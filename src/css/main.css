@@ -1,0 +1,118 @@
+html {
+    color: #222;
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+body {
+    font: 16px/26px Helvetica, Helvetica Neue, Arial;
+}
+
+.full-screen-img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+}
+
+.main-img {
+  background: url(../img/san-diego.jpg) center center no-repeat;
+  background-size: cover;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+}
+
+.main-img.transparent {
+  opacity: 0;
+}
+
+.browserupgrade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    margin: 0 0;
+    padding: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    text-align: center;
+}
+
+.share-buttons {
+  list-style: none;
+  padding: 0;
+}
+
+.share-buttons li {
+  display: inline;
+  margin-left: 5px;
+}
+
+.share-buttons .github-icon {
+  width: 32px;
+  height: 32px;
+  background-color: black;
+  border-radius: 100%;
+  display: inline-block;
+}
+
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+
+@media only screen and (max-width: 480px) {
+  .main-img {
+    /*background-image: url(../img/san-diego-crop.jpg);*/
+    top: 100px;
+  }
+
+  .content {
+    padding-top: 30px;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #0e0000;
+    height: 200px;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .main-img {
+    /*background-image: url(../img/san-diego-crop.jpg);*/
+    top: 170px;
+  }
+
+  .content {
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #0e0000;
+    height: 170px;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 1140px) {
+
+}
+
+/* Clearfix */
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
