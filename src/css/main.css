@@ -6,7 +6,7 @@ html {
 
 @font-face {
   font-family: 'GothamMedium';
-  src: url('../fonts/GOTHAM-MEDIUM.ttf')  format('truetype');
+  src: url('../fonts/gotham.ttf')  format('truetype');
 }
 
 body {
