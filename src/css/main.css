@@ -4,30 +4,45 @@ html {
     line-height: 1.4;
 }
 
+@font-face {
+  font-family: 'GothamMedium';
+  src: url('../fonts/GOTHAM-MEDIUM.ttf')  format('truetype');
+}
+
 body {
-    font: 16px/26px Helvetica, Helvetica Neue, Arial;
+    font: 16px/26px 'GothamMedium';
 }
 
-.full-screen-img {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  height: 100%;
+.coming-soon {
+  font-style: italic;
 }
 
-.main-img {
-  background: url(../img/san-diego.jpg) center center no-repeat;
+.wrapper {
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  top: 200px;
+  text-align: center;
+}
+
+.logo {
+  width: 330px;
+  height: 155px;
+  margin: 0 auto;
+  background-image: url(../img/Logo.png);
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
   -webkit-transition: opacity 1s ease-in-out;
   -moz-transition: opacity 1s ease-in-out;
   -o-transition: opacity 1s ease-in-out;
   transition: opacity 1s ease-in-out;
 }
 
-.main-img.transparent {
-  opacity: 0;
+.info {
+  /*width: 450px;*/
+  margin: 0 auto;
+  text-align: center;
 }
 
 .browserupgrade {
