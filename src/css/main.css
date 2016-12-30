@@ -1,48 +1,82 @@
-html {
-    color: #222;
-    font-size: 1em;
-    line-height: 1.4;
+@font-face {
+  font-family: 'Gotham-Bold';
+  src: url('../fonts/Gotham-Bold.ttf')  format('truetype');
 }
 
 @font-face {
-  font-family: 'GothamMedium';
-  src: url('../fonts/gotham.ttf')  format('truetype');
+  font-family: 'RobotoSlab-Regular';
+  src: url('../fonts/RobotoSlab-Regular.ttf')  format('truetype');
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+    font-family: 'RobotoSlab-Regular', serif;
+    font-size: 18px;
+    color: #FFF;
+    height: 100%;
 }
 
 body {
-    font: 16px/26px 'GothamMedium';
-}
+  height: 100%;
+  width: 100%;
 
-.coming-soon {
-  font-style: italic;
+  background-image: url('../img/maze_bg.png'), linear-gradient(-180deg, #4DA7A8 0%, #68CDc4 100%);
+  background-repeat: repeat;
+  background-size: cover;
 }
 
 .wrapper {
-  width: 100%;
+  width: 473px;
   margin: 0 auto;
   position: relative;
-  top: 200px;
+  top: 144px;
   text-align: center;
 }
 
 .logo {
-  width: 330px;
-  height: 155px;
-  margin: 0 auto;
-  background-image: url(../img/Logo.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
+  width: 310px;
+  margin-bottom: 60px;
   -webkit-transition: opacity 1s ease-in-out;
   -moz-transition: opacity 1s ease-in-out;
   -o-transition: opacity 1s ease-in-out;
   transition: opacity 1s ease-in-out;
 }
 
-.info {
-  /*width: 450px;*/
-  margin: 0 auto;
-  text-align: center;
+p {
+  margin-bottom: 35px;
+  margin-top: 0;
+}
+
+h1 {
+  font-family: 'Gotham-Bold';
+  font-size: 28px;
+  margin-bottom: 40px;
+  margin-top: 0;
+  line-height: 1.3em;
+}
+
+.cta-button {
+  border: none;
+  font-family: 'Gotham-Bold';
+  font-size: 24px;
+  background-image: linear-gradient(-180deg, #FF8561 0%, #E85E24 100%);
+  box-shadow: 0 4px 10px 0 rgba(59, 127, 126, 0.50);
+  border-radius: 100px;
+  padding: 10px 20px;
+  margin-bottom: 35px;
+}
+
+.cta-button a {
+  color: #FFF;
+  text-decoration: none;
+}
+
+button:active {
+  outline: none;
+  border: none;
 }
 
 .browserupgrade {
@@ -81,41 +115,36 @@ body {
    ========================================================================== */
 
 @media only screen and (max-width: 480px) {
-  .main-img {
-    /*background-image: url(../img/san-diego-crop.jpg);*/
-    top: 100px;
+  body {
+    padding: 0 38px 0 38px;
+    letter-spacing: 0;
   }
 
-  .content {
-    padding-top: 30px;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #0e0000;
-    height: 200px;
+  .wrapper {
     width: 100%;
+    top: 128px;
+  }
+
+  .logo, h1 {
+    margin-bottom: 24px;
+  }
+
+  h1, .cta-button {
+    font-size: 20px;
+  }
+
+  p, .cta-button {
+    margin-bottom: 35px;
+  }
+
+  p {
+    font-size: 16px;
   }
 }
 
-@media only screen and (max-width: 768px) {
-  .main-img {
-    /*background-image: url(../img/san-diego-crop.jpg);*/
-    top: 170px;
-  }
+@media only screen and (max-width: 768px) {}
 
-  .content {
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #0e0000;
-    height: 170px;
-    width: 100%;
-  }
-}
-
-@media only screen and (max-width: 1140px) {
-
-}
+@media only screen and (max-width: 1140px) {}
 
 /* Clearfix */
 .clearfix:before,
