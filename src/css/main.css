@@ -24,7 +24,8 @@ body {
   width: 100%;
 
   background-image: url('../img/maze_bg.png'), linear-gradient(-180deg, #4DA7A8 0%, #68CDc4 100%);
-  background-repeat: repeat;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   background-size: cover;
 }
 
