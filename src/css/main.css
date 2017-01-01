@@ -59,6 +59,7 @@ h1 {
 }
 
 .cta-button {
+  color: #FFF;
   border: none;
   font-family: 'Gotham-Bold';
   font-size: 24px;
@@ -74,7 +75,7 @@ h1 {
   text-decoration: none;
 }
 
-button:active {
+.cta-button:active, .cta-button:hover {
   outline: none;
   border: none;
 }
