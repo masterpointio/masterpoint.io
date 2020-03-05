@@ -435,8 +435,10 @@ textarea {
  * ------------------------------------------------------------------- */
 .row {
     width: 89%;
-    max-width: 1200px;
-    margin: 0 auto;
+    /*max-width: 1200px;*/
+    max-width: 950px;
+    margin: 0px 0px 0px 5%;
+    /*margin: 0 auto;*/
 }
 
 .row:after {

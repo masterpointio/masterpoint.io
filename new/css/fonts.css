@@ -172,4 +172,34 @@
   font-weight: normal;
 }
 
+@font-face {
+  font-family: "Flaticon";
+  src: url("icons/Flaticon.eot");
+  src: url("icons/Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("icons/Flaticon.woff2") format("woff2"),
+       url("icons/Flaticon.woff") format("woff"),
+       url("icons/Flaticon.ttf") format("truetype"),
+       url("icons/Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("icons/Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: Flaticon;
+  font-size: 90px;
+  font-style: normal;
+}
+
+.flaticon-audit:before { content: "\f100"; }
+.flaticon-automation:before { content: "\f101"; }
+.flaticon-software:before { content: "\f102"; }
+.flaticon-cloud:before { content: "\f103"; }
 /*# sourceMappingURL=fonts.css.map */
