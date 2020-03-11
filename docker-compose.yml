@@ -1,5 +1,0 @@
-masterpoint.io:
-  build: .
-  ports:
-    - 80:80
-    - 443:443
