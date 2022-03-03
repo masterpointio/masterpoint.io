@@ -799,8 +799,8 @@ input[type="button"] {
   cursor: pointer;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  background-color: #c5c5c5;
-  border: 0.2rem solid #c5c5c5;
+  background-color: #FFF;
+  border: 0.2rem solid #FFF;
 }
 
 .btn:hover,
@@ -813,10 +813,18 @@ button:focus,
 input[type="submit"]:focus,
 input[type="reset"]:focus,
 input[type="button"]:focus {
-  background-color: #b8b8b8;
-  border-color: #b8b8b8;
-  color: #000000;
+  background-color: #000;
+  border-color: #000;
+  color: #FFF;
   outline: 0;
+}
+
+.btn.dark {
+	margin-top: 25px;
+}
+.btn.dark:hover {
+	background-color: #10aaaa;
+	border-color: #10aaaa;
 }
 
 /* button primary
@@ -1223,14 +1231,11 @@ input::-moz-focus-inner {
  * ## display headings
  * ------------------------------------------------------------------- */
 .display-1 {
-  /*font-family: "domine-bold", sans-serif;*/
   font-family: "metropolis-extrabold";
-  /*font-size: 6rem;*/
   font-size: 4.5rem;
   line-height: 1.1;
   letter-spacing: 0;
-  color: #393c3a;
-  /*letter-spacing: -0.03rem;*/
+  color: #FFF;
   margin-top: 0;
   margin-bottom: 4.8rem;
 }
@@ -1240,7 +1245,7 @@ input::-moz-focus-inner {
 
 .subhead {
   font-family: "metropolis-semibold", sans-serif;
-  font-size: 1.6rem;
+  font-size: 2.6rem;
   line-height: 1.3125;
   text-transform: uppercase;
   letter-spacing: 0.25rem;
@@ -1687,10 +1692,10 @@ input::-moz-focus-inner {
   top: -200px;
   left: 0;
   right: 0;
-  min-height: 800px;
+  min-height: 900px;
   z-index: 0;
-  -webkit-transform: translateZ(0) skewY(-12deg);
-  transform: translateZ(0) skewY(-12deg);
+  -webkit-transform: translateZ(0) skewY(-8deg);
+  transform: translateZ(0) skewY(-8deg);
   opacity: .85;
   background-image: -webkit-gradient(linear,left top,right top,from(#10aaaa),to(#076666));
   background-image: -o-linear-gradient(left,#10aaaa 0,#076666 100%);
@@ -1720,8 +1725,8 @@ input::-moz-focus-inner {
   display: table-cell;
   width: 100%;
   height: 100%;
-  vertical-align: middle;
-  padding-bottom: 15.6rem;
+  vertical-align: top;
+  padding-top: 20rem;
   overflow: hidden;
   position: relative;
 }
@@ -1742,21 +1747,20 @@ input::-moz-focus-inner {
   font-family: "metropolis-light", sans-serif;
   font-size: 3.8rem;
   line-height: 1.421;
-  color: rgba(255, 255, 255, 0.8);
+  color: #000;
   margin-top: 2.4rem;
-  padding-left: 10rem;
   position: relative;
 }
-.home-content h1 + p::before {
+/*.home-content h1 + p::before {
   content: "";
   display: block;
   width: 6.5rem;
   height: 1px;
-  background-color: #FF8561;
+  background-color: #000;
   position: absolute;
   left: 6px;
   top: 2.7rem;
-}
+}*/
 
 .home-content__main {
   padding-top: 0;
@@ -2065,7 +2069,6 @@ html.no-csstransitions .home-content__main {
   .home-content h1 + p {
     font-size: 2.4rem;
     padding-right: 2rem;
-    padding-left: 8rem;
   }
   .home-content h1 + p::before {
     width: 5.5rem;
@@ -2147,7 +2150,7 @@ html.no-csstransitions .home-content__main {
     top: 0;
   }
   .s-home .shadow-overlay { 
-	  min-height: 650px;
+	  /*min-height: 650px;*/
   }
   .home-content__main {
     width: auto;
@@ -2239,6 +2242,9 @@ html.no-csstransitions .home-content__main {
   padding-bottom: 18rem;
   background-size: 1200px;
   position: relative;
+}
+.s-about.primary {
+  background-color: #212323;
 }
 
 
@@ -2406,6 +2412,10 @@ html.no-csstransitions .home-content__main {
   color: #d2d2d2;
 }
 
+.s-services img.vendors {
+	max-width: 250px;
+}
+
 
 /* -------------------------------------------------------------------
  * ## services list
@@ -2425,7 +2435,7 @@ html.no-csstransitions .home-content__main {
   color: #FFF;
 }
 .services-list .service-icon {
-  color: #26bfb5;
+  color: #10aaaa;
   line-height: 1.5;
 }
 
@@ -2485,10 +2495,11 @@ html.no-csstransitions .home-content__main {
  *
  * ------------------------------------------------------------------- */
 .s-works {
-  background: #FFF;
+  background: #076666;
   background-size: 1300px;
   padding: 18rem 0 24rem;
   position: relative;
+  color: #FFF;
 }
 .s-works .row {
 	max-width: 1200px;
@@ -2851,7 +2862,7 @@ html.no-csstransitions .home-content__main {
   font-family: "metropolis-regular", sans-serif;
   font-size: 1.4rem;
   line-height: 1.5;
-  color: rgba(85, 85, 85, 0.7);
+  /*color: rgba(85, 85, 85, 0.7);*/
   text-transform: none;
   letter-spacing: 0;
 }
