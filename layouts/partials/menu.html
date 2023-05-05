@@ -1,0 +1,30 @@
+{{ $current := . }}
+{{ range .Site.Menus.main }}
+	{{ $active := or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) }}
+	{{ $active = or $active (eq .Name $current.Title) }}
+	{{ $active = or $active (eq .URL $current.RelPermalink) }}
+	{{ $active = or $active (and (eq .Name "Updates") (eq $current.Section "updates")) }}
+		<li class="menu-item"><a class="{{ if $active }}current-menu-item{{ end }}" href="{{ .URL }}">
+			<span>
+			{{ .Name }}
+			</span>
+			</a>
+			{{ if .HasChildren }}
+			<ul class="sub-menu">
+				{{ range .Children }}
+				<li class="menu-item">
+					<a class="{{ if $active }}current-menu-item{{ end }}" href="{{ .URL }}">{{ .Name }}</a> 
+					{{ if .HasChildren }}
+					<ul class="sub-menu">
+						{{ range .Children }}
+						<li class="menu-item">
+							<a class="{{ if $active }}current-menu-item{{ end }}" href="{{ .URL }}">{{ .Name }}</a> </li>
+						{{ end }}
+					</ul>
+					{{ end }}
+				</li>
+				{{ end }}
+			</ul>
+			{{ end }}
+		</li>
+{{ end }}

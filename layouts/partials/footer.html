@@ -1,0 +1,16 @@
+<footer role="contentinfo">
+    <div class="container">
+        <div id="headerLogo">
+            <a href='{{ "/" | relURL }}'><img src='{{ "img/logo_footer.svg" | relURL }}' alt="{{ .Site.Title }} Logo"></a>
+        </div>
+        <div id="footerNav">
+            <ul>
+                {{ partial "menu.html" . }}
+            </ul>
+        </div>
+        <div id="copyright" >
+            Copyright <script type="text/javascript">document.write(new Date().getFullYear());</script> - {{ .Site.Title }} - All Rights Reserved.<br>
+            <a href="/policies/privacy">Privacy Policy</a> | <a href="/policies/terms">Terms and Conditions</a></div>
+
+    </div>
+</footer>

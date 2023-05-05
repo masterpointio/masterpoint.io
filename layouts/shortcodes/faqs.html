@@ -1,0 +1,6 @@
+<div id="faqsBlock"> {{ range (where (.Site.RegularPages.ByParam "weight") "Type" "faqs") }}
+    <div class="faqBx" id="{{ .File.ContentBaseName | urlize}}">
+      <h3 class="faqQ"><a href="javascript:void(0)">{{ .Title }}</a> </h3>
+      <div class="faqA">{{ .Content }}</div>
+    </div>
+    {{ end }} </div>

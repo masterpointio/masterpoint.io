@@ -1,0 +1,120 @@
+{{ partial "head.html" . }}
+<body {{ if .Params.id }}id='{{ .Params.id }}' {{end}}
+    class="page-default sections-template {{if .Params.banner_image}} withBannerImg {{end}}">
+    {{ partial "header.html" . }}
+    <section id="banner">
+        {{if .Params.banner_image}} <div class="banner-image bg-image"><img src="{{.Params.banner_image}}" /></div>
+        {{end}}
+        <div class="container">
+            <div class="row justify-content-end">
+                <div class="col col-12 col-md-7">
+                    <div class="bannerTxtBx aos-item" data-aos="fade-left">
+                        {{if .Params.banner_tagline}}
+                        <div class="bannerTagline">
+                            {{.Params.banner_tagline | safeHTML}}
+                        </div>
+                        {{end}}
+                        <h2>
+                            {{if .Params.banner_title}}
+                            {{.Params.banner_title|safeHTML}}
+                            {{ else}}
+                            {{ .Title | safeHTML }}
+                            {{end}}
+                        </h2>
+                        {{if .Params.banner_text}}
+                        <div class="bannerTxt">{{ .Params.banner_text|safeHTML}}</div>
+                        {{end}}
+                        {{ if .Params.banner_btn_label}}
+                        <div class="bannerBtn"><a class="button btn-outline-gradient"
+                                href="{{.Params.banner_btn_link}}">{{.Params.banner_btn_label | safeHTML}}</a></div>
+                        {{end}}
+                        {{ if .Params.banner_link_label}}
+                        <div class="bannerLink">or <a href="{{.Params.banner_link}}">{{.Params.banner_link_label | safeHTML}}</a></div>
+                        {{end}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="video-wrapper"><iframe src="https://player.vimeo.com/video/821330736?background=1&muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe><script src="https://player.vimeo.com/api/player.js"></script></div>
+    </section>
+
+<main role="main" class="main-sections">
+    {{range .Pages}}
+    <section class="service-section" id="{{ .File.ContentBaseName }}">
+        {{ if .Params.image }}
+        <div class="bg-image">
+            <img src='{{ .Params.image }}' class="lazy img-fluid" alt="{{ .Site.Title }} - {{ .Title }} Image">
+        </div>
+        {{end}}
+        <div class="container">
+            <div class="serviceBx text-center">
+                <div class="serviceIcon bg-gradient">
+                    {{if .Params.icon}}
+                    <img src="{{.Params.icon}}" />
+                    {{end}}
+                </div>
+                <h3 class="serviceTitle">
+                    {{ if .Params.list_title}}
+                    {{.Params.list_title | safeHTML}}
+                    {{ else}}
+                    {{.Title}}
+                    {{end}}
+                </h3>
+                <div class="serviceContent">{{.Content}}</div>
+                <div class="serviceBtn"><a href="{{ .Site.Params.get_in_touch }}" class="button btn-outline-gradient text-pine btn-big">GET STARTED →</a></div>
+            </div>
+        </div>
+    </section>
+    {{end}}
+    {{ $myVar := .Params.sections }}
+        {{ $mgatag := index site.Taxonomies.section_categories }}
+        {{ range $k, $v := $mgatag }}
+        {{ if eq $k $myVar }}
+        {{ range $v.Pages }}
+        <section id="{{ .Params.id }}">
+            {{ if .Params.image }}
+            <div class="bg-image">
+                <img src='{{ .Params.image }}' class="lazy img-fluid" alt="{{ .Site.Title }} - {{ .Title }} Image">
+            </div>
+            {{end}}
+            {{ if .Params.vimeobg }}
+            <div class="video-wrapper"><iframe src="https://player.vimeo.com/video/{{.Params.vimeobg}}?background=1&muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe><script src="https://player.vimeo.com/api/player.js"></script></div>
+            {{end}}
+            <div class="container">
+                <div class="row {{ .Params.position }} ">
+                    {{if .Params.section_image}}
+                    <div class="col sectionImgCol aos-item" data-aos="fade">
+                        <img src="{{.Params.section_image}}"/>
+                    </div>
+                    {{end}}
+                    <div class="col col-12 sectionColTxt {{ .Params.size }} aos-item" data-aos="fade" >
+                        {{ .Content }}
+                    </div>
+                </div>
+            </div>
+        </section>
+        {{ end }}
+        {{ end }}
+        {{ end }}
+</main>
+
+{{ partial "schedule-assessment.html" . }}
+
+{{ partial "footer.html" . }}
+
+{{ partial "scripts.html" . }}
+
+<script>
+    if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+            if (!user) {
+                window.netlifyIdentity.on("login", () => {
+                    document.location.href = "/admin/";
+                });
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

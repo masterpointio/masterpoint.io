@@ -1,0 +1,17 @@
+<section id="latest-news">
+    <div class="container">
+        <div class="row text-center justify-content-center">
+            <div class="col col-12 col-md-10 col-lg-8 col-xl-7">
+            <h3 class="groupTitle">LATEST UPDATES</h3>
+            <p class="font22">Masterpoint provides updates on the latest industry news and insights on platform architecture and development.</p>
+        </div></div>
+        <div class="row">
+            {{ range first 1 (where (.Site.RegularPages) "Type" "updates") }}
+                {{ partial "news-entry.html" .}}
+            {{end}}
+        </div>
+        <div class="updates-btn text-center">
+            <a href="/updates/" class="button btn-big btn-outline-gradient">Explore All Masterpoint Updates →</a>
+        </div>
+    </div>
+</section>

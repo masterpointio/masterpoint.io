@@ -1,0 +1,15 @@
+<div class="services-row row">
+    {{ range where (.Site.RegularPages.ByWeight) "Type" "process" }}
+    <div class="col col-12 col-md-4" data-aos="fade-down" data-aos-delay="200">
+        <div class="serviceBx">
+            <div class="serviceIcon serviceCount bg-gradient">
+                {{.Params.weight}}
+            </div>
+            <h3 class="serviceTitle">
+                {{.Title}}
+            </h3>
+            <div class="serviceDesc">{{.Description}}</div>
+        </div>
+    </div>
+    {{end}}
+</div>

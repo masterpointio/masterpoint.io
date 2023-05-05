@@ -1,0 +1,17 @@
+<div class="services-row row">
+    {{ range where (.Site.RegularPages.ByWeight) "Type" "services" }}
+    <div class="col col-12 col-md-4">
+        <div class="serviceBx">
+            <div class="serviceIcon bg-gradient">
+                {{if .Params.icon}}
+                <img src="{{.Params.icon}}" />
+                {{end}}
+            </div>
+            <h3 class="serviceTitle">
+                {{.Title}}
+            </h3>
+            <div class="serviceDesc">{{.Description}}</div>
+        </div>
+    </div>
+    {{end}}
+</div>

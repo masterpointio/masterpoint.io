@@ -1,0 +1,10 @@
+<div id="cloud-architecture" class="aos-item" data-aos="fade">
+    <h5 class="cloudLabel">Cloud Architecture Expertise:</h5>
+    <div class="cloudLogos">
+    {{ range where (.Site.RegularPages.ByWeight) "Type" "cloud" }}
+    <div class="cloudLogoBx">
+        <img src="{{ .Params.image }}" alt="{{ .Title }} Logo"/>
+    </div>
+    {{end}}
+</div>
+</div>

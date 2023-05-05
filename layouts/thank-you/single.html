@@ -1,0 +1,40 @@
+{{ partial "head.html" . }}
+
+<body id="thank-you">
+
+{{ partial "header.html" . }}
+
+<div id="banner">
+    <div class="container">
+
+        <div class="row">
+            <div id="banner-text">
+
+                <h2>{{ .Title }}</h2>
+                <p>{{ .Description }}</p>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="main">
+    <div class="container">
+
+        <div class="row">
+            <div class="text-wrapper">
+
+                {{ .Content }}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ partial "footer.html" . }}
+
+{{ partial "scripts.html" . }}
+
+</body>
+</html>

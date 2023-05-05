@@ -1,0 +1,34 @@
+<div id="teamMembers">
+    <div class="teamRow row justify-content-center">
+        {{ range where (.Site.RegularPages.ByParam "weight") "Type" "team" }}
+        <div class="col col-12 col-sm-6 col-md-6 aos-item" data-aos="fade">
+            <div class="teamBx">
+                <div class="teamImgBx">
+                    {{if .Params.image}}
+                    <img src="{{.Params.image}}"/>
+                    {{else}}
+                        <img class="withoutImg" src='{{ "img/logo_icon.svg" | relURL }}'/>
+                    {{end}}
+                </div>
+                <div class="teamTxtBx text-center">
+                    <h3 class="teamName">{{ .Title }}</h3>
+                    <div class="teamDesig"> {{ .Params.designation }}</div>
+                    <div class="teamLinks">
+                    <div class="teamBtn"> <a class="button btn-outline-gradient" data-fancybox="{{ .File.ContentBaseName }}"
+                            data-src="#{{ .File.ContentBaseName }}" href="javascript:;">Read Bio → </a></div>
+                    {{if .Params.linkedin}}
+                        <div class="teamSocial"><a href="{{.Params.linkedin}}" target="_blank"><i class="fa-brands fa-linkedin"></i></a></div>
+                    {{end}}
+                        </div>
+                </div>
+            </div>
+            <div class="team-popup" id="{{ .File.ContentBaseName }}">
+                <div class="teamImgBx"><img src="{{.Params.image}}"/></div>
+                <h3 class="teamName text-highlight">{{ .Title }}</h3>
+                <div class="teamDesig text-lightgrey pb-2"> {{ .Params.designation }}</div>
+                <div class="teamContent">{{ .Content }}</div>
+            </div>
+        </div>
+        {{ end }}
+    </div>
+</div>

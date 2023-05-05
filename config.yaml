@@ -1,0 +1,52 @@
+baseURL:
+languageCode: en-us
+title: Masterpoint Consulting
+taxonomies:
+  category: categories
+  tag: tags
+  section_category: section_categories
+enableRobotsTXT: true
+paginate: 1
+params:
+  linkedin_link: https://www.linkedin.com/company/masterpoint-consulting/about/
+  #google_analytics: UA-
+  form_endpoint: 123456
+  sitewide_note: <strong>Masterpoint stands with Ukraine.</strong> Here’s how you can help Ukraine win with just a few clicks. >
+  sitewide_note_link: /updates/supporting-ukraine/
+  get_in_touch: /contact
+markup:
+  goldmark:
+    extensions:
+      definitionList: true
+      footnote: true
+      linkify: true
+      linkifyProtocol: https
+      strikethrough: true
+      table: true
+      taskList: true
+      typographer: true
+    parser:
+      attribute:
+        block: true
+        title: true
+      autoHeadingID: true
+      autoHeadingIDType: github
+      wrapStandAloneImageWithinParagraph: false
+    renderer:
+      hardWraps: false
+      unsafe: true
+      xhtml: false
+menu:
+  main:
+    - name: Home
+      url: /
+      weight: 10
+    - name: Our Services
+      url: /services/
+      weight: 20
+    - name: Who We Are
+      url: /who-we-are/
+      weight: 30
+    - name: Updates
+      url: /updates/
+      weight: 40

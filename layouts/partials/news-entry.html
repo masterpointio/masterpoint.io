@@ -1,0 +1,34 @@
+<div class="col col-12">
+    <div class="entry">
+        <div class="flex reverse">
+            {{ if .Params.image }}
+            <div class="entryImg">
+                {{ if .Params.outbound }}
+                <a href="{{ .Params.outbound }}" target="_blank"><img src='{{ .Param "image"}}' class="img-fluid lazy"
+                        alt="{{ .Title | safeHTML }}"></a>
+                {{else}}
+                <a href="{{ .Permalink }}"><img src='{{ .Param "image"}}' class="img-fluid lazy"
+                        alt="{{ .Title | safeHTML }}"></a>
+                {{end}}
+            </div>
+            {{end}}
+            <div class="entryContent">
+                <div class="postMeta"><span>{{ .Date.Format "1.02.2006" }}</span></div>
+                <h3 class="postTitle">
+                    {{ if .Params.outbound }}
+                    <a href="{{ .Params.outbound }}" target="_blank">{{ .Title | safeHTML }}</a>
+                    {{else}}
+                    <a href="{{ .Permalink }}">{{ .Title | safeHTML }}</a>
+                    {{end}}
+                </h3>
+
+                <div class="entryDesc">{{ if .Params.author }}<b>By {{.Params.author}}</b>{{end}} - {{ .Description }}</div>
+                {{ if .Params.outbound }}
+                <a href="{{ .Params.outbound }}" target="_blank" class="entry-link text-gradient">Read More &rsaquo;</a>
+                {{else}}
+                <a href="{{ .Permalink }}" class="entry-link text-gradient">Read More &rsaquo;</a>
+                {{end}}
+            </div>
+        </div>
+    </div>
+</div>

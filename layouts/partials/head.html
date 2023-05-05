@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <meta property="og:type" content="website"/>
+
+    <!-- <title> can be separated from metatitle
+        <title>{{ .Title | plainify }} | {{ .Site.Title }}</title>
+    -- Remove <title> in else if used --
+    -->
+
+    {{ if .Params.metaTitle }}
+    <title>{{ .Params.metaTitle | plainify }} | {{ .Site.Title }}</title>
+    <meta name="twitter:title" content="{{ .Params.metatitle | plainify }}"/>
+    <meta property="og:title" content="{{ .Params.metatitle | plainify }}"/>
+    <meta property="og:site_name" content="{{ .Params.metatitle | plainify }}"/>
+    {{else}}
+    <title>{{ .Title | plainify | truncate 60 }} | {{ .Site.Title }}</title>
+    <meta name="twitter:title" content="{{ .Title | plainify | truncate 60 }} | {{ .Site.Title }}"/>
+    <meta property="og:title" content="{{ .Title | plainify | truncate 60 }} | {{ .Site.Title }}"/>
+    <meta property="og:site_name" content="{{ .Title | plainify | truncate 60 }} | {{ .Site.Title }}"/>
+    {{end}}
+    
+
+    {{ if .Params.metaDescription }}
+    <meta name="description" content="{{ .Params.metaDescription | plainify }}"/>
+    <meta property="og:description" content="{{ .Params.metaDescription | plainify }}"/>
+    <meta name="twitter:description" content="{{ .Params.metaDescription | plainify }}"/>
+    {{else}}
+    <meta name="description" content="{{ .Description | plainify | truncate 155 }}"/>
+    <meta property="og:description" content="{{ .Description | plainify | truncate 155 }}"/>
+    <meta name="twitter:description" content="{{ .Description | plainify | truncate 155 }}"/>
+    {{end}}
+
+    <meta property="og:url" content="{{ .Permalink }}"/>
+    <meta name="twitter:url" content="{{ .Permalink }}"/>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    {{ if .Params.og_img }}
+    <meta property="og:image" content='{{ .Params.og_img }}'/>
+    <meta property="twitter:image" content='{{ .Params.og_img }}'/>
+    {{ else }}
+    <meta property="og:image" content="/img/og-img.png"/>
+    <meta property="twitter:image" content="/img/og-img.png"/>
+    {{ end }}
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="628"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+
+    {{ if isset .Site.Params "twitter_user" }}
+    <meta name="twitter:site" content="@{{ .Site.Params.twitter_user }}" />
+    <meta name="twitter:creator" content="@{{ .Site.Params.twitter_user }}" />
+    {{ end }}
+
+    <script id="defer-js" src="https://cdn.jsdelivr.net/npm/@shinsenter/defer.js@2.5.0/dist/defer_plus.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/all.min.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://use.typekit.net/noi8hrw.css">
+
+    {{ $sass := resources.Get "css/style.scss" }}
+    {{ $style := $sass | resources.ToCSS | minify }}
+
+    <link   rel="stylesheet"
+            href="{{ $style.Permalink }}"
+            media="screen">
+
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+</head>

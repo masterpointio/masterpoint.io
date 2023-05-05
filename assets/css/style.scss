@@ -1,0 +1,13 @@
+/*The Foundation and Reset Based in Bootstrap 5.1.3*/
+@import "bootstrap_5.1.3/bootstrap.scss";
+
+/* Optional Features */
+@import "aos.scss"; /* Section Animations */
+@import "animate.scss"; /* Basic Animations */
+@import "magnific-popup.scss"; /* LightBox */
+@import "owl.carousel.min.scss";
+
+/* Naked Framework Requirements */
+@import "variables.scss";
+@import "default.scss"; /*Do NOT modify*/
+@import "custom.scss";

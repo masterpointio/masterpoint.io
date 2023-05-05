@@ -1,0 +1,129 @@
+site_url: https://masterpoint.io
+display_url: https://masterpoint.io
+logo_url: https://masterpoint.io/img/login-logo.svg
+show_preview_links: false
+backend:
+  name: git-gateway
+  repo: Kristopher-Ray/masterpoint.io
+  branch: master
+# This line should *not* be indented
+media_folder: "static/img" # Media files will be stored in the repo under images/uploads
+public_folder: "/img"
+collections:
+  - name: "logos"
+    label: "Client Logo Carousel"
+    folder: "content/logos"
+    media_folder: '/static/img/logos'
+    public_folder: '/img/logos'
+    filter: {field: "visible", value: true}
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Visible in CMS", name: "visible", widget: hidden, default: true}
+      - {label: "Logo Name / Title / Alt Tag", name: "title", widget: "string"}
+      - {label: "Logo Image", name: "image", widget: "image" }
+      - {label: "Order", name: "weight", widget: "number" }
+  - name: "updates"
+    label: "News & Updates"
+    folder: "content/updates"
+    media_folder: '/static/img/updates'
+    public_folder: '/img/updates'
+    filter: {field: "visible", value: true}
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Visible in CMS", name: "visible", widget: hidden, default: true}
+      - {label: "Draft", name: "draft", widget: "boolean", default: true}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Author", name: "author", widget: "string", required: false}
+      - {label: "Slug", name: "slug", widget: "string", required: false}
+      - {label: "Date", name: "date", widget: "date"}
+      - {label: "Description", name: "description", widget: "string", required: false}
+      - {label: "Body", name: "body", widget: "markdown", required: false}
+      - {label: "Featured Image", name: "image", widget: "image" }
+  - name: "team"
+    label: "Team"
+    folder: "content/team"
+    media_folder: '/static/img/team'
+    public_folder: '/img/team'
+    slug: "{{slug}}"
+    fields:
+      - {label: "Draft", name: "draft", widget: "boolean", default: true}
+      - {label: "Name", name: "title", widget: "string"}
+      - {label: "Order", name: "weight", widget: "number" }
+      - {label: "Bio", name: "body", widget: "markdown", required: false}
+      - {label: "Profile Image", name: "image", widget: "image" }
+  - name: "services"
+    label: "Services"
+    folder: "content/services"
+    media_folder: '/static/img/services'
+    public_folder: '/img/services'
+    filter: {field: "visible", value: true}
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Visible in CMS", name: "visible", widget: hidden, default: true}
+      - {label: "Draft", name: "draft", widget: "boolean", default: true}
+      - {label: "Service Title", name: "title", widget: "string"}
+      - {label: "Order", name: "weight", widget: "number" }
+      - {label: "Short Overview", name: "description", widget: "text", required: false}
+      - {label: "Description", name: "body", widget: "markdown", required: false}
+      - {label: "Background Image", name: "image", widget: "image" }
+      - {label: "Service Icon", name: "icon", widget: "image" }
+  - name: "support"
+    label: "Who We Support"
+    folder: "content/support"
+    media_folder: '/static/img/supports'
+    public_folder: '/img/supports'
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Draft", name: "draft", widget: "boolean", default: true}
+      - {label: "Organization or Cause", name: "title", widget: "string"}
+      - {label: "Order", name: "weight", widget: "number" }
+      - {label: "Short Overview", name: "description", widget: "text", required: false}
+      - {label: "Logo or Icon Badge", name: "icon", widget: "image" }
+  - name: "sections"
+    label: "Site Sections"
+    folder: "content/sections"
+    media_folder: '/static/img'
+    public_folder: '/img'
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Draft", name: "draft", widget: "boolean", default: true}
+      - {label: "Categories (seperate by comma)", name: "section_categories", widget: "list", default: ["Home"], required: false}
+      - {label: "Section Reference Title (hidden)", name: "title", widget: "string"}
+      - {label: "Order", name: "weight", widget: "number" }
+      - {label: "Content", name: "body", widget: "markdown", required: false}
+      - {label: "Image", name: "section_image", widget: "image" }
+      - {label: "Background Image", name: "image", widget: "image" }
+  - name: "testimonials"
+    label: "Testimonials"
+    folder: "content/testimonials"
+    media_folder: '/static/img'
+    public_folder: '/img'
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Draft", name: "draft", widget: "boolean", default: true}
+      - {label: "Attribution Name", name: "title", widget: "string"}
+      - {label: "Position", name: "position", widget: "string"}
+      - {label: "Order", name: "weight", widget: "number" }
+      - {label: "Testimonial", name: "body", widget: "markdown", required: false}
+  - label: "Configuration"
+    name: "configuration"
+    files:
+      - name: "config"
+        label: "Global Site Settings"
+        file: "config.yaml"
+        fields:
+          - name: "params"
+            label: "Params"
+            widget: "object"
+            fields:
+              - { label: "Linkedin Link", name: "linkedin_link", widget: "string", required: false }
+              - { label: "Form Endpoint", name: "form_endpoint", widget: "string", required: false }
+              - {label: "Sitewide Note", name: "sitewide_note", widget: "string", required: false}
+              - {label: "Sitewide Note Link", name: "sitewide_note_link", widget: "string", required: false}
+              - {label: "Get In Touch Link", name: "get_in_touch", widget: "string", required: false}

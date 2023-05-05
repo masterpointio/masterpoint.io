@@ -1,0 +1,13 @@
+<div id="testimonialSlider" class="flexslider">
+    <ul class="slides clearfix">
+        {{ range where (.Site.RegularPages.ByWeight) "Type" "testimonials" }}
+        <li>
+            <div class="quoteBx">
+                <div class="quoteTxt">{{.Content}}</div>
+                <div class="quoteName">{{.Title}}</div>
+                <div class="quotePosition">{{.Params.position}}</div>
+                </div>
+        </li>
+        {{end}}
+    </ul>
+</div>

@@ -1,0 +1,143 @@
+<form accept-charset="UTF-8" action='{{ .Site.Params.form_endpoint }}'method="POST">
+
+    <input type="hidden" name="utm_source" value="">
+    <input type="hidden" name="utm_medium" value="">
+    <input type="hidden" name="utm_campaign" value="">
+
+    <div class="col col-12 labelToggle">
+        <label for="full_name_longform">Full Name*</label>
+        <input type="text" id="full_name_longform" class="formField" name="full_name" placeholder="ex. John or Jane Doe" required>
+    </div>
+
+    <div class="col col-12 col-sm-3 labelToggle">
+        <label for="first_name_longform">First Name*</label>
+        <input type="text" id="first_name_longform" class="formField" name="first_name" placeholder="ex. John or Jane" required>
+    </div>
+
+    <div class="col col-12 col-sm-3 labelToggle">
+        <label for="last_name_longform">Last Name*</label>
+        <input type="text" id="last_name_longform" class="formField" name="last_name" placeholder="ex. Doe" required>
+    </div>
+
+    <div class="col col-12 col-sm-6 labelToggle">
+        <label for="email_longform">Email Address*</label>
+        <input type="email" id="email_longform" name="email" placeholder="ex. yourname@email.com" required class="formField labelToggle">
+    </div>
+
+    <div class="col col-12 col-sm-3 labelToggle">
+        <label for="phone_longform">Phone Number*</label>
+        <input type="tel" id="phone_longform" class="phone" name="phone" placeholder="(123) 456-7890" required class="formField labelToggle">
+    </div>
+
+    <div class="col col-12 col-sm-4 labelToggle">
+        <label for="city_longform">City*</label>
+        <input type="text" id="city_longform" name="city" placeholder="ex. Austin" required class="formField labelToggle">
+    </div>
+
+    <div class="col col-12 col-sm-2 labelToggle">
+        <label for="state_longform" id="stateLabel">State*</label>
+        <select name="state" id="state_longform">
+            <option value=""></option>
+            <option value="AL">AL</option>
+            <option value="AK">AK</option>
+            <option value="AR">AR</option>
+            <option value="AZ">AZ</option>
+            <option value="CA">CA</option>
+            <option value="CO">CO</option>
+            <option value="CT">CT</option>
+            <option value="DC">DC</option>
+            <option value="DE">DE</option>
+            <option value="FL">FL</option>
+            <option value="GA">GA</option>
+            <option value="HI">HI</option>
+            <option value="IA">IA</option>
+            <option value="ID">ID</option>
+            <option value="IL">IL</option>
+            <option value="IN">IN</option>
+            <option value="KS">KS</option>
+            <option value="KY">KY</option>
+            <option value="LA">LA</option>
+            <option value="MA">MA</option>
+            <option value="MD">MD</option>
+            <option value="ME">ME</option>
+            <option value="MI">MI</option>
+            <option value="MN">MN</option>
+            <option value="MO">MO</option>
+            <option value="MS">MS</option>
+            <option value="MT">MT</option>
+            <option value="NC">NC</option>
+            <option value="NE">NE</option>
+            <option value="NH">NH</option>
+            <option value="NJ">NJ</option>
+            <option value="NM">NM</option>
+            <option value="NV">NV</option>
+            <option value="NY">NY</option>
+            <option value="ND">ND</option>
+            <option value="OH">OH</option>
+            <option value="OK">OK</option>
+            <option value="OR">OR</option>
+            <option value="PA">PA</option>
+            <option value="RI">RI</option>
+            <option value="SC">SC</option>
+            <option value="SD">SD</option>
+            <option value="TN">TN</option>
+            <option value="TX">TX</option>
+            <option value="UT">UT</option>
+            <option value="VT">VT</option>
+            <option value="VA">VA</option>
+            <option value="WA">WA</option>
+            <option value="WI">WI</option>
+            <option value="WV">WV</option>
+            <option value="WY">WY</option>
+            <option value="AS">AS</option>
+            <option value="GU">GU</option>
+            <option value="MP">MP</option>
+            <option value="PR">PR</option>
+            <option value="UM">UM</option>
+            <option value="VI">VI</option>
+            <option value="AA">AA</option>
+            <option value="AP">AP</option>
+            <option value="AE">AE</option>
+        </select>
+    </div>
+
+    <div class="col col-12 col-sm-3 labelToggle">
+        <label for="zip_longform">Zip Code*</label>
+        <input type="text" id="zip_longform" name="zipcode" placeholder="12345" required class="formField labelToggle">
+    </div>
+
+    <div class="col col-12 labelToggle">
+        <label for="message_longform">Inquire...</label>
+        <textarea name="message" id="message_longform" cols="30" rows="10" placeholder="What can I help you with?" class="formField labelToggle"></textarea>
+    </div>
+
+    <div class="col col-6 col-sm-4 checkbox">
+        <input id="phone_banking_longform" type="checkbox" value="checkbox" name="phone_banking" />
+        <label for="phone_banking_longform">Phone Banking</label>
+    </div>
+    <div class="col col-6 col-sm-4 checkbox">
+        <input id="block_walking_longform" type="checkbox" value="checkbox" name="block_walking" />
+        <label for="block_walking_longform">Block Walking</label>
+    </div>
+    <div class="col col-6 col-sm-4 checkbox">
+        <input id="house_party_longform" type="checkbox" value="checkbox" name="house_party"/>
+        <label for="house_party_longform">House Party</label>
+    </div>
+    <div class="col col-6 col-sm-4 checkbox">
+        <input id="yard_sign_longform" type="checkbox" value="checkbox" name="yard_sign" />
+        <label for="yard_sign_longform">Yard Sign</label>
+    </div>
+    <div class="col col-6 col-sm-4 checkbox">
+        <input id="social_media_longform" type="checkbox" value="checkbox" name="social_media" />
+        <label for="social_media_longform">Social Media</label>
+    </div>
+    <div class="col col-6 col-sm-4 checkbox">
+        <input id="fundraise_longform" type="checkbox" value="checkbox" name="fundraise" />
+        <label for="fundraise_longform">Fundraise</label>
+    </div>
+
+    <div class="col">
+        <button type="submit" class="button">Send Inquiry</button>
+    </div>
+
+</form>

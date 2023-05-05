@@ -1,0 +1,19 @@
+<div class="supports-row row">
+    {{ range where (.Site.RegularPages.ByWeight) "Type" "supports" }}
+    <div class="col col-12">
+        <div class="supportBx">
+            <div class="supportIcon">
+                {{if .Params.icon}}
+                <img src="{{.Params.icon}}" />
+                {{end}}
+            </div>
+            <div class="supportMeta">
+            <h3 class="supportTitle">
+                {{.Title}}
+            </h3>
+            <div class="supportDesc">{{.Description}}</div>
+        </div>
+        </div>
+    </div>
+    {{end}}
+</div>
