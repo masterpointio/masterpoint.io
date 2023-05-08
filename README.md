@@ -1,4 +1,7 @@
-# Masterpoint Consulting Custom Development
+# Masterpoint.io Website 
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/86215631-1b21-4f66-ae04-8413809496f7/deploy-status)](https://app.netlify.com/sites/masterpoint/deploys)
+
 *built with [Hugo](https://gohugo.io)* by - [KristopherRay.com](https://kristopherray.com)  
 
 *Packaged with:*
