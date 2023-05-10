@@ -1,4 +1,6 @@
-<form accept-charset="UTF-8" action='{{ .Site.Params.form_endpoint }}'method="POST">
+<form accept-charset="UTF-8" name="contact" method="POST" data-netlify="true">
+
+    <input type="hidden" name="subject" data-remove-prefix value="Masterpoint Website Inquiry (%{submissionId})" />
 
     <input type="hidden" name="utm_source" value="">
     <input type="hidden" name="utm_medium" value="">
