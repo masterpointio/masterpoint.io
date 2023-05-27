@@ -1137,20 +1137,20 @@ footer {
       z-index: 1;
       display: block;
       .serviceIcon {
-        &:before {
-          content: "";
-          position: absolute;
-          width: 125vw;
-          height: 2px;
-          background: linear-gradient(
-            99.59deg,
-            #ede497 2.59%,
-            #2ad9c2 41.12%,
-            #d891ce 89.63%
-          );
-          top: 50%;
-          z-index: -10;
-        }
+        // &:before {
+        //   content: "";
+        //   position: absolute;
+        //   width: 125vw;
+        //   height: 2px;
+        //   background: linear-gradient(
+        //     99.59deg,
+        //     #ede497 2.59%,
+        //     #2ad9c2 41.12%,
+        //     #d891ce 89.63%
+        //   );
+        //   top: 50%;
+        //   z-index: -10;
+        // }
       }
     }
     &:nth-child(5) {
@@ -2105,13 +2105,23 @@ footer {
 
 #platform-engineering-service {
   padding: 7.5rem 0 6.4rem;
-  background: #fff;;
+  background: #000;
+  color:#fff;
+
+  h3 {
+    color:#fff;
+  }
+
+  .button {
+    color:#fff;
+  }
+
   .bg-image {
     width: 100%;
     height:100%;
     position: absolute;
     &:before {
-      background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.750014) 46.35%, rgba(255, 255, 255, 0) 100%);
+      background: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.750014) 46.35%, rgba(255, 255, 255, 0) 100%);
     }
   }
 }
@@ -2278,6 +2288,15 @@ footer {
       p {
         color: #fff;
       }
+    }
+  }
+}
+
+#thank-you {
+  #banner {
+    h2 {
+      font-size: 2em;
+      margin-bottom: 16px;;
     }
   }
 }
