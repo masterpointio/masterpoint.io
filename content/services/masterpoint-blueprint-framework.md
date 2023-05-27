@@ -7,6 +7,7 @@ weight: 2
 icon: /img/services/icon_masterpoint.svg 
 image: /img/services/bg_masterpint.jpg
 visible: true
+id: masterpoint-blueprint-framework
 ---
 
 Building a new product from the ground up or want a fresh start? Our Blueprint + Framework solution provides a fully automated AWS platform following our best practices and thought processes for high-growth, cloud-native organizations. It’s provisioned in days instead of months, setting your organization up with a foundational cloud platform that you can own and manage as you see fit.

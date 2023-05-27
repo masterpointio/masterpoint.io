@@ -2085,8 +2085,9 @@ footer {
     }
   }
 }
-#platform-engineering-service {
+#terraform-transformation {
   padding: 7.5rem 0 6.4rem;
+  background: #fff;;
   .bg-image {
     width: 100%;
     position: absolute;
@@ -2098,6 +2099,19 @@ footer {
         rgba(255, 255, 255, 0.9) 70.11%,
         rgba(255, 255, 255, 0) 103.07%
       );
+    }
+  }
+}
+
+#platform-engineering-service {
+  padding: 7.5rem 0 6.4rem;
+  background: #fff;;
+  .bg-image {
+    width: 100%;
+    height:100%;
+    position: absolute;
+    &:before {
+      background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.750014) 46.35%, rgba(255, 255, 255, 0) 100%);
     }
   }
 }

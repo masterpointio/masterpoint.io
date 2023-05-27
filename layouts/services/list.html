@@ -40,7 +40,7 @@
 
 <main role="main" class="main-sections">
     {{range .Pages}}
-    <section class="service-section" id="{{ .File.ContentBaseName }}">
+    <section class="service-section" {{if .Params.id}} id="{{ .Params.id }}"{{end}}>
         {{ if .Params.image }}
         <div class="bg-image">
             <img src='{{ .Params.image }}' class="lazy img-fluid" alt="{{ .Site.Title }} - {{ .Title }} Image">
