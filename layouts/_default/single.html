@@ -17,8 +17,8 @@
                                 {{else}}
                                 <a href="{{ .Permalink }}">{{ .Title | safeHTML }}</a>
                                 {{end}}
-                                {{ if .Params.author }}<b>By {{.Params.author}}</b>{{end}}
                             </h1>
+                            {{ if .Params.author }}<b>By {{.Params.author}}</b>{{end}}
                             <div class="entryDesc">{{ .Description }}</div>
                         </div>
                     </div>
