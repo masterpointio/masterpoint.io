@@ -16,4 +16,4 @@ Masterpoint partners with high-performing tech startups to help them confidently
 
 Our impact is that our customers leverage the cloud instead of struggling with it.
 
-<a href="/team" class="button btn-outline-gradient text-pine btn-big">Meet Our Team →</a>
+<a href="/who-we-are/" class="button btn-outline-gradient text-pine btn-big">Meet Our Team →</a>
