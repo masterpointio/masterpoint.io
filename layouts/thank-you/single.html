@@ -7,30 +7,26 @@
 <div id="banner">
     <div class="container">
 
-        <div class="row">
-            <div class="col-12 text-center">
+        <div class="row text-center justify-content-center">
+            <div class="col col-12 col-md-10 col-lg-8 col-xl-7">
 
-                <h2>{{ .Title }}</h2>
+                <h1 class="text-gradient">{{ .Title }}</h1>
                 <p>{{ .Description }}</p>
-                </br>
                 </br>
                 </br>
                 </br>
 
             </div>
         </div>
-
     </div>
+
+   {{ partial "latest-news.html" . }}
 </div>
 
 <div id="main">
     <div class="container">
-
         <div class="row">
             <div class="text-wrapper">
-
-                 {{ partial "latest-news.html" . }}
-
             </div>
         </div>
     </div>
