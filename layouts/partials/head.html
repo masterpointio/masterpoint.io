@@ -21,7 +21,7 @@
     <meta property="og:title" content="{{ .Title | plainify | truncate 60 }} | {{ .Site.Title }}"/>
     <meta property="og:site_name" content="{{ .Title | plainify | truncate 60 }} | {{ .Site.Title }}"/>
     {{end}}
-    
+
 
     {{ if .Params.metaDescription }}
     <meta name="description" content="{{ .Params.metaDescription | plainify }}"/>
@@ -69,10 +69,20 @@
     {{ $sass := resources.Get "css/style.scss" }}
     {{ $style := $sass | resources.ToCSS | minify }}
 
-    <link   rel="stylesheet"
-            href="{{ $style.Permalink }}"
-            media="screen">
+    <link rel="stylesheet" href="{{ $style.Permalink }}" media="screen">
 
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+    <script type="text/javascript" src="//static.klaviyo.com/onsite/js/klaviyo.js?company_id=TTc7Za"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C2CKKGCDB6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-C2CKKGCDB6');
+    </script>
 
 </head>
