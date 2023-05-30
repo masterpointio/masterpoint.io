@@ -12,15 +12,25 @@ $(document).ready(function() {
     });
 });
 
-// Close Mobile Menu
 $(document).mouseup(function(e){
-    var menu = $('nav ul');
-    if (!menu.is(e.target) // The target of the click isn't the container.
-    && menu.has(e.target).length === 0) // Nor a child element of the container
-    {
-            menu.slideUp();
+    if(window.matchMedia('(max-width: 1199px)').matches){
+        var menu = $('nav ul');
+        if (!menu.is(e.target) // The target of the click isn't the container.
+        && menu.has(e.target).length === 0) // Nor a child element of the container
+        {
+                menu.slideUp();
+        }
     }
- });
+});
+
+$(window).resize(function() {
+    if(window.matchMedia('(min-width: 1200px)').matches) {
+        $('nav ul').show();
+    }
+    if(window.matchMedia('(max-width: 1199px)').matches) {
+        $('nav ul').hide();
+    }
+});
  
 // Clone Cloud Assessment Image
 $(document).ready(function() {
