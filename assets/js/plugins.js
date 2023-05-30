@@ -1,14 +1,27 @@
 $("#status").fadeOut(); // will first fade out the loading animation
 $("#preloader").delay(350).fadeOut("slow"); // will fade out the white DIV that covers the website.
 
-// Navigation
 $(document).ready(function() {
     // Mobile Navigation Toggle
     $('#toggle-menu').click(function(){
-        $('nav ul').slideToggle(250);
+        if($("nav ul").is(":visible")){
+            $('nav ul').slideUp(250);
+        } else {
+            $('nav ul').slideDown(250);
+        }
     });
 });
 
+// Close Mobile Menu
+$(document).mouseup(function(e){
+    var menu = $('nav ul');
+    if (!menu.is(e.target) // The target of the click isn't the container.
+    && menu.has(e.target).length === 0) // Nor a child element of the container
+    {
+            menu.slideUp();
+    }
+ });
+ 
 // Clone Cloud Assessment Image
 $(document).ready(function() {
     var $bgImg = $('#comprehensive-cloud-assessment .bg-image').clone();

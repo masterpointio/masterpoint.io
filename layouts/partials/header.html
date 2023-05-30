@@ -11,20 +11,24 @@
     </section>
 {{end}}
 <header aria-label="header">
-<div id="headerLogo">
-    <a href='{{ "/" | relURL }}'><img src='{{ "img/logo.svg" | relURL }}' alt="{{ .Site.Title }} Logo"></a>
-</div>
-    <nav role="navigation" aria-label="menu">
-        <a href="javascript:void(0)" id="toggle-menu"><i class="fa fa-bars"></i>&nbsp; Menu</a>
-        <ul>
-            {{ partial "menu.html" . }}
-        </ul>
-    </nav>
-
-    <div id="headerSocial">            {{ partial "social.html" . }}</div>
-    {{if .Site.Params.get_in_touch}}
-    <div id="headerBtn">
-        <a href="{{.Site.Params.get_in_touch}}" target="_blank" class="button">GET IN TOUCH →</a>
+    <div id="headerLeft" class="d-flex align-items-center">
+        <div id="headerLogo">
+            <a href='{{ "/" | relURL }}'><img src='{{ "img/logo.svg" | relURL }}' alt="{{ .Site.Title }} Logo"></a>
+        </div>
+        <nav role="navigation" aria-label="menu">
+            <a href="javascript:void(0)" id="toggle-menu"><i class="fa fa-bars"></i>&nbsp; Menu</a>
+            <ul>
+                {{ partial "menu.html" . }}
+            </ul>
+        </nav>
     </div>
-    {{end}}
+
+    <div id="headerRight" class="d-flex align-items-center">
+        <div id="headerSocial">            {{ partial "social.html" . }}</div>
+        {{if .Site.Params.get_in_touch}}
+        <div id="headerBtn">
+            <a href="{{.Site.Params.get_in_touch}}" target="_blank" class="button">GET IN TOUCH →</a>
+        </div>
+        {{end}}
+    </div>
 </header>

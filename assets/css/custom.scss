@@ -614,15 +614,28 @@ header {
   justify-content: space-between;
   @media (max-width: 767px) {
     padding-left: 20px; padding-right: 20px;
-  }
-  @media (max-width: 575px) {
     flex-wrap: wrap;
   }
+
+  .d-flex {
+    @media (max-width: 767px) {
+      flex-wrap: wrap;
+      width:100%;
+    }
+  }
+
+  #headerRight {
+    @media (max-width: 767px) {
+      justify-content: end;
+      margin-top: -38px;
+    }
+  }
+
   #headerLogo {
     position: relative;
     @media (max-width: 767px) {
       width: 200px;
-      padding-bottom: 1rem;
+      display: block;
     }
 
     img {
@@ -632,7 +645,7 @@ header {
     @media (max-width: 575px) {
       width: 100%;
       img{
-        width: 200px; display: block; margin: 0 auto;
+        width: 260px; display: block; margin: 0 auto 24px;
       }
     }
 
@@ -676,6 +689,7 @@ header {
       -ms-transition: all 0.3s;
       -o-transition: all 0.3s;
       transition: all 0.3s;
+      white-space: nowrap;
       &:hover,
       &:focus {
         background: $highlight;
