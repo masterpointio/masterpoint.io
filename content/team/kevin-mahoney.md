@@ -2,9 +2,8 @@
 title: Kevin Mahoney
 designation: Platform Engineer
 linkedin: https://linkedin.com
-draft: true
-weight: 4
-image: /img/team/logo-small.png
+draft: false
+weight: 3
+image: /img/team/cleanshot-2023-06-07-at-16.50.03.png
 ---
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in consectetur orci. Aliquam nec ante ultrices, maximus nulla ac, imperdiet dui. Aenean ut pulvinar neque. Mauris varius faucibus leo. Sed in molestie purus, eu maximus sem. Duis quis elementum tellus. Duis gravida, est vitae pellentesque pellentesque, dui nisl tristique sapien, in ornare ligula urna eget sem. Pellentesque auctor justo a mauris rhoncus feugiat. Proin cursus nibh ac mi suscipit, pretium pulvinar arcu efficitur.
+Originally from Ohio, Kevin is a platform engineer who has just recently moved to Budapest, Hungary. He enjoys building platforms that improve operational efficiency and discovering force multipliers to make software delivery faster and more reliable. Outside of work, he's a big fan of traveling the globe, trying new foods, and teaching his dog human-like tricks (like picking up items, climbing ladders, and counting).
