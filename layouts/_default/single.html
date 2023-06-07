@@ -40,8 +40,10 @@
 </main>
 
 {{ if .Params.showUpdatesOverSchedule }}
+  Testing 1
   {{ partial "latest-news.html" . }}
 {{ else }}
+  Testing 2
   {{ partial "schedule-assessment.html" . }}
 {{end}}
 
