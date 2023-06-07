@@ -39,7 +39,11 @@
     </div>
 </main>
 
-{{ partial "schedule-assessment.html" . }}
+{{ if .showUpdatesOverSchedule }}
+  {{ partial "latest-news.html" . }}
+{{ else }}
+  {{ partial "schedule-assessment.html" . }}
+{{end}}
 
 {{ partial "footer.html" . }}
 
