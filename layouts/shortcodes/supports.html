@@ -11,7 +11,7 @@
             <h3 class="supportTitle">
                 {{.Title}}
             </h3>
-            <div class="supportDesc">{{.Description}}</div>
+            <div class="supportDesc">{{ .Description | safeHTML }}</div>
         </div>
         </div>
     </div>
