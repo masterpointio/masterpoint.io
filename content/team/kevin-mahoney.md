@@ -1,7 +1,7 @@
 ---
 title: Kevin Mahoney
 designation: Platform Engineer
-linkedin: https://linkedin.com
+linkedin: https://linkedin.com/in/kevcube
 draft: false
 weight: 3
 image: /img/team/cleanshot-2023-06-07-at-16.53.14.png
