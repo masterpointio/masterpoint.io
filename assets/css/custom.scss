@@ -1715,6 +1715,16 @@ footer {
           rgba(0, 0, 0, 0) 28.87%
         ),
         linear-gradient(270deg, $pine 51.53%, rgba(14, 56, 58, 0) 82.08%);
+
+        @media(max-width: 767px){
+          background: linear-gradient(
+          360deg,
+          rgba(0, 0, 0, 0.3) 0%,
+          rgba(0, 0, 0, 0) 28.87%
+        ),
+        linear-gradient(0deg, $pine 51.53%, rgba(14, 56, 58, 0) 82.08%);
+        }
+        
     }
     @media(max-width: 767px){
     h3, .bannerTagline {
@@ -1730,6 +1740,10 @@ footer {
         opacity: 0.7;
       }
       @media (max-width: 767px) {
+        width: 100%;
+        position: absolute;
+        height: 100%;
+
         &:before{
           display: block;
           background: linear-gradient(360deg,$pine 0%,rgba(255,255,255,0) 35%);
@@ -1779,6 +1793,11 @@ footer {
     width: 56%;
     left: initial;
     left: 0; position: absolute;
+
+    @media(max-width: 767px){
+      width:100%;
+    }
+
     &:before {
       display: none;
     }
