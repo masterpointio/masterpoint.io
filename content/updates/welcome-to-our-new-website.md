@@ -1,10 +1,13 @@
 ---
-title: Welcome to Our New Website
-description: >-
-   Hey there, and welcome to the brand-new Masterpoint website! As the founder of Masterpoint, I'm beyond excited to share our revamped online presence with you, showcasing our expertise in all things AWS Platform Engineering and our commitment to helping our clients succeed.
-date: 2023-05-05
-author: Matt Gowie
 visible: true
+draft: false
+title: Welcome to Our New Website
+author: Matt Gowie
+date: 2023-05-05
+description: Hey there, and welcome to the brand-new Masterpoint website! As the
+  founder of Masterpoint, I'm beyond excited to share our revamped online
+  presence with you, showcasing our expertise in all things AWS Platform
+  Engineering and our commitment to helping our clients succeed.
 image: /img/updates/post.png
 ---
 
@@ -20,6 +23,6 @@ We're incredibly proud of this new site, and we can't wait to hear your thoughts
 
 And if you're looking to accelerate your team's progress on AWS with less pain, we're just a click away. Get in touch with us through our **[Contact](https://masterpoint.netlify.app/contact/)** page.
 
-I couldn't be more excited about this site’s latest face lift and can't wait to showcase Masterpoint’s public facing journey on the web with this new site. Stay tuned for more updates, insights, and don't forget to connect with/follow us on **[LinkedIn](https://www.linkedin.com/)** where you can share our post about the new site **[here](https://chat.openai.com/?model=gpt-4#)**. This will help us spread the word and keep you informed about our latest news.
+I couldn't be more excited about this site’s latest face lift and can't wait to showcase Masterpoint’s public facing journey on the web with this new site. Stay tuned for more updates, insights, and don't forget to connect with/follow us on **[LinkedIn](https://www.linkedin.com/company/masterpoint-consulting/)** where you can share our post about the new site **[here]()**. This will help us spread the word and keep you informed about our latest news.
 
 That's all for now! We appreciate your support and would love it if you could share this post with others who might find it interesting. Thanks and catch you in our next post!
