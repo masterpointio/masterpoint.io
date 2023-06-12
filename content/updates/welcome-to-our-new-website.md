@@ -11,7 +11,7 @@ description: Hey there, and welcome to the brand-new Masterpoint website! As the
 image: /img/updates/post.png
 ---
 
-Our team collaborated with the talented Kris Bolleter, who was instrumental in building this fresh new take on our web presense. We enjoyed working with Kris and highly recommend checking out more of his fantastic work and services at **[https://kristopherray.com/](https://kristopherray.com/)**.
+Our team collaborated with the talented Kris Bolleter, who was instrumental in building this fresh new take on our web presence. We enjoyed working with Kris and highly recommend checking out more of his fantastic work and services at **[https://kristopherray.com/](https://kristopherray.com/)**
 
 Here's what you can expect from the new and improved Masterpoint website:
 
