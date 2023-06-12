@@ -3,7 +3,7 @@ visible: true
 draft: false
 title: Welcome to Our New Website
 author: Matt Gowie
-date: 2023-05-05
+date: 2023-06-12T06:00:00.000Z
 description: Hey there, and welcome to the brand-new Masterpoint website! As the
   founder of Masterpoint, I'm beyond excited to share our revamped online
   presence with you, showcasing our expertise in all things AWS Platform
