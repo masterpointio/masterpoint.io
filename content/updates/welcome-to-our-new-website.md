@@ -23,6 +23,6 @@ We're incredibly proud of this new site, and we can't wait to hear your thoughts
 
 And if you're looking to accelerate your team's progress on AWS with less pain, we're just a click away. Get in touch with us through our **[Contact](https://masterpoint.netlify.app/contact/)** page.
 
-I couldn't be more excited about this site’s latest face lift and can't wait to showcase Masterpoint’s public facing journey on the web with this new site. Stay tuned for more updates, insights, and don't forget to connect with/follow us on **[LinkedIn](https://www.linkedin.com/company/masterpoint-consulting/)** where you can share our post about the new site **[here]()**. This will help us spread the word and keep you informed about our latest news.
+I couldn't be more excited about this site’s latest face lift and can't wait to showcase Masterpoint’s public facing journey on the web with this new site. Stay tuned for more updates, insights, and don't forget to connect with/follow us on **[LinkedIn](https://www.linkedin.com/company/masterpoint-consulting/)** where you can share our post about the new site **[here](https://www.linkedin.com/posts/gowiem_welcome-to-our-new-website-masterpoint-activity-7074046097479897088-UYvo?utm_source=share&utm_medium=member_desktop)**. This will help us spread the word and keep you informed about our latest news.
 
 That's all for now! We appreciate your support and would love it if you could share this post with others who might find it interesting. Thanks and catch you in our next post!
