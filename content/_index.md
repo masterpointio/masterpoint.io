@@ -1,7 +1,7 @@
 ---
 title: Home
 banner_title: "<span class='text-gradient'>Mastered.</span>"
-banner_tagline: "Your platform on the cloud,"
+banner_tagline: "Your platform,"
 banner_text: "At Masterpoint, we know that your engineering organization’s time and resources should be focused on what truly matters:
 <strong class='text-gradient'>your application and customers</strong>. That's why we focus our platform engineering expertise on ensuring you have a strong foundation on which you can build, iterate, and scale."
 banner_image: /img/banner_home.jpg
