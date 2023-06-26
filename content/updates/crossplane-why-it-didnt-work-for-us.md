@@ -27,15 +27,11 @@ There are a number of features that pulled in our attention, and distinguished C
 2. The interface to manage infrastructure becomes plain Kubernetes YAML. This helps simplify management of infrastructure and reduces the learning curve for organizations that are already using and know Kubernetes.
 3. It’s an open-source project with a growing community of contributors and users. At the core of Masterpoint, we value open-source ecosystems and always prefer open solutions to closed source or SaaS products. This enables us to continually get the benefits of the upstream community contributions and contribute back where we can. 
 
-
-
 ## POC setup
 
 Considering our interest, we did a small proof of concept (POC) to evaluate if this tool meets our needs and improves our Platform Engineering processes. The goal was to have a local [kind](https://kind.sigs.k8s.io/docs/user/quick-start/) cluster with a simple setup that deploys common AWS resources like a VPC, an EKS cluster, required IAM and KMS resources, and the [SOPS operator](https://github.com/isindir/sops-secrets-operator) via their helm chart. As a starting point, we used Upbound’s platform reference repo, [platform-ref-aws](https://github.com/upbound/platform-ref-aws#build-and-push-your-platform). We cloned that repository locally and started modifying it for our needs, and ended up with the code you can find in our repository here: [masterpointio/crossplane-poc](https://github.com/masterpointio/crossplane-poc).
 
 When discussing the structure of a repository and how to arrange Crossplane resources, it is important to note that working directly with basic AWS resources like [VPC](https://marketplace.upbound.io/providers/upbound/provider-aws/latest/resources/ec2.aws.upbound.io/VPC/v1beta1) via Customer Resource Definitions is an option, but Crossplane provides high-level abstraction mechanisms called Compositions and Packages. A Composition allows the creation of complex resources by combining simpler ones supplied by multiple providers. You could think of a Composition as a Terraform module; a coupling of resources, inputs, and outputs that are used together as a cohesive unit. A Package can contain one or more Composition resources, and it conforms to the OCI specification for packaging and distributing container images. These container images can be published to a registry, such as Docker Hub or a private ECR, and then installed into a Crossplane instance using the Kubernetes API. That means that users can define and manage infrastructure as a cohesive set of hierarchical components, rather than a collection of disparate resources, and this was of particular interest to us.
-
-
 
 ## Challenges we’ve faced
 
@@ -63,7 +59,6 @@ One last thing, if you're interested, here are some great resources to check out
 * <https://medium.com/nerd-for-tech/introduction-to-crossplane-2f873ae0f9f3> - Crossplane intro
 * <https://grem1.in/post/crossplane/> - Crossplane intro
 
-<﻿/br>
-<﻿/br>
+-﻿--
 
 👋 Interested in platform engineering for your organization, but not sure where to start? Get in touch. We’re an expert team of platform engineers who deliver high quality cloud platforms for startups and SMBs looking to scale. We enable your application engineers to focus on your product and in turn generate more value for your business.
