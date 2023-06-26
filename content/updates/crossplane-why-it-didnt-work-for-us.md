@@ -53,12 +53,17 @@ Due to these limitations and challenges, our team’s gut feeling ended up being
 
 ## Conclusion
 
-Overall, Crossplane has great potential. It’s been developing intensively - just during the work on the POC a number of [provider-aws](https://marketplace.upbound.io/providers/upbound/provider-aws) versions were released, and we’ve found a couple of subprojects and issues in the roadmap that show a wide range of areas for improvement (such as [Composition Functions)](https://github.com/crossplane/crossplane/pull/3465). We believe it could be successfully adopted in large, Enterprise organizations that are fully committed to Kubernetes and seeking multi-cloud, self-service functionality. However, Masterpoint is focused primarily on startups and SMBs. We require tooling that is full-featured and more application engineer friendly.
+Overall, Crossplane has great potential. It’s been developing intensively - just during the work on the POC a number of [provider-aws](https://marketplace.upbound.io/providers/upbound/provider-aws) versions were released, and we’ve found a couple of subprojects and issues in the roadmap that show a wide range of areas for improvement (such as [Composition Functions](https://github.com/crossplane/crossplane/pull/3465)). We believe it could be successfully adopted in large, Enterprise organizations that are fully committed to Kubernetes and seeking multi-cloud, self-service functionality. However, Masterpoint is focused primarily on startups and SMBs. We require tooling that is full-featured and more application engineer friendly.
 
 In the end, Crossplane wasn’t our choice at this point. With all the questions described above it felt like we would be walking away from the core of our subject matter expertise, and putting a decent amount of effort into reaching a goal that could be achieved via a shorter path.
 
-One last thing, if you're interested, here are some great resources to check out regarding CrossPlane, beyond Upbound’s [blog](https://blog.crossplane.io/) and [docs](https://docs.crossplane.io/):
+One last thing, if you're interested, here are some great resources to check out regarding Crossplane, beyond Upbound’s [blog](https://blog.crossplane.io/) and [docs](https://docs.crossplane.io/):
 
 * <https://vrelevant.net/crossplane/> - Great series of posts explaining different aspects about Crossplane
 * <https://medium.com/nerd-for-tech/introduction-to-crossplane-2f873ae0f9f3> - Crossplane intro
 * <https://grem1.in/post/crossplane/> - Crossplane intro
+
+<﻿/br>
+<﻿/br>
+
+👋 Interested in platform engineering for your organization, but not sure where to start? Get in touch. We’re an expert team of platform engineers who deliver high quality cloud platforms for startups and SMBs looking to scale. We enable your application engineers to focus on your product and in turn generate more value for your business.
