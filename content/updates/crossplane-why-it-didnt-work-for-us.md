@@ -3,7 +3,7 @@ visible: true
 draft: false
 title: "Crossplane: Why it Didn't Work for Us"
 author: Veronika Gnilitska
-slug: crossplane-didnt-work
+slug: passing-on-crossplane
 date: 2023-06-26T14:48:43.602Z
 description: We investigated Crossplane at a deep level and found it wasn't for
   us. Read on to learn about our investigation and the issues we found.
