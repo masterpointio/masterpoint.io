@@ -1,6 +1,6 @@
 ---
 visible: true
-draft: true
+draft: false
 title: "Crossplane: Why it Didn't Work for Us"
 author: Veronika Gnilitska
 slug: crossplane-didnt-work
