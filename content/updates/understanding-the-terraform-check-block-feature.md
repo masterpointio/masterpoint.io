@@ -21,9 +21,9 @@ Table of Contents
 * [References](#references)
 
 ## Overview
-Terraform offers multiple ways to ensure the accuracy of the infrastructure configuration with standard HCL features and syntax. These include defining validation conditions for input variables and specifying preconditions and postconditions for resources, data sources, and output.
+Terraform offers multiple ways to ensure the accuracy of the infrastructure configuration with standard HCL features and syntax. These include defining [validation conditions for input variables](https://developer.hashicorp.com/terraform/language/expressions/custom-conditions#input-variable-validation) and specifying [preconditions and postconditions](https://developer.hashicorp.com/terraform/language/expressions/custom-conditions#preconditions-and-postconditions) for resources, data sources, and output.
 
-With the release of version 1.5.0, Terraform has expanded its infrastructure validation capabilities by introducing the `check` feature. It allows testing assertions for the whole configuration with independent blocks as part of the infrastructure management workflow. A `check` block requires specifying at least one, but possibly multiple, assert blocks. Each assert block should include a `condition` expression and an `error_message` expression, matching the current [Custom Condition Checks](https://developer.hashicorp.com/terraform/language/expressions/custom-conditions#custom-conditions). All `check` blocks will be evaluated as the last step of the Terraform `plan` and `apply` operations.
+With the release of version 1.5.0, Terraform has expanded its infrastructure validation capabilities by introducing the `check` feature. It allows testing assertions for the whole configuration with independent blocks as part of the infrastructure management workflow. A `check` block requires specifying at least one, but possibly multiple, assert blocks. Each assert block includes a `condition` expression and an `error_message` expression, matching the current [Custom Condition Checks](https://developer.hashicorp.com/terraform/language/expressions/custom-conditions#custom-conditions). All `check` blocks will be evaluated as the last step of the Terraform `plan` and `apply` operations.
 
 ## How could this feature benefit my infrastructure?
 Unlike the previously mentioned options, `check` blocks are not coupled with the lifecycle of a specific resource, data source, or variable. A check can validate any attribute of the infrastructure or the functionality of the resource itself in the Terraform runs.
@@ -63,7 +63,7 @@ resource "aws_eks_cluster" "default" {
 }
 ```
 
-To start using `check` block, ensure you’re using Terraform v1.5+. It’s recommended to use a ~> constraint to set bounds on versions of Terraform and providers a [root module](https://developer.hashicorp.com/terraform/language/modules#the-root-module) depends on:
+To start using the `check` block, ensure you’re using Terraform v1.5+. It’s recommended to use the [pessimistic constraint operator](https://developer.hashicorp.com/terraform/language/expressions/version-constraints#-3) (i.e. `~>`) to set bounds on the version of Terraform and the providers a [root module](https://developer.hashicorp.com/terraform/language/modules#the-root-module) depends on:
 
 ```hcl
 terraform {
@@ -92,7 +92,7 @@ check "aws_eks_cluster_default" {
 In addition to simple assertions, Terraform offers the ability to reference a data source within `check` block assertions. It’s queried by Terraform at the end of each operation to evaluate the checks and obtain the most recent data from your environment.
 Terraform’s operation won’t be interrupted by failures in the scoped data block or any unsuccessful assertions. This unlocks continuous validation of your assumptions about the infrastructure rather than being confined to the point of initial provisioning.
 
-Also, this allows to utilize [`external` data source](https://registry.terraform.io/providers/hashicorp/external/latest/docs/data-sources/external) provided by Hashicorp. It green-lights integration of arbitrary external scripts into your Terraform configuration. This can be a Python script, a shell script, or any other program that can read JSON from standard input and write JSON to standard output. It's worth noting that the use of the external data source comes with a caveat: it can potentially make your configuration depend on the specific environment where it runs, as it might rely on specific external scripts being available.
+Also, this allows to utilize [`external` data source](https://registry.terraform.io/providers/hashicorp/external/latest/docs/data-sources/external) provided by Hashicorp. It green-lights integration of arbitrary external scripts into your Terraform configuration. This can be a Python script, a shell script, or any other program that can read JSON from standard input and write JSON to standard output. It's worth noting that the use of the external data source comes with a caveat: it can potentially make your configuration depend on the specific environment where it runs, as it might rely on specific external scripts and language runtimes being available.
 
 Example: Add a case with Tailscale auth key expiration to Masterpoint repo.
 
