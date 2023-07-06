@@ -8,17 +8,16 @@ date: TBD
 description: "We dive into one of Terraform's most recent features to leverage infrastructure validation."
 # image: TBD
 ---
+<!-- no toc -->
 Table of Contents
-=================
-* [Overview](#overview)
-* [How could this feature benefit my infrastructure?](#how-could-this-feature-benefit-my-infrastructure)
-* [Do I need this if I'm already testing my Terraform code?](#do-i-need-this-if-im-already-testing-my-terraform-code)
-* [How this can be set up?](#how-this-can-be-set-up)
-* [Using a data source in the assertions - In progress](#using-a-data-source-in-the-assertions---in-progress)
-* [Are there any potential pitfalls? - TBD](#are-there-any-potential-pitfalls---tbd)
-* [Possible improvemends - TBD](#possible-improvemends---tbd)
-* [Conclusion - TBD](#conclusion---tbd)
-* [References](#references)
+- [Overview](#overview)
+- [How could this feature benefit my infrastructure?](#how-could-this-feature-benefit-my-infrastructure)
+- [Do I need this if I'm already testing my Terraform code?](#do-i-need-this-if-im-already-testing-my-terraform-code)
+- [How this can be set up?](#how-this-can-be-set-up)
+- [Using a data source in the assertions](#using-a-data-source-in-the-assertions)
+- [Are there any potential pitfalls?](#are-there-any-potential-pitfalls)
+- [Conclusion](#conclusion)
+- [References](#references)
 
 ## Overview
 Terraform offers multiple ways to ensure the accuracy of the infrastructure configuration with standard HCL features and syntax. These include defining [validation conditions for input variables](https://developer.hashicorp.com/terraform/language/expressions/custom-conditions#input-variable-validation) and specifying [preconditions and postconditions](https://developer.hashicorp.com/terraform/language/expressions/custom-conditions#preconditions-and-postconditions) for resources, data sources, and output.
@@ -88,23 +87,95 @@ check "aws_eks_cluster_default" {
 }
 ```
 
-## Using a data source in the assertions - In progress
+## Using a data source in the assertions
 In addition to simple assertions, Terraform offers the ability to reference a data source within `check` block assertions. It’s queried by Terraform at the end of each operation to evaluate the checks and obtain the most recent data from your environment.
 Terraform’s operation won’t be interrupted by failures in the scoped data block or any unsuccessful assertions. This unlocks continuous validation of your assumptions about the infrastructure rather than being confined to the point of initial provisioning.
 
 Also, this allows to utilize [`external` data source](https://registry.terraform.io/providers/hashicorp/external/latest/docs/data-sources/external) provided by Hashicorp. It green-lights integration of arbitrary external scripts into your Terraform configuration. This can be a Python script, a shell script, or any other program that can read JSON from standard input and write JSON to standard output. It's worth noting that the use of the external data source comes with a caveat: it can potentially make your configuration depend on the specific environment where it runs, as it might rely on specific external scripts and language runtimes being available.
 
-Example: Add a case with Tailscale auth key expiration to Masterpoint repo.
+Let's consider an example from Masterpoint's module [masterpointio/terraform-aws-tailscale](https://github.com/masterpointio/terraform-aws-tailscale/tree/feature/check_auth_key) where we validate the desired object state using a data source. The module provisions an AWS EC2 instance that serves as a [Tailscale subnet router](https://tailscale.com/kb/1019/subnets/) device. The subnet router setup is deployed via `userdata`, and upon authentication with a [Tailnet key](https://registry.terraform.io/providers/tailscale/tailscale/latest/docs/resources/tailnet_key) — managed by Terraform — the device is automatically tagged. Correct tagging of the Tailscale subnet router is critical for its proper functioning; without it, the router will not operate as expected. Since Terraform cannot directly verify if the tags were successfully applied, we can introduce a `check` block to validate this aspect.
 
-## Are there any potential pitfalls? - TBD
-* Performance issues for runs in case of complicated assertions, especially data sources.
+The first assertions verifies that the device has been tagged. The second one confirms that the tags applied are as expected.
 
-## Possible improvemends - TBD
-* Different check for plan and apply
+```hcl
+variable "tailnet_name" {
+  type        = string
+  description = <<EOF
+  This unique name of the Tailnet that is used when registering DNS entries, e.g. 'cat-crocodile.ts.net'.
+  See https://tailscale.com/kb/1217/tailnet-name/ for more information.
+  EOF
+}
 
-## Conclusion - TBD
-* Substitute terratest or other similar tools/custom scripts?
-* Achieve a more reliable, predictable, and secure infrastructure management experience.
+check "device" {
+  data "tailscale_device" "default" {
+    name     = format("%s.%s", module.this.id, var.tailnet_name)
+    wait_for = "30s"
+  }
+
+  assert {
+    condition     = length(data.tailscale_device.default.tags) > 0
+    error_message = "Device ${data.tailscale_device.default.name} is not tagged."
+  }
+
+  assert {
+    condition     = sort(data.tailscale_device.default.tags) == sort(tolist(local.tailscale_tags))
+    error_message = <<EOF
+    Device ${data.tailscale_device.default.name} is not tagged with the correct tags.
+    The list of expected tags is: [${join(",", local.tailscale_tags)}]
+    EOF
+  }
+}
+```
+
+Example of the failed assertion:
+```sh
+Warning: Check block assertion failed
+  on ../../../terraform-aws-tailscale/checks.tf line 19, in check "device":
+  19:     condition     =  sort(data.tailscale_device.default.tags) == sort(tolist(local.tailscale_tags))
+    ├────────────────
+    │ data.tailscale_device.default.tags is set of string with 1 element
+    │ local.tailscale_tags is tuple with 1 element
+Device mp-automation-tailscale-subnet-router.sphinx-dinosaur.ts.net is not tagged with the correct
+tags.
+```
+
+Please notice that in case of successfull assertion Terraform requires approve for `apply` operation due to config reload to verify a check block, e.g.:
+```sh
+Terraform will perform the following actions:
+
+  # module.tailscale_subnet_router.data.tailscale_device.default will be read during apply
+  # (config will be reloaded to verify a check block)
+ <= data "tailscale_device" "default" {
+      + addresses = [
+          + "100.100.48.62",
+        ]
+      + id        = "8181832191506942"
+      + name      = "mp-automation-tailscale-subnet-router.sphinx-dinosaur.ts.net"
+      + tags      = [
+          + "tag:mp-automation-tailscale-subnet-router",
+        ]
+      + wait_for  = "30s"
+    }
+
+Plan: 0 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value:
+```
+This should be considered when introducing check to exsiting CI/CD pipelines.
+
+## Are there any potential pitfalls?
+There is a couple of things we recommend to pay attention to:
+* While, by design, Terraform should not halt due to a check, the use of a data source can increase the operation's execution time and might cause timeout errors if Terraform is unable to fetch it. If the provider offers this option, consider setting a retry limit.
+* As `terraform plan` and `terraform apply` represent different stages in the workflow, the purpose of checks can also diverge into post-plan, post-apply, and the ones relevant for both cases. We see the potential for improvement in check management here, such as the possibility of labeling or ignoring checks for a particular stage.
+
+## Conclusion
+The check block feature provided by Terraform is a valuable addition to the Infrastructure as Code (IaC) toolkit, boosting comprehensive and continuous validation capabilities. It's easy to implement and integrate into your existing infrastructure. While it's unlikely to replace testing tools and strategies completely, it can undoubtedly bear the burden in some cases, especially considering potential improvement areas.
+Like all tools, the check block feature should be used judiciously and in conjunction with other validation and testing methodologies to ensure your infrastructure's overall health, performance, and security.
+We recommend exploring and leveraging this feature and look forward to hearing feedback and thoughts from the community!
 
 ## References
 * [GitHub - Release notes for hashicorp/terraform v1.5.0](https://github.com/hashicorp/terraform/releases/tag/v1.5.0)
