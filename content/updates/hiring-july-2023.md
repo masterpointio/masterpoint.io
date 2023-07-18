@@ -1,7 +1,7 @@
 ---
 visible: true
 draft: false
-title: "Hiring - July 2023"
+title: "Hiring: Senior Platform Engineer (July 2023)"
 author: Matt Gowie
 slug: hiring-july-2023
 date: 2023-07-17
