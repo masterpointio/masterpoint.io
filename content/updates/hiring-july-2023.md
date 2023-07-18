@@ -7,6 +7,7 @@ slug: hiring-july-2023
 date: 2023-07-17
 description: We're hiring a Senior, US-based Platform Engineer ASAP. This is a full-time contract with option to grow into FTE if you're interested. Continue reading to learn more about the position!
 image: /img/updates/hiring-july-2023.png
+callout: "<p>👋 <b>Interested in platform engineering for your organization</b>, but not sure where to start? <a href='/contact'>Get in touch,</a> we're an expert team of platform engineers who deliver high-quality cloud platforms for startups and SMBs looking to scale. We enable your application engineers to focus on your product and in turn generate more value for your business.</p><a href='/contact' class='button'>Get In Touch &rsaquo;</a>"
 ---
 
 Come join us at Masterpoint as we build **awesome** cloud platforms for our clients! We’re searching for our next great platform engineer to help us architect, implement, and improve our cloud platform pattern that is built on AWS, Terraform, and Containers. Our vision for both employees and contractors is to provide an open and inclusive work environment, strive for a proper work / life balance, and contribute to the open source ecosystems that we rely so heavily on.

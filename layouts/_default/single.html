@@ -32,6 +32,12 @@
                     {{end}}
                     <div class="singleContent">
                         {{.Content}}
+
+                        {{ if .Params.callout }}
+                        <div id="callout">
+                            {{ .Params.callout | safeHTML }}
+                        </div>
+                        {{end}}
                     </div>
                 </div>
             </div>

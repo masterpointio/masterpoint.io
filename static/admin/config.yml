@@ -41,6 +41,8 @@ collections:
       - {label: "Description", name: "description", widget: "string", required: false}
       - {label: "Body", name: "body", widget: "markdown", required: false}
       - {label: "Featured Image", name: "image", widget: "image" }
+      - {label: "Call Out (HTML)", name: "callout", widget: "text", required: false}
+      - {label: "OG (meta / Social ) Image", name: "og-img", widget: "image", required: false }
   - name: "team"
     label: "Team"
     folder: "content/team"
