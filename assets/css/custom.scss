@@ -356,7 +356,7 @@ section {
   &.big {
     font-size: 2.666rem;
   }
-  
+
   @media (max-width: 991px) {
     font-size: 2rem;
     &.big{
@@ -366,7 +366,7 @@ section {
   @media (max-width: 575px) {
     font-size: 1.7rem;
     &.big{
-      font-size: 1.85rem; 
+      font-size: 1.85rem;
     }
   }
 }
@@ -700,7 +700,7 @@ header {
         display: inline-block;
       }
       @media (max-width: 767px) {
-        padding-top: 0; padding-bottom: 0; height: 38px; line-height: 38px; 
+        padding-top: 0; padding-bottom: 0; height: 38px; line-height: 38px;
       }
       @media (max-width: 575px) {
         padding-left: 10px; padding-right: 10px;
@@ -817,11 +817,11 @@ header {
 
   .bg-image {
 
-    z-index: 1; 
+    z-index: 1;
     img {
       opacity: 0.74;
     }
-    
+
 
   }
 
@@ -1145,7 +1145,7 @@ footer {
     padding-bottom: 1.25rem;
     z-index: 10;
     display: block;
-    
+
     &:nth-child(2),
     &:nth-child(5) {
       z-index: 1;
@@ -1604,12 +1604,14 @@ footer {
       font-size:2.25rem;
     }
   }
+
   blockquote {
     margin: 1.5rem 0;
   }
 
   ul {
-    margin-left:20px;
+    margin-left: 30px;
+    margin-top: 20px;
   }
 }
 .entry {
@@ -1735,7 +1737,7 @@ footer {
         ),
         linear-gradient(0deg, $pine 51.53%, rgba(14, 56, 58, 0) 82.08%);
         }
-        
+
     }
     @media(max-width: 767px){
     h3, .bannerTagline {
@@ -1764,7 +1766,7 @@ footer {
         }
       }
     }
-    
+
   }
 }
 #who-matt-gowie {
@@ -1797,7 +1799,7 @@ footer {
       max-width:400px;
 
       display: block;
-    
+
     }
   }
   .bg-image {
@@ -1848,7 +1850,7 @@ footer {
     }
   }
   .sectionColTxt {
-   
+
     @media (max-width: 767px) {
       padding-top: 0rem;
     }
@@ -2310,7 +2312,7 @@ footer {
         display: flex;
         align-items: center;
         justify-content: center;
-    
+
         cursor: pointer;
 
         &:hover, &:focus {
