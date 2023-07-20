@@ -10,7 +10,7 @@ image: /img/updates/tf-check-blog-post.png
 ---
 <h2>Table of Contents</h2>
 
-- [Overview](#overview)
+- [Intro](#intro)
 - [How could this feature benefit my infrastructure?](#how-could-this-feature-benefit-my-infrastructure)
 - [Do I need this if I'm already testing my Terraform code?](#do-i-need-this-if-im-already-testing-my-terraform-code)
 - [How can this be set up?](#how-can-this-be-set-up)
@@ -20,11 +20,13 @@ image: /img/updates/tf-check-blog-post.png
 - [Conclusion](#conclusion)
 - [References](#references)
 
-## Overview
+## Intro
 
 Terraform offers multiple ways to ensure the accuracy of the infrastructure configuration with standard HCL features and syntax. These include defining [validation conditions for input variables](https://developer.hashicorp.com/terraform/language/expressions/custom-conditions#input-variable-validation) and specifying [preconditions and postconditions](https://developer.hashicorp.com/terraform/language/expressions/custom-conditions#preconditions-and-postconditions) for resources, data sources, and output.
 
 With the release of version 1.5.0, Terraform has expanded its infrastructure validation capabilities by introducing the `check` feature. It allows testing assertions for the whole configuration with independent blocks as part of the infrastructure management workflow. A `check` block requires specifying at least one, but possibly multiple, assert blocks. Each assert block includes a `condition` expression and an `error_message` expression, matching the current [Custom Condition Checks](https://developer.hashicorp.com/terraform/language/expressions/custom-conditions#custom-conditions). All `check` blocks will be evaluated as the last step of the Terraform `plan` and `apply` operations.
+
+In this article, we'll be diving into this new feature, show you how it can be used in the real world, and discuss the potential pitfalls.
 
 ## How could this feature benefit my infrastructure?
 
@@ -33,8 +35,8 @@ Unlike the previously mentioned options, `check` blocks are not coupled with the
 Here are some potential use cases to apply this feature:
 
 1. **Service state validation:** utilize the `check` block to confirm the operational status of services. For instance, you can verify that database instances, Kubernetes clusters, or virtual machines are up and running, ensuring the overall health of your infrastructure.
-1. **Endpoint confirmation:** leverage checks to validate endpoint connectivity. This involves sending an HTTP request and expecting a successful 200 response, ensuring that your services are accessible and interactable.
-2. **Out-of-band change detection:** an unanticipated change made outside Terraform can cause surprising failures, especially if it can't be detected via a built-in drift detection mechanism (for instance, when another root module manages a resource). Checks come in handy to detect such deviations as the expiration of a TLS certificate or authentication tokens, preventing unforeseen interruptions.
+1. **Endpoint confirmation:** leverage checks to validate endpoint connectivity. This involves sending an HTTP request and expecting a successful 200 response, ensuring that your services are accessible and available.
+2. **Out-of-band change detection:** an unanticipated change made outside Terraform can cause surprising failures, especially if it can't be detected via a built-in drift detection mechanism (for instance, when another root module manages a resource). Checks can come in handy to ensure deviations such as the expiration of a TLS certificate or authentication tokens won't create unforeseen interruptions.
 3. **Enforcing naming and tagging conventions:** maintaining a consistent set of tagging and naming conventions within your organization can be crucial. Use the `check` block feature to enforce these standards across your infrastructure, fostering uniformity and orderliness.
 4. **Upholding security best practices:** checks can help ensure adherence to security best practices within your infrastructure. For example, you can use it to verify that specific ports are closed, IAM configurations are properly set, and encryption is enabled, contributing to a more secure and robust environment.
 
@@ -46,7 +48,7 @@ _Infrastructure validation_ generally refers to checking the correctness of infr
 
 _Infrastructure testing_, on the other hand, usually takes place after the infrastructure has been provisioned and validates that it's functioning as expected. This can include unit tests, integration tests, functional tests, and acceptance tests, among others. Testing tools like [Kitchen-Terraform](https://newcontext-oss.github.io/kitchen-terraform/) and [Terratest](https://terratest.gruntwork.io/) are commonly used for these kinds of tests. They can confirm that resources are adequately created and connected, security groups allow/deny correct traffic, etc.
 
-Most infrastructure tools use declarative language to define the desired state. By its nature, declarative code does not specify the steps needed to reach this state. Inspecting the desired state's details to confirm proper changes while writing the tests can quickly become tedious.
+Terraform uses declarative language to define the desired state of your infrastructure. By its nature, declarative code does not specify the steps needed to reach this state. Inspecting the desired state's details to confirm proper changes while writing the tests can quickly become tedious.
 
 This is where `check` blocks come into play, stepping in to handle assertions when the actual provisioning isn't the primary focus. Given the necessity of configuring external tools and writing tests in Ruby or Go, native HCL `check` blocks can be seen as a practical alternative. They can be used before running tests in sandbox environments — whether ephemeral or persistent, hosted in the cloud, or run locally using mocking tools.
 In fact, the main practical testing scenario might involve validating the provisioning of the proposed changes. In certain instances, examining a single attribute of the final state could be sufficient.
@@ -56,36 +58,35 @@ In fact, the main practical testing scenario might involve validating the provis
 Adding a simple check is trivial. Let’s assume we have a root module that manages AWS EKS cluster configuration and contains the resource `aws_eks_cluster`:
 ```hcl
 resource "aws_eks_cluster" "default" {
- name     = "my-cluster"
- role_arn = var.role_arn
- vpc_config {
-   subnet_ids = var.subnet_ids
- }
+  name     = "my-cluster"
+  role_arn = var.role_arn
+  vpc_config {
+    subnet_ids = var.subnet_ids
+  }
 }
 ```
 
-To start using the `check` block, ensure you’re using Terraform v1.5+. It’s recommended to use the [pessimistic constraint operator](https://developer.hashicorp.com/terraform/language/expressions/version-constraints#-3) (i.e. `~>`) to set bounds on the version of Terraform and the providers a [root module](https://developer.hashicorp.com/terraform/language/modules#the-root-module) depends on:
+To start using the `check` block, ensure you’re using Terraform v1.5+. Since the release of terraform 1.0, we recommend to use the [pessimistic constraint operator](https://developer.hashicorp.com/terraform/language/expressions/version-constraints#-3) (i.e. `~>`) to set bounds on the version of Terraform and the providers a [root module](https://developer.hashicorp.com/terraform/language/modules#the-root-module) depends on:
 
 ```hcl
 terraform {
- required_version = "~> 1.5"
-
- required_providers {
-   aws = {
-     source  = "hashicorp/aws"
-     version = "~> 4.0"
-   }
- }
+  required_version = "~> 1.5"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
 }
 ```
 
 Let’s define a check that validates that our cluster instance is healthy and available:
 ```hcl
 check "aws_eks_cluster_default" {
- assert {
-   condition     = aws_eks_cluster.default.status == "ACTIVE"
-   error_message = "EKS cluster ${aws_eks_cluster.default.id} status is ${aws_eks_cluster.default.status}"
- }
+  assert {
+    condition     = aws_eks_cluster.default.status == "ACTIVE"
+    error_message = "EKS cluster ${aws_eks_cluster.default.id} status is ${aws_eks_cluster.default.status}"
+  }
 }
 ```
 
@@ -95,9 +96,9 @@ In addition to simple assertions, Terraform offers the ability to reference a da
 
 Terraform’s operation won’t be interrupted by failures in the scoped data block or any unsuccessful assertions. This unlocks continuous validation of your assumptions about the infrastructure rather than being confined to the point of initial provisioning.
 
-Also, this allows to utilize [`external`](https://registry.terraform.io/providers/hashicorp/external/latest/docs/data-sources/external) data source provided by Hashicorp. It green-lights integration of arbitrary external scripts into your Terraform configuration. This can be a Python script, a shell script, or any other program that can read JSON from standard input and write JSON to standard output. It's worth noting that the use of the external data source comes with a caveat: it can potentially make your configuration depend on the specific environment where it runs, as it might rely on specific external scripts and language runtimes being available.
+Also, this allows us to utilize the [`external`](https://registry.terraform.io/providers/hashicorp/external/latest/docs/data-sources/external) data source provided by Hashicorp. It green-lights integration of arbitrary external scripts into your Terraform configuration. This can be a Python script, a shell script, or any other program that can read JSON from standard input and write JSON to standard output. It's worth noting that the use of the external data source comes with a caveat: it can potentially make your configuration depend on the specific environment where it runs, as it might rely on specific external scripts and language runtimes being available. This can introduce complexity into your terraform runtime environment that you may want to avoid.
 
-Let's consider an example from Masterpoint's module [masterpointio/terraform-aws-tailscale](https://github.com/masterpointio/terraform-aws-tailscale/tree/feature/check_auth_key) where we validate the desired object state using a data source. The module provisions an AWS EC2 instance that serves as a [Tailscale subnet router](https://tailscale.com/kb/1019/subnets/) device. The subnet router setup is deployed via `userdata`, and upon authentication with a [Tailnet key](https://registry.terraform.io/providers/tailscale/tailscale/latest/docs/resources/tailnet_key) — managed by Terraform — the device is automatically tagged. Correct tagging of the Tailscale subnet router is critical for its proper functioning. We can introduce the checks in [checks.tf](https://github.com/masterpointio/terraform-aws-tailscale/blob/feature/check_auth_key/checks.tf) to validate if the tags were successfully applied.
+Let's consider an example from our own open source module [masterpointio/terraform-aws-tailscale](https://github.com/masterpointio/terraform-aws-tailscale/tree/feature/check_auth_key) where we validate the desired object state using a data source. We use this module to setup Tailscale, a modern VPN tool, that we use with our clients to help them easily access their private AWS resources like databases and internal services. Our module provisions an AWS EC2 instance that serves as a [Tailscale subnet router](https://tailscale.com/kb/1019/subnets/) device and that allows us to tunnel into our private network. The subnet router setup is deployed via `userdata`, and upon authentication with a [Tailnet key](https://registry.terraform.io/providers/tailscale/tailscale/latest/docs/resources/tailnet_key) — managed by Terraform — the device is automatically tagged. Correct tagging of the Tailscale subnet router is critical for its proper functioning. We can introduce the checks in [checks.tf](https://github.com/masterpointio/terraform-aws-tailscale/blob/feature/check_auth_key/checks.tf) to validate if the tags were successfully applied.
 
 The first assertions verifies that the device has been tagged; the second one confirms that the tags applied are as expected:
 
