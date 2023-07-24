@@ -17,6 +17,7 @@ image: /img/updates/tf-check-blog-post.png
 - [Using a data source in the assertions](#using-a-data-source-in-the-assertions)
   - [Limitations to consider](#limitations-to-consider)
 - [Are there any potential pitfalls?](#are-there-any-potential-pitfalls)
+- [Our thoughts](#our-thoughts)
 - [Conclusion](#conclusion)
 - [References](#references)
 
@@ -42,16 +43,17 @@ Here are some potential use cases to apply this feature:
 
 ## Do I need this if I'm already testing my Terraform code?
 
-While similar in their goals of ensuring correct and efficient infrastructure operation, infrastructure validation and testing differ slightly in their scopes and methods.
+While similar in their goals of ensuring correct and efficient infrastructure operation, infrastructure validation, and testing differ slightly in their scopes and methods.
 
 _Infrastructure validation_ generally refers to checking the correctness of infrastructure code against specified standards or requirements before it's deployed. For instance, native Terraform commands like `validate` or `plan` or tools like [TFLint](https://github.com/terraform-linters/tflint) mainly focus on the correctness of code and check the syntax and internal consistency, ensuring it's well-structured and free from apparent errors before deployment.
 
 _Infrastructure testing_, on the other hand, usually takes place after the infrastructure has been provisioned and validates that it's functioning as expected. This can include unit tests, integration tests, functional tests, and acceptance tests, among others. Testing tools like [Kitchen-Terraform](https://newcontext-oss.github.io/kitchen-terraform/) and [Terratest](https://terratest.gruntwork.io/) are commonly used for these kinds of tests. They can confirm that resources are adequately created and connected, security groups allow/deny correct traffic, etc.
 
-Terraform uses declarative language to define the desired state of your infrastructure. By its nature, declarative code does not specify the steps needed to reach this state. Inspecting the desired state's details to confirm proper changes while writing the tests can quickly become tedious.
+Both infrastructure validation and testing are essential for a healthy development process. Here is where the `check` feature comes into play, and might feed two birds with one crumb.
+First, checks can completely take on when the actual resource provisioning isn't the primary focus of the assertion. Given the necessity of configuring sandbox environments (whether ephemeral or persistent, hosted in the cloud, or run locally using mocking tools) and writing tests in Ruby or Go, native HCL `check` blocks can be seen as a practical alternative.
+Furthermore, Terraform uses declarative language to define your infrastructure's desired state and, by its nature, does not specify the steps needed to reach this state. Examining the details of the expected state to confirm proper changes while writing tests can quickly become tedious. An effective test could be to check if the changes have indeed been applied - for this, you only need to look at one part of the result. For example, confirm that the worker nodes have joined the EKS cluster.
 
-This is where `check` blocks come into play, stepping in to handle assertions when the actual provisioning isn't the primary focus. Given the necessity of configuring external tools and writing tests in Ruby or Go, native HCL `check` blocks can be seen as a practical alternative. They can be used before running tests in sandbox environments — whether ephemeral or persistent, hosted in the cloud, or run locally using mocking tools.
-In fact, the main practical testing scenario might involve validating the provisioning of the proposed changes. In certain instances, examining a single attribute of the final state could be sufficient.
+So give it a try, assess your current validation and testing kit and determine scenarios where checks could be beneficial, either as an addition or a replacement.
 
 ## How can this be set up?
 
@@ -126,7 +128,7 @@ check "device" {
     condition     = sort(data.tailscale_device.default.tags) == sort(tolist(local.tailscale_tags))
     error_message = <<EOF
     Device ${data.tailscale_device.default.name} is not tagged with the correct tags.
-    The list of expected tags is: [${join(",", local.tailscale_tags)}]
+    The list of expected tags is: [${join(", ", formatlist("\"%s\"", local.tailscale_tags))}]
     EOF
   }
 }
@@ -141,6 +143,7 @@ Warning: Check block assertion failed
     │ data.tailscale_device.default.tags is set of string with 1 element
     │ local.tailscale_tags is tuple with 1 element
 Device mp-automation-tailscale-subnet-router.cat-crocodile.ts.net is not tagged with the correct tags.
+The list of expected tags is: ["tag:mp-automation-tailscale-subnet-router"]
 ```
 
 ### Limitations to consider
@@ -194,11 +197,20 @@ In addition to the limitations above, we recommend paying attention to a couple 
 * While, by design, Terraform should not halt due to a check, the use of a data source can increase the operation's execution time and might cause timeout errors if Terraform fails to fetch it. Consider setting a retry limit if the provider offers this option.
 * As `terraform plan` and `terraform apply` represent different stages in the workflow, the purpose of checks can also diverge into post-plan, post-apply, and the ones relevant for both cases. We see great potential for improvement here, such as the possibility of labeling or ignoring checks for a particular stage so that checks could be built-in as smoothly as possible.
 
+## Our thoughts
+
+Wrapping things up, this new feature has yet to live up to our expectations fully. On paper, the concept piqued our interest, and we couldn't wait to give it a spin. However, when it came down to integrating it into our Terraform code, it felt less revolutionary than we'd hoped. There were a few hitches, like it being equally tied to the plan and apply lifecycle and not being able to flag a check block as a critical fail-safe.
+
+We realize its effectiveness may vary based on different scenarios and contexts. We'll certainly keep this feature in our toolkit as we continue to refine our infrastructure code.
+
+That being said, there's still a good deal of progress to be made in Terraform's testing and validation arena. We're keen to see how the check block and the overall language will evolve in the future.
+
 ## Conclusion
 
-The check block feature provided by Terraform is a valuable addition to the IaC toolkit, boosting comprehensive and continuous validation capabilities. It's easy to implement and integrate into your existing infrastructure. While it's unlikely to replace testing tools and strategies completely, it can undoubtedly bear the burden in some cases, especially considering potential improvement areas.
+The check block feature provided by Terraform is a valuable addition that boosts continuous validation capabilities. It's easy to implement and integrate into your existing infrastructure. While it's unlikely to replace testing tools and strategies completely, it can undoubtedly bear the burden in some cases, especially considering potential improvement areas.
 
 Like all tools, the check block feature should be used judiciously and in conjunction with other validation and testing methodologies to ensure your infrastructure's overall health, performance, and security.
+
 We recommend exploring and leveraging this feature and look forward to hearing feedback and thoughts from the community!
 
 ## References
