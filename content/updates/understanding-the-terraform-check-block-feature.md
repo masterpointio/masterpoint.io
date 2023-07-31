@@ -15,10 +15,8 @@ image: /img/updates/tf-check-blog-post.png
 - [Do I need this if I'm already testing my Terraform code?](#do-i-need-this-if-im-already-testing-my-terraform-code)
 - [How can this be set up?](#how-can-this-be-set-up)
 - [Using a data source in the assertions](#using-a-data-source-in-the-assertions)
-  - [Limitations to consider](#limitations-to-consider)
 - [Are there any potential pitfalls?](#are-there-any-potential-pitfalls)
-- [Our thoughts](#our-thoughts)
-- [Conclusion](#conclusion)
+- [Final Thoughts](#final-thoughts)
 - [References](#references)
 
 ## Intro
@@ -49,8 +47,10 @@ _Infrastructure validation_ generally refers to checking the correctness of infr
 
 _Infrastructure testing_, on the other hand, usually takes place after the infrastructure has been provisioned and validates that it's functioning as expected. This can include unit tests, integration tests, functional tests, and acceptance tests, among others. Testing tools like [Kitchen-Terraform](https://newcontext-oss.github.io/kitchen-terraform/) and [Terratest](https://terratest.gruntwork.io/) are commonly used for these kinds of tests. They can confirm that resources are adequately created and connected, security groups allow/deny correct traffic, etc.
 
-Both infrastructure validation and testing are essential for a healthy development process. Here is where the `check` feature comes into play, and might feed two birds with one crumb.
-First, checks can completely take on when the actual resource provisioning isn't the primary focus of the assertion. Given the necessity of configuring sandbox environments (whether ephemeral or persistent, hosted in the cloud, or run locally using mocking tools) and writing tests in Ruby or Go, native HCL `check` blocks can be seen as a practical alternative.
+Both infrastructure validation and testing are essential for a healthy development process. Here is where the `check` feature comes into play and might feed two birds with one crumb.
+
+First, checks can work great when the actual resource provisioning isn't the primary focus of the assertion. Given the necessity of configuring sandbox environments (whether ephemeral or persistent, hosted in the cloud, or run locally using mocking tools) and writing tests in Ruby or Go, native HCL `check` blocks can be seen as a practical alternative.
+
 Furthermore, Terraform uses declarative language to define your infrastructure's desired state and, by its nature, does not specify the steps needed to reach this state. Examining the details of the expected state to confirm proper changes while writing tests can quickly become tedious. An effective test could be to check if the changes have indeed been applied - for this, you only need to look at one part of the result. For example, confirm that the worker nodes have joined the EKS cluster.
 
 So give it a try, assess your current validation and testing kit and determine scenarios where checks could be beneficial, either as an addition or a replacement.
@@ -94,7 +94,7 @@ check "aws_eks_cluster_default" {
 
 ## Using a data source in the assertions
 
-In addition to simple assertions, Terraform offers the ability to reference a data source within `check` block assertions. It’s queried by Terraform at the end of each operation to evaluate the checks and obtain the most recent data from your environment.
+In addition to simple assertions, Terraform offers the ability to reference a data source within `check` block assertions. It’s queried by Terraform at the end of each plan and apply operations to evaluate the checks and obtain the most recent data from your environment.
 
 Terraform’s operation won’t be interrupted by failures in the scoped data block or any unsuccessful assertions. This unlocks continuous validation of your assumptions about the infrastructure rather than being confined to the point of initial provisioning.
 
@@ -146,72 +146,62 @@ Device mp-automation-tailscale-subnet-router.cat-crocodile.ts.net is not tagged 
 The list of expected tags is: ["tag:mp-automation-tailscale-subnet-router"]
 ```
 
-### Limitations to consider
-
-1. **Approval is required for `terraform apply`**
-
-In case of a successful assertion, Terraform requires approval for every `apply` operation due to a configuration reload needed to verify a check block, e.g.:
-
-```sh
-Terraform will perform the following actions:
-
-  # module.tailscale_subnet_router.data.tailscale_device.default will be read during apply
-  # (config will be reloaded to verify a check block)
- <= data "tailscale_device" "default" {
-      + addresses = [
-          + "100.100.48.62",
-        ]
-      + id        = "8181818181818181"
-      + name      = "mp-automation-tailscale-subnet-router.cat-crocodile.ts.net"
-      + tags      = [
-          + "tag:mp-automation-tailscale-subnet-router",
-        ]
-      + wait_for  = "30s"
-    }
-
-Plan: 0 to add, 0 to change, 0 to destroy.
-
-Do you want to perform these actions?
-  Terraform will perform the actions described above.
-  Only 'yes' will be accepted to approve.
-
-  Enter a value:
-```
-
-This should be considered when introducing check to existing CI/CD pipelines.
-
-2. **Multiple data resource blocks are not supported**
-
-Unfortunately, it's possible to define only one data source per check at the moment. Otherwise, the error will be thrown:
-
-```sh
-This check block already has a data resource defined at main.tf:83,3-27.
-```
-
-This limitation restrains creating complex assertions within one `check` block.
-
 ## Are there any potential pitfalls?
 
-In addition to the limitations above, we recommend paying attention to a couple of things:
+We recommend paying attention to a couple of things:
 
-* While, by design, Terraform should not halt due to a check, the use of a data source can increase the operation's execution time and might cause timeout errors if Terraform fails to fetch it. Consider setting a retry limit if the provider offers this option.
-* As `terraform plan` and `terraform apply` represent different stages in the workflow, the purpose of checks can also diverge into post-plan, post-apply, and the ones relevant for both cases. We see great potential for improvement here, such as the possibility of labeling or ignoring checks for a particular stage so that checks could be built-in as smoothly as possible.
+* While, by design, Terraform should not halt due to a check, _the use of a data source can increase the operation's execution time and might cause timeout errors_ if Terraform fails to fetch it. Consider setting a retry limit if the provider offers this option.
+* As `terraform plan` and `terraform apply` represent different stages in the workflow, _the purpose of checks can also diverge into post-plan, post-apply, and the ones relevant for both cases_. We see great potential for improvement here, such as the possibility of labeling or ignoring checks for a particular stage so that checks could be built-in as smoothly as possible.
 
-## Our thoughts
+In addition to that we've faced some limitations with data source usage in the assertsions.
 
-Wrapping things up, this new feature has yet to live up to our expectations fully. On paper, the concept piqued our interest, and we couldn't wait to give it a spin. However, when it came down to integrating it into our Terraform code, it felt less revolutionary than we'd hoped. There were a few hitches, like it being equally tied to the plan and apply lifecycle and not being able to flag a check block as a critical fail-safe.
+* _Approval is required for `terraform apply`_
 
-We realize its effectiveness may vary based on different scenarios and contexts. We'll certainly keep this feature in our toolkit as we continue to refine our infrastructure code.
+  In case of a successful assertion, Terraform requires approval for every `apply` operation due to a configuration reload needed to verify a check block, e.g.:
 
-That being said, there's still a good deal of progress to be made in Terraform's testing and validation arena. We're keen to see how the check block and the overall language will evolve in the future.
+  ```sh
+  Terraform will perform the following actions:
 
-## Conclusion
+    # module.tailscale_subnet_router.data.tailscale_device.default will be read during apply
+    # (config will be reloaded to verify a check block)
+  <= data "tailscale_device" "default" {
+        + addresses = [
+            + "100.100.48.62",
+          ]
+        + id        = "8181818181818181"
+        + name      = "mp-automation-tailscale-subnet-router.cat-crocodile.ts.net"
+        + tags      = [
+            + "tag:mp-automation-tailscale-subnet-router",
+          ]
+        + wait_for  = "30s"
+      }
 
-The check block feature provided by Terraform is a valuable addition that boosts continuous validation capabilities. It's easy to implement and integrate into your existing infrastructure. While it's unlikely to replace testing tools and strategies completely, it can undoubtedly bear the burden in some cases, especially considering potential improvement areas.
+  Plan: 0 to add, 0 to change, 0 to destroy.
 
-Like all tools, the check block feature should be used judiciously and in conjunction with other validation and testing methodologies to ensure your infrastructure's overall health, performance, and security.
+  Do you want to perform these actions?
+    Terraform will perform the actions described above.
+    Only 'yes' will be accepted to approve.
 
-We recommend exploring and leveraging this feature and look forward to hearing feedback and thoughts from the community!
+    Enter a value:
+  ```
+
+* _Multiple data resource blocks are not supported_
+
+  Unfortunately, it's possible to define only one data source per check at the moment. Otherwise, the error will be thrown:
+
+  ```sh
+  This check block already has a data resource defined at main.tf:83,3-27.
+  ```
+
+  This limitation restrains creating complex assertions within one `check` block.
+
+## Final Thoughts
+
+While intriguing on paper, Terraform's new check block feature has yet to live up to our initial expectations fully. Its practical integration into our Terraform code has revealed some limitations, and it felt less revolutionary than we'd hoped. There were a few hitches like it being equally tied to the plan and apply lifecycle and not being able to flag a check block as a critical fail-safe.
+
+We realize its effectiveness may vary across different scenarios and contexts. It's easy to implement and integrate into your existing infrastructure. While it's unlikely to replace testing tools and strategies completely, it can undoubtedly bear the burden in some cases, especially considering potential improvements in the future. We'll keep this feature in our toolkit as we refine our infrastructure code.
+
+That being said, there's still a good deal of progress to be made in Terraform's testing and validation arena. We recommend exploring and leveraging this feature and look forward to hearing feedback and thoughts from the community!
 
 ## References
 
