@@ -3,8 +3,8 @@ visible: true
 draft: false
 title: "Understanding the Terraform Check Block Feature"
 author: Veronika Gnilitska
-slug: understanding-the-terraform-check-block-feature
-date: TBD
+slug: understanding-terraform-check
+date: 2023-08-10T09:00:00.00Z
 description: "We dive into one of Terraform's most recent features to leverage infrastructure validation."
 image: /img/updates/tf-check-blog-post.png
 ---
@@ -16,7 +16,8 @@ image: /img/updates/tf-check-blog-post.png
 - [How can this be set up?](#how-can-this-be-set-up)
 - [Using a data source in the assertions](#using-a-data-source-in-the-assertions)
 - [Are there any potential pitfalls?](#are-there-any-potential-pitfalls)
-- [Final Thoughts](#final-thoughts)
+- [Final thoughts](#final-thoughts)
+  - [Update: new `test` command in Terraform v1.6](#update-new-test-command-in-terraform-v16)
 - [References](#references)
 
 ## Intro
@@ -32,7 +33,6 @@ In this article, we'll be diving into this new feature, show you how it can be u
 Unlike the previously mentioned options, `check` blocks are not coupled with the lifecycle of a specific resource, data source, or variable. A check can validate any attribute of the infrastructure or the functionality of the resource itself in the Terraform runs.
 
 Here are some potential use cases to apply this feature:
-
 1. **Service state validation:** utilize the `check` block to confirm the operational status of services. For instance, you can verify that database instances, Kubernetes clusters, or virtual machines are up and running, ensuring the overall health of your infrastructure.
 1. **Endpoint confirmation:** leverage checks to validate endpoint connectivity. This involves sending an HTTP request and expecting a successful 200 response, ensuring that your services are accessible and available.
 2. **Out-of-band change detection:** an unanticipated change made outside Terraform can cause surprising failures, especially if it can't be detected via a built-in drift detection mechanism (for instance, when another root module manages a resource). Checks can come in handy to ensure deviations such as the expiration of a TLS certificate or authentication tokens won't create unforeseen interruptions.
@@ -49,7 +49,7 @@ _Infrastructure testing_, on the other hand, usually takes place after the infra
 
 Both infrastructure validation and testing are essential for a healthy development process. Here is where the `check` feature comes into play and might feed two birds with one crumb.
 
-First, checks can work great when the actual resource provisioning isn't the primary focus of the assertion. Given the necessity of configuring sandbox environments (whether ephemeral or persistent, hosted in the cloud, or run locally using mocking tools) and writing tests in Ruby or Go, native HCL `check` blocks can be seen as a practical alternative.
+First, checks can work great when the actual resource provisioning isn't the primary focus of the assertion.
 
 Furthermore, Terraform uses declarative language to define your infrastructure's desired state and, by its nature, does not specify the steps needed to reach this state. Examining the details of the expected state to confirm proper changes while writing tests can quickly become tedious. An effective test could be to check if the changes have indeed been applied - for this, you only need to look at one part of the result. For example, confirm that the worker nodes have joined the EKS cluster.
 
@@ -57,7 +57,7 @@ So give it a try, assess your current validation and testing kit and determine s
 
 ## How can this be set up?
 
-Adding a simple check is trivial. Let’s assume we have a root module that manages AWS EKS cluster configuration and contains the resource `aws_eks_cluster`:
+Adding a simple check is trivial. Let’s assume we have a [root module](https://developer.hashicorp.com/terraform/language/modules#the-root-module) that manages AWS EKS cluster configuration and contains the resource `aws_eks_cluster`:
 ```hcl
 resource "aws_eks_cluster" "default" {
   name     = "my-cluster"
@@ -68,7 +68,7 @@ resource "aws_eks_cluster" "default" {
 }
 ```
 
-To start using the `check` block, ensure you’re using Terraform v1.5+. Since the release of terraform 1.0, we recommend to use the [pessimistic constraint operator](https://developer.hashicorp.com/terraform/language/expressions/version-constraints#-3) (i.e. `~>`) to set bounds on the version of Terraform and the providers a [root module](https://developer.hashicorp.com/terraform/language/modules#the-root-module) depends on:
+To start using the `check` block, ensure you’re using Terraform v1.5+. Since the release of terraform 1.0, we recommend to use the [pessimistic constraint operator](https://developer.hashicorp.com/terraform/language/expressions/version-constraints#-3) (i.e. `~>`) to set bounds on the version of Terraform and the providers a root module depends on:
 
 ```hcl
 terraform {
@@ -96,7 +96,7 @@ check "aws_eks_cluster_default" {
 
 In addition to simple assertions, Terraform offers the ability to reference a data source within `check` block assertions. It’s queried by Terraform at the end of each plan and apply operations to evaluate the checks and obtain the most recent data from your environment.
 
-Terraform’s operation won’t be interrupted by failures in the scoped data block or any unsuccessful assertions. This unlocks continuous validation of your assumptions about the infrastructure rather than being confined to the point of initial provisioning.
+**Terraform’s operation won’t be interrupted by failures in the scoped data block or any unsuccessful assertions**. This unlocks continuous validation of your assumptions about the infrastructure rather than being confined to the point of initial provisioning.
 
 Also, this allows us to utilize the [`external`](https://registry.terraform.io/providers/hashicorp/external/latest/docs/data-sources/external) data source provided by Hashicorp. It green-lights integration of arbitrary external scripts into your Terraform configuration. This can be a Python script, a shell script, or any other program that can read JSON from standard input and write JSON to standard output. It's worth noting that the use of the external data source comes with a caveat: it can potentially make your configuration depend on the specific environment where it runs, as it might rely on specific external scripts and language runtimes being available. This can introduce complexity into your terraform runtime environment that you may want to avoid.
 
@@ -149,15 +149,11 @@ The list of expected tags is: ["tag:mp-automation-tailscale-subnet-router"]
 ## Are there any potential pitfalls?
 
 We recommend paying attention to a couple of things:
-
-* While, by design, Terraform should not halt due to a check, _the use of a data source can increase the operation's execution time and might cause timeout errors_ if Terraform fails to fetch it. Consider setting a retry limit if the provider offers this option.
-* As `terraform plan` and `terraform apply` represent different stages in the workflow, _the purpose of checks can also diverge into post-plan, post-apply, and the ones relevant for both cases_. We see great potential for improvement here, such as the possibility of labeling or ignoring checks for a particular stage so that checks could be built-in as smoothly as possible.
+* While, by design, Terraform should not halt due to a check, **the use of a data source can increase the operation's execution time and might cause timeout errors** if Terraform fails to fetch it. Consider setting a retry limit if the provider offers this option.
+* As `terraform plan` and `terraform apply` represent different stages in the workflow, **the purpose of checks can also diverge into post-plan, post-apply, and the ones relevant for both cases**. We see great potential for improvement here, such as the possibility of labeling or ignoring checks for a particular stage so that checks could be built-in as smoothly as possible.
 
 In addition to that we've faced some limitations with data source usage in the assertsions.
-
-* _Approval is required for `terraform apply`_
-
-  In case of a successful assertion, Terraform requires approval for every `apply` operation due to a configuration reload needed to verify a check block, e.g.:
+* In case of a successful assertion, **Terraform requires approval for every `apply` operation** due to a configuration reload needed to verify a check block, e.g.:
 
   ```sh
   Terraform will perform the following actions:
@@ -185,23 +181,24 @@ In addition to that we've faced some limitations with data source usage in the a
     Enter a value:
   ```
 
-* _Multiple data resource blocks are not supported_
-
-  Unfortunately, it's possible to define only one data source per check at the moment. Otherwise, the error will be thrown:
-
+* Unfortunately, it's possible to define only one data source per check at the moment, and **multiple data resource blocks are not supported**. Otherwise, the error will be thrown:
   ```sh
   This check block already has a data resource defined at main.tf:83,3-27.
   ```
 
   This limitation restrains creating complex assertions within one `check` block.
 
-## Final Thoughts
+## Final thoughts
 
 While intriguing on paper, Terraform's new check block feature has yet to live up to our initial expectations fully. Its practical integration into our Terraform code has revealed some limitations, and it felt less revolutionary than we'd hoped. There were a few hitches like it being equally tied to the plan and apply lifecycle and not being able to flag a check block as a critical fail-safe.
 
 We realize its effectiveness may vary across different scenarios and contexts. It's easy to implement and integrate into your existing infrastructure. While it's unlikely to replace testing tools and strategies completely, it can undoubtedly bear the burden in some cases, especially considering potential improvements in the future. We'll keep this feature in our toolkit as we refine our infrastructure code.
 
 That being said, there's still a good deal of progress to be made in Terraform's testing and validation arena. We recommend exploring and leveraging this feature and look forward to hearing feedback and thoughts from the community!
+
+### Update: new `test` command in Terraform v1.6
+
+As we were wrapping up this blog post, the Terraform team has released a preview of v1.6, announcing that it will primarily add a new `terraform test` command that we're very excited for! [More information can be found here](https://discuss.hashicorp.com/t/request-for-testing-terraform-test/56254), and we look forward to testing this out and sharing insights in an upcoming Masterpoint post!
 
 ## References
 
