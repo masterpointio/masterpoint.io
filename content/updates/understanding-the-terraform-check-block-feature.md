@@ -4,9 +4,10 @@ draft: false
 title: "Understanding the Terraform Check Block Feature"
 author: Veronika Gnilitska
 slug: understanding-terraform-check
-date: 2023-08-10T09:00:00.00Z
+date: 2023-08-10
 description: "We dive into one of Terraform's most recent features to leverage infrastructure validation."
 image: /img/updates/tf-check-blog-post.png
+callout: "<p>👋 <b>Interested in platform engineering for your organization</b>, but not sure where to start? <a href='/contact'>Get in touch,</a> we're an expert team of platform engineers who deliver high-quality cloud platforms for startups and SMBs looking to scale. We enable your application engineers to focus on your product and in turn generate more value for your business.</p><a href='/contact' class='button'>Get In Touch &rsaquo;</a>"
 ---
 <h2>Table of Contents</h2>
 
