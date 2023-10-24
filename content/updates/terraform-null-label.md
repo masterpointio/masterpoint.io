@@ -34,7 +34,7 @@ Good luck with that. Maybe you’ve written down your standards in documentation
 
 Why not use code?
 
-The `terraform-null-label`` module, available at [https://github.com/cloudposse/terraform-null-label](https://github.com/cloudposse/terraform-null-label), offers a much better solution. We’ll look at some example usage in the next section but at a high level It allows users to define up to six primary inputs, referred to as "ID elements". These include:
+The `terraform-null-label` module, available at [https://github.com/cloudposse/terraform-null-label](https://github.com/cloudposse/terraform-null-label), offers a much better solution. We’ll look at some example usage in the next section but at a high level It allows users to define up to six primary inputs, referred to as "ID elements". These include:
 
 1. **Namespace:** A short abbreviation of the company name, typically 2-4 letters.
 2. **Tenant:** This is used for resources dedicated to a specific customer or team. (For a team like "data analytics" => "da")
@@ -160,34 +160,28 @@ By passing in the context output from the first label module, all of the origina
 * `module.public_alb_label.id` equates to `mp-uw2-prod-alb-public`
 * `module.public_alb_label.tags` equates to:
 
-   ```json
-   {
-     Namespace: "mp",
-     Environment: "uw2",
-     Stage: "prod",
-     Name: "alb",
-     Attributes: "public",
-     BusinessUnit: "ENG",
-     Team: "Reporting",
-     ManagedByTerraform: "True",
-   }
-   ```
+   ```yaml
+   Namespace: "mp"
+   Environment: "uw2"
+   Stage: "prod"
+   Name: "alb"
+   Attributes: "public"
+   BusinessUnit: "ENG"
+   Team: "Reporting"
+   ManagedByTerraform: "True"
 
 * `module.private_alb_label.id` equates to `mp-uw2-prod-alb-private`
 * `module.private_alb_label.tags` equates to:
 
-   ```json
-   {
-     Namespace: "mp",
-     Environment: "uw2",
-     Stage: "prod",
-     Name: "alb",
-     Attributes: "private",
-     BusinessUnit: "ENG",
-     Team: "Reporting",
-     ManagedByTerraform: "True",
-   }
-   ```
+   ```yaml
+   Namespace: "mp"
+   Environment: "uw2"
+   Stage: "prod"
+   Name: "alb"
+   Attributes: "private"
+   BusinessUnit: "ENG"
+   Team: "Reporting"
+   ManagedByTerraform: "True"
 
 The new label module only needs to have new values defined; the previous values are still present and do not need to be redefined.
 
