@@ -32,9 +32,7 @@ Let's face it: naming things is hard. We want consistent naming and tagging, but
 
 Good luck with that. Maybe you’ve written down your standards in documentation, but that’s hard to find, rarely read, and not easily enforceable.
 
-Why not use code?
-
-The `terraform-null-label` module, available at [https://github.com/cloudposse/terraform-null-label](https://github.com/cloudposse/terraform-null-label), offers a much better solution. We’ll look at some example usage in the next section but at a high level It allows users to define up to six primary inputs, referred to as "ID elements". These include:
+Why not use code? The `terraform-null-label` module, available at [https://github.com/cloudposse/terraform-null-label](https://github.com/cloudposse/terraform-null-label), offers a much better solution. We’ll look at some example usage in the next section but at a high level It allows users to define up to six primary inputs, referred to as "ID elements". These include:
 
 1. **Namespace:** A short abbreviation of the company name, typically 2-4 letters.
 2. **Tenant:** This is used for resources dedicated to a specific customer or team (for a team like "data analytics" => "da").
@@ -55,9 +53,14 @@ The `terraform-null-label` module provides a standardized set of outputs that co
 
 The output value of `module.frontend_label.id` would be `mp-uw2-prod-frontend-public`. The `tags` output of the label is similar but it is a map of all ID elements combined with the module’s `tags` input variable value. We'll see a full example of this below.
 
-These output values are now available to apply to any "name" or "tags" input for any Terraform resource or module, saving engineers the cognitive load of needing to remember and apply the correct naming or tagging structure.
+These output values are now available to apply to any `name` or `tags` input for any Terraform resource or module, saving engineers the cognitive load of needing to remember and apply the correct naming or tagging structure.
 
-Using `terraform-null-label` for consistency in naming and tagging is especially important for billing and any FinOps processes. One of the biggest challenges in managing cloud costs is properly attributing resource usage across different teams and business units; without consistency in tagging, it’s a nearly impossible task to do effectively.
+A couple other features that are great to know about as well:
+
+1. [Delimiters](https://github.com/cloudposse/terraform-null-label#input_delimiter) are configurable e.g. swap out hyphens for underscores in the final ID by passing `delimiter = "_"`.
+2. The [ordering](https://github.com/cloudposse/terraform-null-label#input_label_order) of the generated ID is configurable e.g. drop the namespace ID element by passing `label_order = ["environment", "stage", "name", "attributes"]`.
+
+Also, in terms of justification, using `terraform-null-label` for consistency in naming and tagging is especially important for billing and any FinOps processes. One of the biggest challenges in managing cloud costs is properly attributing resource usage across different teams and business units; without consistency in tagging, it’s a nearly impossible task to do effectively.
 
 ## Utilizing the `terraform-null-label` module
 
