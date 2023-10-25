@@ -12,7 +12,7 @@ If you haven’t noticed, there’s been… a _lot_ of change in the Infrastruct
 
 One of the most significant hurdles we encounter in our infrastructure work is the issue of technical debt and resource sprawl, often stemming from inconsistent naming and tagging standards. This inconsistency leads to disorganization, slow delivery, lack of cost intelligence, and, in the worst cases, security vulnerabilities from unaccounted-for resources. It's a problem that is all too common in the infrastructure space, and one that we are constantly striving to address.
 
-One place where there has been an attempt at helping this effort is the AWS’ providers introduction of default tags. This feature allows users to assign tags to all resources created by that provider, which can help with organization and identification. However, this solution is far from perfect. The implementation is somewhat clumsy, and it does not fully address the issue of naming. It's a band-aid solution, a temporary fix that doesn't get to the root of the problem. And of course it’s only for the AWS provider.
+One place where there has been an attempt at helping this effort is the AWS’ providers introduction of [default tags](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags). This feature allows users to assign tags to all resources created by that provider, which can help with organization and identification. However, this solution is far from perfect. The implementation is somewhat clumsy, and it does not fully address the issue of naming. It's a band-aid solution, a temporary fix that doesn't get to the root of the problem. And of course it’s only for the AWS provider.
 
 Our good colleagues at [Cloud Posse](https://cloudposse.com/) have come up with a much more elegant solution (and huge shout out to them for doing so). They have developed a module called [terraform-null-label](https://github.com/cloudposse/terraform-null-label), which offers a much cleaner approach to this problem. This module generates and standardizes names and tags for resources across an entire Terraform environment, ensuring consistency. As part of this post, we’d like to take some time to explore the cleanest solution to this problem we’ve ever seen.
 
@@ -26,9 +26,9 @@ The issue of inconsistent naming becomes even more pronounced when we consider t
 
 As the stack expands and you need to hire more engineers, the cognitive load and spool-up time for each new hire grows and grows. As it becomes harder to understand and categorize and "know about" the infrastructure, it becomes a bigger security/attack surface. Eventually billing and resource attribution becomes a problem too.
 
-## The Fix: terraform-null-label
+## The Solution
 
-Well, the **real** fix is consistent naming and tagging, but the challenge has always been getting a growing, changing roster of engineers to decide on, implement, and enforce a standard _over time_.
+Let's face it: naming things is hard. We want consistent naming and tagging, but the challenge has always been getting a growing, changing roster of engineers to decide on, implement, and enforce a consistent standard _over time_.
 
 Good luck with that. Maybe you’ve written down your standards in documentation, but that’s hard to find, rarely read, and not easily enforceable.
 
@@ -37,20 +37,20 @@ Why not use code?
 The `terraform-null-label` module, available at [https://github.com/cloudposse/terraform-null-label](https://github.com/cloudposse/terraform-null-label), offers a much better solution. We’ll look at some example usage in the next section but at a high level It allows users to define up to six primary inputs, referred to as "ID elements". These include:
 
 1. **Namespace:** A short abbreviation of the company name, typically 2-4 letters.
-2. **Tenant:** This is used for resources dedicated to a specific customer or team. (For a team like "data analytics" => "da")
-3. **Environment:** This refers to the AWS region. (Note that this nomenclature may be inverse to what most engineers are used to).
-4. **Stage:** This indicates the stage of the application, such as `dev`, `stage`, `prod`. This is what we would normally call an `environment` in most settings, but legacy naming within the module has made this a bit funky.
-5. **Name:** This is the name of the component or service, such as 'rds','eks', or `backend-auth`.
+2. **Tenant:** This is used for resources dedicated to a specific customer or team (for a team like "data analytics" => "da").
+3. **Environment:** This refers to the AWS region (note that this nomenclature may be inverse to what most engineers are used to).
+4. **Stage:** This indicates the stage of the application, such as `dev`, `stage`, `prod`. While this is what we would normally call an `environment` in most settings, for legacy reasons the naming within the module has made this a bit funky. It may help to think of the term "stage" by its general English usage, referring to a distinct phase or period within a series of events or a larger process.
+5. **Name:** This is the name of the component or service, such as `rds`, `eks`, or `backend-auth`.
 6. **Attributes:** This is an arbitrary list of strings that can be used to add additional descriptors to the final ID.
 
 The `terraform-null-label` module provides a standardized set of outputs that combine these various ID elements for easy usage across resources and modules. For example, if the following ID elements were supplied to a label module named `frontend_label`:
 
 ```hcl
-  namespace  = "mp" # Shorthand for Masterpoint
+  namespace   = "mp" # Shorthand for Masterpoint
   environment = "uw2" # Shorthand for the AWS us-west-2 region
-  stage      = "prod"
-  name       = "frontend"
-  attributes = ["public"]
+  stage       = "prod"
+  name        = "frontend"
+  attributes  = ["public"]
 ```
 
 The output value of `module.frontend_label.id` would be `mp-uw2-prod-frontend-public`. The `tags` output of the label is similar but it is a map of all ID elements combined with the module’s `tags` input variable value. We'll see a full example of this below.
@@ -63,9 +63,7 @@ Using `terraform-null-label` for consistency in naming and tagging is especially
 
 Below, we have a hypothetical example infrastructure that will be a simple implementation of an AWS Load Balancer. Most platform engineers have encountered these resources before (and their corresponding IaC), and are likely aware of the massive waste of time and cognitive effort it is to remember to name and tag every resource consistently when more resources continue to get added.
 
-Enter `terraform-null-label`.
-
-Here’s an example infrastructure, with `terraform-null-label` applied:
+Enter `terraform-null-label`. Here’s an example infrastructure, with the label module applied:
 
 **NOTE:** This is a simplistic take on this configuration. Real production ready configurations are often _much_ more complex, with many more resources at play, but you can already see the potential for reuse and the time and consistency wins with `terraform-null-label`.
 
@@ -100,7 +98,7 @@ Here’s an example infrastructure, with `terraform-null-label` applied:
 
     # terraform-null-label outputs the merged tags input and all ID element inputs as a map value
     # i.e. { namespace: "mp", stage: "prod", Team: "Reporting", ManagedByTerraform: "True", ... }
-    tags               = module.public_alb_label.tags
+    tags = module.public_alb_label.tags
   }
 
   resource "aws_security_group" "alb_sg" {
@@ -185,7 +183,7 @@ By passing in the context output from the first label module, all of the origina
 
 The new label module only needs to have new values defined; the previous values are still present and do not need to be redefined.
 
-Admittedly, that’s still a pretty simplified example. Real Terraform configurations often employ root and child modules and various workspaces / folders for each; to this point our examples have been constrained to one workspace, working directory, and statefile. There is a nice solution to simplify that process however via the `context.tf` file, but we’re going to explore that advanced usage in a separate article, so be sure to watch this space!
+Admittedly, that’s still a pretty simplified example. Real Terraform configurations often employ root and child modules and various workspaces / folders for each; to this point our examples have been constrained to one workspace, working directory, and statefile. There is a nice solution to simplify that process however via the [`context.tf`](https://github.com/cloudposse/terraform-null-label/blob/main/exports/context.tf) file, but we’re going to explore that advanced usage in a separate article, so be sure to watch this space!
 
 ## Wrap-up
 
