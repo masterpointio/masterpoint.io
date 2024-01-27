@@ -5,9 +5,32 @@ title: "Mastering GitOps with Terraform Controller"
 author: Veronika Gnilitska
 slug: terraform-controller-overview
 date: TBD
-description: The post discusses the use of Terraform Controller by Weaves, and how it can be used to implement GitOps for infrastructure management.
+description: The post explores how Weave's Terraform Controller can enable GitOps for infrastructure management.
 image: /img/updates/terraform-controller-overview/tf_controller_0.png
+callout: "<p>👋 <b>Interested in platform engineering for your organization</b>, but not sure where to start? <a href='/contact'>Get in touch,</a> we're an expert team of platform engineers who deliver high-quality cloud platforms for startups and SMBs looking to scale. We enable your application engineers to focus on your product and in turn generate more value for your business.</p><a href='/contact' class='button'>Get In Touch &rsaquo;</a>"
 ---
+<h2>Table of Contents</h2>
+- [Introduction](#introduction)
+- [In a Nutshell](#in-a-nutshell)
+- [Setting the Stage for GitOps with Terraform Controller](#setting-the-stage-for-gitops-with-terraform-controller)
+- [Managing Infrastructure-as-Code with Terraform Controller](#managing-infrastructure-as-code-with-terraform-controller)
+  - [Backend options](#backend-options)
+  - [Source reference](#source-reference)
+  - [Service account](#service-account)
+- [Version Control and Terraform Compatibility](#version-control-and-terraform-compatibility)
+- [Known Limitations](#known-limitations)
+  - [Terraform Plan and Drift Detection](#terraform-plan-and-drift-detection)
+  - [IPv6 and EKS Compatibility](#ipv6-and-eks-compatibility)
+  - [The Future of tfctl CLI](#the-future-of-tfctl-cli)
+- [Areas of Improvement](#areas-of-improvement)
+  - [Implementing ChatOps for Terraform Operations](#implementing-chatops-for-terraform-operations)
+  - [Utilizing Other Optional Features](#utilizing-other-optional-features)
+  - [Open Source UI](#open-source-ui)
+- [Time-sensitive: Internal Weaveworks Issues and Further Impact on the Project](#time-sensitive-internal-weaveworks-issues-and-further-impact-on-the-project)
+- [Conclusion](#conclusion)
+- [Further Reading and Resources](#further-reading-and-resources)
+
+## Introduction
 
 In this post, we continue exploring effective tools for bridging the gap between Infrastructure as Code and GitOps. We aim to harness the optimal benefits of these practices as they are fundamental in our realm. One such tool that has gained our attention is [Terraform Controller](https://weaveworks.github.io/tf-controller/) by Weaves, and we'd like to share our experience with this product.
 
@@ -174,7 +197,7 @@ We're happy to hear that the community is committed to continuing discussions ab
 
 The Terraform Controller could be a game-changer and make managing infrastructure as code in a GitOps framework a breeze. Still, we acknowledge that building a solid and usable solution requires more investments. We welcome any potential customers who are interested in learning more about this technology to reach out and chat with us!
 
-Regarding community-related experience, we found that the responses to questions were fast. However, it might take a long time to add requested features or fixes to the roadmap and implement them. As a consequence, we may use workarounds and hacks for a while.
+We would like to emphasize our positive experience with the community aspect of this product. The development team has been very responsive to our questions, providing fast and complete responses. While we understand that it may take some time to add requested features/fixes to the roadmap and implement them, we feel that the team was highly receptive to user feedback. Given recent news, we hope that everything goes as smoothly as possible for the team and the product they have been working so hard on.
 
 Overall, we're still on a mission to explore the evolving landscape of GitOps and Terraform, and we need your help! Share your experiences and thoughts on these tools so we can work together to make them even better!
 
