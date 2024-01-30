@@ -10,6 +10,7 @@ image: /img/updates/terraform-controller-overview/tf_controller_0.png
 callout: "<p>👋 <b>Interested in platform engineering for your organization</b>, but not sure where to start? <a href='/contact'>Get in touch,</a> we're an expert team of platform engineers who deliver high-quality cloud platforms for startups and SMBs looking to scale. We enable your application engineers to focus on your product and in turn generate more value for your business.</p><a href='/contact' class='button'>Get In Touch &rsaquo;</a>"
 ---
 <h2>Table of Contents</h2>
+
 - [Introduction](#introduction)
 - [In a Nutshell](#in-a-nutshell)
 - [Setting the Stage for GitOps with Terraform Controller](#setting-the-stage-for-gitops-with-terraform-controller)
@@ -32,20 +33,20 @@ callout: "<p>👋 <b>Interested in platform engineering for your organization</b
 
 ## Introduction
 
-In this post, we continue exploring effective tools for bridging the gap between Infrastructure as Code and GitOps. We aim to harness the optimal benefits of these practices as they are fundamental in our realm. One such tool that has gained our attention is [Terraform Controller](https://weaveworks.github.io/tf-controller/) by Weaves, and we'd like to share our experience with this product.
+In this post, we continue exploring effective tools for bridging the gap between Infrastructure as Code and GitOps. We aim to harness the optimal benefits of these practices as they are fundamental to our thoughts on building great platforms . One such tool that has gained our attention is [Terraform Controller](https://weaveworks.github.io/tf-controller/) by [WeaveWorks](https://www.weave.works/), and we'd like to share our experience.
 
-Before going into the details, we recommend recapturing our experience with a framework called [Crossplane](https://www.crossplane.io/), which we've passed on in our [previous blog post](https://masterpoint.io/updates/passing-on-crossplane/). While Crossplane offers deep Kubernetes integration, treating infrastructure management as a native Kubernetes operation, it also brings certain complexities and limitations. In contrast, Terraform Controller interconnects the Kubernetes ecosystem with Terraform's robust infrastructure management capabilities.
-A key distinction lies in their operational models - Terraform Controller builds upon Terraform's established state management and operational principles. For those already well-acquainted with Terraform, this offers a certain familiarity and reliability, something we'll explore below.
+Before going into the details, we recommend reading our experience with a framework called [Crossplane](https://www.crossplane.io/), which we've passed on in our [previous blog post](https://masterpoint.io/updates/passing-on-crossplane/). While Crossplane offers deep Kubernetes integration, treating infrastructure management as a native Kubernetes operation, it also brings certain complexities and limitations. In contrast, Terraform Controller interconnects the Kubernetes ecosystem with Terraform's robust infrastructure management capabilities.
+A key distinction lies in their operational models - Terraform Controller builds upon Terraform's established state management and operational principles. For those already well-acquainted with Terraform, this offers a certain familiarity, reliability, and feature completeness.
 
 ## In a Nutshell
 
-Terraform Controller is a Kubernetes controller that translates Kubernetes resources into Terraform configurations. This process involves several essential Kubernetes custom resources (CR) - Terraform and Flux source objects.
+Terraform Controller is a Kubernetes controller that translates Kubernetes resources into Terraform configurations. This process involves several essential [Kubernetes custom resources (CR)](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) - Terraform and Flux source objects.
 
 The **Terraform object** is a CR that defines the Terraform root module configuration and, optionally, backend configuration along with GitOps automation options.
 
 The **Flux object** is a source of configuration files that tells the Controller _where_ to find the Terraform root module. In this way, the Controller utilizes Flux's mechanisms for continuous synchronization of configuration from a source.
 
-When you define a Terraform object in Kubernetes, the Controller detects drift, creates a Terraform plan, and executes it to update your infrastructure. Several GitOps automation modes are available: automatic execution with pre-approved apply enabled, a "plan and manual apply" mode for greater control, and an option for drift detection only.
+When you define a Terraform object in Kubernetes, the Controller detects drift, creates a Terraform plan, and executes it to update your infrastructure. Several GitOps automation modes are available: automatic execution with "auto apply" enabled, a "plan and manual apply" mode for greater control, and an option for drift detection only
 
 ## Setting the Stage for GitOps with Terraform Controller
 
@@ -82,11 +83,33 @@ The **Controller** is the brain of the operation. It monitors Kubernetes for spe
 
 The example of the Runner logs:
 
-![Clean Runner's plan log](/img/updates/terraform-controller-overview/tf_controller_4.png)
+```sh
+15:18:56 ❯ kubectl -n flux-system logs -f mp-poc-ecr-aws-packages-tf-runner
+2024/01/25 13:18:43 Starting the runner... version  sha
+{"level":"info","ts":"2024-01-25T13:18:57.256Z","logger":"runner.terraform","msg":"preparing for Upload and Extraction","instance-id":""}
+{"level":"info","ts":"2024-01-25T13:18:57.261Z","logger":"runner.terraform","msg":"write backend config","instance-id":"","path":"/tmp/flux-system-mp-poc-ecr-aws-packages","config":"backend_override.tf"}
+{"level":"info","ts":"2024-01-25T13:18:57.261Z","logger":"runner.terraform","msg":"write config to file","instance-id":"","filePath":"/tmp/flux-system-mp-poc-ecr-aws-packages/backend_override.tf"}
+{"level":"info","ts":"2024-01-25T13:18:57.262Z","logger":"runner.terraform","msg":"looking for path","instance-id":"","file":"terraform"}
+{"level":"info","ts":"2024-01-25T13:18:57.264Z","logger":"runner.terraform","msg":"creating new terraform","instance-id":"ce60329d-1c1f-4435-aa8e-fe45382b05b2","workingDir":"/tmp/flux-system-mp-poc-ecr-aws-packages","execPath":"/usr/local/bin/terraform"}
+{"level":"info","ts":"2024-01-25T13:18:57.273Z","logger":"runner.terraform","msg":"setting envvars","instance-id":"ce60329d-1c1f-4435-aa8e-fe45382b05b2"}
+{"level":"info","ts":"2024-01-25T13:18:57.274Z","logger":"runner.terraform","msg":"getting envvars from os environments","instance-id":"ce60329d-1c1f-4435-aa8e-fe45382b05b2"}
+{"level":"info","ts":"2024-01-25T13:18:57.275Z","logger":"runner.terraform","msg":"setting up the input variables","instance-id":"ce60329d-1c1f-4435-aa8e-fe45382b05b2"}
+{"level":"info","ts":"2024-01-25T13:18:57.275Z","logger":"runner.terraform","msg":"mapping the Spec.Values","instance-id":"ce60329d-1c1f-4435-aa8e-fe45382b05b2"}
+{"level":"info","ts":"2024-01-25T13:18:57.275Z","logger":"runner.terraform","msg":"mapping the Spec.Vars","instance-id":"ce60329d-1c1f-4435-aa8e-fe45382b05b2"}
+{"level":"info","ts":"2024-01-25T13:18:57.275Z","logger":"runner.terraform","msg":"mapping the Spec.VarsFrom","instance-id":"ce60329d-1c1f-4435-aa8e-fe45382b05b2"}
+{"level":"info","ts":"2024-01-25T13:18:57.284Z","logger":"runner.terraform","msg":"generating the template founds"}
+{"level":"info","ts":"2024-01-25T13:18:57.285Z","logger":"runner.terraform","msg":"main.tf.tpl not found, skipping"}
+{"level":"info","ts":"2024-01-25T13:18:57.287Z","logger":"runner.terraform","msg":"initializing","instance-id":"ce60329d-1c1f-4435-aa8e-fe45382b05b2"}
+{"level":"info","ts":"2024-01-25T13:18:57.287Z","logger":"runner.terraform","msg":"mapping the Spec.BackendConfigsFrom","instance-id":"ce60329d-1c1f-4435-aa8e-fe45382b05b2"}
+{"level":"info","ts":"2024-01-25T13:19:03.832Z","logger":"runner.terraform","msg":"workspace select"}
+{"level":"info","ts":"2024-01-25T13:19:03.834Z","logger":"runner.terraform","msg":"creating a plan","instance-id":"ce60329d-1c1f-4435-aa8e-fe45382b05b2"}
+{"level":"info","ts":"2024-01-25T13:19:14.502Z","logger":"runner.terraform","msg":"show the raw plan file","instance-id":"ce60329d-1c1f-4435-aa8e-fe45382b05b2"}
+{"level":"info","ts":"2024-01-25T13:19:18.145Z","logger":"runner.terraform","msg":"cleanup TmpDir","instance-id":"ce60329d-1c1f-4435-aa8e-fe45382b05b2","tmpDir":"/tmp/flux-system-mp-poc-ecr-aws-packages"}
+```
 
 This separation of duties ensures a process where monitoring and execution are handled independently but in a coordinated manner.
 
-As briefly described above, the key element in this setup is the Terraform object. Think of it as the root module of your Terraform configuration. It includes several essential fields that define how your infrastructure is managed:
+As briefly described above, the key element in this setup is the Terraform object. Think of it as an instance definition of one of your Terraform root modules. It includes several essential fields that define how your infrastructure is managed:
 
 ```yaml
 apiVersion: infra.contrib.fluxcd.io/v1alpha2
@@ -122,7 +145,7 @@ spec:
 ```
 
 
-Let's focus on some of them.
+Let's quickly discuss some of these fields.
 
 ### Backend options
 
@@ -133,7 +156,7 @@ Also, note that the backend options can be derived from a shared ConfigMap, whic
 
 ### Source reference
 
-The fields under `spec.sourceRef` specify the source of your Terraform configurations. You can reference a [Git](https://fluxcd.io/flux/components/source/gitrepositories/) or an [OCI](https://fluxcd.io/flux/components/source/ocirepositories/) (Open Container Initiative) repository. What's interesting here is the flexibility in how you can group Terraform objects. They can range from a simple set of resources to an external module maintained by the community or an internally developed one. Alternatively, you can assemble a combination of Terraform modules, resources, data sources, and local expressions. This creates a higher-level abstraction layer of your infrastructure, which we prefer to call a "component." A component's value is simplifying infrastructure construction by thinking on a higher level and avoiding repetitive code. This also reduces the number of Terraform objects in the setup.
+The fields under `spec.sourceRef` specify the source of your Terraform configurations. You can reference a [Git](https://fluxcd.io/flux/components/source/gitrepositories/) or an [OCI](https://fluxcd.io/flux/components/source/ocirepositories/) (Open Container Initiative) repository. What's interesting here is the flexibility in how you can group Terraform objects. They can range from a simple set of resources to an external module maintained by the community or an internally developed one.
 
 ### Service account
 
@@ -145,9 +168,9 @@ Understanding these components and their roles is important for effectively leve
 
 In Terraform Controller, the selection and management of Terraform versions are closely tied to the Runner images. Each Runner image contains a specific version of Terraform, which can be set via the chart values only, limiting the flexibility of using multiple Terraform versions simultaneously.
 
-It's important to note that, as of now, multiple runners are not automatically released in tandem with each new version of the Terraform Controller. This issue was highlighted in a [GitHub discussion](https://github.com/weaveworks/tf-controller/issues/1023) and we're looking forward to fixing this.
+It's important to note that, as of now, multiple runners are not automatically released in tandem with each new version of the Terraform Controller. This issue was highlighted in a [GitHub discussion](https://github.com/weaveworks/tf-controller/issues/1023) and we're looking forward to seeing this get addressed.
 
-We'd also love to mention the potential support for [OpenTofu](https://opentofu.org/) in the Terraform Controller. The GitHub issue [#1132 on the Weaveworks Terraform Controller repository](https://github.com/weaveworks/tf-controller/issues/1132) responds to the growing interest in OpenTofu following HashiCorp's decision to change Terraform's licensing. OpenTofu, a fork of Terraform, remains open-source and is managed by the Linux Foundation, making it an appealing alternative for the community.
+We also love to see the upcoming potential support for [OpenTofu](https://opentofu.org/) in the Terraform Controller. The GitHub issue [#1132 on the Weaveworks Terraform Controller repository](https://github.com/weaveworks/tf-controller/issues/1132) responds to the growing interest in OpenTofu following HashiCorp's decision to change Terraform's licensing. OpenTofu, a fork of Terraform, remains open-source and is managed by the Linux Foundation, making it an appealing alternative for the community.
 This initiative is particularly significant given the broad appeal of OpenTofu and its alignment with open-source principles.
 
 As of January 2024, there is ongoing dialogue and interest in this feature, indicating that future versions of Terraform Controller might include support for OpenTofu.
@@ -182,7 +205,7 @@ We're also interested in the (Branch Planner feature)[(https://weaveworks.github
 
 ### Open Source UI
 
-Another area of interest is the Open Source UI, as outlined in the [Weave GitOps documentation](https://docs.gitops.weave.works/docs/open-source/getting-started/ui-OSS/). The ability to easily oversee and control all the details and stages of infrastructure deployment and management is always a valuable addition.
+Another area of interest that we'd like to see built out further is the Open Source UI, as outlined in the [Weave GitOps documentation](https://docs.gitops.weave.works/docs/open-source/getting-started/ui-OSS/). The ability to easily oversee and control all the details and stages of infrastructure deployment and management is always a valuable addition.
 
 
 ## Time-sensitive: Internal Weaveworks Issues and Further Impact on the Project
@@ -191,11 +214,11 @@ While we've been working on this blog post, some quite concerning news has sprea
 
 Despite these challenges, we still hope for the best outcome. The project is still alive, with some team members continuing their work and planning future developments. It's worth noting that the project could either be renamed and retain all repositories under the current organization or move to a different organization.
 
-We're happy to hear that the community is committed to continuing discussions about the project's future and development, and we're ready to support them in all possible ways.
+We're happy to hear that the community is committed to continuing discussions about the project's future and development, and we're ready to support them as believe this tool has some real potential.
 
 ## Conclusion
 
-The Terraform Controller could be a game-changer and make managing infrastructure as code in a GitOps framework a breeze. Still, we acknowledge that building a solid and usable solution requires more investments. We welcome any potential customers who are interested in learning more about this technology to reach out and chat with us!
+The Terraform Controller could be a game-changer in managing infrastructure as code via GitOps a breeze. Still, we acknowledge that building a solid and usable solution requires further investment. If you're interested in this approach, we welcome any engineering orgs who are interested in using this tool to [reach out and chat with us](https://masterpoint.io/contact/) as we'd love to build a true GitOps Terraform system for you!
 
 We would like to emphasize our positive experience with the community aspect of this product. The development team has been very responsive to our questions, providing fast and complete responses. While we understand that it may take some time to add requested features/fixes to the roadmap and implement them, we feel that the team was highly receptive to user feedback. Given recent news, we hope that everything goes as smoothly as possible for the team and the product they have been working so hard on.
 
@@ -203,7 +226,7 @@ Overall, we're still on a mission to explore the evolving landscape of GitOps an
 
 ## Further Reading and Resources
 
-* Dive into the official [Weave GitOps Terraform Controller documentation](https://weaveworks.github.io/tf-controller/) for more profound knowledge.
+* Dive into the official [Weave GitOps Terraform Controller documentation](https://weaveworks.github.io/tf-controller/) for more in-depth knowledge.
 * Follow [Get Started with the Terraform Controller](https://docs.gitops.weave.works/docs/terraform/get-started/) to try it out.
 * Check out an [EKS scaling example](https://github.com/tf-controller/eks-scaling).
 * Join [Terraform Controller Slack space](https://weave-community.slack.com/archives/C054MR4UP88) to participate in community discussions.
