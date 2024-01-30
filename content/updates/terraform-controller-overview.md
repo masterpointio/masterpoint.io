@@ -22,7 +22,7 @@ callout: "<p>👋 <b>Interested in platform engineering for your organization</b
 - [Known Limitations](#known-limitations)
   - [Terraform Plan and Drift Detection](#terraform-plan-and-drift-detection)
   - [IPv6 and EKS Compatibility](#ipv6-and-eks-compatibility)
-  - [The Future of tfctl CLI](#the-future-of-tfctl-cli)
+  - [The Future of `tfctl` CLI](#the-future-of-tfctl-cli)
 - [Areas of Improvement](#areas-of-improvement)
   - [Implementing ChatOps for Terraform Operations](#implementing-chatops-for-terraform-operations)
   - [Utilizing Other Optional Features](#utilizing-other-optional-features)
@@ -187,9 +187,13 @@ A notable limitation arises in scenarios where the Terraform source hasn't chang
 
 Currently, the Terraform Controller's behavior is tailored towards IPv4 for creating mTLS certificates. This focus on IPv4 might present challenges in environments that are either IPv6-dominant or require IPv6 compatibility. This is especially important in EKS (Elastic Kubernetes Service). If your existing EKS cluster is configured for dual-stack or IPv6-only networking, you will need to recreate the cluster to switch it to support an IPv4 network configuration.
 
-### The Future of tfctl CLI
+### The Future of `tfctl` CLI
 
-The `tfctl` command-line utility, designed for Terraform Controller operations, is undergoing a significant change. Weaveworks plans to migrate the features of `tfctl` into the Weave GitOps CLI. This shift is important as the current CLI is more focused on interacting with Terraform objects rather than managing state or resources directly. Consequently, some functionalities, like the `import` command and other state-oriented operations, are currently missing. However, ongoing discussions on GitHub issues address implementing at least some of these features, indicating potential enhancements in future updates.
+The `tfctl` command-line utility, designed for Terraform Controller operations, is undergoing a significant change.
+
+![Get info about Terraform object](/img/updates/terraform-controller-overview/tf_controller_4.png)
+
+Weaveworks plans to migrate the features of `tfctl` into the Weave GitOps CLI. This shift is important as the current CLI is more focused on interacting with Terraform objects rather than managing state or resources directly. Consequently, some functionalities, like the `import` command and other state-oriented operations, are currently missing. However, ongoing discussions on GitHub issues address implementing at least some of these features, indicating potential enhancements in future updates.
 
 ## Areas of Improvement
 
