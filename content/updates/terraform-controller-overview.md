@@ -4,7 +4,7 @@ draft: false
 title: "Mastering GitOps with Terraform Controller"
 author: Veronika Gnilitska
 slug: terraform-controller-overview
-date: TBD
+date: 2024-02-08
 description: The post explores how Weave's Terraform Controller can enable GitOps for infrastructure management.
 image: /img/updates/terraform-controller-overview/tf_controller_0.png
 callout: "<p>👋 <b>Interested in platform engineering for your organization</b>, but not sure where to start? <a href='/contact'>Get in touch,</a> we're an expert team of platform engineers who deliver high-quality cloud platforms for startups and SMBs looking to scale. We enable your application engineers to focus on your product and in turn generate more value for your business.</p><a href='/contact' class='button'>Get In Touch &rsaquo;</a>"
@@ -33,7 +33,7 @@ callout: "<p>👋 <b>Interested in platform engineering for your organization</b
 
 ## Introduction
 
-In this post, we continue exploring effective tools for bridging the gap between Infrastructure as Code and GitOps. We aim to harness the optimal benefits of these practices as they are fundamental to our thoughts on building great platforms . One such tool that has gained our attention is [Terraform Controller](https://weaveworks.github.io/tf-controller/) by [WeaveWorks](https://www.weave.works/), and we'd like to share our experience.
+In this post, we continue exploring effective tools for bridging the gap between Infrastructure as Code and GitOps. We aim to harness the optimal benefits of these practices as they are fundamental to our thoughts on building great platforms. One such tool that has gained our attention is [Terraform Controller](https://weaveworks.github.io/tf-controller/) by [Weaveworks](https://www.weave.works/), and we'd like to share our experience.
 
 Before going into the details, we recommend reading our experience with a framework called [Crossplane](https://www.crossplane.io/), which we've passed on in our [previous blog post](https://masterpoint.io/updates/passing-on-crossplane/). While Crossplane offers deep Kubernetes integration, treating infrastructure management as a native Kubernetes operation, it also brings certain complexities and limitations. In contrast, Terraform Controller interconnects the Kubernetes ecosystem with Terraform's robust infrastructure management capabilities.
 A key distinction lies in their operational models - Terraform Controller builds upon Terraform's established state management and operational principles. For those already well-acquainted with Terraform, this offers a certain familiarity, reliability, and feature completeness.
@@ -46,7 +46,7 @@ The **Terraform object** is a CR that defines the Terraform root module configur
 
 The **Flux object** is a source of configuration files that tells the Controller _where_ to find the Terraform root module. In this way, the Controller utilizes Flux's mechanisms for continuous synchronization of configuration from a source.
 
-When you define a Terraform object in Kubernetes, the Controller detects drift, creates a Terraform plan, and executes it to update your infrastructure. Several GitOps automation modes are available: automatic execution with "auto apply" enabled, a "plan and manual apply" mode for greater control, and an option for drift detection only
+When you define a Terraform object in Kubernetes, the Controller detects drift, creates a Terraform plan, and executes it to update your infrastructure. Several GitOps automation modes are available: automatic execution with "auto apply" enabled, a "plan and manual apply" mode for greater control, and an option for drift detection only.
 
 ## Setting the Stage for GitOps with Terraform Controller
 
@@ -193,7 +193,7 @@ The `tfctl` command-line utility, designed for Terraform Controller operations, 
 
 ![Get info about Terraform object](/img/updates/terraform-controller-overview/tf_controller_4.png)
 
-Weaveworks plans to migrate the features of `tfctl` into the Weave GitOps CLI. This shift is important as the current CLI is more focused on interacting with Terraform objects rather than managing state or resources directly. Consequently, some functionalities, like the `import` command and other state-oriented operations, are currently missing. However, ongoing discussions on GitHub issues address implementing at least some of these features, indicating potential enhancements in future updates.
+Weaveworks plans to migrate the features of `tfctl` into the Weaveworks GitOps CLI. This shift is important as the current CLI is more focused on interacting with Terraform objects rather than managing state or resources directly. Consequently, some functionalities, like the `import` command and other state-oriented operations, are currently missing. However, ongoing discussions on GitHub issues address implementing at least some of these features, indicating potential enhancements in future updates.
 
 ## Areas of Improvement
 
@@ -205,32 +205,32 @@ We'd like to explore the integration of ChatOps to manage Terraform operations. 
 
 ### Utilizing Other Optional Features
 
-We're also interested in the (Branch Planner feature)[(https://weaveworks.github.io/tf-controller/branch-planner/branch-planner-getting-started/)]. This new component detects an open PR and either creates a new Terraform object or updates an existing one, applying a Plan Only mode based on the original Terraform object. This functionality aligns really well with GitOps workflows, providing a dynamic and transparent way to manage infrastructure changes via pull requests.
+We're also interested in the [Branch Planner feature](https://weaveworks.github.io/tf-controller/branch-planner/branch-planner-getting-started/). This new component detects an open PR and either creates a new Terraform object or updates an existing one, applying a Plan Only mode based on the original Terraform object. This functionality aligns really well with GitOps workflows, providing a dynamic and transparent way to manage infrastructure changes via pull requests.
 
 ### Open Source UI
 
-Another area of interest that we'd like to see built out further is the Open Source UI, as outlined in the [Weave GitOps documentation](https://docs.gitops.weave.works/docs/open-source/getting-started/ui-OSS/). The ability to easily oversee and control all the details and stages of infrastructure deployment and management is always a valuable addition.
+Another area of interest that we'd like to see built out further is the Open Source UI, which is introduced in the [Weaveworks GitOps documentation](https://docs.gitops.weave.works/docs/open-source/getting-started/ui-OSS/). The ability to easily oversee and control all the details and stages of infrastructure deployment and management is always a valuable addition that we've found incredibly useful from tools like [Spacelift](https://spacelift.io/).
 
 
 ## Time-sensitive: Internal Weaveworks Issues and Further Impact on the Project
 
-While we've been working on this blog post, some quite concerning news has spread in the Weaveworks community. A recent [GitHub comment](https://github.com/weaveworks/tf-controller/issues/1166#issuecomment-1904892837) sheds some light on the fact that Weaveworks, the legal entity behind the project, is facing undisclosed issues that are impacting the direction of the project. We have to admit that the future of the Terraform Controller project seems uncertain, and the future steps of the repository's owning organization are not yet clear. It's hard to know what to expect when there is no official public statement from Weaveworks about the situation.
+While we've been working on this blog post, some quite concerning news has spread in the Weaveworks community. A recent [GitHub comment](https://github.com/weaveworks/tf-controller/issues/1166#issuecomment-1904892837) sheds some light on the fact that Weaveworks, the consulting firm behind the project, is facing undisclosed issues that are impacting the direction of the project. We have to admit that the future of the Terraform Controller project seems uncertain, and the future steps of the repository's owning organization are not yet clear. It's hard to know what to expect when there is no official public statement from Weaveworks about the situation.
 
 Despite these challenges, we still hope for the best outcome. The project is still alive, with some team members continuing their work and planning future developments. It's worth noting that the project could either be renamed and retain all repositories under the current organization or move to a different organization.
 
-We're happy to hear that the community is committed to continuing discussions about the project's future and development, and we're ready to support them as believe this tool has some real potential.
+We're happy to hear that the community is committed to continuing discussions about the project's future and development, and we're ready to support them as we believe this tool has some real potential.
 
 ## Conclusion
 
-The Terraform Controller could be a game-changer in managing infrastructure as code via GitOps a breeze. Still, we acknowledge that building a solid and usable solution requires further investment. If you're interested in this approach, we welcome any engineering orgs who are interested in using this tool to [reach out and chat with us](https://masterpoint.io/contact/) as we'd love to build a true GitOps Terraform system for you!
+The Terraform Controller could be a real game-changer in managing infrastructure as code via GitOps. We believe with some further investment and improvements that it would be solid competitor to the primary open-source Terraform automation tool, [Atlantis](https://www.runatlantis.io/). Still, we acknowledge that building a strong system around this tool requires effort and our suggestion is to only entertain using this tool if your org is ready for some level of bleeding-edge investment themselves. If you're intrigued by that idea, we welcome any engineering organizations who are eager to operationalize this tool internally to [reach out and chat with us](https://masterpoint.io/contact/) as we'd love to help you build a true GitOps Terraform system!
 
-We would like to emphasize our positive experience with the community aspect of this product. The development team has been very responsive to our questions, providing fast and complete responses. While we understand that it may take some time to add requested features/fixes to the roadmap and implement them, we feel that the team was highly receptive to user feedback. Given recent news, we hope that everything goes as smoothly as possible for the team and the product they have been working so hard on.
+We would like to emphasize our positive experience with the community aspect of this product. The development team has been very responsive to our questions, providing fast and complete responses. While we understand that it may take some time to add requested features/fixes to the roadmap and implement them, we feel that the team was highly receptive to user feedback. Given recent news, we hope everything goes as smoothly as possible for the team and the product they have been working so hard on.
 
-Overall, we're still on a mission to explore the evolving landscape of GitOps and Terraform, and we need your help! Share your experiences and thoughts on these tools so we can work together to make them even better!
+Overall, we're still on a mission to explore the evolving landscape of GitOps and Terraform, and we need your help! [Get in touch with us on LinkedIn](https://www.linkedin.com/company/masterpoint-consulting/) so you can share your experiences and thoughts so we can work together to make them even better!
 
 ## Further Reading and Resources
 
-* Dive into the official [Weave GitOps Terraform Controller documentation](https://weaveworks.github.io/tf-controller/) for more in-depth knowledge.
+* Dive into the official [Weaveworks GitOps Terraform Controller documentation](https://weaveworks.github.io/tf-controller/) for more in-depth knowledge.
 * Follow [Get Started with the Terraform Controller](https://docs.gitops.weave.works/docs/terraform/get-started/) to try it out.
 * Check out an [EKS scaling example](https://github.com/tf-controller/eks-scaling).
 * Join [Terraform Controller Slack space](https://weave-community.slack.com/archives/C054MR4UP88) to participate in community discussions.
