@@ -27,7 +27,7 @@ callout: "<p>👋 <b>Interested in platform engineering for your organization</b
   - [Implementing ChatOps for Terraform Operations](#implementing-chatops-for-terraform-operations)
   - [Utilizing Other Optional Features](#utilizing-other-optional-features)
   - [Open Source UI](#open-source-ui)
-- [Time-sensitive: Internal Weaveworks Issues and Further Impact on the Project](#time-sensitive-internal-weaveworks-issues-and-further-impact-on-the-project)
+- [Time-sensitive: Weaveworks Issues and Further Impact on the Project](#time-sensitive-weaveworks-issues-and-further-impact-on-the-project)
 - [Conclusion](#conclusion)
 - [Further Reading and Resources](#further-reading-and-resources)
 
@@ -212,13 +212,13 @@ We're also interested in the [Branch Planner feature](https://weaveworks.github.
 Another area of interest that we'd like to see built out further is the Open Source UI, which is introduced in the [Weaveworks GitOps documentation](https://docs.gitops.weave.works/docs/open-source/getting-started/ui-OSS/). The ability to easily oversee and control all the details and stages of infrastructure deployment and management is always a valuable addition that we've found incredibly useful from tools like [Spacelift](https://spacelift.io/).
 
 
-## Time-sensitive: Internal Weaveworks Issues and Further Impact on the Project
+## Time-sensitive: Weaveworks Issues and Further Impact on the Project
 
-While we've been working on this blog post, some quite concerning news has spread in the Weaveworks community. A recent [GitHub comment](https://github.com/weaveworks/tf-controller/issues/1166#issuecomment-1904892837) sheds some light on the fact that Weaveworks, the consulting firm behind the project, is facing undisclosed issues that are impacting the direction of the project. We have to admit that the future of the Terraform Controller project seems uncertain, and the future steps of the repository's owning organization are not yet clear. It's hard to know what to expect when there is no official public statement from Weaveworks about the situation.
+While we've been working on this blog post, some unfortunate news has spread - Weaveworks is shutting down. The official public statement was published [on LinkedIn by Alexis Richardson](https://www.linkedin.com/feed/update/urn:li:activity:7160295096825860096/), CEO of Weaveworks, on 5 Feb 2024.
+We have to admit that the future of the Terraform Controller project is uncertain, and the future steps of the repository's owning organization are not yet clear. Currently, the team is discussing whether to move the repository with the source code or push the latest code to the [
+TF Controller Community](https://github.com/tf-controller), which was the original organization before `tf-controller` was moved to Weaveworks.
 
-Despite these challenges, we still hope for the best outcome. The project is still alive, with some team members continuing their work and planning future developments. It's worth noting that the project could either be renamed and retain all repositories under the current organization or move to a different organization.
-
-We're happy to hear that the community is committed to continuing discussions about the project's future and development, and we're ready to support them as we believe this tool has some real potential.
+Despite these challenges, we still hope for the best outcome. The project is still alive, with some team members continuing their work and planning future developments. We're happy to hear that the community is committed to continuing discussions about the project's future and development, and we're ready to support them as we believe this tool has some real potential.
 
 ## Conclusion
 
