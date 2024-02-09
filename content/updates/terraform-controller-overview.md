@@ -5,7 +5,7 @@ title: "Mastering GitOps with Terraform Controller"
 author: Veronika Gnilitska
 slug: terraform-controller-overview
 date: 2024-02-08
-description: The post explores how Weave's Terraform Controller can enable GitOps for infrastructure management.
+description: The post explores how Terraform Controller by Weaveworks can enable GitOps for infrastructure management.
 image: /img/updates/terraform-controller-overview/tf_controller_0.png
 callout: "<p>👋 <b>Interested in platform engineering for your organization</b>, but not sure where to start? <a href='/contact'>Get in touch,</a> we're an expert team of platform engineers who deliver high-quality cloud platforms for startups and SMBs looking to scale. We enable your application engineers to focus on your product and in turn generate more value for your business.</p><a href='/contact' class='button'>Get In Touch &rsaquo;</a>"
 ---
