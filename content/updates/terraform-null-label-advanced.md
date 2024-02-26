@@ -308,8 +308,7 @@ module "rds_cluster_aurora_postgres" {
   cluster_size= 2
 
   admin_user  = "admin1"
-  <!-- trunk-ignore(gitleaks/hashicorp-tf-password) -->
-  admin_password  = "Test123456789"
+  admin_password  = var.admin_password
   db_name     = "dbname"
   db_port     = 5432
   instance_type   = "db.r4.large"
