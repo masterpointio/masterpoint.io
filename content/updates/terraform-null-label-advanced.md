@@ -8,7 +8,7 @@ description: "A post highlighting some advanced usage of the terraform-null-labe
 image: /img/updates/terraform-null-label-part2.png
 ---
 
-Following up from our last article on terraform-null-label, (if you haven’t read that already, [be sure to here](https://masterpoint.io/updates/terraform-null-label/)) we want to talk about some advanced usage scenarios. Terraform-null-label is great, but it can still be cumbersome to implement when you need to create lots of variables that implement the label interface. In that case, why not borrow a little bit from object-oriented (OO) programming with [the concept of a "mixin"](https://en.wikipedia.org/wiki/Mixin)? Terraform-null-label has this capability through the drop-in `context.tf` file. It provides a great framework to implement naming and tagging, especially in scenarios where there’s lots of nesting and module dependencies. In this follow-up, we’ll explore mixins, and provide some code examples to help understand how to get the most out of terraform-null-label.
+Following up from our last article on the `terraform-null-label` module, (if you haven’t read that already, [be sure to here](https://masterpoint.io/updates/terraform-null-label/)) we want to talk about some advanced usage scenarios. Terraform-null-label is great, but it can still be cumbersome to implement when you need to create lots of variables that implement the label interface. In that case, why not borrow a little bit from object-oriented (OO) programming with [the concept of a "mixin"](https://en.wikipedia.org/wiki/Mixin)? Terraform-null-label has this capability through the drop-in `context.tf` file. It provides a great framework to implement naming and tagging, especially in scenarios where there’s lots of nesting and module dependencies. In this follow-up, we’ll explore mixins, and provide some code examples to help understand how to get the most out of terraform-null-label.
 
 ## Background
 
@@ -50,11 +50,11 @@ print("Order JSON:", order.to_json())
 
 While this is a contrived example, it highlights the big win here: the behavior (returning JSON) only needs to be defined once, and it can be used over and over.
 
-In the context of terraform, you can think of mixins as reusable configuration files that you can simply drop into any terraform project and immediately get value from. In terraform-null-label, the [context.tf file is a mixin](https://github.com/cloudposse/terraform-null-label/blob/main/exports/context.tf), and we’re going to be looking at that advanced usage below.
+In the context of Terraform, you can think of mixins as reusable configuration files that you can simply drop into any Terraform project and immediately get value from. In terraform-null-label, the [context.tf file is a mixin](https://github.com/cloudposse/terraform-null-label/blob/main/exports/context.tf), and we’re going to be looking at that advanced usage below.
 
-## Where Context.tf is Used
+## Where `context.tf` is Used
 
-We’ll be making use of the `context.tf` file. This provides a similar functionality to the mixin example from OO languages. Using this special file "object", we can pass around label metadata between modules while only having to define it once via variables. There are two primary areas within a Terraform configurations where `context.tf` is used:
+We’ll be making use of the `context.tf` file. This provides functionality similar to the mixin example from OOP languages. Using this special file "object", we can pass around label metadata between modules while only having to define it once via variables. There are two primary areas within Terraform configurations where `context.tf` is used:
 
 1. **[Root Modules](https://developer.hashicorp.com/terraform/language/modules#the-root-module)** - When `context.tf` is included at the base of a root module, it enables the developer to pass all of the important label variables to that root module **without** having to specify those variable blocks and it creates the root `null-label` module.
 
@@ -62,7 +62,7 @@ We’ll be making use of the `context.tf` file. This provides a similar function
 
 Don’t worry if this seems hard to understand in the abstract; in the following section we’ll lay out an example usage scenario that makes use of `context.tf` in both types of modules.
 
-## Advanced terraform-null-label Usage
+## Advanced `terraform-null-label` Usage
 
 Now let’s look at some advanced usage in action.
 
@@ -76,8 +76,8 @@ For the infrastructure example, we’ll assume the following configuration:
 Here is the basic structure of the example configuration
 
 ```txt
-    terraform/
-    ├── main.tf # root module (gets planned + applied)
+    terraform/ # root module (gets planned + applied)
+    ├── main.tf 
     ├── variables.tf
     ├── outputs.tf
     ├── context.tf # Important
@@ -118,7 +118,7 @@ module "this" {
   # ...
 ```
 
-And further down, there are variable definitions with default values: \
+And further down, there are variable definitions with default values:
 
 ```hcl
 variable "enabled" {
@@ -135,7 +135,7 @@ variable "namespace" {
 # ... etc
 ```
 
-So what do we get with that configuration? Essentially, this defines variables like "namespace" or "environment" once in our root module, and then we have the generated ID and tag metadata from terraform-null-label available _wherever they pass the context. In our previous article, each resource or module required importing and defining a new terraform-null-label module. With `context.tf`, that only needs to be done once by dropping in that file and then components of that label can be overridden as needed.
+So what do we get with that configuration? Essentially, this defines variables like "namespace" or "environment" once in our root module, and then we have the generated ID and tag metadata from `terraform-null-label` available wherever they pass the context. In our previous article, each resource or module required importing and defining a new `terraform-null-label` module. With `context.tf`, that only needs to be done once by dropping in that file and then components of that label can be overridden as needed.
 
 So instead of:
 
@@ -172,7 +172,7 @@ module "vpc_label" {
   source  = "cloudposse/label/null"
   version = "0.25.0"
 
-  ame = "vpc"
+  name = "vpc"
 
   # Important: all of the other label elements are passed as tfvars which end up in `this.context`
   context = module.this.context
@@ -188,31 +188,27 @@ And we can repeat that for other resources:
 
 ```hcl
 resource "aws_security_group" "frontend_sg" {
-  name    = module.vpc_label.id
+  name        = module.vpc_label.id
   description = "Allow SSH and web traffic"
-  vpc_id  = aws_vpc.public.id
-
+  vpc_id      = aws_vpc.public.id
   ingress {
-  from_port   = 22
-  to_port = 22
-  protocol= "tcp"
-  cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
-
   ingress {
-  from_port   = 443
-  to_port = 443
-  protocol= "tcp"
-  cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
-
   egress {
-  from_port   = 0
-  to_port = 0
-  protocol= "-1"
-  cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
-
   tags = module.vpc_label.tags
 }
 ```
@@ -338,6 +334,6 @@ curl -sL https://raw.githubusercontent.com/cloudposse/terraform-null-label/main/
 
 ## Wrap Up
 
-Advanced usage of terraform-null-label requires digging in and getting a little comfortable with some unique concepts that we typically don’t see in Terraform. The payoff is huge though; reduce cognitive load for your engineers, lots of code reuse, and making your infrastructure comfortably scalable with minimal tech debt.
+Advanced usage of `terraform-null-label` requires digging in and getting a little comfortable with some unique concepts that we typically don’t see in Terraform. The payoff is huge, though: reduce cognitive load for your engineers, do lots of code reuse, and make your infrastructure comfortably scalable with minimal tech debt.
 
-If you’re still not sure how to get started, or are already struggling with terraform sprawl and tech debt, Masterpoint has a wealth of knowledge built on implementing infrastructure at scale. Let us do the heavy Terraform lifting, and we’ll get you set on a path towards shipping infrastructure faster. [Get in touch today!](https://masterpoint.io/contact/)
+If you’re still not sure how to get started, or are already struggling with Terraform sprawl and tech debt, Masterpoint has a wealth of knowledge built on implementing infrastructure at scale. Let us do the heavy Terraform lifting, and we’ll get you set on a path towards shipping infrastructure faster. [Get in touch today!](https://masterpoint.io/contact/)
