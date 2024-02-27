@@ -80,6 +80,7 @@ Here is the basic structure of the example configuration
     ├── main.tf 
     ├── variables.tf
     ├── outputs.tf
+    ├── dev.auto.tfvars
     ├── context.tf # Important
     └── iam-module/ # child module
         ├── main.tf
@@ -121,6 +122,53 @@ module "this" {
 And further down, there are variable definitions with default values:
 
 ```hcl
+variable "context" {
+  type = any
+  default = {
+    enabled             = true
+    namespace           = null
+    tenant              = null
+    environment         = null
+    stage               = null
+    name                = null
+    delimiter           = null
+    attributes          = []
+    tags                = {}
+    additional_tag_map  = {}
+    regex_replace_chars = null
+    label_order         = []
+    id_length_limit     = null
+    label_key_case      = null
+    label_value_case    = null
+    descriptor_formats  = {}
+    # Note: we have to use [] instead of null for unset lists due to
+    # https://github.com/hashicorp/terraform/issues/28137
+    # which was not fixed until Terraform 1.0.0,
+    # but we want the default to be all the labels in `label_order`
+    # and we want users to be able to prevent all tag generation
+    # by setting `labels_as_tags` to `[]`, so we need
+    # a different sentinel to indicate "default"
+    labels_as_tags = ["unset"]
+  }
+  description = <<-EOT
+    Single object for setting entire context at once.
+    See description of individual variables for details.
+    Leave string and numeric variables as `null` to use default value.
+    Individual variable settings (non-null) override settings in context object,
+    except for attributes, tags, and additional_tag_map, which are merged.
+  EOT
+
+  validation {
+    condition     = lookup(var.context, "label_key_case", null) == null ? true : contains(["lower", "title", "upper"], var.context["label_key_case"])
+    error_message = "Allowed values: `lower`, `title`, `upper`."
+  }
+
+  validation {
+    condition     = lookup(var.context, "label_value_case", null) == null ? true : contains(["lower", "title", "upper", "none"], var.context["label_value_case"])
+    error_message = "Allowed values: `lower`, `title`, `upper`, `none`."
+  }
+}
+
 variable "enabled" {
   type        = bool
   default     = null
@@ -135,7 +183,7 @@ variable "namespace" {
 # ... etc
 ```
 
-So what do we get with that configuration? Essentially, this defines variables like "namespace" or "environment" once in our root module, and then we have the generated ID and tag metadata from `terraform-null-label` available wherever they pass the context. In our previous article, each resource or module required importing and defining a new `terraform-null-label` module. With `context.tf`, that only needs to be done once by dropping in that file and then components of that label can be overridden as needed.
+So what do we get with that configuration? Essentially, this defines variables like `context`, `namespace` and `environment` all at once in our root module, and then we have the generated ID and tag metadata from `terraform-null-label` available wherever they pass the context. In our previous article, each resource or module required importing and defining a new `terraform-null-label` module. With `context.tf`, that only needs to be done once by dropping in that file, providing some tfvars, and then components of that label can be overridden as needed.
 
 So instead of:
 
@@ -145,8 +193,7 @@ module "public_vpc_label" {
   version = "0.25.0"
 
   namespace   = "mp"
-  stage       = "prod"
-  environment = "uw2"
+  environment = "dev"
   name        = "vpc"
   attributes  = ["public"]
 
@@ -167,14 +214,26 @@ resource "aws_vpc" "public" {
 We get:
 
 ```hcl
+# terraform/dev.auto.tfvars
+# terraform-null-label elements
+namespace   = "mp"
+environment = "dev"
+attributes  = ["acmeapp"]
+tags        = {
+  BusinessUnit       = "ENG"
+  ManagedByTerraform = "True"
+}
+```
+
+```hcl
 # terraform/main.tf
 module "vpc_label" {
   source  = "cloudposse/label/null"
   version = "0.25.0"
 
-  name = "vpc"
+  name = "vpc" # Override name value from module.this.context
 
-  # Important: all of the other label elements are passed as tfvars which end up in `this.context`
+  # Important: all of the other label elements are passed as tfvars which end up in `module.this.context`
   context = module.this.context
 }
 
@@ -184,11 +243,25 @@ resource "aws_vpc" "public" {
 }
 ```
 
+This results in our VPC getting the `Name` tag of `mp-dev-vpc-acmeapp` and all of the rest of the tags are passed as well and they look like:
+
+```hcl
+# Output of `module.vpc_label.tags`:
+{
+  namespace          = "mp"
+  environment        = "dev"
+  attributes         = "acmeapp"
+  Name               = "mp-dev-vpc-acmeapp"
+  BusinessUnit       = "ENG"
+  ManagedByTerraform = "True"
+}
+```
+
 And we can repeat that for other resources:
 
 ```hcl
 resource "aws_security_group" "frontend_sg" {
-  name        = module.vpc_label.id
+  name        = module.vpc_label.id # mp-dev-vpc-acmeapp
   description = "Allow SSH and web traffic"
   vpc_id      = aws_vpc.public.id
   ingress {
@@ -287,7 +360,7 @@ We can source it in the root module like this:
 module "iam" {
   source = "./iam-module"
 
-  # This makes the same label values defined in the root module available in the child module due to context.tf
+  # This makes the same label values defined in the root module available in the child module due to context.tf accepting the full context
   context = module.this.context
 }
 ```
@@ -321,7 +394,7 @@ module "rds_cluster_aurora_postgres" {
 }
 ```
 
-For this module, we’ve overridden the "name" ID element from terraform-null-label. Regardless of whatever value is defined for the root module’s "name" variable value that gets passed down in the `context` argument, the value will be "oltpdb". If we wanted to override "attributes" or any other of the `context.tf` variables that make up that label, we could do that too.
+For this module, we’ve overridden the "name" ID element from terraform-null-label. Regardless of whatever value is defined for the root module’s "name" variable value that gets passed down in the `context` argument, the value will be "oltpdb", so this RDS cluster will end up with the name `mpdev-oltpdb-acmeapp`. If we wanted to override "attributes" or any other of the `context.tf` variables that make up that label, we could do that too.
 
 ## Using `context.tf` In Your Project
 
