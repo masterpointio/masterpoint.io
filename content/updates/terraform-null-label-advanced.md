@@ -394,7 +394,7 @@ module "rds_cluster_aurora_postgres" {
 }
 ```
 
-For this module, we’ve overridden the "name" ID element from terraform-null-label. Regardless of whatever value is defined for the root module’s "name" variable value that gets passed down in the `context` argument, the value will be "oltpdb", so this RDS cluster will end up with the name `mpdev-oltpdb-acmeapp`. If we wanted to override "attributes" or any other of the `context.tf` variables that make up that label, we could do that too.
+For this module, we’ve overridden the "name" ID element from terraform-null-label. Regardless of whatever value is defined for the root module’s "name" variable value that gets passed down in the `context` argument, the value will be "oltpdb", so this RDS cluster will end up with the name `mp-dev-oltpdb-acmeapp`. If we wanted to override "attributes" or any other of the `context.tf` variables that make up that label, we could do that too.
 
 ## Using `context.tf` In Your Project
 
