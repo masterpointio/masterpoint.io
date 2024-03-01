@@ -4,11 +4,11 @@ draft: false
 title: "terraform-null-label: Advanced Usage"
 author: Matt Gowie
 date: 2024-03-07
-description: "A post highlighting some advanced usage of the terraform-null-label module showing root/child module relationship and implementation of a naming + tagging framework with `context.tf`"
+description: "A post highlighting some advanced usage of the terraform-null-label module showing root/child module relationship and implementation of a naming + tagging framework with context.tf"
 image: /img/updates/terraform-null-label-part2.png
 ---
 
-Following up from our last article on the `terraform-null-label` module, (if you haven’t read that already, [be sure to here](https://masterpoint.io/updates/terraform-null-label/)) we want to talk about some advanced usage scenarios. Terraform-null-label is great, but it can still be cumbersome to implement when you need to create lots of variables that implement the label interface. In that case, why not borrow a little bit from object-oriented (OO) programming with [the concept of a "mixin"](https://en.wikipedia.org/wiki/Mixin)? Terraform-null-label has this capability through the drop-in `context.tf` file. It provides a great framework to implement naming and tagging, especially in scenarios where there’s lots of nesting and module dependencies. In this follow-up, we’ll explore mixins, and provide some code examples to help understand how to get the most out of terraform-null-label.
+Following up from our last article on the `terraform-null-label` module, (if you haven’t read that already, [be sure to here](https://masterpoint.io/updates/terraform-null-label/)) we want to talk about some advanced usage scenarios. This module effectively helps to maintain consistent naming and tagging practices, but it can still be cumbersome to implement when you need to create lots of variables that implement the label interface. In that case, why not borrow a little bit from object-oriented programming (OOP) with [the concept of a "mixin"](https://en.wikipedia.org/wiki/Mixin)? The module has this capability through the drop-in `context.tf` file. It provides a great framework to implement naming and tagging, especially in scenarios where there’s lots of nesting and module dependencies. In this follow-up, we’ll explore mixins, and provide some code examples to help understand how to get the most out of `terraform-null-label`.
 
 ## Background
 
@@ -50,7 +50,7 @@ print("Order JSON:", order.to_json())
 
 While this is a contrived example, it highlights the big win here: the behavior (returning JSON) only needs to be defined once, and it can be used over and over.
 
-In the context of Terraform, you can think of mixins as reusable configuration files that you can simply drop into any Terraform project and immediately get value from. In terraform-null-label, the [context.tf file is a mixin](https://github.com/cloudposse/terraform-null-label/blob/main/exports/context.tf), and we’re going to be looking at that advanced usage below.
+In the context of Terraform, you can think of mixins as reusable configuration files that you can simply drop into any Terraform project and immediately get value from. In `terraform-null-label`, the [context.tf file is a mixin](https://github.com/cloudposse/terraform-null-label/blob/main/exports/context.tf), and we’re going to be looking at that advanced usage below.
 
 ## Where `context.tf` is Used
 
@@ -68,8 +68,8 @@ Now let’s look at some advanced usage in action.
 
 For the infrastructure example, we’ll assume the following configuration:
 
-* A root module with a basic AWS VPC, subnet, and EC2 instance
-* A simple, internal child module for organization specific IAM configuration
+* A root module with a basic AWS VPC, subnet, and EC2 instance.
+* A simple, internal child module for organization-specific IAM configuration.
 * The [terraform-aws-rds-cluster](https://github.com/cloudposse/terraform-aws-rds-cluster) from Cloud Posse which implements `context.tf`.
 * The [context.tf](https://github.com/cloudposse/terraform-null-label/blob/main/exports/context.tf) mixin file provided by the [terraform-null-label](https://github.com/cloudposse/terraform-null-label/blob/main) module `exports/` folder.
 
@@ -104,7 +104,7 @@ module "vpc_label" {
 }
 ```
 
-So why is that "context" directive important? It acts as a "mixin" for label metadata for terraform-null-label. Take another look at the [context.tf](https://github.com/cloudposse/terraform-null-label/blob/main/exports/context.tf) file; you’ll notice a special module named "this" defined:
+So why is that "context" directive important? It acts as a "mixin" for label metadata for `terraform-null-label`. Take another look at the [context.tf](https://github.com/cloudposse/terraform-null-label/blob/main/exports/context.tf) file; you’ll notice a special module named "this" defined:
 
 ```hcl
 # terraform/context.tf
@@ -189,7 +189,7 @@ So instead of:
 
 ```hcl
 module "public_vpc_label" {
-  source  = "cloud posse/label/null"
+  source  = "cloudposse/label/null"
   version = "0.25.0"
 
   namespace   = "mp"
@@ -239,7 +239,7 @@ module "vpc_label" {
 
 resource "aws_vpc" "public" {
   cidr_block = "10.0.0.0/16"
-  tags = module.vpc_label.tags
+  tags       = module.vpc_label.tags
 }
 ```
 
@@ -264,12 +264,6 @@ resource "aws_security_group" "frontend_sg" {
   name        = module.vpc_label.id # mp-dev-vpc-acmeapp
   description = "Allow SSH and web traffic"
   vpc_id      = aws_vpc.public.id
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
   ingress {
     from_port   = 443
     to_port     = 443
@@ -360,7 +354,8 @@ We can source it in the root module like this:
 module "iam" {
   source = "./iam-module"
 
-  # This makes the same label values defined in the root module available in the child module due to context.tf accepting the full context
+  # This makes the same label values defined in the root module available
+  # in the child module due to context.tf accepting the full context
   context = module.this.context
 }
 ```
@@ -376,25 +371,25 @@ module "rds_cluster_aurora_postgres" {
 
   name = "oltpdb"
 
-  engine      = "aurora-postgresql"
-  cluster_family  = "aurora-postgresql9.6"
-  cluster_size= 2
+  engine         = "aurora-postgresql"
+  cluster_family = "aurora-postgresql9.6"
+  cluster_size   = 2
 
-  admin_user  = "admin1"
+  admin_user      = "admin1"
   admin_password  = var.admin_password
-  db_name     = "dbname"
-  db_port     = 5432
+  db_name         = "dbname"
+  db_port         = 5432
   instance_type   = "db.r4.large"
-  vpc_id      = aws_vpc.public.id
-  security_groups = [ aws_security_group.db_security_group.id ]
-  subnets     = [ aws_subnet.public_subnet.id ]
-  zone_id     = "Zxxxxxxxx"
+  vpc_id          = aws_vpc.public.id
+  security_groups = [aws_security_group.db_security_group.id]
+  subnets         = [aws_subnet.public_subnet.id]
+  zone_id         = "Zxxxxxxxx"
 
   context = module.this.context
 }
 ```
 
-For this module, we’ve overridden the "name" ID element from terraform-null-label. Regardless of whatever value is defined for the root module’s "name" variable value that gets passed down in the `context` argument, the value will be "oltpdb", so this RDS cluster will end up with the name `mp-dev-oltpdb-acmeapp`. If we wanted to override "attributes" or any other of the `context.tf` variables that make up that label, we could do that too.
+For this module, we’ve overridden the "name" ID element from `terraform-null-label`. Regardless of whatever value is defined for the root module’s "name" variable value that gets passed down in the `context` argument, the value will be "oltpdb", so this RDS cluster will end up with the name `mp-dev-oltpdb-acmeapp`. If we wanted to override "attributes" or any other of the `context.tf` variables that make up that label, we could do that too.
 
 ## Using `context.tf` In Your Project
 
