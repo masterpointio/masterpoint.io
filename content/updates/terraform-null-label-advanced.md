@@ -3,6 +3,7 @@ visible: true
 draft: false
 title: "terraform-null-label: Advanced Usage"
 author: Matt Gowie
+slug: terraform-null-label-advanced
 date: 2024-03-05
 description: "A post highlighting some advanced usage of the terraform-null-label module showing root/child module relationship and implementation of a naming + tagging framework with context.tf"
 image: /img/updates/terraform-null-label-part2.png
