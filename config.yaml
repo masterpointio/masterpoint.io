@@ -10,7 +10,6 @@ paginate: 1
 params:
   linkedin_link: https://www.linkedin.com/company/masterpoint-consulting/about/
   #google_analytics: UA-
-  form_endpoint: 123456
   sitewide_note: <strong>Masterpoint stands with Ukraine.</strong> Here’s how you can help Ukraine with just a few clicks. >
   sitewide_note_link: /updates/supporting-ukraine/
   get_in_touch: /contact

@@ -4,6 +4,10 @@ html {
 body {
   position: relative;
 }
+
+body,html {
+  background: #fff;
+}
 body,
 html,
 input,
@@ -1042,7 +1046,7 @@ form {
   }
 }
 #schedule-assessment {
-  padding: 2.9rem 0 1.9rem;
+  padding: 3rem 0;
   background: #fff;
 
   .container {
@@ -1557,6 +1561,10 @@ footer {
 .list-default,
 .single-default {
   position: relative;
+
+  header {
+    background: $pine;
+  }
   #banner {
     position: relative;
     padding: 9.9rem 0 1rem;
@@ -2361,5 +2369,125 @@ footer {
 
   #latest-news {
     color: #fff;
+  }
+}
+
+
+#signup {
+  padding:0;
+  background: rgb(0, 51, 51);
+}
+
+.landing-single {
+  #banner {
+    position: relative;
+    padding: 10rem 0 4rem;
+    background: $pine;
+    &:before {
+      background: linear-gradient(
+          360deg,
+          rgba(0, 0, 0, 0.3) 0%,
+          rgba(0, 0, 0, 0) 28.87%
+        ),
+        linear-gradient(90deg, $pine 50%, rgba(14, 56, 58, 0) 68.97%);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      content: "";
+      z-index: 2;
+
+      @media (max-width: 767px) {
+        background: linear-gradient(
+          360deg,
+          rgba(0, 0, 0, 0.3) 0%,
+          rgba(0, 0, 0, 0) 28.87%
+        ),
+        linear-gradient(360deg, $pine 40%, rgba(14, 56, 58, 0) 120%);
+      }
+    }
+    .bg-image {
+      width: 52.3%;
+      left: initial;
+      right: 0;
+      z-index: 1; position: absolute;
+      img {
+        opacity: 0.74;
+      }
+      &:before {
+        display: none;
+      }
+      @media (max-width: 767px) {
+        width:100%;height:100%;
+
+        img {
+          object-fit: cover;
+          object-position: center bottom;
+        }
+        &:before{
+          display: block;
+          background: linear-gradient(360deg,$pine 0%,rgba(255,255,255,0) 35%);
+        }
+      }
+
+    }
+    .bannerTxtBx {
+      max-width: 660px;
+      padding-top: 0.8em;
+
+      @media (max-width: 767px) {
+        text-align: center;
+      }
+    }
+
+    .bannerTxt {
+      padding-top: 0.8em;
+      strong {
+        display: inline-block;
+      }
+    }
+    .bannerTagline {
+      padding-bottom: 0.2em;
+      padding-top: 0;
+    }
+
+    h3 {
+      font-size: 24px;
+      margin: 24px 0 16px;
+    }
+
+    iframe {
+      width:100%;
+      max-width:500px;
+    }
+  }
+
+  &.noBannerImg {
+    #banner {
+      &:before {
+        
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        content: "";
+        z-index: 2;
+  
+        
+          background: linear-gradient(
+            360deg,
+            rgba(0, 0, 0, 0.3) 0%,
+            rgba(0, 0, 0, 0) 28.87%
+          ),
+          linear-gradient(360deg, $pine 40%, rgba(14, 56, 58, 0.4) 120%);
+        }
+      
+
+      .bannerTxtBx {
+        margin: 0 auto;
+      }
+    }
   }
 }
