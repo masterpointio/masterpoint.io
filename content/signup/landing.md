@@ -1,5 +1,5 @@
 ---
-title: Home
+title: Subscribe for Updates
 banner_tagline: "Subscribe for Engineered"
 banner_title: "<span class='text-gradient'>Mastery.</span>"
 banner_text: "Get the latest industry updates directly from the Masterpoint team pertaining to your cloud infrastructure and stay ahead of the curve with the data-backed solutions."

@@ -751,33 +751,37 @@ header {
           color: #ffffff;
           padding: 1px 6.6px;
           position: relative;
-          &:before {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            height: 4px;
-            background: linear-gradient(
-                99.59deg,
-                #ede497 2.59%,
-                #2ad9c2 41.12%,
-                #d891ce 89.63%
-              ),
-              #d9d9d9;
-            width: 0;
-            -webkit-transition: all $transition;
-            -moz-transition: all $transition;
-            -ms-transition: all $transition;
-            -o-transition: all $transition;
-            transition: all $transition;
-          }
-          &:hover,
-          &:focus,
+          
+
           &.current-menu-item {
-            text-decoration: none;
-            color: #fff;
             &:before {
-              width: 100%;
+              content: "";
+              position: absolute;
+              left: 0;
+              bottom: 0;
+              height: 4px;
+              background: linear-gradient(
+                  99.59deg,
+                  #ede497 2.59%,
+                  #2ad9c2 41.12%,
+                  #d891ce 89.63%
+                ),
+                #d9d9d9;
+              width: 0;
+              -webkit-transition: all $transition;
+              -moz-transition: all $transition;
+              -ms-transition: all $transition;
+              -o-transition: all $transition;
+              transition: all $transition;
+            }
+            &:hover,
+            &:focus,
+            &.current-menu-item {
+              text-decoration: none;
+              color: #fff;
+              &:before {
+                width: 100%;
+              }
             }
           }
 
