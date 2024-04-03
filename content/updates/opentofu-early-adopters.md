@@ -4,7 +4,7 @@ draft: false
 title: "Upgrading to OpenTofu: An Easy Journey"
 author: Matt Gowie
 slug: opentofu-early-adopters
-date: 2024-04-04
+date: 2024-04-08
 description: "We're early adopters of OpenTofu. Read about what it took for us to make the switch and how it's going."
 image: /img/updates/opentofu-early-adopters/logo.png
 ---
