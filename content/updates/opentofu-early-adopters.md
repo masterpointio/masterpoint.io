@@ -1,7 +1,7 @@
 ---
 visible: true
 draft: false
-title: "Upgrading to OpenTofu: An Easy Journey"
+title: "From Terraform to OpenTofu: Why and How"
 author: Matt Gowie
 slug: opentofu-early-adopters
 date: 2024-04-08
