@@ -22,7 +22,7 @@ The question of why we did the migration has come up in conversation repeatedly.
 1. At Masterpoint, we emphasize and prioritize open-source in our engagements because open-source tooling and communities drive more value faster, ensure the solutions we deliver are secure, and provide clients with long-term support. As a result, we are dedicated open-source developers, contributors, and maintainers in the Terraform and Platform Engineering ecosystem. Truly open-source tooling like OpenTofu aligns with our values.
 2. Regardless of how much we love open-source, we do recognize that certain projects and scenarios call for paid SaaS tools. **[Spacelift](https://spacelift.io/)** (an IaC Continuous Delivery tool) is one such tool that we’ve used in a number of our client projects. It allows us to deliver great results for our clients without reinventing the wheel with our own pipelines. Since Spacelift can no longer use Terraform v1.6 and above (which are the versions affected by the HashiCorp BSL change), if we wanted to upgrade Terraform then we needed to migrate our pipelines off of Spacelift to Terraform Cloud or another solution. That wasn’t acceptable to us. Instead we chose to migrate off of Terraform and on to OpenTofu, which Spacelift supports, allowing us to stick with tooling we are happy with.
 
-3. Moving to OpenTofu gave us the ability to keep on top of evolving tools while still remaining true to our beliefs. For instance, we want to be better about testing our IaC logic. TerraTest has been the Terraform standard, but requires writing Golang, which is an obstacle for many of our clients. We were excited to test out `terraform test` but this new functionality is only available in BSL licensed versions of Terraform. Luckily, by choosing OpenTofu, we gain access to this and other future functionality.
+3. Moving to OpenTofu gave us the ability to keep on top of evolving tools while still remaining true to our beliefs. For instance, we want to be better about testing our IaC logic. TerraTest has been the Terraform standard, but requires writing Golang, which is an obstacle for many of our clients. We were excited to test out `terraform test` but this new functionality is only available in BSL licensed versions of Terraform. Luckily, by choosing OpenTofu, we gain access to the [test command](https://opentofu.org/docs/cli/commands/test/) and other future functionality.
 
 ### A Little About Our Setup
 
@@ -44,7 +44,7 @@ To give you an idea of the size of the project moved:
 - We manage over 90 workspaces / state files.
 - This project has over 39K lines of Terraform code across over 480 files.
 
-To give you  a visual understanding, here is our internal TF Automation diagram for Spacelift:
+To give you a visual understanding, here is our internal TF Automation diagram for Spacelift:
 
 <div style="width: 960px; height: 720px; margin: 10px; position: relative;"><iframe allowfullscreen frameborder="0" style="width:960px; height:720px" src="https://lucid.app/documents/embedded/7da15015-b1da-42b0-b72a-410da7f16e04" id="wHGggXXNNQO4"></iframe></div>
 
@@ -90,9 +90,7 @@ Our migration journey has been very positive. We’ve only hit a couple minor is
     1. [https://github.com/carlpett/terraform-provider-sops/issues/115](https://github.com/carlpett/terraform-provider-sops/issues/115) – Fixed!
     2. [https://github.com/cloudposse/terraform-provider-utils/issues/344](https://github.com/cloudposse/terraform-provider-utils/issues/344) ([@kevcube](https://github.com/kevcube) is a Masterpoint engineer) – Fixed!
     3. [https://github.com/tailscale/terraform-provider-tailscale/issues/335](https://github.com/tailscale/terraform-provider-tailscale/issues/335) – Open (as of the time of writing)
-
-![An example GPG Key Warning](/img/updates/opentofu-early-adopters/gpg-key-warning.png "An example GPG Key Warning")
-
+      ![An example GPG Key Warning](/img/updates/opentofu-early-adopters/gpg-key-warning.png "An example GPG Key Warning")
 1. About 3 weeks into our usage of OpenTofu, we ran into an issue related using a recently published version of one of our own modules, [masterpointio/terraform-aws-tailscale](https://github.com/masterpointio/terraform-aws-tailscale). The problem was discussed[(you can view it in the OpenTofu Slack here)](https://opentofucommunity.slack.com/archives/C05R0FD0VRU/p1708463312128849) but the core of the issue is that a hiccup in the OpenTofu registry caused our newly published module to not show up until the registry was manually poked. The OpenTofu team was very responsive and helpful in getting this solved and it was fixed within a few hours. We were very appreciative of this short time to resolution. To me, it seems like that team is continuing to work through the outlier bugs in the registry which is understandable considering how new it is. Given the quick fix too, I find this to be a very acceptable problem!
 
 ### Conclusion
