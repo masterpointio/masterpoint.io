@@ -1,7 +1,17 @@
 <div class="col col-12">
     <div class="entry">
         <div class="flex reverse">
-            {{ if .Params.image }}
+            {{ if .Params.preview_image }}
+            <div class="entryImg">
+                {{ if .Params.outbound }}
+                <a href="{{ .Params.outbound }}" target="_blank"><img src='{{ .Param "preview_image"}}' class="img-fluid lazy"
+                        alt="{{ .Title | safeHTML }}"></a>
+                {{else}}
+                <a href="{{ .Permalink }}"><img src='{{ .Param "preview_image"}}' class="img-fluid lazy"
+                        alt="{{ .Title | safeHTML }}"></a>
+                {{end}}
+            </div>
+            {{else}}
             <div class="entryImg">
                 {{ if .Params.outbound }}
                 <a href="{{ .Params.outbound }}" target="_blank"><img src='{{ .Param "image"}}' class="img-fluid lazy"

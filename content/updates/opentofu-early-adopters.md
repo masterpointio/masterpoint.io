@@ -7,6 +7,7 @@ slug: opentofu-early-adopters
 date: 2024-04-08
 description: "We're early adopters of OpenTofu. Read about what it took for us to make the switch and how it's going."
 image: /img/updates/opentofu-early-adopters/logo.png
+preview_image: /img/updates/opentofu-early-adopters/preview.png
 ---
 
 ### Intro
@@ -72,7 +73,8 @@ terraform:
 
 ```
 
-![Pull Request Description for my changes to introduce OpenTofu](/img/updates/opentofu-early-adopters/pr-header.png "Pull Request Description for my changes to introduce OpenTofu")
+
+{{< lightboximg "/img/updates/opentofu-early-adopters/pr-header.png" "Pull Request Description for my changes to introduce OpenTofu" >}}
 
 And that was it! Once that PR got merged, all of our Spacelift Automation and local usage of Atmos changed over to  OpenTofu and we were done! 🏁
 
