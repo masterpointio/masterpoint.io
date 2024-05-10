@@ -31,7 +31,7 @@ There are a few reasons why engineers might not be using Terraform to deploy res
 
 Managing user accounts and roles across multiple SaaS products can be a real headache, especially when those products don't support Single Sign-On (SSO). It's a task that often falls on the shoulders of senior leadership and engineering teams, eating up hours of their time that could be better spent on more strategic initiatives. Fortunately, TF can make this process much less painful.
 
-Before we look at an example, it's worth noting that many SaaS vendors seem to have missed the memo on the importance of SSO for security. As highlighted by[ [The SSO Wall of Shame](https://sso.tax/](https://sso.tax/)), many vendors offer SSO but treat it as a premium feature, bundling it with expensive "Enterprise" pricing tiers or charging multiple times the base product price for the functionality. This practice disincentivizes the use of SSO and encourages poor security practices, especially for smaller organizations that may not have the budget for the higher-tier plans.
+Before we look at an example, it's worth noting that many SaaS vendors seem to have missed the memo on the importance of SSO for security. As highlighted by [The SSO Wall of Shame](https://sso.tax/), many vendors offer SSO but treat it as a premium feature, bundling it with expensive "Enterprise" pricing tiers or charging multiple times the base product price for the functionality. This practice disincentivizes the use of SSO and encourages poor security practices, especially for smaller organizations that may not have the budget for the higher-tier plans.
 
 In a typical software engineering organization, there are likely several service platforms that require managing users and access levels. A common, bare-minimum stack might include AWS, GitHub, CloudFlare, and Datadog for starters. For teams without the benefit of SSO, access to these services is a cumbersome task to manage manually. Each time a team member joins or leaves the organization means one person needs to log in to all of these platforms and add or remove that team member.  With TF, you can centralize users and identity management and make life much easier (and more secure).
 
@@ -63,7 +63,7 @@ Here’s an excerpt of a `team.yaml` file that describes a hypothetical DevOps t
       datadog_role: Standard
 ```
 
-We can use this central file to manage our team in code. Rather than requiring N clicks, adding a new service or user account only requires updating this file.Then, Using TF, we can read this file and deploy this team to all the services. In this example, we’ll update GitHub and Datadog: \
+We can use this central file to manage our team in code. Rather than requiring N clicks, adding a new service or user account only requires updating this file.Then, Using TF, we can read this file and deploy this team to all the services. In this example, we’ll update GitHub and Datadog:
 
 ```hcl
 locals {
@@ -72,6 +72,7 @@ locals {
   # knowledge
   team_data = yamldecode(file("${path.root}/team.yaml"))
 }
+
 resource "github_team" "devops" {
   name        = local.team_data.devops_team.name
   description = local.team_data.devops_team.description
