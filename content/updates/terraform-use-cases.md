@@ -128,7 +128,7 @@ locals {
 
 module "repositories" {
   source  = "mineiros-io/repository/github"
- version = "0.18.0"
+  version = "0.18.0"
 
   for_each = local.repositories
 
