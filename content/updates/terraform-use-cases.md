@@ -21,11 +21,11 @@ In this article, we're going to highlight some resources you might be surprised 
 * Git repos
 * monitoring and alerting configuration
 
-Hopefully your takeaway is the same thing we preach to everyone we work with: if you want a solid platform, use IaC for _everything_.
+Hopefully, your takeaway is the same thing we preach to everyone we work with: if you want a solid platform, use IaC for _everything_.
 
 ### Why Aren’t People Using Terraform for Everything?
 
-There are a few reasons why engineers might not be using Terraform to deploy resources like git repositories, user management, or monitoring. One common reason we often see is that they simply don't think to do it, as they may be more focused on implementing everything else from scratch. In the case of git repositories, engineers might view it as a chicken-and-egg problem, where they manually create repositories before deploying code, rather than automating the entire process with Terraform. Additionally, time constraints and pressure to deliver quickly can lead engineers to stick with their tried-and-tested workflows instead of exploring new approaches like using Terraform to handle it all.
+There are a few reasons why engineers might not be using Terraform to deploy resources like Git repositories, user management, or monitoring. One common reason we often see is that they simply don't think to do it, as they may be more focused on implementing everything else from scratch. In the case of Git repositories, engineers might view it as a chicken-and-egg problem, where they manually create repositories before deploying code, rather than automating the entire process with Terraform. Additionally, time constraints and pressure to deliver quickly can lead engineers to stick with their tried-and-tested workflows instead of exploring new approaches like using Terraform to handle it all.
 
 ### Team member account management and Role Based Access Control
 
@@ -39,9 +39,8 @@ For AWS users, AWS offers IAM Identity Center (formerly AWS SSO), which simplifi
 
 Here’s an excerpt of a `team.yaml` file that describes a hypothetical DevOps team:
 
-`devops_team:`
-
 ```yaml
+devops_team:
   name: DevOps
   description: Internal DevOps Team
   privacy: closed
@@ -63,7 +62,7 @@ Here’s an excerpt of a `team.yaml` file that describes a hypothetical DevOps t
       datadog_role: Standard
 ```
 
-We can use this central file to manage our team in code. Rather than requiring N clicks, adding a new service or user account only requires updating this file.Then, Using TF, we can read this file and deploy this team to all the services. In this example, we’ll update GitHub and Datadog:
+We can use this central file to manage our team in code. Rather than requiring N clicks, adding a new service or user account only requires updating this file. Then, we can read this file and deploy this team to all the services using TF. In this example, we’ll update GitHub and Datadog:
 
 ```hcl
 locals {
@@ -101,7 +100,7 @@ module "datadog_users" {
 }
 ```
 
-This is a simple example, but it should provide an idea of the possibilities when adopting IaC to manage users and roles. By using IaC, instead of having to log in to each platform individually to add or remove team members, we can now change a single file and have everything update automatically when we deploy code changes. Additionally, since all changes are tracked in git, we have a complete history of who made the change, what was changed, when it was changed, and why it was changed.
+This is a simple example, but it should provide an idea of the possibilities when adopting IaC to manage users and roles. By using IaC, instead of having to log in to each platform individually to add or remove team members, we can now change a single file and have everything update automatically when we deploy code changes. Additionally, since all changes are tracked in Git, we have a complete history of who made the change, what was changed, when it was changed, and why it was changed.
 
 ### Git Repository Management
 
@@ -109,7 +108,7 @@ If you're managing code repositories across GitHub, GitLab, or other git provide
 
 In many organizations, developers are tasked with setting up code repositories manually, leading to a patchwork of inconsistent configurations and security settings across projects. Without a standardized approach, each repository may have different branch protection rules, access controls, and other settings, making it difficult to ensure that best practices are being followed consistently. Rolling out new configuration turns into a project. Finally, lack of uniformity can lead to vulnerabilities and make it harder to manage repositories at scale.
 
-We’re big proponents of not re-inventing the wheel, particularly when there are so many great, community-maintained off-the-shelf modules that can be used, and GitHub repository terraform is no exception. We like the repository module from our friends at Mineiros (now the team behind [Terramate](https://terramate.io/)): [https://github.com/mineiros-io/terraform-github-repository](https://github.com/mineiros-io/terraform-github-repository). This module offers a wide range of features that go beyond the basic `github_repository` resource, including more secure defaults like private repo, read-only deploy keys, as well as branch management and protection, merge strategies, metadata, and more. Here’s a simplified example of how we use this module to deploy multiple repositories:
+We’re big proponents of not re-inventing the wheel, particularly when there are so many great, community-maintained off-the-shelf modules that can be used, and GitHub repository Terraform is no exception. We like the repository module from our friends at Mineiros (now the team behind [Terramate](https://terramate.io/)): [https://github.com/mineiros-io/terraform-github-repository](https://github.com/mineiros-io/terraform-github-repository). This module offers a wide range of features that go beyond the basic `github_repository` resource, including more secure defaults like private repo, read-only deploy keys, as well as branch management and protection, merge strategies, metadata, and more. Here’s a simplified example of how we use this module to deploy multiple repositories:
 
 ```hcl
 locals {
@@ -129,7 +128,7 @@ locals {
 
 module "repositories" {
   source  = "mineiros-io/repository/github"
-  version = "~> 0.18.0"
+ version = "0.18.0"
 
   for_each = local.repositories
 
