@@ -35,7 +35,7 @@ Before we look at an example, it's worth noting that many SaaS vendors seem to h
 
 In a typical software engineering organization, there are likely several service platforms that require managing users and access levels. A common, bare-minimum stack might include AWS, GitHub, CloudFlare, and Datadog for starters. For teams without the benefit of SSO, access to these services is a cumbersome task to manage manually. Each time a team member joins or leaves the organization means one person needs to log in to all of these platforms and add or remove that team member.  With TF, you can centralize users and identity management and make life much easier (and more secure).
 
-For AWS users, AWS offers IAM Identity Center (formerly AWS SSO), which simplifies AWS account and role management. But for organizations that haven't jumped on the SSO bandwagon yet, or are using a mix of services with and without SSO support, TF can standardize onboarding and offboarding regardless of vendor. By defining users and roles in a `team.yaml` file, TF Root Modules can automatically create and manage these entities across all the different platforms you're using.
+For AWS users, AWS offers [IAM Identity Center](https://aws.amazon.com/iam/identity-center/) (formerly AWS SSO), which simplifies AWS account and role management. But for organizations that haven't jumped on the SSO bandwagon yet, or are using a mix of services with and without SSO support, TF can standardize onboarding and offboarding regardless of vendor. By defining users and roles in a `team.yaml` file, TF Root Modules can automatically create and manage these entities across all the different platforms you're using.
 
 Here’s an excerpt of a `team.yaml` file that describes a hypothetical DevOps team:
 
@@ -104,7 +104,7 @@ This is a simple example, but it should provide an idea of the possibilities whe
 
 ### Git Repository Management
 
-If you're managing code repositories across GitHub, GitLab, or other git providers, you know how much of a headache it can be, especially if you're working with a [polyrepo](https://github.com/joelparkerhenderson/monorepo-vs-polyrepo?tab=readme-ov-file#what-is-polyrepo) setup. Managing branch protections and keeping access control consistent across all those repos? It's a real challenge. It should be no surprise that we again reach for IaC to help us maintain consistent and secure repository configurations.
+If you're managing code repositories across GitHub, GitLab, or other Git providers, you know how much of a headache it can be, especially if you're working with a [polyrepo](https://github.com/joelparkerhenderson/monorepo-vs-polyrepo?tab=readme-ov-file#what-is-polyrepo) setup. Managing branch protections and keeping access control consistent across all those repos? It's a real challenge. It should be no surprise that we again reach for IaC to help us maintain consistent and secure repository configurations.
 
 In many organizations, developers are tasked with setting up code repositories manually, leading to a patchwork of inconsistent configurations and security settings across projects. Without a standardized approach, each repository may have different branch protection rules, access controls, and other settings, making it difficult to ensure that best practices are being followed consistently. Rolling out new configuration turns into a project. Finally, lack of uniformity can lead to vulnerabilities and make it harder to manage repositories at scale.
 
