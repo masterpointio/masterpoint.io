@@ -751,7 +751,7 @@ header {
           color: #ffffff;
           padding: 1px 6.6px;
           position: relative;
-          
+
 
           &.current-menu-item {
             &:before {
@@ -2394,6 +2394,8 @@ footer {
 }
 
 #thank-you {
+  background: rgb(0, 51, 51);
+
   #banner {
     h2 {
       font-size: 2em;
@@ -2500,7 +2502,7 @@ footer {
   &.noBannerImg {
     #banner {
       &:before {
-        
+
         position: absolute;
         left: 0;
         top: 0;
@@ -2508,8 +2510,8 @@ footer {
         height: 100%;
         content: "";
         z-index: 2;
-  
-        
+
+
           background: linear-gradient(
             360deg,
             rgba(0, 0, 0, 0.3) 0%,
@@ -2517,7 +2519,7 @@ footer {
           ),
           linear-gradient(360deg, $pine 40%, rgba(14, 56, 58, 0.4) 120%);
         }
-      
+
 
       .bannerTxtBx {
         margin: 0 auto;

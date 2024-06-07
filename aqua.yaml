@@ -1,0 +1,13 @@
+---
+# aqua - Declarative CLI Version Manager
+# https://aquaproj.github.io/
+# checksum:
+#   enabled: true
+#   require_checksum: true
+#   supported_envs:
+#   - all
+registries:
+- type: standard
+  ref: v4.190.0 # renovate: depName=aquaproj/aqua-registry
+packages:
+- name: gohugoio/hugo/hugo-extended@v0.127.0
