@@ -31,11 +31,11 @@ $(window).resize(function() {
         $('nav ul').hide();
     }
 });
- 
+
 // Clone Cloud Assessment Image
 $(document).ready(function() {
-    var $bgImg = $('#comprehensive-cloud-assessment .bg-image').clone();
-    $('#comprehensive-cloud-assessment').append($bgImg);
+    var $bgImg = $('#iac-audit .bg-image').clone();
+    $('#iac-audit').append($bgImg);
 });
 
 // FAQs

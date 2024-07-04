@@ -13,7 +13,7 @@ These Terms of Service and Use (“Terms”) apply to your access to and use of 
 
 We may make changes to these Terms from time to time. If we make changes, we will provide you with notice of such changes, such as by sending an email, providing a notice through our Website or updating the date at the top of these Terms. Unless we say otherwise in our notice, the amended Terms will be effective immediately, and your continued use of our Website after we provide such notice will confirm your acceptance of the changes. If you do not agree to the amended Terms, you must stop using our Website.
 
-If you have any questions about these Terms or our Website, please contact us at info@MasterPoint.io.
+If you have any questions about these Terms or our Website, please contact us at hello@masterpoint.io.
 
 ### ADDITIONAL TERMS
 
@@ -23,7 +23,7 @@ For information about how we collect, use, share and otherwise process informati
 2. **Consent to Use of Data and Mobile Communication; SMS Program Terms**
 You consent to our communicating with you about the Website, the Organization and/or its activities by SMS, text message, email or other electronic means. Your carrier’s normal, messaging, data and other rates and fees will apply to these communications.
 If you subscribe to any text programs that the Organization makes available, the following terms apply:
-By subscribing to The Organization’s updates or alerts, you consent to receive periodic updates or alerts by automatic text message. Text STOP to stop. For Help, text HELP or contact us at info@MasterPoint.io. Message and data rates may apply. See the terms above.  Neither the Organization nor the participating carriers guarantee that messages will be delivered. The Organization may discontinue the program at any time without notice.
+By subscribing to The Organization’s updates or alerts, you consent to receive periodic updates or alerts by automatic text message. Text STOP to stop. For Help, text HELP or contact us at hello@masterpoint.io. Message and data rates may apply. See the terms above.  Neither the Organization nor the participating carriers guarantee that messages will be delivered. The Organization may discontinue the program at any time without notice.
 
 3. **User Content**
 Our Website may allow you and other users to create, post, store and share content, including messages, comments, stories, text, photos, graphics, videos, music, and other materials (collectively, “User Content”). Except for the license you grant below, you retain all rights in and to your User Content, as between you and the Organization.

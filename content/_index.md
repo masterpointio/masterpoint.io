@@ -1,15 +1,13 @@
 ---
 title: Home
-banner_title: "<span class='text-gradient'>Mastered.</span>"
-banner_tagline: "Your platform,"
-banner_text: "At Masterpoint, we know that your engineering organization’s time and resources should be focused on what truly matters:
-<strong class='text-gradient'>your application and customers</strong>. That's why we focus our platform engineering expertise on ensuring you have a strong foundation on which you can build, iterate, and scale."
+banner_title: "<span class='text-gradient'>Infrastructure as Code</span>"
+banner_tagline: "Get control of your"
+banner_text: "Home-grown IaC workflow weighing down your time to delivery? We’re here to help make <strong class='text-gradient'>Terraform, OpenTofu, or Pulumi</strong> efficient and scalable, no matter where you provision your infrastructure."
 banner_image: /img/banner_home.jpg
-description: "At Masterpoint, we know that your engineering organization’s time and resources should be focused on what truly matters:
-your application and customers. That's why we focus our platform engineering expertise on ensuring you have a strong foundation on which you can build, iterate, and scale."
-banner_btn_label: How We Can Help →
+description: "Home-grown IaC workflow weighing down your time to delivery? We’re here to help make Terraform, OpenTofu, or Pulumi efficient and scalable, no matter where you provision your infrastructure. "
+banner_btn_label: See the services →
 banner_btn_link: /services
-sections: "home"
+sections: home
 sitemap:
   priority: 1
 id: home

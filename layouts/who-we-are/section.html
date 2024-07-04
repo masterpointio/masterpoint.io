@@ -51,7 +51,7 @@
             </div>
             {{end}}
 
-        
+
             {{ if .Params.vimeobg }}
             <div class="video-wrapper"><iframe src="https://player.vimeo.com/video/{{.Params.vimeobg}}?background=1&muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe><script src="https://player.vimeo.com/api/player.js"></script></div>
             {{end}}
@@ -68,9 +68,9 @@
                 </div>
             </div>
             {{ if .Params.abs_image }}
-           
+
                 <img src='{{ .Params.abs_image }}' id="{{.Params.id}}-abs_image" class="lazy" alt="{{ .Site.Title }} - {{ .Title }} Image">
-           
+
             {{end}}
 
         </section>

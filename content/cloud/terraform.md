@@ -1,6 +1,6 @@
 ---
 title: Terraform
 image: /img/cloud/tfelogo.png
-weight: 2
+weight: 1
 visible: true
 ---
