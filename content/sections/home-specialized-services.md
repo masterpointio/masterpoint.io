@@ -1,5 +1,5 @@
 ---
-title: Our Specialized Services
+title: Get support at every level
 weight: 1
 #position: justify-content-start reverse flex
 #size: col-12 col-md-6
@@ -10,9 +10,9 @@ section_categories:
 id: specialized-services
 ---
 
-### Our Specialized Services {.groupTitle .text-center .text-rhythm}
+### Get support at every level {.groupTitle .text-center .text-rhythm}
 
 {{<services>}}
 <div class="text-center mt-5">
-<a href="/services/" class="button btn-outline-gradient text-pine btn-big">Explore Our Services →</a>
+<a href="/services/" class="button btn-outline-gradient text-pine btn-big">See the Services →</a>
 </div>

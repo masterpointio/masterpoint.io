@@ -29,7 +29,7 @@ This Privacy Policy only applies to transactions made, and data gathered, on thi
 
 ### CHILDREN UNDER THE AGE OF 13
 
-Our Website is not intended for children under 13 years of age. No one under age 13 may provide any personal information to or on the Website. We do not knowingly collect personal information from children under 13. If you are under 13, do not use or provide any information on this Website or through any of its features, use any of the interactive or public comment features of this Website, or provide any information about yourself to us, including your name, address, telephone number, email address, or any screen name or user name you may use. If we learn we have collected or received personal information from a child under 13 without verification of parental consent, we will delete that information. If you believe we might have any information from or about a child under 13, please contact us at info@MasterPoint.io.
+Our Website is not intended for children under 13 years of age. No one under age 13 may provide any personal information to or on the Website. We do not knowingly collect personal information from children under 13. If you are under 13, do not use or provide any information on this Website or through any of its features, use any of the interactive or public comment features of this Website, or provide any information about yourself to us, including your name, address, telephone number, email address, or any screen name or user name you may use. If we learn we have collected or received personal information from a child under 13 without verification of parental consent, we will delete that information. If you believe we might have any information from or about a child under 13, please contact us at hello@masterpoint.io.
 
 ### INFORMATION ABOUT YOU WE COLLECT AND WHY WE GATHER SUCH INFORMATION
 
@@ -136,16 +136,16 @@ We strive to provide you with choices regarding the personal information you pro
 
 **Tracking Technologies and Advertising.** You can set your browser to refuse all or some browser cookies, or to alert you when cookies are being sent. To learn how you can manage your Flash cookie settings, visit the Flash player settings page on Adobe's website. If you disable or refuse cookies, please note that some parts of this site may then be inaccessible or not function properly.
 
-**Disclosure of Your Information for Third-Party Advertising.** If you do not want us to share your personal information with unaffiliated or non-agent third parties for promotional purposes, you can opt-out by checking the relevant box located on the form on which we collect your data (e.g., the registration form, donation page, newsletter, or email alert signup). You can also always opt-out by checking or unchecking the relevant boxes or by sending us an email with your request to info@MasterPoint.io.
+**Disclosure of Your Information for Third-Party Advertising.** If you do not want us to share your personal information with unaffiliated or non-agent third parties for promotional purposes, you can opt-out by checking the relevant box located on the form on which we collect your data (e.g., the registration form, donation page, newsletter, or email alert signup). You can also always opt-out by checking or unchecking the relevant boxes or by sending us an email with your request to hello@masterpoint.io.
 
-**Promotional Information from the Candidate.** If you do not wish to have your contact information used by the Campaign, you can opt-out by checking the relevant box located on the form on which we collect your data (e.g., the registration form, donation page, newsletter or email alert signup). You can always opt-out at any other time by checking or unchecking the relevant boxes or by sending us an email stating your request to info@MasterPoint.io.
+**Promotional Information from the Candidate.** If you do not wish to have your contact information used by the Campaign, you can opt-out by checking the relevant box located on the form on which we collect your data (e.g., the registration form, donation page, newsletter or email alert signup). You can always opt-out at any other time by checking or unchecking the relevant boxes or by sending us an email stating your request to hello@masterpoint.io.
 
 If we have sent you a promotional email, you may send us a return email asking to be omitted from future email distributions. 
 We do not control third parties' collection or use of your information to serve interest-based advertising. However, these third parties may provide you with ways to choose not to have your information collected or used in this way. You can opt out of receiving targeted ads from members of the Network Advertising Initiative ("NAI") on the NAI's website.
 
 ### YOUR CALIFORNIA PRIVACY RIGHTS
 
-California's "Shine the Light" law (Civil Code Section § 1798.83) permits users of our Website that are California residents to request certain information regarding our disclosure of personal information to third parties for their direct marketing purposes. To make such a request, please send an email to info@MasterPoint.io.
+California's "Shine the Light" law (Civil Code Section § 1798.83) permits users of our Website that are California residents to request certain information regarding our disclosure of personal information to third parties for their direct marketing purposes. To make such a request, please send an email to hello@masterpoint.io.
 
 ### SECURITY
 
@@ -157,10 +157,10 @@ Unfortunately, the transmission of information via the internet is not completel
 
 ### OPT-OUT POLICY
 
-We may at times send you email communications with informational or promotional materials. If you prefer not to receive such marketing or promotional emails from us, you may unsubscribe completely by emailing us at: info@MasterPoint.io
+We may at times send you email communications with informational or promotional materials. If you prefer not to receive such marketing or promotional emails from us, you may unsubscribe completely by emailing us at: hello@masterpoint.io
 Please note that opt-out requests may take up to twenty-four (24) hours to process. Please also note that at times we may need to send you email communications that are transactional in nature such as service or termination announcements or payment confirmations which are communications you will not be able to opt-out of.
 
-If you would like us to remove your Personally Identifiable Information from our database, please send a request to: info@MasterPoint.io
+If you would like us to remove your Personally Identifiable Information from our database, please send a request to: hello@masterpoint.io
 
 We are not responsible for removing your personal information from the lists of any third-party services or other third party who has previously been provided your information in accordance with this notice.
 
@@ -175,4 +175,4 @@ We may revise our Privacy Policy at any time. In the event of a change in this P
 ### CONTACT INFORMATION
 
 To ask questions or comment about this privacy policy and our privacy practices, contact us at: https://MasterPoint.io/contact
-To register a complaint or concern, please email our privacy officer at: info@MasterPoint.io
+To register a complaint or concern, please email our privacy officer at: hello@masterpoint.io

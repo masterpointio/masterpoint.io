@@ -10,5 +10,5 @@ section_categories:
 id: our-word
 ---
 
-### Don't take our word for it... {.text-gradient .quoteLabel}
+### Our clients love our hands-on approach {.text-gradient .quoteLabel}
 {{<testimonials>}}

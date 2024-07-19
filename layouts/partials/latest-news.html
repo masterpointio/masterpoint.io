@@ -2,8 +2,8 @@
     <div class="container">
         <div class="row text-center justify-content-center">
             <div class="col col-12 col-md-10 col-lg-8 col-xl-7">
-            <h3 class="groupTitle">LATEST UPDATES</h3>
-            <p class="font22">Masterpoint provides updates on the latest industry news and insights on platform architecture and development.</p>
+            <h3 class="groupTitle">What we’ve been thinking about lately</h3>
+            <p class="font22">We’re pretty deep into the IaC and platform engineering community — and we think about the state of the industry a lot. Here’s a collection of some of our most recent ideas and updates.</p>
         </div></div>
         <div class="row">
             {{ range first 1 (where (.Site.RegularPages) "Type" "updates") }}
@@ -11,7 +11,7 @@
             {{end}}
         </div>
         <div class="updates-btn text-center">
-            <a href="/updates/" class="button btn-big btn-outline-gradient">Explore All Masterpoint Updates →</a>
+            <a href="/updates/" class="button btn-big btn-outline-gradient">Check out our musings →</a>
         </div>
     </div>
 </section>
