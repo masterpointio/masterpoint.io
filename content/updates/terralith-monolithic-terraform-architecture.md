@@ -6,37 +6,26 @@ author: Yangci Ou
 slug: terralith-monolithic-terraform-architecture
 date: 2024-08-99 # TBD
 description: This article explores the challenges and pitfalls of Terralith, a monolithic Terraform architecture in Infrastructure as Code, and uncover why a Terralith is not considered best practice.
-image: /img/updates/terraform-controller-overview/tf_controller_0.png # TODO
+image: /img/updates/terralith/terralith-file-structure-example.png
 callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a>
 ---
 
 <h2>Table of Contents</h2>
 
 - [What is a Terralith?](#what-is-a-terralith)
-- [In a Nutshell](#in-a-nutshell)
-- [Setting the Stage for GitOps with Terraform Controller](#setting-the-stage-for-gitops-with-terraform-controller)
-- [Managing Infrastructure-as-Code with Terraform Controller](#managing-infrastructure-as-code-with-terraform-controller)
-  - [Backend options](#backend-options)
-  - [Source reference](#source-reference)
-  - [Service account](#service-account)
-- [Version Control and Terraform Compatibility](#version-control-and-terraform-compatibility)
-- [Known Limitations](#known-limitations)
-  - [Terraform Plan and Drift Detection](#terraform-plan-and-drift-detection)
-  - [IPv6 and EKS Compatibility](#ipv6-and-eks-compatibility)
-  - [The Future of `tfctl` CLI](#the-future-of-tfctl-cli)
-- [Areas of Improvement](#areas-of-improvement)
-  - [Implementing ChatOps for Terraform Operations](#implementing-chatops-for-terraform-operations)
-  - [Utilizing Other Optional Features](#utilizing-other-optional-features)
-  - [Open Source UI](#open-source-ui)
-- [Time-sensitive: Weaveworks Issues and Further Impact on the Project](#time-sensitive-weaveworks-issues-and-further-impact-on-the-project)
+- [Why It’s Bad: Pitfalls & The Scalability Ceiling of Terraliths](#why-its-bad-pitfalls--the-scalability-ceiling-of-terraliths)
+  - [Complexities with the 3 M’s: Multi-Environment, Multi-Region, Multi-Account](#complexities-with-the-3-ms-multi-environment-multi-region-multi-account)
+  - [Collaborating in a Terralith](#collaborating-in-a-terralith)
+  - [State File Bloat -> Plans + Applies Slow Down](#state-file-bloat-plans-and-applies-slow-down)
+  - [Blast Radius: Walking Through a Minefield](#blast-radius-walking-through-a-minefield)
+- [What To Do About It / Avoiding a Terralith](#what-to-do-about-it--avoiding-a-terralith)
 - [Conclusion](#conclusion)
-- [Further Reading and Resources](#further-reading-and-resources)
 
 ## What is a Terralith?
 
 In the world of software engineering, we often hear about monolithic architecture, which is a model of software built with multiple components combined into a single program. Tightly coupled services live together. Updating or deploying one requires updating or deploying all of them. At a certain  scale, this can be very painful. A single massive root module that contains all the infrastructure definitions sounds like trying to cram an entire city into one skyscraper!
 
-In this post, we’ll explore a similar concept in the realm of Infrastructure as Code (IaC): the “Terralith.” This term is derived from the words “Terraform” and “monolith.” While not an official term, it was first coined by Nicki Watt of OpenCredo during [a HashiCorp Terraform talk](https://www.hashicorp.com/resources/evolving-infrastructure-terraform-opencredo) in 2019.
+In this post, we’ll explore a similar concept in the realm of Infrastructure as Code (IaC): the “Terralith.” This term is derived from the words “Terraform” and “monolith.” While not an official term, it was first coined by Nicki Watt of OpenCredo during [a HashiCorp Terraform talk](https://www.hashicorp.com/resources/evolving-infrastructure-terraform-opencredo).
 
 A Terralith is a Terraform or OpenTofu (which will be collectively referred to as "TF") project which manages multiple infrastructure across the platform within one root module (i.e. one state file). While a monolithic software application might have all its services contained within one codebase, ranging in functionality from authentication to payments to business logic, a Terralith might represent a majority of the infrastructure, including networking, compute, and storage.
 
@@ -52,7 +41,9 @@ At first glance, a Terralith might seem like a good idea. It simplifies the init
 
 However, as your infrastructure grows, the Terralith approach becomes problematic. Let’s examine why.
 1. [Complexities with the 3 M’s: Multi-Environment, Multi-Region, Multi-Account](#complexities-with-the-3-ms-multi-environment-multi-region-multi-account)
-2.
+2. [Collaborating in a Terralith](#collaborating-in-a-terralith)
+3. [State File Bloat -> Plans + Applies Slow Down](#state-file-bloat-plans-and-applies-slow-down)
+4. [Blast Radius: Walking Through a Minefield](#blast-radius-walking-through-a-minefield)
 
 #### Complexities with the 3 M’s: Multi-Environment, Multi-Region, Multi-Account
 One of the primary challenges is environment isolation. With all infrastructure configuration in one place, separating resources for different environments is difficult. This  leads to a higher risk of unintended cross-environmental impacts where changes meant for one environment inadvertently affect others.
@@ -61,29 +52,54 @@ In any non-trivial infrastructure, there are more variables than just the enviro
 
 In the context of fitting a city into a single skyscraper analogy, this is like trying to fit residential areas, industrial zones, commercial districts, and corporate headquarters all into different floors of the same building. It certainly is possible, but it becomes a nightmare to manage - think about all the noise complaints from the industrial zones! And it certainly is not easy to scale when this city’s population expands.
 
-####
+#### Collaborating in a Terralith
 Collaboration in a Terralith setup can be challenging as well. Since all the resources are provisioned with one root module, state is stored in one file. A common best practice in TF is to use [state locking](https://developer.hashicorp.com/terraform/language/state/locking), which locks the state file so only one operation can be executed at a given time. This is intended to prevent odd drift scenarios and state file corruption.
 
 Because of this best practice, two engineers working on completely different infrastructure in the Terralith at the same time can find themselves unable to perform state operations concurrently.
 
 Here is a diagram of what that might look like in practice. This highlights the hit to engineering productivity that the Terralith causes:
 
+![Collaboration in a Terralith](/img/updates/terralith/terralith-collaboration.png) <!-- Made with Excalidraw -->
 
+#### State File Bloat: Plans and Applies Slow Down
+Imagine a Terralith’s state file like a single, massive spreadsheet tracking every item in a rapidly growing warehouse. Eventually, it becomes so large that opening it or updating it takes forever.
 
+In IaC, the workflow first checks all resources against the real infrastructure, then plans the changes from your infrastructure code, and finally executes the plan by applying it. Even if we are trying to modify something as minor as renaming one resource, the system must verify against every single resource in the state.
 
+It’s a domino effect because this not only slows down the development and deployment process, but also increases the vulnerability to transient errors such as credential expirations and API rate limits. At Masterpoint, we've had clients with Terralith codebases which took over 30+ minutes for simple plans and applies. As you can imagine, they often timed out or reached the API limits.
+
+![Terralith API Limit Example](/img/updates/terralith/terralith-api-limit-example.png)
+
+#### Blast Radius: Walking Through a Minefield
+With the single  Terralith state file containing all resources, you have to be concerned about the  blast radius and risk of change. When everything is interconnected in a single configuration and state file, changes in one area can be far reaching and have unintended consequences in other areas. The risk associated with updates and modifications becomes harder to isolate. Containing the impact of changes is more difficult.
+
+For example, a critical bug fix for your application deployed on ECS might be blocked because an untested database upgrade was merged into the IaC codebase. That upgrade was not tested because there was a networking change that held the state file locked. And so on.
+
+A Terralith cannot deploy only one change, leaving the team stuck and the application unfixed, despite the changes being unrelated.
+
+[Targeted applies](https://developer.hashicorp.com/terraform/tutorials/state/resource-targeting) can provide temporary relief for Terralith challenges. These update specific resources or modules within your IaC without applying the whole configuration. But targeted applies are a band-aid solution as they do not solve the root problem of a Terralith.
+
+![Terralith Blast Radius](/img/updates/terralith/terralith-blast-radius.png)
+
+## What To Do About It / Avoiding a Terralith
+Recognizing the limitations of a Terralith architecture in Infrastructure as Code is the first step towards a more scalable and maintainable solution. While there's no one-size-fits-all process, the transition typically involves breaking down the monolithic root module into smaller, more manageable pieces. You can use a [strangler pattern](https://martinfowler.com/bliki/StranglerFigApplication.html) - modularization allows for better organization of resources, improved reusability, and easier management of complex infrastructure services.
+
+Breaking up a monolithic Terraform architecture is like splitting each floor of the skyscraper into its own separate building in our earlier analogy. Now, changes to the “residential” portion won’t affect the “commercial” portion. Each structure can be managed independently, solving the problems mentioned in the above sections.
+
+Of course, there are scenarios where a Terralith might make  sense, such as smaller projects , prototyping, and proof of concepts. “But as you evolve, as you have more teams and more complicated setups, you need to think about [blast radius, state management, and architecture],” as said by [Nicki Watt](https://www.hashicorp.com/resources/evolving-infrastructure-terraform-opencredo).
+
+While the specific end structure will vary based on organizational needs, a general approach to breaking up a Terralith involves splitting infrastructure into different services and drawing clear boundaries around them. You have a few options to do this. At Masterpoint, we typically create root modules at the service boundary: AWS RDS clusters, AWS SQS Queues, Lambda Functions, and ECS Services all get their own root module. Then we instantiate instances of these root modules with specific configuration for each time the service is used within our client’s infrastructure. For example, if you have a prod and a staging database, the same AWS RDS root module would be configured differently and used two times.
+
+TF Workspaces is another method to  manage this complexity. By leveraging workspaces, teams can maintain separation between environments (and thus different backend state storage) while reusing the same TF codebase. This approach adheres to the DRY principle, reducing duplication and helping some of the pitfalls mentioned above.
+
+Infrastructure as Code wrapper tools such as [Atmos](https://atmos.tools/), [Terramate](https://terramate.io/), [Terragrunt](https://terragrunt.gruntwork.io/), among others, can also assist in managing complex, modular TF setups. These tools help organize resources and modules into components, which itself is an opinionated term, allowing each to have its own isolated state and backend in every environment, unlike a Terralith where all resources are congested into one single backend.
 
 ## Conclusion
 
-The Terraform Controller could be a real game-changer in managing infrastructure as code via GitOps. We believe with some further investment and improvements that it would be solid competitor to the primary open-source Terraform automation tool, [Atlantis](https://www.runatlantis.io/). Still, we acknowledge that building a strong system around this tool requires effort and our suggestion is to only entertain using this tool if your org is ready for some level of bleeding-edge investment themselves. If you're intrigued by that idea, we welcome any engineering organizations who are eager to operationalize this tool internally to [reach out and chat with us](https://masterpoint.io/contact/) as we'd love to help you build a true GitOps Terraform system!
+Each organization has its own needs and constraints when deciding on their approach to organizing their Infrastructure as Code. As mentioned above, the Terralith has its place, but can cause issues as your infrastructure grows.
 
-We would like to emphasize our positive experience with the community aspect of this product. The development team has been very responsive to our questions, providing fast and complete responses. While we understand that it may take some time to add requested features/fixes to the roadmap and implement them, we feel that the team was highly receptive to user feedback. Given recent news, we hope everything goes as smoothly as possible for the team and the product they have been working so hard on.
+Ultimately, the key is to have a scalable strategy where the goal is to create a flexible, maintainable IaC structure that can evolve with your organization's needs. You must balance separation of concerns with ease of management.
 
-Overall, we're still on a mission to explore the evolving landscape of GitOps and Terraform, and we need your help! [Get in touch with us on LinkedIn](https://www.linkedin.com/company/masterpoint-consulting/) so you can share your experiences and thoughts so we can work together to make them even better!
+By understanding the pitfalls of the Terralith architecture, you and your teams can avoid mistakes that will lead to further issues.
 
-## Further Reading and Resources
-
-* Dive into the official [Weaveworks GitOps Terraform Controller documentation](https://weaveworks.github.io/tf-controller/) for more in-depth knowledge.
-* Follow [Get Started with the Terraform Controller](https://docs.gitops.weave.works/docs/terraform/get-started/) to try it out.
-* Check out an [EKS scaling example](https://github.com/tf-controller/eks-scaling).
-* Join [Terraform Controller Slack space](https://weave-community.slack.com/archives/C054MR4UP88) to participate in community discussions.
-* Go through the [roadmap](https://github.com/weaveworks/tf-controller#roadmap) to understand the future development milestones.
+Stay tuned for one of our upcoming post featuring practical tips on breaking down a Terralith, as well as a case study detailing how we helped a client decompose their Terraliths to achieve a more scalable and maintainable infrastructure!
