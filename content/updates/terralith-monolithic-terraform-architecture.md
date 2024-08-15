@@ -71,6 +71,7 @@ It’s a domino effect because this not only slows down the development and depl
 
 ![Terralith API Limit Example](/img/updates/terralith/terralith-api-limit-example.png)
 
+
 ###### Blast Radius: Walking Through a Minefield
 With the single  Terralith state file containing all resources, you have to be concerned about the  blast radius and risk of change. When everything is interconnected in a single configuration and state file, changes in one area can be far reaching and have unintended consequences in other areas. The risk associated with updates and modifications becomes harder to isolate. Containing the impact of changes is more difficult.
 
