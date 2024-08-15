@@ -46,14 +46,14 @@ However, as your infrastructure grows, the Terralith approach becomes problemati
 3. [State File Bloat -> Plans + Applies Slow Down](#state-file-bloat-plans-and-applies-slow-down)
 4. [Blast Radius: Walking Through a Minefield](#blast-radius-walking-through-a-minefield)
 
-#### Complexities with the 3 M’s: Multi-Environment, Multi-Region, Multi-Account
+###### Complexities with the 3 M’s: Multi-Environment, Multi-Region, Multi-Account
 One of the primary challenges is environment isolation. With all infrastructure configuration in one place, separating resources for different environments is difficult. This  leads to a higher risk of unintended cross-environmental impacts where changes meant for one environment inadvertently affect others.
 
 In any non-trivial infrastructure, there are more variables than just the environment (production, staging, development). There are also [multiple regions](https://aws.amazon.com/about-aws/global-infrastructure/regions_az/) (e.g. AWS’ US East, US West, etc.) and multiple accounts (artifacts, log archive, disaster recovery, etc). With all these intertwined, the Terralith IaC pattern becomes prone to errors and misconfigurations. It becomes difficult to understand the relationships and dependencies between resources.
 
 In the context of fitting a city into a single skyscraper analogy, this is like trying to fit residential areas, industrial zones, commercial districts, and corporate headquarters all into different floors of the same building. It certainly is possible, but it becomes a nightmare to manage - think about all the noise complaints from the industrial zones! And it certainly is not easy to scale when this city’s population expands.
 
-#### Collaborating in a Terralith
+###### Collaborating in a Terralith
 Collaboration in a Terralith setup can be challenging as well. Since all the resources are provisioned with one root module, state is stored in one file. A common best practice in TF is to use [state locking](https://developer.hashicorp.com/terraform/language/state/locking), which locks the state file so only one operation can be executed at a given time. This is intended to prevent odd drift scenarios and state file corruption.
 
 Because of this best practice, two engineers working on completely different infrastructure in the Terralith at the same time can find themselves unable to perform state operations concurrently.
@@ -62,7 +62,7 @@ Here is a diagram of what that might look like in practice. This highlights the 
 
 ![Collaboration in a Terralith](/img/updates/terralith/terralith-collaboration.png) <!-- Made with Excalidraw -->
 
-#### State File Bloat: Plans and Applies Slow Down
+###### State File Bloat: Plans and Applies Slow Down
 Imagine a Terralith’s state file like a single, massive spreadsheet tracking every item in a rapidly growing warehouse. Eventually, it becomes so large that opening it or updating it takes forever.
 
 In IaC, the workflow first checks all resources against the real infrastructure, then plans the changes from your infrastructure code, and finally executes the plan by applying it. Even if we are trying to modify something as minor as renaming one resource, the system must verify against every single resource in the state.
@@ -71,7 +71,7 @@ It’s a domino effect because this not only slows down the development and depl
 
 ![Terralith API Limit Example](/img/updates/terralith/terralith-api-limit-example.png)
 
-#### Blast Radius: Walking Through a Minefield
+###### Blast Radius: Walking Through a Minefield
 With the single  Terralith state file containing all resources, you have to be concerned about the  blast radius and risk of change. When everything is interconnected in a single configuration and state file, changes in one area can be far reaching and have unintended consequences in other areas. The risk associated with updates and modifications becomes harder to isolate. Containing the impact of changes is more difficult.
 
 For example, a critical bug fix for your application deployed on ECS might be blocked because an untested database upgrade was merged into the IaC codebase. That upgrade was not tested because there was a networking change that held the state file locked. And so on.
