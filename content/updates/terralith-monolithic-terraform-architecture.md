@@ -4,9 +4,10 @@ draft: false
 title: "The Terralith: Monolithic Architecture of Terraform & Infrastructure as Code"
 author: Yangci Ou
 slug: terralith-monolithic-terraform-architecture
-date: 2024-08-20 # TBD
+date: 2024-08-20 # TODO TBD
 description: This article explores the challenges and pitfalls of Terralith, a monolithic Terraform architecture in Infrastructure as Code, and uncovers why a Terralith is not considered best practice.
-image: /img/updates/terralith/terralith-file-structure-example.png
+image: /img/updates/terralith/terralith-article.png # https://lucid.app/lucidchart/1ef59efd-6f8c-4406-acac-cc21a7d95e45/edit?beaconFlowId=6CD419AFAB52646D&invitationId=inv_9d51bf95-2dd6-4c31-b9fa-9378b638482c&page=0_0
+# preview_image: # Use preview_image to prevent image overflow
 callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a></p>
 ---
 
