@@ -86,7 +86,7 @@ A Terralith cannot deploy only one change, leaving the team stuck and the applic
 ## What To Do About It / Avoiding a Terralith
 Recognizing the limitations of a Terralith architecture in Infrastructure as Code is the first step towards a more scalable and maintainable solution. While there's no one-size-fits-all process, the transition typically involves breaking down the monolithic root module into smaller, more manageable pieces. You can use a [strangler pattern](https://martinfowler.com/bliki/StranglerFigApplication.html) - modularization allows for better organization of resources, improved reusability, and easier management of complex infrastructure services.
 
-Breaking up a monolithic Terraform architecture is like splitting each floor of the skyscraper into its own separate building in our earlier analogy. Now, changes to the “residential” portion won’t affect the “commercial” portion. Each structure can be managed independently, solving the problems mentioned in the above sections.
+Breaking up a monolithic TF architecture is like splitting each floor of the skyscraper into its own separate building in our earlier analogy. Now, changes to the “residential” portion won’t affect the “commercial” portion. Each structure can be managed independently, solving the problems mentioned in the above sections.
 
 Of course, there are scenarios where a Terralith might make  sense, such as smaller projects , prototyping, and proof of concepts. “But as you evolve, as you have more teams and more complicated setups, you need to think about [blast radius, state management, and architecture],” as said by [Nicki Watt](https://www.hashicorp.com/resources/evolving-infrastructure-terraform-opencredo).
 
