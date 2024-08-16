@@ -24,7 +24,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 
 ## What is a Terralith?
 
-In the world of software engineering, we often hear about monolithic architecture, which is a model of software built with multiple components combined into a single program. Tightly coupled services live together. Updating or deploying one requires updating or deploying all of them. At a certain  scale, this can be very painful.
+In the world of software engineering, we often hear about monolithic architecture, which is a model of software built with multiple components combined into a single program. Tightly coupled services live together. Updating or deploying one requires updating or deploying all of them. At a certain scale, this can be very painful.
 
 In this post, we’ll explore a similar concept in the realm of Infrastructure as Code (IaC): the “Terralith.” This term is derived from the words “Terraform” and “monolith.” While not an official term, it was first coined by Nicki Watt of OpenCredo during [a HashiCorp Terraform talk](https://www.hashicorp.com/resources/evolving-infrastructure-terraform-opencredo).
 
