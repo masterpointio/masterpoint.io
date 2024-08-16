@@ -38,7 +38,7 @@ Below is an example of a Terralith. Although there are some reusability through 
 
 ## Why It’s Bad: Pitfalls & The Scalability Ceiling of Terraliths
 
-At first glance, a Terralith might seem like a good idea. It simplifies the initial setup and is easy to manage. You don’t have to worry about running multiple tf apply commands, splitting configurations, or managing multiple states. Everything is in one place which makes it easy to navigate, modify, and deploy.
+At first glance, a Terralith might seem like a good idea. It simplifies the initial setup and is easy to manage. You don’t have to worry about running multiple `tf apply` commands, splitting configurations, or managing multiple states. Everything is in one place which makes it easy to navigate, modify, and deploy.
 
 However, as your infrastructure grows, the Terralith approach becomes problematic. Let’s examine why.
 1. [Complexities with the 3 M’s: Multi-Environment, Multi-Region, Multi-Account](#complexities-with-the-3-ms-multi-environment-multi-region-multi-account)
@@ -56,7 +56,7 @@ In the context of fitting a city into a single skyscraper analogy, this is like 
 ###### Collaborating in a Terralith
 Collaboration in a Terralith setup can be challenging as well. Since all the resources are provisioned with one root module, state is stored in one file. A common best practice in TF is to use [state locking](https://developer.hashicorp.com/terraform/language/state/locking), which locks the state file so only one operation can be executed at a given time. This is intended to prevent odd drift scenarios and state file corruption.
 
-Because of this best practice, two engineers working on completely different infrastructure in the Terralith at the same time can find themselves unable to perform state operations concurrently.
+Because of this practice, two engineers working on completely different infrastructure in the Terralith at the same time can find themselves unable to perform state operations concurrently.
 
 Here is a diagram of what that might look like in practice. This highlights the hit to engineering productivity that the Terralith causes:
 
@@ -75,7 +75,7 @@ It’s a domino effect because this not only slows down the development and depl
 ###### Blast Radius: Walking Through a Minefield
 With the single  Terralith state file containing all resources, you have to be concerned about the  blast radius and risk of change. When everything is interconnected in a single configuration and state file, changes in one area can be far reaching and have unintended consequences in other areas. The risk associated with updates and modifications becomes harder to isolate. Containing the impact of changes is more difficult.
 
-For example, a critical bug fix for your application deployed on ECS might be blocked because an untested database upgrade was merged into the IaC codebase. That upgrade was not tested because there was a networking change that held the state file locked. And so on.
+For example, a critical bug fix for your application deployed on [ECS](https://aws.amazon.com/ecs/) might be blocked because an untested database upgrade was merged into the IaC codebase. That upgrade was not tested because there was a networking change that held the state file locked. And so on.
 
 A Terralith cannot deploy only one change, leaving the team stuck and the application unfixed, despite the changes being unrelated.
 
@@ -92,7 +92,7 @@ Of course, there are scenarios where a Terralith might make  sense, such as smal
 
 While the specific end structure will vary based on organizational needs, a general approach to breaking up a Terralith involves splitting infrastructure into different services and drawing clear boundaries around them. You have a few options to do this. At Masterpoint, we typically create root modules at the service boundary: AWS RDS clusters, AWS SQS Queues, Lambda Functions, and ECS Services all get their own root module. Then we instantiate instances of these root modules with specific configuration for each time the service is used within our client’s infrastructure. For example, if you have a prod and a staging database, the same AWS RDS root module would be configured differently and used two times.
 
-TF Workspaces is another method to  manage this complexity. By leveraging workspaces, teams can maintain separation between environments (and thus different backend state storage) while reusing the same TF codebase. This approach adheres to the DRY principle, reducing duplication and helping some of the pitfalls mentioned above.
+[TF Workspaces](https://opentofu.org/docs/language/state/workspaces/) is another method to  manage this complexity. By leveraging workspaces, teams can maintain separation between environments (and thus different backend state storage) while reusing the same TF codebase. This approach adheres to the [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle, reducing duplication and helping some of the pitfalls mentioned above.
 
 Infrastructure as Code wrapper tools such as [Atmos](https://atmos.tools/), [Terramate](https://terramate.io/), [Terragrunt](https://terragrunt.gruntwork.io/), among others, can also assist in managing complex, modular TF setups. These tools help organize resources and modules into components, which itself is an opinionated term, allowing each to have its own isolated state and backend in every environment, unlike a Terralith where all resources are congested into one single backend.
 
@@ -104,4 +104,4 @@ Ultimately, the key is to have a scalable strategy where the goal is to create a
 
 By understanding the pitfalls of the Terralith architecture, you and your teams can avoid mistakes that will lead to further issues.
 
-Stay tuned for one of our upcoming post featuring practical tips on breaking down a Terralith, as well as a case study detailing how we helped a client decompose their Terraliths to achieve a more scalable and maintainable infrastructure!
+Stay tuned for one of our upcoming post featuring practical tips on breaking down a Terralith, as well as a case study detailing how we helped a client decompose their Terralith to achieve a more scalable and maintainable infrastructure!
