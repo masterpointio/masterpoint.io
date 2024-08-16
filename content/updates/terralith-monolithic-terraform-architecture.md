@@ -63,7 +63,7 @@ Here is a diagram of what that might look like in practice. This highlights the 
 ![Collaboration in a Terralith](/img/updates/terralith/terralith-collaboration.png) <!-- Made with Excalidraw -->
 
 ###### State File Bloat: Plans and Applies Slow Down
-Imagine a Terralith’s state file like a single, massive spreadsheet tracking every item in a rapidly growing warehouse. Eventually, it becomes so large that opening it or updating it takes forever.
+Imagine a Terralith’s state file like a single, massive spreadsheet tracking every item in a rapidly growing warehouse. Eventually, it becomes so large that comparing the current state of the resources with the state recorded in the file or updating it takes forever.
 
 In IaC, the workflow first checks all resources against the real infrastructure, then plans the changes from your infrastructure code, and finally executes the plan by applying it. Even if we are trying to modify something as minor as renaming one resource, the system must verify against every single resource in the state.
 
