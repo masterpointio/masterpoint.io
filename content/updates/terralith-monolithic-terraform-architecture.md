@@ -40,7 +40,7 @@ Below is an example of a Terralith. Although there are some reusability through 
 
 At first glance, a Terralith might seem like a good idea. It simplifies the initial setup and is easy to manage. You don’t have to worry about running multiple `tf apply` commands, splitting configurations, or managing multiple states. Everything is in one place which makes it easy to navigate, modify, and deploy.
 
-However, as your infrastructure grows, the Terralith approach becomes problematic. Let’s examine why.
+However, as your infrastructure grows, the Terralith approach becomes problematic. Let's examine some of the reasons why.
 1. [Complexities with the 3 M’s: Multi-Environment, Multi-Region, Multi-Account](#complexities-with-the-3-ms-multi-environment-multi-region-multi-account)
 2. [Collaborating in a Terralith](#collaborating-in-a-terralith)
 3. [State File Bloat -> Plans + Applies Slow Down](#state-file-bloat-plans-and-applies-slow-down)
