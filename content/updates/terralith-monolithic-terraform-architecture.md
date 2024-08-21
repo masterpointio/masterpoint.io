@@ -65,7 +65,7 @@ Here is a diagram of what that might look like in practice. This highlights the 
 ###### State File Bloat: Plans and Applies Slow Down
 Imagine a Terralith’s state file like a single, massive spreadsheet tracking every item in a rapidly growing warehouse. Eventually, it becomes so large that comparing the current state of the resources with the state recorded in the file or updating it takes forever.
 
-In IaC, the workflow first checks all resources against the real infrastructure, then plans the changes from your infrastructure code, and finally executes the plan by applying it. Even if we are trying to modify something as minor as renaming one resource, the system must verify against every single resource in the state.
+In IaC, the workflow first checks all resources against the real infrastructure, then plans the changes from your infrastructure code, and finally executes the plan by applying it. Even if we are trying to modify something as minor as renaming one resource, **the system must verify against every single resource in the state file**.
 
 It’s a domino effect because this not only slows down the development and deployment process, but also increases the vulnerability to transient errors such as credential expirations and API rate limits. At Masterpoint, we've had clients with Terralith codebases which took over 30+ minutes for simple plans and applies. As you can imagine, they often timed out or reached the API limits.
 
