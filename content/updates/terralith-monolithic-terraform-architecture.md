@@ -69,8 +69,7 @@ In IaC, the workflow first checks all resources against the real infrastructure,
 
 It’s a domino effect because this not only slows down the development and deployment process, but also increases the vulnerability to transient errors such as credential expirations and API rate limits. At Masterpoint, we've had clients with Terralith codebases which took over 30+ minutes for simple plans and applies. As you can imagine, they often timed out or reached the API limits.
 
-![Terralith API Limit Example](/img/updates/terralith/terralith-api-limit-example.png)
-
+![Terralith API Limit Example](/img/updates/terralith/terralith-api-limit-example.png) <!-- test markdown command compiling into html -->
 
 ###### Blast Radius: Walking Through a Minefield
 With the single  Terralith state file containing all resources, you have to be concerned about the  blast radius and risk of change. When everything is interconnected in a single configuration and state file, changes in one area can be far reaching and have unintended consequences in other areas. The risk associated with updates and modifications becomes harder to isolate. Containing the impact of changes is more difficult.
