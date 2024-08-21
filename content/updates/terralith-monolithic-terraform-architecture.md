@@ -33,7 +33,7 @@ A Terralith is a Terraform or OpenTofu (which will be collectively referred to a
 The Terralith is the simplest pattern in any new IaC project organization, and as such, it is one of the most common starting points. The defining characteristic of a Terralith is a [single state file](https://opentofu.org/docs/language/state/) that holds the entire state of the infrastructure. All infrastructure is provisioned from a single root module where it continuously expands as requirements grow. This centralized approach can seem appealing at first, but we’ll point out the issues that come from this pattern later.
 
 Below is an example of a Terralith. Although there are some reusability through [child modules](https://opentofu.org/docs/language/modules/#child-modules), it still has a monolithic root module. This means that all resources are managed in **_one singular state file_** and therefore tightly coupled together:
-![Terralith Monolith Example File Structure](/img/updates/terralith/terralith-file-structure-example.png) <!-- Made with carbon.now.sh and Excalidraw -->
+![Terralith Monolith Example File Structure](/img/updates/terralith/terralith-file-structure-example.png) <!-- Made with carbon.now.sh and Excalidraw and Lucid -->
 
 
 ## Why It’s Bad: Pitfalls & The Scalability Ceiling of Terraliths
@@ -69,7 +69,7 @@ In IaC, the workflow first checks all resources against the real infrastructure,
 
 It’s a domino effect because this not only slows down the development and deployment process, but also increases the vulnerability to transient errors such as credential expirations and API rate limits. At Masterpoint, we've had clients with Terralith codebases which took over 30+ minutes for simple plans and applies. As you can imagine, they often timed out or reached the API limits.
 
-![Terralith API Limit Example](/img/updates/terralith/terralith-api-limit-example.png) <!-- test markdown command compiling into html -->
+![Terralith API Limit Example](/img/updates/terralith/terralith-api-limit-example.png) <!-- API Limit Screenshot -->
 
 ###### Blast Radius: Walking Through a Minefield
 With the single  Terralith state file containing all resources, you have to be concerned about the  blast radius and risk of change. When everything is interconnected in a single configuration and state file, changes in one area can be far reaching and have unintended consequences in other areas. The risk associated with updates and modifications becomes harder to isolate. Containing the impact of changes is more difficult.
@@ -80,7 +80,7 @@ A Terralith cannot deploy only one change, leaving the team stuck and the applic
 
 [Targeted applies](https://developer.hashicorp.com/terraform/tutorials/state/resource-targeting) can provide temporary relief for Terralith challenges. These update specific resources or modules within your IaC without applying the whole configuration. But targeted applies are a band-aid solution as they do not solve the root problem of a Terralith.
 
-![Terralith Blast Radius](/img/updates/terralith/terralith-blast-radius.png)
+![Terralith Blast Radius](/img/updates/terralith/terralith-blast-radius.png) <!-- Made with Excalidraw -->
 
 ## What To Do About It / Avoiding a Terralith
 Recognizing the limitations of a Terralith architecture in Infrastructure as Code is the first step towards a more scalable and maintainable solution. While there's no one-size-fits-all process, the transition typically involves breaking down the monolithic root module into smaller, more manageable pieces. You can use a [strangler pattern](https://martinfowler.com/bliki/StranglerFigApplication.html) - modularization allows for better organization of resources, improved reusability, and easier management of complex infrastructure services.
