@@ -4,7 +4,7 @@ draft: false
 title: "The Terralith: Monolithic Architecture of Terraform & Infrastructure as Code"
 author: Yangci Ou
 slug: terralith-monolithic-terraform-architecture
-date: 2024-08-20 # TODO TBD
+date: 2024-08-22
 description: This article explores the challenges and pitfalls of Terralith, a monolithic Terraform architecture in Infrastructure as Code, and uncovers why a Terralith is not considered best practice.
 image: /img/updates/terralith/terralith-article.png
 preview_image: /img/updates/terralith/terralith-preview-image.png # Use preview_image to prevent image overflow, best aspect ratios 270x355 or 600x700
