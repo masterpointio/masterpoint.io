@@ -2,7 +2,7 @@
 visible: true
 draft: false
 title: Managed service partners
-weight: 5
+weight: 4
 icon: /img/services/icon_engineering.svg
 id: managed-service-partners
 description: >-
