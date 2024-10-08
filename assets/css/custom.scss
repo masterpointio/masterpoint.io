@@ -1392,7 +1392,7 @@ footer {
       }
     }
   }
-  #what-masterpoint {
+  #were-masterpoint {
     padding: 3.4rem 0 1.95rem;
     background: #fff;
 
@@ -1707,6 +1707,10 @@ footer {
       border-radius:3px;
       border:3px solid $highlight;
       margin-top:24px;
+
+      p {
+        margin-bottom: 0;
+      }
     }
   }
   .postMeta {
@@ -1904,6 +1908,10 @@ footer {
       line-height: 1.4em;
       margin-bottom: 1.35em;
     }
+  }
+
+  ul {
+    margin-left: 30px;
   }
 }
 #who-our-team {
@@ -2142,7 +2150,7 @@ footer {
     }
   }
 }
-#comprehensive-cloud-assessment {
+#iac-audit {
   background: #fff;
   .bg-image {
     width: 36%;
@@ -2167,10 +2175,13 @@ footer {
     }
   }
 }
-#masterpoint-blueprint-framework {
+#team-training {
   padding: 7.3rem 0 7.8rem;
   color: #fff;
   background: #031e1f;
+  h3 {
+    color: #fff;
+  }
   .bg-image {
     width: 100%; position: absolute;
     &:before {
@@ -2186,7 +2197,7 @@ footer {
     }
   }
 }
-#terraform-transformation {
+#infra-innovation {
   padding: 7.5rem 0 6.4rem;
   background: #fff;
   .bg-image {
@@ -2204,7 +2215,7 @@ footer {
   }
 }
 
-#platform-engineering-service {
+#managed-service-partners {
   padding: 7.5rem 0 6.4rem;
   background: #000;
   color:#fff;

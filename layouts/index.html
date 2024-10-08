@@ -15,13 +15,13 @@
                         </div>
                         {{end}}
 
-                        <h2>
+                        <h3>
                             {{if .Params.banner_title}}
                             {{.Params.banner_title|safeHTML}}
                             {{ else}}
                             {{ .Title | safeHTML }}
                             {{end}}
-                        </h2>
+                        </h3>
                         {{if .Params.banner_text}}
                         <div class="bannerTxt">{{ .Params.banner_text|safeHTML}}</div>
                         {{end}}

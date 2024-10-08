@@ -7,13 +7,11 @@ section_image: /img/cloud_architecture.png
 #image: /img/bg_featured_video.jpg
 section_categories:
     - Home
-id: what-masterpoint
+id: were-masterpoint
 ---
 
-### What is Masterpoint? {.sectionTitle .big .text-pine}
+### Hi, we're Masterpoint {.sectionTitle .big .text-pine}
 
-Masterpoint partners with high-performing tech startups to help them confidently navigate their platform journey and build on top of AWS. We work alongside our clients to build and enable cloud environments that are self-service, compliant, automated, and positioned for rapid growth.
+We partner with growing engineering orgs to help turn unpredictable and chaotic infrastructure into codified clarity. With over a decade of experience working with technical management, architecture, and engineering, we’re a perfect choice for stress-free, effective IaC implementation.
 
-Our impact is that our customers leverage the cloud instead of struggling with it.
-
-<a href="/who-we-are/" class="button btn-outline-gradient text-pine btn-big">Meet Our Team →</a>
+<a href="/who-we-are/" class="button btn-outline-gradient text-pine btn-big">Learn about us →</a>

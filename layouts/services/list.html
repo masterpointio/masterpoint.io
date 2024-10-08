@@ -14,13 +14,13 @@
                             {{.Params.banner_tagline | safeHTML}}
                         </div>
                         {{end}}
-                        <h2>
+                        <h3>
                             {{if .Params.banner_title}}
                             {{.Params.banner_title|safeHTML}}
                             {{ else}}
                             {{ .Title | safeHTML }}
                             {{end}}
-                        </h2>
+                        </h3>
                         {{if .Params.banner_text}}
                         <div class="bannerTxt">{{ .Params.banner_text|safeHTML}}</div>
                         {{end}}
@@ -37,7 +37,6 @@
         </div>
         <div class="video-wrapper"><iframe src="https://player.vimeo.com/video/821330736?background=1&muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe><script src="https://player.vimeo.com/api/player.js"></script></div>
     </section>
-
 <main role="main" class="main-sections">
     {{range .Pages}}
     <section class="service-section" {{if .Params.id}} id="{{ .Params.id }}"{{end}}>

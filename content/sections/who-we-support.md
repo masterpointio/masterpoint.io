@@ -6,7 +6,7 @@ size: col-12 col-md-12 col-lg-8
 #section_image: /img/img_matt_gowie.png
 #image: /img/bg_our_team.jpg
 section_categories:
-    - Who We Are
+    - who-we-are
 id: section-who-we-support
 ---
 
