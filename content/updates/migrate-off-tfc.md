@@ -19,7 +19,7 @@ As a quick aside, we have nothing against HCP Terraform or HashiCorp. The produc
 
 The goal of this post is to support that portion of the community as well as share our experience.
 
-At the end of this post, you’ll learn how to migrate away from Terraform Cloud successfully.
+By the end of this post, you’ll learn how to migrate away from Terraform Cloud successfully.
 
 # Preparation for Migration
 
@@ -29,7 +29,7 @@ Before diving into the actual migration process, it's crucial to assess your cur
 1. Locate your state files. You will need to migrate these state files if they're stored in Terraform Cloud.
 1. Evaluate the variables and secrets stored within Terraform Cloud.
 1. Evaluate any additional Terraform Cloud use cases or tools that you rely on (for example, drift detection, Infracost, Sentinel, or similar tools).
-1. Consider and define any new or different  configuration your IaC migration destination requires.
+1. Consider and define any new or different configuration that your new IaC migration destination requires.
 
 This initial assessment will help you plan your migration strategy and ensure no critical data is lost during the transition.
 
@@ -68,7 +68,7 @@ To migrate the state, you must use the Terraform [API](https://www.terraform.io/
 
 This extra step makes the migration process more labor-intensive compared to other backends. We’ve found [this detailed guide on downloading your Terraform state files to be helpful](https://github.com/hashicorp/terraform/issues/33214#issuecomment-1553223031). It is a GitHub comment by a HashiCorp team member.
 
-Ensure your new storage solution is configured correctly to handle Terraform state files, including appropriate redundancy, access permissions, and encryption settings. While there are other options, we encourage our clients to utilize their primary cloud’s object storage solution, like AWS S3, Google Cloud Storage, or Azure’s Blob Storage, to ensure that the infrastructure management process is secure, reliable, and integrated within the broader cloud environment. If you want a jumpstart on using S3 as your state storage, check out Cloud Posse’s tfstate-backend module.
+Ensure your new storage solution is configured correctly to handle Terraform state files, including appropriate redundancy, access permissions, and encryption settings. While there are other options, we encourage our clients to utilize their primary cloud’s object storage solution, like AWS S3, Google Cloud Storage, or Azure’s Blob Storage, to ensure that the infrastructure management process is secure, reliable, and integrated within the broader cloud environment. If you want a jumpstart on using S3 as your state storage, [check out Cloud Posse’s tfstate-backend module](https://github.com/cloudposse/terraform-aws-tfstate-backend).
 
 ## Variables and Secrets Management
 
@@ -110,7 +110,7 @@ The destination you choose might have additional features, configuration, or fun
 
 For example, if you’re going to migrate to Spacelift, there is configuration that either doesn’t have a direct equivalent in TFC or wasn’t available because of the tier level:
 Do you want to tailor user permissions or workflow very specifically? Define your custom rules with [Rego-based](https://www.openpolicyagent.org/docs/latest/policy-language/) policies.
-Are you trying to solve the problem of managing segmentation and access control in large organizations or complex projects with multiple teams? Consider using [Spaces](https://docs.spacelift.io/concepts/spaces) feature.
+Are you trying to solve the problem of managing segmentation and access control in large organizations or complex projects with multiple teams? Consider using [Spaces](https://docs.spacelift.io/concepts/spaces) to section up your various Stacks.
 
 Investigate your migration destination and make a plan for using these new features. Again, unless the new functionality is required, plan for a post-migration project.
 
@@ -185,7 +185,7 @@ import {
 
 ## Checklist
 
-Here’s the promised [checklist](https://docs.google.com/document/d/1ibwIi3gKIx7KmhsnQtz8Xseb_gpLasC4wPMRyG57jiA/edit?usp=sharing). This list covers common tasks, but you should review and customize them for your migration project’s unique needs.
+Here’s the promised [checklist](https://docs.google.com/document/d/1ibwIi3gKIx7KmhsnQtz8Xseb_gpLasC4wPMRyG57jiA/edit?usp=sharing) in GDoc form, which you can easily copy. This list covers common tasks, but you should review and customize them for your migration project’s unique needs.
 
 # Conclusion
 
