@@ -37,7 +37,7 @@ Let’s walk through these steps in more detail.
 
 ## Decide On A Platform To Migrate To
 
-You’ve probably already picked one, but in case you’re still hesitating, here are some options to consider: [Spacelift](https://spacelift.io/), [Terrateam](https://terrateam.io/), [Terramate](https://terramate.io/), [Env0](https://www.env0.com/), [Scalr](https://www.scalr.com/), [Atlantis](https://www.runatlantis.io/), [Terrakube](https://terrakube.org/), or similar.
+You’ve probably already picked one, but in case you’re still hesitating, here are some options to consider: [Spacelift](https://spacelift.io/), [Terrateam](https://terrateam.io/), [Terramate](https://terramate.io/), [Env0](https://www.env0.com/), [Scalr](https://www.scalr.com/), [Atlantis](https://www.runatlantis.io/), [Terrakube](https://terrakube.org/), [Digger](https://digger.dev/), or similar.
 
 Some of them have already taken care of specific migration instructions, e.g. [How to Migrate From Terraform Cloud to Spacelift](https://spacelift.io/blog/how-to-migrate-from-terraform-cloud), [Migrating to Terrakube](https://docs.terrakube.io/user-guide/migrating-to-terrakube), [Migration TFC/E to Scalr](https://github.com/Scalr/terraform-scalr-migrate-tfc). Reviewing provider-specific documentation is a good idea, but this post will help you with a migration no matter your destination.
 
