@@ -81,6 +81,7 @@
 
 </main>
 
+
 {{ partial "schedule-assessment.html" . }}
 
 {{ partial "signup-section.html" .}}
@@ -88,6 +89,21 @@
 {{ partial "footer.html" . }}
 
 {{ partial "scripts.html" . }}
+<!-- On Load Lightbox -->
+
+<div id="popup" class="mfp-hide">
+    <a href="/power-digital-case-study/"><img src="/img/lightbox.png" target="_blank" alt="Read Our Case Study"></a>
+  </div>
+  
+  <script>
+    $.magnificPopup.open({
+        items: {
+            src: '#popup',
+            type:'inline'
+        }
+    });
+  </script> 
+
 
 <script>
     if (window.netlifyIdentity) {

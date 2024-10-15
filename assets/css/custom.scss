@@ -1094,7 +1094,7 @@ footer {
 }
 
 .mfp-bg {
-  background: $default;
+  background: darken($pine,10%);
 }
 
 //* {
@@ -2555,4 +2555,8 @@ footer {
     }
   }
 
+}
+
+.mfp-close-btn-in .mfp-close {
+  color:#fff;
 }
