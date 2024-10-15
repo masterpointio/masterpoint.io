@@ -2510,6 +2510,10 @@ footer {
     }
   }
 
+  main {
+    padding:0;
+  }
+
   &.noBannerImg {
     #banner {
       &:before {
@@ -2537,4 +2541,18 @@ footer {
       }
     }
   }
+}
+
+.landing-banner {
+  #banner h1, #banner h2 {
+    text-transform: none;
+    font-size:80px;
+  }
+
+  #banner {
+    .bannerTxtBx {
+      max-width: none;
+    }
+  }
+
 }
