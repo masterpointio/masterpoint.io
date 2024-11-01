@@ -47,11 +47,16 @@
         {{end}}
         <div class="container">
             <div class="serviceBx text-center">
+                {{if .Params.icon}}
                 <div class="serviceIcon bg-gradient">
-                    {{if .Params.icon}}
                     <img src="{{.Params.icon}}" />
-                    {{end}}
                 </div>
+                {{end}}
+                {{if .Params.badge}}
+                    <div class="serviceBadge">
+                        <img src="{{.Params.badge}}" />
+                    </div>
+                {{end}}
                 <h3 class="serviceTitle">
                     {{ if .Params.list_title}}
                     {{.Params.list_title | safeHTML}}

@@ -1215,6 +1215,11 @@ footer {
     }
   }
 }
+
+.serviceBadge {
+  @extend.serviceIcon;
+  padding:0;
+}
 .serviceDesc {
   padding-top: 0.5em;
   font-size: 0.88rem;
@@ -2198,6 +2203,24 @@ footer {
   }
 }
 #infra-innovation {
+  padding: 7.5rem 0 6.4rem;
+  background: #fff;
+  .bg-image {
+    width: 100%;
+    position: absolute;
+    &:before {
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0) 3.4%,
+        rgba(255, 255, 255, 0.675) 34.51%,
+        rgba(255, 255, 255, 0.9) 70.11%,
+        rgba(255, 255, 255, 0) 103.07%
+      );
+    }
+  }
+}
+
+#spacelift {
   padding: 7.5rem 0 6.4rem;
   background: #fff;
   .bg-image {
