@@ -1094,7 +1094,7 @@ footer {
 }
 
 .mfp-bg {
-  background: $default;
+  background: darken($pine,10%);
 }
 
 //* {
@@ -2533,6 +2533,10 @@ footer {
     }
   }
 
+  main {
+    padding:0;
+  }
+
   &.noBannerImg {
     #banner {
       &:before {
@@ -2560,4 +2564,22 @@ footer {
       }
     }
   }
+}
+
+.landing-banner {
+  #banner h1, #banner h2 {
+    text-transform: none;
+    font-size:80px;
+  }
+
+  #banner {
+    .bannerTxtBx {
+      max-width: none;
+    }
+  }
+
+}
+
+.mfp-close-btn-in .mfp-close {
+  color:#fff;
 }
