@@ -1,5 +1,5 @@
 ---
-title: Subscribe for Updates
+title: Power Digital Terraform Case Study
 banner_tagline: "How Masterpoint Helped Power Digital"
 banner_title: "<span class='text-gradient'>Achieve 10x Reduction in Infrastructure Automation Costs</span>"
 banner_text: "Download the case study PDF to learn more!"
