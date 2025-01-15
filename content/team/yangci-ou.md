@@ -2,6 +2,7 @@
 title: Yangci Ou
 designation: Platform Engineer
 linkedin: https://linkedin.com/in/yangci
+github: https://github.com/oycyc
 draft: false
 weight: 4
 image: /img/team/yangci-ou.jpg
