@@ -1,10 +1,10 @@
 ---
 title: Weston Platter
-designation: Platform+ Site Reliability Engineer
-linkedin: https://linkedin.com
-draft: true
+designation: Platform + Site Reliability Engineer
+linkedin: https://linkedin.com/in/westonplatter
+draft: false
 weight: 3
-image: /img/team/logo-small.png
+image: /img/team/weston-platter.jpg
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in consectetur orci. Aliquam nec ante ultrices, maximus nulla ac, imperdiet dui. Aenean ut pulvinar neque. Mauris varius faucibus leo. Sed in molestie purus, eu maximus sem. Duis quis elementum tellus. Duis gravida, est vitae pellentesque pellentesque, dui nisl tristique sapien, in ornare ligula urna eget sem. Pellentesque auctor justo a mauris rhoncus feugiat. Proin cursus nibh ac mi suscipit, pretium pulvinar arcu efficitur.
+Weston is a Platform and Site Reliability Engineer. Having spent a decade building software and "quant" data pipelines, he's now focused on shipping infrastructure, reducing friction for teams, and ensuring everyone feels empowered to deploy to prod. Outside of work, you'll find him planting fruit trees and calculating 2nd order option greeks.
