@@ -16,9 +16,15 @@
                     <div class="teamLinks">
                     <div class="teamBtn"> <a class="button btn-outline-gradient" data-fancybox="{{ .File.ContentBaseName }}"
                             data-src="#{{ .File.ContentBaseName }}" href="javascript:;">Read Bio → </a></div>
+                    
                     {{if .Params.linkedin}}
                         <div class="teamSocial"><a href="{{.Params.linkedin}}" target="_blank"><i class="fa-brands fa-linkedin"></i></a></div>
                     {{end}}
+
+                    {{if .Params.github}}
+                        <div class="teamSocial"><a href="{{.Params.github}}" target="_blank"><i class="fa-brands fa-github"></i></a></div>
+                    {{end}}
+
                         </div>
                 </div>
             </div>

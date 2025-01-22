@@ -2,6 +2,7 @@
 title: Veronika Gnilitska
 designation: Platform Engineer
 linkedin: https://www.linkedin.com/in/veronika-gnilitska-9b773743/
+github: https://github.com/gberenice
 draft: false
 weight: 1
 image: /img/team/veronika-gnilitska.jpg

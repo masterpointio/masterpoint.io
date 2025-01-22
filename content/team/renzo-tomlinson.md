@@ -2,6 +2,7 @@
 title: Renzo Tomlinson
 designation: Platform + Site Reliability Engineer
 linkedin: https://www.linkedin.com/in/renzo-tomlinson-5313481b/
+github: https://github.com/rttomlinson
 draft: false
 weight: 5
 image: /img/team/renzo-tomlinson.png

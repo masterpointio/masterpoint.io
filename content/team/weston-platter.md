@@ -2,6 +2,7 @@
 title: Weston Platter
 designation: Platform + Site Reliability Engineer
 linkedin: https://linkedin.com/in/westonplatter
+github: https://github.com/westonplatter
 draft: false
 weight: 3
 image: /img/team/weston-platter.png
