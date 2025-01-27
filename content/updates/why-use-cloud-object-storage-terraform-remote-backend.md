@@ -40,6 +40,7 @@ Using a remote backend to manage state solves issues like these by allowing any 
 
 ![Using Cloud for Terraform Remote Backend State](/img/updates/cloud-object-storage-terraform-remote-backend/aws-s3-terraform-remote-backend.png)
 
+
 ## Why Cloud Based Object Storage Shines as a Remote Backend
 Now you might be wondering, "Okay, remote state sounds great, but where should I store it?" There are various options for the backend - [here’s a list for OpenTofu](https://opentofu.org/docs/language/settings/backends/configuration/).
 
