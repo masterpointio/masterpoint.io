@@ -6,7 +6,7 @@ author: Yangci Ou
 slug: why-use-cloud-object-storage-terraform-remote-backend
 date: 2025-01-29 # TODO, confirm date
 description: This article explores the challenges and pitfalls of Terralith, a monolithic Terraform architecture in Infrastructure as Code, and uncovers why a Terralith is not considered best practice.
-image: /img/updates/cloud-object-storage-terraform-remote-backend/cloud-object-storage-for-terraform-remote-backend_50.webp
+image: /img/updates/cloud-object-storage-terraform-remote-backend/cloud-object-storage-for-terraform-remote-backend.webp
 callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a></p>
 ---
 
