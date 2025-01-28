@@ -12,14 +12,14 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 
 <h2>Table of Contents</h2>
 
-- [Introduction and Why Use a Cloud Object Storage for Backend & Remote State in Terraform](#introduction-and-why-use-a-cloud-object-storage-for-backend--remote-state-in-terraform)
+- [Introduction](#introduction)
 - [What is Remote State and a Remote Backend?](#what-is-remote-state-and-a-remote-backend)
 - [Why Use Remote State and a Remote Backend?](#why-use-remote-state-and-a-remote-backend)
 - [Why Cloud Based Object Storage Shines as a Remote Backend](#why-cloud-based-object-storage-shines-as-a-remote-backend)
 - [How do I create a Remote State Backend?](#how-do-i-create-a-remote-state-backend)
 - [Conclusion](#conclusion)
 
-## Introduction and Why Use a Cloud Object Storage for Backend & Remote State in Terraform
+## Introduction
 
 At Masterpoint, as we build out or modernize many of our clients’ Infrastructure as Code (IaC) projects, one common question that comes up is Terraform/OpenTofu’s backend and remote state. It’s a well-known good practice to have a remote state backend, but why? In this post, we'll dive into the importance of using a remote backend for your IaC project, and why cloud based object storage services should be your go-to choice for a remote backend.
 
