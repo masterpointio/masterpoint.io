@@ -78,7 +78,7 @@ Here is the basic structure of the example configuration
 
 ```txt
     terraform/ # root module (gets planned + applied)
-    ├── main.tf 
+    ├── main.tf
     ├── variables.tf
     ├── outputs.tf
     ├── dev.auto.tfvars
@@ -290,7 +290,7 @@ module "custom_policy_label" {
  source  = "cloudposse/label/null"
  version = "0.25.0"
 
- attributes = "custom"
+ attributes = ["custom"]
 
  # Important: all of the label elements from the root module are passed here
  context = module.this.context
@@ -300,7 +300,7 @@ module "permission_boundary_label" {
  source  = "cloudposse/label/null"
  version = "0.25.0"
 
- attributes = "permboundary"
+ attributes = ["permboundary"]
 
  # Important: all of the label elements from the root module are passed here
  context = module.this.context
