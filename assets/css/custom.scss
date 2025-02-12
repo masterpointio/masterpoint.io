@@ -111,20 +111,26 @@ blockquote {
 .letter-spacing {
   letter-spacing: 0.03em;
 }
+
 p,
 ul,
 li {
   font-size: 1rem;
   margin-top: 0;
-  margin-bottom: 1.75em;
+  margin-bottom: 1em;
 }
 
 ul {
+  /* margin-bottom: 1rem; Keeps spacing at the end of the list */
   padding-left: 0;
 }
 
 li {
   margin-bottom: 0;
+}
+
+li:last-child {
+  margin-bottom: 0.5rem; /* Extra spacing only for the last item in a list */
 }
 
 a {
@@ -184,6 +190,7 @@ h6 {
 img {
   max-width: 100%;
   height: auto;
+  margin-bottom: 1.5rem;
 }
 
 .button {
