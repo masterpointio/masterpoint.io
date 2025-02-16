@@ -161,7 +161,7 @@ This command saves your state to a timestamped file. Remember to store your back
 - Move the relevant resource configurations from the Terralith into the new root modules.
 - Initialize each new root module to ensure the backend is configured correctly.
 
-### #4 Inter-Module Communication (if any)
+### #4 Implement Inter-Module Communication (if any)
 
 If any root module depends on outputs from another, update the references using data sources, variables, or remote state. We recommend using data sources over [`terraform_remote_state`](https://developer.hashicorp.com/terraform/language/state/remote-state-data) whenever possible.
 
