@@ -8,7 +8,7 @@ date: 2025-03-06
 description: In this follow-up to our "What Is a Terralith?" article, we shift the focus from describing the problem to providing a detailed migration plan, practical guidance, and a handy checklist for breaking up a Terralith into smaller, more manageable root modules.
 image: /img/updates/steps-to-break-up-a-terralith/main.png
 preview_image: /img/updates/steps-to-break-up-a-terralith/preview.png
-callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a></p>
+callout: <p>👋 <b>If you're ready to take your infrastructure to the next level</b>, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a></p>
 ---
 
 <h2>Table of Contents</h2>
@@ -177,7 +177,7 @@ There are several ways to migrate the resources to their new state files dependi
 
   **Importing existing resources**
 
-  In newer versions of TF, you can define [import](https://developer.hashicorp.com/terraform/language/import) blocks to move resources between modules in a declarative fashion. This method preserves resource history in Git and is more transparent and less error-prone than the alternative of manual state manipulation. This block is idempotent - once a resource is successfully imported, subsequent runs won’t trigger the same import action as long as that resource remains in that particular state file.
+  In newer versions of TF, you can define [import](https://developer.hashicorp.com/terraform/language/import) blocks to import resources into state in a declarative fashion. This method preserves resource history in Git and is more transparent and less error-prone than the alternative of manual state manipulation. This block is idempotent - once a resource is successfully imported, subsequent runs won’t trigger the same import action as long as that resource remains in that particular state file.
 
   You can place `import` blocks in a separate file `imports.tf` in your new root module and then remove it after completing the migration.
 
@@ -187,8 +187,8 @@ There are several ways to migrate the resources to their new state files dependi
   locals {
     # Define a list of repository names to import
     repos = {
-      "repo-foo": { description = “Our repo foo” },
-      "repo-bar": { description = “Our repo bar” },
+      "repo-foo": { description = "Our repo foo" },
+      "repo-bar": { description = "Our repo bar" },
     }
   }
 
@@ -235,7 +235,7 @@ There are several ways to migrate the resources to their new state files dependi
   **Are there any caveats?**
 
   Yes! Keep the following in mind:
-  - **Provider limitations**: Not all providers or resources fully support import blocks. In some cases, you may need to rely on command-line operations or scripting (see the example script below).
+  - **Provider limitations**: Not all providers or resources fully support importing. In some cases, you may need to rely on command-line operations or scripting (see the example script below).
   - **Immediate removal**: Once a resource has been imported elsewhere, remove it from the legacy Terralith root module right away to avoid collisions between two states managing the same resource.
   - **Collecting resource identifiers for import:** You’ll need to gather the necessary data to import your resources. Sometimes resources can be imported by name, making them easy to identify and collect. In other cases, you may need unique IDs that require pulling data from an API using custom scripts. Be sure to factor these requirements into your planning.
 
