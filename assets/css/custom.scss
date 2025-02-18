@@ -1663,7 +1663,8 @@ footer {
     // Make code small so that code blocks have a horizontal width of 80 characters
     .highlight {
       pre {
-        font-size: 0.78em;
+        font-size: 0.75em;
+        padding-left: 0.3em;
       }
     }
   }
