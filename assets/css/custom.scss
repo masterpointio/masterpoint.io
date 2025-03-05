@@ -111,12 +111,13 @@ blockquote {
 .letter-spacing {
   letter-spacing: 0.03em;
 }
+
 p,
 ul,
 li {
   font-size: 1rem;
   margin-top: 0;
-  margin-bottom: 1.75em;
+  margin-bottom: 1em;
 }
 
 ul {
@@ -125,6 +126,10 @@ ul {
 
 li {
   margin-bottom: 0;
+}
+
+li:last-child {
+  margin-bottom: 0.5rem; /* Extra spacing only for the last item in a list */
 }
 
 a {
@@ -184,6 +189,7 @@ h6 {
 img {
   max-width: 100%;
   height: auto;
+  margin-bottom: 1.5rem;
 }
 
 .button {
@@ -1629,6 +1635,9 @@ footer {
     }
   }
 }
+
+// Default layout for single pages
+// Including updates (blog posts)
 .single-default {
   header {
     position:relative;
@@ -1649,6 +1658,14 @@ footer {
 
     h1.postTitle {
       font-size:2.25rem;
+    }
+
+    // Make code small so that code blocks have a horizontal width of 80 characters
+    .highlight {
+      pre {
+        font-size: 0.75em;
+        padding-left: 0.3em;
+      }
     }
   }
 
