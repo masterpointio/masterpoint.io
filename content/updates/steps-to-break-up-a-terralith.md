@@ -4,7 +4,7 @@ draft: false
 title: "Steps to Break Up a Terralith"
 author: Veronika Gnilitska
 slug: steps-to-break-up-a-terralith
-date: 2025-03-06
+date: 2025-03-05
 description: In this follow-up to our "What Is a Terralith?" article, we shift the focus from describing the problem to providing a detailed migration plan, practical guidance, and a handy checklist for breaking up a Terralith into smaller, more manageable root modules.
 image: /img/updates/steps-to-break-up-a-terralith/main.png
 preview_image: /img/updates/steps-to-break-up-a-terralith/preview.png
@@ -25,7 +25,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
   - [#1 Confirm a Clean Plan](#1-confirm-a-clean-plan)
   - [#2 Create a Backup](#2-create-a-backup)
   - [#3 Create New Module Structures](#3-create-new-module-structures)
-  - [#4 Inter-Module Communication (if any)](#4-inter-module-communication-if-any)
+  - [#4 Implement Inter-Module Communication (if any)](#4-implement-inter-module-communication-if-any)
   - [#5 Move Resources to The New State](#5-move-resources-to-the-new-state)
   - [#6 Validate the New Modules](#6-validate-the-new-modules)
 - [The Final Checks and Tips](#the-final-checks-and-tips)
