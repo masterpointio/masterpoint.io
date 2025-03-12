@@ -71,7 +71,7 @@ When we encountered alert fatigue and saw teams getting bogged down with too man
 
 ## Spacelift’s Infrastructure as Code Terraform CI/CD Automation
 
-We frequently use Spacelift as the Terraform automation platform for managing the IaC of our clients. The platform has “policy-as-code” which can express and execute well-defined policies at various decision points in the IaC management workflow.
+We frequently use [Spacelift as the Terraform automation platform](https://spacelift.io/) for managing the IaC of our clients. The platform has [“policy-as-code”](https://docs.spacelift.io/concepts/policy) which can express and execute well-defined policies at various decision points in the IaC management workflow.
 
 What makes Spacelift’s policy engine shine for notification use cases is its ability to access detailed information about the deployment (TF Applies), including:
 * who triggered it,
@@ -91,7 +91,7 @@ From those details we can, using the OPA Rego policy language, evaluate conditio
 
 The beauty of this approach is that we didn’t need to build any external systems or complex integrations. The data and notification delivery is handled directly within Spacelift’s policy engine, making the solution both robust and easy to maintain.
 
-Our improved solution using Spacelift’s Notification Policies and does the following:
+Our improved solution using [Spacelift's Notification Policies](https://docs.spacelift.io/concepts/policy/notification-policy) and does the following:
 1. Directly targets the responsible Pull Request. The new alerts now directly ping & tag the author of the commit that introduced and triggered the failed deployment.
     * It’s important to note that this is NOT blaming the author, especially since TF Apply errors can be common. Rather, this is proactive, ensuring that the failure notification reaches the person most capable of resolving the issue efficiently.
 2. Provides rich contextual information by including links to the failed run and the specific code that caused it, as well as additional relevant information from the Spacelift policy data inputs mentioned above, such as identifying who the change is associated with.
@@ -121,4 +121,4 @@ In the end, deployment notifications aren’t just a nice-to-have, they’re ess
 
 By implementing this tailored notification approach, we’ve transformed TF Apply failure notifications from an ignored annoyance to a valuable tool for operational stability. This proactive strategy keeps our IaC workflow streamlined, and prevents failures from snowballing into larger issues.
 
-P.S. Interested in exploring more about Spacelift for for managing Infrastructure as Code? We recently published a [case study about migrating over **43,000** resources from Terraform Cloud to Spacelift](https://masterpoint.io/power-digital-case-study/)!
+*P.S. Interested in exploring more about Spacelift for for managing Infrastructure as Code? We recently published a [case study about migrating over **43,000** resources from Terraform Cloud to Spacelift](https://masterpoint.io/power-digital-case-study/)!*
