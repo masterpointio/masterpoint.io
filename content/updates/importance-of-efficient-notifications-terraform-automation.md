@@ -25,7 +25,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 
 In the world of [Terraform](https://www.terraform.io/) and [OpenTofu](https://opentofu.org/) (collectively referred to as “TF” in this post) and Infrastructure as Code (IaC), there are times where the CI/CD pipeline or automation fail to deploy IaC changes. Failures could occur due to the code errors, cloud provider resource constraints, authentication issues, state & locking conflict, transient provider or network disruptions.
 
-Because there are so many factors involved in cloud infrastructure, there’s more possibility for failed TF applies – such failures are acceptable and can easily be addressed with simple follow up changes or reruns.
+Because there are so many factors involved in cloud infrastructure, there’s more possibility for failed TF applies – such failures are acceptable and can easily be addressed with simple follow-up changes or reruns.
 
 But do you know what’s way worse than a failed TF deployment? A deployment failure that doesn’t get noticed **for days**.
 
@@ -87,7 +87,7 @@ This detailed information is passed in as a [JSON data input](https://docs.space
 ![Sample Notification Policy Input](/img/updates/efficient-notifications-terraform-automation/sample-notification-policy-input.png)
 
 
-From those details we can evaluate conditions and send out notifications with Rego. This enables us to easily send the right notification at the right time to the right designated audience. These notifications are also easy to integrate with Slack, Microsoft Teams, GitHub Pull Requests, and other downstream systems.
+From those details, we can evaluate conditions and send out notifications with Rego. This enables us to easily send the right notification at the right time to the right designated audience. These notifications are also easy to integrate with Slack, Microsoft Teams, GitHub Pull Requests, and other downstream systems.
 
 The beauty of this approach is that we didn’t need to build any external systems or complex integrations. The data and notification delivery is handled directly within Spacelift’s policy engine, making the solution both robust and easy to maintain.
 
@@ -103,7 +103,7 @@ Below is a simple targeted notification example -- with different use cases in d
 ![Spacelift Console UI with the Notification Policy Template](/img/updates/efficient-notifications-terraform-automation/simple-targeted-notification-example.jpg)
 
 
-This new implementation of IaC failure alerting using Spacelift Notification Policies has resolved many pain points for us and our clients. It has significant benefits including faster resolution times, increased accountability, and decreased alert fatigue, which all contributes to less infrastructure drift and more reliable operational stability.
+This new implementation of IaC failure alerting using Spacelift Notification Policies has resolved many pain points for us and our clients. It has significant benefits including faster resolution times, increased accountability, and decreased alert fatigue, which all contribute to less infrastructure drift and more reliable operational stability.
 
 ## Open Sourcing our Spacelift Notification Policy Template
 
