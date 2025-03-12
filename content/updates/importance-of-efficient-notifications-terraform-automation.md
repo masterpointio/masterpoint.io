@@ -64,7 +64,7 @@ This is particularly problematic in organizations with large cloud infrastructur
 
 ## Targeted Deployment Notifications
 
-When we encountered alert fatigue and saw teams getting bogged down with too many notifications that might not be relevant to the appropriate engineer, we understood that we needed to make our notifications and alerts both precise and actionable. The approach of broadcasting all failures to an entire team channel was clearly ineffective. The notifications should tie the TF failed apply to the team that made the code change. That team is most likely to include the person with the most context  who is best suited to handle the issue.
+When we encountered alert fatigue and saw teams getting bogged down with too many notifications that might not be relevant to the appropriate engineer, we understood that we needed to make our notifications and alerts both precise and actionable. The approach of broadcasting all failures to an entire global channel was clearly ineffective. The notifications should tie the TF failed apply to the specific team. More specifically, where appropriate, the notifications should be tied to the engineer that made the code change. They are most likely the person best suited for handling the issue and has the most context
 
 ![Pinging ALL vs individual for Notifications](/img/updates/efficient-notifications-terraform-automation/spacelift-notifications-ping.png)
 
