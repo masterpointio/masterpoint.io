@@ -55,7 +55,7 @@ Notifications bring awareness of problems as early as possible for someone to lo
 
 ## Alert Fatigue
 
-But often solutions create their own problems. When in a large infrastructure team environment with  hundreds of root modules and components, another problem comes up: alert fatigue. [Alert fatigue](https://www.datadoghq.com/blog/best-practices-to-prevent-alert-fatigue) isn’t unique to TF infrastructure automation, or  CI/CD pipelines for that matter – it’s a universal challenge that affects all alerting and notification systems.
+But often solutions create their own problems. When in a large infrastructure team environment with  hundreds of root modules and components, another problem comes up with notifications: alert fatigue. [Alert fatigue](https://www.datadoghq.com/blog/best-practices-to-prevent-alert-fatigue) isn’t unique to TF infrastructure automation, or  CI/CD pipelines for that matter – it’s a universal challenge that affects all alerting and notification systems.
 
 When every TF Apply that fails pings everyone in the channel with an universal tag such as `@everyone` or `@here`, notifications quickly become background noise. Teams become desensitized to constant alerts and critical failures (load balancer modifications failing and affecting traffic routing) might get drowned out with minor issues.
 
@@ -71,7 +71,7 @@ When we encountered alert fatigue and saw teams getting bogged down with too man
 
 ## Spacelift’s Infrastructure as Code Terraform CI/CD Automation
 
-We frequently use [Spacelift as the Terraform automation platform](https://spacelift.io/) for managing the IaC of our clients. The platform has [“policy-as-code”](https://docs.spacelift.io/concepts/policy) which can express and execute well-defined policies at various decision points in the IaC management workflow.
+We frequently use [Spacelift as the Terraform automation platform](https://spacelift.io/) for managing the IaC of our clients. The platform has [“policy-as-code”](https://docs.spacelift.io/concepts/policy) which can express and execute well-defined policies at various decision points in the IaC management workflow using the [OPA Rego policy language](https://www.openpolicyagent.org/docs/latest/policy-language/).
 
 What makes Spacelift’s policy engine shine for notification use cases is its ability to access detailed information about the deployment (TF Applies), including:
 * who triggered it,
@@ -87,13 +87,13 @@ This detailed information is passed in as a [JSON data input](https://docs.space
 ![Sample Notification Policy Input](/img/updates/efficient-notifications-terraform-automation/sample-notification-policy-input.png)
 
 
-From those details we can, using the OPA Rego policy language, evaluate conditions and send out notifications. This enables us to easily send the right notification at the right time to the right designated audience. These notifications are also easy to integrate with Slack, Microsoft Teams, GitHub Pull Requests, and other downstream systems.
+From those details we can evaluate conditions and send out notifications with Rego. This enables us to easily send the right notification at the right time to the right designated audience. These notifications are also easy to integrate with Slack, Microsoft Teams, GitHub Pull Requests, and other downstream systems.
 
 The beauty of this approach is that we didn’t need to build any external systems or complex integrations. The data and notification delivery is handled directly within Spacelift’s policy engine, making the solution both robust and easy to maintain.
 
 Our improved solution using [Spacelift's Notification Policies](https://docs.spacelift.io/concepts/policy/notification-policy) and does the following:
 1. Directly targets the responsible Pull Request. The new alerts now directly ping & tag the author of the commit that introduced and triggered the failed deployment.
-    * It’s important to note that this is NOT blaming the author, especially since TF Apply errors can be common. Rather, this is proactive, ensuring that the failure notification reaches the person most capable of resolving the issue efficiently.
+    * It's important to note that this is NOT blaming the author, especially since TF Apply errors can be common. Rather, this is proactive, ensuring that the failure notification reaches the person most capable of resolving the issue efficiently.
 2. Provides rich contextual information by including links to the failed run and the specific code that caused it, as well as additional relevant information from the Spacelift policy data inputs mentioned above, such as identifying who the change is associated with.
 3. Implements deduplication so repeated issues such as identical root module failures don’t create a flood of redundant notifications. This is especially important on GitHub Pull Requests where notifications (comments in the GitHub PR context) can be [updated in-place](https://docs.spacelift.io/concepts/policy/notification-policy#updating-an-existing-pull-request-comment).
 4. Uses multiple notification channels for different failure priority levels. Critical resource issues (e.g. production related infrastructure deployments) deserve different treatment than minor sandbox environment failures.
