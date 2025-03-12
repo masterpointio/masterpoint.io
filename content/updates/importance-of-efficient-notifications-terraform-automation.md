@@ -25,7 +25,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 
 In the world of [Terraform](https://www.terraform.io/) and [OpenTofu](https://opentofu.org/) (collectively referred to as “TF” in this post) and Infrastructure as Code (IaC), there are times where the CI/CD pipeline or automation fail to deploy IaC changes. Failures could occur due to the code errors, cloud provider resource constraints, authentication issues, state & locking conflict, transient provider or network disruptions.
 
-Because there are so many factors involved in cloud infrastructure, there’s more possibility for failed TF applies – such failures are acceptable and can easily be addressed with simple follow up changes or re-run’s.
+Because there are so many factors involved in cloud infrastructure, there’s more possibility for failed TF applies – such failures are acceptable and can easily be addressed with simple follow up changes or reruns.
 
 But do you know what’s way worse than a failed TF deployment? A deployment failure that doesn’t get noticed **for days**.
 
@@ -107,7 +107,7 @@ This new implementation of IaC failure alerting using Spacelift Notification Pol
 
 ## Open Sourcing our Spacelift Notification Policy Template
 
-After seeing the tremendous benefits this custom notification policy brought to different teams, we decided to share our solution to the broader Spacelift community. We’ve extracted our Rego policy implementation into a template and open sourced the code by [contributing it to Spacelift’s Policy Template Library](https://github.com/spacelift-io/spacelift-policies-example-library/pull/70). Developers using the Spacelift platform can import the policy to use for their system or repurpose it and tailor it to their specific organization’s needs.
+After seeing the tremendous benefits this custom notification policy brought to different teams, we decided to share our solution with the broader Spacelift community. We’ve extracted our Rego policy implementation into a template and open sourced the code by [contributing it to Spacelift’s Policy Template Library](https://github.com/spacelift-io/spacelift-policies-example-library/pull/70). Developers using the Spacelift platform can import the policy to use for their system or repurpose it and tailor it to their specific organization’s needs.
 
 ![GitHub PR to Spacelift for the Notification Policy Template](/img/updates/efficient-notifications-terraform-automation/github-pr.jpg)
 
@@ -121,4 +121,4 @@ In the end, deployment notifications aren’t just a nice-to-have, they’re ess
 
 By implementing this tailored notification approach, we’ve transformed TF Apply failure notifications from an ignored annoyance to a valuable tool for operational stability. This proactive strategy keeps our IaC workflow streamlined, and prevents failures from snowballing into larger issues.
 
-*P.S. Interested in exploring more about Spacelift for for managing Infrastructure as Code? We recently published a [case study about migrating over **43,000** resources from Terraform Cloud to Spacelift](https://masterpoint.io/power-digital-case-study/)!*
+*P.S. Interested in exploring more about Spacelift for managing Infrastructure as Code? We recently published a [case study about migrating over **43,000** resources from Terraform Cloud to Spacelift](https://masterpoint.io/power-digital-case-study/)!*
