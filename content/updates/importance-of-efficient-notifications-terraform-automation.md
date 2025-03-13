@@ -35,7 +35,6 @@ When infrastructure deployments fail, they often do so quietly. They can go unno
 
 This is especially true in large IaC codebases or large TF monorepos where there are hundreds of root modules. The CI/CD system dutifully reports the failure, but the failure slips through the cracks because of many deployment pipelines running concurrently due to the sheer number of root modules.
 
-<!-- MATT TO DOUBLE REVIEW THIS POINT -->
 At Masterpoint, we’ve observed this problem repeatedly across many of our clients when performing infrastructure audits and implementations or ongoing managed service provider (MSP) relationships. As organizations’ infrastructure scales and complexity grows, the likelihood of these silent failures increase dramatically which undermines infrastructure reliability.
 
 When TF failures go unnoticed, multiple potential problems can occur and cascade into significant issues such as:
@@ -64,7 +63,7 @@ This is particularly problematic in organizations with large cloud infrastructur
 
 ## Targeted Deployment Notifications
 
-When we encountered alert fatigue and saw teams getting bogged down with too many notifications that might not be relevant to the appropriate engineer, we understood that we needed to make our notifications and alerts both precise and actionable. The approach of broadcasting all failures to an entire global channel was clearly ineffective. The notifications should tie the TF failed apply to the specific team. More specifically, where appropriate, the notifications should be tied to the engineer that made the code change. They are most likely the person best suited for handling the issue and has the most context
+When we encountered alert fatigue and saw teams getting bogged down with too many notifications that might not be relevant to the appropriate engineer, we understood that we needed to make our notifications and alerts both precise and actionable. The approach of broadcasting all failures to an entire global channel was clearly ineffective. The notifications should tie the TF failed apply to the specific team. More specifically, where appropriate, the notifications should be tied to the engineer that made the code change. They are most likely the person best suited for handling the issue and has the most context.
 
 ![Pinging ALL vs individual for Notifications](/img/updates/efficient-notifications-terraform-automation/spacelift-notifications-ping.png)
 
