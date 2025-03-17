@@ -99,7 +99,7 @@ Our improved solution using [Spacelift's Notification Policies](https://docs.spa
 
 Below is a simple targeted notification example -- with different use cases in different organizations, the actual messaging and content will vary greatly to suit what different teams need to best address their needs.
 
-![Spacelift Console UI with the Notification Policy Template](/img/updates/efficient-notifications-terraform-automation/simple-targeted-notification-example.jpg)
+![Targeted Notification Example](/img/updates/efficient-notifications-terraform-automation/simple-targeted-notification-example.png)
 
 
 This new implementation of IaC failure alerting using Spacelift Notification Policies has resolved many pain points for us and our clients. It has significant benefits including faster resolution times, increased accountability, and decreased alert fatigue, which all contribute to less infrastructure drift and more reliable operational stability.
