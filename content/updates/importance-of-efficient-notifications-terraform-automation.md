@@ -116,7 +116,7 @@ You can view this policy on [Spacelift's Policy Template Library here](https://d
 
 ## Conclusion
 
-In the end, deployment notifications aren’t just a nice-to-have, they’re essential. This is especially true for teams working with TF and IaC at scale. Effective notifications aren’t about making sure everyone knows about every failure – they’re about making sure each failure notice  goes to the right place.
+In the end, IaC automation failure notifications aren’t just a nice-to-have, they’re essential. This is especially true for teams working with TF and IaC at scale. Effective notifications aren’t about making sure everyone knows about every failure – they’re about making sure each failure notice goes to the right person(s) who can fix the issue.
 
 By implementing this tailored notification approach, we’ve transformed TF Apply failure notifications from an ignored annoyance to a valuable tool for operational stability. This proactive strategy keeps our IaC workflow streamlined, and prevents failures from snowballing into larger issues.
 
