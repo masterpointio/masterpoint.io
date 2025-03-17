@@ -63,7 +63,7 @@ This is particularly problematic in organizations with large cloud infrastructur
 
 ## Targeted Deployment Notifications
 
-When we encountered alert fatigue and saw teams getting bogged down with too many notifications that might not be relevant to the appropriate engineer, we understood that we needed to make our notifications and alerts both precise and actionable. The approach of broadcasting all failures to an entire global channel was clearly ineffective. The notifications should tie the TF failed apply to the specific team. More specifically, where appropriate, the notifications should be tied to the engineer that made the code change. They are most likely the person best suited for handling the issue and has the most context.
+When we encountered alert fatigue and saw teams getting bogged down with too many notifications that might not be relevant to the appropriate engineer, we understood that we needed to make our notifications and alerts both precise and actionable. The approach of broadcasting all failures to an entire global channel was clearly ineffective. The notifications should tie the TF failed apply to the specific team. More specifically, where appropriate, the notifications should be tied to the engineer who made the code change. They are most likely the person best suited for handling the issue and has the most context.
 
 ![Pinging ALL vs individual for Notifications](/img/updates/efficient-notifications-terraform-automation/spacelift-notifications-ping.png)
 
@@ -116,7 +116,7 @@ You can view this policy on [Spacelift's Policy Template Library here](https://d
 
 ## Conclusion
 
-In the end, IaC automation failure notifications aren’t just a nice-to-have, they’re essential. This is especially true for teams working with TF and IaC at scale. Effective notifications aren’t about making sure everyone knows about every failure – they’re about making sure each failure notice goes to the right person(s) who can fix the issue.
+In the end, IaC automation failure notifications aren’t just a nice-to-have, they’re essential. This is especially true for teams working with TF and IaC at scale. Effective notifications aren’t about making sure everyone knows about every failure – they’re about making sure each failure notice goes to the right person(s) who can resolve the issue.
 
 By implementing this tailored notification approach, we’ve transformed TF Apply failure notifications from an ignored annoyance to a valuable tool for operational stability. This proactive strategy keeps our IaC workflow streamlined, and prevents failures from snowballing into larger issues.
 
