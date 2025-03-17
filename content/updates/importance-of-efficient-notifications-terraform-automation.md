@@ -81,7 +81,7 @@ What makes Spacelift’s policy engine shine for notification use cases is its a
 * state of the TF execution,
 * [and more](https://docs.spacelift.io/concepts/policy/notification-policy#data-input).
 
-This detailed information is passed in as a [JSON data input](https://docs.spacelift.io/concepts/policy/notification-policy#data-input), containing comprehensive details about each step in the CI/CD pipeline. It provides everything needed for precise alerting.
+This detailed information is passed in as a [JSON data input](https://docs.spacelift.io/concepts/policy/notification-policy#data-input), containing comprehensive details about each step in the TF automation pipeline. It provides everything needed for precise alerting.
 
 ![Sample Notification Policy Input](/img/updates/efficient-notifications-terraform-automation/sample-notification-policy-input.png)
 
