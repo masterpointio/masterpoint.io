@@ -33,7 +33,7 @@ But do you know what’s way worse than a failed TF deployment? A deployment fai
 
 When infrastructure deployments fail, they often do so quietly. They can go unnoticed if there are no alerting set up -- particularly in those projects still relying on manual TF executions from local machines rather than in a CI/CD pipeline, where the failure remains on that individual’s machine and is invisible to others. It leaves the [root modules](https://opentofu.org/docs/language/modules/#the-root-module)' TF changes and modifications in an unapplied or failed state, until another change/TF operation reveals them. Without a centralized alerting system, there’s no guarantee it will be properly addressed or even communicated, delaying resolutions.
 
-This is especially true in large IaC codebases or large TF monorepos where there are hundreds of root modules. The CI/CD system dutifully reports the failure, but the failure slips through the cracks because of many deployment pipelines running concurrently due to the sheer number of root modules.
+This is especially true in large IaC codebases or large TF monorepos where there are hundreds of root modules. The automation system dutifully reports the failure, but the failure slips through the cracks because of many apply operations running concurrently due to the sheer number of root modules.
 
 At Masterpoint, we’ve observed this problem repeatedly across many of our clients when performing infrastructure audits, implementations, and ongoing managed service provider (MSP) relationships. As an organizations’ infrastructure scales and complexity grows, the likelihood of these silent failures increase which undermines infrastructure reliability.
 
