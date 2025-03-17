@@ -47,7 +47,7 @@ When TF failures go unnoticed, potential problems can occur and cascade into sig
 
 ## Notifications
 
-When teams first encounter the silent failure problem in IaC deployments, the common initial solution is straightforward: set up basic notifications. In the CI/CD pipeline, on failures, it would capture the error and send a Slack/Microsoft Teams message into the corresponding channel for the team responsible for the TF code.
+When teams first encounter the silent failure problem in IaC deployments, the common initial solution is straightforward: set up basic notifications. In the automation pipeline, on failures, it would capture the error and send a Slack/Microsoft Teams message into the corresponding channel for the team responsible for the TF code.
 
 Notifications bring awareness of problems as early as possible for someone to look into and address. Without such notifications, failures are invisible until they cascade into larger problems.
 
