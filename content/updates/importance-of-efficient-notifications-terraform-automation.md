@@ -54,7 +54,7 @@ Notifications bring awareness of problems as early as possible for someone to lo
 
 ## Alert Fatigue
 
-But often solutions create their own problems. When in a large infrastructure team environment with  hundreds of root modules and components, another problem comes up with notifications: alert fatigue. [Alert fatigue](https://www.datadoghq.com/blog/best-practices-to-prevent-alert-fatigue) isn’t unique to TF infrastructure automation, or  CI/CD pipelines for that matter – it’s a universal challenge that affects all alerting and notification systems.
+But often solutions create their own problems. When in a large infrastructure team environment with  hundreds of root modules and components, another problem comes up with notifications: alert fatigue. [Alert fatigue](https://www.datadoghq.com/blog/best-practices-to-prevent-alert-fatigue) isn’t unique to TF infrastructure automation – it’s a universal challenge that affects all alerting and notification systems.
 
 When every TF Apply that fails pings everyone in the channel with an universal tag such as `@everyone` or `@here`, notifications quickly become background noise. Teams become desensitized to constant alerts and critical failures (load balancer modifications failing and affecting traffic routing) might get drowned out with minor issues.
 
