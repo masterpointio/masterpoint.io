@@ -31,13 +31,13 @@ But do you know what’s way worse than a failed TF deployment? A deployment fai
 
 ## The Silent Failure Problem in IaC Deployments
 
-When infrastructure deployments fail, they often do so quietly. They can go unnoticed if there are no alerting set up (particularly in those projects still relying on manual TF executions from local machines rather than in a CI/CD pipeline, where the failure remains on that individual’s machine and is invisible to others), leaving TF changes and modifications in an unapplied or failed state  until a routine check or another change reveals them. Without a centralized alerting system, there’s no guarantee it will be properly addressed or even communicated, delaying resolutions.
+When infrastructure deployments fail, they often do so quietly. They can go unnoticed if there are no alerting set up -- particularly in those projects still relying on manual TF executions from local machines rather than in a CI/CD pipeline, where the failure remains on that individual’s machine and is invisible to others. It leaves the [root modules](https://opentofu.org/docs/language/modules/#the-root-module)' TF changes and modifications in an unapplied or failed state, until another change/TF operation reveals them. Without a centralized alerting system, there’s no guarantee it will be properly addressed or even communicated, delaying resolutions.
 
 This is especially true in large IaC codebases or large TF monorepos where there are hundreds of root modules. The CI/CD system dutifully reports the failure, but the failure slips through the cracks because of many deployment pipelines running concurrently due to the sheer number of root modules.
 
 At Masterpoint, we’ve observed this problem repeatedly across many of our clients when performing infrastructure audits and implementations or ongoing managed service provider (MSP) relationships. As organizations’ infrastructure scales and complexity grows, the likelihood of these silent failures increase dramatically which undermines infrastructure reliability.
 
-When TF failures go unnoticed, multiple potential problems can occur and cascade into significant issues such as:
+When TF failures go unnoticed, potential problems can occur and cascade into significant issues such as:
 * **Infrastructure drift** - Your actual infrastructure diverges from your desired state in the IaC, which is never good.
 * **Loss of source of truth** - Your VCS/Git repository no longer accurately reflects your deployed infrastructure.
 * **Development roadblocks** - Subsequent changes become blocked because new deployments can’t proceed until the failure is resolved.
@@ -106,7 +106,7 @@ This new implementation of IaC failure alerting using Spacelift Notification Pol
 
 ## Open Sourcing our Spacelift Notification Policy Template
 
-After seeing the tremendous benefits this custom notification policy brought to different teams, we decided to share our solution with the broader Spacelift community. We’ve extracted our Rego policy implementation into a template and open sourced the code by [contributing it to Spacelift’s Policy Template Library](https://github.com/spacelift-io/spacelift-policies-example-library/pull/70). Developers using the Spacelift platform can import the policy to use for their system or repurpose it and tailor it to their specific organization’s needs.
+After seeing the tremendous benefits this custom notification policy brought to different teams, we shared our solution with the broader Spacelift community by extracting our Rego policy implementation into a template and open sourced the code by [contributing it to Spacelift’s Policy Template Library](https://github.com/spacelift-io/spacelift-policies-example-library/pull/70). Developers using the Spacelift platform can import the policy to use for their system or repurpose it and tailor it to their specific organization’s needs.
 
 ![GitHub PR to Spacelift for the Notification Policy Template](/img/updates/efficient-notifications-terraform-automation/github-pr.jpg)
 
