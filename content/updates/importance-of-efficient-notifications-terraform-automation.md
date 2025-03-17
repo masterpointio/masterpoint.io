@@ -68,7 +68,7 @@ When we encountered alert fatigue and saw teams getting bogged down with too man
 ![Pinging ALL vs individual for Notifications](/img/updates/efficient-notifications-terraform-automation/spacelift-notifications-ping.png)
 
 
-## Spacelift’s Infrastructure as Code Terraform CI/CD Automation
+## Notifications through Spacelift’s IaC Automation
 
 We frequently use [Spacelift as the Terraform automation platform](https://spacelift.io/) for managing the IaC of our clients. The platform has [“policy-as-code”](https://docs.spacelift.io/concepts/policy) which can express and execute well-defined policies at various decision points in the IaC management workflow using the [OPA Rego policy language](https://www.openpolicyagent.org/docs/latest/policy-language/).
 
