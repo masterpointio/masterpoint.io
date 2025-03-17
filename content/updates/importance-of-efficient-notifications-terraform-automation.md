@@ -86,7 +86,7 @@ This detailed information is passed in as a [JSON data input](https://docs.space
 ![Sample Notification Policy Input](/img/updates/efficient-notifications-terraform-automation/sample-notification-policy-input.png)
 
 
-From those details, we can evaluate conditions and send out notifications with Rego. This enables us to easily send the right notification at the right time to the right designated audience. These notifications are also easy to integrate with Slack, Microsoft Teams, GitHub Pull Requests, and other downstream systems.
+From those details, we can evaluate conditions and send out notifications with OPA policies. **This enables us to easily send the right notification at the right time to the right designated team member(s)**. These notifications are also turnkey integrated with Slack, Microsoft Teams, GitHub Pull Requests, and other downstream systems.
 
 The beauty of this approach is that we didn’t need to build any external systems or complex integrations. The data and notification delivery is handled directly within Spacelift’s policy engine, making the solution both robust and easy to maintain.
 
