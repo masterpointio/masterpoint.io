@@ -90,7 +90,7 @@ From those details, we can evaluate conditions and send out notifications with R
 
 The beauty of this approach is that we didn’t need to build any external systems or complex integrations. The data and notification delivery is handled directly within Spacelift’s policy engine, making the solution both robust and easy to maintain.
 
-Our improved solution using [Spacelift's Notification Policies](https://docs.spacelift.io/concepts/policy/notification-policy) and does the following:
+Our improved solution using [Spacelift's Notification Policies](https://docs.spacelift.io/concepts/policy/notification-policy) does the following:
 1. Directly targets the responsible Pull Request. The new alerts now directly ping & tag the author of the commit that introduced and triggered the failed deployment.
     * It's important to note that this is NOT blaming the author, especially since TF Apply errors can be common. Rather, this is proactive, ensuring that the failure notification reaches the person most capable of resolving the issue efficiently.
 2. Provides rich contextual information by including links to the failed run and the specific code that caused it, as well as additional relevant information from the Spacelift policy data inputs mentioned above, such as identifying who the change is associated with.
