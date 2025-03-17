@@ -70,7 +70,7 @@ When we encountered alert fatigue and saw teams getting bogged down with too man
 
 ## Notifications through Spacelift’s IaC Automation
 
-We frequently use [Spacelift as the Terraform automation platform](https://spacelift.io/) for managing the IaC of our clients. The platform has [“policy-as-code”](https://docs.spacelift.io/concepts/policy) which can express and execute well-defined policies at various decision points in the IaC management workflow using the [OPA Rego policy language](https://www.openpolicyagent.org/docs/latest/policy-language/).
+We frequently use and champion [Spacelift as the TF automation platform](https://spacelift.io/) for managing the IaC of our clients. One of the big features that we love in Spacelift, is their deep integration and belief in [“policy-as-code”](https://docs.spacelift.io/concepts/policy). We use this to express and execute well-defined policies at various decision points in the IaC management workflow using the [OPA Rego policy language](https://www.openpolicyagent.org/docs/latest/policy-language/).
 
 What makes Spacelift’s policy engine shine for notification use cases is its ability to access detailed information about the deployment (TF Applies), including:
 * who triggered it,
