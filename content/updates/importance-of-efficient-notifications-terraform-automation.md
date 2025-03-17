@@ -35,7 +35,7 @@ When infrastructure deployments fail, they often do so quietly. They can go unno
 
 This is especially true in large IaC codebases or large TF monorepos where there are hundreds of root modules. The CI/CD system dutifully reports the failure, but the failure slips through the cracks because of many deployment pipelines running concurrently due to the sheer number of root modules.
 
-At Masterpoint, we’ve observed this problem repeatedly across many of our clients when performing infrastructure audits and implementations or ongoing managed service provider (MSP) relationships. As organizations’ infrastructure scales and complexity grows, the likelihood of these silent failures increase dramatically which undermines infrastructure reliability.
+At Masterpoint, we’ve observed this problem repeatedly across many of our clients when performing infrastructure audits, implementations, and ongoing managed service provider (MSP) relationships. As an organizations’ infrastructure scales and complexity grows, the likelihood of these silent failures increase which undermines infrastructure reliability.
 
 When TF failures go unnoticed, potential problems can occur and cascade into significant issues such as:
 * **Infrastructure drift** - Your actual infrastructure diverges from your desired state in the IaC, which is never good.
