@@ -29,6 +29,8 @@ Because there are so many factors involved in cloud infrastructure, there’s mo
 
 But do you know what’s way worse than a failed TF deployment? A deployment failure that doesn’t get noticed **for days**.
 
+In this article, we'll talk through this problem and share how we believe it should be handled. We'll include specifics on how we do this today with [Spacelift](https://spacelift.io/) for our clients. 
+
 ## The Silent Failure Problem in IaC Deployments
 
 When infrastructure deployments fail, they often do so quietly. They can go unnoticed if there is no alerting set up -- particularly in those projects still relying on manual TF executions from local machines rather than in an IaC automation pipeline, where the failure remains on that individual’s machine and is invisible to others. It leaves the [root modules](https://opentofu.org/docs/language/modules/#the-root-module)' TF changes and modifications in an unapplied or failed state, until another change/TF operation reveals them. Without a centralized alerting system, there’s no guarantee it will be properly addressed or even communicated, delaying resolutions.
@@ -56,7 +58,7 @@ Notifications bring awareness of problems as early as possible for someone to lo
 
 But often solutions create their own problems. When in a large infrastructure team environment with  hundreds of root modules and components, another problem comes up with notifications: alert fatigue. [Alert fatigue](https://www.datadoghq.com/blog/best-practices-to-prevent-alert-fatigue) isn’t unique to TF infrastructure automation – it’s a universal challenge that affects all alerting and notification systems.
 
-When every TF Apply that fails pings everyone in the channel with an universal tag such as `@everyone` or `@here`, notifications quickly become background noise. Teams become desensitized to constant alerts and critical failures (load balancer modifications failing and affecting traffic routing) might get drowned out with minor issues.
+When every TF Apply that fails pings everyone in the channel with an universal tag such as `@everyone` or `@here`, notifications quickly become background noise. Teams become desensitized to constant alerts and critical failures (for example, load balancer modifications failing and affecting traffic routing) might get drowned out with minor issues.
 
 This is particularly problematic in organizations with large cloud infrastructure footprints managed by IaC – notifications are usually important to someone, but **when everyone on the team gets every notification, they are noticed by none**.
 
@@ -97,7 +99,7 @@ Our improved solution using [Spacelift's Notification Policies](https://docs.spa
 3. Implements deduplication so repeated issues such as identical root module failures don’t create a flood of redundant notifications. This is especially important on GitHub Pull Requests where notifications (comments in the GitHub PR context) can be [updated in-place](https://docs.spacelift.io/concepts/policy/notification-policy#updating-an-existing-pull-request-comment).
 4. Uses multiple notification channels for different failure priority levels. Critical resource issues (e.g. production related infrastructure deployments) deserve different treatment than minor sandbox environment failures.
 
-Below is a simple targeted notification example -- with different use cases in different organizations, the actual messaging and content will vary greatly to suit what different teams need to best address their needs.
+Below is a simple targeted notification example -- with different use cases in different organizations, the actual messaging and content will vary greatly to suit what different teams require to best address their needs.
 
 ![Targeted Notification Example](/img/updates/efficient-notifications-terraform-automation/simple-targeted-notification-example.png)
 
