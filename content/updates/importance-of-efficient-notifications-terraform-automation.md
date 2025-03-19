@@ -23,7 +23,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 
 ## Introduction
 
-In the world of [Terraform](https://www.terraform.io/) and [OpenTofu](https://opentofu.org/) (collectively referred to as “TF” in this post) and Infrastructure as Code (IaC), there are times where the CI/CD pipeline or automation fail to deploy IaC changes. Failures could occur due to the code errors, cloud provider resource constraints, authentication issues, state & locking conflict, transient provider or network disruptions.
+In the world of [Terraform](https://www.terraform.io/) and [OpenTofu](https://opentofu.org/) (collectively referred to as “TF” in this post) and Infrastructure as Code (IaC), there are times where the CI/CD pipeline or automation fails to deploy IaC changes. Failures could occur due to the code errors, cloud provider resource constraints, authentication issues, state & locking conflict, transient provider or network disruptions.
 
 Because there are so many factors involved in cloud infrastructure, there’s more possibility for failed TF applies – such failures are acceptable and can easily be addressed with simple follow-up changes or reruns.
 
