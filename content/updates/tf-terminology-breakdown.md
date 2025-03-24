@@ -21,9 +21,6 @@ callout: <p>👋 <b>Got a term that you're still confused on in the TF or IaC sp
   - [Root Modules](#root-modules)
   - [Child Modules](#child-modules)
   - [Submodules](#submodules)
-- [TF Organization Patterns](#tf-organization-patterns)
-  - [Multi-instance Root Modules](#multi-instance-root-modules)
-  - [Single-instance Root Modules](#single-instance-root-modules)
 - [State Management](#state-management)
   - [Backends](#backends)
   - [State Locking](#state-locking)
@@ -39,6 +36,9 @@ callout: <p>👋 <b>Got a term that you're still confused on in the TF or IaC sp
   - [Stack](#stack)
   - [Terralith Pattern](#terralith-pattern)
   - [Demystifying HashiCorp Offerings: Terraform Cloud vs Terraform Enterprise vs HCP Terraform](#demystifying-hashicorp-offerings-terraform-cloud-vs-terraform-enterprise-vs-hcp-terraform)
+- [TF Organization Patterns](#tf-organization-patterns)
+  - [Multi-instance Root Modules](#multi-instance-root-modules)
+  - [Single-instance Root Modules](#single-instance-root-modules)
 - [Wrapping Up](#wrapping-up)
 
 # Intro
@@ -100,18 +100,6 @@ vpc/
 In this case, "vpc-endpoints" is a submodule of the "vpc" parent. This nesting capability provides additional flexibility in organizing your infrastructure code, but it's worth noting that if you're building many submodules within a child module, it may just be time to break up your child module into separate, stand-alone modules.
 
 Here is an example of a submodule: [cloudposse/terraform-aws-vpc/tree/main/modules/vpc-endpoints](https://github.com/cloudposse/terraform-aws-vpc/tree/main/modules/vpc-endpoints)
-
-# TF Organization Patterns
-
-When using Vanilla TF, there are two primary ways that we've seen people organize their root modules within a given TF project / repo. These are Masterpoint terms that we came up with to help discuss issues surrounding these patterns. We define them here as we believe there is value in sharing these.
-
-## Multi-instance Root Modules
-
-Multi-instance is when a root module directory can have multiple state files that are associated with it. This is done with either TF workspaces or with dynamical backend configurations (what we simply call "Dynamic Backends" - explained below). An example of this is that you have an `db-cluster` root module and you deploy it with different configurations for your dev, stage, and prod environments. Think one directory to many state files.
-
-## Single-instance Root Modules
-
-A root module directory has *only one* associated state file. This means the engineering team has directly encoded configuration into the root module for the given environment that it is being deployed to. Examples that match the above would mean that you would have `db-cluster-dev`, `db-cluster-stage`, and `db-cluster-prod` root modules as their own separate directories and each would have the configuration necessary to deploy those clusters for their associated environment. Think one directory to one state file.
 
 # State Management
 
@@ -198,6 +186,19 @@ Dealing with the Terralith problem and want to know more? [Check out our origina
 HashiCorp has gone back and forth on some of their naming conventions around their Terraform product offering. As a result, it's a confusing product landscape. Terraform Cloud and Terraform Enterprise (sometimes referred to as TFE) offer essentially the same functionality, but Enterprise is self-hosted and has, as anything with the word Enterprise in it would be expected to have, a higher price tag. HCP Terraform, which is an acronym  for Hashicorp Cloud Platform Terraform, is the new name for Terraform Cloud.
 
 You'll see all of these names in practice and can largely equate them to the same thing.
+
+# TF Organization Patterns
+
+When using Vanilla TF, there are two primary ways that we've seen people organize their root modules within a given TF project / repo. These are Masterpoint terms that we came up with to help discuss issues surrounding these patterns. We define them here as we believe there is value in sharing these.
+
+## Multi-instance Root Modules
+
+Multi-instance is when a root module directory can have multiple state files that are associated with it. This is done with either TF workspaces or with dynamical backend configurations (what we simply call "Dynamic Backends" - explained below). An example of this is that you have an `db-cluster` root module and you deploy it with different configurations for your dev, stage, and prod environments. Think one directory to many state files.
+
+## Single-instance Root Modules
+
+A root module directory has *only one* associated state file. This means the engineering team has directly encoded configuration into the root module for the given environment that it is being deployed to. Examples that match the above would mean that you would have `db-cluster-dev`, `db-cluster-stage`, and `db-cluster-prod` root modules as their own separate directories and each would have the configuration necessary to deploy those clusters for their associated environment. Think one directory to one state file.
+
 
 # Wrapping Up
 
