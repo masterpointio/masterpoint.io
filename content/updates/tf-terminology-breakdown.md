@@ -75,7 +75,7 @@ Root modules serve as the main working directory where Terraform or OpenTofu is 
 
 ## Child Modules
 
-Child modules are reusable units of Terraform configuration that are intended to be used by root modules or other child modules. They maintain their own input variables and outputs, making them ideal for encapsulating specific infrastructure patterns or services. By separating out large, complicated configurations into child modules, you can more easily reuse common infra definitions and keep your root modules cleaner and much easier to maintain. These are a key method of TF abstraction.
+Child modules are reusable units of TF configuration that are intended to be used by root modules or other child modules. They maintain their own input variables and outputs, making them ideal for encapsulating specific infrastructure patterns or services. By separating out large, complicated configurations into child modules, you can more easily reuse common infra definitions and keep your root modules cleaner and much easier to maintain. These are a key method of TF abstraction.
 
 Here is an example of a child module: [cloudposse/terraform-aws-vpc](https://github.com/cloudposse/terraform-aws-vpc)
 
@@ -123,15 +123,15 @@ Backends refers to where and how Terraform stores its state files. These state f
 
 State management in Terraform comes in two primary flavors: local and remote backends.
 
-Local backends store state files on your local filesystem, which works well for proofs of concept but presents challenges in team environments.
+**Local backends** store state files on your local filesystem, which works well for proofs of concept but presents challenges in team environments.
 
-Remote backends, on the other hand, store state in shared locations like S3 or Azure Storage, enabling multiple engineers to collaborate safely on the same configurations, while also providing better security controls.
+**Remote backends**, on the other hand, store state in shared locations like S3 or Azure Storage, enabling multiple engineers to collaborate safely on the same configurations, while also providing better security controls.
 
-We wrote an article on the best Backends to use here: [https://masterpoint.io/updates/why-use-cloud-object-storage-terraform-remote-backend/](https://masterpoint.io/updates/why-use-cloud-object-storage-terraform-remote-backend/) 
+We wrote an article on the best Backends to use here: [Why Use Cloud Object Storage for Terraform's Remote Backend & State](https://masterpoint.io/updates/why-use-cloud-object-storage-terraform-remote-backend/)
 
 ## State Locking
 
-Locking is a fundamentally important concept regardless of backend choice. When you run TF operations that could modify state, a lock prevents others from simultaneously making changes that could corrupt your infrastructure state. Different backends implement locking mechanisms differently - for instance, S3 backends typically use DynamoDB for locking..
+[Locking](https://opentofu.org/docs/language/state/locking/) is a fundamentally important concept regardless of backend choice. When you run TF operations that could modify state, a lock prevents others from simultaneously making changes that could corrupt your infrastructure state. Different backends implement locking mechanisms differently - for instance, S3 backends typically use DynamoDB for locking.
 
 ## Dynamic Backends (OpenTofu only)
 
@@ -147,7 +147,7 @@ Terraform 1.5 introduced built-in validation through check blocks, which run dur
 
 ## Native TF Testing
 
-The [native testing framework in Terraform CLI](https://developer.hashicorp.com/terraform/language/tests) and Open[Tofu CLI](https://opentofu.org/docs/cli/commands/test/) provides a basic framework to validate your infrastructure code. It runs complete TF workflows, creating temporary state and resources to verify your configurations work as intended. This approach is particularly valuable for testing modules, as it allows you to validate the actual behavior of your infrastructure patterns. [You can view an example of TF testing in action in our terraform-spacelift-automation module](https://github.com/masterpointio/terraform-spacelift-automation/blob/main/tests/main.tftest.hcl).
+The [native testing framework in Terraform CLI](https://developer.hashicorp.com/terraform/language/tests) and [OpenTofu CLI](https://opentofu.org/docs/cli/commands/test/) provides a basic framework to validate your infrastructure code. It runs complete TF workflows, creating temporary state and resources to verify your configurations work as intended. This approach is particularly valuable for testing modules, as it allows you to validate the actual behavior of your infrastructure patterns. [You can view an example of TF testing in action in our terraform-spacelift-automation module](https://github.com/masterpointio/terraform-spacelift-automation/blob/main/tests/main.tftest.hcl).
 
 ## Terratest
 
@@ -155,17 +155,17 @@ The [native testing framework in Terraform CLI](https://developer.hashicorp.com/
 
 # Industry Terms
 
-As the Terraform ecosystem has matured, new terms have emerged beyond the core concepts. These terms represent specialized tools, architectural patterns, and platform-specific nomenclature that you'll encounter when working with Terraform at scale.
+As the TF ecosystem has matured, new terms have emerged beyond the core concepts. These terms represent specialized tools, architectural patterns, and platform-specific nomenclature that you'll encounter when working with TF at scale.
 
 ## Provider
 
 A provider in TF is a plugin that enables interaction with an API; typically for a specific infrastructure platform or service. Providers serve as the bridge between TF configuration code and the actual infrastructure resources you're managing. Each provider (like AWS, Azure, GCP, Kubernetes, GitHub, CloudFlare, DataDog, etc.) contains resource types and data sources that correspond to services offered by that platform. Providers must be configured in your TF code with the necessary authentication credentials and regional settings before you can use their associated resources.
 
-The term "Provider" has also been adopted by the wider IaC tools like Crossplane + Pulumi.
+The term "Provider" has also been adopted by the wider IaC tools like [Crossplane](https://docs.crossplane.io/latest/concepts/providers/) and [Pulumi](https://www.pulumi.com/docs/iac/concepts/resources/providers/).
 
 ## TACOS
 
-TACOS stands for "Terraform Automation and Collaboration Software." This term is associated with the various Terraform automation products in the space like HCP Terraform, Spacelift, Env0, Scalr, and similar. These are generally hosted platforms that serve as execution environments for TF that help teams collaborate on infrastructure changes, manage workflows, handle approvals, and provide visibility into the state of the organization's infrastructure across multiple environments and projects.
+TACOS stands for "Terraform Automation and Collaboration Software." This term is associated with the various Terraform automation products in the space like [HCP Terraform](https://cloud.hashicorp.com/products/terraform), [Spacelift](https://spacelift.io/), [Env0](https://www.env0.com/), [Scalr](https://www.scalr.com/), and similar. These are generally hosted platforms that serve as execution environments for TF that help teams collaborate on infrastructure changes, manage workflows, handle approvals, and provide visibility into the state of the organization's infrastructure across multiple environments and projects.
 
 ## TF Frameworks
 
@@ -177,13 +177,13 @@ At Masterpoint, we've used ALL of these frameworks through either greenfield pro
 
 ## Stack
 
-The term "stack" has one of the most ambiguous definitions. Different platforms in the Terraform ecosystem refer to different concepts when they use this term. Here's how different platforms define "stacks":
+The term "stack" has one of the most ambiguous definitions. Different platforms in the TF ecosystem refer to different concepts when they use this term. Here's how different platforms define "stacks":
 
-* Spacelift: a deployment unit with its own state and configuration: [https://docs.spacelift.io/concepts/stack](https://docs.spacelift.io/concepts/stack)
-* Atmos: a collection of components and modules: [https://docs.cloudposse.com/resources/legacy/stacks/](https://docs.cloudposse.com/resources/legacy/stacks/)
-* HashiCorp: TF configurations organized into components across multiple environments [https://developer.hashicorp.com/terraform/language/stacks](https://developer.hashicorp.com/terraform/language/stacks)
-* Terramate: Collections of resources managed as a unit [https://terramate.io/docs/cli/stacks/](https://terramate.io/docs/cli/stacks/)
-* [Te](https://terramate.io/docs/cli/stacks/)rragrunt: A collection of "units" (single instance of infrastructure) managed by Terragrunt: [https://terragrunt.gruntwork.io/docs/getting-started/terminology/#stack](https://terragrunt.gruntwork.io/docs/getting-started/terminology/#stack)
+* Spacelift: A deployment unit with its own state and configuration, see [Main Concepts - Stack](https://docs.spacelift.io/concepts/stack).
+* Atmos: A collection of components and modules, see [Resources - Stacks](https://docs.cloudposse.com/resources/legacy/stacks/).
+* HashiCorp: TF configurations organized into components across multiple environments, see [Stacks overview](https://developer.hashicorp.com/terraform/language/stacks).
+* Terramate: Collections of resources managed as a unit, see [Stacks](https://terramate.io/docs/cli/stacks/).
+* Terragrunt: A collection of "units" (a single instance of infrastructure) managed by Terragrunt, see [Terminology - Stack](https://terragrunt.gruntwork.io/docs/getting-started/terminology/#stack).
 
 Platforms like Env0 and Scalr, which provide a more holistic, top-down management of infrastructure configurations like Terraform and Kubernetes, wrap Terragrunt's toolchain to provide stack functionality.
 
@@ -191,7 +191,7 @@ Platforms like Env0 and Scalr, which provide a more holistic, top-down managemen
 
 The [Terralith pattern](https://masterpoint.io/updates/terralith-monolithic-terraform-architecture/) represents a specific approach to TF architecture that opts for a single state file for all infrastructure using a monolithic root module approach. While it's often seen as a natural starting point for new projects, teams should view it as technical debt that needs to be addressed in the future. The pattern's fundamental limitations - from state file locking issues to increased blast radius of changes - make it unsuitable for long-term use or any environment that needs to scale beyond basic infrastructure management.
 
-Dealing with the Terralith problem and want to know more? [Check out our original post on this topic here](https://masterpoint.io/updates/terralith-monolithic-terraform-architecture/) and then [learn how to break up a Terralith in our follow up article here](https://masterpoint.io/updates/steps-to-break-up-a-terralith/).
+Dealing with the Terralith problem and want to know more? [Check out our original post on this topic here](https://masterpoint.io/updates/terralith-monolithic-terraform-architecture/) and then [learn how to break up a Terralith in our follow-up article here](https://masterpoint.io/updates/steps-to-break-up-a-terralith/).
 
 ## Demystifying HashiCorp Offerings: Terraform Cloud vs Terraform Enterprise vs HCP Terraform
 
