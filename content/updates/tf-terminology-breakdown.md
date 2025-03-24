@@ -195,10 +195,13 @@ When using Vanilla TF, there are two primary ways that we've seen people organiz
 
 Multi-instance is when a root module directory can have multiple state files that are associated with it. This is done with either TF workspaces or with dynamical backend configurations (what we simply call "Dynamic Backends" - explained below). An example of this is that you have an `db-cluster` root module and you deploy it with different configurations for your dev, stage, and prod environments. Think one directory to many state files.
 
+This pattern is often associated with the DRY, or "Don't Repeat Yourself", methodology.
+
 ## Single-instance Root Modules
 
 A root module directory has *only one* associated state file. This means the engineering team has directly encoded configuration into the root module for the given environment that it is being deployed to. Examples that match the above would mean that you would have `db-cluster-dev`, `db-cluster-stage`, and `db-cluster-prod` root modules as their own separate directories and each would have the configuration necessary to deploy those clusters for their associated environment. Think one directory to one state file.
 
+This pattern is often associated with the WET, or "Write Every Time", methodology.
 
 # Wrapping Up
 
