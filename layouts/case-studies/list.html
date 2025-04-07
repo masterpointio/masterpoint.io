@@ -1,5 +1,5 @@
 {{ partial "head.html" . }}
-<body {{ if .Params.id }}id='{{ .Params.id }}' {{end}} class="list-default">
+<body {{ if .Params.id }}id='{{ .Params.id }}' {{end}} class="case-studies-list">
     {{ partial "header.html" . }}
     <section id="banner">
         {{if .Params.banner_image}} <div class="banner-image bg-image"><img src="{{.Params.banner_image}}" /></div>
@@ -40,18 +40,16 @@
     <main>
         <div class="container">
             <div class="row">
-                <div class="col introContent">
+                <div class="col">
                     {{ .Content }}
                 </div>
             </div>
             <div class="row">
-                {{ range (.Paginator 5).Pages }}
-                {{ partial "news-entry.html" . }}
+                {{ range .Pages }}
+                {{ partial "case-study-entry.html" . }}
                 {{ end }}
             </div>
-            <div class="row">
-                {{ partial "pagination.html" .}}
-            </div>
+ 
         </div>
     </main>
     {{ partial "schedule-assessment.html" . }}

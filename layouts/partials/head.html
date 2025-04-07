@@ -67,7 +67,7 @@
     <link rel="stylesheet" href="https://use.typekit.net/noi8hrw.css">
 
     {{ $sass := resources.Get "css/style.scss" }}
-    {{ $style := $sass | resources.ToCSS | minify }}
+    {{ $style := $sass | css.Sass | minify }}
 
     <link rel="stylesheet" href="{{ $style.Permalink }}" media="screen">
 

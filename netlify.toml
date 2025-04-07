@@ -31,3 +31,9 @@
 
 [[plugins]]
 package = "netlify-plugin-image-optim"
+
+[[redirects]]
+  from = "/updates/*"
+  to = "/blog/:splat"
+  status = 301
+  force = true

@@ -1,5 +1,5 @@
 {{ partial "head.html" . }}
-<body {{ if .Params.id }}id='{{ .Params.id }}' {{end}} class="list-default">
+<body {{ if .Params.id }}id='{{ .Params.id }}' {{end}} class="case-studies-list">
     {{ partial "header.html" . }}
     <section id="banner">
         {{if .Params.banner_image}} <div class="banner-image bg-image"><img src="{{.Params.banner_image}}" /></div>
@@ -39,19 +39,17 @@
     </section>
     <main>
         <div class="container">
-            <div class="row">
-                <div class="col introContent">
+            <div id="now-intro" class="row d-flex justify-content-center">
+                <div class="col col-12 col-md-10 text-center">
                     {{ .Content }}
                 </div>
             </div>
             <div class="row">
-                {{ range (.Paginator 5).Pages }}
-                {{ partial "news-entry.html" . }}
+                {{ range (where site.RegularPages "Section" "team").ByWeight }}
+                {{ partial "now-entry.html" . }}
                 {{ end }}
             </div>
-            <div class="row">
-                {{ partial "pagination.html" .}}
-            </div>
+ 
         </div>
     </main>
     {{ partial "schedule-assessment.html" . }}

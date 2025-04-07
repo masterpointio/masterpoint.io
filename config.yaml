@@ -6,13 +6,24 @@ taxonomies:
   tag: tags
   section_category: section_categories
 enableRobotsTXT: true
-paginate: 1
 params:
   linkedin_link: https://www.linkedin.com/company/masterpoint-consulting/about/
+  github_link: https://github.com/masterpointio
+  youtube_link: https://www.youtube.com/@MasterpointConsulting
+  newsletter_link: https://newsletter.masterpoint.io/
+  rss_link: https://masterpoint.io/blog/index.xml
   #google_analytics: UA-
   sitewide_note: <strong>Masterpoint stands with Ukraine.</strong> Here’s how you can help Ukraine with just a few clicks. >
   sitewide_note_link: /updates/supporting-ukraine/
   get_in_touch: /contact
+outputs:
+  home:
+    - HTML
+  taxonomy:
+    - HTML
+  section:
+    - HTML
+    - RSS
 markup:
   goldmark:
     extensions:
@@ -46,6 +57,23 @@ menu:
     - name: Who We Are
       url: /who-we-are/
       weight: 30
-    - name: Updates
-      url: /updates/
+    - name: Content
+      url: #
       weight: 40
+      identifier: content
+    - name: Blog
+      url: /blog/
+      weight: 10
+      parent: content
+    - name: Newsletter
+      url: https://newsletter.masterpoint.io/
+      weight: 20
+      parent: content
+    - name: Case Studies
+      url: /case-studies/
+      weight: 30
+      parent: content
+    - name: Now
+      url: /now/
+      weight: 40
+      parent: content
