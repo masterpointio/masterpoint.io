@@ -24,6 +24,10 @@
     <li class="social"><a href="{{ .Site.Params.youtube_link }}" target=_blank><i class="fab fa-youtube" aria-hidden="true" title="youtube link"></i><span class="sr-only">Youtube</span></a></li>
     {{ else }}{{ end }}
     
+    {{ if isset .Site.Params "newsletter_link" }}
+    <li class="social"><a href="{{ .Site.Params.newsletter_link }}" target=_blank><i class="fa-solid fa-newspaper"></i><span class="sr-only">Newsletter</span></a></li>
+    {{ else }}{{ end }}
+    
     {{ if isset .Site.Params "rss_link" }}
     <li class="social"><a href="{{ .Site.Params.rss_link }}" target=_blank><i class="fas fa-rss" aria-hidden="true" title="rss link"></i><span class="sr-only">RSS</span></a></li>
     {{ else }}{{ end }}

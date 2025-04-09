@@ -674,6 +674,11 @@ header {
     }
   }
   #headerBtn{
+    .button {
+      @media(min-width:1200px)and(max-width:1330px){
+        font-size:16px;
+      }
+    }
     @media (max-width: 575px) {
       .button{
         font-size: .85rem;
