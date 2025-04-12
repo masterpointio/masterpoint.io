@@ -753,6 +753,7 @@ header {
         line-height: 1.9em;
         color: #ffffff;
         text-transform: uppercase;
+        position: relative;
         @media (min-width: 1200px)and(max-width: 1300px) {
           font-size: .9rem;
         }
@@ -1884,6 +1885,19 @@ footer {
         text-align: center;
       }
     }
+
+    .bannerLink {
+      margin-top:20px;
+      margin-top:20px;
+      a {
+        color: #fff;
+        font-size:1.25rem;
+
+        strong {
+          @extend .text-gradient;
+        }
+      }
+    }
     .bg-image {
       width: 50%; position: absolute;
       &:before {
@@ -2724,6 +2738,20 @@ footer {
 }
 
 #page-updates {
+
+  // header {
+  //   ul {
+  //     li {
+  //       &:nth-child(4){
+  //         a {
+  //           &:first-of-type {
+  //             @extend .current-menu-item;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
   main {
     .introContent {
       color:#fff;
