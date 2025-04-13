@@ -1,5 +1,5 @@
 {{ partial "head.html" . }}
-<body {{ if .Params.id }}id='{{ .Params.id }}' {{end}} class="list-default">
+<body {{ if .Params.id }}id='{{ .Params.id }}' {{end}} class="list-default content-list">
     {{ partial "header.html" . }}
     <section id="banner">
         {{if .Params.banner_image}} <div class="banner-image bg-image"><img src="{{.Params.banner_image}}" /></div>

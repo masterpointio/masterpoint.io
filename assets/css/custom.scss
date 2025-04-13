@@ -2737,21 +2737,33 @@ footer {
   }
 }
 
-#page-updates {
+.content-list {
+  header {
+    ul {
+      li {
+        &:nth-child(4){
+          a {
+            &:first-of-type {
+              @extend .current-menu-item;
+            }
+          }
+        }
 
-  // header {
-  //   ul {
-  //     li {
-  //       &:nth-child(4){
-  //         a {
-  //           &:first-of-type {
-  //             @extend .current-menu-item;
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
+        .sub-menu {
+          li {
+            a {
+              &::before {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+#page-updates {
   main {
     .introContent {
       color:#fff;
