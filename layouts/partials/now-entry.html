@@ -1,3 +1,4 @@
+{{ if not (or (eq .Content "NO UPDATE") (in .Content "NO UPDATE")) }}
 <div class="col col-12">
     <div class="case-study-entry">
         <div class="flex reverse align-items-center justify-content-center">
@@ -19,3 +20,4 @@
         </div>
     </div>
 </div>
+{{ end }}

@@ -8,6 +8,6 @@
 #   - all
 registries:
 - type: standard
-  ref: v4.190.0 # renovate: depName=aquaproj/aqua-registry
+  ref: v4.345.0 # renovate: depName=aquaproj/aqua-registry
 packages:
-- name: gohugoio/hugo/hugo-extended@v0.127.0
+- name: gohugoio/hugo/hugo-extended@v0.146.4
