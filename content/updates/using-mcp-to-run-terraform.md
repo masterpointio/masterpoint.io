@@ -11,7 +11,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 ---
 
 # Using MCPs to Run Terraform
-Our view is that MCPs are helpful and evolving so fast, but as it applies to running terraform operations, not a substitute for first-hand knowledge with terraform.
+Our view is that MCPs are helpful and evolving incredibly fast, but as it applies to running terraform operations, MCPs are not a substitute for first-hand knowledge of terraform.
 
 <br>
 
