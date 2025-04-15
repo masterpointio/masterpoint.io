@@ -10,10 +10,6 @@ description: "We jump into a hands-on exploration of Model Context Protocols (MC
 callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a>
 ---
 
-# Using MCPs to Run Terraform
-MCPs are a helpful, but not a substitute for first-hand experience
-
-
 ## Table of Contents
 - [Quick Note](#quick-note)
 - [Introduction](#introduction)
