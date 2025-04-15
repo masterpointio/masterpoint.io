@@ -2,7 +2,7 @@
 title: Power Digital Terraform Case Study
 banner_tagline: "How Masterpoint Helped Power Digital"
 banner_title: "<span class='text-gradient'>Achieve 10x Reduction in Infrastructure Automation Costs</span>"
-description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris aliquet odio arcu, et suscipit ex volutpat non. Aenean ultrices vehicula lacinia. Nullam sed arcu purus. Ut elit leo, vulputate sed rhoncus vel, mollis ac velit.
+description: "Learn how Masterpoint helped Power Digital Marketing migrate from Terraform Cloud to Spacelift, resulting in a 10x infrastructure automation cost reduction and significantly improved performance. This case study details the challenges, migration process, and impressive results achieved through platform modernization and infrastructure optimization."
 banner_text: "Download the case study PDF to learn more!"
 banner_image: /img/landing/power-digital-case-study.png
 preview_image: /img/case-studies/power-digital-case-study-preview.jpg
