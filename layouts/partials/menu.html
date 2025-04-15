@@ -4,10 +4,11 @@
 	{{ $active = or $active (eq .Name $current.Title) }}
 	{{ $active = or $active (eq .URL $current.RelPermalink) }}
 	{{ $active = or $active (and (eq .Name "Updates") (eq $current.Section "updates")) }}
-		<li class="menu-item"><a class="{{ if $active }}current-menu-item{{ end }}" href="{{ .URL }}">
+		<li class="menu-item"><a class="{{ if $active }}current-menu-item{{ end }}"  href="{{ .URL }}">
 			<span>
 			{{ .Name }}
 			</span>
+			{{ if .HasChildren }} <span class='drop-icon' for='{{ .Name }}'><i class='fas fa-caret-down'></i></span>{{ end }}
 			</a>
 			{{ if .HasChildren }}
 			<ul class="sub-menu">

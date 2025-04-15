@@ -1,0 +1,23 @@
+{{ if not (or (eq .Content "NO UPDATE") (in .Content "NO UPDATE")) }}
+<div class="col col-12">
+    <div class="case-study-entry">
+        <div class="flex reverse align-items-center justify-content-center">
+            {{ if .Params.image }}
+            <div class="entryImg col col-12 col-md-4">
+                <img src='{{ .Param "image"}}' class="img-fluid lazy" alt="{{ .Title | safeHTML }}">
+            </div>
+            {{end}}
+            <div class="entryContent col col-12 col-md-8">
+                <h2 class="postTitle">
+                    {{ .Title | safeHTML }}
+                </h2>
+
+                <h3>{{ .Params.designation }}</h3>
+
+                <div class="entryDesc">{{ .Content }}</div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{{ end }}

@@ -25,6 +25,9 @@ id: who-matt-gowie
     <a href="https://www.youtube.com/watch?v=a-5a7aXnjmk" target="_blank">The Infrastructure as Code Podcast</a>
   </li>
   <li>
+    <a href="https://www.youtube.com/watch?v=Rp62A1NYvJs" target="_blank">Terraform Tuesdays</a>
+  </li>
+  <li>
     <a href="https://www.youtube.com/watch?v=3DPwxas3SDA" target="_blank">The Cloud Gambit</a>
   </li>
   <li>

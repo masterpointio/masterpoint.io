@@ -1,8 +1,32 @@
 $("#status").fadeOut(); // will first fade out the loading animation
 $("#preloader").delay(350).fadeOut("slow"); // will fade out the white DIV that covers the website.
 
+// Navigation
 $(document).ready(function() {
-    // Mobile Navigation Toggle
+	// Desktop DropDown Navigation
+	
+	
+	// Prevent parent menu items with children from navigating when clicked
+	$('ul.desktopMenu li:has(ul)').on('click', function(e) {
+		if ($(e.target).closest('a').length && $(e.target).closest('li').has('ul').length) {
+			e.preventDefault();
+			// Toggle submenu on click as well
+			var $submenu = $(this).children('ul');
+			if ($submenu.is(':visible')) {
+				$submenu.hide(100);
+			} else {
+				$submenu.stop(true, true).slideDown(250);
+			}
+		}
+	});
+	
+	// Close dropdown menus when clicking outside
+	$(document).on('click', function(e) {
+		if (!$(e.target).closest('ul.desktopMenu').length) {
+			$('ul.desktopMenu li ul').hide(100);
+		}
+	});
+	// Mobile Navigation Toggle
     $('#toggle-menu').click(function(){
         if($("nav ul").is(":visible")){
             $('nav ul').slideUp(250);
@@ -26,6 +50,9 @@ $(document).mouseup(function(e){
 $(window).resize(function() {
     if(window.matchMedia('(min-width: 1200px)').matches) {
         $('nav ul').show();
+    }
+    if(window.matchMedia('(min-width: 1200px)').matches) {
+        $('ul.desktopMenu li ul').hide();
     }
     if(window.matchMedia('(max-width: 1199px)').matches) {
         $('nav ul').hide();
