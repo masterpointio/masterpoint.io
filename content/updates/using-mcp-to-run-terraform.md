@@ -1,17 +1,28 @@
 ---
 visible: false
 draft: false
-title: "Using an MCP to Run Terraform Operations"
+title: "Using MCPs to Run Terraform"
 author: Weston Platter
 date: 2025-04-14
-slug: using-mcp-to-run-terraform
+slug: using-mcps-to-run-terraform
 description: "We jump into a hands-on exploration of Model Context Protocols (MCPs) sharing our experiment using tfmcp to run terraform init, plan, apply. We share our take on where agents add value and highlight security considerations when adding MCPs to your workflow"
 # image: 
 callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a>
 ---
 
 # Using MCPs to Run Terraform
-Our view is that MCPs are helpful and evolving incredibly fast, but as it applies to running terraform operations, MCPs are not a substitute for first-hand knowledge of terraform.
+MCPs are a helpful, but not a substitute for first-hand experience
+
+
+## Table of Contents
+- [Quick Note](#quick-note)
+- [Introduction](#introduction)
+- [Demo / Walk Through](#demo--walk-through)
+  - [MCP configuration](#mcp-configuration)
+  - [Terraform code for us to run](#terraform-code-for-us-to-run)
+  - [Debugging terraform apply](#debugging-terraform-apply)
+- [Takeways](#takeways)
+
 
 <br>
 
