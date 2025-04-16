@@ -5,7 +5,7 @@ title: "Using MCPs to Run Terraform"
 author: Weston Platter
 date: 2025-04-16
 slug: using-mcps-to-run-terraform
-description: "We jump into a hands-on exploration of Model Context Protocols (MCPs) sharing our experiment using tfmcp to run terraform init, plan, apply. We share our take on where agents add value and highlight security considerations when adding MCPs to your workflow"
+description: "We jump into a hands-on exploration of Model Context Protocols (MCPs), sharing our experiment using tfmcp to run terraform init, plan, apply. We share our take on where agents add value and highlight security considerations when adding MCPs to your workflow."
 image: /img/updates/using-mcps-to-run-terraform/header5.png
 callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a>
 ---
@@ -35,11 +35,11 @@ We’re specifically interested in:
 # Introduction
 You might have heard about [Anthropic’s Model Context Protocol](https://modelcontextprotocol.io/introduction) (MCP) and their implementation as MCP clients or servers (MCPs) — they’ve been gaining attention in the agentic workflow space. At a high level, MPC clients/servers act as universal connectors between your AI tool of choice (like Cursor or Claude Desktop) and the tools, APIs, and data sources you want the agent to work with.
 
-You might be asking yourself, “*where do MCPs provide value for the average person?*” Here are a couple examples I’m thinking about using MCPs to streamline my work days,
+You might be asking yourself, “*Where do MCPs provide value for the average person?*” Here are a couple examples I’m thinking about using MCPs to streamline my work days,
 
 - **Sprint planning admin work.** Imagine passing a sprint planning task into your Cursor Agent chat, have AI review the task’s description and acceptance criteria for grammar clarity, and then have a [Notion MCP](https://github.com/makenotion/notion-mcp-server) add the task as a Story in the client specific Epic filling in the relevant Notion fields.
 
-- **Revising Figma designs.** Imagine directing an AI to update existing designs in your company’s Fimga account. (credit goes to Andy Osmami’s [substack post on MCPs](https://addyo.substack.com/i/159868119/ai-figma-programmatic-ui-design) for this example).  "AI, can you grab the color palette from the Login screen design?" The AI, via MCP, fetches the design document from Figma and returns the color styles. Or say "Increase the padding of the signup button and export it as an image" – the AI can command Figma to adjust that element and retrieve an updated asset, then perhaps use it in code.
+- **Revising Figma designs.** Imagine directing an AI to update existing designs in your company’s Figma account. (credit goes to Andy Osmami’s [substack post on MCPs](https://addyo.substack.com/i/159868119/ai-figma-programmatic-ui-design) for this example).  "AI, can you grab the color palette from the Login screen design?" The AI, via MCP, fetches the design document from Figma and returns the color styles. Or say "Increase the padding of the signup button and export it as an image" – the AI can command Figma to adjust that element and retrieve an updated asset, then perhaps use it in code.
 
 The core idea is that MCPs create the ability for AIs to ubiquitously connect to your accounts, services, and APIs to access (authenticated) data, resources, and do specific tasks on your behalf. If you’re just getting up to speed on this, we’d recommend you read more on MCPs and what they’re used for in the Agentic AI world. We found these resources helpful,
 
