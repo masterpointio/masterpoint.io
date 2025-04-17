@@ -158,10 +158,13 @@ resource "postgresql_schema" "app_schema" {
 ### Debugging terraform apply
 At this point, I was ready for the agent to run terraform plan and apply my changes. And here is where the rubber meets the road in using MCPs 🙂. Here’s what I ran into:
 
-**The first issue** was a permissions error — `admin_user` couldn’t create Postgres roles. This issue was totally my fault — I hadn’t granted it any meaningful privileges. I had the MCP repeatedly run `terraform apply`, but either the MCP didn't log/surface the error or Cursor’s Agent Mode wasn't able to interpret the cause of the error.
-![First issue - MCP able to run terraform apply](/img/updates/using-mcps-to-run-terraform/debug1.png)
+**The first issue** was a permissions error — `admin_user` couldn’t create Postgres roles. This issue was totally my fault — I hadn’t granted it any meaningful privileges. I had Crusor run `terraform apply` via the MCP, but it didn't report back if the apply was successful. I think we're in the **very early** stages of MCP workflows and usability concerns like surfacing logs and interpreting errors needs more attention to reduce friction.
 
-Eventually, I switched to running `terraform apply` directly in the terminal and got a helpful error: `admin_user` lacked the required privileges. I jumped into Postgres on the command line via `psql` and granted it `CREATEROLE` and `CREATEDB`.
+![First issue - view from Cursor](/img/updates/using-mcps-to-run-terraform/debug1a.png)
+
+I reverted to running `terraform apply` directly in the terminal and got a helpful error: `admin_user` lacked the required privileges. I jumped into Postgres on the command line via `psql` and granted it `CREATEROLE` and `CREATEDB`.
+
+![First issue - view from Terminal](/img/updates/using-mcps-to-run-terraform/debug1b.png)
 
 **The second issue** was with the provider config — even after fixing the role permissions, `terraform apply` kept failing when run via the MCP (see screenshots). Again, the specific terraform error wasn’t surfaced.
 ![MCP doesn't show the acutual error](/img/updates/using-mcps-to-run-terraform/debug2.png)
