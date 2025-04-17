@@ -17,7 +17,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
   - [MCP configuration](#mcp-configuration)
   - [Terraform code for us to run](#terraform-code-for-us-to-run)
   - [Debugging terraform apply](#debugging-terraform-apply)
-- [Takeways](#takeways)
+- [Takeaways](#takeaways)
 
 
 <br>
@@ -33,13 +33,24 @@ We’re specifically interested in:
 <br>
 
 # Introduction
-You might have heard about Anthropic’s [Model Context Protocol](https://modelcontextprotocol.io/introduction) (MCP) and their implementation as MCP clients or servers (MCPs) — they’ve been gaining attention in the agentic workflow space. At a high level, MPC clients/servers act as universal connectors between your AI tool of choice (like Cursor or Claude Desktop) and the tools, APIs, and data sources you want the agent to work with.
+You might have heard about Anthropic’s [Model Context Protocol](https://modelcontextprotocol.io/introduction) (MCP) and their implementation as MCP clients or servers (MCPs) — they’ve been gaining attention in the agentic workflow space. At a high level, MCP clients/servers act as universal connectors between your AI tool of choice (like Cursor or Claude Desktop) and the tools, APIs, and data sources you want the agent to work with.
 
 You might be asking yourself, “*Where do MCPs provide value for the average person?*” Here are a couple examples I’m thinking about using MCPs to streamline my work days,
 
 - **Sprint planning admin work.** Imagine passing a sprint planning task into your Cursor Agent chat, have AI review the task’s description and acceptance criteria for grammar clarity, and then have a [Notion MCP](https://github.com/makenotion/notion-mcp-server) add the task as a Story in the client specific Epic filling in the relevant Notion fields.
 
-- **Revising Figma designs.** Imagine directing an AI to update existing designs in your company’s Figma account. (credit goes to Andy Osmami’s [substack post on MCPs](https://addyo.substack.com/i/159868119/ai-figma-programmatic-ui-design) for this example).  "AI, can you grab the color palette from the Login screen design?" The AI, via MCP, fetches the design document from Figma and returns the color styles. Or say "Increase the padding of the signup button and export it as an image" – the AI can command Figma to adjust that element and retrieve an updated asset, then perhaps use it in code.
+<!-- - **Revising Figma designs.** Imagine directing an AI to update existing designs in your company’s Figma account. (credit goes to Andy Osmami’s [substack post on MCPs](https://addyo.substack.com/i/159868119/ai-figma-programmatic-ui-design) for this example).  "AI, can you grab the color palette from the Login screen design?" The AI, via MCP, fetches the design document from Figma and returns the color styles. Or say "Increase the padding of the signup button and export it as an image" – the AI can command Figma to adjust that element and retrieve an updated asset, then perhaps use it in code. -->
+
+- **Revising Figma designs.** Imagine directing an AI to update existing designs in your company’s Figma account (credit to Andy Osmami’s [Substack post on MCPs](https://addyo.substack.com/i/159868119/ai-figma-programmatic-ui-design) for this example). For instance:
+
+  > "AI, can you grab the color palette from the Login screen design?"
+
+  The AI—via MCP—fetches the Figma file and returns the color styles. Or:
+
+  > "Increase the padding of the signup button and export it as an image."
+
+  The AI then instructs Figma to adjust that element, retrieves the updated asset, and makes it available for use in your code.
+
 
 The core idea is that MCPs enable AIs to securely connect to your accounts, services, and APIs - accessing authenticated data and performing tasks on your behalf. If you’re just getting up to speed, we recommend these resources:
 - Explainer video on YouTube: [Model Context Protocol (MCP)](https://www.youtube.com/watch?v=5ZWeCKY5WZE)
@@ -145,7 +156,7 @@ resource "postgresql_schema" "app_schema" {
 ### Debugging terraform apply
 At this point, I was ready for the agent to run terraform plan and apply my changes. And here is where the rubber meets the road in using MCPs 🙂. Here’s what I ran into:
 
-**The first issue** was a permissions error — `admin_user` couldn’t create Postgres roles. This issue was totally my fault — I hadn’t granted it any meaningful privileges. I had the MCP repeatedly run `terraform apply`, but either the MCP didn't log/surface the error or Cursor’s Agent Mode wasn't able to interepret the cause of the error.
+**The first issue** was a permissions error — `admin_user` couldn’t create Postgres roles. This issue was totally my fault — I hadn’t granted it any meaningful privileges. I had the MCP repeatedly run `terraform apply`, but either the MCP didn't log/surface the error or Cursor’s Agent Mode wasn't able to interpret the cause of the error.
 ![First issue - MCP able to run terraform apply](/img/updates/using-mcps-to-run-terraform/debug1.png)
 
 Eventually, I switched to running `terraform apply` directly in the terminal and got a helpful error: `admin_user` lacked the required privileges. I jumped into Postgres on the command line via `psql` and granted it `CREATEROLE` and `CREATEDB`.
@@ -169,7 +180,7 @@ Both issues were pretty minor, and while tfmcp made it possible to run Terraform
 
 <br>
 
-## Takeways
+## Takeaways
 
 My takeaways from the experience:
 
@@ -179,7 +190,7 @@ My takeaways from the experience:
 
 ![mcp-collective](/img/updates/using-mcps-to-run-terraform/mcp-collective.png)
 
-- **Surfacing feedback loops is where agentic tools can shine.** Most of the pain in this experiment came from not seeing the error — not from the error itself. Agentic workflows that help you interpret state, errors, or diff outputs (and offer remediations) are more valuable than those that just abstract command execution. The real unlock isn’t just running `terraform apply` — it’s making sense of what went wrong and suggesting what to do next.
+- **Surfacing feedback loops is where agentic tools can shine.** Most of the pain in this experiment came from not seeing the error — not from the error itself. Agentic workflows that help you interpret state, errors, or diff outputs (and offer remediations) are more valuable than abstracting away the command execution. The real unlock isn’t just running `terraform apply` — it’s making sense of what went wrong and suggesting what to do next.
 
 <br>
 
