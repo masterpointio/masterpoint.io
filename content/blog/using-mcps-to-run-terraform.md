@@ -196,7 +196,7 @@ My takeaways from the experience:
 
 ## The Hidden Risks
 
-One last - but critical - consideration is security.  MCPs have unique attack surfaces with the tools, prompts, and resources they provide. This is nothing new when using open source packages from the internet. We've seen malicious code [in node/NPM packages](https://cycode.com/blog/malicious-code-hidden-in-npm-packages/), [ruby gems](https://www.sonatype.com/blog/rubygems-laced-with-bitcoin-stealing-malware), and [python packages](https://unit42.paloaltonetworks.com/malicious-packages-in-pypi/). You’re running another dev’s code on your machine, and could easily run malicious code if it’s in the MCP. We found [this post](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks) by **Invariant Labs** helpful in describing 3 creative Tool Poisoning attacks.
+One last - but critical - consideration around MPCs is security.  MCPs have unique attack surfaces with the tools, prompts, and resources they provide. However, this is nothing new when compared to using open source packages from the internet. We've seen malicious code [in node/NPM packages](https://cycode.com/blog/malicious-code-hidden-in-npm-packages/), [ruby gems](https://www.sonatype.com/blog/rubygems-laced-with-bitcoin-stealing-malware), and [python packages](https://unit42.paloaltonetworks.com/malicious-packages-in-pypi/). You’re running another dev’s code on your machine, and that means you could easily run malicious code if it’s in the MCP. We found [this post](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks) by **Invariant Labs** helpful in describing 3 creative Tool Poisoning attacks.
 
 
 <!-- ## (Appendeix) Instructions to Fully Replicate the Experiment
