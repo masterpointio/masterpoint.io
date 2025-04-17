@@ -1,9 +1,9 @@
 ---
-visible: false
+visible: true
 draft: false
 title: "Using MCPs to Run Terraform"
 author: Weston Platter
-date: 2025-04-16
+date: 2025-04-17
 slug: using-mcps-to-run-terraform
 description: "We jump into a hands-on exploration of Model Context Protocols (MCPs), sharing our experiment using tfmcp to run terraform init, plan, apply. We share our take on where agents add value and highlight security considerations when adding MCPs to your workflow."
 image: /img/updates/using-mcps-to-run-terraform/header5.png
