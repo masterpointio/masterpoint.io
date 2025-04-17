@@ -6,6 +6,8 @@ banner_text: "<p>We're a team of experienced software and platform engineers who
 banner_image: /img/banner_who.jpg
 description: "We're a team of experienced software and platform engineers who advise clients on their most complex IaC challenges. Since our establishment in 2016, we have been committed to providing expert guidance to organizations of all sizes and helping them leverage the latest in IaC practices so their engineering teams can move faster."
 sections: "who-we-are"
+banner_link_label: Wondering what we're up to at the moment? <strong>Check out our now page &rsaquo;</strong>
+banner_link: "/now"
 sitemap:
   priority: 1
 id: page-who-we-are

@@ -1,6 +1,7 @@
 <div id="teamMembers">
     <div class="teamRow row justify-content-center">
         {{ range where (.Site.RegularPages.ByParam "weight") "Type" "team" }}
+        {{ if eq .Params.team true }}
         <div class="col col-12 col-sm-6 col-md-6 aos-item" data-aos="fade">
             <div class="teamBx">
                 <div class="teamImgBx">
@@ -35,6 +36,7 @@
                 <div class="teamContent">{{ .Content }}</div>
             </div>
         </div>
+        {{ end }}
         {{ end }}
     </div>
 </div>

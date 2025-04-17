@@ -3,9 +3,10 @@
         <div id="headerLogo">
             <a href='{{ "/" | relURL }}'><img src='{{ "img/logo_footer.svg" | relURL }}' alt="{{ .Site.Title }} Logo"></a>
         </div>
+        <div id="footerSocial">{{ partial "social.html" . }}</div>
         <div id="footerNav">
             <ul>
-                {{ partial "menu.html" . }}
+                {{ partial "footer-menu.html" . }}
             </ul>
         </div>
         <div id="copyright" >
