@@ -23,7 +23,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 <br>
 
 ## Quick Note
-We’re diverging from the typical Masterpoint beat and looking at an emerging trend MCPs in agentic workflows and how it relates to Infrastructure as Code (IaC). Our goal is to share what we’re learning and experimenting with in the AI realm.
+We’re diverging from the typical Masterpoint beat and looking at an emerging trend: MCPs in agentic workflows and how it relates to Infrastructure as Code (IaC). Our goal is to share what we’re learning and experimenting with in the AI realm.
 
 We’re specifically interested in:
 - roles and responsibilities that AI agents might take on  
