@@ -41,10 +41,9 @@ You might be asking yourself, “*Where do MCPs provide value for the average pe
 
 - **Revising Figma designs.** Imagine directing an AI to update existing designs in your company’s Figma account. (credit goes to Andy Osmami’s [substack post on MCPs](https://addyo.substack.com/i/159868119/ai-figma-programmatic-ui-design) for this example).  "AI, can you grab the color palette from the Login screen design?" The AI, via MCP, fetches the design document from Figma and returns the color styles. Or say "Increase the padding of the signup button and export it as an image" – the AI can command Figma to adjust that element and retrieve an updated asset, then perhaps use it in code.
 
-The core idea is that MCPs create the ability for AIs to ubiquitously connect to your accounts, services, and APIs to access (authenticated) data, resources, and do specific tasks on your behalf. If you’re just getting up to speed on this, we’d recommend you read more on MCPs and what they’re used for in the Agentic AI world. We found these resources helpful,
-
-- ([youtube video](https://www.youtube.com/watch?v=5ZWeCKY5WZE)) explaining the Model Context Protocol (MCP)  
-- ([substack article](https://addyo.substack.com/p/mcp-what-it-is-and-why-it-matters)) What is MCP and Why it Matters
+The core idea is that MCPs enable AIs to securely connect to your accounts, services, and APIs - accessing authenticated data and performing tasks on your behalf. If you’re just getting up to speed, we recommend these resources:
+- Explainer video on YouTube: [Model Context Protocol (MCP)](https://www.youtube.com/watch?v=5ZWeCKY5WZE)
+- Article on Substack: [What is MCP and Why it Matters](https://addyo.substack.com/p/mcp-what-it-is-and-why-it-matters)
 
 <br>
 <br>
