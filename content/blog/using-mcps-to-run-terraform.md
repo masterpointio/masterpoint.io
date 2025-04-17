@@ -45,7 +45,7 @@ You might be asking yourself, “*Where do MCPs provide value for the average pe
 
   > "AI, can you grab the color palette from the Login screen design?"
 
-  The AI—via MCP—fetches the Figma file and returns the color styles. Or:
+  The AI — via MCP — fetches the Figma file and returns the color styles. Or:
 
   > "Increase the padding of the signup button and export it as an image."
 
