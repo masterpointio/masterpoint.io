@@ -15,7 +15,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 - [Introduction](#introduction)
 - [Demo / Walk Through](#demo--walk-through)
   - [MCP configuration](#mcp-configuration)
-  - [Terraform code for us to run](#terraform-code-for-us-to-run)
+  - [Terraform code](#terraform-code)
   - [Debugging terraform apply](#debugging-terraform-apply)
 - [Takeaways](#takeaways)
 
@@ -95,8 +95,10 @@ Example Cursor `mcp.json` config file
 ```
 
 
-### Terraform code for us to run
-From there, I added a `main.tf` file in the configured `TERRAFORM_DIR` and wrote some terraform code:
+### Terraform code
+
+From there, I added a `main.tf` file in the configured `TERRAFORM_DIR` and wrote some basic terraform code to provision the Postgres resources:
+
 * **Terraform block**: sets the required provider, `cyrilgdn/postgresql`
 * **Provider config**: connects to a local Postgres instance as `admin_user`
 * **Postgres Role resource**: creates a login-enabled role for the app
