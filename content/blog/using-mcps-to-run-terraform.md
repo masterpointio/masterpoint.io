@@ -164,7 +164,7 @@ Eventually, I switched to running `terraform apply` directly in the terminal and
 **The second issue** was with the provider config — even after fixing the role permissions, `terraform apply` kept failing when run via the MCP (see screenshots). Again, the specific terraform error wasn’t surfaced.
 ![MCP doesn't show the acutual error](/img/updates/using-mcps-to-run-terraform/debug2.png)
 
-After retrying a couple times, the Cursor Agent Mode suggested I run `terraform apply` via its [the Run capability](https://docs.cursor.com/chat/tools#run), which I did. Cursor was actually decent at running the CLI command and it parsing the output. Once it got access to the error message, Cursor Agent mode suggested a working config update (specifically, setting `superuser = false`). At that point, I continued using Cursor Run to terraform apply the changes. Afterwards, I was able to jump back and us tfmcp to turn terraform operations.
+After retrying a couple times, the Cursor Agent Mode suggested I run `terraform apply` via [Cursor's Run capability](https://docs.cursor.com/chat/tools#run), which I did. Cursor was actually decent at running the CLI command and it parsing the output. Once it got access to the error message, Cursor Agent mode suggested a working config update (specifically, setting `superuser = false`). At that point, I continued using Cursor Run to terraform apply the changes. Afterwards, I was able to jump back and us `tfmcp` to run terraform operations.
 
 Cursor suggesting run terraform apply Run Tool
 ![Cursor suggesting run terraform apply Run Tool](/img/updates/using-mcps-to-run-terraform/debug3.png)
