@@ -33,7 +33,7 @@ We’re specifically interested in:
 <br>
 
 # Introduction
-You might have heard about [Anthropic’s Model Context Protocol](https://modelcontextprotocol.io/introduction) (MCP) and their implementation as MCP clients or servers (MCPs) — they’ve been gaining attention in the agentic workflow space. At a high level, MPC clients/servers act as universal connectors between your AI tool of choice (like Cursor or Claude Desktop) and the tools, APIs, and data sources you want the agent to work with.
+You might have heard about Anthropic’s [Model Context Protocol](https://modelcontextprotocol.io/introduction) (MCP) and their implementation as MCP clients or servers (MCPs) — they’ve been gaining attention in the agentic workflow space. At a high level, MPC clients/servers act as universal connectors between your AI tool of choice (like Cursor or Claude Desktop) and the tools, APIs, and data sources you want the agent to work with.
 
 You might be asking yourself, “*Where do MCPs provide value for the average person?*” Here are a couple examples I’m thinking about using MCPs to streamline my work days,
 
