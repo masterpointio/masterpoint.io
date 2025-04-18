@@ -35,7 +35,7 @@ We’re specifically interested in:
 # Introduction
 You might have heard about Anthropic’s [Model Context Protocol](https://modelcontextprotocol.io/introduction) (MCP) and their implementation as MCP clients or servers (MCPs) — they’ve been gaining attention in the agentic workflow space. At a high level, MCP clients/servers act as universal connectors between your AI tool of choice (like Cursor or Claude Desktop) and the tools, APIs, and data sources you want the agent to work with.
 
-You might be asking yourself, “*Where do MCPs provide value for the average person?*” Here are a couple examples I’m thinking about using MCPs to streamline my work days,
+You might be asking yourself, “*Where do MCPs provide value for the average person?*” Here are a couple of examples I’m thinking about using MCPs to streamline my work days,
 
 - **Sprint planning admin work.** Imagine passing a sprint planning task into your Cursor Agent chat, have AI review the task’s description and acceptance criteria for grammar clarity, and then have a [Notion MCP](https://github.com/makenotion/notion-mcp-server) add the task as a Story in the client specific Epic filling in the relevant Notion fields.
 
@@ -170,7 +170,7 @@ I reverted to running `terraform apply` directly in the terminal and got a helpf
 
 {{< lightboximg "/img/updates/using-mcps-to-run-terraform/debug2.png" "MCP doesn't show the acutual error" >}}
 
-After retrying a couple times, the Cursor Agent Mode suggested I run `terraform apply` via [Cursor's Run capability](https://docs.cursor.com/chat/tools#run), which I did. Cursor was actually decent at running the CLI command and it parsing the output. Once it got access to the error message, Cursor Agent mode suggested a working config update (specifically, setting `superuser = false`). At that point, I continued using Cursor Run to terraform apply the changes. Afterwards, I was able to jump back and use `tfmcp` to run terraform operations.
+After retrying a couple times, the Cursor Agent Mode suggested I run `terraform apply` via [Cursor's Run capability](https://docs.cursor.com/chat/tools#run), which I did. Cursor was actually decent at running the CLI command and parsing the output. Once it got access to the error message, Cursor Agent mode suggested a working config update (specifically, setting `superuser = false`). At that point, I continued using Cursor Run to terraform apply the changes. Afterwards, I was able to jump back and use `tfmcp` to run terraform operations.
 
 Cursor suggesting run terraform apply Run Tool
 {{< lightboximg "/img/updates/using-mcps-to-run-terraform/debug3.png" "Cursor suggesting run terraform apply Run Tool" >}}
