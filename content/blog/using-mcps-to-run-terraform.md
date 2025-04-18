@@ -160,25 +160,27 @@ At this point, I was ready for the agent to run terraform plan and apply my chan
 
 **The first issue** was a permissions error — `admin_user` couldn’t create Postgres roles. This issue was totally my fault — I hadn’t granted it any meaningful privileges. I had Crusor run `terraform apply` via the MCP, but it didn't report back if the apply was successful. I think we're in the **very early** stages of MCP workflows and usability concerns like surfacing logs and interpreting errors needs more attention to reduce friction.
 
-![First issue - view from Cursor](/img/updates/using-mcps-to-run-terraform/debug1a.png)
+{{< lightboximg "/img/updates/using-mcps-to-run-terraform/debug1a.png" "First issue - view from Cursor" >}}
 
 I reverted to running `terraform apply` directly in the terminal and got a helpful error: `admin_user` lacked the required privileges. I jumped into Postgres on the command line via `psql` and granted it `CREATEROLE` and `CREATEDB`.
 
-![First issue - view from Terminal](/img/updates/using-mcps-to-run-terraform/debug1b.png)
+{{< lightboximg "/img/updates/using-mcps-to-run-terraform/debug1b.png" "First issue - view from Terminal" >}}
 
 **The second issue** was with the provider config — even after fixing the role permissions, `terraform apply` kept failing when run via the MCP (see screenshots). Again, the specific terraform error wasn’t surfaced.
-![MCP doesn't show the acutual error](/img/updates/using-mcps-to-run-terraform/debug2.png)
+
+{{< lightboximg "/img/updates/using-mcps-to-run-terraform/debug2.png" "MCP doesn't show the acutual error" >}}
 
 After retrying a couple times, the Cursor Agent Mode suggested I run `terraform apply` via [Cursor's Run capability](https://docs.cursor.com/chat/tools#run), which I did. Cursor was actually decent at running the CLI command and it parsing the output. Once it got access to the error message, Cursor Agent mode suggested a working config update (specifically, setting `superuser = false`). At that point, I continued using Cursor Run to terraform apply the changes. Afterwards, I was able to jump back and use `tfmcp` to run terraform operations.
 
 Cursor suggesting run terraform apply Run Tool
-![Cursor suggesting run terraform apply Run Tool](/img/updates/using-mcps-to-run-terraform/debug3.png)
+{{< lightboximg "/img/updates/using-mcps-to-run-terraform/debug3.png" "Cursor suggesting run terraform apply Run Tool" >}}
+
 
 Cursor suggests setting `superuser = false`
-![Cursor suggests fix for the error](/img/updates/using-mcps-to-run-terraform/debug4.png)
+{{< lightboximg "/img/updates/using-mcps-to-run-terraform/debug4.png" "Cursor suggests fix for the error" >}}
 
 Cursor successfully running terraform apply
-![Cursor successfully ran terraform apply](/img/updates/using-mcps-to-run-terraform/debug5.png)
+{{< lightboximg "/img/updates/using-mcps-to-run-terraform/debug5.png" "Cursor successfully ran terraform apply" >}}
 
 
 Both issues were pretty minor, and while tfmcp made it possible to run Terraform via the agent, it didn’t really make the workflow easier. The real value came from Cursor’s Agent mode — it read the CLI errors, interpreted them, and proposed fixes. That’s where the magic is starting to show.
@@ -193,7 +195,7 @@ My takeaways from the experience:
 
 - **MCPs are inferior to muscle memory — unless they offer something meaningfully better.** While the MCP setup was helpful, I would’ve been much faster running terraform operations on the command line \- mostly because I’ve developed muscle memory for this and have 3-letter command line aliases for terraform init, plan, and apply. I would be persuaded away from using the command line if I had a collection of MCPs that worked in concert together. For example, a process to receive business requests to make an infrastructure change, make appropriate terraform code changes, critique code changes for security and correctness, and (if everything looks good) then run terraform plan + apply actions. Below is a screenshot exemplifying a similar approach using [n8n](https://n8n.io/) to create a collection of MCPs for Firecrawl, Github Actions, Airtable, Brave, and Airbnb (pulled from [this video](https://youtu.be/OUPW4DJMAsA?t=1408)).
 
-![mcp-collective](/img/updates/using-mcps-to-run-terraform/mcp-collective.png)
+{{< lightboximg "/img/updates/using-mcps-to-run-terraform/mcp-collective.png" "Collection of MCPs" >}}
 
 - **Surfacing feedback loops is where agentic tools can shine.** Most of the pain in this experiment came from not seeing the error — not from the error itself. Agentic workflows that help you interpret state, errors, or diff outputs (and offer remediations) are more valuable than abstracting away the command execution. The real unlock isn’t just running `terraform apply` — it’s making sense of what went wrong and suggesting what to do next.
 
