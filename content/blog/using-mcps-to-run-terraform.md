@@ -158,7 +158,7 @@ resource "postgresql_schema" "app_schema" {
 ### Debugging terraform apply
 At this point, I was ready for the agent to run terraform plan and apply my changes. And here is where the rubber meets the road in using MCPs 🙂. Here’s what I ran into:
 
-**The first issue** was a permissions error — `admin_user` couldn’t create Postgres roles. This issue was totally my fault — I hadn’t granted it any meaningful privileges. I had Crusor run `terraform apply` via the MCP, but it didn't report back if the apply was successful. I think we're in the **very early** stages of MCP workflows and usability concerns like surfacing logs and interpreting errors needs more attention to reduce friction.
+**The first issue** was a permissions error — `admin_user` couldn’t create Postgres roles. This issue was totally my fault — I hadn’t granted it any meaningful privileges. I had Cursor run `terraform apply` via the MCP, but it didn't report back if the apply was successful. I think we're in the **very early** stages of MCP workflows and usability concerns like surfacing logs and interpreting errors needs more attention to reduce friction.
 
 {{< lightboximg "/img/updates/using-mcps-to-run-terraform/debug1a.png" "First issue - view from Cursor" >}}
 
