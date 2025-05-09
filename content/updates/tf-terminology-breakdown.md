@@ -6,13 +6,12 @@ slug: terraform-opentofu-terminology-breakdown
 author: Matt Gowie
 date: 2025-03-01
 description: List of Terraform and OpenTofu terms with definitions and explanations.
-image: /img/updates/terraform-null-label-part1.png
+image: /img/updates/tf-terminology-breakdown.png
 callout: <p>👋 <b>Got a term that you're still confused on in the TF or IaC space that you want us to include here? <a href='/contact'>Get in touch and we'd be happy to add it!</a>
 ---
 
 # Table of Contents
 
-- [Table of Contents](#table-of-contents)
 - [Intro](#intro)
 - [Workspaces](#workspaces)
   - [TF CLI Workspaces](#tf-cli-workspaces)
@@ -53,7 +52,7 @@ Let's start with one of the most commonly misunderstood concepts: workspaces. Th
 
 In the context of TF CLI, workspaces are named, isolated instances of state within a single backend. Think of them as separate environments for managing different versions of the same infrastructure. A common use case is maintaining development, staging, and production infrastructure environments using the same TF configuration.
 
-Here's where people often get tripped up: CLI workspaces are not equivalent to long-lived branches in your version control system. Unlike branches, you don't "promote" or merge changes from one workspace to another. Each workspace maintains its own state file, but they all use the same configuration code. The differences between workspaces typically come from the variable values you apply; for example, setting different instance sizes or replica counts based on environment needs.
+Here's where people often get tripped up: CLI workspaces are not equivalent to long-lived branches in your version control system. Unlike branches, you don't "promote" or merge changes from one workspace to another. **Each workspace maintains its own state file**, but they all use the same configuration code. The differences between workspaces typically come from the variable values you apply; for example, setting different instance sizes or replica counts based on environment needs.
 
 When you switch workspaces with `terraform workspace select`, you're not changing branches or code; you're just telling Terraform which state file to use. Your infrastructure changes are still managed through your normal Git workflow, with code moving through branches and pull requests before being applied to different workspaces.
 
