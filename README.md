@@ -20,6 +20,9 @@
 
 #### **To Run A Local Server With Hugo (with Hugo[extended] Installed Locally):**  
 
+0. Install hugo and other dependencies
+`aqua install`
+
 1. Open Command Line / BASH and run
 `hugo serve`
 

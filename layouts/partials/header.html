@@ -17,14 +17,14 @@
         </div>
         <nav role="navigation" aria-label="menu">
             <a href="javascript:void(0)" id="toggle-menu"><i class="fa fa-bars"></i>&nbsp; Menu</a>
-            <ul>
+            <ul class="desktopMenu">
                 {{ partial "menu.html" . }}
             </ul>
         </nav>
     </div>
 
     <div id="headerRight" class="d-flex align-items-center">
-        <div id="headerSocial">            {{ partial "social.html" . }}</div>
+        <div id="headerSocial">{{ partial "social.html" . }}</div>
         {{if .Site.Params.get_in_touch}}
         <div id="headerBtn">
             <a href="{{.Site.Params.get_in_touch}}" target="_blank" class="button">GET IN TOUCH →</a>

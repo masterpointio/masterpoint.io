@@ -1,0 +1,59 @@
+{{ partial "head.html" . }}
+<body {{ if .Params.id }}id='{{ .Params.id }}' {{end}} class="case-studies-list content-list">
+    {{ partial "header.html" . }}
+    <section id="banner">
+        {{if .Params.banner_image}} <div class="banner-image bg-image"><img src="{{.Params.banner_image}}" /></div>
+        {{end}}
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col col-12 col-md-9 col-lg-8 ">
+                    <div class="bannerTxtBx aos-item" data-aos="fade-right">
+                        {{if .Params.banner_tagline}}
+                        <div class="bannerTagline">
+                            {{.Params.banner_tagline | safeHTML}}
+                        </div>
+                        {{end}}
+
+                        <h3>
+                            {{if .Params.banner_title}}
+                            {{.Params.banner_title|safeHTML}}
+                            {{ else}}
+                            {{ .Title | safeHTML }}
+                            {{end}}
+                        </h3>
+                        {{if .Params.banner_text}}
+                        <div class="bannerTxt">{{ .Params.banner_text|safeHTML}}</div>
+                        {{end}}
+                        {{ if .Params.banner_btn_label}}
+                        <div class="bannerBtn"><a class="button btn-outline-gradient"
+                                href="{{.Params.banner_btn_link}}">{{.Params.banner_btn_label | safeHTML}}</a></div>
+                        {{end}}
+                        {{ if .Params.banner_link_label}}
+                        <div class="bannerLink">or <a href="{{.Params.banner_link}}">{{.Params.banner_link_label |
+                                safeHTML}}</a></div>
+                        {{end}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <main>
+        <div class="container">
+            <div id="now-intro" class="row d-flex justify-content-center">
+                <div class="col col-12 col-md-10 text-center">
+                    {{ .Content }}
+                </div>
+            </div>
+            <div class="row">
+                {{ range (where site.RegularPages "Section" "team").ByWeight }}
+                {{ partial "now-entry.html" . }}
+                {{ end }}
+            </div>
+ 
+        </div>
+    </main>
+    {{ partial "schedule-assessment.html" . }}
+    {{ partial "footer.html" . }}
+    {{ partial "scripts.html" . }}
+</body>
+</html>
