@@ -115,7 +115,7 @@ It helps with smaller projects too. Need to renovate that bathroom? That’s a l
 While LOC is not the silver bullet when assessing software, it can be used as one component of approximating codebase complexity. As an example for this reason to use OSS, let’s look at the number of LOC in some very commonly used modules:
 
 1. [https://github.com/cloudposse/terraform-aws-vpc](https://github.com/cloudposse/terraform-aws-vpc) — 666 LOC
-2. [https://github.com/cloudposse/terraform-aws-alb—](https://github.com/cloudposse/terraform-aws-alb—) 1064 LOC
+2. [https://github.com/cloudposse/terraform-aws-alb](https://github.com/cloudposse/terraform-aws-alb) — 1064 LOC
 3. [https://github.com/cloudposse/terraform-aws-eks-cluster](https://github.com/cloudposse/terraform-aws-eks-cluster) — 1224 LOC
 
 What’s more efficient? For you to write (and maintain!) those 2K lines of code for your organization or for you to consume those 3 modules and benefit from the hard work that others have put into making them great?
