@@ -120,7 +120,7 @@ While LOC is not the silver bullet when assessing software, it can be used as on
 
 What’s more efficient? For you to write (and maintain!) those 2K lines of code for your organization or for you to consume those 3 modules and benefit from the hard work that others have put into making them great?
 
-## Objections to open-source IaC
+## Objections to open source IaC
 
 Of course, no solution is perfect. When I often suggest using OSS modules, I tend to hear these objections and will offer a brief rebuttal to each:
 
@@ -132,9 +132,9 @@ This can happen and there are good examples of OSS modules who are prime offende
 
 Software is all about managing dependencies, whether OSS or not. The IaC ecosystem is not the Javascript ecosystem; If you use good modules, pin them to a specific version, and update when you need to then you won’t run into the dependency issues that you may have elsewhere.
 
-#### “We can’t use open-source in my organization because of XYZ reason”
+#### “We can’t use open source in my organization because of XYZ reason”
 
-This is a sad reality for some folks and to those folks I suggest: Copy / pasta the open-source module into your codebase, abiding by the license. Plan to update it from time to time.
+This is a sad reality for some folks and to those folks I suggest: Copy / pasta the open source module into your codebase, abiding by the license. Plan to update it from time to time.
 
 #### “But I can generate all this IaC with AI… why wouldn’t I do that?”
 
@@ -172,11 +172,9 @@ Answering these questions can help you understand the quality of the module, whi
 
 ## Conclusion
 
-We recommend OSS for IaC because it brings together best practices, strong security, reduced maintenance burden, and a significant drop in infrastructure complexity—benefits that empower teams to work smarter and scale faster. It takes time and effort to learn which OSS modules are right for your organization, but we hope this post gives you the right mindset to evaluate and use those modules.
+We recommend OSS for IaC because it brings together best practices, strong security, reduced maintenance, and lower complexity — enabling teams to scale faster and focus their energy on innovation rather than reinvention. While it takes effort to choose the right modules, we hope this post helps you approach that process with the right mindset.
 
-Adopting open source IaC doesn't just help you get the job done faster—it empowers platform teams to move with greater autonomy, iterate more freely, and focus their energy on innovation rather than reinvention.
-
-To that end, if you want some great open-source module libraries to check out, start here:
+To that end, if you want some great open source module libraries to check out, start here:
 
 1. [https://docs.cloudposse.com/modules/](https://docs.cloudposse.com/modules/)
 2. [https://github.com/masterpointio](https://github.com/masterpointio)
