@@ -7,7 +7,7 @@ author: Matt Gowie
 date: 2025-05-21
 description: List of Terraform and OpenTofu terms with definitions and explanations.
 image: /img/updates/tf-terminology-breakdown.png
-callout: <p>👋 <b>Got a term that you're still confused on in the TF or IaC space that you want us to include here? <a href='/contact'>Get in touch and we'd be happy to add it!</a>
+callout: <p>👋 <b>Got a term that you're still confused on in the TF or IaC space that you want us to include here? <a href='/contact'>Get in touch and we'd be happy to add it!</a></b></p>
 ---
 
 # Table of Contents
