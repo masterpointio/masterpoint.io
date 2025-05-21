@@ -192,7 +192,7 @@ When using Vanilla TF, there are two primary ways that we've seen people organiz
 
 ## Multi-instance Root Modules
 
-Multi-instance is when a root module directory can have multiple state files that are associated with it. This is done with either TF workspaces or with dynamical backend configurations (what we simply call "Dynamic Backends" - explained below). An example of this is that you have an `db-cluster` root module and you deploy it with different configurations for your dev, stage, and prod environments. Think one directory to many state files.
+Multi-instance is when a root module directory can have multiple state files that are associated with it. This is done with either TF workspaces or with OpenTofu's dynamically configured backends (what we simply call "Dynamic Backends" - explained below). An example of this is that you have an `db-cluster` root module and you deploy it with different configurations for your dev, stage, and prod environments. Think one directory to many state files.
 
 This pattern is often associated with the DRY, or "Don't Repeat Yourself", methodology.
 
