@@ -52,7 +52,7 @@ First, let’s break down why we believe OSS IaC is so critical. Reasons include
 
 1. Best practices out of the box
 2. Security hardened infrastructure
-3. Less maintenance for fixes + features
+3. Less maintenance thanks to community fixes and shared experience
 4. Decreased Day-0 and Day-2 complexity
 
 As we work through these topics, we’ll share examples of solid open source modules. We’re biased towards [the amazing module library](https://docs.cloudposse.com/modules/) that the fine folks at [Cloud Posse](https://cloudposse.com/) have built. In fact, we believe in their modules so much that we’re big contributors and maintainers of that library. But you can find similar examples in any popular IaC module collection.
@@ -144,27 +144,27 @@ Did you take the time to understand the AI generated IaC code at a deep level? D
 
 Above I suggest that you need to do your own due diligence to ensure that the modules that you use in your organization are quality. Here are some questions that you can ask to check the quality of any given OSS module:
 
-#### Check the feature support
+### Check the feature support
 
 Does it default to support your needs or can you configure it to support your needs? Does it meet 95% of your needs and a quick fork + commit will get it to 100%?
 
-#### What version of TF does it support
+### What version of TF does it support
 
 Is your version of TF supported and can you use the module without upgrading? Does it make sense to upgrade if you need to for this use-case?
 
-#### Evaluate the scope of the module
+### Evaluate the scope of the module
 
 Is it too big and includes dozens of resources that you don’t understand, won’t use, and are for use-cases that you’re not interested in? Is it too small and simply wraps a single resource without any supporting logic that provides value? Or, goldilocks style, is the size just right?
 
-#### Check the number of required `variable` inputs
+### Check the number of required `variable` inputs
 
 Some modules have hundreds of inputs, and that can be a sign of poor module design, but is not always. What is more important is the number of inputs that are required. Does the module require you to supply a ton of values for it to work or does it have reasonable defaults?
 
-#### Ensure the module has tests and follows good practices
+### Ensure the module has tests and follows good practices
 
 Good modules use some combination of `terratest`, native TF testing, security checks like `trivy` or `checkov`, `terraform-docs`, and/or a pre-commit workflow. Is the developer of this module using those tools and testing their code on every PR?
 
-#### Investigate if there is a community behind the module
+### Investigate if there is a community behind the module
 
 Does the module have a good number of GitHub stars (e.g. 20+)? Are there recent releases and conversation in the PRs or issues? Is there an active Slack or Discord community you can go to if you have questions or concerns? Does the OSS developer or organization have other modules that they support?
 
