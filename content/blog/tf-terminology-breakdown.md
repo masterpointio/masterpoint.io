@@ -166,11 +166,11 @@ At Masterpoint, we've used ALL of these frameworks through either greenfield pro
 
 The term "stack" has one of the most ambiguous definitions. Different platforms in the TF ecosystem refer to different concepts when they use this term. Here's how different platforms define "stacks":
 
-* Spacelift: A deployment unit with its own state and configuration, see [Main Concepts - Stack](https://docs.spacelift.io/concepts/stack).
-* Atmos: A collection of components and modules, see [Resources - Stacks](https://docs.cloudposse.com/resources/legacy/stacks/).
-* HashiCorp: TF configurations organized into components across multiple environments, see [Stacks overview](https://developer.hashicorp.com/terraform/language/stacks).
-* Terramate: Collections of resources managed as a unit, see [Stacks](https://terramate.io/docs/cli/stacks/).
-* Terragrunt: A collection of "units" (a single instance of infrastructure) managed by Terragrunt, see [Terminology - Stack](https://terragrunt.gruntwork.io/docs/getting-started/terminology/#stack).
+- Spacelift: A deployment unit with its own state and configuration, see [Main Concepts - Stack](https://docs.spacelift.io/concepts/stack).
+- Atmos: A collection of components and modules, see [Resources - Stacks](https://docs.cloudposse.com/resources/legacy/stacks/).
+- HashiCorp: TF configurations organized into components across multiple environments, see [Stacks overview](https://developer.hashicorp.com/terraform/language/stacks).
+- Terramate: Collections of resources managed as a unit, see [Stacks](https://terramate.io/docs/cli/stacks/).
+- Terragrunt: A collection of "units" (a single instance of infrastructure) managed by Terragrunt, see [Terminology - Stack](https://terragrunt.gruntwork.io/docs/getting-started/terminology/#stack).
 
 Platforms like Env0 and Scalr, which provide a more holistic, top-down management of infrastructure configurations like Terraform and Kubernetes, wrap Terragrunt's toolchain to provide stack functionality.
 
@@ -182,7 +182,7 @@ Dealing with the Terralith problem and want to know more? [Check out our origina
 
 ## Demystifying HashiCorp Offerings: Terraform Cloud vs Terraform Enterprise vs HCP Terraform
 
-HashiCorp has gone back and forth on some of their naming conventions around their Terraform product offering. As a result, it's a confusing product landscape. Terraform Cloud and Terraform Enterprise (sometimes referred to as TFE) offer essentially the same functionality, but Enterprise is self-hosted and has, as anything with the word Enterprise in it would be expected to have, a higher price tag. HCP Terraform, which is an acronym  for Hashicorp Cloud Platform Terraform, is the new name for Terraform Cloud.
+HashiCorp has gone back and forth on some of their naming conventions around their Terraform product offering. As a result, it's a confusing product landscape. Terraform Cloud and Terraform Enterprise (sometimes referred to as TFE) offer essentially the same functionality, but Enterprise is self-hosted and has, as anything with the word Enterprise in it would be expected to have, a higher price tag. HCP Terraform, which is an acronym for Hashicorp Cloud Platform Terraform, is the new name for Terraform Cloud.
 
 You'll see all of these names in practice and can largely equate them to the same thing.
 
@@ -198,7 +198,7 @@ This pattern is often associated with the DRY, or "Don't Repeat Yourself", metho
 
 ## Single-instance Root Modules
 
-A root module directory has *only one* associated state file. This means the engineering team has directly encoded configuration into the root module for the given environment that it is being deployed to. Examples that match the above would mean that you would have `db-cluster-dev`, `db-cluster-stage`, and `db-cluster-prod` root modules as their own separate directories and each would have the configuration necessary to deploy those clusters for their associated environment. Think one directory to one state file.
+A root module directory has _only one_ associated state file. This means the engineering team has directly encoded configuration into the root module for the given environment that it is being deployed to. Examples that match the above would mean that you would have `db-cluster-dev`, `db-cluster-stage`, and `db-cluster-prod` root modules as their own separate directories and each would have the configuration necessary to deploy those clusters for their associated environment. Think one directory to one state file.
 
 This pattern is often associated with the WET, or "Write Every Time", methodology.
 
