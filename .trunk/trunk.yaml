@@ -18,6 +18,10 @@ lint:
     - svgo@3.3.2
     - taplo@0.9.3
     - yamllint@1.37.1
+  ignore:
+    - linters: [ALL]
+      paths:
+        - "**/PULL_REQUEST_TEMPLATE.md"
 runtimes:
   enabled:
     - go@1.21.0
