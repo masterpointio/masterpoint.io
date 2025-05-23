@@ -7,7 +7,7 @@ slug: why-open-source-iac-wins
 date: 2025-05-01
 description: "If your platform team is still writing every Terraform and OpenTofu resource by hand, you're falling behind. This post explains how open source Infrastructure as Code (IaC) enables modern platform engineering at scale — reducing effort, increasing security, and speeding up delivery."
 image: /img/updates/oss-iac/oss-iac.png
-callout: <p>👋 <b>If you're ready to bring OSS best practices into your IaC codebase and workflows, we can help you get there—faster, safer, and with less overhead. <a href='/contact'>Get in touch!</a></p>
+callout: <p>👋 <b>If you're ready to bring OSS best practices into your IaC codebase and workflows, we can help you get there—faster, safer, and with less overhead.</b> <a href='/contact'>Get in touch!</a></p>
 ---
 
 <h2>Table of Contents</h2>
@@ -22,8 +22,10 @@ callout: <p>👋 <b>If you're ready to bring OSS best practices into your IaC co
   - [“There are too many inputs to so-and-so module – it feels like a leaky abstraction”](#there-are-too-many-inputs-to-so-and-so-module--it-feels-like-a-leaky-abstraction)
   - [“Using external modules sounds like dependency hell"](#using-external-modules-sounds-like-dependency-hell)
   - [“We can't use open source in my organization because of XYZ reason”](#we-cant-use-open-source-in-my-organization-because-of-xyz-reason)
+  - ["Open source may have malicious code in it – what if we get hacked?"](#open-source-may-have-malicious-code-in-it--what-if-we-get-hacked)
   - [“But I can generate all this IaC with AI… why wouldn't I do that?”](#but-i-can-generate-all-this-iac-with-ai-why-wouldnt-i-do-that)
 - [How to evaluate good OSS IaC](#how-to-evaluate-good-oss-iac)
+  - [Check the README](#check-the-readme)
   - [Check the feature support](#check-the-feature-support)
   - [What version of TF does it support](#what-version-of-tf-does-it-support)
   - [Evaluate the scope of the module](#evaluate-the-scope-of-the-module)
@@ -38,7 +40,7 @@ At Masterpoint, we're **big** on open source software (OSS). Outside of the few 
 
 One big area where this is critically important is Infrastructure as Code (IaC). For us that means using reusable, OSS modules for Terraform, OpenTofu, or Pulumi.
 
-We strongly believe that everyone should work to avoid reinventing the wheel in their IaC and fight the good fight against any [“Not Invented Here” culture](https://en.wikipedia.org/wiki/Not_invented_here). Chances are, your infrastructure isn't as unique as you might think. We're all spinning up and configuring similar load balancers, Postgres databases, and AI models. You might need some different routing rules or a few different database settings, but the underlying IaC that delivers those resources is going to look eerily similar to what your competitor's org is using. This means that if you're writing out each resource by hand to manage that load balancer or that DB cluster  **you're delivering sub-par infrastructure at a slower pace**.
+We strongly believe that everyone should work to avoid reinventing the wheel in their IaC and fight the good fight against any [“Not Invented Here” culture](https://en.wikipedia.org/wiki/Not_invented_here). Chances are, your infrastructure isn't as unique as you might think. We're all spinning up and configuring similar load balancers, Postgres databases, and AI models. You might need some different routing rules or a few different database settings, but the underlying IaC that delivers those resources is going to look eerily similar to what your competitor's org is using. This means that if you're writing out each resource by hand to manage that load balancer or that DB cluster **you're delivering sub-par infrastructure at a slower pace**.
 
 And who aspires to that?
 
@@ -71,8 +73,8 @@ For example, this [AWS lambda function child-module](https://github.com/cloudpos
 
 By leveraging OSS modules for your IaC, you benefit in two ways:
 
-* Your code that uses the modules gets the best practices they implement “out of the box”.
-* You can look to these modules for inspiration around tasks like naming and tagging, improving your own IaC code.
+- Your code that uses the modules gets the best practices they implement “out of the box”.
+- You can look to these modules for inspiration around tasks like naming and tagging, improving your own IaC code.
 
 ### Security Hardened
 
@@ -94,13 +96,13 @@ When you write all of your IaC code from scratch, it's guaranteed that you're go
 
 When you're using open source modules, you often find exactly what you're looking for because the community has already:
 
-* run into a particular issue
-* thought through it
-* and provided a fix or turnkey way to implement it
+- run into a particular issue
+- thought through it
+- and provided a fix or turnkey way to implement it
 
 This community effort means the fix for your issue is only a version bump away.
 
-IPv6 is a *GREAT* example. Are you ready for all of your public endpoints to be IPv6? I know that not all of our projects and client work is. Of course we're not the only ones!
+IPv6 is a _GREAT_ example. Are you ready for all of your public endpoints to be IPv6? I know that not all of our projects and client work is. Of course we're not the only ones!
 
 But when IPv6 support is required, I know that [great contributions like this one](https://github.com/cloudposse/terraform-aws-alb/pull/186) will make it much easier to implement IPv6 support. We'll be able to lean on the efforts of the community instead of having to do days of in-the-trenches development work to make IPv6 happen.
 
@@ -136,7 +138,7 @@ Software is all about managing dependencies, whether OSS or not. The IaC ecosyst
 
 This is a sad reality for some folks and to those folks I suggest: Copy / pasta the open source module into your codebase, abiding by the license. Plan to update it from time to time.
 
-### "Open source may have malicious code in it -- what if we get hacked?"
+### "Open source may have malicious code in it – what if we get hacked?"
 
 This can be a valid concern if you're just using any OSS project that you stumble upon. But this is why we evaluate OSS projects before we use them and ensure they have strong security practices, are well maintained, and have a community behind them. See how to evaluate good OSS IaC below.
 
