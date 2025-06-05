@@ -33,11 +33,21 @@ jobs:
           github-token: ${{ steps.generate-token.outputs.token }}
           reviewers: "@masterpointio/masterpoint-internal"
           prefix: "chore: "
+          arguments: --base=master
+          # arguments: --base=${{ github.event.repository.default_branch }}
 
-      - name: Merge PR automatically
+      - name: Wait for checks to pass and merge
         if: steps.trunk-upgrade.outputs.pull-request-number != ''
         env:
-          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
           PR_NUMBER: ${{ steps.trunk-upgrade.outputs.pull-request-number }}
         run: |
-          gh pr merge "$PR_NUMBER" --squash --auto --delete-branch
+          echo "Waiting for all required status checks to pass on PR #$PR_NUMBER..."
+
+          while gh pr checks "$PR_NUMBER" --json statusCheckRollup | jq -e '.statusCheckRollup[] | select(.status != "COMPLETED" or .conclusion != "SUCCESS")'; do
+            echo "Checks are still running or failing. Retrying in 30 seconds..."
+            sleep 30
+          done
+
+          echo "All checks passed. Merging PR #$PR_NUMBER..."
+          gh pr merge "$PR_NUMBER" --squash --delete-branch --admin
