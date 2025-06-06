@@ -4,9 +4,10 @@ draft: false
 title: "The Standard Terraform and OpenTofu Files + Their Uses"
 author: Matt Gowie
 slug: standard-tf-files
-date: 2025-01-06
+date: 2025-06-09
 description: "A comprehensive guide to the various files that make up a Terraform and OpenTofu project. Learn what belongs in main.tf, variables.tf, outputs.tf, and other essential files for maintainable Infrastructure as Code."
 image: /img/updates/standard-tf-files.png
+callout: <p>👋 <b>If your team is struggling with inconsistent Terraform organization or looking to establish better practices for Infrastructure as Code, we'd love to help. To discuss how we can support your infrastructure goals with proven patterns and strategies, <a href='/contact'>get in touch!</a></b></p>
 ---
 
 If you've hopped between different Terraform or OpenTofu (collectively referred to as TF going forward in this post) projects across teams, you've definitely seen this problem: everyone organizes their TF files differently. Some teams jam everything into a single main.tf file, while others scatter resources across dozens of specialized files. This isn't just an aesthetic issue — it creates real headaches when you're trying to understand or fix infrastructure code.
@@ -63,12 +64,12 @@ Here's an excerpt of a variables.tf file:
 ```hcl
 variable "vpc_cidr" {
   description = "VPC CIDR block"
-  type            = string
-  default         = "10.0.0.0/16"
+  type        = string
+  default     = "10.0.0.0/16"
 
   validation {
-        condition         = can(cidrnetmask(var.vpc_cidr))
-        error_message = "The vpc_cidr must be a valid CIDR block."
+    condition     = can(cidrnetmask(var.vpc_cidr))
+    error_message = "The vpc_cidr must be a valid CIDR block."
   }
 }
 ```
@@ -90,17 +91,17 @@ Here's an excerpt of an outputs.tf file.
 ```hcl
 output "vpc_id" {
   description = "VPC ID"
-  value           = aws_vpc.this.id
+  value       = aws_vpc.this.id
 }
 
 output "public_subnet_ids" {
   description = "List of public subnet IDs"
-  value           = aws_subnet.public[*].id
+  value       = aws_subnet.public[*].id
 }
 
 output "private_subnet_ids" {
   description = "List of private subnet IDs"
-  value           = aws_subnet.private[*].id
+  value       = aws_subnet.private[*].id
 }
 ```
 
@@ -127,11 +128,11 @@ Here's an example of a data.tf file
 ```hcl
 data "aws_ami" "amazon_linux" {
   most_recent = true
-  owners          = ["amazon"]
+  owners      = ["amazon"]
 
   filter {
-        name   = "name"
-        values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+    name   = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
   }
 }
 
@@ -153,8 +154,11 @@ Here's an example of a checks.tf file:
 ```hcl
 check "s3_encryption" {
   assert {
-        condition         = alltrue([for bucket in aws_s3_bucket.logs : bucket.server_side_encryption_configuration[0].rule[0].apply_server_side_encryption_by_default[0].sse_algorithm == "AES256"])
-        error_message = "All S3 buckets must have server-side encryption enabled with AES256."
+    condition = alltrue([
+      for bucket in aws_s3_bucket.logs :
+      bucket.server_side_encryption_configuration[0].rule[0].apply_server_side_encryption_by_default[0].sse_algorithm == "AES256"
+    ])
+    error_message = "All S3 buckets must have server-side encryption enabled with AES256."
   }
 }
 ```
@@ -172,13 +176,13 @@ Here's an example of a imports.tf file:
 ```hcl
 # Example in imports.tf
 import {
-  to = aws_s3_bucket.legacy_logs           # The address Terraform will use for this S3 bucket
-  id = "company-logs-bucket"              # The S3 bucket's actual name in AWS
+  to = aws_s3_bucket.legacy_logs # The address Terraform will use for this S3 bucket
+  id = "company-logs-bucket"     # The S3 bucket's actual name in AWS
 }
 
 import {
   to = aws_iam_role.existing_lambda_role
-  id = "lambda-execution-role"            # The IAM role's name in AWS
+  id = "lambda-execution-role" # The IAM role's name in AWS
 }
 ```
 
@@ -201,11 +205,11 @@ provider "aws" {
   region = var.aws_region
 
   assume_role {
-        role_arn = var.deployment_role_arn
+    role_arn = var.deployment_role_arn
   }
 
   default_tags {
-        tags = var.default_tags
+    tags = var.default_tags
   }
 }
 
@@ -230,14 +234,14 @@ terraform {
   required_version = ">= 1.3.0, < 2.0.0"
 
   required_providers {
-        aws = {
-          source  = "hashicorp/aws"
-          version = ">= 4.16"
-        }
-        random = {
-          source  = "hashicorp/random"
-          version = ">= 3.4.3"
-        }
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 4.16"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = ">= 3.4.3"
+    }
   }
 }
 ```
@@ -264,12 +268,12 @@ Here's an example .terraform.lock.hcl file:
 # Manual edits may be lost in future updates.
 
 provider "registry.terraform.io/hashicorp/aws" {
-  version         = "4.16.0"
+  version     = "4.16.0"
   constraints = "~> 4.16"
   hashes = [
-        "h1:6V8jLqXdtHjCkMIuxg77BrTVchqpaRK1UUYeTuXDPmE=",
-        "zh:0aa204fead7c431796386cc9e73ccda9a7011cc33017e9338c94b547f30b6f5d",
-        # Additional hash values omitted for brevity
+    "h1:6V8jLqXdtHjCkMIuxg77BrTVchqpaRK1UUYeTuXDPmE=",
+    "zh:0aa204fead7c431796386cc9e73ccda9a7011cc33017e9338c94b547f30b6f5d",
+    # Additional hash values omitted for brevity
   ]
 }
 ```
@@ -306,12 +310,15 @@ Here's an excerpt showing this:
 
 ```hcl
 locals {
-  public_subnet_cidr_blocks = [for i in range(length(var.availability_zones)) :
-        cidrsubnet(var.vpc_cidr, 8, i)]
+  public_subnet_cidr_blocks = [
+    for i in range(length(var.availability_zones)) :
+    cidrsubnet(var.vpc_cidr, 8, i)
+  ]
 
-  private_subnet_cidr_blocks = [for i in range(length(var.availability_zones)) :
-        cidrsubnet(var.vpc_cidr, 8, i + length(var.availability_zones))]
-
+  private_subnet_cidr_blocks = [
+    for i in range(length(var.availability_zones)) :
+    cidrsubnet(var.vpc_cidr, 8, i + length(var.availability_zones))
+  ]
 }
 ```
 
@@ -356,10 +363,10 @@ module "this" {
 
   namespace   = var.namespace
   environment = var.environment
-  stage           = var.stage
-  name            = var.name
+  stage       = var.stage
+  name        = var.name
   attributes  = var.attributes
-  tags            = var.tags
+  tags        = var.tags
 }
 ```
 
@@ -371,17 +378,17 @@ The real power comes when you combine this with provider-level default tags. For
 # In providers.tf
 provider "aws" {
   default_tags {
-        tags = {
-          Organization = "Masterpoint"
-          ManagedBy        = "Terraform"
-        }
+    tags = {
+      Organization = "Masterpoint"
+      ManagedBy    = "Terraform"
+    }
   }
 }
 
 # In main.tf
 resource "aws_vpc" "this" {
   cidr_block = var.vpc_cidr
-  tags           = module.this.tags
+  tags       = module.this.tags
 }
 ```
 
