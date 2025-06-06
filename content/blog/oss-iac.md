@@ -104,7 +104,9 @@ This community effort means the fix for your issue is only a version bump away.
 
 IPv6 is a _GREAT_ example. Are you ready for all of your public endpoints to be IPv6? I know that not all of our projects and client work is. Of course we're not the only ones!
 
-But when IPv6 support is required, I know that [great contributions like this one](https://github.com/cloudposse/terraform-aws-alb/pull/186) will make it much easier to implement IPv6 support. We'll be able to lean on the efforts of the community instead of having to do days of in-the-trenches development work to make IPv6 happen.
+But when IPv6 support is required, I know that [great contributions like this one](https://github.com/cloudposse/terraform-aws-alb/pull/186) will make it much easier to implement IPv6 support. We'll be able to lean on the efforts of the community instead of having to do days of in-the-trenches development work to make IPv6 happen. 
+
+This directly translates to lower operational costs and **frees up an organization's most expensive resource:  engineers' time**. This enables them to focus on building product features that drive value, not on reinventing a solved problem.
 
 ### Decrease Day-0 and Day-2 Complexity
 
@@ -172,7 +174,7 @@ Some modules have hundreds of inputs, and that can be a sign of poor module desi
 
 ### Ensure the module has tests and follows good practices
 
-Good modules use some combination of `terratest`, native TF testing, security checks like `trivy` or `checkov`, `terraform-docs`, and/or a pre-commit workflow. Is the developer of this module using those tools and testing their code on every PR?
+Good modules use some combination of `terratest`, [native TF testing](https://masterpoint.io/blog/terraform-opentofu-terminology-breakdown/#native-tf-testing), security checks like `trivy` or `checkov`, `terraform-docs`, and/or a pre-commit workflow. Is the developer of this module using those tools and testing their code on every PR?
 
 ### Investigate if there is a community behind the module
 
