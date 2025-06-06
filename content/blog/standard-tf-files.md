@@ -1,11 +1,12 @@
 ---
 visible: true
 draft: false
-title: "The Standard Terraform Files + Their Uses"
+title: "The Standard Terraform and OpenTofu Files + Their Uses"
 author: Matt Gowie
+slug: standard-tf-files
 date: 2025-01-06
-description: "A comprehensive guide to organizing Terraform projects with standard file structures. Learn what belongs in main.tf, variables.tf, outputs.tf, and other essential files for maintainable Infrastructure as Code."
-image: /img/updates/terraform-files-organization.png
+description: "A comprehensive guide to the various files that make up a Terraform and OpenTofu project. Learn what belongs in main.tf, variables.tf, outputs.tf, and other essential files for maintainable Infrastructure as Code."
+image: /img/updates/standard-tf-files.png
 ---
 
 If you've hopped between different Terraform or OpenTofu (collectively referred to as TF going forward in this post) projects across teams, you've definitely seen this problem: everyone organizes their TF files differently. Some teams jam everything into a single main.tf file, while others scatter resources across dozens of specialized files. This isn't just an aesthetic issue — it creates real headaches when you're trying to understand or fix infrastructure code.
