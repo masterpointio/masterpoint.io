@@ -12,15 +12,16 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 
 ## Table of Contents
 
+- [Growing Pains](#growing-pains)
 - [Why This Matters for Growing Teams](#why-this-matters-for-growing-teams)
 - [Managing Google Workspace with Terraform](#managing-google-workspace-with-terraform)
 - [Getting Started With the Module](#getting-started-with-the-module)
 - [Design Decisions to Make It Intuitive](#design-decisions-to-make-it-intuitive)
-  - [Design Decision #1 - Testing with Integration and Validation Tests](#design-decision-1---testing-with-integration-and-validation-tests)
-  - [Design Decision #2 - Chose intuitive Terraform variables that diverged from Terraform resources](#design-decision-2---chose-intuitive-terraform-variables-that-diverged-from-terraform-resources)
+  - [Testing with Integration and Validation Tests](#design-decision-1---testing-with-integration-and-validation-tests)
+  - [Choosing Intuitive Terraform Variable Structure](#design-decision-2---choosing-intuitive-terraform-variable-structure)
 - [Wrapping Up](#wrapping-up)
 
-# Managing Your Google Workspace with Terraform
+## Growing Pains
 
 As Masterpoint has been around for almost 10 years now, we've experienced growing pains transitioning from a one-person consultancy to a small team of core full-time engineers, with the help of additional contractors when needed.
 
@@ -210,7 +211,7 @@ run "group_member_type_invalid" {
 }
 ```
 
-### Design Decision #2 - Chose intuitive Terraform variables that diverged from Terraform resources
+### Design Decision #2 - Choosing Intuitive Terraform Variable Structure
 
 In the Google Workspace provider, provisioning a group involves declaring two resources: `group` and `group_settings`.
 
