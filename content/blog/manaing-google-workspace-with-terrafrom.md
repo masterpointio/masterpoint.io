@@ -11,6 +11,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 ---
 
 ## Table of Contents
+
 - [Why This Matters for Growing Teams](#why-this-matters-for-growing-teams)
 - [Managing Google Workspace with Terraform](#managing-google-workspace-with-terraform)
 - [Getting Started With the Module](#getting-started-with-the-module)
@@ -19,22 +20,21 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
   - [Design Decision #2 - Chose intuitive Terraform variables that diverged from Terraform resources](#design-decision-2---chose-intuitive-terraform-variables-that-diverged-from-terraform-resources)
 - [Wrapping Up](#wrapping-up)
 
-
 # Managing Your Google Workspace with Terraform
 
 As Masterpoint has been around for almost 10 years now, we've experienced growing pains transitioning from a one-person consultancy to a small team of core full-time engineers, with the help of additional contractors when needed.
 
-During that time, we've focused on client projects more than our own internal systems. When I joined in December, we started to feel the friction of onboarding a new Google Workspace user more acutely. Matt (CEO/CTO) had to remember what permissions a new Google Workspace user gets by default, how to provision SSO permissions for Masterpoint's AWS Accounts, and how to get a user set up for client-specific SSOs. Since he hadn't gone through that process in 6 months, he forgot some important details, which resulted in delayed access to the Masterpoint AWS accounts and took time away from his ability to focus on other work due to tedious administrative tasks. 
+During that time, we've focused on client projects more than our own internal systems. When I joined in December, we started to feel the friction of onboarding a new Google Workspace user more acutely. Matt (CEO/CTO) had to remember what permissions a new Google Workspace user gets by default, how to provision SSO permissions for Masterpoint's AWS Accounts, and how to get a user set up for client-specific SSOs. Since he hadn't gone through that process in 6 months, he forgot some important details, which resulted in delayed access to the Masterpoint AWS accounts and took time away from his ability to focus on other work due to tedious administrative tasks.
 
 ## Why This Matters for Growing Teams
 
 In our small company and possibly in your own organization, it's not a big deal for the founder or early engineer to create a new employee's Google Workspace account or give them SSO account access via the Admin UI. But as a company scales:
 
-* Founders or engineers are (hopefully) focused on product, customers, and strategy.  
-* Nobody remembers why or when a permission was changed.  
-* Group membership becomes inconsistent.  
-* Onboarding/offboarding gets slower and error-prone.  
-* The stakes for getting security permissions correct increase.
+- Founders or engineers are (hopefully) focused on product, customers, and strategy.
+- Nobody remembers why or when a permission was changed.
+- Group membership becomes inconsistent.
+- Onboarding/offboarding gets slower and error-prone.
+- The stakes for getting security permissions correct increase.
 
 As a company grows past 10, dozens, or 100+ people, teams (and dare we say departments) become more distributed and harder to manage across many different SaaS tools. It's important to have systems in place that provide clarity and enable individuals to get the right work done in a timely manner. We believe efficient systems are part of a company evolving into higher levels of organizational maturity.
 
@@ -46,9 +46,9 @@ We heard great things about [GAM](https://github.com/GAM-team/GAM) (an imperativ
 
 In terms of using the provider, while there are a few Terraform modules out there for managing Google Workspaces, we decided to create our own Terraform module. The motivation to build a new module from scratch stemmed from our desire to:
 
-1. Democratize user onboarding powers so Matt (CEO/CTO) is not a bottleneck.  
-2. Provide transparency and history for changes to our team's permissions.  
-3. Easily manage SSO configurations allowing engineers to sign into multiple AWS accounts using their Google Identity.  
+1. Democratize user onboarding powers so Matt (CEO/CTO) is not a bottleneck.
+2. Provide transparency and history for changes to our team's permissions.
+3. Easily manage SSO configurations allowing engineers to sign into multiple AWS accounts using their Google Identity.
 4. Intuitively organize user and team settings in a clear and straight forward approach.
 
 Here's the GitHub link for the Google Workspace module:  
@@ -56,7 +56,7 @@ Here's the GitHub link for the Google Workspace module:
 
 ## Getting Started With the Module
 
-To make the module easy to get up and running with your own Google Workspace, we included two practical on-ramps for existing and brand new Google Workspaces: 
+To make the module easy to get up and running with your own Google Workspace, we included two practical on-ramps for existing and brand new Google Workspaces:
 
 1. **Import an existing Google Workspace**  
    We shared the [terraform code](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/main.tf) we used to declare existing [users](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/users.yaml) and [groups](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/groups.yaml) in YAML, and the [import blocks](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/imports.tf) to easily import an existing setup. We additionally shared a [Python script](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/debugging-script.py) to view the JSON of your existing resources (which you could give to an LLM and tell it to follow the example to create your own `users.yaml` and `groups.yaml` files).
@@ -264,7 +264,7 @@ locals {
 module "googleworkspace" {
   source  = "masterpointio/users-groups-automation/googleworkspace"
   version = "X.X.X"
-  
+
   groups = {
     support = {
       name    = "Support"
@@ -289,4 +289,3 @@ With this setup in place and a CODEOWNERS file, we're now transparently, democra
 Want help implementing this terraform module set in your Google Workspace?
 
 We do short, high-impact automation projects like this for engineering teams all the time—with long-term impact. If your onboarding still runs on sticky notes and muscle memory, reach out and we'll streamline your onboarding process.
-
