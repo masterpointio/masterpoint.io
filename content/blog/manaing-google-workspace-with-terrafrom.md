@@ -5,29 +5,28 @@ title: "Managing Your Google Workspace with Terraform"
 author: Weston Platter
 date: 2025-06-23
 slug: managing-google-workspace-with-terraform
-description: "We share the journey of migrating our own Google Workspace from an error-prone click-ops process to a streamlined Infrastructure as Code (IaC) setup and provide Terraform module design decisions that help any module developer create more effective Terraform modules. Copy our Google Workspace Terraform import process and you can experience the same gains."
-image: None
+description: "Migrate Google Workspace from click-ops to Infrastructure as Code with our open source Terraform module. Includes design patterns and import examples."
+tags: ["terraform", "google-workspace", "iac", "automation"]
 callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a>
 ---
 
 ## Table of Contents
-- [Managing Your Google Workspace with Terraform](#managing-your-google-workspace-with-terraform)
 - [Why This Matters for Growing Teams](#why-this-matters-for-growing-teams)
 - [Managing Google Workspace with Terraform](#managing-google-workspace-with-terraform)
 - [Getting Started With the Module](#getting-started-with-the-module)
 - [Design Decisions to Make It Intuitive](#design-decisions-to-make-it-intuitive)
-  - [Design Decision #1 - testing! Call out a couple tests and test patterns we used](#design-decision-1---testing-call-out-a-couple-tests-and-test-patterns-we-used)
+  - [Design Decision #1 - Testing with Integration and Validation Tests](#design-decision-1---testing-with-integration-and-validation-tests)
   - [Design Decision #2 - Chose intuitive Terraform variables that diverged from Terraform resources](#design-decision-2---chose-intuitive-terraform-variables-that-diverged-from-terraform-resources)
-- [Wrapping up](#wrapping-up)
+- [Wrapping Up](#wrapping-up)
 
 
-# **Managing Your Google Workspace with Terraform**
+# Managing Your Google Workspace with Terraform
 
 As Masterpoint has been around for almost 10 years now, we've experienced growing pains transitioning from a one-person consultancy to a small team of core full-time engineers, with the help of additional contractors when needed.
 
 During that time, we've focused on client projects more than our own internal systems. When I joined in December, we started to feel the friction of onboarding a new Google Workspace user more acutely. Matt (CEO/CTO) had to remember what permissions a new Google Workspace user gets by default, how to provision SSO permissions for Masterpoint's AWS Accounts, and how to get a user set up for client-specific SSOs. Since he hadn't gone through that process in 6 months, he forgot some important details, which resulted in delayed access to the Masterpoint AWS accounts and took time away from his ability to focus on other work due to tedious administrative tasks. 
 
-## **Why This Matters for Growing Teams**
+## Why This Matters for Growing Teams
 
 In our small company and possibly in your own organization, it's not a big deal for the founder or early engineer to create a new employee's Google Workspace account or give them SSO account access via the Admin UI. But as a company scales:
 
@@ -39,7 +38,7 @@ In our small company and possibly in your own organization, it's not a big deal 
 
 As a company grows past 10, dozens, or 100+ people, teams (and dare we say departments) become more distributed and harder to manage across many different SaaS tools. It's important to have systems in place that provide clarity and enable individuals to get the right work done in a timely manner. We believe efficient systems are part of a company evolving into higher levels of organizational maturity.
 
-## **Managing Google Workspace with Terraform**
+## Managing Google Workspace with Terraform
 
 We looked at a couple of open source solutions and decided on using the Terraform [Google Workspace](https://github.com/hashicorp/terraform-provider-googleworkspace) provider. We often use SaaS-specific Terraform providers to provision user accounts for DataDog and other SaaS services, so this was an easy decision.
 
@@ -55,7 +54,7 @@ In terms of using the provider, while there are a few Terraform modules out ther
 Here's the GitHub link for the Google Workspace module:  
 [https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation)
 
-## **Getting Started With the Module**
+## Getting Started With the Module
 
 To make the module easy to get up and running with your own Google Workspace, we included two practical on-ramps for existing and brand new Google Workspaces: 
 
@@ -107,7 +106,7 @@ module "googleworkspace_users_groups" {
 
 Below we point out a few Terraform module design decisions we made to reduce friction as others use the module.
 
-#### Design Decision \#1 \- testing\! Call out a couple tests and test patterns we used
+### Design Decision #1 - Testing with Integration and Validation Tests
 
 To ensure the Terraform module remains reliable after changes—whether by contributors or automated processes—we've added approximately 20 tests. Thankfully [Terraform](https://developer.hashicorp.com/terraform/tutorials/configuration-language/test#prerequisites) and [OpenTofu](https://opentofu.org/docs/cli/commands/test/) both include a built-in testing framework that allows us to write tests directly in HCL, replacing the previous Go-based approach. The tests validate that the module behaves as expected and prevent new changes from unintentionally breaking functionality that downstream consumers rely on.
 
@@ -208,7 +207,7 @@ run "group_member_type_invalid" {
 }
 ```
 
-#### Design Decision \#2 - Chose intuitive Terraform variables that diverged from Terraform resources
+### Design Decision #2 - Chose intuitive Terraform variables that diverged from Terraform resources
 
 In the Google Workspace provider, provisioning a group involves declaring two resources: `group` and `group_settings`.
 
