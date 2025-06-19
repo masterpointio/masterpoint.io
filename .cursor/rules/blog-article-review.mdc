@@ -66,6 +66,7 @@ When reviewing or editing blog posts in `/content/blog/`, apply the following co
 - Use SCSS in `/assets/css/` for custom styles
 
 ### Code Quality
+- Run `trunk check` and `trunk fmt` before committing
 - Follow conventional commit format
 - Ensure all Markdown passes markdownlint validation
 - Use proper YAML formatting with yamllint compliance
