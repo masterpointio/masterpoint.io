@@ -2,3 +2,6 @@
 /public/
 /resources/
 .DS_Store
+
+# leave CC settings and configs up to each dev with their tooling prefs
+CLAUDE.md
