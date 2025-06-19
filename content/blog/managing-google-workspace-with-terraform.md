@@ -1,9 +1,9 @@
 ---
 visible: true
-draft: true
+draft: false
 title: "Managing Your Google Workspace with Terraform"
 author: Weston Platter
-date: 2025-06-23
+date: 2025-06-19
 slug: managing-google-workspace-with-terraform
 description: "Migrate Google Workspace from click-ops to Infrastructure as Code with our open source Terraform module. Includes design patterns and import examples."
 tags: ["terraform", "google-workspace", "iac", "automation"]
@@ -84,14 +84,17 @@ provider "googleworkspace" {
   oauth_scopes            = local.oauth_scopes
 }
 
-# Get users and groups from YAML files. You might choose to use other config file formats.
+# Get users and groups from YAML files. You might choose to use other config file.
+# Note: path.module refers to the directory where terraform/tofu plan/apply is run
+# var.googleworkspace_configs is a variable for the directory containing config files
 locals {
-  _all_groups = yamldecode(file("${path.module}/${var.googleworkspace_configs}/groups.yaml"))
-  _all_users  = yamldecode(file("${path.module}/${var.googleworkspace_configs}/users.yaml"))
+  config_path = "${path.module}/${var.googleworkspace_configs}"
+  all_groups = yamldecode(file("${local.config_path}/groups.yaml"))
+  all_users  = yamldecode(file("${local.config_path}/users.yaml"))
 
   # Skip objects that start with "_", which we use as default or prototype objects
-  groups = { for k, v in local._all_groups : k => v if !startswith(k, "_") }
-  users  = { for k, v in local._all_users : k => v if !startswith(k, "_") }
+  groups = { for k, v in local.all_groups : k => v if !startswith(k, "_") }
+  users  = { for k, v in local.all_users : k => v if !startswith(k, "_") }
 }
 
 module "googleworkspace_users_groups" {
