@@ -149,7 +149,7 @@ run "groups_member_role_success" {
 }
 ```
 
-2. **Test validations in the variables.tf file.** We added variable validations to catch bad inputs early. This provides a fast feedback loop during a `terraform plan` rather than only getting this feedback from the Google Admin SDK APIs when running `terraform apply`. During Infrastructure as Code audits, we look at Terraform CI/CD workflows to ensure PRs are `terraform plan`-ed before merging to catch issues where a variable input has a bad value.
+1. **Test validations in the variables.tf file.** We added variable validations to catch bad inputs early. This provides a fast feedback loop during a `terraform plan` rather than only getting this feedback from the Google Admin SDK APIs when running `terraform apply`. During Infrastructure as Code audits, we look at Terraform CI/CD workflows to ensure PRs are `terraform plan`-ed before merging to catch issues where a variable input has a bad value.
 
 ```hcl
 # users variable declaration
