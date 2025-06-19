@@ -1,0 +1,78 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Cursor Rules for Masterpoint.io
+
+## Blog Post Review Criteria
+
+When reviewing or editing blog posts in `/content/blog/`, apply the following comprehensive review criteria:
+
+### Basic Content Quality
+- Check for spelling errors, grammatical mistakes, and proper punctuation
+- Scan for incomplete sentences or missing words
+- Verify consistent terminology, capitalization, and formatting throughout
+- Ensure sentences flow well and are easy to understand
+
+### Technical Accuracy
+- Validate all code blocks are syntactically correct and properly formatted. Language hints should only be at the top of the code block ONLY.
+- Verify all URLs are functional and point to correct resources
+- Check accuracy of technical statements and implementation details
+- Ensure all referenced versions are current and accurate
+
+### Structure & Organization
+- Verify Table of Contents matches actual section headings and structure
+- Ensure content follows logical progression from problem to solution
+- Check section headings are descriptive, consistently formatted, and properly nested
+- Validate smooth transitions between sections and ideas
+
+### Content Completeness
+- Remove any placeholder content or TODO comments
+- Ensure all referenced code blocks are complete and functional
+- Verify required images, diagrams, or additional files are present
+- Check call-to-actions and contact links are clear and functional
+
+### SEO & Metadata
+- Validate all required YAML front matter fields are complete and accurate
+- Ensure meta description is compelling and under 160 characters
+- Check slug is clean, descriptive, and matches content
+- Verify tags are relevant and consistent with site taxonomy
+
+### Brand & Voice (Masterpoint Specific)
+- Reinforce Masterpoint's expertise in Infrastructure as Code and consulting
+- Maintain appropriate technical depth for [Experienced ICs, Team Leads, and VP of Engineering] audiences
+- Ensure clear value proposition for readers and potential clients
+- Maintain authoritative but approachable professional tone
+
+### Marketing Effectiveness
+- Clearly articulate pain points and how solutions address them
+- Include relevant experience and credibility indicators
+- Provide appropriate calls-to-action for consultation/contact
+- Highlight unique approach or expertise that differentiates Masterpoint
+
+## Hugo Site Development Guidelines
+
+### Content Structure
+- All content goes in `/content/` directory as Markdown with YAML front matter
+- Blog posts require: `date`, `tags`, `author`
+- Service pages use `weight` for ordering, `description` for SEO
+- Case studies include `client`, `challenge`, `solution` fields
+
+### Technical Standards
+- Use Hugo shortcodes for consistent formatting (defined in `/layouts/shortcodes/`)
+- Optimize images and place in `/static/images/`
+- Follow Bootstrap 5.1.3 conventions for styling
+- Use SCSS in `/assets/css/` for custom styles
+
+### Code Quality
+- Follow conventional commit format
+- Ensure all Markdown passes markdownlint validation
+- Use proper YAML formatting with yamllint compliance
+
+### Content Focus Areas
+- Infrastructure as Code (Terraform, OpenTofu, Pulumi)
+- Platform engineering workflows that enable teams to operate as integrated and effective centers of collaboration.
+- Real-world case studies and migrations
+- Technical tutorials and implementation guides
+- Masterpoint's core services: IaC audits, platform implementation, training, managed services
