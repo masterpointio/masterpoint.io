@@ -67,7 +67,7 @@ To make the module easy to get up and running with your own Google Workspace, we
 
 After the initial import or setup, your Google Workspace [root module](https://newsletter.masterpoint.io/p/multi-instance-vs-single-instance-root-modules) could end up being as simple as this:
 
-```hcl
+```terraform
 locals {
   oauth_scopes = [
     "https://www.googleapis.com/auth/admin.directory.group",
@@ -120,7 +120,7 @@ Below are more complex examples validating integration between different provide
 
 1. **Validate that user and group inputs result in a user being a group member.** We view this as an integration test because we are testing if a user and a group correctly integrate and result in a user_to_group instance.
 
-```hcl
+```terraform
 run "groups_member_role_success" {
   command = apply
   providers = {
@@ -130,8 +130,8 @@ run "groups_member_role_success" {
     users = {
       "first.last@example.com" = {
         primary_email = "first.last@example.com"
-        family_name  = "Last"
-        given_name   = "First"
+        family_name   = "Last"
+        given_name    = "First"
         groups = {
           "team" = {
             role = "MEMBER"
@@ -155,16 +155,16 @@ run "groups_member_role_success" {
 
 1. **Test validations in the variables.tf file.** We added variable validations to catch bad inputs early. This provides a fast feedback loop during a `terraform plan` rather than only getting this feedback from the Google Admin SDK APIs when running `terraform apply`. During Infrastructure as Code audits, we look at Terraform CI/CD workflows to ensure PRs are `terraform plan`-ed before merging to catch issues where a variable input has a bad value.
 
-```hcl
+```terraform
 # users variable declaration
 variable "users" {
   description = "List of users"
   type = map(object({
     # other variable fields
-    groups : optional(map(object({
-      role : optional(string, "MEMBER"),
-      delivery_settings : optional(string, "ALL_MAIL"),
-      type : optional(string, "USER"),
+    groups: optional(map(object({
+      role: optional(string, "MEMBER"),
+      delivery_settings: optional(string, "ALL_MAIL"),
+      type: optional(string, "USER"),
     })), {}),
     primary_email : string,
   }))
@@ -172,8 +172,8 @@ variable "users" {
   # validate users.groups.[group_key].type
   validation {
     condition = alltrue(flatten([
-      for user in var.users : [
-        for group in values(try(user.groups, {})) : (
+      for user in var.users: [
+        for group in values(try(user.groups, {})): (
           group.type == null || contains(["USER", "GROUP", "CUSTOMER"], upper(group.type))
         )
       ]
@@ -215,7 +215,7 @@ run "group_member_type_invalid" {
 
 In the Google Workspace provider, provisioning a group involves declaring two resources: `group` and `group_settings`.
 
-```hcl
+```terraform
 resource "googleworkspace_group" "sales" {
   email = "sales@example.com"
 }
@@ -228,14 +228,14 @@ resource "googleworkspace_group_settings" "sales_settings" {
 
 This `group` and `group_setting` resource design mirrors Google's Admin SDK REST API structure. However, we felt that group settings more intuitively belonged as a nested attribute inside a group. So in our group variable, we added `settings` and extracted settings in the module's `local` block:
 
-```hcl
+```terraform
 # variable declaration
 variable "groups" {
   description = "List of groups"
   type = map(object({
-    name    : string,
-    email   : string,
-    settings : optional(object({
+    name: string,
+    email: string,
+    settings: optional(object({
       who_can_join: optional(string),
     }))
   }))
@@ -258,7 +258,7 @@ resource "googleworkspace_group_settings" "defaults" {
 
 Yes, it's an abstraction which can sometimes lead to issues, but we think reducing cognitive friction is worth the added business logic in the Terraform code. Here's an example of a simpler configuration for groups:
 
-```hcl
+```terraform
 locals {
   default_group_settings = {
     who_can_join = "ALL_IN_DOMAIN_CAN_JOIN"
