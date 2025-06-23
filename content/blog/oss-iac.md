@@ -4,7 +4,7 @@ draft: false
 title: "Your Infra Isn't Special: Why Open Source Infrastructure as Code (IaC) Wins"
 author: Matt Gowie
 slug: why-open-source-iac-wins
-date: 2025-05-01
+date: 2025-06-22
 description: "If your platform team is still writing every Terraform and OpenTofu resource by hand, you're falling behind. This post explains how open source Infrastructure as Code (IaC) enables modern platform engineering at scale — reducing effort, increasing security, and speeding up delivery."
 image: /img/updates/oss-iac/oss-iac.png
 callout: <p>👋 <b>If you're ready to bring OSS best practices into your IaC codebase and workflows, we can help you get there—faster, safer, and with less overhead.</b> <a href='/contact'>Get in touch!</a></p>
