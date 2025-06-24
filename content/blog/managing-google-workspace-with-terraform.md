@@ -120,96 +120,96 @@ Below are more complex examples validating integration between different provide
 
 1. **Validate that user and group inputs result in a user being a group member.** We view this as an integration test because we are testing if a user and a group correctly integrate and result in a user_to_group instance.
 
-```terraform
-run "groups_member_role_success" {
-  command = apply
-  providers = {
-    googleworkspace = googleworkspace.mock
-  }
-  variables {
-    users = {
-      "first.last@example.com" = {
-        primary_email = "first.last@example.com"
-        family_name   = "Last"
-        given_name    = "First"
-        groups = {
-          "team" = {
-            role = "MEMBER"
+  ```terraform
+  run "groups_member_role_success" {
+    command = apply
+    providers = {
+      googleworkspace = googleworkspace.mock
+    }
+    variables {
+      users = {
+        "first.last@example.com" = {
+          primary_email = "first.last@example.com"
+          family_name   = "Last"
+          given_name    = "First"
+          groups = {
+            "team" = {
+              role = "MEMBER"
+            }
           }
         }
       }
-    }
-    groups = {
-      "team" = {
-        name = "Team"
-        email = "team@example.com"
-      }
-    }
-  }
-  assert {
-    condition     = googleworkspace_group_member.user_to_groups["team@example.com/first.last@example.com"].role == "MEMBER"
-    error_message = "Expected 'role' to be 'MEMBER'."
-  }
-}
-```
-
-1. **Test validations in the variables.tf file.** We added variable validations to catch bad inputs early. This provides a fast feedback loop during a `terraform plan` rather than only getting this feedback from the Google Admin SDK APIs when running `terraform apply`. During Infrastructure as Code audits, we look at Terraform CI/CD workflows to ensure PRs are `terraform plan`-ed before merging to catch issues where a variable input has a bad value.
-
-```terraform
-# users variable declaration
-variable "users" {
-  description = "List of users"
-  type = map(object({
-    # other variable fields
-    groups: optional(map(object({
-      role: optional(string, "MEMBER"),
-      delivery_settings: optional(string, "ALL_MAIL"),
-      type: optional(string, "USER"),
-    })), {}),
-    primary_email : string,
-  }))
-
-  # validate users.groups.[group_key].type
-  validation {
-    condition = alltrue(flatten([
-      for user in var.users: [
-        for group in values(try(user.groups, {})): (
-          group.type == null || contains(["USER", "GROUP", "CUSTOMER"], upper(group.type))
-        )
-      ]
-    ]))
-    error_message = "group type must be either 'USER', 'GROUP', or 'CUSTOMER'"
-  }
-}
-
-run "group_member_type_invalid" {
-  command = plan
-  providers = {
-    googleworkspace = googleworkspace.mock
-  }
-  variables {
-    users = {
-      "invalid.type@example.com" = {
-        primary_email = "invalid.type@example.com"
-        family_name  = "Type"
-        given_name   = "Invalid"
-        groups = {
-          "test-group" = {
-            type = "INVALID-TYPE"
-          }
+      groups = {
+        "team" = {
+          name = "Team"
+          email = "team@example.com"
         }
       }
     }
-    groups = {
-      "test-group" = {
-        name  = "Test Group"
-        email = "test-group@example.com"
-      }
+    assert {
+      condition     = googleworkspace_group_member.user_to_groups["team@example.com/first.last@example.com"].role == "MEMBER"
+      error_message = "Expected 'role' to be 'MEMBER'."
     }
   }
-  expect_failures = [var.users]
-}
-```
+  ```
+
+2. **Test validations in the variables.tf file.** We added variable validations to catch bad inputs early. This provides a fast feedback loop during a `terraform plan` rather than only getting this feedback from the Google Admin SDK APIs when running `terraform apply`. During Infrastructure as Code audits, we look at Terraform CI/CD workflows to ensure PRs are `terraform plan`-ed before merging to catch issues where a variable input has a bad value.
+
+  ```terraform
+  # users variable declaration
+  variable "users" {
+    description = "List of users"
+    type = map(object({
+      # other variable fields
+      groups: optional(map(object({
+        role: optional(string, "MEMBER"),
+        delivery_settings: optional(string, "ALL_MAIL"),
+        type: optional(string, "USER"),
+      })), {}),
+      primary_email : string,
+    }))
+
+    # validate users.groups.[group_key].type
+    validation {
+      condition = alltrue(flatten([
+        for user in var.users: [
+          for group in values(try(user.groups, {})): (
+            group.type == null || contains(["USER", "GROUP", "CUSTOMER"], upper(group.type))
+          )
+        ]
+      ]))
+      error_message = "group type must be either 'USER', 'GROUP', or 'CUSTOMER'"
+    }
+  }
+
+  run "group_member_type_invalid" {
+    command = plan
+    providers = {
+      googleworkspace = googleworkspace.mock
+    }
+    variables {
+      users = {
+        "invalid.type@example.com" = {
+          primary_email = "invalid.type@example.com"
+          family_name  = "Type"
+          given_name   = "Invalid"
+          groups = {
+            "test-group" = {
+              type = "INVALID-TYPE"
+            }
+          }
+        }
+      }
+      groups = {
+        "test-group" = {
+          name  = "Test Group"
+          email = "test-group@example.com"
+        }
+      }
+    }
+    expect_failures = [var.users]
+  }
+  ```
 
 ### Design Decision #2 - Choosing Intuitive Terraform Variable Structure
 
@@ -229,7 +229,7 @@ resource "googleworkspace_group_settings" "sales_settings" {
 This `group` and `group_setting` resource design mirrors Google's Admin SDK REST API structure. However, we felt that group settings more intuitively belonged as a nested attribute inside a group. So in our group variable, we added `settings` and extracted settings in the module's `local` block:
 
 ```terraform
-# variable declaration
+# groups variable declaration
 variable "groups" {
   description = "List of groups"
   type = map(object({
