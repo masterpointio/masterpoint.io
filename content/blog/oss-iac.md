@@ -116,7 +116,7 @@ To use my favorite house building analogy, think about the choice of building a 
 
 It helps with smaller projects too. Need to renovate that bathroom? That's a lot simpler when everything already follows a specification. Who knows, there might be upgraded components available that meet your needs.
 
-While LOC is not the silver bullet when assessing software, it can be used as one component of approximating codebase complexity. As an example for this reason to use OSS, let's look at the number of LOC in some very commonly used modules:
+While Lines of Code (LOC) is not the silver bullet when assessing software, it can be used as one component of approximating codebase complexity. As an example for this reason to use OSS, let's look at the number of LOC in some very commonly used modules:
 
 1. [https://github.com/cloudposse/terraform-aws-vpc](https://github.com/cloudposse/terraform-aws-vpc) — 666 LOC
 2. [https://github.com/cloudposse/terraform-aws-alb](https://github.com/cloudposse/terraform-aws-alb) — 1064 LOC
