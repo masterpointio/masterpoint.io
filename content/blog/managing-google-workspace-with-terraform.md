@@ -16,8 +16,8 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 - [Why This Matters for Scaling Teams](#why-this-matters-for-scaling-teams)
 - [Managing Google Workspace with Terraform](#managing-google-workspace-with-terraform)
 - [Getting Started With the Module](#getting-started-with-the-module)
-- [Design Decisions to Make It Intuitive](#design-decisions-to-make-it-intuitive)
-  - [Testing with Integration and Validation Tests](#design-decision-1---testing-with-integration-and-validation-tests)
+- [Module Design Decisions](#module-design-decisions)
+  - [Implementing Integration and Validation Tests](#design-decision-1---implementing-integration-and-validation-tests)
   - [Choosing Intuitive Terraform Variable Structure](#design-decision-2---choosing-intuitive-terraform-variable-structure)
 - [Wrapping Up](#wrapping-up)
 
@@ -106,11 +106,11 @@ module "googleworkspace_users_groups" {
 }
 ```
 
-## Design Decisions to Make It Intuitive
+## Module Design Decisions
 
 Below we point out a few Terraform module design decisions we made to reduce friction as others use the module.
 
-### Design Decision #1 - Testing with Integration and Validation Tests
+### Design Decision #1 - Implementing Integration and Validation Tests
 
 To ensure the Terraform module remains reliable after changes—whether by contributors or automated processes—we've added approximately 20 tests. Thankfully [Terraform](https://developer.hashicorp.com/terraform/tutorials/configuration-language/test#prerequisites) and [OpenTofu](https://opentofu.org/docs/cli/commands/test/) both include a built-in testing framework that allows us to write tests directly in HCL, replacing the previous Go-based approach. The tests validate that the module behaves as expected and prevent new changes from unintentionally breaking functionality that downstream consumers rely on.
 
