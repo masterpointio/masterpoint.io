@@ -13,7 +13,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 ## Table of Contents
 
 - [Growing Pains](#growing-pains)
-- [Why This Matters for Growing Teams](#why-this-matters-for-growing-teams)
+- [Why This Matters for Scaling Teams](#why-this-matters-for-scaling-teams)
 - [Managing Google Workspace with Terraform](#managing-google-workspace-with-terraform)
 - [Getting Started With the Module](#getting-started-with-the-module)
 - [Design Decisions to Make It Intuitive](#design-decisions-to-make-it-intuitive)
@@ -27,7 +27,7 @@ As Masterpoint has been around for almost 10 years now, we've experienced growin
 
 During that time, we've focused on client projects more than our own internal systems. When I joined in December, we started to feel the friction of onboarding a new Google Workspace user more acutely. Matt (CEO/CTO) had to remember what permissions a new Google Workspace user gets by default, how to provision SSO permissions for Masterpoint's AWS Accounts, and how to get a user set up for client-specific SSOs. Since he hadn't gone through that process in 6 months, he forgot some important details, which resulted in delayed access to the Masterpoint AWS accounts and took time away from his ability to focus on other work due to tedious administrative tasks.
 
-## Why This Matters for Growing Teams
+## Why This Matters for Scaling Teams
 
 In our small company and possibly in your own organization, it's not a big deal for the founder or early engineer to create a new employee's Google Workspace account or give them SSO account access via the Admin UI. But as a company scales:
 
