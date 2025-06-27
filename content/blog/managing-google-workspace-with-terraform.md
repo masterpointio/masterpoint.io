@@ -47,7 +47,7 @@ We looked at a couple of open source solutions and decided on using the Terrafor
 
 We heard great things about [GAM](https://github.com/GAM-team/GAM) (an imperative command line tool) from a few colleagues, but we didn't need its full range of capabilities. We prefer to use declarative systems so we know the user account and group settings we see in config files are indeed the values in production.
 
-In terms of using the provider, while there are a few Terraform modules out there for managing Google Workspaces, we decided to create our own Terraform module. The motivation to build a new module from scratch stemmed from our desire to:
+While there are a few Terraform modules out there for managing Google Workspaces, we decided to create our own Terraform module to use the provider. The motivation to build a module from scratch stemmed from our desire to:
 
 1. Democratize user onboarding powers so Matt (CEO/CTO) is not a bottleneck.
 2. Provide transparency and history for changes to our team's permissions.
