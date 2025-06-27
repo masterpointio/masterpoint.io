@@ -87,7 +87,7 @@ provider "googleworkspace" {
   oauth_scopes            = local.oauth_scopes
 }
 
-# Get users and groups from YAML files. You might choose to use other config file.
+# Get users and groups from YAML files. You might choose to use other config files.
 # Note: path.module refers to the directory where terraform/tofu plan/apply is run
 # var.googleworkspace_configs is a variable for the directory containing config files
 locals {
