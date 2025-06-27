@@ -31,7 +31,7 @@ During that time, we've focused on client projects more than our own internal sy
 
 In our small company and possibly in your own organization, it's not a big deal for the founder or early engineer to create a new employee's Google Workspace account or give them SSO account access via the Admin UI. But as a company scales:
 
-- Founders or engineers are (hopefully) focused on product, customers, and strategy.
+- Founders and engineers are focused on product, customers, and strategy.
 - Nobody remembers why or when a permission was changed.
 - Group membership becomes inconsistent.
 - Onboarding/offboarding gets slower and error-prone.
