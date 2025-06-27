@@ -23,7 +23,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 
 ## Growing Pains
 
-As Masterpoint has been around for almost 10 years now, we've experienced growing pains transitioning from a one-person consultancy to a small team of core full-time engineers, with the help of additional contractors when needed.
+As Masterpoint has been around for almost 10 years now, we've experienced growing pains transitioning from a one-person consultancy to a team of core full-time engineers, with the help of additional contractors when needed.
 
 During that time, we've focused on client projects more than our own internal systems. When I joined in December, we started to feel the friction of onboarding a new Google Workspace user more acutely. Matt (CEO/CTO) had to remember what permissions a new Google Workspace user gets by default, how to provision SSO permissions for Masterpoint's AWS Accounts, and how to get a user set up for client-specific SSOs. Since he hadn't gone through that process in 6 months, he forgot some important details, which resulted in delayed access to the Masterpoint AWS accounts and took time away from his ability to focus on other work due to tedious administrative tasks.
 
