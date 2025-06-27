@@ -37,7 +37,9 @@ In our small company and possibly in your own organization, it's not a big deal 
 - Onboarding/offboarding gets slower and error-prone.
 - The consequences for getting security permissions incorrect increase.
 
-As a company grows past 10, dozens, or 100+ people, teams (and dare we say departments) become more distributed and harder to manage across many different SaaS tools. It's important to have systems in place that provide clarity and enable individuals to get the right work done in a timely manner. We believe efficient systems are part of a company evolving into higher levels of organizational maturity.
+As a company grows past ten, dozens, or a hundred people, teams (and dare we say departments) become more distributed. It is harder to manage user accounts across many different SaaS tools. It's important to have systems in place that provide clarity and enable individuals to get the right access to get their work done in a timely manner. We believe efficient systems are part of a company evolving toward higher levels of organizational maturity. 
+
+One aspect of that is finding a better way to manager your Google Workspace accounts.
 
 ## Managing Google Workspace with Terraform
 
