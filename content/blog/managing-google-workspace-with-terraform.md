@@ -258,7 +258,7 @@ resource "googleworkspace_group_settings" "defaults" {
 }
 ```
 
-Yes, it's an abstraction which can sometimes lead to issues, but we think reducing cognitive friction is worth the added business logic in the Terraform code. Here's an example of a simpler configuration for groups:
+Yes, it's an abstraction which can sometimes lead to issues, but we think reducing cognitive friction for the module user is worth the added business logic in the Terraform code. Here's an example of a simpler configuration for groups:
 
 ```terraform
 locals {
