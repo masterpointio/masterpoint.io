@@ -54,7 +54,7 @@ While there are a few Terraform modules out there for managing Google Workspaces
 3. Easily manage SSO configurations allowing engineers to sign into multiple AWS accounts using their Google Identity.
 4. Intuitively organize user and team settings in a clear and straight forward approach.
 
-Here's the GitHub link for the Google Workspace module:  
+Here's the GitHub link for our Google Workspace module:  
 [https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation)
 
 ## Getting Started With the Module
