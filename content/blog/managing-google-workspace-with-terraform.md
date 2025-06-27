@@ -35,7 +35,7 @@ In our small company and possibly in your own organization, it's not a big deal 
 - Nobody remembers why or when a permission was changed.
 - Group membership becomes inconsistent.
 - Onboarding/offboarding gets slower and error-prone.
-- The stakes for getting security permissions correct increase.
+- The consequences for getting security permissions incorrect increase.
 
 As a company grows past 10, dozens, or 100+ people, teams (and dare we say departments) become more distributed and harder to manage across many different SaaS tools. It's important to have systems in place that provide clarity and enable individuals to get the right work done in a timely manner. We believe efficient systems are part of a company evolving into higher levels of organizational maturity.
 
