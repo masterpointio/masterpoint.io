@@ -59,7 +59,7 @@ Here's the GitHub link for our Google Workspace module:
 
 ## Getting Started With the Module
 
-To make the module easy to get up and running with your own Google Workspace, we included two practical on-ramps for existing and brand new Google Workspaces:
+To make the module easy to get up and running with your own Google Workspace, we included two practical on-ramps:
 
 1. **Import an existing Google Workspace**  
    We shared the [terraform code](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/main.tf) we used to declare existing [users](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/users.yaml) and [groups](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/groups.yaml) in YAML, and the [import blocks](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/imports.tf) to easily import an existing setup. We additionally shared a [Python script](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/debugging-script.py) to view the JSON of your existing resources (which you could give to an LLM and tell it to follow the example to create your own `users.yaml` and `groups.yaml` files)..
