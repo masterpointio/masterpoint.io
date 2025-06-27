@@ -55,10 +55,9 @@ We heard great things about [GAM](https://github.com/GAM-team/GAM) (an imperativ
 
 While there are a few Terraform modules out there for managing Google Workspaces, we decided to create our own Terraform module to use the provider. The motivation to build a module from scratch stemmed from our desire to:
 
-1. Democratize user onboarding powers so Matt (CEO/CTO) is not a bottleneck.
-2. Provide transparency and history for changes to our team's permissions.
-3. Easily manage SSO configurations allowing engineers to sign into multiple AWS accounts using their Google Identity.
-4. Intuitively organize user and team settings in a clear and straight forward approach.
+1. Easily manage [user specific SSO settings](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/933242a5d69401ea097f3b9f29894091f0581f5f/examples/import-existing-org/users.yaml#L12-L18) allowing engineers to sign into multiple AWS accounts using their Google Identity.
+2. Organize `group` and `group_setting` variable inputs in clear and straight forward approach (more details on this in [Design Decision #2](#design-decision-2---choosing-intuitive-terraform-variable-structures))
+3. Create default values for `user`, `group`, and `group_setting` making our config files easier to work with (see [this example](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/933242a5d69401ea097f3b9f29894091f0581f5f/examples/import-existing-org/users.yaml#L2-L18)).
 
 Here's the GitHub link for our Google Workspace module:  
 [https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation)
