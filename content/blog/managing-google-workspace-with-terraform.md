@@ -18,7 +18,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 - [Getting Started With the Module](#getting-started-with-the-module)
 - [Module Design Decisions](#module-design-decisions)
   - [Implementing Integration and Validation Tests](#design-decision-1---implementing-integration-and-validation-tests)
-  - [Choosing Intuitive Terraform Variable Structure](#design-decision-2---choosing-intuitive-terraform-variable-structure)
+  - [Choosing Intuitive Terraform Variable Structures](#design-decision-2---choosing-intuitive-terraform-variable-structures)
 - [Wrapping Up](#wrapping-up)
 
 ## Growing Pains
