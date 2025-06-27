@@ -213,7 +213,7 @@ Below are more complex examples validating integration between different provide
   }
   ```
 
-### Design Decision #2 - Choosing Intuitive Terraform Variable Structure
+### Design Decision #2 - Choosing Intuitive Terraform Variable Structures
 
 In the Google Workspace provider, provisioning a group involves declaring two resources: `group` and `group_settings`.
 
