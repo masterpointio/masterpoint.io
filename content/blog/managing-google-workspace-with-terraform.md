@@ -45,7 +45,7 @@ One aspect of that is finding a better way to manager your Google Workspace acco
 
 We looked at a couple of open source solutions and decided on using the Terraform [Google Workspace](https://github.com/hashicorp/terraform-provider-googleworkspace) provider. We often use SaaS-specific Terraform providers to provision user accounts for DataDog and other SaaS services, so this was an easy decision.
 
-We heard great things about [GAM](https://github.com/GAM-team/GAM) (an imperative command line tool) from a few colleagues, but we didn't need its full range of capabilities and prefer to use declarative systems so we know the user account and group settings we see in config files are indeed the values in production.
+We heard great things about [GAM](https://github.com/GAM-team/GAM) (an imperative command line tool) from a few colleagues, but we didn't need its full range of capabilities. We prefer to use declarative systems so we know the user account and group settings we see in config files are indeed the values in production.
 
 In terms of using the provider, while there are a few Terraform modules out there for managing Google Workspaces, we decided to create our own Terraform module. The motivation to build a new module from scratch stemmed from our desire to:
 
