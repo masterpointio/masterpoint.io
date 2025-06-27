@@ -228,7 +228,7 @@ resource "googleworkspace_group_settings" "sales_settings" {
 }
 ```
 
-This `group` and `group_setting` resource design mirrors Google's Admin SDK REST API structure. However, we felt that group settings more intuitively belonged as a nested attribute inside a group. So in our group variable, we added `settings` and extracted settings in the module's `local` block:
+This `group` and `group_setting` resource design mirrors Google's Admin SDK REST API structure. However, we felt that group settings more intuitively belonged as a nested attribute inside a group. So in our group variable, we added `settings`. Then, later, we extracted settings in the module's `local` block to meet the provider's expectations:
 
 ```terraform
 # groups variable declaration
