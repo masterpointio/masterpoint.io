@@ -117,13 +117,13 @@ locals {
 
 module "googleworkspace_users_groups" {
   source  = "masterpointio/users-groups-automation/googleworkspace"
-  version = "X.X.X"
+  # version = "X.X.X" # it's a best practive to version pin modules
   groups  = local.groups
   users   = local.users
 }
 ```
 
-The Terraform code above references `users.yaml` and `groups.yaml` files that contain your actual user and group configurations. 
+The above code references `users.yaml` and `groups.yaml` files that contain your actual user and group configurations. 
 
 Here's an example `users.yaml` file, which uses YAML anchors to share common values across team members:
 ```yaml
