@@ -64,13 +64,23 @@ Here's the GitHub link for our Google Workspace module:
 
 ## Getting Started With the Module
 
-To make the module easy to get up and running with your own Google Workspace, we included two practical on-ramps:
+To make the module easy to get up and running with your own Google Workspace, we included two practical examples:
 
-1. **Import an existing Google Workspace**  
-   We shared the [terraform code](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/main.tf) we used to declare existing [users](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/users.yaml) and [groups](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/groups.yaml) in YAML, and the [import blocks](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/imports.tf) to easily import an existing setup. We additionally shared a [Python script](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/debugging-script.py) to view the JSON of your existing resources (which you could give to an LLM and tell it to follow the example to create your own `users.yaml` and `groups.yaml` files)..
+1. **Import existing Google Workspace users and groups**  
+    We expect most people will use the module with an existing Google Workspace. To make this easy, we included the Terraform and YAML configuration files we used to import our own workspace users and groups.
 
-2. **Create New Resources**  
-   Start fresh by managing Google Workspace users and groups directly from Terraform. This is a great starting point if you're setting up a new org or moving toward automation-first infra practices.
+    The key component is the `imports.tf` file, which shows how to map existing Google Workspace resources to the module's resources. We also included a [Python script](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/debugging-script.py) to help debug by printing out the JSON objects as rendered by the Google APIs.
+
+    Since importing cloud resources into Terraform modules can be tricky, we documented our complete approach in [import-existing-org](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/tree/main/examples/import-existing-org). The example includes these key files:
+    - [main.tf](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/main.tf) - Module configuration
+    - [imports.tf](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/imports.tf) - Import mappings
+    - [users.yaml](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/users.yaml) - User definitions with YAML anchors
+    - [groups.yaml](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/groups.yaml) - Group definitions with YAML anchors
+
+
+2. **Creating new users and groups**  
+    For users who don't need to import users or groups, follow [this example](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/tree/main/examples/complete). This is a great starting point if you're setting up a new org or only creating new users and groups. 
+
 
 After the initial import or setup, your Google Workspace [root module](https://newsletter.masterpoint.io/p/multi-instance-vs-single-instance-root-modules) could end up being as simple as this:
 
@@ -111,6 +121,72 @@ module "googleworkspace_users_groups" {
   groups  = local.groups
   users   = local.users
 }
+```
+
+The Terraform code above references `users.yaml` and `groups.yaml` files that contain your actual user and group configurations. 
+
+Here's an example `users.yaml` file, which uses YAML anchors to share common values across team members:
+```yaml
+---
+_default_user: &default_user
+  is_admin: false
+  groups:
+    company: { role: member }
+    engineering: { role: member }
+
+_custom_schemas_client1: &_custom_schemas_client1
+  schema_name: AWS_SSO_for_Client1
+  schema_values:
+    Role: '["arn:aws:iam::111111111111:role/GoogleAppsAdmin","arn:aws:iam::111111111111:saml-provider/GoogleApps"]'
+
+user1.last@example.com:
+  <<: *default_user
+  primary_email: user1.last@example.com
+  given_name: User1
+  family_name: Last
+  custom_schemas:
+    - <<: *_custom_schemas_client1
+
+user2.last@example.com:
+  <<: *default_user
+  primary_email: user2.last@example.com
+  given_name: User2
+  family_name: Last
+  custom_schemas:
+    - <<: *_custom_schemas_client1
+```
+
+And here's an example `groups.yaml` file, also leveraging YAML anchors to apply sane defaults to multiple goups.
+```yaml
+---
+_default_active_settings: &default_active_settings
+  allow_external_members: false
+  allow_web_posting: true
+  archive_only: false
+  custom_roles_enabled_for_settings_to_be_merged: false
+  enable_collaborative_inbox: false
+  is_archived: false
+  primary_language: en_US
+  who_can_join: ALL_IN_DOMAIN_CAN_JOIN
+  who_can_assist_content: OWNERS_AND_MANAGERS
+  who_can_view_group: ALL_IN_DOMAIN_CAN_VIEW
+  who_can_view_membership: ALL_IN_DOMAIN_CAN_VIEW
+
+company:
+  email: company@example.com
+  name: All Company Team
+  description: Includes everyone in the company
+  is_admin: false
+  settings:
+    <<: *default_active_settings
+
+engineering:
+  email: engineering@example.com
+  name: Engineering Team
+  description: Engineering Team that all technical employees are members of by default
+  is_admin: false
+  settings:
+    <<: *default_active_settings
 ```
 
 ## Module Design Decisions
