@@ -125,7 +125,7 @@ module "googleworkspace_users_groups" {
 
 The above code references `users.yaml` and `groups.yaml` files that contain your actual user and group configurations. 
 
-Here's an example `users.yaml` file, which uses YAML anchors to share common defaults across team members:
+Here's an example `users.yaml` file, which uses YAML anchors to share user defaults and Google + AWS SSO configurations across team members:
 ```yaml
 ---
 _default_user: &default_user
