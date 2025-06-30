@@ -78,7 +78,7 @@ To make the module easy to get up and running with your own Google Workspace, we
     - [groups.yaml](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/groups.yaml) - Group definitions with YAML anchors
 
 
-2. **Creating new users and groups**  
+2. **Create new users and groups**  
     For users who don't need to import users or groups, follow [this example](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/tree/main/examples/complete). This is a great starting point if you're setting up a new org or only creating new users and groups. 
 
 
