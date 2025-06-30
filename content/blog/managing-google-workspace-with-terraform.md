@@ -27,11 +27,11 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 
 As Masterpoint has been around for almost 10 years now, we've experienced growing pains transitioning from a one-person consultancy to a team of core full-time engineers, with the help of additional contractors when needed.
 
-During that time, we've focused on client projects far more than our internal systems. When I joined in December, we started to feel the friction of onboarding a new team member, including adding their Google Workspace account. Matt (our CEO/CTO) had to, 
+During that time, we've focused on client projects far more than our internal systems. When I joined in December, we started to feel the friction of onboarding a new team member, including adding their Google Workspace account. Matt (our CEO/CTO) had to,
 
 - remember what permissions a new Google Workspace user gets by default
 - how to provision SSO permissions for Masterpoint's AWS Accounts
-- how to get a user set up for client-specific SSOs 
+- how to get a user set up for client-specific SSOs
 
 Since he hadn't gone through that process in 6 months, he forgot important details, which resulted in my delayed access to the Masterpoint AWS accounts. In the end, he had to take time and focus away from other work due to these tedious administrative tasks.
 
@@ -45,7 +45,7 @@ In our small company and possibly in your own organization, it's not a big deal 
 - Onboarding/offboarding gets slower and error-prone.
 - The consequences for getting security permissions incorrect increase.
 
-As a company grows past ten, dozens, or a hundred people, teams (and dare we say departments) become more distributed. It is harder to manage user accounts across many different SaaS tools. It's important to have systems in place that provide clarity and enable individuals to get the right access to get their work done in a timely manner. We believe efficient systems are part of a company evolving toward higher levels of organizational maturity. 
+As a company grows past ten, dozens, or a hundred people, teams (and dare we say departments) become more distributed. It is harder to manage user accounts across many different SaaS tools. It's important to have systems in place that provide clarity and enable individuals to get the right access to get their work done in a timely manner. We believe efficient systems are part of a company evolving toward higher levels of organizational maturity.
 
 One aspect of that is finding a better way to manager your Google Workspace accounts.
 
@@ -69,20 +69,19 @@ Here's the GitHub link for our Google Workspace module:
 To make the module easy to get up and running with your own Google Workspace, we included two practical examples:
 
 1. **Import existing Google Workspace users and groups**  
-    We expect most people will use the module with an existing Google Workspace. To make this easy, we included the Terraform and YAML configuration files we used to import our own workspace users and groups.
+   We expect most people will use the module with an existing Google Workspace. To make this easy, we included the Terraform and YAML configuration files we used to import our own workspace users and groups.
 
-    The key component is the `imports.tf` file, which shows how to map existing Google Workspace resources to the module's resources. We also included a [Python script](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/debugging-script.py) to help debug by printing out the JSON objects as rendered by the Google APIs.
+   The key component is the `imports.tf` file, which shows how to map existing Google Workspace resources to the module's resources. We also included a [Python script](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/debugging-script.py) to help debug by printing out the JSON objects as rendered by the Google APIs.
 
-    Since importing cloud resources into Terraform modules can be tricky, we documented our complete approach in [import-existing-org](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/tree/main/examples/import-existing-org). The example includes these key files:
-    - [main.tf](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/main.tf) - Module configuration
-    - [imports.tf](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/imports.tf) - Import mappings
-    - [users.yaml](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/users.yaml) - User definitions with YAML anchors
-    - [groups.yaml](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/groups.yaml) - Group definitions with YAML anchors
+   Since importing cloud resources into Terraform modules can be tricky, we documented our complete approach in [import-existing-org](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/tree/main/examples/import-existing-org). The example includes these key files:
 
+   - [main.tf](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/main.tf) - Module configuration
+   - [imports.tf](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/imports.tf) - Import mappings
+   - [users.yaml](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/users.yaml) - User definitions with YAML anchors
+   - [groups.yaml](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/groups.yaml) - Group definitions with YAML anchors
 
 2. **Create new users and groups**  
-    For users who don't need to import users or groups, follow [this example](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/tree/main/examples/complete). This is a great starting point if you're setting up a new org or only creating new users and groups. 
-
+   For users who don't need to import users or groups, follow [this example](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/tree/main/examples/complete). This is a great starting point if you're setting up a new org or only creating new users and groups.
 
 After the initial import or setup, your Google Workspace [root module](https://newsletter.masterpoint.io/p/multi-instance-vs-single-instance-root-modules) could end up being as simple as this:
 
@@ -125,9 +124,10 @@ module "googleworkspace_users_groups" {
 }
 ```
 
-The above code references `users.yaml` and `groups.yaml` files that contain your actual user and group configurations. 
+The above code references `users.yaml` and `groups.yaml` files that contain your actual user and group configurations.
 
 Here's an example `users.yaml` file, which uses YAML anchors to share user defaults and Google + AWS SSO configurations across team members:
+
 ```yaml
 ---
 _default_user: &default_user
@@ -159,6 +159,7 @@ user2.last@example.com:
 ```
 
 And here's an example `groups.yaml` file, also leveraging YAML anchors to apply sane defaults to multiple goups.
+
 ```yaml
 ---
 _default_active_settings: &default_active_settings
@@ -205,98 +206,98 @@ Below are more complex examples validating integration between different provide
 
 1. **Validate that user and group inputs result in a user being a group member.** We view this as an integration test because we are testing if a user and a group correctly integrate and result in a user_to_group instance.
 
-  ```terraform
-  run "groups_member_role_success" {
-    command = apply
-    providers = {
-      googleworkspace = googleworkspace.mock
-    }
-    variables {
-      users = {
-        "first.last@example.com" = {
-          primary_email = "first.last@example.com"
-          family_name   = "Last"
-          given_name    = "First"
-          groups = {
-            "team" = {
-              role = "MEMBER"
-            }
-          }
-        }
-      }
-      groups = {
-        "team" = {
-          name = "Team"
-          email = "team@example.com"
-        }
-      }
-    }
-    assert {
-      condition     = googleworkspace_group_member.user_to_groups["team@example.com/first.last@example.com"].role == "MEMBER"
-      error_message = "Expected 'role' to be 'MEMBER'."
-    }
-  }
-  ```
+   ```terraform
+   run "groups_member_role_success" {
+     command = apply
+     providers = {
+       googleworkspace = googleworkspace.mock
+     }
+     variables {
+       users = {
+         "first.last@example.com" = {
+           primary_email = "first.last@example.com"
+           family_name   = "Last"
+           given_name    = "First"
+           groups = {
+             "team" = {
+               role = "MEMBER"
+             }
+           }
+         }
+       }
+       groups = {
+         "team" = {
+           name = "Team"
+           email = "team@example.com"
+         }
+       }
+     }
+     assert {
+       condition     = googleworkspace_group_member.user_to_groups["team@example.com/first.last@example.com"].role == "MEMBER"
+       error_message = "Expected 'role' to be 'MEMBER'."
+     }
+   }
+   ```
 
 2. **Test validations in the variables.tf file.** We added variable validations to catch bad inputs early. This provides a fast feedback loop during a `terraform plan` rather than only getting this feedback from the Google Admin SDK APIs when running `terraform apply`. During Infrastructure as Code audits, we look at Terraform CI/CD workflows to ensure PRs are `terraform plan`-ed before merging to catch issues where a variable input has a bad value.
 
-  ```terraform
-  # users variable declaration
-  variable "users" {
-    description = "List of users"
-    type = map(object({
-      # other variable fields
-      groups: optional(map(object({
-        role: optional(string, "MEMBER"),
-        delivery_settings: optional(string, "ALL_MAIL"),
-        type: optional(string, "USER"),
-      })), {}),
-      primary_email : string,
-    }))
+   ```terraform
+   # users variable declaration
+   variable "users" {
+     description = "List of users"
+     type = map(object({
+       # other variable fields
+       groups: optional(map(object({
+         role: optional(string, "MEMBER"),
+         delivery_settings: optional(string, "ALL_MAIL"),
+         type: optional(string, "USER"),
+       })), {}),
+       primary_email : string,
+     }))
 
-    # validate users.groups.[group_key].type
-    validation {
-      condition = alltrue(flatten([
-        for user in var.users: [
-          for group in values(try(user.groups, {})): (
-            group.type == null || contains(["USER", "GROUP", "CUSTOMER"], upper(group.type))
-          )
-        ]
-      ]))
-      error_message = "group type must be either 'USER', 'GROUP', or 'CUSTOMER'"
-    }
-  }
+     # validate users.groups.[group_key].type
+     validation {
+       condition = alltrue(flatten([
+         for user in var.users: [
+           for group in values(try(user.groups, {})): (
+             group.type == null || contains(["USER", "GROUP", "CUSTOMER"], upper(group.type))
+           )
+         ]
+       ]))
+       error_message = "group type must be either 'USER', 'GROUP', or 'CUSTOMER'"
+     }
+   }
 
-  run "group_member_type_invalid" {
-    command = plan
-    providers = {
-      googleworkspace = googleworkspace.mock
-    }
-    variables {
-      users = {
-        "invalid.type@example.com" = {
-          primary_email = "invalid.type@example.com"
-          family_name  = "Type"
-          given_name   = "Invalid"
-          groups = {
-            "test-group" = {
-              type = "INVALID-TYPE"
-            }
-          }
-        }
-      }
-      groups = {
-        "test-group" = {
-          name  = "Test Group"
-          email = "test-group@example.com"
-        }
-      }
-    }
+   run "group_member_type_invalid" {
+     command = plan
+     providers = {
+       googleworkspace = googleworkspace.mock
+     }
+     variables {
+       users = {
+         "invalid.type@example.com" = {
+           primary_email = "invalid.type@example.com"
+           family_name  = "Type"
+           given_name   = "Invalid"
+           groups = {
+             "test-group" = {
+               type = "INVALID-TYPE"
+             }
+           }
+         }
+       }
+       groups = {
+         "test-group" = {
+           name  = "Test Group"
+           email = "test-group@example.com"
+         }
+       }
+     }
 
-    # we expect the users variable to fail the "users.groups.[group_key].type" validation block
-    expect_failures = [var.users]
-  }
-  ```
+     # we expect the users variable to fail the "users.groups.[group_key].type" validation block
+     expect_failures = [var.users]
+   }
+   ```
 
 There are 4 more complex tests, helping us ensure this module won't break in the future.
 
