@@ -290,6 +290,8 @@ Below are more complex examples validating integration between different provide
         }
       }
     }
+
+    # we expect the users variable to fail the "users.groups.[group_key].type" validation block
     expect_failures = [var.users]
   }
   ```
