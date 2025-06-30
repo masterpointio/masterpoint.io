@@ -3,7 +3,7 @@ visible: true
 draft: false
 title: "Managing Your Google Workspace with Terraform"
 author: Weston Platter
-date: 2025-06-19
+date: 2025-07-02
 slug: managing-google-workspace-with-terraform
 description: "Migrate Google Workspace from click-ops to Infrastructure as Code with our open source Terraform module. Includes design patterns and import examples."
 tags: ["terraform", "google-workspace", "infrastructure-as-code", "automation"]
