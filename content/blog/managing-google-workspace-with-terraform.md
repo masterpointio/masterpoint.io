@@ -162,7 +162,7 @@ And here's an example `groups.yaml` file, also leveraging YAML anchors to apply 
 
 ```yaml
 ---
-_default_active_settings: &default_active_settings
+_default_active_settings: &_default_active_settings
   allow_external_members: false
   allow_web_posting: true
   archive_only: false
@@ -181,7 +181,7 @@ company:
   description: Includes everyone in the company
   is_admin: false
   settings:
-    <<: *default_active_settings
+    <<: *_default_active_settings
 
 engineering:
   email: engineering@example.com
@@ -189,7 +189,7 @@ engineering:
   description: Engineering Team that all technical employees are members of by default
   is_admin: false
   settings:
-    <<: *default_active_settings
+    <<: *_default_active_settings
 ```
 
 ## Module Design Decisions
