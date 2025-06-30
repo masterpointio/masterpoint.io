@@ -294,7 +294,7 @@ Below are more complex examples validating integration between different provide
   }
   ```
 
-There are N more complex tests, helping us ensure this module won't break in the future.
+There are 4 more complex tests, helping us ensure this module won't break in the future.
 
 ### Design Decision #2 - Choosing Intuitive Terraform Variable Structures
 
