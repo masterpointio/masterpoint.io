@@ -378,7 +378,7 @@ module "googleworkspace" {
 
 ## Wrapping Up
 
-With this setup in place and a CODEOWNERS file, we're now transparently, consistently, and securely managing users and groups within Google Workspace. This helps our engineering leader, Matt, avoid having to keep account setup details in his head. It also enables us as a team to avoid waiting on him or any other one person. Need an adjustment to your google user - like enabling AWS SSO for a specific user? Open a PR, get the right approval from the CODEOWNERS, merge it, and automation takes care of the rest. We love this workflow and we hope it's useful to you and your team!
+With this setup in place and a `CODEOWNERS` file, we're now transparently, consistently, and securely managing users and groups within Google Workspace. This helps our engineering leader, Matt, avoid having to keep account setup details in his head. It also enables us as a team to avoid waiting on any one person. Need an adjustment to your Google user - like enabling AWS SSO for a specific user? Open a PR, get the right approval from the `CODEOWNERS`, merge it, and automation takes care of the rest. We love this workflow and we hope it's useful to you and your team!
 
 Want help automating your Google Workspace configuration with Terraform? Need to make sure your Workspace policies stay consistent and auditable? Want to avoid onboarding chokepoints like Matt used to be?
 
