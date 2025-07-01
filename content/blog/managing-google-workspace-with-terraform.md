@@ -33,7 +33,7 @@ During that time, we've focused on client projects far more than our internal sy
 - how to provision SSO permissions for Masterpoint's AWS Accounts
 - how to get a user set up for client-specific SSOs
 
-Since he hadn't gone through that process in 6 months, he forgot important details, which resulted in my delayed access to the Masterpoint AWS accounts. In the end, he had to take time and focus away from other work due to these tedious administrative tasks.
+Since the last onboarding was about 6 months prior, important details weren't fresh in mind, which resulted in my delayed access to the Masterpoint AWS accounts. In the end, he had to take time and focus away from other work due to these tedious administrative tasks.
 
 ## Why This Matters for Scaling Teams
 
