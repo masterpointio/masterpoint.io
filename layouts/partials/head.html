@@ -47,7 +47,7 @@
     {{ if .Params.og_img }}
     <meta property="og:image" content='{{ .Params.og_img }}'/>
     <meta property="twitter:image" content='{{ .Params.og_img }}'/>
-    {{ else if .Params.image }}
+    {{ else if and (eq .Section "blog") (.Params.image) }}
     <meta property="og:image" content='{{ .Params.image }}'/>
     <meta property="twitter:image" content='{{ .Params.image }}'/>
     {{ else }}
