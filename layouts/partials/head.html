@@ -47,6 +47,9 @@
     {{ if .Params.og_img }}
     <meta property="og:image" content='{{ .Params.og_img }}'/>
     <meta property="twitter:image" content='{{ .Params.og_img }}'/>
+    {{ else if .Params.image }}
+    <meta property="og:image" content='{{ .Params.image }}'/>
+    <meta property="twitter:image" content='{{ .Params.image }}'/>
     {{ else }}
     <meta property="og:image" content="/img/og-img.png"/>
     <meta property="twitter:image" content="/img/og-img.png"/>
