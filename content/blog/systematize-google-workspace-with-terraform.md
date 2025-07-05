@@ -1,14 +1,13 @@
 ---
 visible: true
 draft: false
-title: "Managing Your Google Workspace with Terraform"
+title: "Systematize Your Google Workspace Setup with Terraform"
 author: Weston Platter
 date: 2025-07-14
 slug: managing-google-workspace-with-terraform
 description: "Migrate Google Workspace from ClickOps to Infrastructure as Code with our open source Terraform module. Includes design patterns and import examples."
 tags: ["terraform", "google-workspace", "infrastructure-as-code", "automation"]
 image: /img/updates/managing-googleworkspace-with-terraform/preview-3.png
-# image: /img/updates/oss-iac/oss-iac.png
 callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a>
 ---
 
