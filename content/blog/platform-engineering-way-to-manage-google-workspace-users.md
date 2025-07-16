@@ -46,11 +46,11 @@ In our small company and possibly in your own organization, it's not a big deal 
 
 As a company grows past ten, dozens, or a hundred people, teams (and dare we say departments) become more distributed. It is harder to manage user accounts across many different SaaS tools. It's important to have systems in place that provide clarity and enable individuals to get the right access to get their work done in a timely manner. We believe efficient systems are part of a company evolving toward higher levels of organizational maturity.
 
-One aspect of that is finding a better way to manager your Google Workspace accounts.
+One aspect of that is finding a better way to manage your Google Workspace accounts.
 
 ## Managing Google Workspace with Terraform
 
-We looked at a couple of open source solutions and decided on using the [Terraform Google Workspace provider](https://github.com/hashicorp/terraform-provider-googleworkspace). We often use Terraform to provision and manage user accounts within SaaS products (for example, we created a mdoule to [provision user accounts for DataDog](https://github.com/masterpointio/terraform-datadog-users)), so using Terraform to provision and manage google users felt like an easy decision.
+We looked at a couple of open source solutions and decided on using the [Terraform Google Workspace provider](https://github.com/hashicorp/terraform-provider-googleworkspace). We often use Terraform to provision and manage user accounts within SaaS products (for example, we created a module to [provision user accounts for DataDog](https://github.com/masterpointio/terraform-datadog-users)), so using Terraform to provision and manage google users felt like an easy decision.
 
 We heard great things about [GAM](https://github.com/GAM-team/GAM) (an imperative command line tool) from a few colleagues, but we didn't need its full range of capabilities. We prefer to use declarative systems so we know the user account and group settings we see in config files are indeed the values in production.
 
@@ -117,7 +117,7 @@ locals {
 
 module "googleworkspace_users_groups" {
   source  = "masterpointio/users-groups-automation/googleworkspace"
-  # version = "X.X.X" # it's a best practive to version pin modules
+  # version = "X.X.X" # it's a best practice to version pin modules
   groups  = local.groups
   users   = local.users
 }
@@ -157,7 +157,7 @@ user2.last@example.com:
     - <<: *_custom_schemas_client1
 ```
 
-And here's an example `groups.yaml` file, also leveraging YAML anchors to apply sane defaults to multiple goups.
+And here's an example `groups.yaml` file, also leveraging YAML anchors to apply sane defaults to multiple groups.
 
 ```yaml
 ---
