@@ -50,7 +50,7 @@ One aspect of that is finding a better way to manager your Google Workspace acco
 
 ## Managing Google Workspace with Terraform
 
-We looked at a couple of open source solutions and decided on using the [Terraform Google Workspace provider](https://github.com/hashicorp/terraform-provider-googleworkspace). We often use SaaS-specific Terraform providers to [provision user accounts for DataDog](https://github.com/masterpointio/terraform-datadog-users) and other SaaS services, so this was an easy decision.
+We looked at a couple of open source solutions and decided on using the [Terraform Google Workspace provider](https://github.com/hashicorp/terraform-provider-googleworkspace). We often use Terraform to provision and manage user accounts within SaaS products (for example, we created a mdoule to [provision user accounts for DataDog](https://github.com/masterpointio/terraform-datadog-users)), so using Terraform to provision and manage google users felt like an easy decision.
 
 We heard great things about [GAM](https://github.com/GAM-team/GAM) (an imperative command line tool) from a few colleagues, but we didn't need its full range of capabilities. We prefer to use declarative systems so we know the user account and group settings we see in config files are indeed the values in production.
 
