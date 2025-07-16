@@ -1,10 +1,10 @@
 ---
 visible: true
 draft: false
-title: "Systematize Your Google Workspace Setup with Terraform"
+title: "The Platform Engineering Way to Manage Google Workspace Users"
 author: Weston Platter
-date: 2025-07-14
-slug: systematize-google-workspace-terraform
+date: 2025-07-16
+slug: platform-engineering-way-to-manage-google-workspace-users
 description: "Migrate Google Workspace from ClickOps to Infrastructure as Code with our open source Terraform module. Includes design patterns and import examples."
 tags: ["terraform", "google-workspace", "infrastructure-as-code", "automation"]
 image: /img/updates/managing-googleworkspace-with-terraform/preview-3.png
