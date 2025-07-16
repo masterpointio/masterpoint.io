@@ -24,7 +24,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 
 ## Growing Pains
 
-As Masterpoint has been around for almost 10 years now, we've experienced growing pains transitioning from a one-person consultancy to a team of core full-time engineers, with the help of additional contractors when needed.
+As Masterpoint has been around for almost 10 years now, we've experienced growing pains transitioning from a one-person consultancy to a team of full-time Infrastructure as Code engineers.
 
 During that time, we've focused on client projects far more than our internal systems. When I joined in December, we started to feel the friction of onboarding a new team member, including adding their [Google Workspace](https://workspace.google.com/) account. Matt (our CEO/CTO) had to:
 
