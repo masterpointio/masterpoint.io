@@ -3,7 +3,7 @@ visible: true
 draft: false
 title: "The Platform Engineering Way to Manage Google Workspace Users"
 author: Weston Platter
-date: 2025-07-16
+date: 2025-07-17
 slug: platform-engineering-way-to-manage-google-workspace-users
 description: "Migrate Google Workspace from ClickOps to Infrastructure as Code with our open source Terraform module. Includes design patterns and import examples."
 tags: ["terraform", "google-workspace", "infrastructure-as-code", "automation"]
