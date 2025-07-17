@@ -50,7 +50,7 @@ One aspect of that is finding a better way to manage your Google Workspace accou
 
 ## Managing Google Workspace with Terraform
 
-We looked at a couple of open source solutions and decided on using the [Terraform Google Workspace provider](https://github.com/hashicorp/terraform-provider-googleworkspace). We often use Terraform to provision and manage user accounts within SaaS products (for example, we created a module to [provision user accounts for DataDog](https://github.com/masterpointio/terraform-datadog-users)), so using Terraform to provision and manage google users felt like an easy decision.
+We looked at a couple of open source solutions and decided on using the [Terraform Google Workspace provider](https://github.com/hashicorp/terraform-provider-googleworkspace). We often use Terraform to provision and manage user accounts within SaaS products (for example, we created a module to [provision user accounts for DataDog](https://github.com/masterpointio/terraform-datadog-users)), so using Terraform to provision and manage Google users felt like an easy decision.
 
 We heard great things about [GAM](https://github.com/GAM-team/GAM) (an imperative command line tool) from a few colleagues, but we didn't need its full range of capabilities. We prefer to use declarative systems so we know the user account and group settings we see in config files are indeed the values in production.
 
@@ -60,14 +60,14 @@ While there are a few Terraform modules out there for managing Google Workspaces
 2. Organize `group` and `group_setting` variable inputs in clear and straight forward approach (more details on this in [Design Decision #2](#design-decision-2---choosing-intuitive-terraform-variable-structures))
 3. Create default values for `user`, `group`, and `group_setting` making our config files easier to work with (see [this example](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/933242a5d69401ea097f3b9f29894091f0581f5f/examples/import-existing-org/users.yaml#L2-L18)).
 
-Here's the GitHub link for our Google Workspace module:  
+Here's the GitHub link for our Google Workspace module:
 [https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation)
 
 ## Getting Started With the Module
 
 To make the module easy to get up and running with your own Google Workspace, we included two practical examples:
 
-1. **Import existing Google Workspace users and groups**  
+1. **Import existing Google Workspace users and groups**
    We expect most people will use the module with an existing Google Workspace. To make this easy, we included the Terraform and YAML configuration files we used to import our own workspace users and groups.
 
    The key component is the `imports.tf` file, which shows how to map existing Google Workspace resources to the module's resources. We also included a [Python script](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/debugging-script.py) to help debug by printing out the JSON objects as rendered by the Google APIs.
@@ -79,7 +79,7 @@ To make the module easy to get up and running with your own Google Workspace, we
    - [users.yaml](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/users.yaml) - User definitions with YAML anchors
    - [groups.yaml](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/groups.yaml) - Group definitions with YAML anchors
 
-2. **Create new users and groups**  
+2. **Create new users and groups**
    For users who don't need to import users or groups, follow [this example](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/tree/main/examples/complete). This is a great starting point if you're setting up a new org or only creating new users and groups.
 
 After the initial import or setup, your Google Workspace [root module](https://newsletter.masterpoint.io/p/multi-instance-vs-single-instance-root-modules) could end up being as simple as this:
@@ -238,7 +238,7 @@ Below are more complex examples validating integration between different provide
    }
    ```
 
-2. **Test validations in the variables.tf file.** We added variable validations to catch bad inputs early. This provides a fast feedback loop during a `terraform plan` rather than only getting this feedback from the Google Admin SDK APIs when running `terraform apply`. During Infrastructure as Code audits, we look at Terraform CI/CD workflows to ensure PRs are `terraform plan`-ed before merging to catch issues where a variable input has a bad value.
+2. **Test validations in the `variables.tf` file.** We added variable validations to catch bad inputs early. This provides a fast feedback loop during a `terraform plan` rather than only getting this feedback from the Google Admin SDK APIs when running `terraform apply`. During Infrastructure as Code audits, we look at Terraform CI/CD workflows to ensure PRs are `terraform plan`-ed before merging to catch issues where a variable input has a bad value.
 
    ```terraform
    # users variable declaration
