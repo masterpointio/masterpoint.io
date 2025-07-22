@@ -53,14 +53,12 @@ Got someone in mind? Introduce your connection directly to [Matt](https://www.li
 When reaching out, we ask you use this email template as a starting point:
 
 > **Subject:** Quick Intro to Masterpoint
-> 
-> 
+>
 > Hey [Referral's Name],
-> 
+>
 > I wanted to quickly introduce you to Matt at Masterpoint (https://masterpoint.io). Masterpoint specializes in Infrastructure as Code, helping teams efficiently operate and scale their platforms using tools like OpenTofu and Terraform. Given your role and team's needs, I believe you'll benefit from connecting with Matt and his team.
-> 
+>
 > I'll let you two take it from here!
-> 
 
 It's entirely your call if you want to let the prospect know about the referral bonus. This comes out of Masterpoint's pocket and not the prospective client's, so we leave this to you.
 

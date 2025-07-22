@@ -9,6 +9,7 @@ This is the Masterpoint.io company website - a Hugo-based static site for an Inf
 ## Essential Commands
 
 ### Development
+
 ```bash
 # Install Hugo Extended (required - regular Hugo won't work due to SCSS)
 aqua install
@@ -25,6 +26,7 @@ hugo new case-studies/client-name.md
 ```
 
 ### Local Development
+
 - Server runs on: `http://localhost:1313`
 - Hugo Extended is required (managed via Aqua)
 - No npm/yarn commands - this is a pure Hugo project
@@ -32,13 +34,15 @@ hugo new case-studies/client-name.md
 ## Architecture Overview
 
 ### Content Management
+
 - All content is in Markdown files under `/content/`
 - NetlifyCMS is configured for content editing (accessible at `/admin/`)
 - Front matter in Markdown files controls metadata and page behavior
 - Content types: blog posts, case studies, services, team profiles, landing pages
 
 ### Template System
-```
+
+```text
 /layouts/
 ├── _default/        # Default templates (list.html, single.html)
 ├── partials/        # Reusable components (header, footer, etc.)
@@ -47,12 +51,14 @@ hugo new case-studies/client-name.md
 ```
 
 ### Styling Architecture
+
 - Bootstrap 5.1.3 provides the CSS framework
 - Custom SCSS in `/assets/css/style.scss`
 - Pre-minified JavaScript plugins in `/assets/js/plugins.js`
 - No build process for JS - uses static files
 
 ### Key Configuration Files
+
 - `config.yaml` - Site configuration, menus, params
 - `netlify.toml` - Build settings, redirects, Hugo version
 - `aqua.yaml` - Manages Hugo Extended installation
@@ -60,6 +66,7 @@ hugo new case-studies/client-name.md
 ## Content Creation Patterns
 
 ### Blog Posts
+
 ```markdown
 ---
 title: "Your Blog Title"
@@ -74,6 +81,7 @@ draft: false
 ```
 
 ### Custom Shortcodes
+
 - `{{< youtube VIDEO_ID >}}` - Embed YouTube videos
 - `{{< form formName="contact" >}}` - Contact forms
 - `{{< testimonial >}}` - Client testimonials
@@ -99,6 +107,7 @@ draft: false
 ## Common Tasks
 
 ### Add a New Blog Post
+
 ```bash
 hugo new blog/my-post-title.md
 # Edit content/blog/my-post-title.md
@@ -107,15 +116,18 @@ hugo new blog/my-post-title.md
 ```
 
 ### Update Team Member
+
 - Edit files in `/content/team/`
 - Update image in `/static/img/team/`
 - Follows pattern: `firstname-lastname.md`
 
 ### Modify Site Navigation
+
 - Edit `config.yaml` → `menu` section
 - Supports nested menus and external links
 
 ### Add Client Logo
+
 - Add logo to `/static/img/clients/`
 - Reference in `/content/clients.md` or relevant partial
 
