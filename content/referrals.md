@@ -7,7 +7,6 @@ slug: referrals
 layout: "single"
 visible: true
 draft: false
-image: /img/referrals/referral-program-dog.png
 aliases:
   - /referral/
   - /referral-program/
@@ -38,7 +37,7 @@ If you introduce us to someone who becomes a Masterpoint client:
 
 ## What Masterpoint Does Best
 
-We help teams streamline and improve their platform operations through Infrastructure as Code (tools like OpenTofu and Terraform). Here's where we shine:
+We’re passionate about helping teams take control of their platform. We use Infrastructure as Code (think OpenTofu and Terraform) to make day-to-day operations smoother, more predictable, and even a little fun. Here's where we shine:
 
 - Delivering battle hardened IaC workflows that reduce maintenance, improve operational efficiency, and keep platform uptime high.
 - Helping clients avoid common maintenance pitfalls so they can keep a healthy ratio between platform engineers and application engineers.
