@@ -68,7 +68,8 @@ hugo new case-studies/client-name.md
 ### Blog Posts
 
 Example blog post header:
-```markdown
+
+````markdown
 ---
 visible: true
 draft: false
@@ -81,6 +82,7 @@ tags: ["terraform", "google-workspace", "infrastructure-as-code", "automation"]
 image: /img/updates/managing-googleworkspace-with-terraform/preview-3.png
 callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a></p>
 ---
+
 <CONTENT>
 
 ### Custom Shortcodes
@@ -117,6 +119,7 @@ hugo new blog/my-post-title.md
 # Add banner image to static/img/blog/
 # Set draft: false when ready
 ```
+````
 
 ### Update Team Member
 
