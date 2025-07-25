@@ -2526,7 +2526,7 @@ footer {
   }
 }
 
-#thank-you {
+#thank-you, #page-404 {
   background: rgb(0, 51, 51);
 
   #banner {
@@ -2772,6 +2772,11 @@ footer {
   }
 }
 
+.masterpoint-dog-img {
+  margin: 20px;
+  border-radius: 10px;
+}
+
 .case-study-single {
   main {
     padding: 34px 0;
@@ -2779,7 +2784,7 @@ footer {
     img {
       margin-bottom: 24px;
     }
-    
+
     .container {
       max-width:900px;
 
@@ -2841,14 +2846,14 @@ footer {
         counter-reset: custom-counter;
         padding-left: 0;
         margin-top: 24px;
-        
+
         li {
           position: relative;
           padding-left: 36px;
           margin-bottom: 10px;
           counter-increment: custom-counter;
-          
-          
+
+
           &:before {
             content: counter(custom-counter);
             position: absolute;
@@ -2865,7 +2870,7 @@ footer {
             background-clip: padding-box;
             box-shadow: 0 0 0 2px transparent;
             background-origin: border-box;
-            background-image: linear-gradient(#fff, #fff), 
+            background-image: linear-gradient(#fff, #fff),
                               linear-gradient(186deg, #EDE497 4.21%, #2AD9C2 44.01%, #D891CE 94.12%);
             background-clip: content-box, border-box;
           }
@@ -2876,14 +2881,14 @@ footer {
         list-style: none;
         padding-left: 0;
         margin-top: 24px;
-        
+
         li {
           position: relative;
           padding-left: 36px;
           margin-bottom: 10px;
           font-weight: 700;
           font-size: 1.15em;
-          
+
           &:before {
             content: '\f00c';
             font-family: 'Font Awesome 6 Pro';
@@ -2970,4 +2975,3 @@ footer {
   }
 
 }
-

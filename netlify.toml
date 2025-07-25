@@ -37,3 +37,8 @@ package = "netlify-plugin-image-optim"
   to = "/blog/:splat"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
