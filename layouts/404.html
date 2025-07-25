@@ -1,0 +1,35 @@
+{{ partial "head.html" . }}
+<body id="page-404">
+  {{ partial "header.html" . }}
+
+  <section id="banner">
+    <div class="container">
+      <div class="row">
+        <div class="col col-12">
+          <div class="bannerTxtBx text-center aos-item" data-aos="fade">
+            <div class="error-image mb-4">
+              <img
+                src="/img/404-dog.png"
+                alt="404 Error - Page Not Found"
+                class="img-fluid masterpoint-dog-img"
+                style="max-width: 400px"
+              />
+            </div>
+            <div class="bannerTxt">
+              Want to get back on track on the site? Check out our most recent
+              blog post below.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main role="main">{{ partial "latest-news.html" . }}</main>
+
+  {{ partial "schedule-assessment.html" . }}
+
+  {{ partial "footer.html" . }}
+
+  {{ partial "scripts.html" . }}
+</body>
