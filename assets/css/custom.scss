@@ -1629,6 +1629,14 @@ footer {
     }
   }
 
+  .dark-bg-section {
+    background: #003333;
+    color: #fff;
+    .sectionTitle {
+      color: #fff;
+    }
+  }
+
   #latest-news {
     position: relative;
     color: #fff;

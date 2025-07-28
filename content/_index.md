@@ -1,12 +1,14 @@
 ---
 title: Home
 banner_title: "<span class='text-gradient'>Infrastructure as Code</span>"
-banner_tagline: "Get control of your"
-banner_text: "Home-grown IaC workflow weighing down your time to delivery? We’re here to help make <strong class='text-gradient'>Terraform, OpenTofu, or Pulumi</strong> efficient and scalable, no matter where you provision your infrastructure."
+banner_tagline: "Master Your"
+banner_text: "Deploy faster. Break less. Scale smarter. We deliver workflows that transform your tangled infrastructure as code into a platform your team can manage, scale, and evolve."
 banner_image: /img/banner_home.jpg
-description: "Home-grown IaC workflow weighing down your time to delivery? We’re here to help make Terraform, OpenTofu, or Pulumi efficient and scalable, no matter where you provision your infrastructure. "
-banner_btn_label: See the services →
-banner_btn_link: /services
+description: "Deploy faster. Break less. Scale smarter. We deliver workflows that transform your tangled infrastructure as code into a platform your team can manage, scale, and evolve."
+banner_btn_label: Book a call
+banner_btn_link: https://calendly.com/matt-at-masterpoint/project-chat
+banner_btn2_label: Audit your IaC
+banner_btn2_link: https://masterpoint.io/services/iac-audit
 sections: home
 sitemap:
   priority: 1
