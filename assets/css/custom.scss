@@ -1312,6 +1312,7 @@ footer {
 }
 
 .serviceBadge {
+  /* prettier-ignore */
   @extend.serviceIcon;
   padding: 0;
 }
