@@ -27,7 +27,12 @@
                         {{end}}
                         {{ if .Params.banner_btn_label}}
                         <div class="bannerBtn"><a class="button btn-outline-gradient"
-                                href="{{.Params.banner_btn_link}}">{{.Params.banner_btn_label | safeHTML}}</a></div>
+                                href="{{.Params.banner_btn_link}}">{{.Params.banner_btn_label | safeHTML}}</a>
+                        {{ if .Params.banner_btn2_label}}
+                            <a class="button btn-outline-gradient"
+                                href="{{.Params.banner_btn2_link}}">{{.Params.banner_btn2_label | safeHTML}}</a>
+                        {{end}}
+                        </div>
                         {{end}}
                         {{ if .Params.banner_link_label}}
                         <div class="bannerLink">or <a href="{{.Params.banner_link}}">{{.Params.banner_link_label | safeHTML}}</a></div>
@@ -41,7 +46,6 @@
         <div class="video-wrapper"><iframe src="https://player.vimeo.com/video/821330736?background=1&muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe><script src="https://player.vimeo.com/api/player.js"></script></div>
     </section>
 
-
 <main role="main" class="main-sections">
 
 
@@ -50,7 +54,8 @@
         {{ range $k, $v := $mgatag }}
         {{ if eq $k $myVar }}
         {{ range $v.Pages }}
-        <section id="{{ .Params.id }}">
+        {{ if .Params.visible }}
+        <section id="{{ .Params.id }}" class="{{ .Params.class }}">
             {{ if .Params.image }}
             <div class="bg-image">
                 <img src='{{ .Params.image }}' class="lazy img-fluid" alt="{{ .Site.Title }} - {{ .Title }} Image">
@@ -75,7 +80,7 @@
         {{ end }}
         {{ end }}
         {{ end }}
-
+        {{ end }}
 
     {{ partial "latest-news.html" . }}
 

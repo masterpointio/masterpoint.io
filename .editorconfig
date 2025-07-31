@@ -13,6 +13,9 @@ quote_type = double
 [*.html]
 indent_size = 2
 
+[*.yaml]
+indent_size = 2
+
 [*.md]
 max_line_length = 0
 trim_trailing_whitespace = false

@@ -1,0 +1,19 @@
+<div class="logos" id="carousel">
+  <div class="owl-carousel owl-theme">
+  {{ range where (.Site.RegularPages.ByWeight) "Type" "logos" }}
+    {{ if .Params.visible }}
+      <div class="item flex">
+          <div class="logoBx">
+          {{ if .Params.link }}
+          <a href="{{ .Params.link }}" target="_blank" rel="noopener noreferrer">
+              <img src="{{ .Params.image }}" alt="{{ .Title }} Logo"/>
+          </a>
+          {{ else }}
+          <img src="{{ .Params.image }}" alt="{{ .Title }} Logo"/>
+          {{ end }}
+      </div>
+    </div>
+    {{end}}
+  {{end}}
+  </div>
+</div>

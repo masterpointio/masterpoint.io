@@ -1,13 +1,12 @@
 ---
 title: What is Masterpoint?
-weight: 2
-#position: align-items-center
+weight: 3
 size: col-12 col-md-6
 section_image: /img/cloud_architecture.png
-#image: /img/bg_featured_video.jpg
 section_categories:
     - Home
 id: were-masterpoint
+visible: false
 ---
 
 ### Hi, we're Masterpoint {.sectionTitle .big .text-pine}
