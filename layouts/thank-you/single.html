@@ -9,6 +9,10 @@
 
         <div class="row text-center justify-content-center">
             <div class="col col-12 col-md-10 col-lg-8 col-xl-7">
+                <img src="/img/thank-you-dog.png"
+                    alt="Masterpoint Dog with a thank you note"
+                    class="img-fluid masterpoint-dog-img"
+                    style="max-width: 400px" />
 
                 <h2 class="text-gradient">{{ .Title }}</h2>
                 <p>{{ .Description | safeHTML }}</p>
@@ -18,9 +22,11 @@
     </div>
 </div>
 
-<div id="main">
+<main id="main">
     {{ partial "latest-news.html" . }}
-</div>
+</main>
+
+{{ partial "schedule-assessment.html" . }}
 
 {{ partial "footer.html" . }}
 
