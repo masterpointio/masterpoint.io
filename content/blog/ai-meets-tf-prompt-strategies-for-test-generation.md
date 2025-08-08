@@ -158,25 +158,26 @@ The final version of the prompt (cursor rule) is up on GitHub in our open-source
 
 Lastly, we wanted to highlight the aspects of what we think go into a “durable prompt” that can be used across a variety of Terraform codebases. We’re hoping you can leverage these  strategies within your own prompts.
 
-1. **Describe the codebase layout upfront**
+1. **Describe the codebase layout upfront**.  
    Describe how the Terraform child module is organized and where you want the LLM to place new files. This gives the LLM a working model of your repo's structure.
 
-2. **Direct the LLM to make small incremental changes**
+2. **Direct the LLM to make small incremental changes**.  
    We found it valuable to have the LLM make small chunks of changes, have us review and verify the test behavior, and then commit them. We added this to the prompt so the LLM would expect this workflow.
 
-3. **Ask for clarifying questions**
+3. **Ask for clarifying questions**.  
    We found it helpful to direct the LLM to ask clarifying questions (either within the chat session or within the prompt). This helps limit the amount of misguided guesswork the LLM does on your behalf. Adding a quick *“do you have any questions for me about this task?”* goes a long way.
 
-4. **Be explicit about what to test and how to test**
+4. **Be explicit about what to test and how to test**.  
    For us, we prompted the LLM to divide test coverage into (happy path, edge case, and complex) categories. We additionally split up happy path tests into specific files matching the tests’s focus, like `main.tf.hcl`, `locals.tf.hcl`, `variables.tf.hcl`, etc. Your team or org might have different preferences, which is great. Find out what works for your needs.
 
-5. **Mock ALL providers**
+5. **Mock ALL providers**.  
    In this specific prompt, we directed the LLM to mock ALL providers. We didn’t want to introduce the possibility of using AI to write and run live integration tests. To make this work, we provided specific mock examples for AWS and Tailscale (we’ll probably add more as needed).
 
-6. **Prompt for refactoring and brevity**
+6. **Prompt for refactoring and brevity**.  
    LLMs tend to produce verbose boilerplate code. Have the LLM to refactor tests to reduce duplication while keeping the same test coverage. In our experiments, this forced the model to condense test logic into more concise and maintainable tests.
 
-7. **Expect non-deterministic behavior from LLMs.** We got different outputs when we re-ran the same operation – same LLM with the same prompt and working from the same codebase. LLMs are non-deterministic functions. We see this as a feature 🙃 (not a bug), and  will often select the best ideas generated from re-running operations multiple times.
+7. **Expect non-deterministic behavior from LLMs.**  
+  We got different outputs when we re-ran the same operation – same LLM with the same prompt and working from the same codebase. LLMs are non-deterministic functions. We see this as a feature 🙃 (not a bug), and  will often select the best ideas generated from re-running operations multiple times.
 
 ## Prompt for Generating Terraform Tests in Child-Modules
 
