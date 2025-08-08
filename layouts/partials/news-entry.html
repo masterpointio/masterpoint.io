@@ -32,7 +32,7 @@
                     {{end}}
                 </h3>
 
-                <div class="entryDesc">{{ if .Params.author }}<b>By {{.Params.author}}</b>{{end}} - {{ .Description }}</div>
+                <div class="entryDesc">{{ if .Params.author }}<b>By {{.Params.author}}</b>{{end}} - {{ .Description | safeHTML }}</div>
                 {{ if .Params.outbound }}
                 <a href="{{ .Params.outbound }}" target="_blank" class="entry-link text-gradient">Read More &rsaquo;</a>
                 {{else}}
