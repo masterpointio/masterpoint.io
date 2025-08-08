@@ -2,3 +2,8 @@
 /public/
 /resources/
 .DS_Store
+
+CLAUDE.md
+.claude/*
+.cursor/*
+
