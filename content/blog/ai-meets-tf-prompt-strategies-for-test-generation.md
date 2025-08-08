@@ -156,7 +156,7 @@ To summarize where Yang and I started from and where we ended up, we began with 
 The final version of the prompt (cursor rule) is up on GitHub in our open-source LLM prompts repo. Please try it out and share feedback from your experience\!
 {{ create repo and add link to prompt here }}
 
-Lastly, we wanted to highlight the aspects of what we think go into a “durable prompt” that can be used across a variety of Terraform codebases. We’re hoping you can leverage these  strategies within your own prompts.
+Lastly, we wanted to highlight the aspects of what we think go into a durable prompt that can be used across a variety of Terraform codebases. We’re hoping you can leverage these  strategies within your own prompts.
 
 1. **Describe the codebase layout upfront**.  
    Describe how the Terraform child module is organized and where you want the LLM to place new files. This gives the LLM a working model of your repo's structure.
