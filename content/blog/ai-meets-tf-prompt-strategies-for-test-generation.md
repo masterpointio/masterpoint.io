@@ -33,7 +33,7 @@ We previously [wrote about Model Context Provider (MCP)](https://masterpoint.io/
 
 Threads across [Github](https://github.com/dotnet/runtime/pull/115762) and [Reddit](https://www.reddit.com/r/Terraform/comments/1l7my1x/where_is_ai_still_completely_useless_for/) have shown how AI-generated code can be subpar 😂.
 
-As a team, we’ve embraced a paradoxical approach: stay grounded in solid software engineering principles and curiously stepp into the "Ironman suits" that generative LLMs have to offer (Karthpathy's [Software 3.0 talk](https://youtu.be/LCEmiRjPEtQ?si=gSQ-viGAArtHt8G-&t=1642) at YC). As a result, we've developed new best practices and refined LLM prompts or Cursor Rules that help us as a team more efficiently complete known chunks of work.
+As a team, we’ve embraced a paradoxical approach: stay grounded in solid software engineering principles and curiously step into the "Ironman suits" that generative LLMs have to offer (Karthpathy's [Software 3.0 talk](https://youtu.be/LCEmiRjPEtQ?si=gSQ-viGAArtHt8G-&t=1642) at YC). As a result, we've developed new best practices and refined LLM prompts or Cursor Rules that help us as a team more efficiently complete known chunks of work.
 
 In this post, we’ll share some of the AI code gen strategies that have worked as we write Terraform tests for child modules. These "durable prompts" provide DevOps and Platform Engineering teams with concrete "Infrastructure as Code AI" actions they can try on any Terraform codebase.
 
@@ -106,7 +106,7 @@ Out of the box, Claude Code did significantly better:
 
 It wasn’t perfect. We still had to prompt the model to reorganize some sections of the code and refactor test input, but the overall quality aligned with our expectations.
 
-To capture this feedback for future use, Yang applied a common vibe coding stratey. He asked Claude to reflect on his feedback and create an improved prompt to generate Terraform tests. We wanted to operate from a more developed structural base as we iterated on a reproducible AI-driven workflow.
+To capture this feedback for future use, Yang applied a common vibe-coding stratey. He asked Claude to reflect on his feedback and create an improved prompt to generate Terraform tests. We wanted to operate from a more developed structural base as we iterated on a reproducible AI-driven workflow.
 
 **Takeaway:** Model quality matters. Claude’s Sonnet-4 significantly outperformed the model Cursor selected using “Auto Model” for structured code generation. While it still needed human review, the code layout and basic tests and aligned with our goals.
 
@@ -167,8 +167,6 @@ Lastly, we wanted to highlight the aspects of what we think go into a “durable
 3. **Ask for clarifying questions**
    We found it helpful to direct the LLM to ask clarifying questions (either within the chat session or within the prompt). This helps limit the amount of misguided guesswork the LLM does on your behalf. Adding a quick *“do you have any questions for me about this task?”* goes a long way.
 
-
-
 4. **Be explicit about what to test and how to test**
    For us, we prompted the LLM to divide test coverage into (happy path, edge case, and complex) categories. We additionally split up happy path tests into specific files matching the tests’s focus, like `main.tf.hcl`, `locals.tf.hcl`, `variables.tf.hcl`, etc. Your team or org might have different preferences, which is great. Find out what works for your needs.
 
@@ -185,7 +183,7 @@ Lastly, we wanted to highlight the aspects of what we think go into a “durable
 The full and final version of the prompt is located in Masterpoint's [shared-prompts](https://github.com/masterpointio/shared-prompts) repo,
 [https://github.com/masterpointio/shared-prompts](https://github.com/masterpointio/shared-prompts).
 
-TODO(westonplatter) - wait for Veronika's feedback on the promp
+TODO(westonplatter) - wait for Veronika's feedback on the prompt
 
 {{ I reviewed the prompt and rewrote a good chunk of it }}
 [https://github.com/masterpointio/internal-prompts/pull/13](https://github.com/masterpointio/internal-prompts/pull/13)
