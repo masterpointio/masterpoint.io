@@ -33,7 +33,7 @@ We previously [wrote about Model Context Provider (MCP)](https://masterpoint.io/
 
 Threads across [Github](https://github.com/dotnet/runtime/pull/115762) and [Reddit](https://www.reddit.com/r/Terraform/comments/1l7my1x/where_is_ai_still_completely_useless_for/) have shown how AI-generated code can be subpar 😂.
 
-As a team, we’ve embraced a paradoxical approach: stay grounded in solid software engineering principles and curiously step into the "Ironman suits" that generative LLMs have to offer (Karthpathy's [Software 3.0 talk](https://youtu.be/LCEmiRjPEtQ?si=gSQ-viGAArtHt8G-&t=1642) at YC). As a result, we've developed new best practices and refined LLM prompts or Cursor Rules that help us as a team more efficiently complete known chunks of work.
+As a team, we’ve embraced a paradoxical approach: stay grounded in solid software engineering principles and curiously step into the "Ironman suits" that generative LLMs have to offer (Karthpathy's [Software 3.0 talk](https://youtu.be/LCEmiRjPEtQ?si=gSQ-viGAArtHt8G-&t=1642) at YC). As a result, we've developed new best practices and refined LLM prompts or Cursor Rules that help us as a team complete chunks of work more efficiently.
 
 In this post, we’ll share some of the AI code gen strategies that have worked as we write Terraform tests for child modules. These "durable prompts" provide DevOps and Platform Engineering teams with concrete "Infrastructure as Code AI" actions they can try on any Terraform codebase.
 
