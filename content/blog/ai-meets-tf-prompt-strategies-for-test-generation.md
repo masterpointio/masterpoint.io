@@ -106,7 +106,7 @@ Out of the box, Claude Code did significantly better:
 
 It wasn’t perfect. We still had to prompt the model to reorganize some sections of the code and refactor test input, but the overall quality aligned with our expectations.
 
-To capture this feedback for future use, Yang applied a common vibe-coding stratey. He asked Claude to reflect on his feedback and create an improved prompt to generate Terraform tests. We wanted to operate from a more developed structural base as we iterated on a reproducible AI-driven workflow.
+To capture this feedback for future use, Yang applied a common vibe-coding strategy. He asked Claude to reflect on his feedback and create an improved prompt to generate Terraform tests. We wanted to operate from a more developed structural base as we iterated on a reproducible AI-driven workflow.
 
 **Takeaway:** Model quality matters. Claude’s Sonnet-4 significantly outperformed the model Cursor selected using “Auto Model” for structured code generation. While it still needed human review, the code layout and basic tests and aligned with our goals.
 
