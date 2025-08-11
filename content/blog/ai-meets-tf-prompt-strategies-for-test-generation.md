@@ -18,12 +18,13 @@ image: /img/updates/ai-meets-tf-prompt-strategies-for-test-generation/yang-westo
   - [Terminal-Based AI Coding](#terminal-based-ai-coding)
   - [We’re still experimenting with MCPs for Code Gen](#were-still-experimenting-with-mcps-for-code-gen)
 - [Our exploration in Writing Terraform Tests with AI](#our-exploration-in-writing-terraform-tests-with-ai)
-  - [v0 – Cursor Auto Model](#v0--cursor-auto-model)
-  - [v1 – Claude Code using Sonnet-4](#v1--claude-code-using-sonnet-4)
-  - [v2 – Cursor + Sonnet-4 + Refined Prompt](#v2--cursor--sonnet-4--refined-prompt)
-  - [v3 – Applying the Refined Prompt to Other Codebases](#v3--applying-the-refined-prompt-to-other-codebases)
+  - [v0 – Cursor Auto Model](#v0-cursor-auto-model)
+  - [v1 – Claude Code using Sonnet-4](#v1-claude-code-using-sonnet-4)
+  - [v2 – Cursor Sonnet-4 Refined Prompt](#v2-cursor-sonnet-4-refined-prompt)
+  - [v3 – Applying the Refined Prompt to Other Codebases](#v3-applying-the-refined-prompt-to-other-codebases)
 - [Takeaways for Durable Prompts](#takeaways-for-durable-prompts)
-- [Prompt for Generating Terraform Tests in Child-Modules](#prompt-for-generating-terraform-tests-for-child-modules)
+- [Prompt for Generating Terraform Tests in Child-Modules](#prompt-for-generating-terraform-tests-in-child-modules)
+- [Credits](#credits)
 
 <br>
 
