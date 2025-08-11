@@ -12,6 +12,7 @@ image: /img/updates/ai-meets-tf-prompt-strategies-for-test-generation/yang-westo
 > TLDR: We crafted an LLM prompt to generate Terraform tests. It's [here](#) in our [shared-prompts](https://github.com/masterpointio/shared-prompts) Github repo. If you’re looking for the list of things that worked for us, jump to the [Takeaways for Durable Prompts](#takeaways-for-durable-prompts) section. If you want to learn how we got there, read on.
 
 ## Table of Contents
+
 - [Why AI for IaC?](#why-ai-for-iac)
 - [Our AI Toolkit for IaC](#our-ai-toolkit-for-iac)
   - [AI-Enhanced IDE](#ai-enhanced-ide)
@@ -46,13 +47,13 @@ We've experimented with a handful of AI tools to evolve our development workflow
 
 [**Cursor**](https://cursor.sh/) \- We primarily use Cursor, an IDE with embedded AI features like smart suggestions, completions, and in-editor agent workflows ([Agent Model](https://docs.cursor.com/agent/modes#agent)). One of its standout features is [Cursor Rules](https://docs.cursor.com/context/rules). Users can create prompts or rules and reference these rules when asking Cursor to autonomously complete tasks. For example, a company creates and distributes a Cursor rule containing their AWS naming and tagging strategy. Developers can then ask Cursor to review their git diff and ensure modified Terraform resources comply with the naming and tagging conventions.
 
-*Similar alternatives: GitHub Copilot in VS Code, JetBrains AI Assistant, or WindSurf*
+_Similar alternatives: GitHub Copilot in VS Code, JetBrains AI Assistant, or WindSurf_
 
 ### Terminal-Based AI Coding
 
 [**Claude Code**](https://www.anthropic.com/claude) \- A command-line AI coding assistant that allows us to describe complex coding tasks in natural language directly from the terminal. This tool excels at understanding broader project context and generating complete solutions without the constraints of an IDE interface.
 
-*Similar alternatives: [Airder](https://github.com/Aider-AI/aider), [OpenCode](https://github.com/opencode-ai/opencode)*, (this list changes almost weekly)
+_Similar alternatives: [Airder](https://github.com/Aider-AI/aider), [OpenCode](https://github.com/opencode-ai/opencode)_, (this list changes almost weekly)
 
 ### We’re still experimenting with MCPs for Code Gen
 
@@ -66,10 +67,10 @@ Given the module had a limited feature scope, only used one provider (AWS), and 
 
 We started by defining Acceptance Criteria for the work, regardless of whether it was done by a human or an AI. We wanted to:
 
-* **Add basic tests** – Set up basic TF testing that works for both [Terraform](https://developer.hashicorp.com/terraform/language/tests) and [OpenTofu](https://opentofu.org/docs/cli/commands/test/) to ensure current and future changes are validated before going into production.
-* **Test variable inputs** – confirm required `variable` fields are enforced and invalid values are caught early.
-* **Add basic happy paths** – cover the expected usage scenarios defined in `main.tf`.
-* **Probe edge cases** – write tests that intentionally stretch the limits of what we expect the module to handle or target known failure modes and regressions.
+- **Add basic tests** – Set up basic TF testing that works for both [Terraform](https://developer.hashicorp.com/terraform/language/tests) and [OpenTofu](https://opentofu.org/docs/cli/commands/test/) to ensure current and future changes are validated before going into production.
+- **Test variable inputs** – confirm required `variable` fields are enforced and invalid values are caught early.
+- **Add basic happy paths** – cover the expected usage scenarios defined in `main.tf`.
+- **Probe edge cases** – write tests that intentionally stretch the limits of what we expect the module to handle or target known failure modes and regressions.
 
 ### v0 – Cursor Auto Model
 
@@ -83,9 +84,9 @@ Since our prompt didn’t specify how we wanted the tests structured, or what th
 
 Here’s where things fell apart:
 
-* **Wrong test file layout**: It dropped the test files into the root of the repo instead of a `/tests` directory. To be fair, we hadn’t told it our preference, but this showed the model lacked sensible defaults.
-* **Broken test scaffolding**: After adding a `tests/` folder, the model created a new `main.tf` and tried to expose `locals` through outputs—patterns that go against standard Terraform testing practices.
-* **Fallback behavior**: Realizing the model didn’t seem to understand testing strategies, Yang passed it a URL for the Terraform test docs. Even then, it ignored the guidelines and continued using its own interpretation.
+- **Wrong test file layout**: It dropped the test files into the root of the repo instead of a `/tests` directory. To be fair, we hadn’t told it our preference, but this showed the model lacked sensible defaults.
+- **Broken test scaffolding**: After adding a `tests/` folder, the model created a new `main.tf` and tried to expose `locals` through outputs—patterns that go against standard Terraform testing practices.
+- **Fallback behavior**: Realizing the model didn’t seem to understand testing strategies, Yang passed it a URL for the Terraform test docs. Even then, it ignored the guidelines and continued using its own interpretation.
 
 **Takeaway:** This combo of Cursor \+ a generic v0 prompt didn’t produce valuable code. While it eventually got something running, it needed significant human cleanup and couldn’t be trusted to scaffold usable tests on its own.
 
@@ -101,9 +102,9 @@ We passed it the same prompt,
 
 Out of the box, Claude Code did significantly better:
 
-* It generated clearly named test files: `complex.tftest.hcl`, `edge_cases.tftest.hcl`, and `locals.tftest.hcl`.
-* Test files were placed in the correct `/tests` directory.
-* The test logic reflected an understanding of Terraform’s test lifecycle and how locals/variables should be handled.
+- It generated clearly named test files: `complex.tftest.hcl`, `edge_cases.tftest.hcl`, and `locals.tftest.hcl`.
+- Test files were placed in the correct `/tests` directory.
+- The test logic reflected an understanding of Terraform’s test lifecycle and how locals/variables should be handled.
 
 It wasn’t perfect. We still had to prompt the model to reorganize some sections of the code and refactor test input, but the overall quality aligned with our expectations.
 
@@ -117,10 +118,10 @@ At this point, we had learned that the underlying AI model matters, and using a 
 
 We jumped back into Cursor and gave it the more thoughtful, specific LLM prompt and configured Cursor to use the same Sonnet-4 LLM model. The prompt spelled out key structural decisions that we had previously assumed the AI would “figure out”:
 
-* Where to place the tests
-* How to mock Terraform providers
-* How to structure test inputs and share data across files
-* How to test `locals` without exposing them via outputs
+- Where to place the tests
+- How to mock Terraform providers
+- How to structure test inputs and share data across files
+- How to test `locals` without exposing them via outputs
 
 The results matched Claude Code’s quality, but now with added convenience. Working within Cursor gave us the ability to quickly review, tweak, and regenerate code in context, which sped up iteration time.
 
@@ -130,7 +131,7 @@ The results matched Claude Code’s quality, but now with added convenience. Wor
 
 By this point, Yang and I had learned how to direct an LLM with a structured prompt to generate tests that mirrored what we'd write ourselves. In my view, this was the moment we crossed from "vibe coding" into actual software engineering through prompting. It wasn’t zero-shot prompt magic tricks and rolling of the dice anymore. We had a well-thought-out prompt generating decent Terraform tests in at least one repo.
 
-Zooming out for a second … LLMs are random functions that transform input into output. In this case, we’re transforming a prompt and the code into terraform tests. We can fine-tune the prompts we pass into LLMs  to yield higher quality outputs, but using an LLM means using a semi-random process (how random also depends on the LLM’s temperature parameter). Given this non-deterministic behavior, you have the opportunity to re-run operations multiple times and get different results. We see this as a huge value-add if you want to ask an LLM to write 3 terraform tests 3 different times, compare the 9 different tests, and then select the top 2 or 3 for your use case.
+Zooming out for a second … LLMs are random functions that transform input into output. In this case, we’re transforming a prompt and the code into terraform tests. We can fine-tune the prompts we pass into LLMs to yield higher quality outputs, but using an LLM means using a semi-random process (how random also depends on the LLM’s temperature parameter). Given this non-deterministic behavior, you have the opportunity to re-run operations multiple times and get different results. We see this as a huge value-add if you want to ask an LLM to write 3 terraform tests 3 different times, compare the 9 different tests, and then select the top 2 or 3 for your use case.
 
 Our next step was to test out the refined prompt on other child modules. I continuing using Cursor (and Sonnet-4) in Agent Mode to generate tests for in two other modules, [`terraform-datadog-users`](https://github.com/masterpointio/terraform-datadog-users) and [`terraform-secrets-helper`](https://github.com/masterpointio/terraform-secrets-helper/),
 
@@ -140,15 +141,14 @@ Our next step was to test out the refined prompt on other child modules. I conti
 
 The results were promising. The LLM correctly created a `tests` folder, placed new test files in there, wrote 2–3 starter tests, and attempted to reduce code repetition through shared variables.
 
-* Terraform DataDog Users – [PR \#12](https://github.com/masterpointio/terraform-datadog-users/pull/12)
-* Terraform Secrets Helper – [PR \#17](https://github.com/masterpointio/terraform-secrets-helper/pull/17)
+- Terraform DataDog Users – [PR \#12](https://github.com/masterpointio/terraform-datadog-users/pull/12)
+- Terraform Secrets Helper – [PR \#17](https://github.com/masterpointio/terraform-secrets-helper/pull/17)
 
 Even though the code was helpful, Yang and I still needed to be actively involved.
 
 While reviewing the tests for the Terraform Secrets Helper module, Yang and I noticed the LLM didn’t fully understand the module’s scope and purpose, as it generated 160 lines of superficial tests. Thankfully, we refactored the tests to create meaningful test coverage for the next engineer to make changes.
 
 If, however, we had blindly merged the sloppy and confusing code, the module would have still worked in production, but the codebase would be less readable and harder to maintain. This is an example of how human review and refactoring still play a crucial role when adding AI to development workflows. The final version of your code needs to be clear, concise, and easily readable in order for a team of engineers to use it in production and maintain it long term.
-
 
 ## Takeaways for Durable Prompts
 
@@ -157,7 +157,7 @@ To summarize where Yang and I started from and where we ended up, we began with 
 The final version of the prompt (cursor rule) is up on GitHub in our open-source LLM prompts repo. Please try it out and share feedback from your experience\!
 {{ create repo and add link to prompt here }}
 
-Lastly, we wanted to highlight the aspects of what we think go into a durable prompt that can be used across a variety of Terraform codebases. We’re hoping you can leverage these  strategies within your own prompts.
+Lastly, we wanted to highlight the aspects of what we think go into a durable prompt that can be used across a variety of Terraform codebases. We’re hoping you can leverage these strategies within your own prompts.
 
 1. **Describe the codebase layout upfront**.  
    Describe how the Terraform child module is organized and where you want the LLM to place new files. This gives the LLM a working model of your repo's structure.
@@ -166,7 +166,7 @@ Lastly, we wanted to highlight the aspects of what we think go into a durable pr
    We found it valuable to have the LLM make small chunks of changes, have us review and verify the test behavior, and then commit them. We added this to the prompt so the LLM would expect this workflow.
 
 3. **Ask for clarifying questions**.  
-   We found it helpful to direct the LLM to ask clarifying questions (either within the chat session or within the prompt). This helps limit the amount of misguided guesswork the LLM does on your behalf. Adding a quick *“do you have any questions for me about this task?”* goes a long way.
+   We found it helpful to direct the LLM to ask clarifying questions (either within the chat session or within the prompt). This helps limit the amount of misguided guesswork the LLM does on your behalf. Adding a quick _“do you have any questions for me about this task?”_ goes a long way.
 
 4. **Be explicit about what to test and how to test**.  
    For us, we prompted the LLM to divide test coverage into (happy path, edge case, and complex) categories. We additionally split up happy path tests into specific files matching the tests’s focus, like `main.tf.hcl`, `locals.tf.hcl`, `variables.tf.hcl`, etc. Your team or org might have different preferences, which is great. Find out what works for your needs.
@@ -178,7 +178,7 @@ Lastly, we wanted to highlight the aspects of what we think go into a durable pr
    LLMs tend to produce verbose boilerplate code. Have the LLM to refactor tests to reduce duplication while keeping the same test coverage. In our experiments, this forced the model to condense test logic into more concise and maintainable tests.
 
 7. **Expect non-deterministic behavior from LLMs.**  
-  We got different outputs when we re-ran the same operation – same LLM with the same prompt and working from the same codebase. LLMs are non-deterministic functions. We see this as a feature 🙃 (not a bug), and  will often select the best ideas generated from re-running operations multiple times.
+   We got different outputs when we re-ran the same operation – same LLM with the same prompt and working from the same codebase. LLMs are non-deterministic functions. We see this as a feature 🙃 (not a bug), and will often select the best ideas generated from re-running operations multiple times.
 
 ## Prompt for Generating Terraform Tests in Child-Modules
 
@@ -190,10 +190,9 @@ TODO(westonplatter) - wait for Veronika's feedback on the prompt
 {{ I reviewed the prompt and rewrote a good chunk of it }}
 [https://github.com/masterpointio/internal-prompts/pull/13](https://github.com/masterpointio/internal-prompts/pull/13)
 
-
 ## Credits
 
 We wanted to thank a few folks who thoughtfully and generously provided feedback on the article's draft versions. Thanks for helping us see grammatical mishaps, transition gaps, and ask the questions we couldn't on our own.
 
-Chris Hood
+Chris Hood  
 Peter Farrell
