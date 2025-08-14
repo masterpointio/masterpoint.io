@@ -9,7 +9,7 @@ description: We share our experience developing an LLM prompt for Cursor and Cla
 image: /img/updates/ai-meets-tf-prompt-strategies-for-test-generation/yang-weston-woodworking-robotic-arm.png
 ---
 
-> TLDR: We crafted an LLM prompt to generate Terraform tests. It's [here](https://github.com/masterpointio/shared-prompts/blob/main/rules/tf-testing-child-module.mdc) in our [shared-prompts](https://github.com/masterpointio/shared-prompts) GitHub repo. If you’re looking for the list of things that worked for us, jump to the [Takeaways for Durable Prompts](#takeaways-for-durable-prompts) section. If you want to learn how we got there, read on.
+> TLDR: We crafted an [LLM prompt](https://github.com/masterpointio/shared-prompts/blob/main/rules/tf-testing-child-module.mdc) to generate Terraform tests, and shared it in our [shared-prompts](https://github.com/masterpointio/shared-prompts) GitHub repo. If you're looking for the list of things that worked for us, jump to the [Takeaways for Durable Prompts](#takeaways-for-durable-prompts) section. If you want to learn how we got there, read on.
 
 ## Table of Contents
 
@@ -184,7 +184,6 @@ Lastly, we wanted to highlight the aspects of what we think go into a durable pr
 
 The full and final version of the prompt is located in Masterpoint's [shared-prompts](https://github.com/masterpointio/shared-prompts) repo,
 [https://github.com/masterpointio/shared-prompts/blob/main/rules/tf-testing-child-module.mdc](https://github.com/masterpointio/shared-prompts/blob/main/rules/tf-testing-child-module.mdc).
-
 
 ## Credits
 
