@@ -9,7 +9,7 @@ description: We share our experience developing an LLM prompt for Cursor and Cla
 image: /img/updates/ai-meets-tf-prompt-strategies-for-test-generation/yang-weston-woodworking-robotic-arm.png
 ---
 
-> TLDR: We crafted an LLM prompt to generate Terraform tests. It's [here](#) in our [shared-prompts](https://github.com/masterpointio/shared-prompts) Github repo. If you’re looking for the list of things that worked for us, jump to the [Takeaways for Durable Prompts](#takeaways-for-durable-prompts) section. If you want to learn how we got there, read on.
+> TLDR: We crafted an LLM prompt to generate Terraform tests. It's [here](https://github.com/masterpointio/shared-prompts/blob/main/rules/tf-testing-child-module.mdc) in our [shared-prompts](https://github.com/masterpointio/shared-prompts) Github repo. If you’re looking for the list of things that worked for us, jump to the [Takeaways for Durable Prompts](#takeaways-for-durable-prompts) section. If you want to learn how we got there, read on.
 
 ## Table of Contents
 
@@ -183,16 +183,12 @@ Lastly, we wanted to highlight the aspects of what we think go into a durable pr
 ## Prompt for Generating Terraform Tests in Child-Modules
 
 The full and final version of the prompt is located in Masterpoint's [shared-prompts](https://github.com/masterpointio/shared-prompts) repo,
-[https://github.com/masterpointio/shared-prompts](https://github.com/masterpointio/shared-prompts).
+[https://github.com/masterpointio/shared-prompts/blob/main/rules/tf-testing-child-module.mdc](https://github.com/masterpointio/shared-prompts/blob/main/rules/tf-testing-child-module.mdc).
 
-TODO(westonplatter) - wait for Veronika's feedback on the prompt
-
-{{ I reviewed the prompt and rewrote a good chunk of it }}
-[https://github.com/masterpointio/internal-prompts/pull/13](https://github.com/masterpointio/internal-prompts/pull/13)
 
 ## Credits
 
-We wanted to thank a few folks who thoughtfully and generously provided feedback on the article's draft versions. Thanks for helping us see grammatical mishaps, transition gaps, and ask the questions we couldn't on our own.
+We wanted to thank a few folks who thoughtfully and generously provided feedback on the article's draft versions. Thanks for helping us see grammatical mishaps, transition gaps, and ask questions along the way.
 
 Chris Hood  
 Peter Farrell
