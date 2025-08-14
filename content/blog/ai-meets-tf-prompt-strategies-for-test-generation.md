@@ -5,11 +5,11 @@ title: "AI Meets Terraform: Prompt Strategies for Test Generation"
 author: Weston Platter
 slug: ai-meets-tf-prompt-strategies-for-test-generation
 date: 2025-08-14T00:00:00.000Z
-description: We share our experience developing an LLM prompt for Cursor and Claude Code to write meaningful Terraform tests. We describe various experiments, highlight strategies for crafting "durable prompts", and share the prompt’s final version in Masterpoint's <a href="https://github.com/masterpointio/shared-prompts">shared-prompts</a> Github repo.
+description: We share our experience developing an LLM prompt for Cursor and Claude Code to write meaningful Terraform tests. We describe various experiments, highlight strategies for crafting "durable prompts", and share the prompt’s final version in Masterpoint's <a href="https://github.com/masterpointio/shared-prompts">shared-prompts</a> GitHub repo.
 image: /img/updates/ai-meets-tf-prompt-strategies-for-test-generation/yang-weston-woodworking-robotic-arm.png
 ---
 
-> TLDR: We crafted an LLM prompt to generate Terraform tests. It's [here](https://github.com/masterpointio/shared-prompts/blob/main/rules/tf-testing-child-module.mdc) in our [shared-prompts](https://github.com/masterpointio/shared-prompts) Github repo. If you’re looking for the list of things that worked for us, jump to the [Takeaways for Durable Prompts](#takeaways-for-durable-prompts) section. If you want to learn how we got there, read on.
+> TLDR: We crafted an LLM prompt to generate Terraform tests. It's [here](https://github.com/masterpointio/shared-prompts/blob/main/rules/tf-testing-child-module.mdc) in our [shared-prompts](https://github.com/masterpointio/shared-prompts) GitHub repo. If you’re looking for the list of things that worked for us, jump to the [Takeaways for Durable Prompts](#takeaways-for-durable-prompts) section. If you want to learn how we got there, read on.
 
 ## Table of Contents
 
@@ -31,11 +31,11 @@ image: /img/updates/ai-meets-tf-prompt-strategies-for-test-generation/yang-westo
 
 ## Why AI for IaC?
 
-We previously [wrote about Model Context Provider (MCP)](https://masterpoint.io/blog/using-mcps-to-run-terraform/), exploring how you can use AI to run Terraform `plan` and `apply` operations. Since then, we've been experimenting with the [GitHub](https://github.com/github/github-mcp-server), [context7](https://github.com/upstash/context7), and [AWS](https://github.com/awslabs/mcp) MCPs, Cursor, Claude Code, and a few Software Engineering (SWE) Agents. We’re in the process of integrating AI into our team’s workflows as an Infrastructure as Code (IaC) consulting company. One place that it’s proven especially valuable is using curated LLM prompts to write tests for Terraform child modules.
+We previously [wrote about Model Context Protocol (MCP)](https://masterpoint.io/blog/using-mcps-to-run-terraform/), exploring how you can use AI to run Terraform `plan` and `apply` operations. Since then, we've been experimenting with the [GitHub](https://github.com/github/github-mcp-server), [Context7](https://github.com/upstash/context7), and [AWS](https://github.com/awslabs/mcp) MCPs, Cursor, Claude Code, and a few Software Engineering (SWE) Agents. We’re in the process of integrating AI into our team’s workflows as an Infrastructure as Code (IaC) consulting company. One place that it’s proven especially valuable is using curated LLM prompts to write tests for Terraform child modules.
 
-Threads across [Github](https://github.com/dotnet/runtime/pull/115762) and [Reddit](https://www.reddit.com/r/Terraform/comments/1l7my1x/where_is_ai_still_completely_useless_for/) have shown how AI-generated code can be subpar 😂
+Threads across [GitHub](https://github.com/dotnet/runtime/pull/115762) and [Reddit](https://www.reddit.com/r/Terraform/comments/1l7my1x/where_is_ai_still_completely_useless_for/) have shown how AI-generated code can be subpar 😂
 
-As a team, we’ve embraced a paradoxical approach: stay grounded in solid software engineering principles and curiously step into the "Ironman suits" that generative LLMs have to offer (Karthpathy's [Software 3.0 talk](https://youtu.be/LCEmiRjPEtQ?si=gSQ-viGAArtHt8G-&t=1642) at YC). As a result, we've developed new best practices and refined LLM prompts or Cursor Rules that help us as a team complete chunks of work more efficiently.
+As a team, we’ve embraced a paradoxical approach: stay grounded in solid software engineering principles and curiously step into the "Ironman suits" that generative LLMs have to offer (Karpathy's [Software 3.0 talk](https://youtu.be/LCEmiRjPEtQ?si=gSQ-viGAArtHt8G-&t=1642) at YC). As a result, we've developed new best practices and refined LLM prompts or Cursor Rules that help us as a team complete chunks of work more efficiently.
 
 In this post, we’ll share some of the AI code gen strategies that have worked as we write Terraform tests for child modules. These "durable prompts" provide DevOps and Platform Engineering teams with concrete "Infrastructure as Code AI" actions they can try on any Terraform codebase.
 
@@ -45,7 +45,7 @@ We've experimented with a handful of AI tools to evolve our development workflow
 
 ### AI-Enhanced IDE
 
-[**Cursor**](https://cursor.sh/) \- We primarily use Cursor, an IDE with embedded AI features like smart suggestions, completions, and in-editor agent workflows ([Agent Model](https://docs.cursor.com/agent/modes#agent)). One of its standout features is [Cursor Rules](https://docs.cursor.com/context/rules). Users can create prompts or rules and reference these rules when asking Cursor to autonomously complete tasks. For example, a company creates and distributes a Cursor rule containing their AWS naming and tagging strategy. Developers can then ask Cursor to review their git diff and ensure modified Terraform resources comply with the naming and tagging conventions.
+[**Cursor**](https://cursor.sh/) - We primarily use Cursor, an IDE with embedded AI features like smart suggestions, completions, and in-editor agent workflows ([Agent Mode](https://docs.cursor.com/agent/modes#agent)). One of its standout features is [Cursor Rules](https://docs.cursor.com/context/rules). Users can create prompts or rules and reference these rules when asking Cursor to autonomously complete tasks. For example, a company creates and distributes a Cursor rule containing their AWS naming and tagging strategy. Developers can then ask Cursor to review their git diff and ensure modified Terraform resources comply with the naming and tagging conventions.
 
 _Similar alternatives: GitHub Copilot in VS Code, JetBrains AI Assistant, or WindSurf_
 
@@ -114,7 +114,7 @@ To capture this feedback for future use, Yang applied a common vibe-coding strat
 
 ### v2 – Cursor Sonnet-4 Refined Prompt
 
-At this point, we had learned that the underlying AI model matters, and using a descriptive prompt really helped. We also carried forward LLM prompt that Claude Code generated for us in the last step. We now wanted to see if Cursor could get to the same spot as Claude Code if we passed in the refined prompt from the last step.
+At this point, we had learned that the underlying AI model matters, and using a descriptive prompt really helped. We also carried forward the LLM prompt Claude Code generated for us in the last step. We now wanted to see if Cursor could get to the same spot as Claude Code if we passed in the refined prompt from the last step.
 
 We jumped back into Cursor and gave it the more thoughtful, specific LLM prompt and configured Cursor to use the same Sonnet-4 LLM model. The prompt spelled out key structural decisions that we had previously assumed the AI would “figure out”:
 
@@ -131,7 +131,7 @@ The results matched Claude Code’s quality, but now with added convenience. Wor
 
 By this point, Yang and I had learned how to direct an LLM with a structured prompt to generate tests that mirrored what we'd write ourselves. In my view, this was the moment we crossed from "vibe coding" into actual software engineering through prompting. It wasn’t zero-shot prompt magic tricks and rolling of the dice anymore. We had a well-thought-out prompt generating decent Terraform tests in at least one repo.
 
-Zooming out for a second … LLMs are random functions that transform input into output. In this case, we’re transforming a prompt and the code into Terraform/OpenTofu tests. We can fine-tune the prompts we pass into LLMs to yield higher quality outputs, but using an LLM means using a semi-random process (how random also depends on the LLM’s temperature parameter). Given this non-deterministic behavior, you have the opportunity to re-run operations multiple times and get different results. We see this as a huge value-add if you want to ask an LLM to write 3 terraform tests 3 different times, compare the 9 different tests, and then select the top 2 or 3 for your use case.
+Zooming out for a second … LLMs are random functions that transform input into output. In this case, we’re transforming a prompt and the code into Terraform/OpenTofu tests. We can fine-tune the prompts we pass into LLMs to yield higher quality outputs, but using an LLM means using a semi-random process (how random also depends on the LLM’s temperature parameter). Given this non-deterministic behavior, you have the opportunity to re-run operations multiple times and get different results. We see this as a huge value-add if you want to ask an LLM to write three Terraform tests three different times, compare the nine different tests, and then select the top two or three for your use case.
 
 Our next step was to test out the refined prompt on other child modules. I continued using Cursor (and Sonnet-4) in Agent Mode to generate tests for two other modules, [`terraform-datadog-users`](https://github.com/masterpointio/terraform-datadog-users) and [`terraform-secrets-helper`](https://github.com/masterpointio/terraform-secrets-helper/),
 
@@ -141,7 +141,7 @@ Our next step was to test out the refined prompt on other child modules. I conti
 
 The results were promising. The LLM correctly created a `tests` folder, placed new test files in there, wrote 2–3 starter tests, and attempted to reduce code repetition through shared variables.
 
-- Terraform DataDog Users – [PR \#12](https://github.com/masterpointio/terraform-datadog-users/pull/12)
+- Terraform Datadog Users – [PR \#12](https://github.com/masterpointio/terraform-datadog-users/pull/12)
 - Terraform Secrets Helper – [PR \#17](https://github.com/masterpointio/terraform-secrets-helper/pull/17)
 
 Even though the code was helpful, Yang and I still needed to be actively involved.
