@@ -3,8 +3,6 @@
 /resources/
 .DS_Store
 
-# leave cursor settings and configs up to each dev with their tooling prefs
-.cursor/
-
-# leave CC settings and configs up to each dev with their tooling prefs
-.claude/
+CLAUDE.md
+.claude/*
+.cursor/*
