@@ -5,7 +5,7 @@ title: "AI Meets Terraform: Prompt Strategies for Test Generation"
 author: Weston Platter
 slug: ai-meets-tf-prompt-strategies-for-test-generation
 date: 2025-08-14T00:00:00.000Z
-description: We share our experience developing an LLM prompt for Cursor and Claude Code to write meaningful Terraform tests. We describe various experiments, highlight strategies for crafting "durable prompts", and share the prompt’s final version in Masterpoint's <a href="https://github.com/masterpointio/shared-prompts">shared-prompts</a> GitHub repo.
+description: We share our experience developing an LLM prompt for Cursor and Claude Code to write meaningful Terraform tests. We describe various experiments, highlight strategies for crafting "durable prompts", and share the <a href="https://github.com/masterpointio/shared-prompts/blob/main/rules/tf-testing-child-module.mdc">prompt’s final version</a> in Masterpoint's <a href="https://github.com/masterpointio/shared-prompts">shared-prompts</a> GitHub repo.
 image: /img/updates/ai-meets-tf-prompt-strategies-for-test-generation/yang-weston-woodworking-robotic-arm.png
 ---
 
