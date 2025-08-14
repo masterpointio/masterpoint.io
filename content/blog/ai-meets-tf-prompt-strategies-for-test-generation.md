@@ -19,10 +19,10 @@ image: /img/updates/ai-meets-tf-prompt-strategies-for-test-generation/yang-westo
   - [Terminal-Based AI Coding](#terminal-based-ai-coding)
   - [We’re still experimenting with MCPs for Code Gen](#were-still-experimenting-with-mcps-for-code-gen)
 - [Our exploration in Writing Terraform Tests with AI](#our-exploration-in-writing-terraform-tests-with-ai)
-  - [v0 – Cursor Auto Model](#v0-cursor-auto-model)
-  - [v1 – Claude Code using Sonnet-4](#v1-claude-code-using-sonnet-4)
-  - [v2 – Cursor Sonnet-4 Refined Prompt](#v2-cursor-sonnet-4-refined-prompt)
-  - [v3 – Applying the Refined Prompt to Other Codebases](#v3-applying-the-refined-prompt-to-other-codebases)
+  - [v0 – Cursor Auto Model](#v0--cursor-auto-model)
+  - [v1 – Claude Code using Sonnet-4](#v1--claude-code-using-sonnet-4)
+  - [v2 – Cursor Sonnet-4 Refined Prompt](#v2--cursor-sonnet-4-refined-prompt)
+  - [v3 – Applying the Refined Prompt to Other Codebases](#v3--applying-the-refined-prompt-to-other-codebases)
 - [Takeaways for Durable Prompts](#takeaways-for-durable-prompts)
 - [Prompt for Generating Terraform Tests in Child-Modules](#prompt-for-generating-terraform-tests-in-child-modules)
 - [Credits](#credits)
@@ -47,13 +47,13 @@ We've experimented with a handful of AI tools to evolve our development workflow
 
 [**Cursor**](https://cursor.sh/) - We primarily use Cursor, an IDE with embedded AI features like smart suggestions, completions, and in-editor agent workflows ([Agent Mode](https://docs.cursor.com/agent/modes#agent)). One of its standout features is [Cursor Rules](https://docs.cursor.com/context/rules). Users can create prompts or rules and reference these rules when asking Cursor to autonomously complete tasks. For example, a company creates and distributes a Cursor rule containing their AWS naming and tagging strategy. Developers can then ask Cursor to review their git diff and ensure modified Terraform resources comply with the naming and tagging conventions.
 
-_Similar alternatives: GitHub Copilot in VS Code, JetBrains AI Assistant, or WindSurf_
+Similar alternatives: GitHub Copilot in VS Code, JetBrains AI Assistant, or WindSurf
 
 ### Terminal-Based AI Coding
 
 [**Claude Code**](https://www.anthropic.com/claude) \- A command-line AI coding assistant that allows us to describe complex coding tasks in natural language directly from the terminal. This tool excels at understanding broader project context and generating complete solutions without the constraints of an IDE interface.
 
-_Similar alternatives: [Aider](https://github.com/Aider-AI/aider), [OpenCode](https://github.com/opencode-ai/opencode), (this list changes almost weekly)_
+Similar alternatives: [Aider](https://github.com/Aider-AI/aider), [OpenCode](https://github.com/opencode-ai/opencode), (this list changes almost weekly)
 
 ### We’re still experimenting with MCPs for Code Gen
 
