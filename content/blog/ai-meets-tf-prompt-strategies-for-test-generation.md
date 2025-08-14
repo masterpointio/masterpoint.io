@@ -33,7 +33,7 @@ image: /img/updates/ai-meets-tf-prompt-strategies-for-test-generation/yang-westo
 
 We previously [wrote about Model Context Provider (MCP)](https://masterpoint.io/blog/using-mcps-to-run-terraform/), exploring how you can use AI to run Terraform `plan` and `apply` operations. Since then, we've been experimenting with the [GitHub](https://github.com/github/github-mcp-server), [context7](https://github.com/upstash/context7), and [AWS](https://github.com/awslabs/mcp) MCPs, Cursor, Claude Code, and a few Software Engineering (SWE) Agents. We’re in the process of integrating AI into our team’s workflows as an Infrastructure as Code (IaC) consulting company. One place that it’s proven especially valuable is using curated LLM prompts to write tests for Terraform child modules.
 
-Threads across [Github](https://github.com/dotnet/runtime/pull/115762) and [Reddit](https://www.reddit.com/r/Terraform/comments/1l7my1x/where_is_ai_still_completely_useless_for/) have shown how AI-generated code can be subpar 😂.
+Threads across [Github](https://github.com/dotnet/runtime/pull/115762) and [Reddit](https://www.reddit.com/r/Terraform/comments/1l7my1x/where_is_ai_still_completely_useless_for/) have shown how AI-generated code can be subpar 😂
 
 As a team, we’ve embraced a paradoxical approach: stay grounded in solid software engineering principles and curiously step into the "Ironman suits" that generative LLMs have to offer (Karthpathy's [Software 3.0 talk](https://youtu.be/LCEmiRjPEtQ?si=gSQ-viGAArtHt8G-&t=1642) at YC). As a result, we've developed new best practices and refined LLM prompts or Cursor Rules that help us as a team complete chunks of work more efficiently.
 
@@ -110,7 +110,7 @@ It wasn’t perfect. We still had to prompt the model to reorganize some section
 
 To capture this feedback for future use, Yang applied a common vibe-coding strategy. He asked Claude to reflect on his feedback and create an improved prompt to generate Terraform tests. We wanted to operate from a more developed structural base as we iterated on a reproducible AI-driven workflow.
 
-**Takeaway:** Model quality matters. Claude’s Sonnet-4 significantly outperformed the model Cursor selected using “Auto Model” for structured code generation. While it still needed human review, the code layout and basic tests and aligned with our goals.
+**Takeaway:** Model quality matters. Claude’s Sonnet-4 significantly outperformed the model Cursor selected using “Auto Model” for structured code generation. While it still needed human review, the code layout and basic tests aligned with our goals.
 
 ### v2 – Cursor Sonnet-4 Refined Prompt
 
@@ -131,9 +131,9 @@ The results matched Claude Code’s quality, but now with added convenience. Wor
 
 By this point, Yang and I had learned how to direct an LLM with a structured prompt to generate tests that mirrored what we'd write ourselves. In my view, this was the moment we crossed from "vibe coding" into actual software engineering through prompting. It wasn’t zero-shot prompt magic tricks and rolling of the dice anymore. We had a well-thought-out prompt generating decent Terraform tests in at least one repo.
 
-Zooming out for a second … LLMs are random functions that transform input into output. In this case, we’re transforming a prompt and the code into terraform tests. We can fine-tune the prompts we pass into LLMs to yield higher quality outputs, but using an LLM means using a semi-random process (how random also depends on the LLM’s temperature parameter). Given this non-deterministic behavior, you have the opportunity to re-run operations multiple times and get different results. We see this as a huge value-add if you want to ask an LLM to write 3 terraform tests 3 different times, compare the 9 different tests, and then select the top 2 or 3 for your use case.
+Zooming out for a second … LLMs are random functions that transform input into output. In this case, we’re transforming a prompt and the code into Terraform/OpenTofu tests. We can fine-tune the prompts we pass into LLMs to yield higher quality outputs, but using an LLM means using a semi-random process (how random also depends on the LLM’s temperature parameter). Given this non-deterministic behavior, you have the opportunity to re-run operations multiple times and get different results. We see this as a huge value-add if you want to ask an LLM to write 3 terraform tests 3 different times, compare the 9 different tests, and then select the top 2 or 3 for your use case.
 
-Our next step was to test out the refined prompt on other child modules. I continuing using Cursor (and Sonnet-4) in Agent Mode to generate tests for in two other modules, [`terraform-datadog-users`](https://github.com/masterpointio/terraform-datadog-users) and [`terraform-secrets-helper`](https://github.com/masterpointio/terraform-secrets-helper/),
+Our next step was to test out the refined prompt on other child modules. I continued using Cursor (and Sonnet-4) in Agent Mode to generate tests for two other modules, [`terraform-datadog-users`](https://github.com/masterpointio/terraform-datadog-users) and [`terraform-secrets-helper`](https://github.com/masterpointio/terraform-secrets-helper/),
 
 {{< lightboximg "/img/updates/ai-meets-tf-prompt-strategies-for-test-generation/v4-prompt.png" "v4 – Cursor Auto Model prompt" >}}
 
@@ -154,8 +154,8 @@ If, however, we had blindly merged the sloppy and confusing code, the module wou
 
 To summarize where Yang and I started from and where we ended up, we began with a naive and simple prompt, and iterated on the prompt until we felt comfortable with the overall quality of the AI-generated test code. We observed that clear and specific prompt instructions, combined with a state-of-the-art LLM model, made a significant difference. We then tried using the prompt within a few other child-module repos to establish Terraform test coverage.
 
-The final version of the prompt (cursor rule) is up on GitHub in our open-source LLM prompts repo. Please try it out and share feedback from your experience\!
-{{ create repo and add link to prompt here }}
+The final version of the prompt (cursor rule) is up on GitHub in our open-source LLM prompts repo. Please try it out and share feedback from your experience!  
+[https://github.com/masterpointio/shared-prompts/blob/main/rules/tf-testing-child-module.mdc](https://github.com/masterpointio/shared-prompts/blob/main/rules/tf-testing-child-module
 
 Lastly, we wanted to highlight the aspects of what we think go into a durable prompt that can be used across a variety of Terraform codebases. We’re hoping you can leverage these strategies within your own prompts.
 
@@ -175,7 +175,7 @@ Lastly, we wanted to highlight the aspects of what we think go into a durable pr
    In this specific prompt, we directed the LLM to mock ALL providers. We didn’t want to introduce the possibility of using AI to write and run live integration tests. To make this work, we provided specific mock examples for AWS and Tailscale (we’ll probably add more as needed).
 
 6. **Prompt for refactoring and brevity**.  
-   LLMs tend to produce verbose boilerplate code. Have the LLM to refactor tests to reduce duplication while keeping the same test coverage. In our experiments, this forced the model to condense test logic into more concise and maintainable tests.
+   LLMs tend to produce verbose boilerplate code. Have the LLM refactor tests to reduce duplication while keeping the same test coverage. In our experiments, this forced the model to condense test logic into more concise and maintainable tests.
 
 7. **Expect non-deterministic behavior from LLMs.**  
    We got different outputs when we re-ran the same operation – same LLM with the same prompt and working from the same codebase. LLMs are non-deterministic functions. We see this as a feature 🙃 (not a bug), and will often select the best ideas generated from re-running operations multiple times.
