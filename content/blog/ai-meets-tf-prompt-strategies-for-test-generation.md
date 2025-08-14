@@ -53,7 +53,7 @@ _Similar alternatives: GitHub Copilot in VS Code, JetBrains AI Assistant, or Win
 
 [**Claude Code**](https://www.anthropic.com/claude) \- A command-line AI coding assistant that allows us to describe complex coding tasks in natural language directly from the terminal. This tool excels at understanding broader project context and generating complete solutions without the constraints of an IDE interface.
 
-_Similar alternatives: [Airder](https://github.com/Aider-AI/aider), [OpenCode](https://github.com/opencode-ai/opencode)_, (this list changes almost weekly)
+_Similar alternatives: [Aider](https://github.com/Aider-AI/aider), [OpenCode](https://github.com/opencode-ai/opencode), (this list changes almost weekly)_
 
 ### We’re still experimenting with MCPs for Code Gen
 
@@ -155,7 +155,7 @@ If, however, we had blindly merged the sloppy and confusing code, the module wou
 To summarize where Yang and I started from and where we ended up, we began with a naive and simple prompt, and iterated on the prompt until we felt comfortable with the overall quality of the AI-generated test code. We observed that clear and specific prompt instructions, combined with a state-of-the-art LLM model, made a significant difference. We then tried using the prompt within a few other child-module repos to establish Terraform test coverage.
 
 The final version of the prompt (cursor rule) is up on GitHub in our open-source LLM prompts repo. Please try it out and share feedback from your experience!  
-[https://github.com/masterpointio/shared-prompts/blob/main/rules/tf-testing-child-module.mdc](https://github.com/masterpointio/shared-prompts/blob/main/rules/tf-testing-child-module
+[https://github.com/masterpointio/shared-prompts/blob/main/rules/tf-testing-child-module.mdc](https://github.com/masterpointio/shared-prompts/blob/main/rules/tf-testing-child-module.mdc)
 
 Lastly, we wanted to highlight the aspects of what we think go into a durable prompt that can be used across a variety of Terraform codebases. We’re hoping you can leverage these strategies within your own prompts.
 
@@ -188,7 +188,7 @@ The full and final version of the prompt is located in Masterpoint's [shared-pro
 
 ## Credits
 
-We wanted to thank a few folks who thoughtfully and generously provided feedback on the article's draft versions. Thanks for helping us see grammatical mishaps, transition gaps, and ask questions along the way.
+We wanted to thank a few folks who thoughtfully and generously provided feedback on the article's draft versions. Thanks for helping us see grammatical mishaps, transition gaps, and asking questions along the way.
 
 Chris Hood  
 Peter Farrell
