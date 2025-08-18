@@ -63,7 +63,7 @@
     />
     {{end}}
 
-    {{ if and (eq .Section "blog") .Params.author }}
+    {{ if and (eq .Section "blog") (.Params.author) }}
     <meta name="author" content="{{ .Params.author }}" />
     {{ end }}
 
