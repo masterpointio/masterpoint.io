@@ -61,9 +61,7 @@
       name="twitter:description"
       content="{{ .Description | plainify | truncate 155 }}"
     />
-    {{end}}
-
-    {{ if and (eq .Section "blog") (.Params.author) }}
+    {{end}} {{ if and (eq .Section "blog") (.Params.author) }}
     <meta name="author" content="{{ .Params.author }}" />
     {{ end }}
 
