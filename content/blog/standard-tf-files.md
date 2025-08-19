@@ -191,6 +191,7 @@ Using a distinct imports.tf file immediately clarifies which parts of your infra
 If you're migrating a large, existing system to TF incrementally, these import blocks, and the corresponding HCL you develop, effectively chart your progress.
 
 Want to know more about importing resources in TF? [Our article on breaking up Terraliths](/blog/steps-to-break-up-a-terralith/) talks through this topic a good bit.
+
 ## Supporting Configuration Files
 
 The previous files are extremely common across most TF projects we see and focus on your infrastructure. Let's look at other supporting types of files which connect your infrastructure to external services.
@@ -256,7 +257,7 @@ The required_providers block serves two important functions:
 
 The source attribute is particularly important in organizations that use private provider registries or forks of official providers.
 
-Want to know all about versioning in Terraform and OpenTofu? Read our definitive article on that topic: [The Ultimate Terraform Versioning Guide](/blog/ultimate-terraform-versioning-guide). 
+Want to know all about versioning in Terraform and OpenTofu? Read our definitive article on that topic: [The Ultimate Terraform Versioning Guide](/blog/ultimate-terraform-versioning-guide).
 
 ### .terraform.lock.hcl: The Dependency Lock File
 
@@ -410,4 +411,3 @@ Separating variables, outputs, data sources, and resources into their own files 
 You don't have to do this all at once. Start applying these patterns incrementally on existing projects. With new modules, begin with the right structure from day one. Proper organization naturally guides developers toward other best practices like single-responsibility modules and clean interfaces.
 
 At Masterpoint, we've seen how standardizing TF file organization has streamlined collaboration, reduced mistakes, and maintained quality as we've grown and helped our clients grow. These aren't just theoretical benefits; they translate directly into faster delivery and more reliable infrastructure.
-
