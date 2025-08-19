@@ -4,7 +4,7 @@ draft: false
 title: "The Standard Terraform and OpenTofu Files + Their Uses"
 author: Matt Gowie
 slug: standard-tf-files
-date: 2025-06-09
+date: 2025-10-07
 description: "A comprehensive guide to the various files that make up a Terraform and OpenTofu project. Learn what belongs in main.tf, variables.tf, outputs.tf, and other essential files for maintainable Infrastructure as Code."
 image: /img/updates/standard-tf-files.png
 callout: <p>👋 <b>If your team is struggling with inconsistent Terraform organization or looking to establish better practices for Infrastructure as Code, we'd love to help. To discuss how we can support your infrastructure goals with proven patterns and strategies, <a href='/contact'>get in touch!</a></b></p>
