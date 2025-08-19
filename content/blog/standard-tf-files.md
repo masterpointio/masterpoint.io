@@ -22,9 +22,9 @@ This guide walks through the TF files you'll see in well-structured projects, wh
 
 ### main.tf: Resource Definitions and Primary Infrastructure
 
-Every TF project needs a main file (it doesn't technically need to be named main.tf but that is the industry convention).This file defines the actual infrastructure resources you're provisioning. When someone first looks at a TF project, they'll typically start here to understand what you're building.
+Every TF project needs a main file (it doesn't technically need to be named main.tf but that is the industry convention). This file defines the actual infrastructure resources you're provisioning. When someone first looks at a TF project, they'll typically start here to understand what you're building.
 
-Before we go further, let's clarify some terminology. A TF project refers to your entire infrastructure codebase: everything in your repository including root modules, child modules, and supporting files. A TF module (Root module or child module) is a standalone, reusable collection of TF files that encapsulates specific functionality and can be used independently or consumed by other configurations. You might use a VPC module, an RDS module, and an ECS module within your project, but each module exists as its own complete unit.
+Before we go further, let's clarify some [basic terminology](https://masterpoint.io/blog/terraform-opentofu-terminology-breakdown/). A TF project refers to your entire infrastructure codebase: everything in your repository including [root modules](https://masterpoint.io/blog/terraform-opentofu-terminology-breakdown/#root-modules), [child modules](https://masterpoint.io/blog/terraform-opentofu-terminology-breakdown/#child-modules), and supporting files. A TF module (Root module or child module) is a standalone, reusable collection of TF files that encapsulates specific functionality and can be used independently or consumed by other configurations. You might use a VPC module, an RDS module, and an ECS module within your project, but each module exists as its own complete unit.
 
 The main.tf file should contain your core resource definitions without getting bogged down with variables, outputs, or provider configurations. For an AWS VPC module, you'd include resources like VPCs, subnets, route tables, and internet gateways here.
 
@@ -105,7 +105,7 @@ output "private_subnet_ids" {
 }
 ```
 
-Only create outputs for values that you need access to or that other modules might reasonably need. Common examples include resource IDs, ARNs, generated names, and connection information. Avoid exposing internal implementation details that shouldn't influence how other modules interact with yours, such as the actual CIDR range or ID of a private subnet.
+Only create outputs for values that you need access to or that other modules might reasonably need. Common examples include resource IDs, ARNs, generated names, and connection information. Avoid exposing internal implementation details that shouldn't influence how other modules interact with yours, such as the actual CIDR range of a private subnet.
 
 Well-crafted outputs are a contract between your module and its consumers, defining exactly what information is available after your infrastructure is provisioned. Like any good API contract, this means you should maintain backwards compatibility whenever possible. Adding new outputs is generally safe, but removing or changing existing outputs can break configurations that depend on them.
 
@@ -145,7 +145,7 @@ While centralizing data sources in data.tf is generally a good practice for visi
 
 ### checks.tf: Resource-Level Validation and Policies
 
-A standards-driven TF project often includes an optional checks.tf file that centralizes your validation rules and assertions. While validation blocks in variables.tf verify input values, checks.tf focuses on validating the actual infrastructure configuration and enforcing organizational policies. [See our full article on the check block here](/blog/understanding-the-terraform-check-block-feature/).
+A standards-driven TF project often includes an optional checks.tf file that centralizes your validation rules and assertions. While validation blocks in variables.tf verify input values, checks.tf focuses on validating the actual infrastructure configuration and enforcing organizational policies. [See our full article on the check block here](/blog/understanding-terraform-check/).
 
 The checks.tf file uses TF's built-in validation framework to define conditions that must be met for the configuration to be considered valid. These validations run during the plan phase, catching potential issues before they reach your production environment.
 
@@ -189,6 +189,8 @@ import {
 Using a distinct imports.tf file immediately clarifies which parts of your infrastructure were adopted by TF, rather than provisioned by it. This clarity is valuable for infrastructure audits and simplifies knowledge transfer when team members are getting acquainted with the project.
 
 If you're migrating a large, existing system to TF incrementally, these import blocks, and the corresponding HCL you develop, effectively chart your progress.
+
+Want to know more about importing resources in TF? [Our article on breaking up Terraliths](/blog/steps-to-break-up-a-terralith/ talks through this topic a good bit.
 
 ## Supporting Configuration Files
 
@@ -255,7 +257,7 @@ The required_providers block serves two important functions:
 
 The source attribute is particularly important in organizations that use private provider registries or forks of official providers.
 
-Version constraints follow semantic versioning principles. The ~> operator allows patch and minor version updates while preventing major version changes that might break your configuration. For critical infrastructure, you might want to pin to exact versions with = for maximum stability.
+Want to know all about versioning in Terraform and OpenTofu? Read our definitive article on that topic: [The Ultimate Terraform Versioning Guide](/blog/ultimate-terraform-versioning-guide). 
 
 ### .terraform.lock.hcl: The Dependency Lock File
 
@@ -326,7 +328,7 @@ Keep locals close to where they're used.
 
 Avoid scattering multiple locals blocks throughout a file. Doing so creates a treasure hunt for anyone trying to understand how values are derived.
 
-Instead, aim for a single, well-organized block that groups related transformations together with clear names and comments when needed.
+Instead, aim for a single, well-organized block that groups related transformations together with clear names and comments when needed. Want to see an example of some intense locals logic in TF that is well organized and commented? [Check out our terraform-spacelift-automation open source module's main.tf](https://github.com/masterpointio/terraform-spacelift-automation/blob/main/main.tf) and your eyes will go wide.
 
 ### When to Create Additional .tf Files
 
@@ -410,4 +412,3 @@ You don't have to do this all at once. Start applying these patterns incremental
 
 At Masterpoint, we've seen how standardizing TF file organization has streamlined collaboration, reduced mistakes, and maintained quality as we've grown and helped our clients grow. These aren't just theoretical benefits; they translate directly into faster delivery and more reliable infrastructure.
 
-If your team is struggling with inconsistent Terraform organization or looking to establish better practices for Infrastructure as Code, we'd love to help. [Reach out to us](/contact/) to discuss how we can support your infrastructure goals with proven patterns and strategies.
