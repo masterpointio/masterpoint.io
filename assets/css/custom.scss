@@ -5,7 +5,8 @@ body {
   position: relative;
 }
 
-body,html {
+body,
+html {
   background: #fff;
 }
 body,
@@ -21,7 +22,6 @@ select {
   @media (max-width: 1199px) {
     font-size: 16px;
   }
-
 }
 
 .clearfix:after {
@@ -274,24 +274,24 @@ img {
     height: $line-height-mobile;
     line-height: $line-height-mobile;
     font-size: 1rem;
-    &.btn-big{
+    &.btn-big {
       height: $line-height-mobile + 4;
       line-height: $line-height-mobile + 4;
       font-size: 1.05rem;
     }
     &.btn-outline-white,
-  &.btn-outline-gray,
-  &.btn-outline-gradient {
-    line-height: $line-height-mobile - 4;
-    &.btn-big {
-      line-height: $line-height-mobile;
+    &.btn-outline-gray,
+    &.btn-outline-gradient {
+      line-height: $line-height-mobile - 4;
+      &.btn-big {
+        line-height: $line-height-mobile;
+      }
     }
   }
-  }
   @media (max-width: 575px) {
-    font-size: .85rem;
-    &.btn-big{
-      font-size: .85rem;
+    font-size: 0.85rem;
+    &.btn-big {
+      font-size: 0.85rem;
     }
   }
 }
@@ -368,13 +368,13 @@ section {
 
   @media (max-width: 991px) {
     font-size: 2rem;
-    &.big{
+    &.big {
       font-size: 2.26rem;
     }
   }
   @media (max-width: 575px) {
     font-size: 1.7rem;
-    &.big{
+    &.big {
       font-size: 1.85rem;
     }
   }
@@ -575,21 +575,38 @@ section {
 }
 
 @-webkit-keyframes gradient {
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 @-moz-keyframes gradient {
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 @keyframes gradient {
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
-
 
 #sitewideNote {
   position: relative;
@@ -603,12 +620,12 @@ section {
     color: #000000;
   }
   @media (max-width: 991px) {
-    strong{
+    strong {
       display: block;
     }
   }
   @media (max-width: 575px) {
-    font-size: .85rem;
+    font-size: 0.85rem;
   }
 }
 header {
@@ -622,14 +639,15 @@ header {
   align-items: center;
   justify-content: space-between;
   @media (max-width: 767px) {
-    padding-left: 20px; padding-right: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
     flex-wrap: wrap;
   }
 
   .d-flex {
     @media (max-width: 767px) {
       flex-wrap: wrap;
-      width:100%;
+      width: 100%;
     }
   }
 
@@ -646,7 +664,7 @@ header {
       width: 200px;
       display: block;
     }
-    @media (min-width: 1200px)and(max-width: 1300px) {
+    @media (min-width: 1200px) and(max-width: 1300px) {
       width: 240px;
       display: block;
     }
@@ -657,31 +675,33 @@ header {
     }
     @media (max-width: 575px) {
       width: 100%;
-      img{
-        width: 260px; display: block; margin: 0 auto 24px;
+      img {
+        width: 260px;
+        display: block;
+        margin: 0 auto 24px;
       }
     }
-
   }
   #headerSocial {
     margin-left: auto;
     padding-right: 1.1rem;
     @media (max-width: 767px) {
-      padding-right: .8rem;
+      padding-right: 0.8rem;
     }
     @media (max-width: 575px) {
-      margin-left: initial; padding: 0 .7rem;
+      margin-left: initial;
+      padding: 0 0.7rem;
     }
   }
-  #headerBtn{
+  #headerBtn {
     .button {
-      @media(min-width:1200px)and(max-width:1330px){
-        font-size:16px;
+      @media (min-width: 1200px) and(max-width:1330px) {
+        font-size: 16px;
       }
     }
     @media (max-width: 575px) {
-      .button{
-        font-size: .85rem;
+      .button {
+        font-size: 0.85rem;
       }
     }
   }
@@ -700,7 +720,8 @@ header {
       font-weight: 700;
       font-size: 1rem;
       color: #ffffff;
-      text-transform: uppercase; padding: .7rem .8rem;
+      text-transform: uppercase;
+      padding: 0.7rem 0.8rem;
       border-radius: 4px 4px 0 0;
       -webkit-transition: all 0.3s;
       -moz-transition: all 0.3s;
@@ -718,10 +739,14 @@ header {
         display: inline-block;
       }
       @media (max-width: 767px) {
-        padding-top: 0; padding-bottom: 0; height: 38px; line-height: 38px;
+        padding-top: 0;
+        padding-bottom: 0;
+        height: 38px;
+        line-height: 38px;
       }
       @media (max-width: 575px) {
-        padding-left: 10px; padding-right: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
       }
     }
 
@@ -736,7 +761,8 @@ header {
         background: $highlight;
         width: 200px;
         z-index: 99;
-        right: 0; border-radius: 4px 0 4px 4px;
+        right: 0;
+        border-radius: 4px 0 4px 4px;
       }
       @media (max-width: 575px) {
         left: 0;
@@ -754,14 +780,14 @@ header {
         color: #ffffff;
         text-transform: uppercase;
         position: relative;
-        @media (min-width: 1200px)and(max-width: 1300px) {
-          font-size: .9rem;
+        @media (min-width: 1200px) and(max-width: 1300px) {
+          font-size: 0.9rem;
         }
         @media (max-width: 1199px) {
           width: 100%;
           margin: 0;
           padding: 0;
-          border-bottom: solid 1px rgba(0,0,0,0.2);
+          border-bottom: solid 1px rgba(0, 0, 0, 0.2);
         }
 
         a {
@@ -772,10 +798,9 @@ header {
 
           &:hover,
           &:focus {
-            background: rgba(0,0,0,0.2);
+            background: rgba(0, 0, 0, 0.2);
             color: #fff;
           }
-
 
           &.current-menu-item {
             &:before {
@@ -784,7 +809,8 @@ header {
               left: 0;
               bottom: 0;
               height: 4px;
-              background: linear-gradient(
+              background:
+                linear-gradient(
                   99.59deg,
                   #ede497 2.59%,
                   #2ad9c2 41.12%,
@@ -814,7 +840,7 @@ header {
             padding: 6px 16px;
             &:hover,
             &:focus {
-              background: rgba(0,0,0,0.2);
+              background: rgba(0, 0, 0, 0.2);
             }
           }
         }
@@ -855,7 +881,7 @@ header {
 
               &:hover,
               &:focus {
-                background: rgba(0,0,0,0.2);
+                background: rgba(0, 0, 0, 0.2);
                 color: #fff;
               }
             }
@@ -881,13 +907,10 @@ header {
   }
 
   .bg-image {
-
     z-index: 1;
     img {
       opacity: 0.74;
     }
-
-
   }
 
   .video-wrapper {
@@ -1120,13 +1143,14 @@ footer {
   background: #fff;
 
   #footerSocial {
-    margin-top:24px;
+    margin-top: 24px;
     li {
       a {
         color: #ccc;
 
-        &:hover, &:focus {
-         color: $highlight;
+        &:hover,
+        &:focus {
+          color: $highlight;
         }
       }
     }
@@ -1165,7 +1189,7 @@ footer {
 }
 
 .mfp-bg {
-  background: darken($pine,10%);
+  background: darken($pine, 10%);
 }
 
 //* {
@@ -1288,8 +1312,9 @@ footer {
 }
 
 .serviceBadge {
+  /* prettier-ignore */
   @extend.serviceIcon;
-  padding:0;
+  padding: 0;
 }
 .serviceDesc {
   padding-top: 0.5em;
@@ -1297,7 +1322,7 @@ footer {
   line-height: 1.5em;
   color: #525252;
   @media (max-width: 1199px) {
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
 }
 .serviceTitle {
@@ -1390,11 +1415,8 @@ footer {
     padding: 12rem 0 1.81rem;
     background: $pine;
     &:before {
-      background: linear-gradient(
-          360deg,
-          rgba(0, 0, 0, 0.3) 0%,
-          rgba(0, 0, 0, 0) 28.87%
-        ),
+      background:
+        linear-gradient(360deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 28.87%),
         linear-gradient(90deg, $pine 50%, rgba(14, 56, 58, 0) 68.97%);
       position: absolute;
       left: 0;
@@ -1405,19 +1427,21 @@ footer {
       z-index: 2;
 
       @media (max-width: 767px) {
-        background: linear-gradient(
-          360deg,
-          rgba(0, 0, 0, 0.3) 0%,
-          rgba(0, 0, 0, 0) 28.87%
-        ),
-        linear-gradient(360deg, $pine 40%, rgba(14, 56, 58, 0) 120%);
+        background:
+          linear-gradient(
+            360deg,
+            rgba(0, 0, 0, 0.3) 0%,
+            rgba(0, 0, 0, 0) 28.87%
+          ),
+          linear-gradient(360deg, $pine 40%, rgba(14, 56, 58, 0) 120%);
       }
     }
     .bg-image {
       width: 52.3%;
       left: initial;
       right: 0;
-      z-index: 1; position: absolute;
+      z-index: 1;
+      position: absolute;
       img {
         opacity: 0.74;
       }
@@ -1425,18 +1449,22 @@ footer {
         display: none;
       }
       @media (max-width: 767px) {
-        width:100%;height:100%;
+        width: 100%;
+        height: 100%;
 
         img {
           object-fit: cover;
           object-position: center bottom;
         }
-        &:before{
+        &:before {
           display: block;
-          background: linear-gradient(360deg,$pine 0%,rgba(255,255,255,0) 35%);
+          background: linear-gradient(
+            360deg,
+            $pine 0%,
+            rgba(255, 255, 255, 0) 35%
+          );
         }
       }
-
     }
     .bannerTxtBx {
       max-width: 660px;
@@ -1462,9 +1490,9 @@ footer {
     padding: 3.3rem 0 2.95rem;
     background: #fff;
 
-    @media(max-width:767px){
+    @media (max-width: 767px) {
       .container {
-        max-width:420px;
+        max-width: 420px;
       }
     }
   }
@@ -1472,7 +1500,7 @@ footer {
     padding: 3.4rem 0 1.95rem;
     background: #fff;
 
-    @media(max-width:767px){
+    @media (max-width: 767px) {
       text-align: center;
     }
 
@@ -1485,9 +1513,9 @@ footer {
         padding-top: 2rem;
       }
     }
-    .sectionImgCol{
+    .sectionImgCol {
       @media (max-width: 767px) {
-        img{
+        img {
           width: 300px;
         }
       }
@@ -1513,11 +1541,8 @@ footer {
       top: 0;
       position: absolute;
       z-index: 2;
-      background: linear-gradient(
-          90deg,
-          #031e1f 15.42%,
-          rgba(14, 56, 58, 0) 48.62%
-        ),
+      background:
+        linear-gradient(90deg, #031e1f 15.42%, rgba(14, 56, 58, 0) 48.62%),
         linear-gradient(0deg, #031e1f 0%, rgba(14, 56, 58, 0) 72.12%);
     }
     .bg-image {
@@ -1530,9 +1555,13 @@ footer {
         display: none;
       }
       @media (max-width: 767px) {
-        &:before{
+        &:before {
           display: block;
-          background: linear-gradient(360deg,$pine 0%,rgba(255,255,255,0) 35%);
+          background: linear-gradient(
+            360deg,
+            $pine 0%,
+            rgba(255, 255, 255, 0) 35%
+          );
         }
       }
       img {
@@ -1611,14 +1640,18 @@ footer {
     .entry {
       .entryImg {
         &:before {
-          content:'';
-          display:block;
-          position:absolute;
-          left:0;
-          top:0;
-          width:100%;
-          height:100%;
-          background: linear-gradient(90deg, rgba(0, 0, 0, 0.41) 0%, rgba(0, 0, 0, 0) 50%);
+          content: "";
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.41) 0%,
+            rgba(0, 0, 0, 0) 50%
+          );
           z-index: 9;
           pointer-events: none;
         }
@@ -1640,31 +1673,31 @@ footer {
 }
 
 .open-image-link {
-  position:relative;
-  width:100%;
-  height:auto;
+  position: relative;
+  width: 100%;
+  height: auto;
   display: block;
   &:before {
-    content:'';
+    content: "";
     display: flex;
-    width:100%;
-    height:100%;
-    position:absolute;
-    left:0;
-    top:0;
-    transition: all .3s;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: all 0.3s;
     align-items: center;
     justify-content: center;
   }
 
   &:hover {
     &:before {
-      content:'\f00e';
-      font-weight:900;
-      font-family: 'Font Awesome 6 Pro';
-      background: rgba(0,0,0,.75);
-      color:#fff;
-      font-size:32px;
+      content: "\f00e";
+      font-weight: 900;
+      font-family: "Font Awesome 6 Pro";
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      font-size: 32px;
     }
   }
 }
@@ -1691,11 +1724,8 @@ footer {
       left: 0;
       top: 0;
       position: absolute;
-      background: linear-gradient(
-          360deg,
-          rgba(0, 0, 0, 0.3) 0%,
-          rgba(0, 0, 0, 0) 28.87%
-        ),
+      background:
+        linear-gradient(360deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 28.87%),
         linear-gradient(90deg, $pine 50%, rgba(14, 56, 58, 0) 68.97%);
     }
   }
@@ -1705,7 +1735,7 @@ footer {
 // Including updates (blog posts)
 .single-default {
   header {
-    position:relative;
+    position: relative;
   }
   main {
     h1,
@@ -1722,7 +1752,7 @@ footer {
     }
 
     h1.postTitle {
-      font-size:2.25rem;
+      font-size: 2.25rem;
     }
 
     // Make code small so that code blocks have a horizontal width of 80 characters
@@ -1758,7 +1788,7 @@ footer {
   max-width: 795px;
   color: #fff;
   overflow: hidden;
-  .flex{
+  .flex {
     @media (max-width: 575px) {
       display: block;
     }
@@ -1768,14 +1798,16 @@ footer {
     width: 50%;
     flex-grow: 1;
     @media (max-width: 575px) {
-      padding: 20px; width: 100%;
+      padding: 20px;
+      width: 100%;
     }
   }
   .entryImg {
     width: 34.5%;
     position: relative;
     @media (max-width: 575px) {
-      width: 100%; height: 60vw;
+      width: 100%;
+      height: 60vw;
     }
     img {
       object-fit: cover;
@@ -1791,13 +1823,13 @@ footer {
     padding: 2.5rem 1.8rem 2.25rem 2.3rem;
     border-top: solid 3px #fff;
     background: #fff;
-    color:#333;
+    color: #333;
 
     #callout {
       padding: 24px;
-      border-radius:3px;
-      border:3px solid $highlight;
-      margin-top:24px;
+      border-radius: 3px;
+      border: 3px solid $highlight;
+      margin-top: 24px;
 
       p {
         margin-bottom: 0;
@@ -1816,7 +1848,7 @@ footer {
     line-height: 1.5em;
     padding-top: 0.4em;
     @media (max-width: 1199px) {
-    font-size: 1rem;
+      font-size: 1rem;
     }
   }
   .entry-link {
@@ -1863,35 +1895,33 @@ footer {
       top: 0;
       position: absolute;
       z-index: 2;
-      background: linear-gradient(
-          360deg,
-          rgba(0, 0, 0, 0.3) 0%,
-          rgba(0, 0, 0, 0) 28.87%
-        ),
+      background:
+        linear-gradient(360deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 28.87%),
         linear-gradient(270deg, $pine 51.53%, rgba(14, 56, 58, 0) 82.08%);
 
-        @media(max-width: 767px){
-          background: linear-gradient(
-          360deg,
-          rgba(0, 0, 0, 0.3) 0%,
-          rgba(0, 0, 0, 0) 28.87%
-        ),
-        linear-gradient(0deg, $pine 51.53%, rgba(14, 56, 58, 0) 82.08%);
-        }
-
+      @media (max-width: 767px) {
+        background:
+          linear-gradient(
+            360deg,
+            rgba(0, 0, 0, 0.3) 0%,
+            rgba(0, 0, 0, 0) 28.87%
+          ),
+          linear-gradient(0deg, $pine 51.53%, rgba(14, 56, 58, 0) 82.08%);
+      }
     }
-    @media(max-width: 767px){
-    h3, .bannerTagline {
+    @media (max-width: 767px) {
+      h3,
+      .bannerTagline {
         text-align: center;
       }
     }
 
     .bannerLink {
-      margin-top:20px;
-      margin-top:20px;
+      margin-top: 20px;
+      margin-top: 20px;
       a {
         color: #fff;
-        font-size:1.25rem;
+        font-size: 1.25rem;
 
         strong {
           @extend .text-gradient;
@@ -1899,7 +1929,8 @@ footer {
       }
     }
     .bg-image {
-      width: 50%; position: absolute;
+      width: 50%;
+      position: absolute;
       &:before {
         display: none;
       }
@@ -1911,26 +1942,30 @@ footer {
         position: absolute;
         height: 100%;
 
-        &:before{
+        &:before {
           display: block;
-          background: linear-gradient(360deg,$pine 0%,rgba(255,255,255,0) 35%);
+          background: linear-gradient(
+            360deg,
+            $pine 0%,
+            rgba(255, 255, 255, 0) 35%
+          );
         }
-        img{
-          opacity: .6;
+        img {
+          opacity: 0.6;
         }
       }
     }
-
   }
 }
 #who-matt-gowie {
   padding: 5rem 0;
   background: #fff;
 
-  @media(max-width: 767px){
-    padding:3rem 0 0 0;
+  @media (max-width: 767px) {
+    padding: 3rem 0 0 0;
 
-    h3 , h4 {
+    h3,
+    h4 {
       text-align: center;
       display: block !important;
     }
@@ -1943,26 +1978,26 @@ footer {
     bottom: 0;
     right: 62%;
 
-    @media(max-width: 767px){
+    @media (max-width: 767px) {
       position: relative;
-      width:100%;
-      height:auto;
-      right:0;
-      bottom:0;
-      margin:0 auto;
-      max-width:400px;
+      width: 100%;
+      height: auto;
+      right: 0;
+      bottom: 0;
+      margin: 0 auto;
+      max-width: 400px;
 
       display: block;
-
     }
   }
   .bg-image {
     width: 56%;
     left: initial;
-    left: 0; position: absolute;
+    left: 0;
+    position: absolute;
 
-    @media(max-width: 767px){
-      width:100%;
+    @media (max-width: 767px) {
+      width: 100%;
     }
 
     &:before {
@@ -1988,23 +2023,32 @@ footer {
     @media (max-width: 767px) {
       text-align: right;
       position: relative;
-      &:before{
-        content: ''; width: 100%; height: 100%; left: 0; top: 0;
-        background: linear-gradient(360deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 35%); position: absolute;
+      &:before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background: linear-gradient(
+          360deg,
+          #ffffff 0%,
+          rgba(255, 255, 255, 0) 35%
+        );
+        position: absolute;
       }
-      img{
+      img {
         width: 250px;
-        max-width: 100%; margin-left: 0;
+        max-width: 100%;
+        margin-left: 0;
       }
     }
     @media (max-width: 575px) {
-      img{
+      img {
         width: 200px;
       }
     }
   }
   .sectionColTxt {
-
     @media (max-width: 767px) {
       padding-top: 0rem;
     }
@@ -2024,9 +2068,11 @@ footer {
   color: #fff;
   background: $pine;
   .bg-image {
-    width: 100%; position: absolute;
+    width: 100%;
+    position: absolute;
     &:before {
-      background: linear-gradient(
+      background:
+        linear-gradient(
           180deg,
           rgba(0, 0, 0, 0.8) -18.07%,
           rgba(0, 0, 0, 0) 91.05%
@@ -2061,7 +2107,8 @@ footer {
   overflow: hidden;
   margin: 0 auto;
   border: solid 3px transparent;
-  background-image: linear-gradient($pine, $pine),
+  background-image:
+    linear-gradient($pine, $pine),
     radial-gradient(
       circle at top left,
       #ede497 -0.66%,
@@ -2143,7 +2190,9 @@ footer {
     flex-grow: 1;
     padding-left: 1.9rem;
     @media (max-width: 575px) {
-      width: 100%; padding-left: 0; padding-top: 1.5rem;
+      width: 100%;
+      padding-left: 0;
+      padding-top: 1.5rem;
     }
   }
   .supportDesc {
@@ -2175,19 +2224,17 @@ footer {
       height: 100%;
       left: 0;
       top: 0;
-      background: linear-gradient(
-          360deg,
-          rgba(0, 0, 0, 0.3) 0%,
-          rgba(0, 0, 0, 0) 28.87%
-        ),
+      background:
+        linear-gradient(360deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 28.87%),
         linear-gradient(270deg, $pine 50%, rgba(14, 56, 58, 0) 62.57%);
 
-        @media (max-width: 767px) {
-          display: none;
-        }
+      @media (max-width: 767px) {
+        display: none;
+      }
     }
     .bg-image {
-      width: 60%; position: absolute;
+      width: 60%;
+      position: absolute;
       &:before {
         display: none;
       }
@@ -2195,16 +2242,20 @@ footer {
         opacity: 0.66;
       }
       @media (max-width: 767px) {
-        width:100%;
-        height:100%;
+        width: 100%;
+        height: 100%;
 
         img {
           object-fit: cover;
           object-position: center center;
         }
-        &:before{
+        &:before {
           display: block;
-          background: linear-gradient(360deg,$pine 0%,rgba(255,255,255,0) 150%);
+          background: linear-gradient(
+            360deg,
+            $pine 0%,
+            rgba(255, 255, 255, 0) 150%
+          );
         }
       }
     }
@@ -2237,7 +2288,7 @@ footer {
     max-width: 780px;
   }
   .serviceIcon {
-    margin-bottom: 0.0rem;
+    margin-bottom: 0rem;
   }
   .serviceTitle {
     font-size: 2.111rem;
@@ -2265,7 +2316,7 @@ footer {
     img {
       object-position: right center;
       @media (max-width: 767px) {
-        opacity: .4;
+        opacity: 0.4;
       }
     }
   }
@@ -2287,7 +2338,8 @@ footer {
     color: #fff;
   }
   .bg-image {
-    width: 100%; position: absolute;
+    width: 100%;
+    position: absolute;
     &:before {
       background: linear-gradient(0deg, #031e1f 0%, rgba(14, 56, 58, 0) 72.12%);
     }
@@ -2340,22 +2392,27 @@ footer {
 #managed-service-partners {
   padding: 7.5rem 0 6.4rem;
   background: #000;
-  color:#fff;
+  color: #fff;
 
   h3 {
-    color:#fff;
+    color: #fff;
   }
 
   .button {
-    color:#fff;
+    color: #fff;
   }
 
   .bg-image {
     width: 100%;
-    height:100%;
+    height: 100%;
     position: absolute;
     &:before {
-      background: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.750014) 46.35%, rgba(255, 255, 255, 0) 100%);
+      background: linear-gradient(
+        180deg,
+        #000 0%,
+        rgba(0, 0, 0, 0.750014) 46.35%,
+        rgba(255, 255, 255, 0) 100%
+      );
     }
   }
 }
@@ -2379,7 +2436,8 @@ footer {
     position: absolute;
   }
   .bg-image {
-    width: 100%; position: absolute;
+    width: 100%;
+    position: absolute;
     height: 444px;
     img {
       opacity: 0.3;
@@ -2422,7 +2480,8 @@ footer {
 #services-faqs {
   padding: 4.3rem 0 3.95rem;
   position: relative;
-  background: linear-gradient(0deg, #031e1f 0%, rgba(14, 56, 58, 0) 72.12%),
+  background:
+    linear-gradient(0deg, #031e1f 0%, rgba(14, 56, 58, 0) 72.12%),
     linear-gradient(0deg, #0e383a, #0e383a), #d9d9d9;
 }
 #faqsBlock {
@@ -2480,7 +2539,7 @@ footer {
         content: "+";
         position: absolute;
         left: 0;
-        top:-8px;
+        top: -8px;
         font-weight: 800;
         font-size: 1.12em;
         line-height: 1em;
@@ -2494,7 +2553,8 @@ footer {
 
         cursor: pointer;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           cursor: pointer !important;
         }
       }
@@ -2513,11 +2573,10 @@ footer {
   }
 }
 
-
 #contact {
   main {
     .container {
-      max-width:900px;
+      max-width: 900px;
 
       p {
         color: #fff;
@@ -2526,7 +2585,8 @@ footer {
   }
 }
 
-#thank-you {
+#thank-you,
+#page-404 {
   background: rgb(0, 51, 51);
 
   #banner {
@@ -2541,9 +2601,8 @@ footer {
   }
 }
 
-
 #signup {
-  padding:0;
+  padding: 0;
   background: rgb(0, 51, 51);
 }
 
@@ -2553,11 +2612,8 @@ footer {
     padding: 10rem 0 4rem;
     background: $pine;
     &:before {
-      background: linear-gradient(
-          360deg,
-          rgba(0, 0, 0, 0.3) 0%,
-          rgba(0, 0, 0, 0) 28.87%
-        ),
+      background:
+        linear-gradient(360deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 28.87%),
         linear-gradient(90deg, $pine 50%, rgba(14, 56, 58, 0) 68.97%);
       position: absolute;
       left: 0;
@@ -2568,19 +2624,21 @@ footer {
       z-index: 2;
 
       @media (max-width: 767px) {
-        background: linear-gradient(
-          360deg,
-          rgba(0, 0, 0, 0.3) 0%,
-          rgba(0, 0, 0, 0) 28.87%
-        ),
-        linear-gradient(360deg, $pine 40%, rgba(14, 56, 58, 0) 120%);
+        background:
+          linear-gradient(
+            360deg,
+            rgba(0, 0, 0, 0.3) 0%,
+            rgba(0, 0, 0, 0) 28.87%
+          ),
+          linear-gradient(360deg, $pine 40%, rgba(14, 56, 58, 0) 120%);
       }
     }
     .bg-image {
       width: 52.3%;
       left: initial;
       right: 0;
-      z-index: 1; position: absolute;
+      z-index: 1;
+      position: absolute;
       img {
         opacity: 0.74;
       }
@@ -2588,18 +2646,22 @@ footer {
         display: none;
       }
       @media (max-width: 767px) {
-        width:100%;height:100%;
+        width: 100%;
+        height: 100%;
 
         img {
           object-fit: cover;
           object-position: center bottom;
         }
-        &:before{
+        &:before {
           display: block;
-          background: linear-gradient(360deg,$pine 0%,rgba(255,255,255,0) 35%);
+          background: linear-gradient(
+            360deg,
+            $pine 0%,
+            rgba(255, 255, 255, 0) 35%
+          );
         }
       }
-
     }
     .bannerTxtBx {
       max-width: 660px;
@@ -2627,19 +2689,18 @@ footer {
     }
 
     iframe {
-      width:100%;
-      max-width:500px;
+      width: 100%;
+      max-width: 500px;
     }
   }
 
   main {
-    padding:0;
+    padding: 0;
   }
 
   &.noBannerImg {
     #banner {
       &:before {
-
         position: absolute;
         left: 0;
         top: 0;
@@ -2648,15 +2709,14 @@ footer {
         content: "";
         z-index: 2;
 
-
-          background: linear-gradient(
+        background:
+          linear-gradient(
             360deg,
             rgba(0, 0, 0, 0.3) 0%,
             rgba(0, 0, 0, 0) 28.87%
           ),
           linear-gradient(360deg, $pine 40%, rgba(14, 56, 58, 0.4) 120%);
-        }
-
+      }
 
       .bannerTxtBx {
         margin: 0 auto;
@@ -2666,16 +2726,17 @@ footer {
 }
 
 .landing-banner {
-  #banner h1, #banner h2 {
+  #banner h1,
+  #banner h2 {
     text-transform: none;
-    font-size:80px;
+    font-size: 80px;
 
-    @media(max-width:767px){
-      font-size:55px;
+    @media (max-width: 767px) {
+      font-size: 55px;
     }
 
-    @media(max-width:575px){
-      font-size:40px;
+    @media (max-width: 575px) {
+      font-size: 40px;
     }
   }
 
@@ -2684,11 +2745,10 @@ footer {
       max-width: none;
     }
   }
-
 }
 
 .mfp-close-btn-in .mfp-close {
-  color:#fff;
+  color: #fff;
 }
 
 #caseStudiesPage {
@@ -2698,18 +2758,17 @@ footer {
 
   #banner {
     background: $pine;
-    padding-bottom:40px;
+    padding-bottom: 40px;
   }
 
   main {
     background: $pine;
 
     .container {
-      max-width:1000px;
+      max-width: 1000px;
     }
 
     .case-study-entry {
-
       .entryImg {
         img {
           box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.35);
@@ -2717,7 +2776,6 @@ footer {
       }
 
       .entryContent {
-
         h3 {
           font-size: 42px;
         }
@@ -2730,7 +2788,7 @@ footer {
       .entry-link {
         font-weight: 800;
         text-transform: uppercase;
-        margin-top:24px;
+        margin-top: 24px;
         display: inline-block;
       }
     }
@@ -2741,7 +2799,7 @@ footer {
   header {
     ul {
       li {
-        &:nth-child(4){
+        &:nth-child(4) {
           a {
             &:first-of-type {
               @extend .current-menu-item;
@@ -2766,10 +2824,15 @@ footer {
 #page-updates {
   main {
     .introContent {
-      color:#fff;
+      color: #fff;
       text-align: center;
     }
   }
+}
+
+.masterpoint-dog-img {
+  margin: 20px;
+  border-radius: 10px;
 }
 
 .case-study-single {
@@ -2779,13 +2842,24 @@ footer {
     img {
       margin-bottom: 24px;
     }
-    
-    .container {
-      max-width:900px;
 
-      h2, h3, h4, h5 {
-        em, i {
-          background: linear-gradient(90deg, #E3DA8D -11.99%, #16C5AE 31.19%, #C47DBA 85.54%), linear-gradient(0deg, #0E383A 0%, #0E383A 100%);
+    .container {
+      max-width: 900px;
+
+      h2,
+      h3,
+      h4,
+      h5 {
+        em,
+        i {
+          background:
+            linear-gradient(
+              90deg,
+              #e3da8d -11.99%,
+              #16c5ae 31.19%,
+              #c47dba 85.54%
+            ),
+            linear-gradient(0deg, #0e383a 0%, #0e383a 100%);
           color: #fff;
           font-style: normal;
           line-height: 1em;
@@ -2795,12 +2869,12 @@ footer {
       }
 
       h2 {
-        font-size:36px;
+        font-size: 36px;
         color: $pine;
       }
 
       h3 {
-        font-size:28px;
+        font-size: 28px;
         color: #777;
       }
 
@@ -2811,28 +2885,35 @@ footer {
 
       blockquote {
         background: $pine;
-        border-left:0;
-        border-radius:8px;
-        position:relative;
-        padding:24px 24px 32px 42px;
-        color:#fff;
-        font-size:24px;
-        font-style:normal;
-        margin-top:24px;
+        border-left: 0;
+        border-radius: 8px;
+        position: relative;
+        padding: 24px 24px 32px 42px;
+        color: #fff;
+        font-size: 24px;
+        font-style: normal;
+        margin-top: 24px;
 
         strong {
           @extend .text-gradient;
         }
 
         &:before {
-          content:'';
-          width:10px;
-          height:100%;
-          background:$highlight;
-          position:absolute;
-          left:12px;
-          top:0;
-          background: linear-gradient(186deg, #EDE497 4.21%, #2AD9C2 44.01%, #D891CE 94.12%), linear-gradient(0deg, #0E383A 0%, #0E383A 100%);
+          content: "";
+          width: 10px;
+          height: 100%;
+          background: $highlight;
+          position: absolute;
+          left: 12px;
+          top: 0;
+          background:
+            linear-gradient(
+              186deg,
+              #ede497 4.21%,
+              #2ad9c2 44.01%,
+              #d891ce 94.12%
+            ),
+            linear-gradient(0deg, #0e383a 0%, #0e383a 100%);
         }
       }
 
@@ -2841,14 +2922,13 @@ footer {
         counter-reset: custom-counter;
         padding-left: 0;
         margin-top: 24px;
-        
+
         li {
           position: relative;
           padding-left: 36px;
           margin-bottom: 10px;
           counter-increment: custom-counter;
-          
-          
+
           &:before {
             content: counter(custom-counter);
             position: absolute;
@@ -2865,8 +2945,14 @@ footer {
             background-clip: padding-box;
             box-shadow: 0 0 0 2px transparent;
             background-origin: border-box;
-            background-image: linear-gradient(#fff, #fff), 
-                              linear-gradient(186deg, #EDE497 4.21%, #2AD9C2 44.01%, #D891CE 94.12%);
+            background-image:
+              linear-gradient(#fff, #fff),
+              linear-gradient(
+                186deg,
+                #ede497 4.21%,
+                #2ad9c2 44.01%,
+                #d891ce 94.12%
+              );
             background-clip: content-box, border-box;
           }
         }
@@ -2876,23 +2962,30 @@ footer {
         list-style: none;
         padding-left: 0;
         margin-top: 24px;
-        
+
         li {
           position: relative;
           padding-left: 36px;
           margin-bottom: 10px;
           font-weight: 700;
           font-size: 1.15em;
-          
+
           &:before {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Pro';
+            content: "\f00c";
+            font-family: "Font Awesome 6 Pro";
             position: absolute;
             color: #fff;
             left: 0;
             top: 2px;
             font-weight: 900;
-            background: linear-gradient(186deg, #EDE497 4.21%, #2AD9C2 44.01%, #D891CE 94.12%), linear-gradient(0deg, #0E383A 0%, #0E383A 100%);
+            background:
+              linear-gradient(
+                186deg,
+                #ede497 4.21%,
+                #2ad9c2 44.01%,
+                #d891ce 94.12%
+              ),
+              linear-gradient(0deg, #0e383a 0%, #0e383a 100%);
             width: 24px;
             height: 24px;
             font-size: 18px;
@@ -2914,7 +3007,7 @@ footer {
 
   #now-intro {
     margin-bottom: 42px;
-    margin-top:-32px;
+    margin-top: -32px;
     .col {
       background: #f3f3f3;
       border-radius: 16px;
@@ -2922,7 +3015,7 @@ footer {
 
       h2 {
         text-transform: uppercase;
-        font-size:32px;
+        font-size: 32px;
 
         @extend .text-gradient;
       }
@@ -2930,15 +3023,15 @@ footer {
   }
 
   main {
-    padding-top:0;
+    padding-top: 0;
 
     .container {
-      max-width:1000px;
+      max-width: 1000px;
     }
 
     .case-study-entry {
       margin-bottom: 42px;
-      padding-bottom:42px;
+      padding-bottom: 42px;
       border-bottom: 1px solid #ccc;
 
       @media (max-width: 767px) {
@@ -2947,7 +3040,7 @@ footer {
 
       .flex {
         @media (max-width: 767px) {
-          display:block;
+          display: block;
         }
       }
 
@@ -2957,17 +3050,15 @@ footer {
         }
         @media (max-width: 767px) {
           max-width: 300px;
-          margin:0 auto 24px;
+          margin: 0 auto 24px;
         }
       }
 
       h2 {
-        font-size:32px;
+        font-size: 32px;
         text-transform: uppercase;
         color: $pine;
       }
     }
   }
-
 }
-

@@ -19,7 +19,7 @@
                                 {{end}}
                             </h1>
                             {{ if .Params.author }}<b>By {{.Params.author}}</b>{{end}}
-                            <div class="entryDesc">{{ .Description }}</div>
+                            <div class="entryDesc">{{ .Description | safeHTML }}</div>
                         </div>
                     </div>
 
