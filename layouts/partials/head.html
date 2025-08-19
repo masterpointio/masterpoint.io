@@ -61,7 +61,9 @@
       name="twitter:description"
       content="{{ .Description | plainify | truncate 155 }}"
     />
-    {{end}}
+    {{end}} {{ if and (eq .Section "blog") (.Params.author) }}
+    <meta name="author" content="{{ .Params.author }}" />
+    {{ end }}
 
     <meta property="og:url" content="{{ .Permalink }}" />
     <meta name="twitter:url" content="{{ .Permalink }}" />
