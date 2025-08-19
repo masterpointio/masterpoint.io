@@ -190,8 +190,7 @@ Using a distinct imports.tf file immediately clarifies which parts of your infra
 
 If you're migrating a large, existing system to TF incrementally, these import blocks, and the corresponding HCL you develop, effectively chart your progress.
 
-Want to know more about importing resources in TF? [Our article on breaking up Terraliths](/blog/steps-to-break-up-a-terralith/ talks through this topic a good bit.
-
+Want to know more about importing resources in TF? [Our article on breaking up Terraliths](/blog/steps-to-break-up-a-terralith/) talks through this topic a good bit.
 ## Supporting Configuration Files
 
 The previous files are extremely common across most TF projects we see and focus on your infrastructure. Let's look at other supporting types of files which connect your infrastructure to external services.
