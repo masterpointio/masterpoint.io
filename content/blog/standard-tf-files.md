@@ -260,7 +260,7 @@ Want to know all about versioning in Terraform and OpenTofu? Read our definitive
 
 ### .terraform.lock.hcl: The Dependency Lock File
 
-The .terraform.lock.hcl file is often overlooked, but it's important as it helps ensure consistent builds across environments. Unlike the previous files which you create manually, TF automatically generates and updates this lock file when you run terraform init. This file should only be used in root modules -- child modules should not have lock files. 
+The .terraform.lock.hcl file is often overlooked, but it's important as it helps ensure consistent builds across environments. Unlike the previous files which you create manually, TF automatically generates and updates this lock file when you run terraform init. This file should only be used in root modules -- child modules should not have lock files.
 
 Here's an example .terraform.lock.hcl file:
 
