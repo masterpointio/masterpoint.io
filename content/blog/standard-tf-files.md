@@ -24,7 +24,7 @@ This guide walks through the TF files you'll see in well-structured projects, wh
 
 Every TF project needs a main file (it doesn't technically need to be named main.tf but that is the industry convention). This file defines the actual infrastructure resources you're provisioning. When someone first looks at a TF project, they'll typically start here to understand what you're building.
 
-Before we go further, let's clarify some [basic terminology](/blog/terraform-opentofu-terminology-breakdown/). A TF project refers to your entire infrastructure codebase: everything in your repository including [root modules](/blog/terraform-opentofu-terminology-breakdown/#root-modules), [child modules](/blog/terraform-opentofu-terminology-breakdown/#child-modules), and supporting files. A TF module (Root module or child module) is a standalone, reusable collection of TF files that encapsulates specific functionality and can be used independently or consumed by other configurations. You might use a VPC module, an RDS module, and an ECS module within your project, but each module exists as its own complete unit.
+Before we go further, let's clarify some [basic terminology](/blog/terraform-opentofu-terminology-breakdown/). A TF project refers to your entire infrastructure codebase: everything in your repository including [root modules](/blog/terraform-opentofu-terminology-breakdown/#root-modules), [child modules](/blog/terraform-opentofu-terminology-breakdown/#child-modules), and supporting files. A TF module (root module or child module) is a standalone, reusable collection of TF files that encapsulates specific functionality and can be used independently or consumed by other configurations. You might use a VPC module, an RDS module, and an ECS module within your project, but each module exists as its own complete unit.
 
 The main.tf file should contain your core resource definitions without getting bogged down with variables, outputs, or provider configurations. For an AWS VPC module, you'd include resources like VPCs, subnets, route tables, and internet gateways here.
 
@@ -34,15 +34,14 @@ Here's an example of a main.tf file:
 
 ```hcl
 resource "aws_vpc" "this" {
-  cidr_block               = var.vpc_cidr
+  cidr_block           = var.vpc_cidr
   enable_dns_hostnames = true
-  tags                     = merge(var.tags, { Name = "${var.namespace}-vpc" })
+  tags                 = merge(var.tags, { Name = "${var.namespace}-vpc" })
 }
-
 resource "aws_subnet" "public" {
-  count                 = length(var.availability_zones)
-  vpc_id                = aws_vpc.this.id
-  cidr_block            = local.public_subnet_cidr_blocks[count.index]
+  count             = length(var.availability_zones)
+  vpc_id            = aws_vpc.this.id
+  cidr_block        = local.public_subnet_cidr_blocks[count.index]
   availability_zone = var.availability_zones[count.index]
 }
 ```
@@ -261,7 +260,7 @@ Want to know all about versioning in Terraform and OpenTofu? Read our definitive
 
 ### .terraform.lock.hcl: The Dependency Lock File
 
-The .terraform.lock.hcl file is often overlooked, but it's important as it helps ensure consistent builds across environments. Unlike the previous files which you create manually, TF automatically generates and updates this lock file when you run terraform init.
+The .terraform.lock.hcl file is often overlooked, but it's important as it helps ensure consistent builds across environments. Unlike the previous files which you create manually, TF automatically generates and updates this lock file when you run terraform init. This file should only be used in root modules -- child modules should not have lock files. 
 
 Here's an example .terraform.lock.hcl file:
 
@@ -288,7 +287,7 @@ Like package-lock files in other ecosystems, the .terraform.lock.hcl file should
 
 When new team members clone your repository, the lock file guarantees they'll use exactly the same provider versions during local development. Similarly, your CI/CD pipelines can rely on these locked dependencies for reproducible deployments.
 
-If you need to update providers to newer versions, the terraform init -upgrade command will refresh the lock file with the latest versions that satisfy the constraints in versions.tf.
+If you need to update providers to newer versions, the `terraform init -upgrade` command will refresh the lock file with the latest versions that satisfy the constraints in versions.tf.
 
 If your team works on multiple operating systems, use the following command whenever creating or updating your lock file:
 
@@ -337,9 +336,9 @@ While we've covered the standard files found in most TF projects, you may occasi
 Additional files make sense when they group related resources that form a logical component of your infrastructure. For example, in a complex networking module, you might keep your route tables in route_tables.tf and your network ACLs in nacls.tf, even though both technically contain networking resources that could belong in main.tf.
 
 ```bash
-├── main.tf               # Primary resources (VPC, subnets)
+├── main.tf           # Primary resources (VPC, subnets)
 ├── route_tables.tf   # Route tables and routes
-├── nacls.tf              # Network ACLs and rules
+├── nacls.tf          # Network ACLs and rules
 ├── variables.tf
 └── outputs.tf
 ```
@@ -354,7 +353,7 @@ Each module should do one thing well.
 
 ### Using context.tf for Project Metadata
 
-A lesser-known but valuable pattern in TF projects is using the context.tf file to provide standardized metadata and tagging. This approach, popularized by the Cloud Posse terraform-null-label module, ensures consistent naming + tagging across all your infrastructure resources.
+A lesser-known but valuable pattern in TF projects is using the context.tf file to provide standardized metadata and tagging. This approach, popularized by the Cloud Posse [terraform-null-label](https://github.com/cloudposse/terraform-null-label) module, ensures consistent naming + tagging across all your infrastructure resources.
 
 The context.tf file typically contains a module reference that standardizes tags, naming conventions, and other cross-cutting concerns:
 
