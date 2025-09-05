@@ -24,6 +24,9 @@ lint:
     - linters: [ALL]
       paths:
         - "**/PULL_REQUEST_TEMPLATE.md"
+        - assets/js/plugins.js
+        - assets/css/cookieconsent.min.scss
+        - assets/css/custom.scss
 runtimes:
   enabled:
     - go@1.21.0
