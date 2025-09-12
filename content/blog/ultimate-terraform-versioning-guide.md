@@ -5,9 +5,31 @@ title: "The Ultimate Terraform Versioning Guide"
 author: Veronika Gnilitska
 slug: ultimate-terraform-versioning-guide
 date: 2025-09-15
-description: At Masterpoint, we're particular about versioning strategies in Terraform and OpenTofu. TF is powerful, but its flexibility introduces challenges. Incorrect or inconsistent versioning of the TF CLI, providers, or modules can quickly escalate from minor inconveniences into major problems, impacting both local development and automated pipelines.
+description: A practical, no-fluff guide to versioning in Terraform/OpenTofu that helps you avoid the hidden traps of tool, provider, and module mismatches. If your team has ever faced surprises after “just updating Terraform” (or wants to prevent them), this guide is a must-read.
 image: /img/updates/tf-versioning-guide/main.jpeg
 ---
+
+<h2>Table of Contents</h2>
+
+- [Why Infrastructure Versioning Is Uniquely Complex](#why-infrastructure-versioning-is-uniquely-complex)
+  - [The State Trap](#the-state-trap)
+  - [The Cascade Effect](#the-cascade-effect)
+- [Common Issues Caused by Poor Versioning Practices](#common-issues-caused-by-poor-versioning-practices)
+- [Child Modules: Keep it Open](#child-modules-keep-it-open)
+  - [How to determine the minimum required versions?](#how-to-determine-the-minimum-required-versions)
+- [Root Modules: Be Precise](#root-modules-be-precise)
+  - [Handling Major Upgrades](#handling-major-upgrades)
+  - [Timing Your Upgrades: Bleeding Edge vs. Stability](#timing-your-upgrades-bleeding-edge-vs-stability)
+- [What Happens When Child Modules Conflict?](#what-happens-when-child-modules-conflict)
+- [Using Terraform Lock Files](#using-terraform-lock-files)
+- [Pinning Terraform for Your Organization with Aqua](#pinning-terraform-for-your-organization-with-aqua)
+- [Can I Automate Version Upgrades?](#can-i-automate-version-upgrades)
+  - [Renovate Configs](#renovate-configs)
+  - [What do these PRs actually look like?](#what-do-these-prs-actually-look-like)
+  - [Update Frequency Varies](#update-frequency-varies)
+  - [Confidence Through Testing](#confidence-through-testing)
+  - [Important Note](#important-note)
+- [Conclusion](#conclusion)
 
 At Masterpoint, we're particular about versioning strategies in Terraform and OpenTofu (collectively referred to from here on out as TF). TF is powerful, but its flexibility introduces challenges. Incorrect or inconsistent versioning of the TF CLI, providers, or modules can quickly escalate from minor inconveniences into major problems, impacting both local development and automated pipelines.
 
@@ -27,9 +49,9 @@ These challenges make infrastructure versioning less forgiving than traditional 
 
 ## Common Issues Caused by Poor Versioning Practices
 
-Imagine a team managing AWS Lambda functions with TF. Their setup used the [cloudposse/terraform-aws-lambda-function](http://terraform-aws-lambda-function) module, and since everything had been working smoothly, they decided to update the module to the latest version, without pinning it.
+Imagine a team managing AWS Lambda functions with TF. Their setup used the [cloudposse/terraform-aws-lambda-function](https://github.com/cloudposse/terraform-aws-lambda-function) module, and since everything had been working smoothly, they decided to update the module to the latest version, without pinning it.
 
-What they didn't realize was that the new module version introduced an internal change to how tags were passed to the CloudWatch submodule. This altered the naming of log groups, even though the team's TF configuration hadn't changed. When they ran `plan`, it showed something alarming: TF wanted to destroy and recreate the existing log groups ([GitHub Issue #78](https://github.com/cloudposse/terraform-aws-lambda-function/issues/78), [fix in v0.6.1](https://github.com/cloudposse/terraform-aws-lambda-function/releases/tag/0.6.1)). Had they applied the plan, they would've lost all historical logs for their Lambda functions – critical data for debugging, compliance, and audit trails.
+What they didn't realize was that the new module version introduced an internal change to how tags were passed to the CloudWatch submodule. This altered the naming of log groups, even though the team's TF configuration hadn't changed. When they ran `plan`, it showed something alarming: TF wanted to destroy and recreate the existing log groups ([GitHub Issue #78](https://github.com/cloudposse/terraform-aws-lambda-function/issues/78), [fix in v0.6.1](https://github.com/cloudposse/terraform-aws-lambda-function/releases/tag/v0.6.1)). Had they applied the plan, they would've lost all historical logs for their Lambda functions – critical data for debugging, compliance, and audit trails.
 
 Careless versioning can be a ticking time bomb. Symptoms range from confusing state file errors to providers introducing breaking changes that unexpectedly alter or even destroy resources. Let's take a closer look.
 
@@ -39,9 +61,9 @@ Careless versioning can be a ticking time bomb. Symptoms range from confusing st
 - **Provider Compatibility Problems**
   Providers, such as AWS or AzureRM, regularly introduce breaking changes. Incorrect provider version constraints often manifest as configuration errors, unexpected resource replacements, or sudden plan failures.
 
-  📝For example, [this issue](https://github.com/hashicorp/terraform-provider-aws/issues/41278) in AWS Provider v5.86.0 broke backwards compatibility in the S3 lifecycle configuration: users saw unexpected behavior due to a change in handling the `transition_default_minimum_object_size` attribute.
+  📝 For example, [this issue](https://github.com/hashicorp/terraform-provider-aws/issues/41278) in AWS Provider v5.86.0 broke backwards compatibility in the S3 lifecycle configuration: users saw unexpected behavior due to a change in handling the `transition_default_minimum_object_size` attribute.
 
-  📝In a different kind of failure, TF fails to read the state file because the [`aws_eks_addon`](https://registry.terraform.io/providers/hashicorp/aws/5.0.0/docs/resources/eks_addon) resource contains the argument `resolve_conflicts`, which is no longer recognized by the current AWS provider.
+  📝 In a different kind of failure, TF fails to read the state file because the [`aws_eks_addon`](https://registry.terraform.io/providers/hashicorp/aws/5.0.0/docs/resources/eks_addon) resource contains the argument `resolve_conflicts`, which is no longer recognized by the current AWS provider.
 
   ![Terraform error showing unrecognized argument resolve_conflicts](/img/updates/tf-versioning-guide/error.png)
 
@@ -207,7 +229,7 @@ When you run `aqua install`, it reads this file, downloads each listed CLI at th
 
 ## Can I Automate Version Upgrades?
 
-There are various tools to help you automate TF CLI, module, and provider version updates in a predictable and consistent way. We recommend adopting [Renovate](https://docs.renovatebot.com/) - a GitHub Action that runs on a set schedule, and helps to handle the grunt work - scanning your code, detecting outdated dependencies, and opening pull requests with version bumps and updated lock files. You get notified, review the changes, and merge when you're ready.
+There are various tools to help you automate TF CLI, module, and provider version updates in a predictable and consistent way. We recommend adopting [Renovate](https://docs.renovatebot.com/) —- a GitHub Action that runs on a set schedule, and helps to handle the grunt work -- scanning your code, detecting outdated dependencies, and opening pull requests with version bumps and updated lock files. You get notified, review the changes, and merge when you're ready.
 
 Here are some basic configuration examples to get you started.
 
@@ -275,7 +297,7 @@ Currently, Renovate's TF manager does **not** automatically update the `.terrafo
 }
 ```
 
-Check out our config in the open-source repository, which includes more managers and rules – [renovate.json](https://github.com/masterpointio/terraform-module-template/blob/main/.github/renovate.json5).
+Check out our config in the open-source repository, which includes more managers and rules -- [renovate.json](https://github.com/masterpointio/terraform-module-template/blob/main/.github/renovate.json5).
 
 ## Conclusion
 
