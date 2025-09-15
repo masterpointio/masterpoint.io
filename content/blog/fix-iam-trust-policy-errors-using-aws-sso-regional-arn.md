@@ -112,13 +112,13 @@ This reveals the critical information:
 }
 ```
 
-Notice the `/us-west-2/` in the path! When AWS SSO is configured outside of `us-east-1`, the role path includes the region. This means your condition pattern needs to account for this regional component.
+Notice the `/us-west-2/` in the path! When AWS IAM Identity Center & SSO is configured outside of `us-east-1`, the role path includes the region. This means your condition pattern needs to account for this regional component.
 
 **Your assumed role ARN**: `arn:aws:sts::111111111111:assumed-role/AWSReservedSSO_AWSAdministratorAccess_9999999999999999/user`
 
 **Actual IAM role ARN**: `arn:aws:iam::111111111111:role/aws-reserved/sso.amazonaws.com/us-west-2/AWSReservedSSO_AWSAdministratorAccess_9999999999999999`
 
-The trust policy pattern `arn:aws:iam::111111111111:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_AWSAdministratorAccess*` doesn't match because it's missing the `/us-west-2/` region component.
+Your trust policy should include the region in the path, exactly like the IAM role ARN above. It's worth noting that if Disaster Recovery (multi-region) is a priority or when using IaC such as Terraform, instead of hardcoding the region like us-west-2, it may be better to use `/*/` (which doesn't impose any security risks either). (e.g. `arn:aws:iam::*:role/aws-reserved/sso.amazonaws.com/*/AWSReservedSSO_AWSAdministratorAccess*`)
 
 ## Why This Gotcha / Edge Case Exists
 
@@ -128,7 +128,7 @@ As for why `us-east-1` doesn't have the regional path, it's likely because AWS c
 
 ## Example IAM Trust Policy
 
-Here's an example IAM trust policy that allows SSO users from the Administrator permission set to assume the target role:
+Here's an example IAM trust policy that allows SSO users from the Administrator permission set to assume the target role, if the IAM Identity Center is provisioned outside of `us-east-1`:
 
 ```json
 {
