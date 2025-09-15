@@ -16,7 +16,7 @@ You set up a trust policy that looks correct, references the correct SSO role AR
 
 It might be because of this critical gotcha edge case: region-specific paths in the SSO role ARNs.
 
-I faced this issue myself and found other [StackOverflow](https://stackoverflow.com/questions/73639007/allow-user-to-assume-an-iam-role-with-sso-login), [AWS re:Post](https://repost.aws/questions/QUpP-HDDmXT4C1YvjWvoVl_A/aws-identity-center-assumed-role-principals), and even [Reddit](https://www.reddit.com/r/aws/comments/1ml4zjn/trusting_external_customers_aws_idenitity_center/) posts of other engineers. It's buried in the [AWS documentation](https://docs.aws.amazon.com/singlesignon/latest/userguide/referencingpermissionsets.html) and easy to miss, so I'll cover it in this article to hopefully help others avoid scratching their heads for an hour like I did, and make it easily findable on the Internet.
+I faced this issue myself, along with others on [StackOverflow](https://stackoverflow.com/questions/73639007/allow-user-to-assume-an-iam-role-with-sso-login), [AWS re:Post](https://repost.aws/questions/QUpP-HDDmXT4C1YvjWvoVl_A/aws-identity-center-assumed-role-principals), and even [Reddit](https://www.reddit.com/r/aws/comments/1ml4zjn/trusting_external_customers_aws_idenitity_center/). It's buried in the [AWS documentation](https://docs.aws.amazon.com/singlesignon/latest/userguide/referencingpermissionsets.html) and easy to miss, so I'll cover it in this article to hopefully help others avoid scratching their heads for an hour like I did, and make it easily findable on the Internet.
 
 ## The Problem
 
