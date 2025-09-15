@@ -26,7 +26,7 @@ An user from the AWS IAM Identity Center assumed into the AWS SSO role, and shou
 
 `An error occurred (AccessDenied) when calling the AssumeRole operation: User: arn:aws:sts::123456789012:assumed-role/AWSReservedSSO_AWSAdministratorAccess_abc123def456/user@company.com is not authorized to perform: sts:AssumeRole on resource: arn:aws:iam::123456789012:role/target-role`
 
-Your trust policy looks correct, it allows an user from the `123456789012` account and where their current role begins with `AWSReservedSSO_AWSAdministratorAccess` to `AssumeRole` into the target role that this trust policy is attached to:
+Your trust policy looks correct, it allows an user from the `123456789012` account and where their current role is `AWSReservedSSO_AWSAdministratorAccess` to `AssumeRole` into the target role that this trust policy is attached to:
 
 ```json
 {
@@ -64,6 +64,7 @@ Here's the official AWS documentation that states this: [Referencing permission 
 **Actual role ARN in non-us-east-1 regions:**
 
 `arn:aws:iam::123456789012:role/aws-reserved/sso.amazonaws.com/AWS-REGION/AWSReservedSSO_RoleName_abc123`
+e.g. us-west-2:
 `arn:aws:iam::123456789012:role/aws-reserved/sso.amazonaws.com/us-west-2/AWSReservedSSO_RoleName_abc123`
 
 Notice the `/us-west-2/` component that gets injected into the path.
