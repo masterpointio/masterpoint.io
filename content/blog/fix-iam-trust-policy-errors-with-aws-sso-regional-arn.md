@@ -125,7 +125,7 @@ Unlike the AWS IAM service that handles IAM users, roles, policies, etc. which i
 
 As for why `us-east-1` doesn't have the regional path, it's likely because AWS considers it the default region and doesn't need to be specified and it's some legacy behavior when they first implemented it. There are other patterns like this, like even though AWS CloudFront is a "global" resource, it's still hosted in the `us-east-1` region. But, there's no documentation that explicitly states why this is, so this is an assumption.
 
-## Final Example IAM Trust Policy
+## Example IAM Trust Policy
 
 Here's an example IAM trust policy that allows SSO users from the Administrator permission set to assume the target role:
 
