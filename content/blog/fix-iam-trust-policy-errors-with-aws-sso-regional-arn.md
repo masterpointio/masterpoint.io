@@ -143,7 +143,7 @@ Here's an example IAM trust policy that allows SSO users from the Administrator 
           "aws:PrincipalArn": [
             // Instead of us-west-2, you can also use * to allow any region.
             // The wildcard (*) at the end of the ARN AWSReservedSSO_AWSAdministratorAccess* is also important, as there's no need to hardcode the randomly generated ID.
-            "arn:aws:iam::*:role/aws-reserved/us-west-2/sso.amazonaws.com/AWSReservedSSO_AWSAdministratorAccess*"
+            "arn:aws:iam::*:role/aws-reserved/sso.amazonaws.com/us-west-2/AWSReservedSSO_AWSAdministratorAccess*"
           ]
         }
       }
@@ -176,7 +176,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
         # Instead of us-west-2, you can also use * to allow any region.
         # The wildcard (*) at the end of the ARN AWSReservedSSO_AWSAdministratorAccess* is also important,
         # as there's no need to hardcode the randomly generated ID.
-        "arn:aws:iam::*:role/aws-reserved/us-west-2/sso.amazonaws.com/AWSReservedSSO_AWSAdministratorAccess*"
+        "arn:aws:iam::*:role/aws-reserved/sso.amazonaws.com/us-west-2/AWSReservedSSO_AWSAdministratorAccess*"
       ]
     }
   }
