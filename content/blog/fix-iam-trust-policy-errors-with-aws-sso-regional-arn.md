@@ -106,8 +106,8 @@ This reveals the critical information:
         "Path": "/aws-reserved/sso.amazonaws.com/",
         "RoleName": "AWSReservedSSO_AdministratorAccess_9999999999999999",
         "RoleId": "AROA3L3FW5XXXXXXXXXXX",
-        "Arn": "arn:aws:iam::111111111111:role/aws-reserved/sso.amazonaws.com/us-west-2/AWSReservedSSO_AdministratorAccess_9999999999999999", # Note the /us-west-2/ path here!
-        ... # other fields which are not relevant here
+        "Arn": "arn:aws:iam::111111111111:role/aws-reserved/sso.amazonaws.com/us-west-2/AWSReservedSSO_AdministratorAccess_9999999999999999", // Note the /us-west-2/ path here!
+        ... // other fields which are not relevant here
     }
 }
 ```
@@ -135,14 +135,14 @@ Here's an example IAM trust policy that allows SSO users from the Administrator 
     {
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::123456789012:root" # We can use this to allow multiple accounts.
+        "AWS": "arn:aws:iam::123456789012:root" // We can use this to allow multiple accounts.
       },
       "Action": ["sts:AssumeRole", "sts:TagSession"],
       "Condition": {
         "ArnLike": {
           "aws:PrincipalArn": [
-            # Instead of us-west-2, you can also use * to allow any region.
-            # The wildcard (*) at the end of the ARN AWSReservedSSO_AWSAdministratorAccess* is also important, as there's no need to hardcode the randomly generated ID.
+            // Instead of us-west-2, you can also use * to allow any region.
+            // The wildcard (*) at the end of the ARN AWSReservedSSO_AWSAdministratorAccess* is also important, as there's no need to hardcode the randomly generated ID.
             "arn:aws:iam::*:role/aws-reserved/us-west-2/sso.amazonaws.com/AWSReservedSSO_AWSAdministratorAccess*",
           ]
         }
