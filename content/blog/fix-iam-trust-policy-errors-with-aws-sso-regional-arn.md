@@ -64,6 +64,7 @@ Here's the official AWS documentation that states this: [Referencing permission 
 **Actual role ARN in non-us-east-1 regions:**
 
 `arn:aws:iam::123456789012:role/aws-reserved/sso.amazonaws.com/AWS-REGION/AWSReservedSSO_RoleName_abc123`
+
 e.g. us-west-2:
 `arn:aws:iam::123456789012:role/aws-reserved/sso.amazonaws.com/us-west-2/AWSReservedSSO_RoleName_abc123`
 
