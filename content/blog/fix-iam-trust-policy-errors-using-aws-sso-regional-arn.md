@@ -66,6 +66,7 @@ Here's the official AWS documentation that states this: [Referencing permission 
 `arn:aws:iam::123456789012:role/aws-reserved/sso.amazonaws.com/AWS-REGION/AWSReservedSSO_RoleName_abc123`
 
 e.g. us-west-2:
+
 ```json
 arn:aws:iam::123456789012:role/aws-reserved/sso.amazonaws.com/us-west-2/AWSReservedSSO_RoleName_abc123
 ```
@@ -121,6 +122,7 @@ Notice the `/us-west-2/` in the path! When AWS IAM Identity Center & SSO is conf
 **Actual IAM role ARN**: `arn:aws:iam::111111111111:role/aws-reserved/sso.amazonaws.com/us-west-2/AWSReservedSSO_AWSAdministratorAccess_9999999999999999`
 
 Your trust policy should include the region in the path, like the IAM role ARN above. It's worth noting that if Disaster Recovery (multi-region) is a priority or when using IaC such as Terraform, instead of hardcoding the region like us-west-2, it may be better to use `/*/` (which doesn't impose any security risks either), e.g.:
+
 ```json
 arn:aws:iam::*:role/aws-reserved/sso.amazonaws.com/*/AWSReservedSSO_AWSAdministratorAccess*
 ```
