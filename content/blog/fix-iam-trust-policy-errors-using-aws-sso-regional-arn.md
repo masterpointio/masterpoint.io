@@ -1,7 +1,7 @@
 ---
 visible: true
 draft: false
-title: "Fixing IAM Trust Policy Errors when using AWS IAM Identity Center SSO Role (Regional ARN, us-east-1 vs other regions)"
+title: "Fix IAM Trust Policy Errors using AWS IAM Identity Center SSO Role Regional ARN"
 author: Yangci Ou
 slug: fix-iam-trust-policy-errors-with-aws-sso-regional-arn
 date: 2025-09-17
@@ -16,7 +16,7 @@ You set up a trust policy that looks correct, references the correct SSO role AR
 
 It might be because of this critical gotcha edge case: region-specific paths in the SSO role ARNs.
 
-I faced this issue myself, along with others on [StackOverflow](https://stackoverflow.com/questions/73639007/allow-user-to-assume-an-iam-role-with-sso-login), [AWS re:Post](https://repost.aws/questions/QUpP-HDDmXT4C1YvjWvoVl_A/aws-identity-center-assumed-role-principals), and even [Reddit](https://www.reddit.com/r/aws/comments/1ml4zjn/trusting_external_customers_aws_idenitity_center/). It's buried in the [AWS documentation](https://docs.aws.amazon.com/singlesignon/latest/userguide/referencingpermissionsets.html) and easy to miss, so I'll cover it in this article to hopefully help others avoid scratching their heads for an hour like I did, and make it easily findable on the Internet.
+I faced this issue myself, along with others on [StackOverflow](https://stackoverflow.com/questions/73639007/allow-user-to-assume-an-iam-role-with-sso-login), [AWS re:Post](https://repost.aws/questions/QUpP-HDDmXT4C1YvjWvoVl_A/aws-identity-center-assumed-role-principals), and even [Reddit](https://www.reddit.com/r/aws/comments/1ml4zjn/trusting_external_customers_aws_idenitity_center/). When pairing with my colleague, Veronika, we asked ChatGPT to troubleshoot this, but even it was unable to provide the correct solution. It's a small but important piece of information that's buried in the [AWS documentation](https://docs.aws.amazon.com/singlesignon/latest/userguide/referencingpermissionsets.html) and easy to miss, so I'll cover it in this article to hopefully help others avoid scratching their heads for an hour like I did, and make it easily findable on the Internet.
 
 ## The Problem
 
@@ -143,8 +143,12 @@ Here's an example IAM trust policy that allows SSO users from the Administrator 
       "Condition": {
         "ArnLike": {
           "aws:PrincipalArn": [
-            // Instead of us-west-2, you can also use * to allow any region.
-            // The wildcard (*) at the end of the ARN AWSReservedSSO_AWSAdministratorAccess* is also important, as there's no need to hardcode the randomly generated ID.
+            // It's worth noting that if Disaster Recovery (multi-region) is a priority
+            // or when using IaC such as Terraform, instead of hardcoding the region like us-west-2,
+            // it may be better to use `/*/` (which doesn't impose any security risks either).
+
+            // The wildcard (*) at the end of the ARN AWSReservedSSO_AWSAdministratorAccess* is
+            // also important, as there's no need to hardcode the randomly generated ID.
             "arn:aws:iam::*:role/aws-reserved/sso.amazonaws.com/us-west-2/AWSReservedSSO_AWSAdministratorAccess*"
           ]
         }
@@ -175,7 +179,10 @@ data "aws_iam_policy_document" "assume_role_policy" {
       test     = "ArnLike"
       variable = "aws:PrincipalArn"
       values = [
-        # Instead of us-west-2, you can also use * to allow any region.
+        # It's worth noting that if Disaster Recovery (multi-region) is a priority
+        # or when using IaC such as Terraform, instead of hardcoding the region like us-west-2,
+        # it may be better to use `/*/` (which doesn't impose any security risks either).
+
         # The wildcard (*) at the end of the ARN AWSReservedSSO_AWSAdministratorAccess* is also important,
         # as there's no need to hardcode the randomly generated ID.
         "arn:aws:iam::*:role/aws-reserved/sso.amazonaws.com/us-west-2/AWSReservedSSO_AWSAdministratorAccess*"
