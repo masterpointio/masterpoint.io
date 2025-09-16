@@ -95,7 +95,7 @@ This will return something like:
 
 ### Step 2. Check the SSO role ARN
 
-Extract just the role name from the ARN: `AWSReservedSSO_AWSAdministratorAccess_9999999999999999` (this will be different for everyone) and now you retrieve information about the role:
+Extract just the role name from the ARN: `AWSReservedSSO_AWSAdministratorAccess_9999999999999999` (the suffix will be different for everyone) and now you retrieve information about the role:
 
 ```bash
 aws iam get-role --role-name AWSReservedSSO_AWSAdministratorAccess_9999999999999999
