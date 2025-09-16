@@ -69,10 +69,10 @@ Now let’s look at some advanced usage in action.
 
 For the infrastructure example, we’ll assume the following configuration:
 
-- A root module with a basic AWS VPC, subnet, and EC2 instance.
-- A simple, internal child module for organization-specific IAM configuration.
-- The [terraform-aws-rds-cluster](https://github.com/cloudposse/terraform-aws-rds-cluster) from Cloud Posse which implements `context.tf`.
-- The [context.tf](https://github.com/cloudposse/terraform-null-label/blob/main/exports/context.tf) mixin file provided by the [terraform-null-label](https://github.com/cloudposse/terraform-null-label/blob/main) module `exports/` folder.
+* A root module with a basic AWS VPC, subnet, and EC2 instance.
+* A simple, internal child module for organization-specific IAM configuration.
+* The [terraform-aws-rds-cluster](https://github.com/cloudposse/terraform-aws-rds-cluster) from Cloud Posse which implements `context.tf`.
+* The [context.tf](https://github.com/cloudposse/terraform-null-label/blob/main/exports/context.tf) mixin file provided by the [terraform-null-label](https://github.com/cloudposse/terraform-null-label/blob/main) module `exports/` folder.
 
 Here is the basic structure of the example configuration
 
