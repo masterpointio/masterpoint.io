@@ -9,6 +9,7 @@ description: "We dive into one of Terraform's most recent features to leverage i
 image: /img/updates/tf-check-blog-post.png
 callout: "<p>👋 <b>Interested in platform engineering for your organization</b>, but not sure where to start? <a href='/contact'>Get in touch,</a> we're an expert team of platform engineers who deliver high-quality cloud platforms for startups and SMBs looking to scale. We enable your application engineers to focus on your product and in turn generate more value for your business.</p><a href='/contact' class='button'>Get In Touch &rsaquo;</a>"
 ---
+
 <h2>Table of Contents</h2>
 
 - [Intro](#intro)
@@ -34,11 +35,12 @@ In this article, we'll be diving into this new feature, show you how it can be u
 Unlike the previously mentioned options, `check` blocks are not coupled with the lifecycle of a specific resource, data source, or variable. A check can validate any attribute of the infrastructure or the functionality of the resource itself in the Terraform runs.
 
 Here are some potential use cases to apply this feature:
+
 1. **Service state validation:** utilize the `check` block to confirm the operational status of services. For instance, you can verify that database instances, Kubernetes clusters, or virtual machines are up and running, ensuring the overall health of your infrastructure.
 1. **Endpoint confirmation:** leverage checks to validate endpoint connectivity. This involves sending an HTTP request and expecting a successful 200 response, ensuring that your services are accessible and available.
-2. **Out-of-band change detection:** an unanticipated change made outside Terraform can cause surprising failures, especially if it can't be detected via a built-in drift detection mechanism (for instance, when another root module manages a resource). Checks can come in handy to ensure deviations such as the expiration of a TLS certificate or authentication tokens won't create unforeseen interruptions.
-3. **Enforcing naming and tagging conventions:** maintaining a consistent set of tagging and naming conventions within your organization can be crucial. Use the `check` block feature to enforce these standards across your infrastructure, fostering uniformity and orderliness.
-4. **Upholding security best practices:** checks can help ensure adherence to security best practices within your infrastructure. For example, you can use it to verify that specific ports are closed, IAM configurations are properly set, and encryption is enabled, contributing to a more secure and robust environment.
+1. **Out-of-band change detection:** an unanticipated change made outside Terraform can cause surprising failures, especially if it can't be detected via a built-in drift detection mechanism (for instance, when another root module manages a resource). Checks can come in handy to ensure deviations such as the expiration of a TLS certificate or authentication tokens won't create unforeseen interruptions.
+1. **Enforcing naming and tagging conventions:** maintaining a consistent set of tagging and naming conventions within your organization can be crucial. Use the `check` block feature to enforce these standards across your infrastructure, fostering uniformity and orderliness.
+1. **Upholding security best practices:** checks can help ensure adherence to security best practices within your infrastructure. For example, you can use it to verify that specific ports are closed, IAM configurations are properly set, and encryption is enabled, contributing to a more secure and robust environment.
 
 ## Do I need this if I'm already testing my Terraform code?
 
@@ -59,6 +61,7 @@ So give it a try, assess your current validation and testing kit and determine s
 ## How can this be set up?
 
 Adding a simple check is trivial. Let’s assume we have a [root module](https://developer.hashicorp.com/terraform/language/modules#the-root-module) that manages AWS EKS cluster configuration and contains the resource `aws_eks_cluster`:
+
 ```hcl
 resource "aws_eks_cluster" "default" {
   name     = "my-cluster"
@@ -84,6 +87,7 @@ terraform {
 ```
 
 Let’s define a check that validates that our cluster instance is healthy and available:
+
 ```hcl
 check "aws_eks_cluster_default" {
   assert {
@@ -136,6 +140,7 @@ check "device" {
 ```
 
 Example of the failed assertion:
+
 ```sh
 Warning: Check block assertion failed
   on ../../../terraform-aws-tailscale/checks.tf line 19, in check "device":
@@ -150,11 +155,13 @@ The list of expected tags is: ["tag:mp-automation-tailscale-subnet-router"]
 ## Are there any potential pitfalls?
 
 We recommend paying attention to a couple of things:
-* While, by design, Terraform should not halt due to a check, **the use of a data source can increase the operation's execution time and might cause timeout errors** if Terraform fails to fetch it. Consider setting a retry limit if the provider offers this option.
-* As `terraform plan` and `terraform apply` represent different stages in the workflow, **the purpose of checks can also diverge into post-plan, post-apply, and the ones relevant for both cases**. We see great potential for improvement here, such as the possibility of labeling or ignoring checks for a particular stage so that checks could be built-in as smoothly as possible.
+
+- While, by design, Terraform should not halt due to a check, **the use of a data source can increase the operation's execution time and might cause timeout errors** if Terraform fails to fetch it. Consider setting a retry limit if the provider offers this option.
+- As `terraform plan` and `terraform apply` represent different stages in the workflow, **the purpose of checks can also diverge into post-plan, post-apply, and the ones relevant for both cases**. We see great potential for improvement here, such as the possibility of labeling or ignoring checks for a particular stage so that checks could be built-in as smoothly as possible.
 
 In addition to that we've faced some limitations with data source usage in the assertsions.
-* In case of a successful assertion, **Terraform requires approval for every `apply` operation** due to a configuration reload needed to verify a check block, e.g.:
+
+- In case of a successful assertion, **Terraform requires approval for every `apply` operation** due to a configuration reload needed to verify a check block, e.g.:
 
   ```sh
   Terraform will perform the following actions:
@@ -182,7 +189,8 @@ In addition to that we've faced some limitations with data source usage in the a
     Enter a value:
   ```
 
-* Unfortunately, it's possible to define only one data source per check at the moment, and **multiple data resource blocks are not supported**. Otherwise, the error will be thrown:
+- Unfortunately, it's possible to define only one data source per check at the moment, and **multiple data resource blocks are not supported**. Otherwise, the error will be thrown:
+
   ```sh
   This check block already has a data resource defined at main.tf:83,3-27.
   ```
@@ -203,6 +211,6 @@ As we were wrapping up this blog post, the Terraform team has released a preview
 
 ## References
 
-* [GitHub - Release notes for hashicorp/terraform v1.5.0](https://github.com/hashicorp/terraform/releases/tag/v1.5.0)
-* [Terraform Configuration Language - Checks with Assertions](https://developer.hashicorp.com/terraform/language/expressions/custom-conditions#checks-with-assertions)
-* [Terraform Tutorials - Use Checks to Validate Infrastructure](https://developer.hashicorp.com/terraform/tutorials/configuration-language/checks)
+- [GitHub - Release notes for hashicorp/terraform v1.5.0](https://github.com/hashicorp/terraform/releases/tag/v1.5.0)
+- [Terraform Configuration Language - Checks with Assertions](https://developer.hashicorp.com/terraform/language/expressions/custom-conditions#checks-with-assertions)
+- [Terraform Tutorials - Use Checks to Validate Infrastructure](https://developer.hashicorp.com/terraform/tutorials/configuration-language/checks)

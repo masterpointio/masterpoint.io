@@ -11,6 +11,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 ---
 
 ## Table of Contents
+
 - [Quick Note](#quick-note)
 - [Introduction](#introduction)
 - [Demo / Walk Through](#demo--walk-through)
@@ -19,23 +20,25 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
   - [Debugging terraform apply](#debugging-terraform-apply)
 - [Takeaways](#takeaways)
 
-
 <br>
 
 ## Quick Note
+
 We’re diverging from the typical Masterpoint beat and looking at an emerging trend: MCPs in agentic workflows and how it relates to Infrastructure as Code (IaC). Our goal is to share what we’re learning and experimenting with in the AI realm.
 
 We’re specifically interested in:
-- roles and responsibilities that AI agents might take on  
-- security boundaries required to keep client infra safe  
+
+- roles and responsibilities that AI agents might take on
+- security boundaries required to keep client infra safe
 - ways new tech can simplify how clients manage IaC
 
 <br>
 
 # Introduction
+
 You might have heard about Anthropic’s [Model Context Protocol](https://modelcontextprotocol.io/introduction) (MCP) and their implementation as MCP clients or servers (MCPs) — they’ve been gaining attention in the agentic workflow space. At a high level, MCP clients/servers act as universal connectors between your AI tool of choice (like Cursor or Claude Desktop) and the tools, APIs, and data sources you want the agent to work with.
 
-You might be asking yourself, “*Where do MCPs provide value for the average person?*” Here are a couple of examples I’m thinking about using MCPs to streamline my work days,
+You might be asking yourself, “_Where do MCPs provide value for the average person?_” Here are a couple of examples I’m thinking about using MCPs to streamline my work days,
 
 - **Sprint planning admin work.** Imagine passing a sprint planning task into your Cursor Agent chat, have AI review the task’s description and acceptance criteria for grammar clarity, and then have a [Notion MCP](https://github.com/makenotion/notion-mcp-server) add the task as a Story in the client specific Epic filling in the relevant Notion fields.
 
@@ -51,8 +54,8 @@ You might be asking yourself, “*Where do MCPs provide value for the average pe
 
   The AI then instructs Figma to adjust that element, retrieves the updated asset, and makes it available for use in your code.
 
-
 The core idea is that MCPs enable AIs to securely connect to your accounts, services, and APIs - accessing authenticated data and performing tasks on your behalf. If you’re just getting up to speed, we recommend these resources:
+
 - Explainer video on YouTube: [Model Context Protocol (MCP)](https://www.youtube.com/watch?v=5ZWeCKY5WZE)
 - Article on Substack: [What is MCP and Why it Matters](https://addyo.substack.com/p/mcp-what-it-is-and-why-it-matters)
 
@@ -63,27 +66,26 @@ The core idea is that MCPs enable AIs to securely connect to your accounts, serv
 
 To explore how and where agents with MCPs can take on more responsibilities within the Infrastructure as Code realm, I ran a small experiment using a Terraform MCP client — [tfmcp](https://github.com/nwiizo/tfmcp) — to run commands like `init`, `plan`, and `apply` on my local computer.
 
-My example infrastructure use-case for this experiment was to  create a Postgres database, a schema, and give an app user scoped read/write access — just enough to get a feel for using an MCP client in practice.
+My example infrastructure use-case for this experiment was to create a Postgres database, a schema, and give an app user scoped read/write access — just enough to get a feel for using an MCP client in practice.
 
 ### MCP configuration
+
 To get started, I needed to configure a few things:
 
 1. **Install tfmcp.** I followed the install instructions in the [tfmcp's README](https://github.com/nwiizo/tfmcp/tree/b0fcc5c32f4bf0a71f373dd18891ce9faf36f09b?tab=readme-ov-file#installation).
 
-2. **Set up tfmcp in Cursor.** I followed [Cursor’s instructions](https://docs.cursor.com/context/model-context-protocol\#configuring-mcp-servers]) and plugged in the relevant tfmcp settings (see example `mcp.json`).
+2. **Set up tfmcp in Cursor.** I followed [Cursor’s instructions](https://docs.cursor.com/context/model-context-protocol#configuring-mcp-servers]) and plugged in the relevant tfmcp settings (see example `mcp.json`).
 
 3. **Configure tfmcp to run Terraform commands in the desired directory.** For this config I needed to tell tfmcp where my terraform was located and add my homebrew install location to the tfmcp path (again, see example `mcp.json`).
 
-
 Example Cursor `mcp.json` config file
+
 ```json
 {
   "mcpServers": {
     "tfmcp": {
       "command": "/Users/weston/clients/westonplatter/tfmcp/target/release/tfmcp",
-      "args": [
-        "mcp"
-      ],
+      "args": ["mcp"],
       "env": {
         "HOME": "/Users/weston",
         "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin",
@@ -91,71 +93,71 @@ Example Cursor `mcp.json` config file
       }
     }
   }
-} 
+}
 ```
-
 
 ### Terraform code
 
 From there, I added a `main.tf` file in the configured `TERRAFORM_DIR` and wrote some basic terraform code to provision the Postgres resources:
 
-* **Terraform block**: sets the required provider, `cyrilgdn/postgresql`
-* **Provider config**: connects to a local Postgres instance as `admin_user`
-* **Postgres Role resource**: creates a login-enabled role for the app
-* **Postgres Database resource**: creates a DB owned by the app role
-* **Schema resource**: creates a schema in the DB owned by the app role
+- **Terraform block**: sets the required provider, `cyrilgdn/postgresql`
+- **Provider config**: connects to a local Postgres instance as `admin_user`
+- **Postgres Role resource**: creates a login-enabled role for the app
+- **Postgres Database resource**: creates a DB owned by the app role
+- **Schema resource**: creates a schema in the DB owned by the app role
 
 ```terraform
 # declare terraform providers
 terraform {
- required_providers {  
-   postgresql  = {  
+ required_providers {
+   postgresql  = {
      source    = "cyrilgdn/postgresql"
      version   = "1.25.0"
-   }  
- }  
+   }
+ }
 }
 
 # configure the postgres provider with auth credentials for the postgres db
-provider "postgresql" {  
+provider "postgresql" {
  host             = "localhost"
- port             = 5432  
- database         = "postgres"  
- username         = "admin_user"  
- password         = ""  
- sslmode          = "disable"  
- connect_timeout  = 15  
+ port             = 5432
+ database         = "postgres"
+ username         = "admin_user"
+ password         = ""
+ sslmode          = "disable"
+ connect_timeout  = 15
 }
 
-# create a role for the app  
-resource "postgresql_role" "app_role" {  
+# create a role for the app
+resource "postgresql_role" "app_role" {
  name     = "app_role"
- login    = true  
+ login    = true
  password = "mypass" # intentionally insecure password for demo
 }
 
 # create a database for the app
-resource "postgresql_database" "app_db" {  
-  name                   = "app_db"  
-  owner                  = postgresql_role.app_role.name  
-  template               = "template0"  
-  lc_collate             = "C"  
-  connection_limit       = -1  
-  allow_connections      = true  
-  alter_object_ownership = true  
+resource "postgresql_database" "app_db" {
+  name                   = "app_db"
+  owner                  = postgresql_role.app_role.name
+  template               = "template0"
+  lc_collate             = "C"
+  connection_limit       = -1
+  allow_connections      = true
+  alter_object_ownership = true
 }
 
-# create a schema for the app  
-resource "postgresql_schema" "app_schema" {  
-  name     = "app_schema"  
-  owner    = postgresql_role.app_role.name  
-  database = postgresql_database.app_db.name  
+# create a schema for the app
+resource "postgresql_schema" "app_schema" {
+  name     = "app_schema"
+  owner    = postgresql_role.app_role.name
+  database = postgresql_database.app_db.name
 }
 ```
 
 <br>
 
 ### Debugging terraform apply
+
 At this point, I was ready for the agent to run terraform plan and apply my changes. And here is where the rubber meets the road in using MCPs 🙂. Here’s what I ran into:
 
 **The first issue** was a permissions error — `admin_user` couldn’t create Postgres roles. This issue was totally my fault — I hadn’t granted it any meaningful privileges. I had Cursor run `terraform apply` via the MCP, but it didn't report back if the apply was successful. I think we're in the **very early** stages of MCP workflows and usability concerns like surfacing logs and interpreting errors needs more attention to reduce friction.
@@ -175,13 +177,11 @@ After retrying a couple times, the Cursor Agent Mode suggested I run `terraform 
 Cursor suggesting run terraform apply Run Tool
 {{< lightboximg "/img/updates/using-mcps-to-run-terraform/debug3.png" "Cursor suggesting run terraform apply Run Tool" >}}
 
-
 Cursor suggests setting `superuser = false`
 {{< lightboximg "/img/updates/using-mcps-to-run-terraform/debug4.png" "Cursor suggests fix for the error" >}}
 
 Cursor successfully running terraform apply
 {{< lightboximg "/img/updates/using-mcps-to-run-terraform/debug5.png" "Cursor successfully ran terraform apply" >}}
-
 
 Both issues were pretty minor, and while tfmcp made it possible to run Terraform via the agent, it didn’t really make the workflow easier. The real value came from Cursor’s Agent mode — it read the CLI errors, interpreted them, and proposed fixes. That’s where the magic is starting to show.
 
@@ -203,21 +203,20 @@ My takeaways from the experience:
 
 ## The Hidden Risks
 
-One last - but critical - consideration around MPCs is security.  MCPs have unique attack surfaces with the tools, prompts, and resources they provide. However, this is nothing new when compared to using open source packages from the internet. We've seen malicious code [in node/NPM packages](https://cycode.com/blog/malicious-code-hidden-in-npm-packages/), [ruby gems](https://www.sonatype.com/blog/rubygems-laced-with-bitcoin-stealing-malware), and [python packages](https://unit42.paloaltonetworks.com/malicious-packages-in-pypi/). You’re running another dev’s code on your machine, and that means you could easily run malicious code if it’s in the MCP. We found [this post](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks) by **Invariant Labs** helpful in describing 3 creative Tool Poisoning attacks.
-
+One last - but critical - consideration around MPCs is security. MCPs have unique attack surfaces with the tools, prompts, and resources they provide. However, this is nothing new when compared to using open source packages from the internet. We've seen malicious code [in node/NPM packages](https://cycode.com/blog/malicious-code-hidden-in-npm-packages/), [ruby gems](https://www.sonatype.com/blog/rubygems-laced-with-bitcoin-stealing-malware), and [python packages](https://unit42.paloaltonetworks.com/malicious-packages-in-pypi/). You’re running another dev’s code on your machine, and that means you could easily run malicious code if it’s in the MCP. We found [this post](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks) by **Invariant Labs** helpful in describing 3 creative Tool Poisoning attacks.
 
 <!-- ## (Appendeix) Instructions to Fully Replicate the Experiment
 If you're interested in running the example same experiment, here are waypoints to follow,
 
-- Create admin\_role with no privileges  
-- Run terraform apply via MCP  
-- Expect to get failures with no surfaced error messages  
-- Add privileges to admin\_user role  
-  - CREATEROLE  
-  - CREATEDB  
-- Run terraform apply via MCP  
-- Expect to get failures with no surfaced error messages  
-- Have Cursor Agent run terraform apply via the CLI  
-- Make superuser \= false change in provider  
-- Have Cursor Agent run terraform apply via the CLI  
+- Create admin\_role with no privileges
+- Run terraform apply via MCP
+- Expect to get failures with no surfaced error messages
+- Add privileges to admin\_user role
+  - CREATEROLE
+  - CREATEDB
+- Run terraform apply via MCP
+- Expect to get failures with no surfaced error messages
+- Have Cursor Agent run terraform apply via the CLI
+- Make superuser \= false change in provider
+- Have Cursor Agent run terraform apply via the CLI
 - Expect successful apply -->

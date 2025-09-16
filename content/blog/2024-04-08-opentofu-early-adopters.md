@@ -18,7 +18,7 @@ If you’re not familiar with OpenTofu, the project started shortly after [Hashi
 
 ### Why the Migration?
 
-The question of why we did the migration has come up in conversation repeatedly.  It comes down to three reasons:
+The question of why we did the migration has come up in conversation repeatedly. It comes down to three reasons:
 
 1. At Masterpoint, we emphasize and prioritize open-source in our engagements because open-source tooling and communities drive more value faster, ensure the solutions we deliver are secure, and provide clients with long-term support. As a result, we are dedicated open-source developers, contributors, and maintainers in the Terraform and Platform Engineering ecosystem. Truly open-source tooling like OpenTofu aligns with our values.
 2. Regardless of how much we love open-source, we do recognize that certain projects and scenarios call for paid SaaS tools. **[Spacelift](https://spacelift.io/)** (an IaC Continuous Delivery tool) is one such tool that we’ve used in a number of our client projects. It allows us to deliver great results for our clients without reinventing the wheel with our own pipelines. Since Spacelift can no longer use Terraform v1.6 and above (which are the versions affected by the HashiCorp BSL change), if we wanted to upgrade Terraform then we needed to migrate our pipelines off of Spacelift to Terraform Cloud or another solution. That wasn’t acceptable to us. Instead we chose to migrate off of Terraform and on to OpenTofu, which Spacelift supports, allowing us to stick with tooling we are happy with.
@@ -53,11 +53,11 @@ To give you a visual understanding, here is our internal TF Automation diagram f
 
 The transition to OpenTofu was impressively smooth, with our normal Terraform code requiring **not a single change** to support compatibility with the new CLI tool, `tofu`, and the OpenTofu framework. We were blown away by that! The version we migrated to, [OpenTofu 1.6.1](https://github.com/opentofu/opentofu/releases/tag/v1.6.1), was only the 2nd release of the project, so we expected to run into at least one issue. We were pleasantly surprised. The compatibility between `tofu` and `terraform` out of the gate underscores the OpenTofu team’s serious chops and ability to deliver a reliable tool.
 
-Now just because OpenTofu was able to run all of our Terraform code, that doesn’t mean we didn’t need to make any changes at all. Using OpenTofu isn’t like waving a magic wand. To support it in our environment, we needed to update our Atmos and Spacelift configurations to execute `tofu`  instead of `terraform`. And since OpenTofu was so new, we upstreamed fixes for some niggling issues. 
+Now just because OpenTofu was able to run all of our Terraform code, that doesn’t mean we didn’t need to make any changes at all. Using OpenTofu isn’t like waving a magic wand. To support it in our environment, we needed to update our Atmos and Spacelift configurations to execute `tofu` instead of `terraform`. And since OpenTofu was so new, we upstreamed fixes for some niggling issues.
 
 Here are the details of those changes:
 
-1. We had to add OpenTofu to our project so  our team members had access to the binary. Since we’re using [aqua](https://aquaproj.github.io/), this was as simple as running the command `aqua generate -i opentofu/opentofu` and committing the update!
+1. We had to add OpenTofu to our project so our team members had access to the binary. Since we’re using [aqua](https://aquaproj.github.io/), this was as simple as running the command `aqua generate -i opentofu/opentofu` and committing the update!
 2. We had to update the `terraform-spacelift-cloud-infrastructure-automation` module to support setting the ["workflow tool" argument](https://registry.terraform.io/providers/spacelift-io/spacelift/latest/docs/resources/stack#terraform_workflow_tool) to a new `OPEN_TOFU` value. After we upgraded our internal usage of that module, this change enabled us to designate OpenTofu as our preferred tool, instead of Terraform. [The open source PR for that module change was made here](https://github.com/cloudposse/terraform-spacelift-cloud-infrastructure-automation/pull/162).
 3. We had to update our atmos configuration to ensure that atmos commands executed `tofu` and not `terraform`.
 4. Critically, we had to pass the `OPEN_TOFU` workflow tool value to Spacelift. This required the following changes in our base atmos `_defaults.yaml` file:
@@ -67,16 +67,13 @@ terraform:
   command: tofu
   settings:
     spacelift:
-
       # Tofu > Terraform
       terraform_workflow_tool: OPEN_TOFU
-
 ```
-
 
 {{< lightboximg "/img/updates/opentofu-early-adopters/pr-header.png" "Pull Request Description for my changes to introduce OpenTofu" >}}
 
-And that was it! Once that PR got merged, all of our Spacelift Automation and local usage of Atmos changed over to  OpenTofu and we were done! 🏁
+And that was it! Once that PR got merged, all of our Spacelift Automation and local usage of Atmos changed over to OpenTofu and we were done! 🏁
 
 ### How Long Did It Take?
 
@@ -89,9 +86,9 @@ As mentioned above, we manage thousands of resources, over 90 workspaces, 39,000
 Our migration journey has been very positive. We’ve only hit a couple minor issues that were quickly addressed:
 
 1. GPG Key signing support for non-mainstream providers is still a WIP. This results in tiny warnings like the screenshot; we find these to be an eyesore and prefer our logs to be clean to avoid missing any true issues. Luckily, for such providers, we’ve opened issues and it appears these will be fixed very soon:
-    1. [https://github.com/carlpett/terraform-provider-sops/issues/115](https://github.com/carlpett/terraform-provider-sops/issues/115) – Fixed!
-    2. [https://github.com/cloudposse/terraform-provider-utils/issues/344](https://github.com/cloudposse/terraform-provider-utils/issues/344) ([@kevcube](https://github.com/kevcube) is a Masterpoint engineer) – Fixed!
-    3. [https://github.com/tailscale/terraform-provider-tailscale/issues/335](https://github.com/tailscale/terraform-provider-tailscale/issues/335) – Open (as of the time of writing)
+   1. [https://github.com/carlpett/terraform-provider-sops/issues/115](https://github.com/carlpett/terraform-provider-sops/issues/115) – Fixed!
+   2. [https://github.com/cloudposse/terraform-provider-utils/issues/344](https://github.com/cloudposse/terraform-provider-utils/issues/344) ([@kevcube](https://github.com/kevcube) is a Masterpoint engineer) – Fixed!
+   3. [https://github.com/tailscale/terraform-provider-tailscale/issues/335](https://github.com/tailscale/terraform-provider-tailscale/issues/335) – Open (as of the time of writing)
       {{< lightboximg "/img/updates/opentofu-early-adopters/gpg-key-warning.png" "An example GPG Key Warning" >}}
 1. About 3 weeks into our usage of OpenTofu, we ran into an issue related using a recently published version of one of our own modules, [masterpointio/terraform-aws-tailscale](https://github.com/masterpointio/terraform-aws-tailscale). The problem was discussed[(you can view it in the OpenTofu Slack here)](https://opentofucommunity.slack.com/archives/C05R0FD0VRU/p1708463312128849) but the core of the issue is that a hiccup in the OpenTofu registry caused our newly published module to not show up until the registry was manually poked. The OpenTofu team was very responsive and helpful in getting this solved and it was fixed within a few hours. We were very appreciative of this short time to resolution. To me, it seems like that team is continuing to work through the outlier bugs in the registry which is understandable considering how new it is. Given the quick fix too, I find this to be a very acceptable problem!
 

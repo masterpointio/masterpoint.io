@@ -18,9 +18,9 @@ Why? Because when you do that, you unlock a new level of consistency and reliabi
 
 In this article, we're going to highlight some resources you might be surprised to learn can be managed:
 
-* users
-* Git repos
-* monitoring and alerting configuration
+- users
+- Git repos
+- monitoring and alerting configuration
 
 Hopefully, your takeaway is the same thing we preach to everyone we work with: if you want a solid platform, use IaC for _everything_.
 
@@ -34,7 +34,7 @@ Managing user accounts and roles across multiple SaaS products can be a real hea
 
 Before we look at an example, it's worth noting that many SaaS vendors seem to have missed the memo on the importance of SSO for security. As highlighted by [The SSO Wall of Shame](https://sso.tax/), many vendors offer SSO but treat it as a premium feature, bundling it with expensive "Enterprise" pricing tiers or charging multiple times the base product price for the functionality. This practice disincentivizes the use of SSO and encourages poor security practices, especially for smaller organizations that may not have the budget for the higher-tier plans.
 
-In a typical software engineering organization, there are likely several service platforms that require managing users and access levels. A common, bare-minimum stack might include AWS, GitHub, CloudFlare, and Datadog for starters. For teams without the benefit of SSO, access to these services is a cumbersome task to manage manually. Each time a team member joins or leaves the organization means one person needs to log in to all of these platforms and add or remove that team member.  With TF, you can centralize users and identity management and make life much easier (and more secure).
+In a typical software engineering organization, there are likely several service platforms that require managing users and access levels. A common, bare-minimum stack might include AWS, GitHub, CloudFlare, and Datadog for starters. For teams without the benefit of SSO, access to these services is a cumbersome task to manage manually. Each time a team member joins or leaves the organization means one person needs to log in to all of these platforms and add or remove that team member. With TF, you can centralize users and identity management and make life much easier (and more secure).
 
 For AWS users, AWS offers [IAM Identity Center](https://aws.amazon.com/iam/identity-center/) (formerly AWS SSO), which simplifies AWS account and role management. But for organizations that haven't jumped on the SSO bandwagon yet, or are using a mix of services with and without SSO support, TF can standardize onboarding and offboarding regardless of vendor. By defining users and roles in a `team.yaml` file, TF Root Modules can automatically create and manage these entities across all the different platforms you're using.
 
@@ -143,13 +143,13 @@ module "repositories" {
 
 Another task engineers often get stuck with: setting up monitoring and alerting configurations manually. It is no surprise that this leads to a hodgepodge of inconsistent thresholds and settings across different services and stacks. Without a standardized approach, similar application deployments may have different criteria for what constitutes an alert, making it difficult to ensure that best practices are being followed consistently. This lack of uniformity can lead to noisy or missing alerts and make it harder to manage monitoring at scale.
 
-But there's a better way! Managing your metric thresholds and alert configurations via code enables shared context across your teams. It makes it  easier for a developer to add a new alert or modify an existing one that's been driving everyone crazy with false positives. Managing this integration layer this way also avoids “ClickOps”: using provider UIs to deploy complex infrastructure. Instead, application resources _and their monitoring configurations_ can be provisioned in code, as well as versioned together.
+But there's a better way! Managing your metric thresholds and alert configurations via code enables shared context across your teams. It makes it easier for a developer to add a new alert or modify an existing one that's been driving everyone crazy with false positives. Managing this integration layer this way also avoids “ClickOps”: using provider UIs to deploy complex infrastructure. Instead, application resources _and their monitoring configurations_ can be provisioned in code, as well as versioned together.
 
 We’re big fans, contributors, and maintainers of the Cloud Posse Module library, and luckily that module library includes two great modules for this use-case: the [terraform-datadog-platform](https://github.com/cloudposse/terraform-datadog-platform) and [terraform-aws-datadog-integration](https://github.com/cloudposse/terraform-aws-datadog-integration) modules. We utilize the integration module to activate the initial integration between our target AWS accounts and a Datadog account, and the platform module to configure a variety of Datadog resources, including:
 
-* monitors
-* synthetics
-* and more
+- monitors
+- synthetics
+- and more
 
 Here is an example of a monitor configuration that we use with many clients:
 
@@ -197,6 +197,6 @@ Defining monitoring inside IaC not only improves the consistency of your platfor
 
 ## Conclusion
 
-Infrastructure as Code (IaC) is a powerful tool that makes managing software infrastructure much easier; unfortunately we often see engineering teams that don’t go all the way with it. Don’t get us wrong: using IaC to deploy application infrastructure like containers and databases is a massive win, but not using it for things like repositories and monitoring is missing out on a huge part of the value proposition. This is why we use TF after all: so we can translate more than just our compute and storage  into code.
+Infrastructure as Code (IaC) is a powerful tool that makes managing software infrastructure much easier; unfortunately we often see engineering teams that don’t go all the way with it. Don’t get us wrong: using IaC to deploy application infrastructure like containers and databases is a massive win, but not using it for things like repositories and monitoring is missing out on a huge part of the value proposition. This is why we use TF after all: so we can translate more than just our compute and storage into code.
 
 Making the transition to **fully** automated infrastructure requires a committed effort from engineers, but the benefits are clear. By leveraging IaC to its full potential, you can create platforms that are more reliable, more efficient, and better able to scale as your organization and applications do.

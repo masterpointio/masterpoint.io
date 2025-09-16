@@ -159,31 +159,33 @@ Going back to our example, what if we needed to deploy another internal load bal
 
 By passing in the context output from the first label module, all of the original values are present, with only the defined ones overridden. With that, you get:
 
-* `module.public_alb_label.id` equates to `mp-uw2-prod-alb-public`
-* `module.public_alb_label.tags` equates to:
+- `module.public_alb_label.id` equates to `mp-uw2-prod-alb-public`
+- `module.public_alb_label.tags` equates to:
 
-   ```yaml
-   Namespace: "mp"
-   Environment: "uw2"
-   Stage: "prod"
-   Name: "alb"
-   Attributes: "public"
-   BusinessUnit: "ENG"
-   Team: "Reporting"
-   ManagedByTerraform: "True"
+  ```yaml
+  Namespace: "mp"
+  Environment: "uw2"
+  Stage: "prod"
+  Name: "alb"
+  Attributes: "public"
+  BusinessUnit: "ENG"
+  Team: "Reporting"
+  ManagedByTerraform: "True"
+  ```
 
-* `module.private_alb_label.id` equates to `mp-uw2-prod-alb-private`
-* `module.private_alb_label.tags` equates to:
+- `module.private_alb_label.id` equates to `mp-uw2-prod-alb-private`
+- `module.private_alb_label.tags` equates to:
 
-   ```yaml
-   Namespace: "mp"
-   Environment: "uw2"
-   Stage: "prod"
-   Name: "alb"
-   Attributes: "private"
-   BusinessUnit: "ENG"
-   Team: "Reporting"
-   ManagedByTerraform: "True"
+  ```yaml
+  Namespace: "mp"
+  Environment: "uw2"
+  Stage: "prod"
+  Name: "alb"
+  Attributes: "private"
+  BusinessUnit: "ENG"
+  Team: "Reporting"
+  ManagedByTerraform: "True"
+  ```
 
 The new label module only needs to have new values defined; the previous values are still present and do not need to be redefined.
 
