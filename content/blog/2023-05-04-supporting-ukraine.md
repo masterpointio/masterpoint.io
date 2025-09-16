@@ -4,6 +4,7 @@ draft: false
 title: Supporting Ukraine
 author: Matt Gowie
 date: 2023-05-04
+slug: supporting-ukraine
 description: At Masterpoint, we stand with Ukraine in the ongoing, unjust
   invasion from Russia. We have a full-time team member in Kyiv, as well as
   close colleagues and friends there, which makes this issue particularly close
