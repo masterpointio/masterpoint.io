@@ -4,6 +4,7 @@ draft: false
 title: "Three Terraform Use-cases You Need to Start Implementing"
 author: Matt Gowie
 date: 2024-05-13
+slug: terraform-use-cases
 description: "Engineering orgs that use IaC tools like Terraform aren’t typically maximizing their leverage. This article highlights at least three uses of Terraform and IaC automation that don’t necessarily center around traditional application workload infrastructure."
 image: /img/updates/tf-use-cases.jpeg
 callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a>
