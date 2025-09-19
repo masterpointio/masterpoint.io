@@ -5,7 +5,6 @@ title: "How to Migrate off Terraform Cloud"
 author: Veronika Gnilitska
 slug: how-to-migrate-off-tfc
 date: 2024-10-10
-# date_modified: Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: "Need to to migrate off Terraform Cloud? We're happy to share some tips about preparation, pitfalls, and the process itself based on Masterpoint's experience."
 image: /img/updates/migrate-off-tfc/main.webp
 preview_image: /img/updates/migrate-off-tfc/preview.webp

@@ -5,7 +5,6 @@ title: Terraform + OpenTofu Terminology Breakdown
 slug: terraform-opentofu-terminology-breakdown
 author: Matt Gowie
 date: 2025-05-21
-# date_modified: Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: List of Terraform and OpenTofu terms with definitions and explanations.
 image: /img/updates/tf-terminology-breakdown.png
 callout: <p>👋 <b>Got a term that you're still confused on in the TF or IaC space that you want us to include here? <a href='/contact'>Get in touch and we'd be happy to add it!</a></b></p>

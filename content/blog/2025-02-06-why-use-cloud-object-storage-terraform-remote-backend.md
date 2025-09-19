@@ -5,7 +5,6 @@ title: "Why Use Cloud Object Storage for Terraform's Remote Backend & State"
 author: Yangci Ou
 slug: why-use-cloud-object-storage-terraform-remote-backend
 date: 2025-02-06
-# date_modified: Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: Discover why cloud object storage services are the gold standard for Terraform or OpenTofu’s remote state and backend, including the benefits and an example using AWS S3 & DynamoDB.
 image: /img/updates/cloud-object-storage-terraform-remote-backend/cloud-object-storage-for-terraform-remote-backend.webp
 callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a></p>

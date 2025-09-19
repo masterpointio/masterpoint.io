@@ -5,7 +5,6 @@ title: "From Terraform to OpenTofu: Why and How"
 author: Matt Gowie
 slug: opentofu-early-adopters
 date: 2024-04-08
-# date_modified: Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: "We're early adopters of OpenTofu. Read about what it took for us to make the switch and how it's going."
 image: /img/updates/opentofu-early-adopters/logo.png
 preview_image: /img/updates/opentofu-early-adopters/preview.png
