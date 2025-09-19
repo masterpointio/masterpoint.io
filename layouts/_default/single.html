@@ -10,7 +10,12 @@
                 <div class="entry">
                     <div class="flex reverse">
                         <div class="entryContent text-center">
-                            <div class="postMeta"><span>{{ .Date.Format "1.02.2006" }}</span></div>
+                            <div class="postMeta">
+                                <span>Published: {{ .Date.Format "1.02.2006" }}</span>
+                                {{ if and .Params.date_modified (ne (.Params.date_modified | dateFormat "1.02.2006") (.Date.Format "1.02.2006")) }}
+                                <span> • Updated: {{ .Params.date_modified | dateFormat "1.02.2006" }}</span>
+                                {{ end }}
+                            </div>
                             <h1 class="postTitle">
                                 {{ if .Params.outbound }}
                                 <a href="{{ .Params.outbound }}" target="_blank">{{ .Title | safeHTML }}</a>

@@ -171,5 +171,43 @@
       })(window,document,'script','dataLayer','GTM-NWQ5HPKT');
     </script>
     <!-- End Google Tag Manager -->
+
+    {{ if eq .Section "blog" }}
+    <!-- Structured Data for Blog Posts -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": {{ .Title | jsonify }},
+      "description": {{ .Description | jsonify }},
+      "author": {
+        "@type": "Person",
+        "name": {{ if .Params.author }}{{ .Params.author | jsonify }}{{ else }}"Masterpoint"{{ end }}
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Masterpoint Consulting",
+        "url": "{{ .Site.BaseURL }}"
+      },
+      "datePublished": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+      {{ if .Params.date_modified }}
+      "dateModified": {{ .Params.date_modified | dateFormat "2006-01-02T15:04:05Z07:00" | jsonify }},
+      {{ else }}
+      "dateModified": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+      {{ end }}
+      "url": {{ .Permalink | jsonify }},
+      {{ if .Params.image }}
+      "image": {
+        "@type": "ImageObject",
+        "url": {{ (printf "%s%s" .Site.BaseURL .Params.image) | jsonify }}
+      },
+      {{ end }}
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": {{ .Permalink | jsonify }}
+      }
+    }
+    </script>
+    {{ end }}
   </head>
 </html>
