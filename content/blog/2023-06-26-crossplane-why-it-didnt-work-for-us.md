@@ -5,6 +5,7 @@ title: "Crossplane: Why it Didn't Work for Us"
 author: Veronika Gnilitska
 slug: passing-on-crossplane
 date: 2023-06-26T14:48:43.602Z
+# date_modified: Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: We investigated Crossplane at a deep level and found it wasn't for
   us. Read on to learn about our investigation and the issues we found.
 image: /img/updates/crossplane-blog-post-image.png

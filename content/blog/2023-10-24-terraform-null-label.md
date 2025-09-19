@@ -4,6 +4,7 @@ draft: false
 title: "terraform-null-label: the why and how it should be used"
 author: Matt Gowie
 date: 2023-10-24
+# date_modified: Be sure to use this if you've updated the post as this helps with SEO and index freshness
 slug: terraform-null-label
 description: "A post highlighting one of our favorite terraform modules: terraform-null-label. We dive into what it is, why it's great, and some potential use cases in Terraform configurations."
 image: /img/updates/terraform-null-label-part1.png

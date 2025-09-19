@@ -5,6 +5,7 @@ title: "Steps to Break Up a Terralith"
 author: Veronika Gnilitska
 slug: steps-to-break-up-a-terralith
 date: 2025-03-06
+# date_modified: Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: In this follow-up to our "What Is a Terralith?" article, we shift the focus from describing the problem to providing a detailed migration plan, practical guidance, and a handy checklist for breaking up a Terralith into smaller, more manageable root modules.
 image: /img/updates/steps-to-break-up-a-terralith/main.png
 preview_image: /img/updates/steps-to-break-up-a-terralith/preview.png

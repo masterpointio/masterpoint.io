@@ -4,6 +4,7 @@ draft: false
 title: "Using MCPs to Run Terraform"
 author: Weston Platter
 date: 2025-04-17
+# date_modified: Be sure to use this if you've updated the post as this helps with SEO and index freshness
 slug: using-mcps-to-run-terraform
 description: "We jump into a hands-on exploration of Model Context Protocol (MCP), sharing our experiment using a MCP client to run terraform init, plan, apply. We share our take on where agents add value and highlight security considerations when adding MCPs to your workflow."
 image: /img/updates/using-mcps-to-run-terraform/header5.png

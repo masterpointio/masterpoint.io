@@ -4,6 +4,7 @@ draft: false
 title: Welcome to Our New Website
 author: Matt Gowie
 date: 2023-06-12T06:00:00.000Z
+# date_modified: Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: Hey there, and welcome to the brand-new Masterpoint website! As the
   founder of Masterpoint, I'm beyond excited to share our revamped online
   presence with you, showcasing our expertise in all things AWS Platform
