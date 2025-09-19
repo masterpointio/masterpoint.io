@@ -20,16 +20,21 @@ hugo serve
 # Build the site for production
 hugo --gc --minify
 
-# Create new content
-hugo new blog/my-new-post.md
+# Create new content (blog posts use date-prefixed naming)
+hugo new blog/$(date +%Y-%m-%d)-my-new-post.md
 hugo new case-studies/client-name.md
+
+# Lint and format code
+trunk check
+trunk fmt
 ```
 
 ### Local Development
 
 - Server runs on: `http://localhost:1313`
-- Hugo Extended is required (managed via Aqua)
+- Hugo Extended v0.145.0 is required (managed via Aqua)
 - No npm/yarn commands - this is a pure Hugo project
+- Trunk is used for linting (markdownlint, prettier, checkov, etc.)
 
 ## Architecture Overview
 
@@ -76,6 +81,7 @@ draft: false
 title: "The Platform Engineering Way to Manage Google Workspace Users"
 author: Weston Platter
 date: 2025-07-17
+date_modified: 2025-07-19  # Optional: Shows "Updated" date if different from publish date
 slug: platform-engineering-way-to-manage-google-workspace-users
 description: "Migrate Google Workspace from ClickOps to Infrastructure as Code with our open source Terraform module. Includes design patterns and import examples."
 tags: ["terraform", "google-workspace", "infrastructure-as-code", "automation"]
@@ -87,11 +93,37 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 
 ### Custom Shortcodes
 
-- `{{< youtube VIDEO_ID >}}` - Embed YouTube videos
-- `{{< form formName="contact" >}}` - Contact forms
-- `{{< testimonial >}}` - Client testimonials
-- `{{< faq >}}` - FAQ sections
 - `{{< button link="/path" text="CTA Text" >}}` - Call-to-action buttons
+- `{{< buttonout link="https://external.com" text="External Link" >}}` - External buttons
+- `{{< form formName="contact" >}}` - Contact forms
+- `{{< testimonials >}}` - Client testimonials
+- `{{< faqs >}}` - FAQ sections
+- `{{< team >}}` - Team member displays
+- `{{< services >}}` - Service listings
+- `{{< process >}}` - Process steps
+- `{{< supports >}}` - Support/technology logos
+- `{{< client-logos >}}` - Client logo displays
+
+## Code Quality & Linting
+
+The project uses Trunk for code quality management with multiple linters:
+
+- **Markdown**: markdownlint with custom config (`.markdownlint.yaml`)
+- **YAML**: yamllint for configuration files
+- **Security**: checkov for infrastructure security, gitleaks for secrets
+- **Formatting**: prettier for consistent code style
+- **Images**: oxipng for PNG optimization, svgo for SVG optimization
+
+```bash
+# Run all linters
+trunk check
+
+# Auto-fix issues where possible
+trunk fmt
+
+# Check specific files
+trunk check path/to/file.md
+```
 
 ## Important Development Notes
 
@@ -101,6 +133,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 4. **Draft Content**: Set `draft: true` in front matter to hide from production
 5. **Menu Items**: Configure in `config.yaml` under `menu` section
 6. **Redirects**: Add to `netlify.toml` (e.g., `/updates/*` → `/blog/*`)
+7. **Blog Naming**: Use date-prefixed format: `YYYY-MM-DD-title.md`
 
 ## Deployment Process
 
@@ -114,8 +147,9 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 ### Add a New Blog Post
 
 ```bash
-hugo new blog/my-post-title.md
-# Edit content/blog/my-post-title.md
+# Blog posts use date-prefixed naming (YYYY-MM-DD-title.md)
+hugo new blog/$(date +%Y-%m-%d)-my-post-title.md
+# Edit content/blog/YYYY-MM-DD-my-post-title.md
 # Add banner image to static/img/blog/
 # Set draft: false when ready
 ```
