@@ -5,6 +5,7 @@ title: "terraform-null-label: Advanced Usage"
 author: Matt Gowie
 slug: terraform-null-label-advanced
 date: 2024-03-05
+# date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: "A post highlighting some advanced usage of the terraform-null-label module showing root/child module relationship and implementation of a naming + tagging framework with context.tf"
 image: /img/updates/terraform-null-label-part2.png
 ---
@@ -69,10 +70,10 @@ Now let’s look at some advanced usage in action.
 
 For the infrastructure example, we’ll assume the following configuration:
 
-* A root module with a basic AWS VPC, subnet, and EC2 instance.
-* A simple, internal child module for organization-specific IAM configuration.
-* The [terraform-aws-rds-cluster](https://github.com/cloudposse/terraform-aws-rds-cluster) from Cloud Posse which implements `context.tf`.
-* The [context.tf](https://github.com/cloudposse/terraform-null-label/blob/main/exports/context.tf) mixin file provided by the [terraform-null-label](https://github.com/cloudposse/terraform-null-label/blob/main) module `exports/` folder.
+- A root module with a basic AWS VPC, subnet, and EC2 instance.
+- A simple, internal child module for organization-specific IAM configuration.
+- The [terraform-aws-rds-cluster](https://github.com/cloudposse/terraform-aws-rds-cluster) from Cloud Posse which implements `context.tf`.
+- The [context.tf](https://github.com/cloudposse/terraform-null-label/blob/main/exports/context.tf) mixin file provided by the [terraform-null-label](https://github.com/cloudposse/terraform-null-label/blob/main) module `exports/` folder.
 
 Here is the basic structure of the example configuration
 

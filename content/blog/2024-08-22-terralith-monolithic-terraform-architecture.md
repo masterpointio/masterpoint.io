@@ -5,6 +5,7 @@ title: "The Terralith: Monolithic Architecture of Terraform & Infrastructure as 
 author: Yangci Ou
 slug: terralith-monolithic-terraform-architecture
 date: 2024-08-22
+# date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: This article explores the challenges and pitfalls of Terralith, a monolithic Terraform architecture in Infrastructure as Code, and uncovers why a Terralith is not a good practice.
 image: /img/updates/terralith/terralith-article.png
 preview_image: /img/updates/terralith/terralith-preview-image.png # Use preview_image to prevent image overflow, best aspect ratios 270x355 or 600x700
@@ -35,25 +36,27 @@ The Terralith is the simplest pattern in any new IaC project organization, and a
 Below is an example of a Terralith. Although there are some reusability through [child modules](https://opentofu.org/docs/language/modules/#child-modules), it still has a monolithic root module. This means that all resources are managed in **_one singular state file_** and therefore tightly coupled together:
 ![Terralith Monolith Example File Structure](/img/updates/terralith/terralith-file-structure-example.png) <!-- Made with carbon.now.sh and Excalidraw and Lucid -->
 
-
 ## Why It’s Bad: Pitfalls & The Scalability Ceiling of Terraliths
 
 At first glance, a Terralith might seem like a good idea. It simplifies the initial setup and is easy to manage. You don’t have to worry about running multiple `tf apply` commands, splitting configurations, or managing multiple states. Everything is in one place which makes it easy to navigate, modify, and deploy.
 
 However, as your infrastructure grows, the Terralith approach becomes problematic. Let's examine some of the reasons why.
+
 1. [Complexities with the 3 M’s: Multi-Environment, Multi-Region, Multi-Account](#complexities-with-the-3-ms-multi-environment-multi-region-multi-account)
 2. [Collaborating in a Terralith](#collaborating-in-a-terralith)
 3. [State File Bloat -> Plans + Applies Slow Down](#state-file-bloat-plans-and-applies-slow-down)
 4. [Blast Radius: Walking Through a Minefield](#blast-radius-walking-through-a-minefield)
 
 ###### Complexities with the 3 M’s: Multi-Environment, Multi-Region, Multi-Account
-One of the primary challenges is environment isolation. With all infrastructure configuration in one place, separating resources for different environments is difficult. This  leads to a higher risk of unintended cross-environmental impacts where changes meant for one environment inadvertently affect others.
+
+One of the primary challenges is environment isolation. With all infrastructure configuration in one place, separating resources for different environments is difficult. This leads to a higher risk of unintended cross-environmental impacts where changes meant for one environment inadvertently affect others.
 
 In any non-trivial infrastructure, there are more variables than just the environment (production, staging, development). There are also [multiple regions](https://aws.amazon.com/about-aws/global-infrastructure/regions_az/) (e.g. AWS’ US East, US West, etc.) and multiple accounts (artifacts, log archive, disaster recovery, etc). With all these intertwined, the Terralith IaC pattern becomes prone to errors and misconfigurations. It becomes difficult to understand the relationships and dependencies between resources.
 
 In the context of fitting a city into a single skyscraper analogy, this is like trying to fit residential areas, industrial zones, commercial districts, and corporate headquarters all into different floors of the same building. It certainly is possible, but it becomes a nightmare to manage - think about all the noise complaints from the industrial zones! And it certainly is not easy to scale when this city’s population expands.
 
 ###### Collaborating in a Terralith
+
 Collaboration in a Terralith setup can be challenging as well. Since all the resources are provisioned with one root module, state is stored in one file. A common best practice in TF is to use [state locking](https://developer.hashicorp.com/terraform/language/state/locking), which locks the state file so only one operation can be executed at a given time. This is intended to prevent odd drift scenarios and state file corruption.
 
 Because of this practice, two engineers working on completely different infrastructure in the Terralith at the same time can find themselves unable to perform state operations concurrently.
@@ -63,6 +66,7 @@ Here is a diagram of what that might look like in practice. This highlights the 
 ![Collaboration in a Terralith](/img/updates/terralith/terralith-collaboration.png) <!-- Made with Excalidraw -->
 
 ###### State File Bloat: Plans and Applies Slow Down
+
 Imagine a Terralith’s state file like a single, massive spreadsheet tracking every item in a rapidly growing warehouse. Eventually, it becomes so large that comparing the current state of the resources with the state recorded in the file or updating it takes forever.
 
 In IaC, the workflow first checks all resources against the real infrastructure, then plans the changes from your infrastructure code, and finally executes the plan by applying it. Even if we are trying to modify something as minor as renaming one resource, **the system must verify against every single resource in the state file**.
@@ -72,7 +76,8 @@ It’s a domino effect because this not only slows down the development and depl
 ![Terralith API Limit Example](/img/updates/terralith/terralith-api-limit-example.png) <!-- API Limit Screenshot -->
 
 ###### Blast Radius: Walking Through a Minefield
-With the single  Terralith state file containing all resources, you have to be concerned about the  blast radius and risk of change. When everything is interconnected in a single configuration and state file, changes in one area can be far reaching and have unintended consequences in other areas. The risk associated with updates and modifications becomes harder to isolate. Containing the impact of changes is more difficult.
+
+With the single Terralith state file containing all resources, you have to be concerned about the blast radius and risk of change. When everything is interconnected in a single configuration and state file, changes in one area can be far reaching and have unintended consequences in other areas. The risk associated with updates and modifications becomes harder to isolate. Containing the impact of changes is more difficult.
 
 For example, a critical bug fix for your application deployed on [ECS](https://aws.amazon.com/ecs/) might be blocked because an untested database upgrade was merged into the IaC codebase. That upgrade was not tested because there was a networking change that held the state file locked. And so on.
 
@@ -83,6 +88,7 @@ A Terralith cannot deploy only one change, leaving the team stuck and the applic
 ![Terralith Blast Radius](/img/updates/terralith/terralith-blast-radius.png) <!-- Made with Excalidraw -->
 
 ## What To Do About It / Avoiding a Terralith
+
 Recognizing the limitations of a Terralith architecture in Infrastructure as Code is the first step towards a more scalable and maintainable solution. While there's no one-size-fits-all process, the transition typically involves breaking down the monolithic root module into smaller, more manageable pieces. You can use a [strangler pattern](https://martinfowler.com/bliki/StranglerFigApplication.html) - modularization allows for better organization of resources, improved reusability, and easier management of complex infrastructure services.
 
 Breaking up a monolithic TF architecture is like splitting each floor of the skyscraper into its own separate building in our earlier analogy. Now, changes to the “residential” portion won’t affect the “commercial” portion. Each structure can be managed independently, solving the problems mentioned in the above sections.
@@ -91,7 +97,7 @@ Of course, there are scenarios where a Terralith might make sense, such as small
 
 While the specific end structure will vary based on organizational needs, a general approach to breaking up a Terralith involves splitting infrastructure into different services and drawing clear boundaries around them. You have a few options to do this. At Masterpoint, we typically create root modules at the service boundary: AWS RDS clusters, AWS SQS Queues, Lambda Functions, and ECS Services all get their own root module. Then we instantiate instances of these root modules with specific configuration for each time the service is used within our client’s infrastructure. For example, if you have a prod and a staging database, the same AWS RDS root module would be configured differently and used two times.
 
-[TF Workspaces](https://opentofu.org/docs/language/state/workspaces/) is another method to  manage this complexity. By leveraging workspaces, teams can maintain separation between environments while reusing the same TF codebase. This approach adheres to the [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle, reducing duplication and helping some of the pitfalls mentioned above.
+[TF Workspaces](https://opentofu.org/docs/language/state/workspaces/) is another method to manage this complexity. By leveraging workspaces, teams can maintain separation between environments while reusing the same TF codebase. This approach adheres to the [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle, reducing duplication and helping some of the pitfalls mentioned above.
 
 Infrastructure as Code wrapper tools such as [Atmos](https://atmos.tools/), [Terramate](https://terramate.io/), [Terragrunt](https://terragrunt.gruntwork.io/), among others, can also assist in managing complex, modular TF setups. These tools help organize resources and modules into components, which itself is an opinionated term, allowing each to have its own isolated state and backend in every environment, unlike a Terralith where all resources are congested into one single backend.
 

@@ -4,6 +4,7 @@ draft: false
 title: "terraform-null-label: the why and how it should be used"
 author: Matt Gowie
 date: 2023-10-24
+# date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
 slug: terraform-null-label
 description: "A post highlighting one of our favorite terraform modules: terraform-null-label. We dive into what it is, why it's great, and some potential use cases in Terraform configurations."
 image: /img/updates/terraform-null-label-part1.png
@@ -159,31 +160,33 @@ Going back to our example, what if we needed to deploy another internal load bal
 
 By passing in the context output from the first label module, all of the original values are present, with only the defined ones overridden. With that, you get:
 
-* `module.public_alb_label.id` equates to `mp-uw2-prod-alb-public`
-* `module.public_alb_label.tags` equates to:
+- `module.public_alb_label.id` equates to `mp-uw2-prod-alb-public`
+- `module.public_alb_label.tags` equates to:
 
-   ```yaml
-   Namespace: "mp"
-   Environment: "uw2"
-   Stage: "prod"
-   Name: "alb"
-   Attributes: "public"
-   BusinessUnit: "ENG"
-   Team: "Reporting"
-   ManagedByTerraform: "True"
+  ```yaml
+  Namespace: "mp"
+  Environment: "uw2"
+  Stage: "prod"
+  Name: "alb"
+  Attributes: "public"
+  BusinessUnit: "ENG"
+  Team: "Reporting"
+  ManagedByTerraform: "True"
+  ```
 
-* `module.private_alb_label.id` equates to `mp-uw2-prod-alb-private`
-* `module.private_alb_label.tags` equates to:
+- `module.private_alb_label.id` equates to `mp-uw2-prod-alb-private`
+- `module.private_alb_label.tags` equates to:
 
-   ```yaml
-   Namespace: "mp"
-   Environment: "uw2"
-   Stage: "prod"
-   Name: "alb"
-   Attributes: "private"
-   BusinessUnit: "ENG"
-   Team: "Reporting"
-   ManagedByTerraform: "True"
+  ```yaml
+  Namespace: "mp"
+  Environment: "uw2"
+  Stage: "prod"
+  Name: "alb"
+  Attributes: "private"
+  BusinessUnit: "ENG"
+  Team: "Reporting"
+  ManagedByTerraform: "True"
+  ```
 
 The new label module only needs to have new values defined; the previous values are still present and do not need to be redefined.
 

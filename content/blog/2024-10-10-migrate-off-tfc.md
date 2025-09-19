@@ -5,6 +5,7 @@ title: "How to Migrate off Terraform Cloud"
 author: Veronika Gnilitska
 slug: how-to-migrate-off-tfc
 date: 2024-10-10
+# date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: "Need to to migrate off Terraform Cloud? We're happy to share some tips about preparation, pitfalls, and the process itself based on Masterpoint's experience."
 image: /img/updates/migrate-off-tfc/main.webp
 preview_image: /img/updates/migrate-off-tfc/preview.webp
@@ -42,7 +43,6 @@ You’ve probably already picked one, but in case you’re still hesitating, her
 Some of them have already taken care of specific migration instructions, e.g. [How to Migrate From Terraform Cloud to Spacelift](https://spacelift.io/blog/how-to-migrate-from-terraform-cloud), [Migrating to Terrakube](https://docs.terrakube.io/user-guide/migrating-to-terrakube), [Migration TFC/E to Scalr](https://github.com/Scalr/terraform-scalr-migrate-tfc). Reviewing provider-specific documentation is a good idea, but this post will help you with a migration no matter your destination.
 
 There’s a lot that goes into choosing a destination, from pricing to features, so make sure you do your due diligence. This guide focuses on tasks you’ll have to go through no matter which solution you choose.
-
 
 ## State File Management
 
