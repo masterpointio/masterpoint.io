@@ -5,10 +5,12 @@ title: "Crossplane: Why it Didn't Work for Us"
 author: Veronika Gnilitska
 slug: passing-on-crossplane
 date: 2023-06-26T14:48:43.602Z
+# date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: We investigated Crossplane at a deep level and found it wasn't for
   us. Read on to learn about our investigation and the issues we found.
 image: /img/updates/crossplane-blog-post-image.png
 ---
+
 ## Our current solution and desired improvements
 
 At Masterpoint, our entire focus is on creating solid cloud platforms for our clients by utilizing our subject matter expertise in AWS, Terraform, and Kubernetes. As part of that thought process, we see GitOps as one of the core patterns that our Platform Engineering team relies upon when we build new cloud-native platforms. This pattern of continuous delivery increases transparency and accelerates the overall delivery process by eliminating [configuration drift](https://www.aquasec.com/cloud-native-academy/vulnerability-management/configuration-drift/).
@@ -55,9 +57,9 @@ In the end, Crossplane wasn’t our choice at this point. With all the questions
 
 One last thing, if you're interested, here are some great resources to check out regarding Crossplane, beyond Upbound’s [blog](https://blog.crossplane.io/) and [docs](https://docs.crossplane.io/):
 
-* <https://vrelevant.net/crossplane/> - Great series of posts explaining different aspects about Crossplane
-* <https://medium.com/nerd-for-tech/introduction-to-crossplane-2f873ae0f9f3> - Crossplane intro
-* <https://grem1.in/post/crossplane/> - Crossplane intro
+- <https://vrelevant.net/crossplane/> - Great series of posts explaining different aspects about Crossplane
+- <https://medium.com/nerd-for-tech/introduction-to-crossplane-2f873ae0f9f3> - Crossplane intro
+- <https://grem1.in/post/crossplane/> - Crossplane intro
 
 -﻿--
 

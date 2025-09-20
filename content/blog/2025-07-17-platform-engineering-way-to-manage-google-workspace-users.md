@@ -4,6 +4,7 @@ draft: false
 title: "The Platform Engineering Way to Manage Google Workspace Users"
 author: Weston Platter
 date: 2025-07-17
+# date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
 slug: platform-engineering-way-to-manage-google-workspace-users
 description: "Migrate Google Workspace from ClickOps to Infrastructure as Code with our open source Terraform module. Includes design patterns and import examples."
 tags: ["terraform", "google-workspace", "infrastructure-as-code", "automation"]
