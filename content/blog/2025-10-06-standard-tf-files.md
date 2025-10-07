@@ -4,11 +4,30 @@ draft: false
 title: "The Standard Terraform and OpenTofu Files + Their Uses"
 author: Matt Gowie
 slug: standard-tf-files
-date: 2025-10-07
+date: 2025-10-06
 description: "A comprehensive guide to the various files that make up a Terraform and OpenTofu project. Learn what belongs in main.tf, variables.tf, outputs.tf, and other essential files for maintainable Infrastructure as Code."
 image: /img/updates/standard-tf-files.png
 callout: <p>👋 <b>If your team is struggling with inconsistent Terraform organization or looking to establish better practices for Infrastructure as Code, we'd love to help. To discuss how we can support your infrastructure goals with proven patterns and strategies, <a href='/contact'>get in touch!</a></b></p>
 ---
+
+<h2>Table of Contents</h2>
+
+- [Core Configuration Files](#core-configuration-files)
+  - [main.tf: Resource Definitions and Primary Infrastructure](#maintf-resource-definitions-and-primary-infrastructure)
+  - [variables.tf: Input Variable Declarations](#variablestf-input-variable-declarations)
+  - [outputs.tf: Exporting Values](#outputstf-exporting-values)
+  - [data.tf: External Data Source Queries](#datatf-external-data-source-queries)
+  - [checks.tf: Resource-Level Validation and Policies](#checkstf-resource-level-validation-and-policies)
+  - [imports.tf: Resource Import Declarations](#importstf-resource-import-declarations)
+- [Supporting Configuration Files](#supporting-configuration-files)
+  - [providers.tf: Managing Provider Configurations](#providerstf-managing-provider-configurations)
+  - [versions.tf: Terraform and Provider Requirements](#versionstf-terraform-and-provider-requirements)
+  - [.terraform.lock.hcl: The Dependency Lock File](#terraformlockhcl-the-dependency-lock-file)
+- [Advanced TF File Usage](#advanced-tf-file-usage)
+  - [Locals and Their Placement](#locals-and-their-placement)
+  - [When to Create Additional .tf Files](#when-to-create-additional-tf-files)
+  - [Using context.tf for Project Metadata](#using-contexttf-for-project-metadata)
+- [Conclusion](#conclusion)
 
 If you've hopped between different Terraform or OpenTofu (collectively referred to as TF going forward in this post) projects across teams, you've definitely seen this problem: everyone organizes their TF files differently. Some teams jam everything into a single main.tf file, while others scatter resources across dozens of specialized files. This isn't just an aesthetic issue — it creates real headaches when you're trying to understand or fix infrastructure code.
 
