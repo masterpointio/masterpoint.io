@@ -3061,3 +3061,52 @@ footer {
     }
   }
 }
+
+// Header anchor links for blog posts (H1-H6)
+// Entire heading is clickable with # symbol on the right and underline animation
+.heading-with-anchor {
+  .heading-anchor-link {
+    color: inherit;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+
+    &:hover {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .heading-text {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 0;
+        height: 2px;
+        background-color: $highlight;
+        transition: width 0.3s ease-in-out;
+      }
+    }
+
+    .heading-anchor-symbol {
+      margin-left: 0.5em;
+      color: $highlight;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+      font-weight: 400;
+      font-size: 0.8em;
+    }
+
+    &:hover .heading-anchor-symbol {
+      opacity: 0.8;
+    }
+
+    &:hover .heading-text::after {
+      width: 100%;
+    }
+  }
+}
