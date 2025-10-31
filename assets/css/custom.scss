@@ -3062,6 +3062,129 @@ footer {
   }
 }
 
+// Floating Table of Contents
+.floating-toc {
+  position: fixed;
+  left: 2rem;
+  top: 120px;
+  width: 260px;
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+  z-index: 40;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-20px);
+  transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+
+  // Show when scrolled past header
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+  }
+
+  // Hide on mobile and tablets (adjust to show on larger screens)
+  @media (max-width: 1400px) {
+    display: none;
+  }
+
+  .toc-nav {
+    background: rgba(255, 255, 255, 0.98);
+    border: 2px solid #e8e8e8;
+    border-radius: 6px;
+    padding: 0.9rem 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .toc-title {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $pine;
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid $highlight;
+  }
+
+  .toc-content {
+
+    // Hugo generates nested ul/li structure
+    ul, ol {
+      list-style: none !important;
+      list-style-type: none !important;
+      padding-left: 0 !important;
+      margin-left: 0 !important;
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+
+      li {
+        list-style: none !important;
+        list-style-type: none !important;
+
+        &::before {
+          display: none !important;
+          content: none !important;
+        }
+
+        // Add subtle separator between items
+        &:not(:last-child) {
+          border-bottom: 1px solid #f0f0f0;
+        }
+
+        > a {
+          font-weight: 600;
+          color: #555;
+          text-decoration: none;
+          display: block;
+          padding: 0.3rem 0.4rem;
+          padding-left: calc(0.4rem - 3px);
+          border-radius: 4px;
+          border-left: 3px solid transparent;
+          transition: color 0.2s ease, background 0.2s ease, border-left-color 0.2s ease;
+          line-height: 1.25;
+
+          &:hover {
+            color: $highlight;
+            background: rgba(0, 224, 224, 0.08);
+            text-decoration: none;
+          }
+
+          &.active {
+            color: $highlight;
+            background: rgba(0, 224, 224, 0.12);
+            border-left-color: $highlight;
+          }
+        }
+
+        // Hide all nested lists (H3, H4, etc.)
+        > ul {
+          display: none !important;
+        }
+      }
+    }
+  }
+
+  // Custom scrollbar styling
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 224, 224, 0.3);
+    border-radius: 3px;
+
+    &:hover {
+      background: rgba(0, 224, 224, 0.5);
+    }
+  }
+}
+
 // Header anchor links for blog posts (H1-H6)
 // Entire heading is clickable with # symbol on the right and underline animation
 .heading-with-anchor {
