@@ -1,0 +1,2 @@
+# Ignore Hugo template files with Go template syntax that prettier cannot parse
+layouts/_default/_markup/render-heading.html

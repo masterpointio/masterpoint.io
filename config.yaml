@@ -46,6 +46,10 @@ markup:
       hardWraps: false
       unsafe: true
       xhtml: false
+  tableOfContents:
+    startLevel: 2
+    endLevel: 2
+    ordered: false
 menu:
   main:
     - name: Home
