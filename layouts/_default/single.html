@@ -4,6 +4,9 @@
 
 <main>
     <div class="container">
+        {{ if eq .Section "blog" }}
+        {{ partial "floating-toc.html" . }}
+        {{ end }}
 
         <div class="row">
             <div class="col col-12">
