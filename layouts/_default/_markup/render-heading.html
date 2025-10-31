@@ -1,0 +1,17 @@
+{{- /*
+  Heading Render Hook
+  Automatically adds clickable anchor links to all heading levels (H1-H6)
+  for easy deep-linking and sharing of specific sections.
+  The entire heading text is clickable, with a # symbol on the right.
+*/ -}}
+
+{{- $level := .Level -}}
+{{- $text := .Text -}}
+{{- $anchor := .Anchor -}}
+
+<h{{ $level }} id="{{ $anchor }}" class="heading-with-anchor">
+  <a href="#{{ $anchor }}" class="heading-anchor-link" aria-label="Link to {{ $text }}">
+    <span class="heading-text">{{ $text | safeHTML }}</span>
+    <span class="heading-anchor-symbol">#</span>
+  </a>
+</h{{ $level }}>
