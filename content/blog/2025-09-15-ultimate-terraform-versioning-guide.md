@@ -104,7 +104,10 @@ Since [Child Modules](https://masterpoint.io/blog/terraform-opentofu-terminology
 terraform {
   required_version = ">= 1.6.0"
   required_providers {
-    aws = ">= 5.0.0"
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 5.0.0"
+    }
   }
 }
 ```
@@ -126,7 +129,10 @@ Example:
 terraform {
   required_version = "1.7.5"
   required_providers {
-    aws = "~> 5.81.0"
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.81.0"
+    }
   }
 }
 ```
