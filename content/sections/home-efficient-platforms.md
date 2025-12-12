@@ -16,7 +16,7 @@ id: efficient-platforms
 
 <div class="col col-12 col-md-4">
 <div class="platform-tile platform-tile-1">
-<div class="platformIcon"><img src="img/noun-developer-7187679.svg"/></div>
+<div class="platformIcon"><img src="img/noun-developer-7187679.svg" alt="Developer" /></div>
 <div class="platformCount">1+</div>
 <div class="platformCTA">Full-time engineer of hours saved</div>
 </div>
@@ -24,7 +24,7 @@ id: efficient-platforms
 
 <div class="col col-12 col-md-4">
 <div class="platform-tile platform-tile-2">
-<div class="platformIcon"><img src="img/noun-cycle-7222105.svg"/></div>
+<div class="platformIcon"><img src="img/noun-cycle-7222105.svg" alt="Cycle" /></div>
 <div class="platformCount">10x</div>
 <div class="platformCTA">Faster Plan & Apply Cycles</div>
 </div>
@@ -32,7 +32,7 @@ id: efficient-platforms
 
 <div class="col col-12 col-md-4">
 <div class="platform-tile platform-tile-2">
-<div class="platformIcon"><img src="img/noun-reduction-7894266.svg"/></div>
+<div class="platformIcon"><img src="img/noun-reduction-7894266.svg" alt="Reduction" /></div>
 <div class="platformCount">10x</div>
 <div class="platformCTA">Reduction in Infrastructure </div>
 </div>
