@@ -9,7 +9,6 @@ visible: true
 draft: false
 ---
 
-
 Hey folks -- Matt from Masterpoint here. I had this funny idea to show people how to tie the double fisherman's knot that inspired the Masterpoint logo. This knot is a fundamental climbing knot that ties two ropes together (considered a "bend") and it's something I've used consistently throughout my years climbing. I hope you get a kick out of it!
 
 <div style="margin: 2rem 0;">
