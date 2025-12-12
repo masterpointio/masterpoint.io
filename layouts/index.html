@@ -9,11 +9,7 @@
             <div class="row">
                 <div class="col col-12 col-md-7">
                     <div class="bannerTxtBx aos-item" data-aos="fade-right">
-                        {{if .Params.banner_tagline}}
-                        <div class="bannerTagline">
-                            {{.Params.banner_tagline | safeHTML}}
-                        </div>
-                        {{end}}
+                        
 
                         <h3>
                             {{if .Params.banner_title}}
@@ -22,16 +18,22 @@
                             {{ .Title | safeHTML }}
                             {{end}}
                         </h3>
+                        {{if .Params.banner_tagline}}
+                        <div class="bannerTagline">
+                            {{.Params.banner_tagline | safeHTML}}
+                        </div>
+                        {{end}}
                         {{if .Params.banner_text}}
                         <div class="bannerTxt">{{ .Params.banner_text|safeHTML}}</div>
                         {{end}}
+                        <div class="rowLinks bannerBtn">
                         {{ if .Params.banner_btn_label}}
-                        <div class="bannerBtn"><a class="button btn-outline-gradient"
-                                href="{{.Params.banner_btn_link}}">{{.Params.banner_btn_label | safeHTML}}</a></div>
+                        <a class="button btn-gradient" href="{{.Params.banner_btn_link}}">{{.Params.banner_btn_label | safeHTML}}</a>
                         {{end}}
                         {{ if .Params.banner_link_label}}
-                        <div class="bannerLink">or <a href="{{.Params.banner_link}}">{{.Params.banner_link_label | safeHTML}}</a></div>
+                        <a class="button btn-outline-gradient" href="{{.Params.banner_link}}">{{.Params.banner_link_label | safeHTML}}</a>
                         {{end}}
+                    </div>
                     </div>
                 </div>
             </div>
@@ -79,17 +81,15 @@
 
     {{ partial "latest-news.html" . }}
 
+   
+
 </main>
 
-
 {{ partial "schedule-assessment.html" . }}
-
-{{ partial "signup-section.html" .}}
 
 {{ partial "footer.html" . }}
 
 {{ partial "scripts.html" . }}
-<!-- On Load Lightbox -->
 
 <script>
     if (window.netlifyIdentity) {

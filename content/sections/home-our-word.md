@@ -1,6 +1,6 @@
 ---
 title: Don't take our word for it...
-weight: 4
+weight: 5
 #position: align-items-center justify-content-end
 size: col-12 col-md-7
 #section_image: /img/doctor_and_patient.jpg
