@@ -3,15 +3,29 @@
   Automatically adds clickable anchor links to all heading levels (H1-H6)
   for easy deep-linking and sharing of specific sections.
   The entire heading text is clickable, with a # symbol on the right.
+
+  Only applies to blog posts and case studies to avoid styling conflicts
+  on marketing pages (home, services, etc.).
 */ -}}
 
 {{- $level := .Level -}}
 {{- $text := .Text -}}
 {{- $anchor := .Anchor -}}
 
+{{- /* Determine if this page should have anchor links */ -}}
+{{- $enableAnchorLinks := false -}}
+{{- /* Enable for blog, case studies, and standalone root-level pages (like /referrals) */ -}}
+{{- if or (eq .Page.Section "blog") (eq .Page.Section "case-studies") (eq .Page.Section "") -}}
+  {{- $enableAnchorLinks = true -}}
+{{- end -}}
+
+{{- if $enableAnchorLinks -}}
 <h{{ $level }} id="{{ $anchor }}" class="heading-with-anchor">
   <a href="#{{ $anchor }}" class="heading-anchor-link" aria-label="Link to {{ $text }}">
     <span class="heading-text">{{ $text | safeHTML }}</span>
     <span class="heading-anchor-symbol">#</span>
   </a>
 </h{{ $level }}>
+{{- else -}}
+<h{{ $level }} id="{{ $anchor }}">{{ $text | safeHTML }}</h{{ $level }}>
+{{- end -}}
