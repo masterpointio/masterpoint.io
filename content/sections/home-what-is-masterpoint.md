@@ -7,7 +7,7 @@ section_image: /img/cloud_architecture.png
 #image: /img/bg_featured_video.jpg
 draft: true
 section_categories:
-    - Home
+  - Home
 id: were-masterpoint
 ---
 

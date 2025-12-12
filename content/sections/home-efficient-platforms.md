@@ -6,15 +6,13 @@ weight: 4
 #section_image: /img/diverse_group_of_doctors.jpg
 #image: /img/bg_featured_video.jpg
 section_categories:
-    - Home
+  - Home
 id: efficient-platforms
 ---
-
 
 ### Our Work Lead to <br> <span class="text-gradient">Efficient Platforms</span> {.groupTitle .text-center .text-rhythm}
 
 <div class="row platform-row">
-
 
 <div class="col col-12 col-md-4">
 <div class="platform-tile platform-tile-1">
@@ -24,7 +22,6 @@ id: efficient-platforms
 </div>
 </div>
 
-
 <div class="col col-12 col-md-4">
 <div class="platform-tile platform-tile-2">
 <div class="platformIcon"><img src="img/noun-cycle-7222105.svg"/></div>
@@ -32,7 +29,6 @@ id: efficient-platforms
 <div class="platformCTA">Faster Plan & Apply Cycles</div>
 </div>
 </div>
- 
 
 <div class="col col-12 col-md-4">
 <div class="platform-tile platform-tile-2">
@@ -41,6 +37,5 @@ id: efficient-platforms
 <div class="platformCTA">Reduction in Infrastructure </div>
 </div>
 </div>
-
 
 </div>

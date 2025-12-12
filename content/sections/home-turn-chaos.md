@@ -6,7 +6,7 @@ weight: 3
 #section_image: /img/diverse_group_of_doctors.jpg
 #image: /img/bg_featured_video.jpg
 section_categories:
-    - Home
+  - Home
 id: turn-chaos-operations
 ---
 

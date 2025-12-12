@@ -6,9 +6,10 @@ size: col-12 col-md-7
 #section_image: /img/doctor_and_patient.jpg
 image: /img/bg_our_word.jpg
 section_categories:
-    - Home
+  - Home
 id: our-word
 ---
 
 ### Our clients love our hands-on approach {.text-gradient .quoteLabel}
+
 {{<testimonials>}}

@@ -6,7 +6,7 @@ size: col-12 col-md-6
 #section_image: /img/bg_make_infrastructure.png
 image: /img/bg_make_infrastructure.png
 section_categories:
-    - Home
+  - Home
 id: make-infrastructure
 ---
 
