@@ -1,7 +1,7 @@
 ---
 title: "Masterpoint <span class='text-gradient'>Now</span>"
 description: Find out the latest personal updates from the Masterpoint Team
-banner_text: "<a href=\"https://nownownow.com/about\">Inspired by Derek Sivers</a> and our friends at <a href=\"https://gobetweenlabs.com/now/\">Go Between</a>, this /now page shares a bit more about what Matt and the Masterpoint team are up to right now. This content is updated every 6 months and was last updated in January 2026."
+banner_text: '<a href="https://nownownow.com/about">Inspired by Derek Sivers</a> and our friends at <a href="https://gobetweenlabs.com/now/">Go Between</a>, this /now page shares a bit more about what Matt and the Masterpoint team are up to right now. This content is updated every 6 months and was last updated in January 2026.'
 last_update: January 2026
 id: nowPage
 banner_btn_label: Let's Chat!
