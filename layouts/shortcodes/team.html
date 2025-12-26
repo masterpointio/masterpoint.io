@@ -1,52 +1,68 @@
 <div id="teamMembers">
-    <div class="teamRow row justify-content-center">
-        {{ range where (.Site.RegularPages.ByParam "weight") "Type" "team" }}
-        {{ if eq .Params.team true }}
-        <div class="col col-12 col-sm-6 col-md-6 aos-item" data-aos="fade">
-            <div class="teamBx">
-                <div class="teamImgBx">
-                    {{if .Params.image}}
-                    <img src="{{.Params.image}}"/>
-                    {{else}}
-                        <img class="withoutImg" src='{{ "img/logo_icon.svg" | relURL }}'/>
-                    {{end}}
-                </div>
-                <div class="teamTxtBx text-center">
-                    <h3 class="teamName">{{ .Title }}</h3>
-                    <div class="teamDesig"> {{ .Params.designation }}</div>
-                    <div class="teamLinks">
-                    <div class="teamBtn"> <a class="button btn-outline-gradient" data-fancybox="{{ .File.ContentBaseName }}"
-                            data-src="#{{ .File.ContentBaseName }}" href="javascript:;">Read Bio → </a></div>
-
-                    {{if .Params.linkedin}}
-                        <div class="teamSocial"><a href="{{.Params.linkedin}}" target="_blank"><i class="fa-brands fa-linkedin"></i></a></div>
-                    {{end}}
-
-                    {{if .Params.github}}
-                        <div class="teamSocial"><a href="{{.Params.github}}" target="_blank"><i class="fa-brands fa-github"></i></a></div>
-                    {{end}}
-
-                        </div>
-                </div>
-            </div>
-            <div class="team-popup" id="{{ .File.ContentBaseName }}">
-                <div class="teamImgBx"><img src="{{.Params.image}}"/></div>
-                <h3 class="teamName text-highlight">{{ .Title }}</h3>
-                <div class="teamDesig text-lightgrey pb-2"> {{ .Params.designation }}</div>
-                <div class="teamContent">
-                    {{if .Params.bio}}
-                    <p>{{ .Params.bio }}</p>
-                    {{ if not (or (eq .Content "NO UPDATE") (in .Content "NO UPDATE")) }}
-                    <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid rgba(255, 255, 255, 0.2);">
-                    {{ end }}
-                    {{end}}
-                    {{ if not (or (eq .Content "NO UPDATE") (in .Content "NO UPDATE")) }}
-                    {{ .Content }}
-                    {{ end }}
-                </div>
-            </div>
+  <div class="teamRow row justify-content-center">
+    {{ range where (.Site.RegularPages.ByParam "weight") "Type" "team" }} {{ if
+    eq .Params.team true }}
+    <div class="col col-12 col-sm-6 col-md-6 aos-item" data-aos="fade">
+      <div class="teamBx">
+        <div class="teamImgBx">
+          {{if .Params.image}}
+          <img src="{{.Params.image}}" />
+          {{else}}
+          <img class="withoutImg" src='{{ "img/logo_icon.svg" | relURL }}' />
+          {{end}}
         </div>
-        {{ end }}
-        {{ end }}
+        <div class="teamTxtBx text-center">
+          <h3 class="teamName">{{ .Title }}</h3>
+          <div class="teamDesig">{{ .Params.designation }}</div>
+          <div class="teamLinks">
+            <div class="teamBtn">
+              <a
+                class="button btn-outline-gradient"
+                data-fancybox="{{ .File.ContentBaseName }}"
+                data-src="#{{ .File.ContentBaseName }}"
+                href="javascript:;"
+                >Read Bio →
+              </a>
+            </div>
+
+            {{if .Params.linkedin}}
+            <div class="teamSocial">
+              <a href="{{.Params.linkedin}}" target="_blank"
+                ><i class="fa-brands fa-linkedin"></i
+              ></a>
+            </div>
+            {{end}} {{if .Params.github}}
+            <div class="teamSocial">
+              <a href="{{.Params.github}}" target="_blank"
+                ><i class="fa-brands fa-github"></i
+              ></a>
+            </div>
+            {{end}}
+          </div>
+        </div>
+      </div>
+      <div class="team-popup" id="{{ .File.ContentBaseName }}">
+        <div class="teamImgBx"><img src="{{.Params.image}}" /></div>
+        <h3 class="teamName text-highlight">{{ .Title }}</h3>
+        <div class="teamDesig text-lightgrey pb-2">
+          {{ .Params.designation }}
+        </div>
+        <div class="teamContent">
+          {{if .Params.bio}}
+          <p>{{ .Params.bio }}</p>
+          {{ if not (or (eq .Content "NO UPDATE") (in .Content "NO UPDATE")) }}
+          <hr
+            style="
+              margin: 1.5rem 0;
+              border: none;
+              border-top: 1px solid rgba(255, 255, 255, 0.2);
+            "
+          />
+          {{ end }} {{end}} {{ if not (or (eq .Content "NO UPDATE") (in .Content
+          "NO UPDATE")) }} {{ .Content }} {{ end }}
+        </div>
+      </div>
     </div>
+    {{ end }} {{ end }}
+  </div>
 </div>
