@@ -6,11 +6,19 @@ github: https://github.com/oycyc
 draft: false
 weight: 4
 team: true
-image: /img/team/yangci-ou.jpg
-bio: Yangci is a platform engineer from Philadelphia, PA. He finds great fulfillment in leveraging technology to tackle complex challenges across diverse technical domains. Outside of work, he enjoys going on adventures and exploring new areas or enjoying racket sports like badminton.
+image: /img/team/yangci-ou.png
+bio: Yangci (Yang) is a platform engineer from Philadelphia, PA. He finds great fulfillment in leveraging technology to tackle complex challenges across diverse technical domains and turning ambiguous problems into scalable, well-operated systems. Outside of work, he enjoys going on adventures, exploring new areas, skating, and playing racket sports like badminton.
 ---
-Lately, I've been appreciating and learning to dance with what life brings and finding joy in the moment, particularly with life getting busier and busier. I also feel an extreme sense of gratefulness for where I am. Even with life getting busier, as I’m naturally curious and adventurous, I’ve been ambitious to want to learn more in technology & work (currently looking into more cloud certifications), as well as doing more things (activities, experiences, etc.) with friends and family in life, so I set a priority on managing my time efficiently.
+Lately I’ve been learning to dance with whatever life brings. Staying present and finding joy in the moment, even as things get busier. I feel genuinely grateful for where I am right now.
 
-Badminton, tennis, and pickleball are three main sports I play. I’ve played them for a while now and I’m still continuing to keep up. I’m constantly improving as I play more, but I don’t strive to be the best since to me, sports is not where I’m competitive in, so it serves as a way to hang out and have fun with friends and family, and it certainly has done that well.
+I’m channeling my curiosity and adventurous streak into growth by diving deeper into technologies where it interests me most, while also making time for experiences with friends and family. I’m prioritizing better time management so I can keep doing both. Time management has become a big priority so I can keep growing without missing the moments that matter.
 
-I’ve also been trying to be hands on and self sufficient in all aspects of life, most notably recently I changed my car’s battery by myself. I’m not a car enthusiast or anything at all, I simply drive to get to where I need to be, so the only thing I know to do is oil changes. When my battery started to get weak during the winter, I watched some videos and decided to be hands on and replace it myself. It was really satisfying, not even necessary the cost saved or avoiding the hassle of a mechanic, but rather satisfying that I can solve problems self-sufficiently.
+Along the way, I've been turning that curiosity into momentum by earning several certifications (and continuing to learn for more), including:
+- [AWS Certified Solutions Architect – Associate](https://www.credly.com/badges/3b79670c-3091-4c52-b59a-6dd580c111b1/)
+- [Microsoft Certified: Azure Developer Associate](https://learn.microsoft.com/en-us/users/yangci/credentials/f18d5775bfc1d60)
+- [Microsoft Certified: Azure AI Engineer Associate](https://learn.microsoft.com/en-us/users/yangci/credentials/35524e81cbbc84a)
+- [GitHub Advanced Security](https://www.credly.com/badges/472657ac-a234-4276-9c09-c0dc40262914/)
+
+For fun, you’ll usually find me playing badminton, tennis, or pickleball. I’m always improving, but I’m not super competitive. I love the casual, social side of sports and the chance to have a good time with the people around me.
+
+Outside of work, I’ve also been channeling my curiosity into being more hands-on and self-sufficient in everyday life. I’ve been treating practical things that pop up like mini-adventures, learning and troubleshooting as I go. Recently that’s looked like doing my own oil changes, replacing a car battery, installing a new ceiling fan, and working with sink plumbing. It's been great as I've found a lot of fulfillment in picking up a new skill each time.
