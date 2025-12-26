@@ -17,7 +17,7 @@
                     <div class="teamLinks">
                     <div class="teamBtn"> <a class="button btn-outline-gradient" data-fancybox="{{ .File.ContentBaseName }}"
                             data-src="#{{ .File.ContentBaseName }}" href="javascript:;">Read Bio → </a></div>
-                    
+
                     {{if .Params.linkedin}}
                         <div class="teamSocial"><a href="{{.Params.linkedin}}" target="_blank"><i class="fa-brands fa-linkedin"></i></a></div>
                     {{end}}
@@ -33,7 +33,17 @@
                 <div class="teamImgBx"><img src="{{.Params.image}}"/></div>
                 <h3 class="teamName text-highlight">{{ .Title }}</h3>
                 <div class="teamDesig text-lightgrey pb-2"> {{ .Params.designation }}</div>
-                <div class="teamContent">{{ .Content }}</div>
+                <div class="teamContent">
+                    {{if .Params.bio}}
+                    <p>{{ .Params.bio }}</p>
+                    {{ if not (or (eq .Content "NO UPDATE") (in .Content "NO UPDATE")) }}
+                    <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid rgba(255, 255, 255, 0.2);">
+                    {{ end }}
+                    {{end}}
+                    {{ if not (or (eq .Content "NO UPDATE") (in .Content "NO UPDATE")) }}
+                    {{ .Content }}
+                    {{ end }}
+                </div>
             </div>
         </div>
         {{ end }}
