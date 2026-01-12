@@ -1,21 +1,20 @@
-<div class="services-row row justify-content-center">
+<div class="services-row row">
     {{ range where (.Site.RegularPages.ByWeight) "Type" "services" }}
-    <div class="col col-12 col-md-6">
+    <div class="col col-12 col-md-4">
         <div class="serviceBx">
-            {{if .Params.icon}}
-                <div class="serviceIcon bg-gradient">
-                    <img src="{{.Params.icon}}" />
-                </div>
-            {{end}}
-            {{if .Params.badge}}
-                <div class="serviceBadge">
-                    <img src="{{.Params.badge}}" />
-                </div>
-            {{end}}
-            <h3 class="serviceTitle">
-                {{.Title}}
+            <div class="serviceIcon bg-gradient">
+                {{if .Params.icon}}
+                <img src="{{.Params.icon}}" />
+                {{end}}
+            </div>
+            <h3 class="serviceTitle homeServiceTitle">
+                {{if .Params.home_title}}
+                    {{.Params.home_title}}
+                {{else}}
+                    {{.Title}}
+                {{end}}
             </h3>
-            <div class="serviceDesc">{{.Description}}</div>
+            <div class="serviceDesc">{{.Params.home_description}}</div>
         </div>
     </div>
     {{end}}
