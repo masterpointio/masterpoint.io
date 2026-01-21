@@ -5,6 +5,7 @@ weight: 1
 #size: col-12 col-md-6
 #section_image: /img/diverse_group_of_doctors.jpg
 #image: /img/bg_featured_video.jpg
+draft: true
 section_categories:
     - Home
 id: specialized-services
