@@ -112,6 +112,53 @@ blockquote {
     flex-direction: row-reverse;
   }
 }
+.numbered-list {
+  position: relative;
+  margin-left: 0;
+  list-style: none;
+  padding-left: 0;
+  counter-reset: numbered-counter;
+  li {
+    position: relative;
+    padding-left: 1.8em;
+    font-size: 1.33rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.35em;
+    counter-increment: numbered-counter;
+    padding-bottom: 0.45em;
+    @media (max-width: 991px) {
+      font-size: 1.13rem;
+      padding-left: 2em;
+    }
+    &:before {
+      content: counter(numbered-counter) ". ";
+      display: block;
+      border-radius: 100%;
+      text-align: center;
+      line-height: 30px;
+      color: #0e383a;
+      font-size: 0.91em;
+      font-style: normal;
+      font-weight: 700;
+      width: 30px;
+      height: 30px;
+      background: linear-gradient(
+        100deg,
+        #ede497 2.59%,
+        #2ad9c2 41.12%,
+        #d891ce 89.63%
+      );
+      position: absolute;
+      left: 0;
+      @media (max-width: 991px) {
+        width: 24px;
+        line-height: 24px;
+        height: 24px;
+      }
+    }
+  }
+}
 .letter-spacing {
   letter-spacing: 0.03em;
 }
@@ -227,6 +274,15 @@ img {
     height: $line-height-desktop + 6;
     line-height: $line-height-desktop + 6;
     font-size: 1.22rem;
+  }
+  &.btn-gradient {
+    background: linear-gradient(
+      92deg,
+      #ede497 -0.66%,
+      #2ad9c2 26%,
+      #d891ce 59.55%
+    );
+    color: #033;
   }
   &.btn-outline-white,
   &.btn-outline-gray,
@@ -1004,6 +1060,26 @@ header {
       }
     }
   }
+  .rowLinks {
+    display: flex;
+    align-items: center;
+    .button {
+      padding: 0 1.27em;
+      margin-right: 1.4em;
+    }
+    @media (max-width: 767px) {
+      justify-content: center;
+      .button{
+        margin: 0 .7em;
+      }
+    }
+    @media (max-width: 575px) {
+      flex-direction: column;
+      .button{
+        margin: 10px;
+      }
+    }
+  }
   .bannerBtn {
     padding-top: 1.5rem;
   }
@@ -1212,8 +1288,7 @@ footer {
   }
 }
 #cloud-architecture {
-  padding-top: 4.55rem;
-
+  padding-top: 3.55rem;
   @media (max-width: 767px) {
     text-align: center;
   }
@@ -1221,20 +1296,23 @@ footer {
 .cloudLogos {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin: 0 -10px;
-
+  justify-content: flex-start;
   @media (max-width: 767px) {
-    justify-content: center;
+    justify-content: center; margin: 0 -1rem;
   }
   @media (max-width: 575px) {
     flex-wrap: wrap;
   }
   .cloudLogoBx {
-    padding: 10px;
-    max-width: 200px;
-    @media (max-width: 575px) {
-      width: 33%;
+    padding: 10px 0;
+    max-width: 205px;
+    margin-right: 3.45rem;
+    @media (max-width: 991px) {
+      margin-right: 3rem;
+      max-width: 175px;
+    }
+    @media (max-width: 767px) {
+      margin: 0 1rem;
     }
   }
 }
@@ -1248,30 +1326,25 @@ footer {
 .services-row {
   position: relative;
   .col {
-    padding-top: 1.5rem;
+    padding-top: 1.1rem;
     padding-bottom: 1.25rem;
-    z-index: 10;
-    display: block;
-
     &:nth-child(2),
     &:nth-child(5) {
-      z-index: 1;
-      display: block;
       .serviceIcon {
-        // &:before {
-        //   content: "";
-        //   position: absolute;
-        //   width: 125vw;
-        //   height: 2px;
-        //   background: linear-gradient(
-        //     99.59deg,
-        //     #ede497 2.59%,
-        //     #2ad9c2 41.12%,
-        //     #d891ce 89.63%
-        //   );
-        //   top: 50%;
-        //   z-index: -10;
-        // }
+        &:before {
+          content: "";
+          position: absolute;
+          width: 125vw;
+          height: 2px;
+          background: linear-gradient(
+            99.59deg,
+            #ede497 2.59%,
+            #2ad9c2 41.12%,
+            #d891ce 89.63%
+          );
+          top: 50%;
+          z-index: -1;
+        }
       }
     }
     &:nth-child(5) {
@@ -1295,7 +1368,7 @@ footer {
   align-items: center;
   justify-content: center;
   padding: 15px;
-  margin: 0 auto 1.7rem;
+  margin: 0 auto 1.5rem;
   position: relative;
   @media (max-width: 767px) {
     &:before {
@@ -1314,13 +1387,8 @@ footer {
     }
   }
 }
-
-.serviceBadge {
-  @extend.serviceIcon;
-  padding: 0;
-}
 .serviceDesc {
-  padding-top: 0.5em;
+  padding-top: 0.3em;
   font-size: 0.88rem;
   line-height: 1.5em;
   color: #525252;
@@ -1334,6 +1402,12 @@ footer {
   line-height: 1em;
   text-transform: uppercase;
   color: $pine;
+  &.homeServiceTitle {
+    font-size: 1.77rem;
+    @media (max-width: 991px) {
+      font-size: 1.5rem;
+    }
+  }
   @media (max-width: 1199px) {
     font-size: 1.25rem;
   }
@@ -1415,7 +1489,7 @@ footer {
   position: relative;
   #banner {
     position: relative;
-    padding: 12rem 0 1.81rem;
+    padding: 9.5rem 0 1.35rem;
     background: $pine;
     &:before {
       background:
@@ -1477,6 +1551,22 @@ footer {
         text-align: center;
       }
     }
+    h3 {
+      font-size: 4.055rem;
+      padding-bottom: 0.325em;
+      span {
+        display: inline-block;
+      }
+      @media (max-width: 767px) {
+        font-size: 3.2rem;
+      }
+      @media (max-width: 575px) {
+        font-size: 2.2rem;
+        span{
+          display: block;
+        }
+      }
+    }
     .bannerTxt {
       padding-top: 0.8em;
       strong {
@@ -1486,6 +1576,11 @@ footer {
     .bannerTagline {
       padding-bottom: 0.2em;
       padding-top: 0;
+      line-height: 0.81em;
+      font-size: 1.5rem;
+      @media (max-width: 575px) {
+        font-size: 1.2rem;
+      }
     }
   }
   #specialized-services {
@@ -1498,6 +1593,139 @@ footer {
         max-width: 420px;
       }
     }
+  }
+  #turn-chaos-operations {
+    padding: 3.1rem 0 1.8rem;
+    background: #fff;
+    text-align: center;
+  }
+  .audit-home-tile {
+    text-align: left;
+    margin-top: 4rem;
+    position: relative;
+    color: #fff;
+    padding: 3.15rem 2.9rem;
+    border-radius: 3.33rem;
+    @media (max-width: 575px) {
+      border-radius: 2rem;
+      padding: 2rem;
+    }
+    .bg-image {
+      width: 100%;
+      border-radius: 3.33rem;
+      overflow: hidden;
+      position: absolute; height: 100%;
+      @media (max-width: 575px) {
+        border-radius: 2rem;
+      }
+      img {
+        opacity: 0.1;
+        z-index: 9;
+        position: relative;
+      }
+      &:before {
+        background: #0f393b;
+      }
+    }
+    .row {
+      position: relative;
+      z-index: 9;
+    }
+    .audit-home-btn {
+      position: absolute;
+      z-index: 9; 
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      margin-bottom: -26px;
+      @media (max-width: 767px) {
+        width: 280px; margin-bottom: -20px;
+      }
+      @media (max-width: 575px) {
+        text-align: center;
+      }
+    }
+  }
+  .platform-row {
+    position: relative;
+    &:before {
+      content: "";
+      position: absolute;
+      width: 100vw;
+      height: 2px;
+      background: linear-gradient(
+        99.59deg,
+        #ede497 2.59%,
+        #2ad9c2 41.12%,
+        #d891ce 89.63%
+      );
+      top: 50%;
+      z-index: -1;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .col {
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+  }
+  .platform-tile {
+    width: 100%;
+    border-radius: 3.33rem;
+    background: linear-gradient(45deg, #ede497 33.91%, #90dfac 104.57%), #ede497;
+    padding: 5.7rem 2.5rem;
+    position: relative;
+    height: 100%;
+    @media (max-width: 991px) {
+      border-radius: 2rem;
+      padding: 5rem 2rem 2rem;
+    }
+    @media (max-width: 767px) {
+      padding: 3.5rem 2rem 2rem;
+    }
+    &.platform-tile-2 {
+      background: linear-gradient(
+          51deg,
+          #5fdcb6 24.34%,
+          #2ad9c2 62.22%,
+          #8ab1c9 91.67%
+        ),
+        #2ad9c2;
+    }
+    &.platform-tile-3 {
+      background: linear-gradient(50deg, #6abec7 21.29%, #d891ce 84.5%), #d891ce;
+    }
+    .platformIcon {
+      position: absolute;
+      right: 1.3rem;
+      top: 0.9rem;
+    }
+    .platformCount {
+      color: #0f393b;
+      font-size: 3.88rem;
+      font-style: normal;
+      font-weight: 800;
+      line-height: 0.95em;
+      @media (max-width: 991px) {
+        font-size: 3rem;
+      }
+    }
+    .platformCTA {
+      color: #0f393b;
+      font-size: 1.83rem;
+      font-style: normal;
+      font-weight: 800;
+      line-height: 0.95em;
+      padding-top: 0.55em;
+      @media (max-width: 991px) {
+        font-size: 1.4rem;
+      }
+    }
+  }
+  #efficient-platforms {
+    padding: 3rem 0 2.7rem;
+    position: relative;
+    background: #fff;
   }
   #were-masterpoint {
     padding: 3.4rem 0 1.95rem;
@@ -1530,6 +1758,30 @@ footer {
     .container {
       max-width: 100%;
       padding: 0;
+    }
+  }
+  #make-infrastructure {
+    color: #fff; 
+    padding-bottom: 4.1rem;
+    background: #0b292a;
+    .bg-image {
+      width: 49.6%;
+      &:before {
+        background: linear-gradient(
+          90deg,
+          rgba(11, 41, 42, 0) 68.35%,
+          #0b292a 95.61%
+        );
+      }
+    }
+    @media (max-width: 767px) {
+      padding-top: 0;
+      .bg-image{
+        width: 100%; height: 50vw;
+        &:before{
+          background: linear-gradient(360deg,#0b292a 0%,rgba(255,255,255,0) 35%);
+        }
+      }
     }
   }
   #our-word {
@@ -2458,7 +2710,7 @@ footer {
     }
   }
   .services-row {
-    justify-content: center;
+    justify-content: center; 
     .col {
       padding-top: 1.38rem;
       padding-bottom: 0.5rem;
