@@ -20,7 +20,8 @@
 {{- end -}}
 
 {{- if $enableAnchorLinks -}}
-<h{{ $level }} id="{{ $anchor }}" {{- with .Attributes.class }} class="{{ . }} heading-with-anchor" {{- end }}>
+<h{{ $level }} id="{{ $anchor }}"
+  class="heading-with-anchor{{ with .Attributes.class }} {{ . }}{{ end }}">
   <a href="#{{ $anchor }}" class="heading-anchor-link" aria-label="Link to {{ $text }}">
     <span class="heading-text">{{ $text | safeHTML }}</span>
     <span class="heading-anchor-symbol">#</span>
