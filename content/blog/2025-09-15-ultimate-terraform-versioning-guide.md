@@ -5,7 +5,7 @@ title: "The Ultimate Terraform Versioning Guide"
 author: Veronika Gnilitska
 slug: ultimate-terraform-versioning-guide
 date: 2025-09-15
-# date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
+date_modified: 2025-11-25 # Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: A practical, no-fluff guide to versioning in Terraform/OpenTofu that helps you avoid the hidden traps of tool, provider, and module mismatches. If your team has ever faced surprises after “just updating Terraform” (or wants to prevent them), this guide is a must-read.
 image: /img/updates/tf-versioning-guide/main.jpeg
 ---
@@ -104,7 +104,10 @@ Since [Child Modules](https://masterpoint.io/blog/terraform-opentofu-terminology
 terraform {
   required_version = ">= 1.6.0"
   required_providers {
-    aws = ">= 5.0.0"
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 5.0.0"
+    }
   }
 }
 ```
@@ -126,7 +129,10 @@ Example:
 terraform {
   required_version = "1.7.5"
   required_providers {
-    aws = "~> 5.81.0"
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.81.0"
+    }
   }
 }
 ```

@@ -24,4 +24,10 @@ resources.Minify }}
   Defer.dom("img.lazy", 200, "loaded");
 </script>
 
+{{ if eq .Section "blog" }}
+{{ $tocJS := resources.Get "js/floating-toc.js" }}
+{{ $secureTocJS := $tocJS | resources.Minify }}
+<script src="{{ $secureTocJS.Permalink }}"></script>
+{{ end }}
+
 {{ partial "lightbox.html" .}}

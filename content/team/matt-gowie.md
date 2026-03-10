@@ -1,8 +1,7 @@
 ---
 title: Matt Gowie
-designation: Owner
+designation: CEO + CTO
 linkedin: https://www.linkedin.com/in/gowiem/
-#github: https://github.com/gberenice
 draft: false
 team: false
 weight: 1
