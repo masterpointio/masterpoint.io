@@ -1,0 +1,24 @@
+{{ $col := .Get "col" | default "col-md-6" }}
+{{ $id := .Get "id" }}
+
+{{ with .Page.Params.platform_tiles }}
+<div class="row platform-row" id="{{ $id }}">
+    {{ range $i, $item := . }}
+    <div class="col col-12 {{ $col }}">
+        <div class="platform-tile platform-tile-{{ add $i 1 }}">
+            {{ with $item.icon }}
+            <div class="platformIcon">{{ . | safeHTML }}</div>
+            {{ end }}
+
+            {{ with $item.title }}
+            <div class="platformCTA">{{ . | safeHTML }}</div>
+            {{ end }}
+
+            {{ with $item.intro }}
+            <div class="platform-intro">{{ . | safeHTML }}</div>
+            {{ end }}
+        </div>
+    </div>
+    {{ end }}
+</div>
+{{ end }}

@@ -15,6 +15,7 @@
   crossorigin="anonymous"
   referrerpolicy="no-referrer"
 />
+
 {{ $js := resources.Get "js/plugins.js" }} {{ $secureJS := $js |
 resources.Minify }}
 <script src="{{ $secureJS.Permalink }}"></script>

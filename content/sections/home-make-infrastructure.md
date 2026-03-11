@@ -10,7 +10,7 @@ section_categories:
 id: make-infrastructure
 ---
 
-### Make Infrastructure <span class="text-gradient">Your Competitive Edge</span> {.groupTitle .text-white .mb-1}
+### Make Infrastructure <span class="text-gradient">Your Competitive Edge</span> {.groupTitle .text-white .mb-1 .text-uppercase}
 
 Code is easy to come by. But cheap code doesn’t make for an efficient platform. Workflows and automations do. Our IaC workshops and Workflow Library provide the expertise, training, and foundations needed to build the workflows that lead to efficient operations.
 

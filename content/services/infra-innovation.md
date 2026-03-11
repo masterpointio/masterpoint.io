@@ -5,8 +5,6 @@ title: Infrastructure innovation
 weight: 3
 icon: /img/services/icon_terraform.svg
 id: infra-innovation
-description: >-
-  Say hello to a modern, maintainable, scalable IaC solution without the stress of setup. Our team has the expertise to migrate, automate, or simply innovate with current best practices.
 image: /img/services/bg_terraform.jpg
 ---
 

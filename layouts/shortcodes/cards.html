@@ -1,0 +1,22 @@
+{{ $col := .Get "col" | default "col-md-6" }}
+{{ $id := .Get "id" }}
+
+{{ with .Page.Params.cards }}
+<div class="row row-cards" id="{{ $id }}">
+    {{ range . }}
+    <div class="col col-12 {{ $col }}">
+        <div class="card card-default h-100">
+            <div class="card-body">
+                {{with .icon}}
+                <div class="icon">{{ . | safeHTML }}</div>
+                {{end}}
+                {{with .title | safeHTML}}
+                <h4>{{ . }}</h4>
+                {{end}}
+                <p>{{ .intro | safeHTML }}</p>
+            </div>
+        </div>
+    </div>
+    {{ end }}
+</div>
+{{ end }}
