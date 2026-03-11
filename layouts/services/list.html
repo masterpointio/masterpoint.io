@@ -65,7 +65,12 @@
                     {{end}}
                 </h3>
                 <div class="serviceContent">{{.Content}}</div>
-                <div class="serviceBtn"><a href="{{ .Site.Params.get_in_touch }}" class="button btn-outline-gradient text-pine btn-big">GET STARTED →</a></div>
+                <div class="d-flex justify-content-center btn-wrapper">
+                    <div class="serviceBtn"><a href="{{ .Site.Params.get_in_touch }}" class="button btn-gradient text-pine btn-big">GET STARTED →</a></div>
+                    {{ if .Params.sections}}
+                    <div class="serviceBtn"><a href="{{ .Permalink}}" class="button btn-outline-gradient text-pine btn-big">Or Learn More →</a></div>
+                    {{end}}
+                </div>
             </div>
         </div>
     </section>

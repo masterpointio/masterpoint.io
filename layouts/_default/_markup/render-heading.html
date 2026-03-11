@@ -19,16 +19,28 @@
   {{- $enableAnchorLinks = true -}}
 {{- end -}}
 
+{{- /* Build extra attributes from markdown attribute syntax {.class1 .class2 #id} */ -}}
+{{- $class := "" -}}
+{{- $extraAttrs := "" -}}
+{{- $attrs := .Attributes -}}
+{{- with $attrs -}}
+  {{- with .class -}}
+    {{- $class = . -}}
+  {{- end -}}
+  {{- range $k, $v := $attrs -}}
+    {{- if and (ne $k "class") (ne $k "id") -}}
+      {{- $extraAttrs = printf `%s %s="%s"` $extraAttrs $k $v -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
 {{- if $enableAnchorLinks -}}
-<h{{ $level }} id="{{ $anchor }}"
-  class="heading-with-anchor{{ with .Attributes.class }} {{ . }}{{ end }}">
+<h{{ $level }} id="{{ $anchor }}" class="heading-with-anchor{{ with $class }} {{ . }}{{ end }}"{{ $extraAttrs | safeHTMLAttr }}>
   <a href="#{{ $anchor }}" class="heading-anchor-link" aria-label="Link to {{ $text }}">
     <span class="heading-text">{{ $text | safeHTML }}</span>
     <span class="heading-anchor-symbol">#</span>
   </a>
 </h{{ $level }}>
 {{- else -}}
-<h{{ $level }} id="{{ $anchor }}" {{- with .Attributes.class }} class="{{ . }}" {{- end }}>
-  {{ $text | safeHTML }}
-</h{{ $level }}>
+<h{{ $level }} id="{{ $anchor }}"{{ with $class }} class="{{ . }}"{{ end }}{{ $extraAttrs | safeHTMLAttr }}>{{ $text | safeHTML }}</h{{ $level }}>
 {{- end -}}

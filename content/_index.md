@@ -8,7 +8,7 @@ description: "We deliver workflows that transform your tangled infrastructure as
 banner_btn_label: Book A Call
 banner_btn_link: /#
 banner_link_label: Audit Your IaC →
-banner_link: /#
+banner_link: /services/audit/
 sections: "home"
 sitemap:
   priority: 1
