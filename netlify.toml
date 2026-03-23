@@ -38,6 +38,13 @@ to = "/blog/:splat"
 status = 301
 force = true
 
+# linktree's link shortener + QRCode generator lost my link... so now we need a redirect
+[[redirects]]
+from = "/tying-knot/"
+to = "/tying-the-masterpoint-knot/"
+status = 301
+force = true
+
 [[redirects]]
 from = "/*"
 to = "/404.html"
