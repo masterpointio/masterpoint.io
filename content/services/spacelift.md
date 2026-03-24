@@ -1,5 +1,5 @@
 ---
-visible: true
+visible: false
 draft: false
 title: Spacelift-Powered IaC Automation
 weight: 5

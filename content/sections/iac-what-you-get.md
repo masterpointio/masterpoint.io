@@ -17,7 +17,7 @@ cards:
     title: Tailored Recommendations
     intro: "Specific steps to improve speed, stability, and growth. Prioritized by impact so you know where to start."
   - icon: '<img src="/img/icon_access.png"/>'
-    title: Lifetime Access to IaC Workflow Library
+    title: Lifetime Access to IaC Pattern Library
     intro: "Our playbooks for essential platform workflows. A living library that grows with industry best practices."
   - icon: '<img src="/img/icon_guidance.png"/>'
     title: 1 Month of Expert Guidance
