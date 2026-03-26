@@ -16,7 +16,7 @@ id: iac-pricing
 ### Pricing {.sectionTitle .big .text-gradient .d-inline .pb-0}
 
 <div class="iac-price pt-2 mt-1">
-$10,000 USD - Flat Fee<br>
+$15,000 USD - Flat Fee<br>
 <b class="text-pine">IaC Confidence - <em class="text-pink">Priceless</em></b>
 </div>
 
