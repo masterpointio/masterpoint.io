@@ -205,15 +205,16 @@ $(document).ready(function() {
       loop: true,
       autoWidth: true,
       items: 8,
-      autoplay:true,
+      autoplay: true,
       slideTransition: 'linear',
-      autoplayTimeout: 3000,
+      autoplayTimeout: 5000,
       autoplaySpeed: 5000,
+      smartSpeed: 5000,
       autoplayHoverPause: false,
-    responsiveClass:true,
-    dots: false,
-    nav: false,
-    mouseDrag: false
+      responsiveClass: true,
+      dots: false,
+      nav: false,
+      mouseDrag: false
     });
     // Trigger first transition immediately to skip the initial delay
     owl.trigger('next.owl.carousel');
