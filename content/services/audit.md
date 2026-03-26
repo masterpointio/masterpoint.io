@@ -1,5 +1,5 @@
 ---
-title: Audit your IaC. Unblock your team. 
+title: Audit your IaC. Unblock your team.
 banner_title: "<span class='text-gradient'>Audit your IaC.</span><br> Unblock your team."
 #banner_tagline: "Deploy faster. Break less. Scale smarter."
 banner_text: "A precise audit of your infrastructure operations that uncovers hidden risks, eliminates bottlenecks, and sets your team up to ship 10x faster."
@@ -13,10 +13,10 @@ sections: "iacaudit"
 sitemap:
   priority: 1
 id: page-iac-audit-services
-video_id: '-2C0IhmE2XQ'
+video_id: "-2C0IhmE2XQ"
 list_title: Infrastructure as Code audit
 weight: 1
-icon: /img/services/icon_assessment.svg 
+icon: /img/services/icon_assessment.svg
 image: /img/services/bg_cloud_assessment.jpg
 overview_id: iac-audit
 ---

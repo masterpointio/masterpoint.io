@@ -6,7 +6,7 @@ weight: 1
 #section_image: /img/diverse_group_of_doctors.jpg
 #image: /img/bg_featured_video.jpg
 section_categories:
-    - iacaudit
+  - iacaudit
 id: iac-sound-familier
 
 cards:
@@ -20,9 +20,7 @@ cards:
     intro: "<b class='text-vanilla'>You're hiring more platform engineers but velocity isn't improving</b>"
   - icon: '<i class="fa-solid fa-square-xmark"></i>'
     intro: "<b class='text-vanilla'>Security and compliance reviews keep finding the same gaps</b>"
-
 ---
-
 
 ### Sound familiar? {.sectionTitle .big .text-center}
 

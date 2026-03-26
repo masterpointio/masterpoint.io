@@ -6,12 +6,12 @@ weight: 4
 #section_image: /img/diverse_group_of_doctors.jpg
 #image: /img/bg_featured_video.jpg
 section_categories:
-    - iacaudit
+  - iacaudit
 id: iac-what-you-get
 
 cards:
   - icon: '<img src="/img/icon_finding_reports.png"/>'
-    title: 'Findings Report'
+    title: "Findings Report"
     intro: "Map your goals, review your code, assess your workflows. We identify what's working, what's not, and what's holding you back."
   - icon: '<img src="/img/icon_tailored_recommendations.png"/>'
     title: Tailored Recommendations
@@ -22,7 +22,6 @@ cards:
   - icon: '<img src="/img/icon_guidance.png"/>'
     title: 1 Month of Expert Guidance
     intro: "Direct access to Masterpoint experts via sync and async channels. We help you upskill your organization so you run your own platform."
-
 ---
 
 ### <span class="text-gradient">What You Get</span> {.sectionTitle .big .text-center}

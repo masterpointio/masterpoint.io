@@ -6,9 +6,8 @@ size: col-12 col-md-10 col-lg-8
 #section_image: /img/diverse_group_of_doctors.jpg
 image: /img/bg_iac_cta.jpg
 section_categories:
-    - iacaudit
+  - iacaudit
 id: iac-cta
-
 ---
 
 ### <span class="text-gradient">Ready to Own</span><br> Your Infrastructure? {.scheduleTitle .text-center}

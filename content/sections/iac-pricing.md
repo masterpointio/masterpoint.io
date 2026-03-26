@@ -6,11 +6,9 @@ weight: 5
 #section_image: /img/diverse_group_of_doctors.jpg
 #image: /img/bg_featured_video.jpg
 section_categories:
-    - iacaudit
+  - iacaudit
 id: iac-pricing
-
 ---
-
 
 <div class="row">
 <div class="col col-12 col-md-5">

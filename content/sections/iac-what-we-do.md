@@ -6,20 +6,19 @@ weight: 2
 #section_image: /img/diverse_group_of_doctors.jpg
 #image: /img/bg_featured_video.jpg
 section_categories:
-    - iacaudit
+  - iacaudit
 id: iac-what-we-do
 
 platform_tiles:
   - icon: '<img src="/img/icon_infra_review.png"/>'
-    title: 'Infrastructure Review'
+    title: "Infrastructure Review"
     intro: "Code, automation, diagrams, and documentation"
   - icon: '<img src="/img/icon_team_interviews.png"/>'
-    title: 'Team Interviews'
+    title: "Team Interviews"
     intro: "Pain points, bottlenecks, hidden issues"
   - icon: '<img src="/img/icon_workflow_assessement.png"/>'
-    title: 'Workflow Assessment'
+    title: "Workflow Assessment"
     intro: "Tools, processes, and operational habits"
-
 ---
 
 <div class="row justify-content-center text-center">
