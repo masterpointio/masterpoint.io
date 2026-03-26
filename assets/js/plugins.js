@@ -199,21 +199,25 @@ $(window).on('load', function(){
 
   // Client Logos
 $(document).ready(function() {
-    $('.logos .owl-carousel').owlCarousel({
+    var owl = $('.logos .owl-carousel');
+    owl.owlCarousel({
       margin: 0,
       loop: true,
       autoWidth: true,
       items: 8,
-      autoplay:true,
+      autoplay: true,
       slideTransition: 'linear',
-      autoplayTimeout: 9000,
-      autoplaySpeed: 9000,
+      autoplayTimeout: 5000,
+      autoplaySpeed: 5000,
+      smartSpeed: 5000,
       autoplayHoverPause: false,
-    responsiveClass:true,
-    dots: false,
-    nav: false,
-    mouseDrag: false
-    })
+      responsiveClass: true,
+      dots: false,
+      nav: false,
+      mouseDrag: false
+    });
+    // Trigger first transition immediately to skip the initial delay
+    owl.trigger('next.owl.carousel');
   })
 
 // Consent Cookie v3.1.0
