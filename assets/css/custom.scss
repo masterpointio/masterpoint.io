@@ -808,7 +808,7 @@ padding-top: 12px;
     @media (max-width: 767px) {
       padding-right: 0.8rem; margin-left: 0;
     }
-    
+
     @media (max-width: 575px) {
       margin-left: initial;
       padding: 0 0.7rem;
@@ -2663,7 +2663,7 @@ footer {
     }
   }
 }
-#team-training {
+#infra-innovation-service {
   padding: 7.3rem 0 7.8rem;
   color: #fff;
   background: #031e1f;
@@ -2686,7 +2686,7 @@ footer {
     }
   }
 }
-#infra-innovation {
+#operate-service {
   padding: 7.5rem 0 6.4rem;
   background: #fff;
   .bg-image {
@@ -2704,25 +2704,25 @@ footer {
   }
 }
 
-#spacelift {
-  padding: 7.5rem 0 6.4rem;
-  background: #fff;
-  .bg-image {
-    width: 100%;
-    position: absolute;
-    &:before {
-      background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0) 3.4%,
-        rgba(255, 255, 255, 0.675) 34.51%,
-        rgba(255, 255, 255, 0.9) 70.11%,
-        rgba(255, 255, 255, 0) 103.07%
-      );
-    }
-  }
-}
+// #spacelift {
+//   padding: 7.5rem 0 6.4rem;
+//   background: #fff;
+//   .bg-image {
+//     width: 100%;
+//     position: absolute;
+//     &:before {
+//       background: linear-gradient(
+//         180deg,
+//         rgba(255, 255, 255, 0) 3.4%,
+//         rgba(255, 255, 255, 0.675) 34.51%,
+//         rgba(255, 255, 255, 0.9) 70.11%,
+//         rgba(255, 255, 255, 0) 103.07%
+//       );
+//     }
+//   }
+// }
 
-#managed-service-partners {
+#spacelift-service {
   padding: 7.5rem 0 6.4rem;
   background: #000;
   color: #fff;
@@ -2749,6 +2749,7 @@ footer {
     }
   }
 }
+
 #services-how-works {
   color: #fff;
   padding: 4rem 0 3.9rem;

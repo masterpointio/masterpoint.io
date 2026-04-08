@@ -1,11 +1,11 @@
 ---
 visible: true
 draft: false
-title: Managed service partners
+title: Upskill and Operate
 weight: 4
 icon: /img/services/icon_engineering.svg
-id: managed-service-partners
-image: /img/services/bg_platform.jpg
+id: operate-service
+image: /img/services/bg_terraform.jpg
 ---
 
-Outsource your IaC altogether and focus on the high-priority internal initiatives that need your attention. For a straightforward monthly fee we’ll act like an embedded team that implements your IaC stack, automates the continuous delivery, and keeps it running smoothly.
+We guide your engineers so they operate your platform like professionals. We upskill your team through guidance, workshops, and trainings so your team can own your platform and continue to ship fast long after we're gone.
