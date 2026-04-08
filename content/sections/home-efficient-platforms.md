@@ -1,5 +1,5 @@
 ---
-title: Our Work Lead to Efficient Platforms
+title: Our Work Leads to Efficient Platforms
 weight: 4
 #position: justify-content-start reverse flex
 #size: col-12 col-md-6
@@ -10,7 +10,7 @@ section_categories:
 id: efficient-platforms
 ---
 
-### Our Work Lead to <br> <span class="text-gradient">Efficient Platforms</span> {.groupTitle .text-center .text-rhythm}
+### Our Work Leads to <br> <span class="text-gradient">Efficient Platforms</span> {.groupTitle .text-center .text-rhythm}
 
 <div class="row platform-row">
 
