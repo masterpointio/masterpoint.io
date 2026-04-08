@@ -33,7 +33,7 @@ In the age of AI, writing code is cheap. **<span class="text-gradient">The real 
 {.font23}
 
 <div class="rowLinks justify-content-center pt-4">
-    <a class="button btn-gradient" href="/#">Schedule a Discovery Call</a>
+    <a class="button btn-gradient" href="https://calendly.com/matt-at-masterpoint/project-chat">Schedule a Discovery Call</a>
 </div>
 
 </div>

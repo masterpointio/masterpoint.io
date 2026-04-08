@@ -29,5 +29,5 @@ cards:
 {{< cards col="col-sm-6 col-md-6" id="what-get-row" >}}
 
 <div class="rowLinks text-center pt-4 mt-1">
-    <a class="button btn-gradient" href="/#">Schedule a Discovery Call</a>
+    <a class="button btn-gradient" href="https://calendly.com/matt-at-masterpoint/project-chat">Schedule a Discovery Call</a>
 </div>

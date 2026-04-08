@@ -28,7 +28,7 @@ platform_tiles:
 
 ### The Results<br> Teams See {.sectionTitle .big .text-gradient .d-inline .pb-0}
 
-<a class="button btn-gradient" href="/#">Schedule a Discovery Call</a>
+<a class="button btn-gradient" href="https://calendly.com/matt-at-masterpoint/project-chat">Schedule a Discovery Call</a>
 {.pt-4 .mt-1}
 
 </div>

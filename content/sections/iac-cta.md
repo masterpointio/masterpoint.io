@@ -16,5 +16,5 @@ Our audit paves the way for platform operations that scale with your business. W
 {.font22 .text-center}
 
 <div class="rowLinks text-center pt-3">
-    <a class="button btn-gradient" href="/#">Schedule a Discovery Call</a>
+    <a class="button btn-gradient" href="https://calendly.com/matt-at-masterpoint/project-chat">Schedule a Discovery Call</a>
 </div>
