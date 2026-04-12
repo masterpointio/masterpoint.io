@@ -1,0 +1,18 @@
+{{ if .RawContent }}
+<div id="blogStickyHeader">
+    <span class="sticky-title">{{ .Title }}</span>
+    <button id="copyForLlm" class="button sml" aria-label="Copy page content as markdown for LLM">
+        <i class="fa fa-copy"></i> Copy for LLM
+    </button>
+</div>
+<script id="rawMarkdownContent" type="text/plain">
+# {{ .Title | safeHTML }}
+
+URL: {{ .Permalink }}
+{{ with .Params.author }}Author: {{ . }}
+{{ end }}Published: {{ .Date.Format "January 2, 2006" }}
+{{ with .Params.description }}
+> {{ . | safeHTML }}
+{{ end }}
+{{ .RawContent | safeHTML }}</script>
+{{ end }}
