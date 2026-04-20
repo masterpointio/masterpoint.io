@@ -45,7 +45,6 @@ download_button: /download/power-digital-case-study.pdf
 
 The company’s rapid growth, while a testament to its success, brought with it a set of challenges that impeded further expansion. As Power Digital onboarded more clients and expanded its service offerings, the existing infrastructure limitations became increasingly apparent. The company found itself at a crossroads, needing to address these challenges to maintain its competitive edge while it continued to scale.
 
-
 ### The Challenge{.text-uppercase .mt-5}
 
 #### Monolithic Terraform Configuration (Terralith)
@@ -61,15 +60,13 @@ At the heart of Power Digital Marketing’s infrastructure challenges lay a mono
 
 This monolithic structure, while initially manageable, had become a significant bottleneck in Power Digital’s ability to scale and adapt to business needs.
 
-
 #### Scalability Issues with Growing Resources and Client Base {.mt-5}
 
 ![Scalability Issues Infographic - Power Digital Case Study](/img/case-studies/scalability-issues-case-study-power-digital.png)
 
-## The company’s platform team found itself managing *over 43,000 resources...*
+## The company’s platform team found itself managing _over 43,000 resources..._
 
 a scale that pushed their existing Terraform Cloud setup to continually breaking.
-
 
 **The scalability issues manifested in several ways:**
 
@@ -80,7 +77,6 @@ a scale that pushed their existing Terraform Cloud setup to continually breaking
 
 These scalability issues significantly impacted the efficiency of development and deployment processes, causing delays, frustration among the team, and affecting the quality of service delivered to clients.
 
-
 #### High Infrastructure Costs and Financial Burden {.mt-5}
 
 Power Digital’s infrastructure challenges were not limited to technical issues. The company was grandfathered into an outdated Terraform Cloud pricing model; scaling further meant adopting a new pricing plan that was exponentially more expensive without guarantees of improved performance.
@@ -88,7 +84,6 @@ Power Digital’s infrastructure challenges were not limited to technical issues
 **This financial pressure added another layer of urgency to Power Digital’s need for a more scalable and cost-effective infrastructure solution.**
 
 ![63 Hours of Engineering Time Lost Each Month - Infographic Power Digital Case Study](/img/case-studies/63-hours-of-engineering-time-lost-each-month.png)
-
 
 #### Delayed Client Onboarding and Reduced Efficiency {.mt-5}
 
@@ -135,7 +130,6 @@ After considering several implementation options, Masterpoint recommended migrat
 
 ![Spacelift Website Screenshot - Power Digital Case Study](/img/case-studies/spacelift-migration-case-study-image.png)
 
-
 1. **Cost-Effective Pricing Model:** Spacelift’s pricing structure was much more in line with Power Digital’s usage patterns and growth trajectory, offering significant cost savings.
 2. **Superior Resource Management:** Spacelift provides more granular control over resource management and deployment.
 3. **Advanced Automation Features:** Spacelift offers an impressive amount of customization through a deep integration with Open Policy Agent and 3rd-party integrations.
@@ -143,7 +137,6 @@ After considering several implementation options, Masterpoint recommended migrat
 5. **Scalability:** Spacelift makes it easy to handle large numbers of resources and environments; users can easily decompose large configurations into manageable modules that are easily connected with automation.
 
 With Spacelift, Masterpoint was able to migrate over 43,000 resources from Terraform Cloud without issue.
-
 
 #### Decomposing the Terralith {.mt-5}
 
@@ -155,13 +148,12 @@ Power Digital had an unwieldy Terralith containing over 43,000 Terraform resourc
 2. **Migration Strategy:** A new, modularized system was developed and run in parallel with the existing Terralith. This allowed for new clients to be onboarded using the new system without impacting existing clients or disrupting ongoing business operations. Once the new system was fully deployed for new clients, the team proceeded to decompose the original Terralith and migrate existing clients to the new modularized environments.
 3. **Standardization:** Developing standardized modules for common infrastructure components, promoting best practices around module usage with tofu Workspaces and removing repetitive code anti-patterns.
 4. **Dependency Management:** Clearly defining and managing dependencies between modules to ensure
-smooth operations.
+   smooth operations.
 5. **Version Control Optimization:** Restructuring the repository to better support the new modular approach, improving collaboration and code management for the platform engineering team. This restructuring also facilitated a smoother transition for existing clients and easier onboarding for new clients during the migration process.
 
 ![25min to 3min Infographic - Power Digital Case Study](/img/case-studies/25min-to-3min.png)
 
 This modularization, combined with Spacelift’s automation capabilities, **enabled sub-3-minute init/plan/apply deployments for new clients**, a dramatic improvement over a configuration that took 25 minutes just to complete a plan.
-
 
 ---
 
@@ -177,8 +169,6 @@ One of the most impressive aspects of the migration, and one that showcased the 
 
 Masterpoint is a proud OpenTofu community member; we believe the project is the future of IaC technology, and migrations like this one highlight why.
 
-
-
 #### Knowledge Transfer and Training {.mt-5}
 
 Masterpoint wants customers to be partners in their IaC journey, which means delivering turn-key IaC solutions that includes training the current engineering team on how to manage and maintain them. Masterpoint provided a comprehensive knowledge transfer and training to Power Digital Marketing’s team.
@@ -191,7 +181,6 @@ Masterpoint wants customers to be partners in their IaC journey, which means del
 4. **Continuous Learning Plans:** Establishing a framework for ongoing learning and skill development.
 
 This comprehensive training ensured that Power Digital’s team was well-equipped to not only manage and maintain the new infrastructure platform, but to iterate and deliver their own improvements and features long-term.
-
 
 ---
 
@@ -207,7 +196,6 @@ The migration from Terraform Cloud to Spacelift and OpenTofu, led by Masterpoint
 4. **Increased Scalability:** The new infrastructure means the platform is no longer a bottleneck for onboarding new clients, enabling the business to grow and scale quickly. As a benefit of Masterpoint’s work, Power Digital has been able to onboard a total of 100+ new clients without issue in the past 60 days since migration.
 5. **Enhanced Security and Compliance:** Improved access control, better audit trails, and standardized security practices across client deployments.
 6. **Better Disaster Recovery:** Outages require a nimble response to prevent client impact: faster cycles, better automation reliability, and infrastructure isolation means the platform team can quickly stand up new infrastructure in response to trouble.
-
 
 ---
 
