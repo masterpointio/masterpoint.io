@@ -11,7 +11,7 @@ sitemap:
 download_button: /download/power-digital-case-study.pdf
 ---
 
-![Power Digital x MasterPoint Logos](/img/case-studies/power-digital-x-masterpoint-case-study-logos.png)  
+![Power Digital x MasterPoint Logos](/img/case-studies/power-digital-x-masterpoint-case-study-logos.png)
 
 ## Abstract{.text-uppercase}
 
@@ -32,7 +32,7 @@ download_button: /download/power-digital-case-study.pdf
 - Easier client onboarding.
 - Enhanced disaster recovery.
 
-> **Are you facing similar challenges?**  
+> **Are you facing similar challenges?**
 > Contact Masterpoint today, we’ll evaluate your infrastructure and develop a comprehensive plan and solution.
 
 ---
@@ -85,28 +85,28 @@ These scalability issues significantly impacted the efficiency of development an
 
 Power Digital’s infrastructure challenges were not limited to technical issues. The company was grandfathered into an outdated Terraform Cloud pricing model; scaling further meant adopting a new pricing plan that was exponentially more expensive without guarantees of improved performance.
 
-**This fi nancial pressure added another layer of urgency to Power Digital’s need for a more scalable and cost-eff ective infrastructure solution.**
+**This financial pressure added another layer of urgency to Power Digital’s need for a more scalable and cost-effective infrastructure solution.**
 
 ![63 Hours of Engineering Time Lost Each Month - Infographic Power Digital Case Study](/img/case-studies/63-hours-of-engineering-time-lost-each-month.png)
 
 
-#### Delayed Client Onboarding and Reduced Effi ciency {.mt-5}
+#### Delayed Client Onboarding and Reduced Efficiency {.mt-5}
 
-The cumulative eff ect of these challenges had a direct impact on Power Digital’s core business operations: onboarding new clients onto the platform was the primary revenue driver, and the existing platform was a bottleneck.
+The cumulative effect of these challenges had a direct impact on Power Digital’s core business operations: onboarding new clients onto the platform was the primary revenue driver, and the existing platform was a bottleneck.
 
 **Key issues included:**
 
-1. **Slow Client Onboarding:** The complex Terraform Cloud setup and frequent slowdowns negatively impacted the client onboarding process, causing delays and aff ecting client satisfaction.
+1. **Slow Client Onboarding:** The complex Terraform Cloud setup and frequent slowdowns negatively impacted the client onboarding process, causing delays and affecting client satisfaction.
 2. **Resource Misallocation:** Developers and operations staff found themselves spending an inordinate amount of time managing infrastructure issues instead of focusing on delivering value and new features
 3. **Lost Productivity:** Power Digital estimated that at least 63 hours of engineer time per month were spent just waiting on plan/apply loops and debugging broken Terraform runs.
 
-While these effi ciency issues were felt by engineers on the platform team immediately, the long-term eff ect goes right to the bottom line: slow, broken client onboarding directly impacts revenue and business growth potential.
+While these efficiency issues were felt by engineers on the platform team immediately, the long-term effect goes right to the bottom line: slow, broken client onboarding directly impacts revenue and business growth potential.
 
 #### Limited Ability to Scale and Support Long-term Goals {.mt-5}
 
 As Power Digital Marketing continued to grow its client base, it became increasingly clear that the current infrastructure would not be able to support their long-term goals and objectives. The existing Terraform Cloud setup was not designed to handle the scale at which the company was now operating.
 
-These types of limitations posed a signifi cant threat to Power Digital’s long-term success and market position.
+These types of limitations posed a significant threat to Power Digital’s long-term success and market position.
 
 ### The Solution{.text-uppercase}
 
@@ -160,14 +160,14 @@ smooth operations.
 
 ![25min to 3min Infographic - Power Digital Case Study](/img/case-studies/25min-to-3min.png)
 
-This modularization, combined with Spacelift’s automation capabilities, **enabled sub-3-minute init/plan/ apply deployments for new clients**, a dramatic improvement over a configuration that took 25 minutes just to complete a plan.
+This modularization, combined with Spacelift’s automation capabilities, **enabled sub-3-minute init/plan/apply deployments for new clients**, a dramatic improvement over a configuration that took 25 minutes just to complete a plan.
 
 
 ---
 
 #### Migration to OpenTofu
 
-One of the most impressive aspects of the migration, and one that showcased the capabilities of the OpenTofu community, Masterpoint simultaneously migrated over 43,000 resources from Terraform to the open-sourcefriendly OpenTofu project. With the current uncertainty around Terraform and its licensing structure, moving to OpenTofu offers several strategic advantages:
+One of the most impressive aspects of the migration, and one that showcased the capabilities of the OpenTofu community, Masterpoint simultaneously migrated over 43,000 resources from Terraform to the open-source friendly OpenTofu project. With the current uncertainty around Terraform and its licensing structure, moving to OpenTofu offers several strategic advantages:
 
 ![Opentofu Website Screenshot](/img/case-studies/open-tofu-screenshot.png)
 
@@ -215,13 +215,13 @@ The migration from Terraform Cloud to Spacelift and OpenTofu, led by Masterpoint
 
 Power Digital Marketing’s move from Terraform Cloud to Spacelift and OpenTofu shows the importance of taking time to evaluate your infrastructure and asking questions:
 
-1. **Is our infrastructure automation cost-eff ective?**
+1. **Is our infrastructure automation cost-effective?**
 2. **Does it meet our current needs?**
 3. **Can it meet our future demands?**
 
-It’s ok if the answer is “no” to any of these questions, especially the last one.
+It’s okay if the answer is “no” to any of these questions, especially the last one.
 This project you just read about was not a result of a failure in design of the original system, but rather an evolution to remove scaling limits – a good problem to have.
 
 By leveraging Masterpoint’s expertise, Power Digital has overcome significant challenges, reduced costs, and positioned themselves for continued growth and success.
 
-If your organization is experiencing similar challenges with infrastructure scalability, cost management, or effi ciency, it may be time to consider a change. Whether you just need an external perspective on your current setup or want someone to take IaC off your hands completely, we can help. Get in touch with us to schedule an assessment to see how we can improve your infrastructure and save you money and time.
+If your organization is experiencing similar challenges with infrastructure scalability, cost management, or efficiency, it may be time to consider a change. Whether you just need an external perspective on your current setup or want someone to take IaC off your hands completely, we can help. Get in touch with us to schedule an assessment to see how we can improve your infrastructure and save you money and time.
