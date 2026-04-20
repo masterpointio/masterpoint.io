@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" fill="none" role="img" aria-label="The previous tangled Synthmind AI infrastructure — a monolithic Terraform state shared across teams.">
+  <defs>
+    <linearGradient id="bf-bg" x1="0" y1="0" x2="0" y2="340"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#f6f8f8"/></linearGradient>
+  </defs>
+  <rect width="900" height="340" rx="16" fill="url(#bf-bg)" stroke="rgba(14,56,58,0.12)"/>
+  <text x="30" y="40" font-family="'proxima-nova',Arial" font-size="14" font-weight="800" letter-spacing="3" fill="#d891ce">BEFORE</text>
+  <text x="30" y="72" font-family="'proxima-nova',Arial" font-size="26" font-weight="800" fill="#0e383a">One Terraform state. Seven teams. No guardrails.</text>
+
+  <!-- central state node -->
+  <g transform="translate(420 170)">
+    <circle r="62" fill="#0e383a"/>
+    <circle r="62" stroke="#d891ce" stroke-width="3" stroke-dasharray="4 3" fill="none"/>
+    <text y="-4" text-anchor="middle" font-family="'proxima-nova',Arial" font-size="14" font-weight="800" fill="#fff">terraform.tfstate</text>
+    <text y="18" text-anchor="middle" font-family="'proxima-nova',Arial" font-size="11" fill="#ede497">1,412 resources</text>
+  </g>
+
+  <!-- chaotic connections to team boxes -->
+  <g font-family="'proxima-nova',Arial" font-size="12" font-weight="700" fill="#0e383a">
+    <g transform="translate(60 120)"><rect width="120" height="44" rx="8" fill="#fff" stroke="rgba(14,56,58,0.3)"/><text x="60" y="28" text-anchor="middle">ML Platform</text></g>
+    <g transform="translate(60 200)"><rect width="120" height="44" rx="8" fill="#fff" stroke="rgba(14,56,58,0.3)"/><text x="60" y="28" text-anchor="middle">Inference</text></g>
+    <g transform="translate(60 270)"><rect width="120" height="44" rx="8" fill="#fff" stroke="rgba(14,56,58,0.3)"/><text x="60" y="28" text-anchor="middle">Data Pipelines</text></g>
+    <g transform="translate(720 120)"><rect width="120" height="44" rx="8" fill="#fff" stroke="rgba(14,56,58,0.3)"/><text x="60" y="28" text-anchor="middle">Frontend</text></g>
+    <g transform="translate(720 200)"><rect width="120" height="44" rx="8" fill="#fff" stroke="rgba(14,56,58,0.3)"/><text x="60" y="28" text-anchor="middle">Growth</text></g>
+    <g transform="translate(720 270)"><rect width="120" height="44" rx="8" fill="#fff" stroke="rgba(14,56,58,0.3)"/><text x="60" y="28" text-anchor="middle">Security</text></g>
+    <g transform="translate(390 80)"><rect width="120" height="44" rx="8" fill="#fff" stroke="rgba(14,56,58,0.3)"/><text x="60" y="28" text-anchor="middle">Shared Infra</text></g>
+  </g>
+
+  <!-- tangled lines -->
+  <g stroke="#d891ce" stroke-width="1.5" fill="none" opacity=".75">
+    <path d="M180 142 Q270 180 360 168"/>
+    <path d="M180 222 Q270 200 360 180"/>
+    <path d="M180 292 Q300 260 368 210"/>
+    <path d="M720 142 Q630 180 482 168"/>
+    <path d="M720 222 Q620 200 482 180"/>
+    <path d="M720 292 Q610 260 478 210"/>
+    <path d="M450 124 Q430 150 420 128"/>
+  </g>
+  <g stroke="#d891ce" stroke-width="1" fill="none" opacity=".4">
+    <path d="M180 142 Q400 80 720 142"/>
+    <path d="M180 292 Q450 340 720 292"/>
+    <path d="M60 200 Q400 280 840 200"/>
+  </g>
+
+  <!-- pain badges -->
+  <g font-family="'proxima-nova',Arial" font-size="11" font-weight="800" fill="#fff">
+    <g transform="translate(275 285)"><rect width="150" height="24" rx="12" fill="#d891ce"/><text x="12" y="16">25-min plan times</text></g>
+    <g transform="translate(440 285)"><rect width="160" height="24" rx="12" fill="#d891ce"/><text x="12" y="16">Drift on 38% of stacks</text></g>
+    <g transform="translate(610 285)"><rect width="90" height="24" rx="12" fill="#d891ce"/><text x="12" y="16">No SOC 2</text></g>
+  </g>
+</svg>

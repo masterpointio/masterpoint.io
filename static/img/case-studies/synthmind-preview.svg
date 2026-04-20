@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" fill="none">
+  <defs>
+    <linearGradient id="prev-bg" x1="0" y1="0" x2="640" y2="400">
+      <stop offset="0" stop-color="#0e383a"/>
+      <stop offset="1" stop-color="#031e1f"/>
+    </linearGradient>
+    <linearGradient id="prev-grad" x1="0" y1="0" x2="640" y2="0">
+      <stop offset="0" stop-color="#ede497"/>
+      <stop offset=".5" stop-color="#2ad9c2"/>
+      <stop offset="1" stop-color="#d891ce"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#prev-bg)"/>
+  <circle cx="520" cy="80" r="180" fill="rgba(42,217,194,0.12)"/>
+  <circle cx="80" cy="340" r="140" fill="rgba(216,145,206,0.1)"/>
+  <text x="48" y="120" font-family="'proxima-nova',Arial" font-size="14" font-weight="800" letter-spacing="3" fill="#2ad9c2">CASE STUDY</text>
+  <text x="48" y="180" font-family="'proxima-nova',Arial" font-size="42" font-weight="800" fill="#fff">Synthmind AI</text>
+  <text x="48" y="230" font-family="'proxima-nova',Arial" font-size="20" font-weight="700" fill="url(#prev-grad)">10x faster AI platform deploys</text>
+  <text x="48" y="260" font-family="'proxima-nova',Arial" font-size="14" fill="rgba(255,255,255,0.7)">Multi-account AWS · Terraform → OpenTofu · Spacelift</text>
+  <rect x="48" y="300" width="4" height="32" fill="url(#prev-grad)"/>
+  <text x="64" y="322" font-family="'proxima-nova',Arial" font-size="12" font-weight="800" fill="#fff" letter-spacing="2">MASTERPOINT</text>
+</svg>

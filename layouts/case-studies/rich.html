@@ -1,0 +1,309 @@
+{{ partial "head.html" . }}
+<body {{ if .Params.id }}id='{{ .Params.id }}' {{ end }}
+    class="page-default rich-case-study {{ if .Params.banner_image }}withBannerImg{{ else }}noBannerImg{{ end }}">
+    {{ partial "header.html" . }}
+
+    {{/* ============================================================ */}}
+    {{/* HERO BANNER                                                   */}}
+    {{/* ============================================================ */}}
+    <section id="rcs-banner">
+        {{ if .Params.banner_image }}
+        <div class="banner-image bg-image">
+            <img src="{{ .Params.banner_image }}" alt="{{ .Title }}" />
+        </div>
+        {{ end }}
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col col-12 col-lg-10 text-center">
+                    <div class="rcs-banner-inner aos-item" data-aos="fade-up">
+                        {{ with .Params.banner_tagline }}
+                        <div class="rcs-eyebrow">{{ . | safeHTML }}</div>
+                        {{ else }}
+                        <div class="rcs-eyebrow">Case Study</div>
+                        {{ end }}
+
+                        <h1 class="rcs-banner-title">
+                            {{ if .Params.banner_title }}
+                                {{ .Params.banner_title | safeHTML }}
+                            {{ else }}
+                                {{ .Title | safeHTML }}
+                            {{ end }}
+                        </h1>
+
+                        {{ with .Params.banner_subtitle }}
+                        <p class="rcs-banner-subtitle">{{ . | safeHTML }}</p>
+                        {{ end }}
+
+                        {{/* Client + Masterpoint logo lockup */}}
+                        {{ if .Params.client_logo }}
+                        <div class="rcs-logo-lockup" data-aos="fade-up" data-aos-delay="150">
+                            <img src="{{ .Params.client_logo }}" alt="{{ .Params.client_name | default .Title }} logo" class="rcs-client-logo" />
+                            <span class="rcs-logo-x">&times;</span>
+                            <img src="/img/logo.svg" onerror="this.onerror=null;this.src='/img/masterpoint-logo.svg';" alt="Masterpoint Consulting logo" class="rcs-mp-logo" />
+                        </div>
+                        {{ end }}
+
+                        <div class="rcs-banner-ctas">
+                            {{ if .Params.download_button }}
+                            <a href="{{ .Params.download_button }}" class="button btn-gradient">Download PDF &rsaquo;</a>
+                            {{ end }}
+                            <a href="#rcs-body" class="button btn-outline-gradient">Read Case Study &rsaquo;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{/* ============================================================ */}}
+    {{/* METRICS BAR — overlapping the banner                          */}}
+    {{/* ============================================================ */}}
+    {{ with .Params.metrics }}
+    <section id="rcs-metrics">
+        <div class="container">
+            <div class="row rcs-metrics-row justify-content-center">
+                {{ range $i, $m := . }}
+                <div class="col col-12 col-sm-6 col-lg-3">
+                    <div class="rcs-metric" data-aos="fade-up" data-aos-delay="{{ mul $i 100 }}">
+                        {{ with $m.icon }}
+                        <div class="rcs-metric-icon"><i class="fa-solid {{ . }}"></i></div>
+                        {{ end }}
+                        <div class="rcs-metric-value text-gradient">{{ $m.value | safeHTML }}</div>
+                        <div class="rcs-metric-label">{{ $m.label | safeHTML }}</div>
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+    {{ end }}
+
+    {{/* ============================================================ */}}
+    {{/* AT-A-GLANCE + TL;DR                                           */}}
+    {{/* ============================================================ */}}
+    {{ if or .Params.client_name .Params.tldr }}
+    <section id="rcs-overview">
+        <div class="container">
+            <div class="row">
+                {{ if .Params.client_name }}
+                <div class="col col-12 col-lg-4">
+                    <aside class="rcs-client-card" data-aos="fade-right">
+                        <h4 class="rcs-card-title">At a Glance</h4>
+                        <dl class="rcs-dl">
+                            <dt>Client</dt>
+                            <dd>{{ .Params.client_name }}</dd>
+
+                            {{ with .Params.client_industry }}
+                            <dt>Industry</dt>
+                            <dd>{{ . }}</dd>
+                            {{ end }}
+
+                            {{ with .Params.client_size }}
+                            <dt>Company Size</dt>
+                            <dd>{{ . }}</dd>
+                            {{ end }}
+
+                            {{ with .Params.client_region }}
+                            <dt>Region</dt>
+                            <dd>{{ . }}</dd>
+                            {{ end }}
+
+                            {{ with .Params.engagement_length }}
+                            <dt>Engagement</dt>
+                            <dd>{{ . }}</dd>
+                            {{ end }}
+
+                            {{ with .Params.services_used }}
+                            <dt>Services</dt>
+                            <dd>
+                                <ul class="rcs-inline-list">
+                                    {{ range . }}<li>{{ . }}</li>{{ end }}
+                                </ul>
+                            </dd>
+                            {{ end }}
+                        </dl>
+
+                        {{ with .Params.technologies }}
+                        <div class="rcs-tech-badges">
+                            <div class="rcs-tech-badges-label">Tech Stack</div>
+                            <div class="rcs-badge-row">
+                                {{ range . }}
+                                <span class="rcs-badge">
+                                    {{ with .icon }}<i class="fa-brands {{ . }}"></i>{{ end }}
+                                    {{ .name }}
+                                </span>
+                                {{ end }}
+                            </div>
+                        </div>
+                        {{ end }}
+                    </aside>
+                </div>
+                {{ end }}
+
+                <div class="col col-12 {{ if .Params.client_name }}col-lg-8{{ end }}">
+                    {{ with .Params.tldr }}
+                    <div class="rcs-tldr" data-aos="fade-left">
+                        <div class="rcs-tldr-label">TL;DR</div>
+                        <div class="rcs-tldr-text">{{ . | safeHTML }}</div>
+                    </div>
+                    {{ end }}
+
+                    {{ with .Params.summary }}
+                    <div class="rcs-summary" data-aos="fade-left" data-aos-delay="100">
+                        {{ . | safeHTML | markdownify }}
+                    </div>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+    </section>
+    {{ end }}
+
+    {{/* ============================================================ */}}
+    {{/* CHART — pure CSS before/after comparison                      */}}
+    {{/* ============================================================ */}}
+    {{ with .Params.chart }}
+    <section id="rcs-chart">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col col-12 col-lg-10">
+                    <div class="rcs-chart-wrap" data-aos="fade-up">
+                        {{ with .eyebrow }}<div class="rcs-eyebrow">{{ . }}</div>{{ end }}
+                        {{ with .title }}<h2 class="rcs-chart-title">{{ . | safeHTML }}</h2>{{ end }}
+                        {{ with .subtitle }}<p class="rcs-chart-subtitle">{{ . | safeHTML }}</p>{{ end }}
+
+                        {{/* Derive max value for bar scaling */}}
+                        {{ $max := 0.0 }}
+                        {{ range .data }}
+                            {{ $v := .value | float }}
+                            {{ if gt $v $max }}{{ $max = $v }}{{ end }}
+                        {{ end }}
+
+                        <div class="rcs-bars">
+                            {{ range $i, $d := .data }}
+                            {{ $pct := 0.0 }}
+                            {{ if gt $max 0.0 }}
+                                {{ $pct = div (mul ($d.value | float) 100.0) $max }}
+                            {{ end }}
+                            <div class="rcs-bar-row" data-aos="fade-right" data-aos-delay="{{ mul $i 150 }}">
+                                <div class="rcs-bar-label">{{ $d.label }}</div>
+                                <div class="rcs-bar-track">
+                                    <div class="rcs-bar-fill rcs-bar-{{ $d.color | default "gradient" }}" style="--rcs-bar-pct: {{ $pct }}%;">
+                                        <span class="rcs-bar-value">{{ $d.value }}{{ with $d.unit }} {{ . }}{{ end }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            {{ end }}
+                        </div>
+
+                        {{ with .footnote }}<p class="rcs-chart-footnote">{{ . | safeHTML }}</p>{{ end }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {{ end }}
+
+    {{/* ============================================================ */}}
+    {{/* BODY — challenge / solution / results markdown                */}}
+    {{/* ============================================================ */}}
+    <main id="rcs-body">
+        <div class="container">
+            <div class="row">
+                <div class="col col-12 col-lg-10 mx-auto">
+                    <article class="rcs-article singleContent">
+                        {{ .Content }}
+                    </article>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {{/* ============================================================ */}}
+    {{/* ENGAGEMENT TIMELINE                                           */}}
+    {{/* ============================================================ */}}
+    {{ with .Params.timeline }}
+    <section id="rcs-timeline">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col col-12 col-lg-10">
+                    <div class="rcs-eyebrow text-center">The Engagement</div>
+                    <h2 class="rcs-section-title text-center">How We Got There</h2>
+                    <ol class="rcs-timeline">
+                        {{ range $i, $t := . }}
+                        <li class="rcs-timeline-item" data-aos="fade-up" data-aos-delay="{{ mul $i 100 }}">
+                            <div class="rcs-timeline-marker">{{ add $i 1 }}</div>
+                            <div class="rcs-timeline-content">
+                                <h3>{{ $t.title }}</h3>
+                                {{ with $t.duration }}<div class="rcs-timeline-duration">{{ . }}</div>{{ end }}
+                                <p>{{ $t.description | safeHTML }}</p>
+                            </div>
+                        </li>
+                        {{ end }}
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    {{ end }}
+
+    {{/* ============================================================ */}}
+    {{/* TESTIMONIAL / PULL QUOTE                                      */}}
+    {{/* ============================================================ */}}
+    {{ with .Params.testimonial }}
+    <section id="rcs-testimonial">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col col-12 col-lg-10">
+                    <figure class="rcs-quote" data-aos="fade-up">
+                        <div class="rcs-quote-mark">&ldquo;</div>
+                        <blockquote class="rcs-quote-text">{{ .quote | safeHTML }}</blockquote>
+                        <figcaption class="rcs-quote-author">
+                            {{ with .avatar }}
+                            <img src="{{ . }}" alt="{{ $.Params.testimonial.author }}" class="rcs-quote-avatar" />
+                            {{ end }}
+                            <div>
+                                <div class="rcs-quote-name">{{ .author }}</div>
+                                {{ with .role }}<div class="rcs-quote-role">{{ . }}</div>{{ end }}
+                            </div>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </section>
+    {{ end }}
+
+    {{/* ============================================================ */}}
+    {{/* KEY TAKEAWAYS                                                 */}}
+    {{/* ============================================================ */}}
+    {{ with .Params.takeaways }}
+    <section id="rcs-takeaways">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col col-12 col-lg-10">
+                    <div class="rcs-takeaways" data-aos="fade-up">
+                        <div class="rcs-eyebrow">Key Takeaways</div>
+                        <h2 class="rcs-section-title">What Other Teams Can Learn</h2>
+                        <ul class="checked-list">
+                            {{ range . }}
+                            <li>{{ . | safeHTML }}</li>
+                            {{ end }}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {{ end }}
+
+    {{/* ============================================================ */}}
+    {{/* CTA                                                           */}}
+    {{/* ============================================================ */}}
+    {{ partial "schedule-assessment.html" . }}
+
+    {{ partial "footer.html" . }}
+    {{ partial "scripts.html" . }}
+</body>
+</html>

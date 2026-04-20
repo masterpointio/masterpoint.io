@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64" fill="none">
+  <defs>
+    <linearGradient id="sm-grad" x1="0" y1="32" x2="320" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ede497"/>
+      <stop offset=".5" stop-color="#2ad9c2"/>
+      <stop offset="1" stop-color="#d891ce"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(6 8)">
+    <!-- Neural-ish node graphic -->
+    <circle cx="24" cy="24" r="22" stroke="url(#sm-grad)" stroke-width="3" fill="none"/>
+    <circle cx="10" cy="14" r="3.2" fill="url(#sm-grad)"/>
+    <circle cx="38" cy="14" r="3.2" fill="url(#sm-grad)"/>
+    <circle cx="24" cy="34" r="3.2" fill="url(#sm-grad)"/>
+    <circle cx="10" cy="36" r="3.2" fill="url(#sm-grad)"/>
+    <circle cx="38" cy="36" r="3.2" fill="url(#sm-grad)"/>
+    <path d="M10 14 L24 34 L38 14 M10 36 L24 34 L38 36 M10 14 L10 36 M38 14 L38 36" stroke="url(#sm-grad)" stroke-width="1.2" stroke-linecap="round" opacity=".75"/>
+  </g>
+  <text x="62" y="40" font-family="'proxima-nova', 'Helvetica Neue', Arial, sans-serif" font-size="28" font-weight="800" letter-spacing="-0.5" fill="#ffffff">
+    Synth<tspan fill="url(#sm-grad)">mind</tspan>
+  </text>
+  <text x="64" y="55" font-family="'proxima-nova', 'Helvetica Neue', Arial, sans-serif" font-size="9" font-weight="700" letter-spacing="3" fill="#2ad9c2">AI PLATFORM</text>
+</svg>
