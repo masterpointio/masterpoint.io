@@ -2,6 +2,10 @@
 <body {{ if .Params.id }}id='{{ .Params.id }}' {{end}} class="single-default">
     {{ partial "header.html" . }}
 
+    {{ if eq .Section "blog" }}
+    {{ partial "blog-sticky-header.html" . }}
+    {{ end }}
+
 <main>
     <div class="container">
         {{ if eq .Section "blog" }}
