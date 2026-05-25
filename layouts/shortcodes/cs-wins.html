@@ -1,0 +1,37 @@
+{{/*
+  cs-wins — grid of "additional wins" cards.
+  Inner content: blocks separated by ---, each block has:
+    icon: fa-shield-halved
+    title: Some title
+    body: Body content (can span multiple lines)
+*/}}
+{{- $raw := .Inner -}}
+{{- $blocks := split $raw "---" -}}
+<div class="cs-wins">
+  {{- range $blocks -}}
+    {{- $block := trim . " \t\n" -}}
+    {{- if $block -}}
+      {{- $lines := split $block "\n" -}}
+      {{- $icon := "fa-circle-check" -}}
+      {{- $title := "" -}}
+      {{- $body := "" -}}
+      {{- range $lines -}}
+        {{- $line := trim . " \t" -}}
+        {{- if hasPrefix $line "icon:" -}}
+          {{- $icon = trim (strings.TrimPrefix "icon:" $line) " " -}}
+        {{- else if hasPrefix $line "title:" -}}
+          {{- $title = trim (strings.TrimPrefix "title:" $line) " " -}}
+        {{- else if hasPrefix $line "body:" -}}
+          {{- $body = trim (strings.TrimPrefix "body:" $line) " " -}}
+        {{- else if and $line $body -}}
+          {{- $body = printf "%s %s" $body $line -}}
+        {{- end -}}
+      {{- end -}}
+      <div class="cs-win">
+        <div class="cs-win__icon"><i class="fa-solid {{ $icon }}"></i></div>
+        <h4 class="cs-win__title">{{ $title | safeHTML }}</h4>
+        <p class="cs-win__body">{{ $body | safeHTML }}</p>
+      </div>
+    {{- end -}}
+  {{- end -}}
+</div>

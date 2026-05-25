@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" role="img" aria-label="50+ ECS services migrated from EC2 to Fargate, each task in its own micro-VM with Fargate Spot where tolerated">
+  <defs>
+    <linearGradient id="brandGradFG" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ede497" />
+      <stop offset="50%" stop-color="#2ad9c2" />
+      <stop offset="100%" stop-color="#d891ce" />
+    </linearGradient>
+    <pattern id="hatchOld" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#7f3a3f" stroke-width="2" opacity="0.5"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="500" rx="14" fill="#0e383a"/>
+
+  <text x="60" y="50" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="14" letter-spacing="3" font-weight="700" fill="#ede497">50+ ECS SERVICES · EC2 → FARGATE</text>
+  <line x1="60" y1="65" x2="200" y2="65" stroke="url(#brandGradFG)" stroke-width="3"/>
+
+  <!-- BEFORE -->
+  <g transform="translate(60,110)">
+    <text x="0" y="0" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="13" letter-spacing="2" font-weight="800" fill="#d891ce">BEFORE · ECS ON EC2</text>
+
+    <g transform="translate(0,20)">
+      <rect width="500" height="330" rx="12" fill="#1a0d0e" stroke="#d891ce" stroke-width="2"/>
+      <rect width="500" height="330" rx="12" fill="url(#hatchOld)" opacity="0.15"/>
+
+      <!-- 3 EC2 hosts with task soup -->
+      <g font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" fill="#fff">
+        <g transform="translate(20,30)">
+          <rect width="145" height="280" rx="8" fill="#2a1416" stroke="#d891ce"/>
+          <text x="72" y="22" text-anchor="middle" font-weight="700" font-size="12">ec2 host · m5.xlarge</text>
+          <text x="72" y="38" text-anchor="middle" font-size="10" fill="#a8b8b9">noisy neighbors</text>
+          <!-- tasks -->
+          <g>
+            <rect x="10" y="50" width="60" height="20" rx="3" fill="#3a1a1c" stroke="#d891ce"/>
+            <text x="40" y="64" text-anchor="middle" font-size="9">task</text>
+            <rect x="75" y="50" width="60" height="20" rx="3" fill="#3a1a1c" stroke="#d891ce"/>
+            <text x="105" y="64" text-anchor="middle" font-size="9">task</text>
+            <rect x="10" y="75" width="60" height="20" rx="3" fill="#3a1a1c" stroke="#d891ce"/>
+            <text x="40" y="89" text-anchor="middle" font-size="9">task</text>
+            <rect x="75" y="75" width="60" height="20" rx="3" fill="#3a1a1c" stroke="#d891ce"/>
+            <text x="105" y="89" text-anchor="middle" font-size="9">task</text>
+            <rect x="10" y="100" width="125" height="20" rx="3" fill="#3a1a1c" stroke="#d891ce"/>
+            <text x="72" y="114" text-anchor="middle" font-size="9">task (bin-packed)</text>
+            <rect x="10" y="125" width="60" height="20" rx="3" fill="#3a1a1c" stroke="#d891ce"/>
+            <text x="40" y="139" text-anchor="middle" font-size="9">task</text>
+            <rect x="75" y="125" width="60" height="20" rx="3" fill="#3a1a1c" stroke="#d891ce"/>
+            <text x="105" y="139" text-anchor="middle" font-size="9">task</text>
+          </g>
+          <!-- maintenance bullets -->
+          <g fill="#f0c0c0" font-size="10">
+            <text x="10" y="180">· EC2 patching</text>
+            <text x="10" y="198">· AMI tuning</text>
+            <text x="10" y="216">· ASG mgmt</text>
+            <text x="10" y="234">· capacity planning</text>
+            <text x="10" y="252">· headroom waste</text>
+          </g>
+        </g>
+
+        <g transform="translate(180,30)">
+          <rect width="145" height="280" rx="8" fill="#2a1416" stroke="#d891ce"/>
+          <text x="72" y="22" text-anchor="middle" font-weight="700" font-size="12">ec2 host · m5.xlarge</text>
+          <text x="72" y="38" text-anchor="middle" font-size="10" fill="#a8b8b9">underutilized</text>
+          <g>
+            <rect x="10" y="50" width="60" height="20" rx="3" fill="#3a1a1c" stroke="#d891ce"/>
+            <text x="40" y="64" text-anchor="middle" font-size="9">task</text>
+            <rect x="10" y="75" width="125" height="20" rx="3" fill="#3a1a1c" stroke="#d891ce"/>
+            <text x="72" y="89" text-anchor="middle" font-size="9">task</text>
+            <rect x="10" y="100" width="60" height="20" rx="3" fill="#3a1a1c" stroke="#d891ce"/>
+            <text x="40" y="114" text-anchor="middle" font-size="9">task</text>
+            <rect x="75" y="100" width="60" height="20" rx="3" fill="#3a1a1c" stroke="#d891ce"/>
+            <text x="105" y="114" text-anchor="middle" font-size="9">task</text>
+          </g>
+          <text x="72" y="180" text-anchor="middle" font-size="10" fill="#f0c0c0" font-style="italic">~30% capacity</text>
+          <text x="72" y="198" text-anchor="middle" font-size="10" fill="#f0c0c0" font-style="italic">held in reserve</text>
+        </g>
+
+        <g transform="translate(340,30)">
+          <rect width="145" height="280" rx="8" fill="#2a1416" stroke="#d891ce"/>
+          <text x="72" y="22" text-anchor="middle" font-weight="700" font-size="12">ec2 host · m5.xlarge</text>
+          <text x="72" y="38" text-anchor="middle" font-size="10" fill="#a8b8b9">overloaded</text>
+          <g>
+            <rect x="10" y="50" width="125" height="20" rx="3" fill="#3a1a1c" stroke="#d891ce"/>
+            <text x="72" y="64" text-anchor="middle" font-size="9">task</text>
+            <rect x="10" y="75" width="125" height="20" rx="3" fill="#3a1a1c" stroke="#d891ce"/>
+            <text x="72" y="89" text-anchor="middle" font-size="9">task</text>
+            <rect x="10" y="100" width="60" height="20" rx="3" fill="#3a1a1c" stroke="#d891ce"/>
+            <text x="40" y="114" text-anchor="middle" font-size="9">task</text>
+            <rect x="75" y="100" width="60" height="20" rx="3" fill="#3a1a1c" stroke="#d891ce"/>
+            <text x="105" y="114" text-anchor="middle" font-size="9">task</text>
+            <rect x="10" y="125" width="125" height="20" rx="3" fill="#3a1a1c" stroke="#d891ce"/>
+            <text x="72" y="139" text-anchor="middle" font-size="9">task (CPU pinned)</text>
+            <rect x="10" y="150" width="125" height="20" rx="3" fill="#3a1a1c" stroke="#d891ce"/>
+            <text x="72" y="164" text-anchor="middle" font-size="9">task (noisy)</text>
+          </g>
+          <text x="72" y="200" text-anchor="middle" font-size="10" fill="#f0c0c0" font-style="italic">slow scaling</text>
+          <text x="72" y="218" text-anchor="middle" font-size="10" fill="#f0c0c0" font-style="italic">ASG provision lag</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- arrow center -->
+  <g transform="translate(580,250)">
+    <path d="M0 30 L40 30 L40 18 L70 38 L40 58 L40 46 L0 46 Z" fill="url(#brandGradFG)"/>
+  </g>
+
+  <!-- AFTER -->
+  <g transform="translate(680,110)">
+    <text x="0" y="0" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="13" letter-spacing="2" font-weight="800" fill="#2ad9c2">AFTER · ECS ON FARGATE</text>
+
+    <g transform="translate(0,20)">
+      <rect width="460" height="330" rx="12" fill="#0a2b2d" stroke="#2ad9c2" stroke-width="2"/>
+      <text x="20" y="34" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" letter-spacing="2" font-weight="700" fill="#a4f2e6">PER-TASK MICRO-VMS · NO HOSTS</text>
+
+      <!-- grid of 50 tiny tiles -->
+      <g font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-weight="700" font-size="7" text-anchor="middle">
+        <!-- 5 rows x 10 cols, alternating spot/regular -->
+      </g>
+      <g>
+        <!-- generate fargate task tiles -->
+        <g transform="translate(20,60)">
+          <!-- row builder -->
+          <!-- I'll inline 50 tiles -->
+        </g>
+      </g>
+      <!-- inlined 50 rectangles via groups -->
+      <g transform="translate(20,60)">
+        <!-- row 0 -->
+        <g><rect x="0"   y="0"  width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="19" y="23" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="42"  y="0"  width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="61" y="20" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="84"  y="0"  width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="103" y="23" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="126" y="0"  width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="145" y="20" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="168" y="0"  width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="187" y="23" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="210" y="0"  width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="229" y="20" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="252" y="0"  width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="271" y="23" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="294" y="0"  width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="313" y="20" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="336" y="0"  width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="355" y="23" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="378" y="0"  width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="397" y="20" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+
+        <g><rect x="0"   y="42" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="19" y="62" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="42"  y="42" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="61" y="65" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="84"  y="42" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="103" y="62" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="126" y="42" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="145" y="65" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="168" y="42" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="187" y="62" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="210" y="42" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="229" y="65" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="252" y="42" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="271" y="62" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="294" y="42" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="313" y="65" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="336" y="42" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="355" y="62" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="378" y="42" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="397" y="65" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+
+        <g><rect x="0"   y="84" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="19" y="107" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="42"  y="84" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="61" y="104" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="84"  y="84" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="103" y="107" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="126" y="84" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="145" y="104" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="168" y="84" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="187" y="107" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="210" y="84" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="229" y="104" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="252" y="84" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="271" y="107" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="294" y="84" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="313" y="104" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="336" y="84" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="355" y="107" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="378" y="84" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="397" y="104" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+
+        <g><rect x="0"   y="126" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="19" y="146" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="42"  y="126" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="61" y="149" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="84"  y="126" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="103" y="146" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="126" y="126" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="145" y="149" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="168" y="126" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="187" y="146" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="210" y="126" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="229" y="149" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="252" y="126" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="271" y="146" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="294" y="126" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="313" y="149" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="336" y="126" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="355" y="146" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="378" y="126" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="397" y="149" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+
+        <g><rect x="0"   y="168" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="19" y="191" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="42"  y="168" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="61" y="188" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="84"  y="168" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="103" y="191" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="126" y="168" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="145" y="188" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="168" y="168" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="187" y="191" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="210" y="168" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="229" y="188" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="252" y="168" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="271" y="191" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="294" y="168" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="313" y="188" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+        <g><rect x="336" y="168" width="38" height="38" rx="6" fill="#13474a" stroke="#2ad9c2"/><text x="355" y="191" text-anchor="middle" fill="#a4f2e6" font-size="9">task</text></g>
+        <g><rect x="378" y="168" width="38" height="38" rx="6" fill="#13474a" stroke="#ede497"/><text x="397" y="188" text-anchor="middle" fill="#ede497" font-size="9">spot</text></g>
+      </g>
+
+      <g transform="translate(20,285)" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" fill="#a4f2e6">
+        <rect x="0" y="-10" width="12" height="12" rx="2" fill="#13474a" stroke="#2ad9c2"/>
+        <text x="18" y="0">on-demand task</text>
+        <rect x="130" y="-10" width="12" height="12" rx="2" fill="#13474a" stroke="#ede497"/>
+        <text x="148" y="0">Fargate Spot (~70% off)</text>
+      </g>
+    </g>
+  </g>
+</svg>

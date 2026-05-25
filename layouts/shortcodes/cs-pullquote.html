@@ -1,0 +1,8 @@
+{{- $attribution := .Get "attribution" -}}
+<aside class="cs-pullquote">
+  <div class="cs-pullquote__mark">&ldquo;</div>
+  <div class="cs-pullquote__body">{{ .Inner | $.Page.RenderString }}</div>
+  {{- if $attribution -}}
+  <div class="cs-pullquote__attribution">{{ $attribution | safeHTML }}</div>
+  {{- end -}}
+</aside>

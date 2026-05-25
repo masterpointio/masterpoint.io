@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 540" role="img" aria-label="From 1 AWS account to 11 — visual sketch">
+  <defs>
+    <linearGradient id="haGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ede497"/>
+      <stop offset="50%" stop-color="#2ad9c2"/>
+      <stop offset="100%" stop-color="#d891ce"/>
+    </linearGradient>
+    <linearGradient id="haCard" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#13474a"/>
+      <stop offset="100%" stop-color="#0a2b2d"/>
+    </linearGradient>
+    <filter id="haShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- ambient glow -->
+  <ellipse cx="240" cy="270" rx="260" ry="220" fill="url(#haGrad)" opacity="0.07"/>
+
+  <!-- "1" big monolith card on top -->
+  <g transform="translate(50,30)" filter="url(#haShadow)">
+    <rect width="200" height="120" rx="14" fill="#3a1a1c" stroke="#d891ce" stroke-width="2"/>
+    <text x="22" y="36" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="10" letter-spacing="3" font-weight="800" fill="#f7d4ef">BEFORE</text>
+    <text x="22" y="84" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="56" font-weight="900" fill="#fff">1</text>
+    <text x="80" y="78" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#fff">AWS account</text>
+    <text x="80" y="96" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" fill="#f7c0d8">monolith · ClickOps</text>
+  </g>
+
+  <!-- arrow connector -->
+  <g transform="translate(232,160)">
+    <path d="M0 0 L0 36" stroke="url(#haGrad)" stroke-width="3"/>
+    <path d="M-10 30 L0 44 L10 30" fill="none" stroke="url(#haGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- After: AWS Organization frame with 11 tiles -->
+  <g transform="translate(35,220)" filter="url(#haShadow)">
+    <rect width="410" height="290" rx="14" fill="url(#haCard)" stroke="#2ad9c2" stroke-width="2"/>
+    <text x="20" y="32" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="10" letter-spacing="3" font-weight="800" fill="#a4f2e6">AFTER · AWS ORGANIZATION</text>
+    <text x="20" y="68" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="56" font-weight="900" fill="url(#haGrad)">11</text>
+    <text x="100" y="58" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#fff">isolated accounts</text>
+    <text x="100" y="76" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" fill="#a4f2e6">hard IAM boundary · separate billing</text>
+
+    <!-- 11 small tiles arranged -->
+    <g font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="9" font-weight="700" text-anchor="middle">
+      <!-- row 1: foundation -->
+      <g><rect x="20"  y="100" width="84" height="38" rx="6" fill="#0e383a" stroke="url(#haGrad)" stroke-width="2"/><text x="62"  y="116" fill="#ede497">ROOT</text><text x="62"  y="129" fill="#7f9d9e" font-size="8">org · scp</text></g>
+      <g><rect x="112" y="100" width="84" height="38" rx="6" fill="#0e383a" stroke="url(#haGrad)" stroke-width="2"/><text x="154" y="116" fill="#ede497">IDENTITY</text><text x="154" y="129" fill="#7f9d9e" font-size="8">SSO</text></g>
+      <g><rect x="204" y="100" width="84" height="38" rx="6" fill="#0e383a" stroke="url(#haGrad)" stroke-width="2"/><text x="246" y="116" fill="#ede497">LOG</text><text x="246" y="129" fill="#7f9d9e" font-size="8">archive</text></g>
+      <g><rect x="296" y="100" width="84" height="38" rx="6" fill="#0e383a" stroke="url(#haGrad)" stroke-width="2"/><text x="338" y="116" fill="#ede497">AUDIT</text><text x="338" y="129" fill="#7f9d9e" font-size="8">sec hub</text></g>
+
+      <!-- row 2: shared services -->
+      <g><rect x="20"  y="146" width="84" height="38" rx="6" fill="#0e383a" stroke="#2ad9c2"/><text x="62"  y="162" fill="#a4f2e6">DNS</text><text x="62"  y="175" fill="#7f9d9e" font-size="8">route53</text></g>
+      <g><rect x="112" y="146" width="84" height="38" rx="6" fill="#0e383a" stroke="#2ad9c2"/><text x="154" y="162" fill="#a4f2e6">ARTIFACTS</text><text x="154" y="175" fill="#7f9d9e" font-size="8">ECR · S3</text></g>
+      <g><rect x="204" y="146" width="84" height="38" rx="6" fill="#0e383a" stroke="#2ad9c2"/><text x="246" y="162" fill="#a4f2e6">AUTO</text><text x="246" y="175" fill="#7f9d9e" font-size="8">spacelift</text></g>
+      <g><rect x="296" y="146" width="84" height="38" rx="6" fill="#0e383a" stroke="#2ad9c2"/><text x="338" y="162" fill="#a4f2e6">SANDBOX</text><text x="338" y="175" fill="#7f9d9e" font-size="8">experiments</text></g>
+
+      <!-- row 3: workloads -->
+      <g><rect x="74"  y="206" width="84" height="38" rx="6" fill="#0e383a" stroke="#d891ce"/><text x="116" y="222" fill="#f7d4ef">DEV</text><text x="116" y="235" fill="#7f9d9e" font-size="8">vpc</text></g>
+      <g><rect x="166" y="206" width="84" height="38" rx="6" fill="#0e383a" stroke="#d891ce"/><text x="208" y="222" fill="#f7d4ef">STAGING</text><text x="208" y="235" fill="#7f9d9e" font-size="8">vpc</text></g>
+      <g><rect x="258" y="206" width="84" height="38" rx="6" fill="#0e383a" stroke="#d891ce"/><text x="300" y="222" fill="#f7d4ef">PROD</text><text x="300" y="235" fill="#7f9d9e" font-size="8">vpc</text></g>
+    </g>
+
+    <!-- caption row -->
+    <g font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="10" fill="#a4f2e6">
+      <circle cx="30" cy="266" r="3" fill="#ede497"/>
+      <text x="42" y="270">SCP guardrails</text>
+      <circle cx="160" cy="266" r="3" fill="#2ad9c2"/>
+      <text x="172" y="270">OIDC trust</text>
+      <circle cx="260" cy="266" r="3" fill="#d891ce"/>
+      <text x="272" y="270">per-env isolation</text>
+    </g>
+  </g>
+</svg>

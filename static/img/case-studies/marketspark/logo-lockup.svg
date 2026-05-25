@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 160" role="img" aria-label="MarketSpark x Masterpoint logo lockup placeholder">
+  <defs>
+    <linearGradient id="lockupGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ede497"/>
+      <stop offset="50%" stop-color="#2ad9c2"/>
+      <stop offset="100%" stop-color="#d891ce"/>
+    </linearGradient>
+  </defs>
+
+  <!-- left: MarketSpark placeholder -->
+  <g transform="translate(40,40)">
+    <g>
+      <circle cx="40" cy="40" r="30" fill="none" stroke="#0e383a" stroke-width="3"/>
+      <path d="M40 12 L46 36 L70 40 L46 44 L40 68 L34 44 L10 40 L34 36 Z" fill="#0e383a"/>
+    </g>
+    <text x="90" y="38" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="26" font-weight="900" fill="#0e383a">MarketSpark</text>
+    <text x="90" y="62" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" letter-spacing="3" font-weight="700" fill="#7f9d9e">CLIENT · LOGO PLACEHOLDER</text>
+  </g>
+
+  <!-- divider -->
+  <g transform="translate(420,40)">
+    <line x1="0" y1="0" x2="0" y2="80" stroke="url(#lockupGrad)" stroke-width="3"/>
+    <text x="-12" y="48" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="22" font-weight="900" fill="#0e383a">×</text>
+  </g>
+
+  <!-- right: Masterpoint placeholder -->
+  <g transform="translate(470,40)">
+    <g>
+      <rect x="0" y="0" width="60" height="60" rx="10" fill="#0e383a"/>
+      <text x="30" y="42" text-anchor="middle" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="36" font-weight="900" fill="url(#lockupGrad)">M</text>
+    </g>
+    <text x="80" y="38" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="26" font-weight="900" fill="#0e383a">Masterpoint</text>
+    <text x="80" y="62" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" letter-spacing="3" font-weight="700" fill="#7f9d9e">PLATFORM ENGINEERING CONSULTANCY</text>
+  </g>
+</svg>

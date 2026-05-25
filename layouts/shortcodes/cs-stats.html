@@ -1,0 +1,32 @@
+{{/*
+  cs-stats — a row of stat cards for inline article use.
+  Inner content is line-delimited; each line uses pipes:
+    value | label | (optional) note
+  Example:
+    {{< cs-stats >}}
+    1 → 11 | AWS accounts | from monolith to org
+    0% → ~100% | OpenTofu coverage |
+    50+ | services on Fargate |
+    {{< /cs-stats >}}
+*/}}
+{{- $raw := .Inner -}}
+{{- $lines := split $raw "\n" -}}
+<div class="cs-stat-grid">
+  {{- range $lines -}}
+    {{- $line := trim . " \t" -}}
+    {{- if $line -}}
+      {{- $parts := split $line "|" -}}
+      {{- $value := "" -}}
+      {{- $label := "" -}}
+      {{- $note := "" -}}
+      {{- if ge (len $parts) 1 -}}{{- $value = trim (index $parts 0) " " -}}{{- end -}}
+      {{- if ge (len $parts) 2 -}}{{- $label = trim (index $parts 1) " " -}}{{- end -}}
+      {{- if ge (len $parts) 3 -}}{{- $note  = trim (index $parts 2) " " -}}{{- end -}}
+      <div class="cs-stat-card">
+        <div class="cs-stat-card__value">{{ $value | safeHTML }}</div>
+        {{- if $label -}}<div class="cs-stat-card__label">{{ $label | safeHTML }}</div>{{- end -}}
+        {{- if $note -}}<div class="cs-stat-card__note">{{ $note | safeHTML }}</div>{{- end -}}
+      </div>
+    {{- end -}}
+  {{- end -}}
+</div>

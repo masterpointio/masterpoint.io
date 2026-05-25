@@ -6,6 +6,9 @@ taxonomies:
   tag: tags
   section_category: section_categories
 enableRobotsTXT: true
+ignoreFiles:
+  - "CLAUDE\\.md$"
+  - "\\.raw\\.md$"
 params:
   linkedin_link: https://www.linkedin.com/company/masterpoint-consulting/about/
   github_link: https://github.com/masterpointio

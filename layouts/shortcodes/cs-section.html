@@ -1,0 +1,14 @@
+{{- $eyebrow := .Get "eyebrow" -}}
+{{- $title := .Get "title" -}}
+{{- $intro := .Get "intro" -}}
+<header class="cs-section-header">
+  {{- if $eyebrow -}}
+  <div class="cs-section-header__eyebrow">{{ $eyebrow | safeHTML }}</div>
+  {{- end -}}
+  {{- if $title -}}
+  <h2 class="cs-section-header__title">{{ $title | safeHTML }}</h2>
+  {{- end -}}
+  {{- if $intro -}}
+  <p class="cs-section-header__intro">{{ $intro | safeHTML }}</p>
+  {{- end -}}
+</header>

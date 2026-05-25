@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="MarketSpark x Masterpoint case study hero">
+  <defs>
+    <linearGradient id="bgPine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0e383a"/>
+      <stop offset="60%" stop-color="#0a2a2c"/>
+      <stop offset="100%" stop-color="#061d1e"/>
+    </linearGradient>
+    <linearGradient id="brandGradH" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ede497" />
+      <stop offset="50%" stop-color="#2ad9c2" />
+      <stop offset="100%" stop-color="#d891ce" />
+    </linearGradient>
+    <radialGradient id="glow" cx="80%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#2ad9c2" stop-opacity="0.35"/>
+      <stop offset="60%" stop-color="#2ad9c2" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bgPine)"/>
+  <rect width="1600" height="900" fill="url(#glow)"/>
+
+  <!-- decorative grid -->
+  <g stroke="#1f5a5d" stroke-width="1" opacity="0.35">
+    <line x1="0" y1="200" x2="1600" y2="200"/>
+    <line x1="0" y1="400" x2="1600" y2="400"/>
+    <line x1="0" y1="600" x2="1600" y2="600"/>
+    <line x1="0" y1="800" x2="1600" y2="800"/>
+    <line x1="200" y1="0" x2="200" y2="900"/>
+    <line x1="600" y1="0" x2="600" y2="900"/>
+    <line x1="1000" y1="0" x2="1000" y2="900"/>
+    <line x1="1400" y1="0" x2="1400" y2="900"/>
+  </g>
+
+  <!-- floating account tiles backdrop -->
+  <g opacity="0.5">
+    <g transform="translate(1100,170)" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#a4f2e6">
+      <rect width="120" height="56" rx="8" fill="none" stroke="#2ad9c2"/>
+      <text x="60" y="33" text-anchor="middle">ROOT</text>
+      <g transform="translate(140,0)"><rect width="120" height="56" rx="8" fill="none" stroke="#2ad9c2"/><text x="60" y="33" text-anchor="middle">IDENTITY</text></g>
+      <g transform="translate(280,0)"><rect width="120" height="56" rx="8" fill="none" stroke="#2ad9c2"/><text x="60" y="33" text-anchor="middle">LOG ARCHIVE</text></g>
+      <g transform="translate(0,80)"><rect width="120" height="56" rx="8" fill="none" stroke="#ede497"/><text x="60" y="33" text-anchor="middle" fill="#ede497">AUDIT</text></g>
+      <g transform="translate(140,80)"><rect width="120" height="56" rx="8" fill="none" stroke="#ede497"/><text x="60" y="33" text-anchor="middle" fill="#ede497">DNS</text></g>
+      <g transform="translate(280,80)"><rect width="120" height="56" rx="8" fill="none" stroke="#ede497"/><text x="60" y="33" text-anchor="middle" fill="#ede497">ARTIFACTS</text></g>
+      <g transform="translate(0,160)"><rect width="120" height="56" rx="8" fill="none" stroke="#d891ce"/><text x="60" y="33" text-anchor="middle" fill="#f7d4ef">AUTOMATION</text></g>
+      <g transform="translate(140,160)"><rect width="120" height="56" rx="8" fill="none" stroke="#d891ce"/><text x="60" y="33" text-anchor="middle" fill="#f7d4ef">SANDBOX</text></g>
+      <g transform="translate(280,160)"><rect width="120" height="56" rx="8" fill="none" stroke="#d891ce"/><text x="60" y="33" text-anchor="middle" fill="#f7d4ef">DEV</text></g>
+      <g transform="translate(70,240)"><rect width="120" height="56" rx="8" fill="none" stroke="#2ad9c2"/><text x="60" y="33" text-anchor="middle">STAGING</text></g>
+      <g transform="translate(210,240)"><rect width="120" height="56" rx="8" fill="none" stroke="#2ad9c2"/><text x="60" y="33" text-anchor="middle">PROD</text></g>
+    </g>
+  </g>
+
+  <!-- decorative scattered "tofu" code -->
+  <g font-family="ui-monospace, Menlo, Monaco, Consolas, monospace" font-size="12" fill="#1f5a5d" opacity="0.7">
+    <text x="80" y="780">resource "aws_vpc" "main" { cidr_block = "10.0.0.0/16" }</text>
+    <text x="80" y="800">module "ecs_service" { source = "../../modules/ecs-fargate" }</text>
+    <text x="80" y="820">resource "aws_iam_role" "task" { name = "ms-${var.svc}" }</text>
+  </g>
+
+  <!-- main headline -->
+  <g transform="translate(80,300)" font-family="Proxima Nova, Helvetica, Arial, sans-serif">
+    <text x="0" y="0" font-size="18" letter-spacing="6" font-weight="800" fill="#ede497">CASE STUDY · MARKETSPARK</text>
+    <text x="0" y="100" font-size="92" font-weight="900" fill="#ffffff">From <tspan fill="url(#brandGradH)">ClickOps to IaC</tspan></text>
+    <text x="0" y="190" font-size="92" font-weight="900" fill="#ffffff">in <tspan fill="url(#brandGradH)">100% OpenTofu</tspan>.</text>
+    <text x="0" y="260" font-size="22" font-weight="500" fill="#a8b8b9">A from-the-ground-up AWS rebuild: one account became eleven,</text>
+    <text x="0" y="290" font-size="22" font-weight="500" fill="#a8b8b9">50+ services moved to Fargate, every resource defined in code.</text>
+  </g>
+</svg>

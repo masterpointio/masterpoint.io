@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" role="img" aria-label="IoT networking re-architected from application-layer VPN plumbing scattered across EC2 instances to a network-layer concern handled by VPC route tables and NAT">
+  <defs>
+    <linearGradient id="brandGradN" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ede497" />
+      <stop offset="50%" stop-color="#2ad9c2" />
+      <stop offset="100%" stop-color="#d891ce" />
+    </linearGradient>
+    <marker id="arrowMint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2ad9c2"/>
+    </marker>
+    <marker id="arrowPink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d891ce"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="620" rx="14" fill="#0e383a"/>
+
+  <text x="60" y="50" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="14" letter-spacing="3" font-weight="700" fill="#ede497">IoT NETWORKING · RE-ARCHITECTED</text>
+  <line x1="60" y1="65" x2="200" y2="65" stroke="url(#brandGradN)" stroke-width="3"/>
+  <text x="60" y="92" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="14" fill="#a8b8b9">VPN tunnels with cellular-router IP allowlists, moved from the application layer down to the network layer.</text>
+
+  <!-- BEFORE row -->
+  <g transform="translate(60,130)">
+    <text x="0" y="0" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="13" letter-spacing="2" font-weight="800" fill="#d891ce">BEFORE · APP-LAYER PLUMBING</text>
+
+    <!-- field -->
+    <g transform="translate(0,30)">
+      <rect width="180" height="120" rx="10" fill="#0a2b2d" stroke="#7f9d9e" stroke-dasharray="4,3"/>
+      <text x="90" y="22" text-anchor="middle" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" letter-spacing="2" font-weight="700" fill="#7f9d9e">FIELD</text>
+      <g font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" fill="#fff">
+        <rect x="14" y="40" width="70" height="28" rx="4" fill="#13474a" stroke="#a8b8b9"/>
+        <text x="49" y="58" text-anchor="middle">router-a</text>
+        <rect x="96" y="40" width="70" height="28" rx="4" fill="#13474a" stroke="#a8b8b9"/>
+        <text x="131" y="58" text-anchor="middle">router-b</text>
+        <rect x="14" y="76" width="70" height="28" rx="4" fill="#13474a" stroke="#a8b8b9"/>
+        <text x="49" y="94" text-anchor="middle">router-c</text>
+        <rect x="96" y="76" width="70" height="28" rx="4" fill="#13474a" stroke="#a8b8b9"/>
+        <text x="131" y="94" text-anchor="middle">router-d</text>
+      </g>
+    </g>
+
+    <!-- tangled VPN lines -->
+    <g stroke="#d891ce" stroke-width="1.5" fill="none" opacity="0.85">
+      <path d="M190,80  C 260,40 320,140 420,70"/>
+      <path d="M190,100 C 280,160 320,30 420,110"/>
+      <path d="M190,120 C 260,80 360,180 420,170"/>
+      <path d="M190,140 C 300,220 320,90 420,210"/>
+    </g>
+
+    <!-- EC2 instances with app VPN logic -->
+    <g transform="translate(420,40)">
+      <text x="0" y="0" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" letter-spacing="2" font-weight="700" fill="#d891ce">EC2 INSTANCES (APP-LAYER VPN)</text>
+      <g font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="10.5" fill="#ffd2ee">
+        <rect x="0"   y="16" width="170" height="44" rx="6" fill="#3a1a1c" stroke="#d891ce"/>
+        <text x="85" y="36" text-anchor="middle" font-weight="700" fill="#fff">app-srv-1</text>
+        <text x="85" y="52" text-anchor="middle">VPN tunnel · allowlist code</text>
+
+        <rect x="180" y="16" width="170" height="44" rx="6" fill="#3a1a1c" stroke="#d891ce"/>
+        <text x="265" y="36" text-anchor="middle" font-weight="700" fill="#fff">app-srv-2</text>
+        <text x="265" y="52" text-anchor="middle">VPN tunnel · allowlist code</text>
+
+        <rect x="0"   y="68" width="170" height="44" rx="6" fill="#3a1a1c" stroke="#d891ce"/>
+        <text x="85" y="88" text-anchor="middle" font-weight="700" fill="#fff">app-srv-3</text>
+        <text x="85" y="104" text-anchor="middle">VPN tunnel · allowlist code</text>
+
+        <rect x="180" y="68" width="170" height="44" rx="6" fill="#3a1a1c" stroke="#d891ce"/>
+        <text x="265" y="88" text-anchor="middle" font-weight="700" fill="#fff">app-srv-4</text>
+        <text x="265" y="104" text-anchor="middle">VPN tunnel · allowlist code</text>
+      </g>
+    </g>
+
+    <!-- note -->
+    <text x="800" y="100" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="13" font-style="italic" fill="#f0c0c0">Application team owns the VPN plumbing.</text>
+    <text x="800" y="120" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="13" font-style="italic" fill="#f0c0c0">Every new field router touches app code.</text>
+    <text x="800" y="140" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="13" font-style="italic" fill="#f0c0c0">Allowlist drift bugs are hard to spot.</text>
+  </g>
+
+  <!-- divider -->
+  <line x1="60" y1="320" x2="1140" y2="320" stroke="url(#brandGradN)" stroke-width="2" opacity="0.5"/>
+
+  <!-- AFTER row -->
+  <g transform="translate(60,350)">
+    <text x="0" y="0" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="13" letter-spacing="2" font-weight="800" fill="#2ad9c2">AFTER · NETWORK-LAYER, OWNED BY VPC</text>
+
+    <!-- field -->
+    <g transform="translate(0,30)">
+      <rect width="180" height="120" rx="10" fill="#0a2b2d" stroke="#7f9d9e" stroke-dasharray="4,3"/>
+      <text x="90" y="22" text-anchor="middle" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" letter-spacing="2" font-weight="700" fill="#7f9d9e">FIELD</text>
+      <g font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" fill="#fff">
+        <rect x="14" y="40" width="70" height="28" rx="4" fill="#13474a" stroke="#a8b8b9"/>
+        <text x="49" y="58" text-anchor="middle">router-a</text>
+        <rect x="96" y="40" width="70" height="28" rx="4" fill="#13474a" stroke="#a8b8b9"/>
+        <text x="131" y="58" text-anchor="middle">router-b</text>
+        <rect x="14" y="76" width="70" height="28" rx="4" fill="#13474a" stroke="#a8b8b9"/>
+        <text x="49" y="94" text-anchor="middle">router-c</text>
+        <rect x="96" y="76" width="70" height="28" rx="4" fill="#13474a" stroke="#a8b8b9"/>
+        <text x="131" y="94" text-anchor="middle">router-d</text>
+      </g>
+    </g>
+
+    <!-- one clean tunnel into NAT -->
+    <path d="M180,90 L260,90" stroke="#2ad9c2" stroke-width="2" marker-end="url(#arrowMint)"/>
+
+    <!-- NAT subnet block -->
+    <g transform="translate(260,40)">
+      <rect width="380" height="160" rx="10" fill="#0a2b2d" stroke="#2ad9c2"/>
+      <text x="190" y="22" text-anchor="middle" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" letter-spacing="2" font-weight="700" fill="#a4f2e6">VPC · DEDICATED ROUTING TIER</text>
+
+      <!-- nat -->
+      <rect x="20" y="40" width="120" height="46" rx="6" fill="#13474a" stroke="url(#brandGradN)" stroke-width="2"/>
+      <text x="80" y="60" text-anchor="middle" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#fff">NAT GW</text>
+      <text x="80" y="76" text-anchor="middle" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="10" fill="#a4f2e6">static EIP</text>
+
+      <!-- route table -->
+      <rect x="155" y="40" width="120" height="46" rx="6" fill="#13474a" stroke="url(#brandGradN)" stroke-width="2"/>
+      <text x="215" y="60" text-anchor="middle" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#fff">ROUTE TABLE</text>
+      <text x="215" y="76" text-anchor="middle" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="10" fill="#a4f2e6">cellular CIDR → NAT</text>
+
+      <!-- allowlist -->
+      <rect x="20" y="100" width="255" height="42" rx="6" fill="#0e383a" stroke="#ede497"/>
+      <text x="148" y="119" text-anchor="middle" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#ede497">codified allowlist · in OpenTofu</text>
+      <text x="148" y="134" text-anchor="middle" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="10" fill="#7f9d9e">terraform plan ↔ network change</text>
+
+      <!-- network icon hint right -->
+      <g transform="translate(300,40)">
+        <circle cx="30" cy="50" r="28" fill="none" stroke="#2ad9c2" stroke-dasharray="3,3"/>
+        <text x="30" y="56" text-anchor="middle" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="22" font-weight="900" fill="#2ad9c2">L3</text>
+      </g>
+    </g>
+
+    <!-- out to ECS apps clean -->
+    <path d="M640,120 L720,120" stroke="#2ad9c2" stroke-width="2" marker-end="url(#arrowMint)"/>
+
+    <g transform="translate(720,40)">
+      <text x="0" y="0" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" letter-spacing="2" font-weight="700" fill="#a4f2e6">ECS FARGATE · APPS DON'T CARE ABOUT VPN</text>
+      <g font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" fill="#a4f2e6">
+        <rect x="0"   y="18" width="170" height="44" rx="6" fill="#13474a" stroke="#2ad9c2"/>
+        <text x="85" y="38" text-anchor="middle" font-weight="700" fill="#fff">api-service</text>
+        <text x="85" y="54" text-anchor="middle">just app code</text>
+
+        <rect x="180" y="18" width="170" height="44" rx="6" fill="#13474a" stroke="#2ad9c2"/>
+        <text x="265" y="38" text-anchor="middle" font-weight="700" fill="#fff">device-broker</text>
+        <text x="265" y="54" text-anchor="middle">just app code</text>
+
+        <rect x="0"   y="70" width="170" height="44" rx="6" fill="#13474a" stroke="#2ad9c2"/>
+        <text x="85" y="90" text-anchor="middle" font-weight="700" fill="#fff">ingest-worker</text>
+        <text x="85" y="106" text-anchor="middle">just app code</text>
+
+        <rect x="180" y="70" width="170" height="44" rx="6" fill="#13474a" stroke="#2ad9c2"/>
+        <text x="265" y="90" text-anchor="middle" font-weight="700" fill="#fff">events-fanout</text>
+        <text x="265" y="106" text-anchor="middle">just app code</text>
+      </g>
+    </g>
+
+    <text x="60" y="220" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="13" font-style="italic" fill="#a4f2e6">Network changes are a route-table PR, not an app-team ticket.</text>
+  </g>
+</svg>

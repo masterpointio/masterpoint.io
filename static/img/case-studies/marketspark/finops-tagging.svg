@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 460" role="img" aria-label="FinOps tagging strategy enables per-environment and per-service cost allocation">
+  <defs>
+    <linearGradient id="gradFin" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ede497" />
+      <stop offset="50%" stop-color="#2ad9c2" />
+      <stop offset="100%" stop-color="#d891ce" />
+    </linearGradient>
+    <linearGradient id="barProd" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2ad9c2"/>
+      <stop offset="100%" stop-color="#0e383a"/>
+    </linearGradient>
+    <linearGradient id="barStg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ede497"/>
+      <stop offset="100%" stop-color="#7d6a1a"/>
+    </linearGradient>
+    <linearGradient id="barDev" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#d891ce"/>
+      <stop offset="100%" stop-color="#6b3863"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="460" rx="14" fill="#0e383a"/>
+
+  <text x="60" y="50" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="14" letter-spacing="3" font-weight="700" fill="#ede497">FINOPS · COST BY ENVIRONMENT &amp; SERVICE</text>
+  <line x1="60" y1="65" x2="200" y2="65" stroke="url(#gradFin)" stroke-width="3"/>
+  <text x="60" y="92" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="14" fill="#a8b8b9">Uniform tag schema applied across every resource in every account. Visibility, finally.</text>
+
+  <!-- tag schema box -->
+  <g transform="translate(60,130)">
+    <rect width="360" height="240" rx="12" fill="#0a2b2d" stroke="url(#gradFin)" stroke-width="2"/>
+    <text x="20" y="32" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" letter-spacing="2" font-weight="700" fill="#a4f2e6">TAG SCHEMA · context label module</text>
+    <g font-family="ui-monospace, Menlo, Monaco, Consolas, monospace" font-size="13" fill="#e8efef">
+      <text x="20" y="62"><tspan fill="#a4f2e6">Namespace</tspan> = "ms"</text>
+      <text x="20" y="84"><tspan fill="#a4f2e6">Environment</tspan> = "prod"</text>
+      <text x="20" y="106"><tspan fill="#a4f2e6">Service</tspan> = "device-broker"</text>
+      <text x="20" y="128"><tspan fill="#a4f2e6">Owner</tspan> = "platform"</text>
+      <text x="20" y="150"><tspan fill="#a4f2e6">CostCenter</tspan> = "iot-ingestion"</text>
+      <text x="20" y="172"><tspan fill="#a4f2e6">ManagedBy</tspan> = "opentofu"</text>
+      <text x="20" y="194"><tspan fill="#a4f2e6">Repo</tspan> = "infra/aws"</text>
+    </g>
+    <text x="20" y="222" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" fill="#7f9d9e">applied via one module · every resource · every account</text>
+  </g>
+
+  <!-- chart -->
+  <g transform="translate(480,150)">
+    <text x="0" y="-10" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" letter-spacing="2" font-weight="700" fill="#a4f2e6">MONTHLY COST · STACKED BY ENV (ILLUSTRATIVE)</text>
+
+    <!-- axis -->
+    <line x1="0" y1="0" x2="0" y2="220" stroke="#1f5a5d"/>
+    <line x1="0" y1="220" x2="640" y2="220" stroke="#1f5a5d"/>
+
+    <!-- y labels -->
+    <g font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="10" fill="#7f9d9e" text-anchor="end">
+      <text x="-8" y="6">$</text>
+      <text x="-8" y="58">$$</text>
+      <text x="-8" y="113">$$$</text>
+      <text x="-8" y="168">$$$$</text>
+      <text x="-8" y="224">0</text>
+    </g>
+
+    <!-- bar groups -->
+    <g font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" fill="#a8b8b9" text-anchor="middle">
+      <!-- compute -->
+      <g transform="translate(40,0)">
+        <rect x="0" y="60"  width="38" height="160" fill="url(#barProd)"/>
+        <rect x="42" y="120" width="38" height="100" fill="url(#barStg)"/>
+        <rect x="84" y="160" width="38" height="60" fill="url(#barDev)"/>
+        <text x="61" y="240">compute</text>
+      </g>
+      <g transform="translate(200,0)">
+        <rect x="0" y="90" width="38" height="130" fill="url(#barProd)"/>
+        <rect x="42" y="140" width="38" height="80" fill="url(#barStg)"/>
+        <rect x="84" y="170" width="38" height="50" fill="url(#barDev)"/>
+        <text x="61" y="240">data</text>
+      </g>
+      <g transform="translate(360,0)">
+        <rect x="0" y="120" width="38" height="100" fill="url(#barProd)"/>
+        <rect x="42" y="155" width="38" height="65" fill="url(#barStg)"/>
+        <rect x="84" y="180" width="38" height="40" fill="url(#barDev)"/>
+        <text x="61" y="240">network</text>
+      </g>
+      <g transform="translate(520,0)">
+        <rect x="0" y="155" width="38" height="65" fill="url(#barProd)"/>
+        <rect x="42" y="180" width="38" height="40" fill="url(#barStg)"/>
+        <rect x="84" y="195" width="38" height="25" fill="url(#barDev)"/>
+        <text x="61" y="240">obs · misc</text>
+      </g>
+    </g>
+
+    <!-- legend -->
+    <g font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="11" fill="#a4f2e6" transform="translate(0,265)">
+      <rect x="0" y="-10" width="12" height="12" fill="url(#barProd)"/>
+      <text x="18" y="0">prod</text>
+      <rect x="70" y="-10" width="12" height="12" fill="url(#barStg)"/>
+      <text x="88" y="0">staging</text>
+      <rect x="170" y="-10" width="12" height="12" fill="url(#barDev)"/>
+      <text x="188" y="0">dev</text>
+    </g>
+  </g>
+
+  <!-- callout right -->
+  <g transform="translate(60,400)" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="13" fill="#a4f2e6">
+    <circle cx="6" cy="-4" r="4" fill="#ede497"/>
+    <text x="20" y="0">Cost runaways in dev no longer touch prod billing.</text>
+    <circle cx="466" cy="-4" r="4" fill="#2ad9c2"/>
+    <text x="480" y="0">Account-isolated billing surface, by design.</text>
+  </g>
+</svg>
