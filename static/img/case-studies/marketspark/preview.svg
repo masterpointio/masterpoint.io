@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" role="img" aria-label="MarketSpark case study preview card">
+  <defs>
+    <linearGradient id="bgPreview" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0e383a"/>
+      <stop offset="100%" stop-color="#061d1e"/>
+    </linearGradient>
+    <linearGradient id="gradPreview" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ede497" />
+      <stop offset="50%" stop-color="#2ad9c2" />
+      <stop offset="100%" stop-color="#d891ce" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="480" fill="url(#bgPreview)"/>
+
+  <g stroke="#1f5a5d" stroke-width="1" opacity="0.4">
+    <line x1="0" y1="120" x2="800" y2="120"/>
+    <line x1="0" y1="240" x2="800" y2="240"/>
+    <line x1="0" y1="360" x2="800" y2="360"/>
+  </g>
+
+  <text x="60" y="80" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="13" letter-spacing="5" font-weight="800" fill="#ede497">CASE STUDY</text>
+  <text x="60" y="180" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="44" font-weight="900" fill="#fff">MarketSpark</text>
+  <text x="60" y="230" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="url(#gradPreview)">Modernizing AWS · 100% IaC</text>
+
+  <g font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="14" fill="#a8b8b9">
+    <text x="60" y="280">· 1 → 11 AWS accounts</text>
+    <text x="60" y="305">· 0% → ~100% Infrastructure as Code</text>
+    <text x="60" y="330">· 50+ services migrated to ECS Fargate</text>
+    <text x="60" y="355">· DR measured in hours, not weeks</text>
+  </g>
+
+  <line x1="60" y1="400" x2="180" y2="400" stroke="url(#gradPreview)" stroke-width="3"/>
+  <text x="60" y="430" font-family="Proxima Nova, Helvetica, Arial, sans-serif" font-size="13" letter-spacing="3" font-weight="700" fill="#a4f2e6">READ THE STORY →</text>
+</svg>

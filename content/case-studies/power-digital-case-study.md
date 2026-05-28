@@ -1,4 +1,5 @@
 ---
+layout: legacy
 title: Power Digital Terraform Case Study
 banner_tagline: "How Masterpoint Helped Power Digital"
 banner_title: "<span class='text-gradient'>Achieve 10x Reduction in Infrastructure Automation Costs</span>"
