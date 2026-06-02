@@ -1,3 +1,5 @@
+<!-- trunk-ignore-all(markdownlint) -->
+
 # Case Studies — working guide
 
 This document captures the architecture, conventions, and workflow for building

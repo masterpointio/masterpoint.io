@@ -1,12 +1,12 @@
 ---
 title: "Template Preview · Every Shortcode / Component in One Page"
-draft: true # excluded from production; run `hugo serve -D` locally to preview
+draft: true   # excluded from production; run `hugo serve -D` locally to preview
 description: "Living template / shortcode / component gallery for the case-study layout. Use this page to preview each cs-* shortcode and copy-paste boilerplate when starting a new case study."
 
 # Hero
 eyebrow: "TEMPLATE PREVIEW"
 client: "Template"
-client_logo: /img/case-studies/marketspark/marketspark-logo.png # any image works
+client_logo: /img/case-studies/marketspark/marketspark-logo.png   # any image works
 hero_title: "A <span class='text-gradient'>case-study template</span> with every shortcode wired up."
 # hero_aside_image: /img/case-studies/marketspark/hero-bg.jpg  # uncomment for hero photo
 
@@ -48,17 +48,16 @@ Need to do a table here.
 ---
 
 {{< cs-about
-name="Template Client"
-url="https://example.com/"
-linkedin="https://www.linkedin.com/company/example/"
-
-> }}
-> This is the `cs-about` shortcode. A short, one-paragraph description of the client goes here. The eyebrow auto-generates as **About {name}** unless you pass `eyebrow="..."` explicitly. The website pill and LinkedIn brand mark appear in the top-right of the card if `url` and `linkedin` are set.
-> {{< /cs-about >}}
+  name="Template Client"
+  url="https://example.com/"
+  linkedin="https://www.linkedin.com/company/example/"
+>}}
+This is the `cs-about` shortcode. A short, one-paragraph description of the client goes here. The eyebrow auto-generates as **About {name}** unless you pass `eyebrow="..."` explicitly. The website pill and LinkedIn brand mark appear in the top-right of the card if `url` and `linkedin` are set.
+{{< /cs-about >}}
 
 ## A Section H2 (auto-listed in the contents card)
 
-Plain prose paragraphs render with the article's body font and rhythm. **Bold** is pine, _italic_ is plain italic, [links are highlight-mint](https://example.com), and `inline code` gets a soft mint background.
+Plain prose paragraphs render with the article's body font and rhythm. **Bold** is pine, *italic* is plain italic, [links are highlight-mint](https://example.com), and `inline code` gets a soft mint background.
 
 > Block quotes get a gradient left border and a soft pine background. Use them for asides where a `cs-callout` would be too heavy.
 
@@ -67,7 +66,7 @@ Plain prose paragraphs render with the article's body font and rhythm. **Bold** 
 ### `cs-callout` — three variants
 
 {{< cs-callout title="cs-callout · info variant" icon="fa-circle-info" variant="info" >}}
-The **info** variant uses the mint accent. Good for definitions, sidebars, and "good to know" boxes. Markdown renders inside: [links](https://example.com), `inline code`, **bold**, _italic_.
+The **info** variant uses the mint accent. Good for definitions, sidebars, and "good to know" boxes. Markdown renders inside: [links](https://example.com), `inline code`, **bold**, *italic*.
 {{< /cs-callout >}}
 
 {{< cs-callout title="cs-callout · accent variant" icon="fa-circle-question" variant="accent" >}}
@@ -119,17 +118,16 @@ hours, not weeks | recovery | last one
 
 {{< cs-beforeafter >}}
 {{< cs-pane variant="before" title="Before" >}}
-
 - Bullet inside the **before** pane (pink-tinted)
 - Markdown works here
 - Another point
-  {{< /cs-pane >}}
-  {{< cs-pane variant="after" title="After" >}}
+{{< /cs-pane >}}
+{{< cs-pane variant="after" title="After" >}}
 - Bullet inside the **after** pane (mint-tinted)
 - Markdown also works
 - Another point
-  {{< /cs-pane >}}
-  {{< /cs-beforeafter >}}
+{{< /cs-pane >}}
+{{< /cs-beforeafter >}}
 
 ---
 
@@ -138,16 +136,12 @@ hours, not weeks | recovery | last one
 {{< cs-wins >}}
 icon: fa-shield-halved
 title: A win-card title
-body: One or two sentences. Inline markdown like _italics_ and [links](https://example.com) renders correctly.
-
+body: One or two sentences. Inline markdown like *italics* and [links](https://example.com) renders correctly.
 ---
-
 icon: fa-database
 title: Another win
 body: Cards auto-fit in a responsive grid. They lift slightly on hover.
-
 ---
-
 icon: fa-tags
 title: A third win
 body: The icon is a Font Awesome class (e.g. `fa-shield-halved`). The gradient badge wraps it automatically.
@@ -158,8 +152,7 @@ body: The icon is a Font Awesome class (e.g. `fa-shield-halved`). The gradient b
 ### `cs-lockup` — client × Masterpoint logo lockup
 
 {{< cs-lockup
-client_logo="/img/case-studies/marketspark/marketspark-logo.png"
-client_name="Template Client"
-caption="cs-lockup pairs a client logo with the Masterpoint mark via a gradient × — works well as an intro figure for an engagement."
-
-> }}
+  client_logo="/img/case-studies/marketspark/marketspark-logo.png"
+  client_name="Template Client"
+  caption="cs-lockup pairs a client logo with the Masterpoint mark via a gradient × — works well as an intro figure for an engagement."
+>}}
