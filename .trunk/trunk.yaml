@@ -27,6 +27,9 @@ lint:
         - assets/js/plugins.js
         - assets/css/cookieconsent.min.scss
         - assets/css/custom.scss
+    - linters: [markdownlint]
+      paths:
+        - content/case-studies/**/*.md
 runtimes:
   enabled:
     - go@1.21.0
