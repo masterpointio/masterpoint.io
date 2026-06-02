@@ -1,5 +1,4 @@
 ---
-draft: true # NOT READY FOR RELEASE
 title: "Modernizing MarketSpark's AWS Cloud into a 100% Infrastructure as Code, Automated & Multi-Account Platform"
 weight: 2
 description: "Masterpoint rebuilt MarketSpark's AWS environment from a single manually operated account into an 11-account AWS Organization, 100% codified & automated in Infrastructure as Code, with 100+ ECS and Lambda services across all environments."
