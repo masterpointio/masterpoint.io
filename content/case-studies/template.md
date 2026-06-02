@@ -1,6 +1,6 @@
 ---
 title: "Template Preview · Every Shortcode / Component in One Page"
-draft: true   # excluded from production; run `hugo serve -D` locally to preview
+# draft: true   # excluded from production; run `hugo serve -D` locally to preview
 description: "Living template / shortcode / component gallery for the case-study layout. Use this page to preview each cs-* shortcode and copy-paste boilerplate when starting a new case study."
 
 # Hero
