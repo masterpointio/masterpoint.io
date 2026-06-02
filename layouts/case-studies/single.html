@@ -1,60 +1,108 @@
 {{ partial "head.html" . }}
 <body {{ if .Params.id }}id='{{ .Params.id }}' {{end}}
-    class="page-default sections-template {{if .Params.banner_image}} withBannerImg{{else}}noBannerImg {{end}} landing-single landing-banner case-study-single">
+    class="case-study-modern">
     {{ partial "header.html" . }}
-    <section id="banner">
-        {{if .Params.banner_image}} <div class="banner-image bg-image"><img src="{{.Params.banner_image}}" /></div>
-        {{end}}
+
+    {{/* HERO */}}
+    {{ $bgImg := or .Params.hero_image .Params.hero_aside_image }}
+    <section class="cs-hero{{ if $bgImg }} cs-hero--with-bg{{ end }}">
+        {{ if $bgImg }}
+        <div class="cs-hero__bg">
+            <img src="{{ $bgImg }}" alt="" />
+        </div>
+        {{ end }}
         <div class="container">
-            <div class="row">
-                <div class="col col-12 {{if .Params.banner_image}}col-md-9{{else}} text-center{{end}}">
-                    <div class="bannerTxtBx aos-item" data-aos="fade-right">
-                        {{if .Params.banner_tagline}}
-                        <div class="bannerTagline">
-                            {{.Params.banner_tagline | safeHTML}}
+            <div class="cs-hero__layout">
+                <div class="cs-hero__inner{{ if $bgImg }} cs-hero__inner--framed{{ end }}">
+                    {{ if .Params.client_logo }}
+                    <div class="cs-hero__lockup">
+                        <div class="cs-hero__lockup-mark cs-hero__lockup-mark--client">
+                            <img src="{{ .Params.client_logo }}" alt="{{ .Params.client | default "" }} logo" />
                         </div>
-                        {{end}}
-
-                        <h2>
-                            {{if .Params.banner_title}}
-                            {{.Params.banner_title|safeHTML}}
-                            {{ else}}
-                            {{ .Title | safeHTML }}
-                            {{end}}
-                        </h2>
-
-                        {{  if .Params.download_button }}
-                        <a href="{{ .Params.download_button }}" class="button mt-3">Download The PDF Case Study &rsaquo;</a>
-                        {{end}}
+                        <div class="cs-hero__lockup-x" aria-hidden="true">&times;</div>
+                        <div class="cs-hero__lockup-mark cs-hero__lockup-mark--mp">
+                            <img src="/img/logo.svg" alt="Masterpoint logo" />
+                        </div>
                     </div>
+                    {{ end }}
+                    <div class="cs-hero__eyebrow">
+                        {{ if .Params.eyebrow }}{{ .Params.eyebrow | safeHTML }}{{ else }}CASE STUDY{{ if .Params.client }} &middot; {{ .Params.client }}{{ end }}{{ end }}
+                    </div>
+                    <h1 class="cs-hero__title">
+                        {{ if .Params.hero_title }}
+                        {{ .Params.hero_title | safeHTML }}
+                        {{ else }}
+                        {{ .Title | safeHTML }}
+                        {{ end }}
+                    </h1>
                 </div>
             </div>
-            
         </div>
-
-        <div class="video-wrapper"><iframe src="https://player.vimeo.com/video/821330736?background=1&muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe><script src="https://player.vimeo.com/api/player.js"></script></div>
     </section>
 
-    <main>
+    {{/* AT-A-GLANCE STAT STRIP */}}
+    {{ if .Params.stat_bar }}
+    <section class="cs-stat-strip">
         <div class="container">
-    
-            <div class="row">
-                <div class="col col-12">
-                   
-                        
-                    {{.Content}}
-                       
-                 
+            <div class="cs-stat-strip__inner">
+                {{ range .Params.stat_bar }}
+                <div class="cs-stat">
+                    <div class="cs-stat__value">{{ .value | safeHTML }}</div>
+                    <div class="cs-stat__label">{{ .label | safeHTML }}</div>
                 </div>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+    {{ end }}
+
+    <main class="cs-main">
+        <div class="container">
+            <div class="cs-article-card">
+                {{ if .Params.client_meta }}
+                <div class="cs-meta-bar">
+                    {{ range .Params.client_meta }}
+                    <div class="cs-meta-bar__item">
+                        <span class="cs-meta-bar__label">{{ .label }}</span>
+                        <span class="cs-meta-bar__value">{{ .value | safeHTML }}</span>
+                    </div>
+                    {{ end }}
+                </div>
+                {{ end }}
+
+                <article class="cs-article">
+                    {{/* Auto-inject the "In This Success Story" contents
+                         card before the first H2 (so it lands after the cs-about
+                         block). Every modern case study gets it; opt out per page
+                         with `toc: false`. `$`-escape the partial output so any `$`
+                         in a heading title isn't read as a replaceRE group ref. */}}
+                    {{ $content := .Content }}
+                    {{ if ne .Params.toc false }}
+                        {{ $toc := partial "case-study-toc.html" . }}
+                        {{ if $toc }}
+                        {{ $tocSafe := replace (string $toc) "$" "$$" }}
+                        {{ $content = replaceRE `<h2[ >]` (printf "%s${0}" $tocSafe) $content 1 }}
+                        {{ end }}
+                    {{ end }}
+                    {{ $content | safeHTML }}
+
+                    {{/* End-of-article CTA. Defaults to a generic Masterpoint
+                         pitch; any case study can override by setting `callout:`
+                         in front matter, or hide it entirely with `callout: false`. */}}
+                    {{ $defaultCallout := `<p>👋 <strong>Curious if Masterpoint could help your team too?</strong> We partner with engineering organizations across the full spectrum — from unicorn startups to Fortune 500 enterprises — to deliver infrastructure systems and patterns that truly scale. <a href='https://calendly.com/matt-at-masterpoint/project-chat' target='_blank' rel='noopener'>Get in touch</a> and we'll walk through your environment, your roadmap, and see where we can help.</p><a href='https://calendly.com/matt-at-masterpoint/project-chat' target='_blank' rel='noopener' class='button'>Get in touch &rsaquo;</a>` }}
+                    {{ $cta := cond (isset .Params "callout") .Params.callout $defaultCallout }}
+                    {{ if $cta }}
+                    <div class="cs-article__callout">
+                        {{ $cta | safeHTML }}
+                    </div>
+                    {{ end }}
+                </article>
             </div>
         </div>
     </main>
 
-{{ partial "signup-section.html" . }}
-
-{{ partial "footer.html" . }}
-
-{{ partial "scripts.html" . }}
-
+    {{ partial "schedule-assessment.html" . }}
+    {{ partial "footer.html" . }}
+    {{ partial "scripts.html" . }}
 </body>
 </html>
