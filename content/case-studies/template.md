@@ -33,7 +33,7 @@ sitemap:
 
 This page is `draft: true` so it's excluded from production. To preview locally, restart `hugo serve` with the `-D` flag:
 
-```
+```bash
 hugo serve -D
 ```
 
