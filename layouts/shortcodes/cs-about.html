@@ -1,0 +1,62 @@
+{{/*
+  cs-about — dedicated "about the client" card.
+  Usage:
+    {{< cs-about name="ClientName" url="https://..." linkedin="https://..." facts="A | B | C" >}}
+    Prose paragraph describing the client. Lead with the client name naturally —
+    the eyebrow already names them, the heading isn't repeated.
+    {{< /cs-about >}}
+*/}}
+{{- $name := .Get "name" -}}
+{{- $url := .Get "url" -}}
+{{- $linkedin := .Get "linkedin" -}}
+{{- $industry := .Get "industry" -}}
+{{- $technologies := .Get "technologies" -}}
+{{- $factsRaw := .Get "facts" -}}
+{{- $eyebrow := .Get "eyebrow" | default (cond (ne $name "") (printf "About %s" $name) "About the client") -}}
+<aside class="cs-about">
+  <div class="cs-about__header">
+    <div class="cs-about__eyebrow">{{ $eyebrow }}</div>
+    {{- if or $url $linkedin -}}
+    <div class="cs-about__links">
+      {{- if $url -}}
+      <a class="cs-about__url" href="{{ $url }}" target="_blank" rel="noopener">
+        {{- replace (replace $url "https://" "") "/" "" -}}
+        <i class="fa-solid fa-arrow-up-right-from-square cs-about__url-icon" aria-hidden="true"></i>
+      </a>
+      {{- end -}}
+      {{- if $linkedin -}}
+      <a class="cs-about__social cs-about__social--linkedin" href="{{ $linkedin }}" target="_blank" rel="noopener" aria-label="{{ $name }} on LinkedIn">
+        <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+      </a>
+      {{- end -}}
+    </div>
+    {{- end -}}
+  </div>
+  <div class="cs-about__body">
+    {{ .Inner | $.Page.RenderString }}
+  </div>
+  {{- if or $industry $technologies -}}
+  <dl class="cs-about__meta">
+    {{- if $industry -}}
+    <div class="cs-about__meta-row">
+      <dt class="cs-about__meta-label">Industry</dt>
+      <dd class="cs-about__meta-value">{{ $industry | safeHTML }}</dd>
+    </div>
+    {{- end -}}
+    {{- if $technologies -}}
+    <div class="cs-about__meta-row">
+      <dt class="cs-about__meta-label">Technologies</dt>
+      <dd class="cs-about__meta-value">{{ $technologies | safeHTML }}</dd>
+    </div>
+    {{- end -}}
+  </dl>
+  {{- end -}}
+  {{- if $factsRaw -}}
+  <ul class="cs-about__facts">
+    {{- range split $factsRaw "|" -}}
+      {{- $f := trim . " " -}}
+      {{- if $f -}}<li>{{ $f | safeHTML }}</li>{{- end -}}
+    {{- end -}}
+  </ul>
+  {{- end -}}
+</aside>

@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is the Masterpoint.io company website - a Hugo-based static site for an Infrastructure-as-Code (IaC) consulting firm specializing in Terraform, OpenTofu, Pulumi, and cloud infrastructure solutions. The site is deployed on Netlify with automatic builds from the Git repository.
 
+## Case Studies
+
+**When working on anything related to case studies, always reference [`docs/case-studies.md`](docs/case-studies.md) first.** It documents the case-study architecture, layouts, shortcodes, front matter schema, styling decisions, and iteration workflow. **Keep it updated** — whenever you make a decision about case-study layout, shortcodes, visuals, or workflow, update that file before ending the session (and remove mentions of anything deleted from the codebase).
+
 ## Essential Commands
 
 ### Development

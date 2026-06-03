@@ -3980,3 +3980,1555 @@ font-size: 1.55rem;
     }
   }
 }
+
+@keyframes csHeroAsideFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes csLockupPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.08); opacity: 0.82; }
+}
+
+// =============================================================================
+// MODERN CASE STUDY LAYOUT  (.case-study-modern)
+// Used by content/case-studies/*.md unless they specify `layout: legacy`.
+// Power Digital uses the legacy layout (`.case-study-single`) — keep that
+// untouched. Everything below is scoped under `.case-study-modern`.
+// =============================================================================
+
+$cs-mint: #2ad9c2;
+$cs-pine-dark: #061d1e;
+$cs-pine-deep: #0a2a2c;
+$cs-pine-soft: #13474a;
+$cs-pine-line: #1f5a5d;
+$cs-mint-soft: rgba(42, 217, 194, 0.12);
+$cs-mint-faint: rgba(42, 217, 194, 0.06);
+
+@mixin cs-brand-gradient {
+  background: linear-gradient(92deg, #ede497 -0.66%, #2ad9c2 26%, #d891ce 59.55%);
+}
+@mixin cs-brand-gradient-text {
+  @include cs-brand-gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.case-study-modern {
+  background: $pine;
+
+  header {
+    background: $pine;
+  }
+
+  // ---------------------------------------------------------------------------
+  // HERO  — clean gradient pine, subtle decorative grid only.
+  // ---------------------------------------------------------------------------
+  .cs-hero {
+    position: relative;
+    padding: 9.4rem 0 4.8rem;
+    min-height: 720px;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(180deg, $pine 0%, $cs-pine-deep 60%, $cs-pine-dark 100%);
+    color: #fff;
+    overflow: hidden;
+
+    // ≤991px the global header stacks into two rows (logo+MENU, then socials +
+    // GET IN TOUCH ≈ 132–144px tall) and is position:absolute over the hero, so
+    // the top padding has to clear it across this whole range — keep it large
+    // (≈10rem). Do NOT shrink it for smaller phones; the header stays two-row.
+    @media (max-width: 991px) {
+      min-height: 600px;
+      padding: 10rem 0 4rem;
+    }
+    @media (max-width: 575px) {
+      min-height: 500px;
+      padding: 10rem 0 3.2rem;
+    }
+
+    > .container {
+      width: 100%;
+    }
+
+    // full-bleed background image + lighter horizontal scrim:
+    // dark on the left where the title frame sits, mostly clear on the right
+    // so the subject of the photo (worker / cables / etc.) reads through.
+    &__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 70% center; // bias toward the right of the photo
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(
+            90deg,
+            rgba(6, 29, 30, 0.78) 0%,
+            rgba(6, 29, 30, 0.55) 40%,
+            rgba(6, 29, 30, 0.15) 70%,
+            rgba(6, 29, 30, 0.05) 100%
+          ),
+          linear-gradient(180deg, rgba(14, 56, 58, 0.10) 0%, rgba(6, 29, 30, 0.25) 100%);
+      }
+    }
+
+    // decorative element: soft mint-glow + faint dotted grid (suppressed when bg image present)
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 88% 18%, rgba(42, 217, 194, 0.18), transparent 55%),
+        radial-gradient(ellipse at 10% 90%, rgba(216, 145, 206, 0.10), transparent 50%);
+      pointer-events: none;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 80%);
+      -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 80%);
+      pointer-events: none;
+    }
+
+    &--with-bg {
+      &::before,
+      &::after {
+        opacity: 0.35;
+      }
+    }
+
+    &__layout {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    &__inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+    }
+
+    // Frosted card so title stays readable over the hero background image.
+    &__inner--framed {
+      padding: 1.8rem 2rem 1.6rem;
+      max-width: 720px;
+      background: linear-gradient(135deg, rgba(6, 29, 30, 0.72) 0%, rgba(14, 56, 58, 0.62) 100%);
+      backdrop-filter: blur(8px) saturate(120%);
+      -webkit-backdrop-filter: blur(8px) saturate(120%);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow:
+        0 30px 60px -25px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        @include cs-brand-gradient;
+      }
+
+      @media (max-width: 575px) {
+        padding: 1.4rem 1.2rem 1.2rem;
+        border-radius: 12px;
+        max-width: 100%;
+      }
+    }
+
+    &__aside {
+      position: relative;
+      z-index: 1;
+      margin-top: 0.5rem;
+
+      img {
+        width: 100%;
+        height: auto;
+        max-height: 320px;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        border-radius: 14px;
+        box-shadow:
+          0 30px 60px -20px rgba(0, 0, 0, 0.55),
+          0 0 0 1px rgba(42, 217, 194, 0.25);
+      }
+
+      // soft mint frame glow
+      &::after {
+        content: "";
+        position: absolute;
+        inset: -10px;
+        border-radius: 18px;
+        background: linear-gradient(135deg, rgba(42, 217, 194, 0.16), rgba(216, 145, 206, 0.06));
+        z-index: -1;
+        filter: blur(24px);
+        opacity: 0.55;
+      }
+
+      @media (max-width: 575px) {
+        img {
+          max-height: 220px;
+          border-radius: 10px;
+        }
+      }
+    }
+
+    &__eyebrow {
+      font-size: 0.85rem;
+      letter-spacing: 0.35em;
+      font-weight: 800;
+      color: $vanilla;
+      text-transform: uppercase;
+      padding-bottom: 1.5rem;
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0.4rem;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        @include cs-brand-gradient;
+      }
+    }
+
+    &__logo {
+      display: inline-flex;
+      margin-bottom: 1.4rem;
+      padding: 0.6rem 0.95rem;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.45);
+      img {
+        height: 40px;
+        width: auto;
+        max-width: 260px;
+        display: block;
+      }
+      @media (max-width: 575px) {
+        img { height: 32px; }
+      }
+    }
+
+    // Hero in-place client × Masterpoint lockup
+    &__lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    &__lockup-mark {
+      display: inline-flex;
+      align-items: center;
+      &--client {
+        padding: 0.5rem 0.8rem;
+        background: #ffffff;
+        border-radius: 7px;
+        box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.45);
+        img {
+          display: block;
+          height: 32px;
+          // Lock the displayed aspect ratio so Netlify's image-optim plugin
+          // (pngquant/imagemin) recompressing the source file can't subtly
+          // change rendered dimensions. The MarketSpark logo is 401×101 ≈
+          // 3.97:1; this `aspect-ratio` declaration computes the same
+          // displayed width on both local and Netlify regardless of any
+          // post-build PNG re-encoding.
+          width: auto;
+          aspect-ratio: 401 / 101;
+          max-width: 200px;
+        }
+      }
+      &--mp {
+        img {
+          display: block;
+          height: 26px;
+          width: auto;
+          max-width: 200px;
+        }
+      }
+      @media (max-width: 575px) {
+        &--client img { height: 26px; }
+        &--mp img     { height: 22px; }
+      }
+    }
+
+    &__lockup-x {
+      font-family: $header-font;
+      font-size: 1.8rem;
+      font-weight: 300;
+      line-height: 1;
+      @include cs-brand-gradient-text;
+      user-select: none;
+      @media (max-width: 575px) {
+        font-size: 1.4rem;
+      }
+    }
+
+    &__title {
+      font-size: 2.7rem;
+      line-height: 1.12;
+      font-weight: 900;
+      letter-spacing: -0.015em;
+      padding-bottom: 0;
+      color: #fff;
+      max-width: 880px;
+      text-transform: none; // override global #banner h1 uppercase
+      .text-gradient {
+        @include cs-brand-gradient-text;
+      }
+      @media (max-width: 991px) {
+        font-size: 2.45rem;
+      }
+      @media (max-width: 575px) {
+        font-size: 1.9rem;
+      }
+    }
+
+    &__meta {
+      list-style: none;
+      padding: 0;
+      margin: 2.4rem 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.4rem 3.5rem;
+
+      li {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        padding-left: 0;
+        margin-bottom: 0;
+        &::before {
+          display: none;
+        }
+      }
+    }
+    &__meta-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: $cs-mint;
+      font-weight: 800;
+    }
+    &__meta-value {
+      font-size: 1.05rem;
+      color: #e8efef;
+      font-weight: 600;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // AT-A-GLANCE STAT STRIP
+  // ---------------------------------------------------------------------------
+  .cs-stat-strip {
+    background: $pine;
+    position: relative;
+    z-index: 2;
+    padding: 0;
+    color: #fff;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+
+    &__inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      background: $cs-pine-deep;
+      border-radius: 14px;
+      overflow: hidden;
+      transform: translateY(-2.5rem);
+      box-shadow:
+        0 30px 60px -20px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(42, 217, 194, 0.25);
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        @include cs-brand-gradient;
+      }
+
+      @media (max-width: 991px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      @media (max-width: 575px) {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  .cs-stat {
+    padding: 1.7rem 1.6rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.07);
+    text-align: left;
+
+    &:last-child {
+      border-right: 0;
+    }
+    @media (max-width: 991px) {
+      // 2-up grid: give each cell a touch more breathing room
+      padding: 2rem 1.6rem;
+      &:nth-child(2n) {
+        border-right: 0;
+      }
+      &:nth-child(-n+2) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      }
+    }
+    @media (max-width: 575px) {
+      // 1-up stack: tighten the padding so stacked stats don't sprawl
+      padding: 1.1rem 1.4rem;
+      border-right: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+
+    &__value {
+      font-size: 2.2rem;
+      line-height: 1.1;
+      font-weight: 900;
+      @include cs-brand-gradient-text;
+      letter-spacing: -0.01em;
+
+      // Keep the value comfortably below the hero title at every breakpoint
+      // (title is 2.45rem ≤991 / 1.9rem ≤575), so it never visually outweighs
+      // the title — especially at the narrow end of the 2-up range (~600px).
+      @media (max-width: 991px) {
+        font-size: 1.8rem;
+      }
+      @media (max-width: 575px) {
+        font-size: 1.55rem;
+      }
+    }
+    &__label {
+      margin-top: 0.4rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      color: #b8c7c8;
+      line-height: 1.4;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // MAIN ARTICLE  — pine page backdrop + white content card on top.
+  // ---------------------------------------------------------------------------
+  .cs-main {
+    background: $pine;
+    padding: 1rem 0 4.5rem;
+    color: #2a3a3b;
+    position: relative;
+
+    .container {
+      max-width: 1320px;
+    }
+  }
+
+  .cs-article-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 3.4rem 3.8rem 3rem;
+    box-shadow:
+      0 30px 80px -30px rgba(0, 0, 0, 0.45),
+      0 0 0 1px rgba(255, 255, 255, 0.04);
+    max-width: 1080px;
+    margin: 0 auto;
+
+    @media (max-width: 991px) {
+      padding: 2.4rem 1.8rem 2rem;
+      border-radius: 10px;
+    }
+    @media (max-width: 575px) {
+      padding: 1.6rem 1.2rem 1.5rem;
+      border-radius: 8px;
+    }
+  }
+
+  // Compact metadata bar at the top of the article card — replaces the
+  // bulky client_meta list that used to live inside the hero.
+  .cs-meta-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.2rem 1.6rem;
+    padding: 1rem 0 1.4rem;
+    margin: 0 0 1.6rem;
+    border-bottom: 1px solid #e1ebeb;
+
+    &__item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    &__label {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: $cs-mint;
+    }
+    &__value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: $pine;
+      line-height: 1.4;
+    }
+  }
+
+  .cs-article {
+    font-size: 0.98rem;
+    line-height: 1.68;
+    color: #2a3a3b;
+
+    > * + * {
+      margin-top: 1.2rem;
+    }
+    > p {
+      margin-top: 0;
+      margin-bottom: 1.4rem;
+    }
+
+    h2 {
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: $pine;
+      margin-top: 3.6rem;
+      margin-bottom: 0.6rem;
+      padding-bottom: 0.4rem;
+      letter-spacing: -0.01em;
+      position: relative;
+
+      &::before {
+        content: "";
+        display: block;
+        width: 56px;
+        height: 4px;
+        @include cs-brand-gradient;
+        margin-bottom: 1.1rem;
+        border-radius: 2px;
+      }
+      @media (max-width: 575px) {
+        font-size: 1.7rem;
+      }
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: $pine;
+      margin-top: 2.4rem;
+      margin-bottom: 0.4rem;
+    }
+
+    h4 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: $pine;
+      margin-top: 1.8rem;
+      margin-bottom: 0.4rem;
+    }
+
+    p {
+      font-size: 0.98rem;
+      line-height: 1.68;
+      color: #2a3a3b;
+    }
+
+    strong {
+      color: $pine;
+      font-weight: 800;
+    }
+
+    a:not(.button) {
+      color: $highlight;
+      text-decoration: underline;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 3px;
+      &:hover {
+        color: darken($highlight, 8%);
+      }
+    }
+
+    // Heading anchor wrappers shouldn't carry the body-link underline.
+    h2, h3, h4, h5 {
+      a, a:hover {
+        color: inherit;
+        text-decoration: none;
+      }
+      .heading-anchor-symbol { color: $cs-mint; }
+      .heading-text::after { background-color: $cs-mint; }
+    }
+
+    ul,
+    ol {
+      padding-left: 1.5rem;
+      margin: 1rem 0 1.4rem;
+      li {
+        font-size: 0.95rem;
+        line-height: 1.62;
+        margin-bottom: 0.6rem;
+        padding-left: 0.3rem;
+      }
+    }
+
+    ul li::marker {
+      color: $cs-mint;
+    }
+    ol li::marker {
+      color: $pine;
+      font-weight: 800;
+    }
+
+    // Inline icon prefix used at the start of a bullet item, e.g.:
+    //   - <i class="cs-bullet-icon fa-solid fa-sitemap"></i> **Title.** body
+    // The bullet's mint dot stays (acts like a hanging indent marker) and
+    // this icon sits inline with the title text.
+    .cs-bullet-icon {
+      color: $cs-mint;
+      font-size: 0.95em;
+      margin-right: 0.45em;
+      width: 1.2em;
+      display: inline-block;
+      text-align: center;
+      vertical-align: -1px;
+    }
+
+    // Items with a cs-bullet-icon get a slightly larger gap before content
+    li:has(> .cs-bullet-icon) {
+      padding-left: 0.1rem;
+    }
+
+    blockquote {
+      margin: 2rem 0;
+      padding: 1.4rem 1.8rem 1.4rem 2rem;
+      background: linear-gradient(180deg, #f6fbfb 0%, #eef7f6 100%);
+      border-left: 4px solid transparent;
+      border-image: linear-gradient(180deg, #ede497 0%, #2ad9c2 50%, #d891ce 100%) 1;
+      border-radius: 4px;
+      font-style: normal;
+      font-weight: 500;
+      color: $pine;
+      font-size: 1.15rem;
+      line-height: 1.6;
+
+      p {
+        font-size: 1.15rem;
+        margin-bottom: 0.6rem;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+      strong {
+        color: $pine;
+      }
+    }
+
+    hr {
+      margin: 3rem 0;
+      border: 0;
+      border-top: 1px dashed #cdd9d9;
+    }
+
+    code {
+      background: $cs-mint-soft;
+      color: $pine;
+      padding: 0.15em 0.4em;
+      border-radius: 3px;
+      font-size: 0.92em;
+    }
+
+    // Block code: terminal-style dark card.
+    pre,
+    .highlight pre {
+      background: $cs-pine-deep;
+      color: #e8efef;
+      padding: 1.1rem 1.3rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      margin: 1.4rem 0;
+      border: 1px solid rgba(42, 217, 194, 0.18);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+      code {
+        background: transparent;
+        color: inherit;
+        padding: 0;
+        font-size: inherit;
+        border-radius: 0;
+      }
+    }
+
+    // Code blocks nested in a list item shouldn't carry the list marker styling.
+    li > .highlight,
+    li > pre {
+      margin: 0.7rem 0 0.9rem;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin: 1.5rem 0;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // "ON THIS PAGE" CONTENTS CARD  (cs-toc shortcode)
+  // Rendered inside .cs-article (usually right after the cs-about block). Lists
+  // the page's H2 sections. Everything is keyed off the #cs-toc id (not BEM &__
+  // under the id — that hits the SCSS id+& trap) so these rules out-specify the
+  // broad .cs-article descendant rules (p, a, ol, li …) without !important.
+  // ---------------------------------------------------------------------------
+  #cs-toc {
+    position: relative;
+    margin: 1.8rem 0 2.6rem;
+    padding: 1.1rem 1.4rem 1.2rem 1.6rem;
+    background: linear-gradient(180deg, #fbfdfd 0%, #f0f7f6 100%);
+    border: 1px solid #dde9e8;
+    border-radius: 12px;
+    overflow: hidden;
+
+    // gradient left accent bar (echoes the blockquote treatment)
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 4px;
+      background: linear-gradient(180deg, #ede497 0%, #2ad9c2 50%, #d891ce 100%);
+    }
+
+    .cs-toc__title {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: $pine;
+      margin: 0 0 0.55rem;
+      line-height: 1.3;
+    }
+
+    .cs-toc__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      counter-reset: cs-toc-counter;
+    }
+
+    .cs-toc__item {
+      counter-increment: cs-toc-counter;
+      margin: 0;
+      padding: 0;
+      font-size: 0.95rem;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid #e4eeed;
+      }
+    }
+
+    .cs-toc__link {
+      display: flex;
+      align-items: baseline;
+      gap: 0.7rem;
+      padding: 0.5rem 0.45rem;
+      color: $pine;
+      font-weight: 600;
+      line-height: 1.35;
+      text-decoration: none;
+      border-radius: 6px;
+      transition:
+        color 0.18s ease,
+        background 0.18s ease;
+
+      &::before {
+        content: counter(cs-toc-counter);
+        flex: 0 0 auto;
+        min-width: 1.5em;
+        font-size: 0.82rem;
+        font-weight: 800;
+        color: $cs-mint;
+        text-align: center;
+      }
+
+      &:hover {
+        color: $highlight;
+        background: $cs-mint-faint;
+        text-decoration: none;
+      }
+    }
+
+    @media (max-width: 575px) {
+      padding: 0.95rem 1.1rem 1rem 1.3rem;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // SHORTCODE: cs-lockup  (client × Masterpoint logo lockup)
+  // ---------------------------------------------------------------------------
+  .cs-lockup {
+    margin: 1rem 0 2.4rem;
+    padding: 1.4rem 1rem;
+    background: transparent;
+    border: 0;
+    text-align: center;
+
+    &__row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2.4rem;
+      flex-wrap: wrap;
+      @media (max-width: 575px) {
+        gap: 1.2rem;
+      }
+    }
+
+    &__mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 0;
+        border-radius: 0;
+      }
+
+      &--client img {
+        height: 56px;
+        width: auto;
+        max-width: 280px;
+        @media (max-width: 575px) { height: 42px; }
+      }
+
+      &--mp img {
+        height: 40px;
+        width: auto;
+        max-width: 260px;
+        @media (max-width: 575px) { height: 32px; }
+      }
+    }
+
+    &__x {
+      flex-shrink: 0;
+      font-family: $header-font;
+      font-size: 2.6rem;
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: 0;
+      @include cs-brand-gradient-text;
+      user-select: none;
+
+      @media (max-width: 575px) {
+        font-size: 2rem;
+      }
+    }
+
+    &__caption {
+      margin-top: 1.2rem;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: #6c7c7d;
+      font-style: italic;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // SHORTCODE: cs-about  (dedicated "about the client" card)
+  // ---------------------------------------------------------------------------
+  .cs-about {
+    position: relative;
+    margin: 0.5rem 0 2.4rem;
+    padding: 1.25rem 1.5rem 1.3rem;
+    background: linear-gradient(180deg, #fbfdfd 0%, #f0f7f6 100%);
+    border: 1px solid #dde9e8;
+    border-radius: 12px;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      @include cs-brand-gradient;
+    }
+
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.6rem 1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    &__eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: $pine;
+      margin: 0;
+    }
+
+    &__links {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+    }
+
+    &__url {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: $highlight;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      background: $cs-mint-soft;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: rgba(42, 217, 194, 0.22);
+        text-decoration: none;
+      }
+    }
+
+    &__url-icon {
+      font-size: 0.65rem;
+      opacity: 0.85;
+    }
+
+    &__social {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      text-decoration: none;
+      transition: transform 0.18s ease, opacity 0.18s ease;
+
+      i {
+        font-size: 1.55rem;
+        line-height: 1;
+      }
+
+      &:hover {
+        transform: translateY(-1px);
+        text-decoration: none;
+      }
+
+      &--linkedin {
+        color: #0a66c2; // LinkedIn brand blue
+        &:hover {
+          color: #084c92;
+        }
+      }
+    }
+
+    &__body {
+      font-size: 0.98rem;
+      line-height: 1.65;
+      color: #2a3a3b;
+
+      p {
+        margin-bottom: 0;
+        font-size: 0.98rem;
+        line-height: 1.65;
+      }
+    }
+
+    &__meta {
+      margin: 1.05rem 0 0;
+      padding-top: 1rem;
+      border-top: 1px dashed #c5d6d6;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.55rem 1rem;
+    }
+
+    &__meta-row {
+      display: grid;
+      grid-template-columns: 7rem minmax(0, 1fr);
+      gap: 0.4rem 0.9rem;
+      align-items: baseline;
+
+      @media (max-width: 575px) {
+        grid-template-columns: 1fr;
+        gap: 0.15rem;
+      }
+    }
+
+    &__meta-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: $cs-mint;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    &__meta-value {
+      font-size: 0.92rem;
+      color: $pine;
+      font-weight: 500;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    &__facts {
+      list-style: none !important;
+      padding: 0 !important;
+      margin: 1.1rem 0 0 !important;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.55rem;
+
+      li {
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: $pine;
+        padding: 0.35rem 0.7rem;
+        background: #fff;
+        border: 1px solid #d9e8e7;
+        border-radius: 999px;
+        margin: 0;
+        line-height: 1;
+
+        &::marker {
+          display: none;
+        }
+        &::before {
+          display: none !important;
+        }
+      }
+    }
+
+    @media (max-width: 575px) {
+      padding: 1.4rem 1.3rem 1.3rem;
+      border-radius: 10px;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // SHORTCODE: cs-figure
+  // ---------------------------------------------------------------------------
+  .cs-figure {
+    margin: 2.4rem 0;
+
+    &__frame {
+      background: $pine;
+      border-radius: 12px;
+      padding: 1.1rem;
+      box-shadow: 0 18px 40px -22px rgba(14, 56, 58, 0.45);
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 0;
+      }
+    }
+
+    &__caption {
+      margin-top: 0.9rem;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: #6c7c7d;
+      text-align: center;
+      font-style: italic;
+    }
+
+    &--wide {
+      @media (min-width: 1200px) {
+        margin-left: -3rem;
+        margin-right: -3rem;
+      }
+    }
+
+    &--plain {
+      .cs-figure__frame {
+        background: transparent;
+        padding: 0;
+        box-shadow: none;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // SHORTCODE: cs-stats (inline stat-card grid)
+  // ---------------------------------------------------------------------------
+  .cs-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  .cs-stat-card {
+    padding: 1.5rem 1.4rem;
+    background: $pine;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    border: 1px solid rgba(42, 217, 194, 0.25);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      @include cs-brand-gradient;
+    }
+
+    &__value {
+      font-size: 1.85rem;
+      line-height: 1.1;
+      font-weight: 900;
+      @include cs-brand-gradient-text;
+      letter-spacing: -0.01em;
+    }
+
+    &__label {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.35;
+    }
+
+    &__note {
+      margin-top: 0.3rem;
+      font-size: 0.82rem;
+      color: #a8b8b9;
+      line-height: 1.4;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // SHORTCODE: cs-callout
+  // ---------------------------------------------------------------------------
+  .cs-callout {
+    margin: 2rem 0;
+    padding: 1.4rem 1.6rem;
+    border-radius: 10px;
+    background: $cs-mint-faint;
+    border-left: 4px solid $cs-mint;
+    color: $pine;
+
+    &__header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+    &__icon {
+      color: $cs-mint;
+    }
+    &__title {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: $pine;
+    }
+    &__body {
+      font-size: 1rem;
+      line-height: 1.65;
+      color: #2a3a3b;
+      p:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    &--info {
+      background: $cs-mint-faint;
+      border-left-color: $cs-mint;
+    }
+    &--warning {
+      background: rgba(237, 228, 151, 0.18);
+      border-left-color: #c9b840;
+      .cs-callout__icon {
+        color: #c9b840;
+      }
+    }
+    &--accent {
+      background: rgba(216, 145, 206, 0.12);
+      border-left-color: $pink;
+      .cs-callout__icon {
+        color: $pink;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // SHORTCODE: cs-pullquote
+  // ---------------------------------------------------------------------------
+  .cs-pullquote {
+    position: relative;
+    margin: 3rem 0;
+    padding: 2rem 1.5rem 2rem 4rem;
+    background: linear-gradient(135deg, $pine 0%, $cs-pine-deep 100%);
+    color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.35);
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+      @include cs-brand-gradient;
+    }
+
+    &__mark {
+      position: absolute;
+      top: 0.3rem;
+      left: 1.2rem;
+      font-family: Georgia, serif;
+      font-size: 4.5rem;
+      line-height: 1;
+      color: rgba(42, 217, 194, 0.35);
+      pointer-events: none;
+    }
+
+    &__body {
+      font-size: 1.45rem;
+      font-weight: 600;
+      line-height: 1.45;
+      color: #fff;
+      p {
+        font-size: 1.45rem;
+        line-height: 1.45;
+        margin-bottom: 0;
+        color: #fff;
+      }
+      strong {
+        @include cs-brand-gradient-text;
+      }
+    }
+
+    &__attribution {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: $vanilla;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    // -- LIGHT variant -- editorial cream/mint card; pine text. Good for an
+    //    end-of-article testimonial where it sits next to a dark CTA card.
+    &--light {
+      background: linear-gradient(180deg, #fbfdfd 0%, #f0f7f6 100%);
+      border: 1px solid #dde9e8;
+      color: $pine;
+      box-shadow: none;
+
+      .cs-pullquote__mark {
+        color: rgba(42, 217, 194, 0.55);
+      }
+      .cs-pullquote__body,
+      .cs-pullquote__body p {
+        color: $pine;
+      }
+      .cs-pullquote__attribution {
+        color: $cs-mint;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-size: 0.78rem;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // SHORTCODE: cs-beforeafter / cs-pane
+  // ---------------------------------------------------------------------------
+  .cs-beforeafter {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.4rem;
+    margin: 2rem 0;
+    @media (max-width: 767px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  .cs-pane {
+    position: relative;
+    padding: 1.6rem 1.5rem 1.4rem;
+    border-radius: 10px;
+    background: #f6f9f9;
+    border: 1px solid #e1ebeb;
+
+    &__pill {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      font-weight: 800;
+      padding: 0.25rem 0.6rem;
+      border-radius: 3px;
+      margin-bottom: 0.6rem;
+      background: $cs-pine-soft;
+      color: #fff;
+    }
+    &__title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: $pine;
+      margin-top: 0 !important;
+      margin-bottom: 0.6rem;
+    }
+    &__body {
+      font-size: 1rem;
+      line-height: 1.55;
+      color: #2a3a3b;
+      ul {
+        padding-left: 1.3rem;
+        margin: 0.4rem 0 0;
+        li {
+          font-size: 0.98rem;
+          margin-bottom: 0.4rem;
+        }
+      }
+      p:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    &--before {
+      background: linear-gradient(180deg, #fbeef0 0%, #f6e1e5 100%);
+      border-color: #ecccd2;
+      .cs-pane__pill {
+        background: $pink;
+        color: #2a1416;
+      }
+      .cs-pane__title {
+        color: #6b3863;
+      }
+      .cs-pane__body ul li::marker {
+        color: $pink;
+      }
+    }
+    &--after {
+      background: linear-gradient(180deg, #eaf8f5 0%, #def4f0 100%);
+      border-color: #b6e3d9;
+      .cs-pane__pill {
+        background: $cs-mint;
+        color: #003a36;
+      }
+      .cs-pane__title {
+        color: #0a4f48;
+      }
+      .cs-pane__body ul li::marker {
+        color: $cs-mint;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // SHORTCODE: cs-wins  (additional wins grid)
+  // ---------------------------------------------------------------------------
+  .cs-wins {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.2rem;
+    margin: 2rem 0 2.4rem;
+  }
+  .cs-win {
+    padding: 1.5rem 1.4rem 1.3rem;
+    background: #fff;
+    border: 1px solid #e1ebeb;
+    border-radius: 10px;
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 30px -20px rgba(14, 56, 58, 0.3);
+      border-color: #c5dada;
+    }
+
+    &__icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: $pine;
+      font-size: 1.15rem;
+      margin-bottom: 0.9rem;
+      @include cs-brand-gradient;
+    }
+
+    &__title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: $pine;
+      margin: 0 0 0.5rem;
+      padding-bottom: 0;
+      line-height: 1.3;
+      &::before {
+        display: none;
+      }
+    }
+
+    &__body {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: #4a5a5b;
+      margin: 0;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // ARTICLE-END CALLOUT (.cs-article__callout)
+  // ---------------------------------------------------------------------------
+  // End-of-article CTA — matches the blog post `#callout` treatment:
+  // white card, 3px mint border, default text. Sits below the article body.
+  .cs-article__callout {
+    margin: 2.4rem 0 0.5rem;
+    padding: 24px;
+    background: #fff;
+    border: 3px solid $highlight;
+    border-radius: 3px;
+    color: $default;
+    font-size: 1rem;
+    line-height: 1.6;
+
+    p {
+      color: $default;
+      margin: 0 0 1rem;
+      font-size: 1rem;
+      line-height: 1.6;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    strong {
+      color: $pine;
+    }
+
+    a:not(.button) {
+      color: $highlight;
+      font-weight: 700;
+      text-decoration: underline;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 3px;
+
+      &:hover {
+        color: darken($highlight, 8%);
+      }
+    }
+
+    // Button keeps the global `.button` look (mint background, white uppercase)
+    a.button {
+      margin-top: 0.4rem;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // SHORTCODE: cs-todo (visible TODO marker for draft work)
+  // ---------------------------------------------------------------------------
+  .cs-todo {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin: 1.6rem 0;
+    padding: 0.85rem 1rem;
+    background: repeating-linear-gradient(
+      135deg,
+      rgba(237, 228, 151, 0.18) 0 14px,
+      rgba(237, 228, 151, 0.08) 14px 28px
+    );
+    border: 1px dashed #c9b840;
+    border-radius: 8px;
+    color: #5b4a08;
+    font-size: 0.95rem;
+    line-height: 1.5;
+
+    &__tag {
+      flex-shrink: 0;
+      display: inline-block;
+      padding: 0.18rem 0.55rem;
+      background: #c9b840;
+      color: #2a1f00;
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      border-radius: 3px;
+      margin-top: 0.1rem;
+    }
+
+    &__body {
+      flex: 1;
+      p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: #5b4a08;
+      }
+      strong {
+        color: #2a1f00;
+      }
+    }
+  }
+
+  // Floating sidebar TOC is not used on case studies.
+  .floating-toc {
+    display: none !important;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Schedule-assessment section override (lighten transition)
+  // ---------------------------------------------------------------------------
+  #schedule-assessment {
+    background: #fff;
+    padding-top: 3rem;
+  }
+}
