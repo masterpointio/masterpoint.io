@@ -4249,32 +4249,20 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
         background: #ffffff;
         border-radius: 7px;
         box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.45);
+        // Size logos by height only; width follows each logo's natural
+        // aspect ratio. No hardcoded ratio or width clamp — works for any
+        // client logo. (SVG marks must keep their viewBox; see logo.svg.)
         img {
           display: block;
           height: 32px;
-          // Lock the displayed aspect ratio so Netlify's image-optim plugin
-          // (pngquant/imagemin) recompressing the source file can't subtly
-          // change rendered dimensions. The MarketSpark logo is 401×101 ≈
-          // 3.97:1; this `aspect-ratio` declaration computes the same
-          // displayed width on both local and Netlify regardless of any
-          // post-build PNG re-encoding.
           width: auto;
-          aspect-ratio: 401 / 101;
-          max-width: 200px;
         }
       }
       &--mp {
         img {
           display: block;
           height: 26px;
-          // Lock the displayed aspect ratio so Netlify's image-optim plugin
-          // (svgo) recompressing logo.svg can't alter its intrinsic
-          // dimensions and change the rendered width. logo.svg is
-          // 289×30 (viewBox 0 0 289 30); this keeps the same displayed
-          // width on both local and Netlify regardless of re-encoding.
           width: auto;
-          aspect-ratio: 289 / 30;
-          max-width: 200px;
         }
       }
       @media (max-width: 575px) {
