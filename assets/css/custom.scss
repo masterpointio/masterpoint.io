@@ -4249,6 +4249,7 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
           display: block;
           height: 32px;
           width: auto;
+          max-width: 225px;
         }
       }
       &--mp {
@@ -4256,6 +4257,7 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
           display: block;
           height: 26px;
           width: auto;
+          max-width: 225px;
         }
       }
       @media (max-width: 575px) {
