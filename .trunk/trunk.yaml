@@ -27,6 +27,10 @@ lint:
         - assets/js/plugins.js
         - assets/css/cookieconsent.min.scss
         - assets/css/custom.scss
+    # These don't like the way we insert shortcode components (e.g. {{< cs-about >}} )
+    - linters: [markdownlint, prettier]
+      paths:
+        - content/case-studies/**/*.md
 runtimes:
   enabled:
     - go@1.21.0
