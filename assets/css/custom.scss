@@ -4245,22 +4245,11 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
       display: inline-flex;
       align-items: center;
       &--client {
-        padding: 0.5rem 0.8rem;
-        background: #ffffff;
-        border-radius: 7px;
-        box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.45);
         img {
           display: block;
           height: 32px;
-          // Lock the displayed aspect ratio so Netlify's image-optim plugin
-          // (pngquant/imagemin) recompressing the source file can't subtly
-          // change rendered dimensions. The MarketSpark logo is 401×101 ≈
-          // 3.97:1; this `aspect-ratio` declaration computes the same
-          // displayed width on both local and Netlify regardless of any
-          // post-build PNG re-encoding.
           width: auto;
-          aspect-ratio: 401 / 101;
-          max-width: 200px;
+          max-width: 225px;
         }
       }
       &--mp {
@@ -4268,7 +4257,7 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
           display: block;
           height: 26px;
           width: auto;
-          max-width: 200px;
+          max-width: 225px;
         }
       }
       @media (max-width: 575px) {
