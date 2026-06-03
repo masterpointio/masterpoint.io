@@ -4245,13 +4245,6 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
       display: inline-flex;
       align-items: center;
       &--client {
-        padding: 0.5rem 0.8rem;
-        background: #ffffff;
-        border-radius: 7px;
-        box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.45);
-        // Size logos by height only; width follows each logo's natural
-        // aspect ratio. No hardcoded ratio or width clamp — works for any
-        // client logo. (SVG marks must keep their viewBox; see logo.svg.)
         img {
           display: block;
           height: 32px;

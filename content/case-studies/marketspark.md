@@ -1,4 +1,5 @@
 ---
+# TODO: NEED TO ASK MARKETSPARK FOR PROPER LOGO (dark & light variants)
 # draft: true # NOT READY FOR RELEASE
 title: "Modernizing MarketSpark's AWS Cloud into a 100% Infrastructure as Code, Automated & Multi-Account Platform"
 weight: 2
