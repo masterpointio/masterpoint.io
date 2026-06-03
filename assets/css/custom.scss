@@ -4267,7 +4267,13 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
         img {
           display: block;
           height: 26px;
+          // Lock the displayed aspect ratio so Netlify's image-optim plugin
+          // (svgo) recompressing logo.svg can't alter its intrinsic
+          // dimensions and change the rendered width. logo.svg is
+          // 289×30 (viewBox 0 0 289 30); this keeps the same displayed
+          // width on both local and Netlify regardless of re-encoding.
           width: auto;
+          aspect-ratio: 289 / 30;
           max-width: 200px;
         }
       }
