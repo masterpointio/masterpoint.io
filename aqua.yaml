@@ -7,7 +7,7 @@
 #   supported_envs:
 #   - all
 registries:
-- type: standard
-  ref: v4.345.0 # renovate: depName=aquaproj/aqua-registry
+  - type: standard
+    ref: v4.345.0 # renovate: depName=aquaproj/aqua-registry
 packages:
-- name: gohugoio/hugo/hugo-extended@v0.162.1
+  - name: gohugoio/hugo/hugo-extended@v0.162.1
