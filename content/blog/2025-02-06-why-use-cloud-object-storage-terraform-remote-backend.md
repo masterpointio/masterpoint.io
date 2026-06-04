@@ -104,4 +104,4 @@ While local backend state might suffice for small personal projects or proof of 
 
 In the world of Infrastructure as Code, your state file is as crucial as the infrastructure that it manages. Be sure to store your state safely in a remote backend. Your future self (and your team) will thank you!
 
-P.S. Interested in exploring more IaC state management readings? We recently published a [case study about migrating over **43,000** resources from Terraform Cloud to Spacelift to save **10x in infrastructure automation costs**](https://masterpoint.io/power-digital-case-study/)!
+P.S. Interested in exploring more IaC state management readings? We recently published a [case study about migrating over **43,000** resources from Terraform Cloud to Spacelift, while saving **10x in infrastructure automation costs**](https://masterpoint.io/power-digital-case-study/)!
