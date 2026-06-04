@@ -22,7 +22,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 
 ## Introduction
 
-At Masterpoint, as we build out or modernize many of our clients’ Infrastructure as Code (IaC) projects, one common question that comes up is Terraform/OpenTofu’s backend and remote state. It’s a well-known good practice to have a remote state backend, but why? In this post, we'll dive into the importance of using a remote backend for your IaC project, and why cloud based object storage services should be your go-to choice for a remote backend.
+At Masterpoint, as we build out or modernize many of our clients’ [Infrastructure as Code](https://aws.amazon.com/what-is/iac/) (IaC) projects, one common question that comes up is Terraform/OpenTofu’s backend and remote state. It’s a well-known good practice to have a remote state backend, but why? In this post, we'll dive into the importance of using a remote backend for your IaC project, and why cloud based object storage services should be your go-to choice for a remote backend.
 
 ## What is Remote State and a Remote Backend?
 
