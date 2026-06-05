@@ -68,7 +68,7 @@
     {{ end }}
 
     {{/* BODY — rotating colour cards (csi-* shortcodes) + closing CTA card */}}
-    {{ $defaultCallout := `<p>👋 <strong>Curious if Masterpoint could help your team too?</strong> We partner with engineering organizations across the full spectrum — from unicorn startups to Fortune 500 enterprises — to deliver infrastructure systems and patterns that truly scale. <a href='https://calendly.com/matt-at-masterpoint/project-chat' target='_blank' rel='noopener'>Get in touch</a> and we'll walk through your environment, your roadmap, and see where we can help.</p>` }}
+    {{ $defaultCallout := `<p>👋 <strong>Curious if <span class="csi-grad">Masterpoint</span> could help your team too?</strong> We partner with engineering organizations across the full spectrum — from unicorn startups to Fortune 500 enterprises — to deliver infrastructure systems and patterns that truly scale. <a href='https://calendly.com/matt-at-masterpoint/project-chat' target='_blank' rel='noopener'>Get in touch</a> and we'll walk through your environment, your roadmap, and see where we can help.</p>` }}
     {{ $cta := cond (isset .Params "callout") .Params.callout $defaultCallout }}
     <main class="csi-main">
         <div class="csi-article-card">
