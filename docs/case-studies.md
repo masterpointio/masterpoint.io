@@ -206,11 +206,10 @@ styles them):
 - **`cs-about`** — the client/about card (first light band, nested inside a
   `csi-split`). Gained an optional **`logo`** arg that renders the client logo at
   the top of the card with a divider. Its `csi-split` uses `ratio="65-35"` so the
-  card is wider than its image (a small enterprise networking cabling photo,
-  `client-cabling.jpg`).
-- **`cs-pullquote`** — used inline mid-article, centred at ~820px inside the
-  "perfect time" section, as a standout pull quote (distinct from the closing
-  `csi-testimonial`). It's fine to have quotes in multiple places.
+  card is wider than its image (`telecommunications.jpg`).
+- **`cs-pullquote`** — used inline mid-article (between the impact grid and the
+  closing sections) as a standout pull quote, distinct from the closing
+  `csi-testimonial`. It's fine to have quotes in multiple places.
 
 **`variant` = the card's face colour** (drives the light↔dark rotation): `light`
 (white) and `pine` (dark) are the two real faces. `cream`/`mint` alias to light;
@@ -245,10 +244,43 @@ Authoring rules:
 - **External links open in a new tab** via
   `layouts/case-studies/_markup/render-link.html` — a case-studies-scoped link
   render hook that adds `target="_blank" rel="noopener noreferrer"` to any
-  `http(s)` link. Applies to body prose and shortcode-rendered prose.
+  `http(s)` link. Applies to body prose and shortcode-rendered prose. The hook
+  template must **not** end in a trailing newline (it's trimmed with a closing
+  `{{- /* … */ -}}`): because the hook replaces links inline, a trailing newline
+  renders as a literal space after every link (e.g. `OpenTofu ,`).
+- **Caption links are hand-written, not hook-processed.** A `caption=` containing
+  an `<a>` is injected via `safeHTML` and bypasses the render hook, so add
+  `target="_blank" rel="noopener noreferrer"` to the anchor by hand if it should
+  open in a new tab.
 - New shortcode files aren't picked up by a running `hugo serve` — restart it.
   The serve's CSS hot-reload has also been flaky; if a change doesn't show,
   restart serve and hard-refresh (Cmd+Shift+R).
+
+### Scroll animations (AOS)
+
+The immersive body reveals on scroll using **AOS** (Animate On Scroll) — the same
+library the marketing pages use, so motion is consistent site-wide rather than a
+bespoke per-page system. AOS is bundled in `assets/js/plugins.js` and initialized
+globally (`AOS.init({ easing: 'ease-out-cubic', duration: 1500, mirror: false,
+once: true })`), with styles in `assets/css/aos.scss` (imported by `style.scss`).
+
+- **Declarative `data-aos` attributes live in the `csi-*` shortcode templates**,
+  not in content. All use `fade-up`: `csi-section` (head, then prose at
+  `data-aos-delay="100"`), `csi-split` (text, then media at `delay="120"`),
+  `csi-testimonial`, `cs-pullquote`, and the closing `.csi-cta`.
+- **The hero and stat strip are intentionally NOT animated** — they're above the
+  fold and read as the kept-verbatim modern top.
+- **Duration is overridden to `900ms`** per element via `data-aos-duration="900"`
+  (the global default 1500ms felt too slow band-by-band). The per-element
+  attribute out-specifies the global `body[data-aos-duration="1500"]` rule that
+  `AOS.init` sets, so only the case study speeds up — the rest of the site keeps
+  1500ms.
+- **No per-card stagger on grids.** `csi-impact`/`cs-wins` cards carry no
+  `data-aos` of their own; they reveal with their parent `csi-prose` block, which
+  avoids nested-AOS double-animation.
+- Adding `data-aos` to a new shortcode needs no JS wiring — the global
+  `AOS.init` already scans `[data-aos]` (and watches for new nodes). Restart
+  `hugo serve` after creating a new shortcode template.
 
 ### Page ending
 
@@ -258,68 +290,6 @@ Masterpoint could help your team too?" callout, now with an **inline underlined
 partial ("Get a standardized, predictable, and efficient infrastructure
 management process" + Schedule button), then `footer`. Same closing as the modern
 case studies and the marketing pages.
-
-### Visual assets (`static/img/case-studies/marketspark/`)
-
-- **Diagrams:** four on-brand SVGs (`before-clickops`, `org-accounts`,
-  `iac-coverage`, `gitops-flow`): `760×560` viewBox, pine-deep card +
-  brand-gradient border, mint/teal/pink accents (amber `#e0a64a` only in
-  `before-clickops` as a "before/warning" accent — the diagrams predate the
-  no-yellow rule; palette can be revisited). Rendered via
-  `csi-split contain="true"`.
-- **`client-cabling.jpg`** — small networking cabling photo in the About split
-  (replaced the old `client-snapshot.svg` "at a glance" card, which was deleted).
-- **`hero-bg.jpg`** — full-bleed hero photo. **`/img/bg_our_word.jpg`** — the
-  shared cosmic image reused as the featured closing-testimonial background.
-
-All graphics are placeholders/borrowed — swap for real, client-approved assets
-(and the real client logo + testimonial copy) before launch.
-
----
-
-## Visualizations
-
-Two flavors:
-
-1. **Custom on-brand SVG diagrams** under `static/img/case-studies/CLIENT/`.
-   Pine + brand gradient (`#ede497 → #2ad9c2 → #d891ce`), Proxima Nova
-   typography, soft drop shadow. Use for _concept_ visuals (architecture,
-   before/after, workflow).
-2. **Real photographic backgrounds** for the hero (downloaded from Unsplash).
-   Always store under `static/img/case-studies/CLIENT/`. Avoid stock-image
-   clichés (handshakes, generic computers) — prefer abstract or domain-themed
-   imagery.
-
-When the user asks for an image, ask whether they want SVG-illustrated or a
-real photo before committing. The hero specifically takes a real photo for
-mood; in-article figures are typically SVG.
-
-### Downloading hero images
-
-```bash
-curl -sL "https://images.unsplash.com/photo-XXXX?w=1200&q=80" \
-  -o static/img/case-studies/CLIENT/hero-bg.jpg
-```
-
-Unsplash URLs are stable; the `photo-XXXX` ID can be found by browsing
-unsplash.com and copying any image link.
-
-### Per-client folder discipline
-
-Keep only files actually referenced in content. A typical per-client folder
-shape:
-
-```
-static/img/case-studies/CLIENT/
-├── CLIENT-logo.png   # client_logo
-├── hero-bg.jpg       # hero_aside_image
-└── preview.svg       # preview_image + og_img
-```
-
-Delete unused SVGs/images as work converges — the codebase is the source of
-truth, not "what might come back later".
-
----
 
 ## Page-level styling decisions
 
@@ -415,24 +385,9 @@ Required because Hugo's CLI build does not catch visual regressions.
 5. **Delete `.screenshots/*` at the end of the session.** Don't ship screenshot
    artifacts — they bloat the repo and aren't reproducible.
 
-### Useful Chrome DevTools snippets
+### Hunting CSS specificity issues
 
-```js
-// Inspect computed style on an element
-() => {
-  const el = document.querySelector("SELECTOR");
-  const s = getComputedStyle(el);
-  return {
-    fontSize: s.fontSize,
-    color: s.color,
-    textTransform: s.textTransform,
-  };
-};
-```
-
-For specificity hunts: walk parents and check styles, or iterate
-`document.styleSheets` and test `el.matches(rule.selectorText)`. When a rule
-that "should" match doesn't, **read the compiled CSS** in
+When a rule that "should" match doesn't, **read the compiled CSS** at
 `http://127.0.0.1:1313/css/style.min.css` — SCSS `&` nesting can produce
 unexpected selectors (see the double-`&` trap above).
 
@@ -445,15 +400,6 @@ without asking — that's their dev loop.
 
 If a **new** shortcode template is added, the watcher won't pick it up. Tell
 the user to restart `hugo serve` (Ctrl-C + rerun).
-
----
-
-## Template preview page
-
-`content/case-studies/template.md` (`draft: true`) is a living gallery showing
-every `cs-*` shortcode with boilerplate content. To preview locally, restart
-with `hugo serve -D`. Netlify's production build (`hugo --gc --minify`, no
-`-D`) excludes it. Use this to show examples.
 
 ---
 
@@ -522,6 +468,16 @@ truth; this log explains the reasoning behind what's still there.
   contain detailed prose with hyperlinks that don't compress well into card
   format.
 
+### Motion
+
+- **Scroll reveals via AOS, not a bespoke observer.** The immersive body reuses
+  the site-wide AOS library (already loaded for the marketing pages) so motion is
+  consistent everywhere. `data-aos="fade-up"` lives in the `csi-*` shortcode
+  templates; per-element `data-aos-duration="900"` overrides the global 1500ms
+  (which felt too slow band-by-band); the hero + stat strip are left un-animated
+  as the kept-verbatim modern top. (A standalone IntersectionObserver version was
+  built first, then replaced with AOS for consistency.)
+
 ### Hugo wiring
 
 - **Slug derived from filename.** Don't set `slug:` unless filename and URL
@@ -530,42 +486,3 @@ truth; this log explains the reasoning behind what's still there.
   Otherwise Hugo turns every `.md` under `content/` into a publishable page.
 - **Em dash budget under 10 per case study.** They lose punch when overused;
   prefer parens / commas / colons / periods for in-sentence pauses.
-
-### `public/` orphans
-
-`hugo serve` doesn't garbage-collect old build artifacts, so stale slugs
-from earlier experiments (`market-spark`, `synthmind-ai`, etc.) can keep
-getting served locally. Netlify production builds use `hugo --gc --minify`
-and are clean by default — orphans are a local dev-loop problem only. Fix:
-`rm -rf public/ && hugo serve` (or `hugo --gc` once).
-
----
-
-## Files this layout touches
-
-- `layouts/case-studies/single.html` — modern layout (hero, stat strip,
-  article card, auto-injected TOC, default CTA wiring)
-- `layouts/case-studies/immersive.html` — immersive layout (modern hero/stat
-  copied verbatim + rotating light↔dark colour-card body + closing CTA card)
-- `layouts/case-studies/legacy.html` — Power Digital's untouched layout
-- `layouts/shortcodes/cs-*.html` — modern-layout shortcodes (`cs-about` gained an
-  optional `logo` arg; reused inside the immersive body too)
-- `layouts/shortcodes/csi-*.html` — immersive card shortcodes (`csi-section`,
-  `csi-split`, `csi-steps`, `csi-impact`, `csi-testimonial`)
-- `layouts/case-studies/_markup/render-link.html` — case-studies link render hook
-  (external links open in a new tab)
-- `layouts/partials/case-study-toc.html` — "In This Case Study Success Story"
-  contents card, auto-injected by `single.html` before the first `<h2>`
-- `layouts/partials/schedule-assessment.html` — shared "Get a standardized…" CTA,
-  included by both `single.html` and `immersive.html`
-- `layouts/partials/scripts.html` — blog floating-toc JS (gated to blog only)
-- `assets/css/custom.scss` — `// MODERN CASE STUDY LAYOUT` (`.case-study-modern`)
-  and `// IMMERSIVE CASE STUDY — BODY` (`.case-study-immersive`) scoped blocks
-- `static/img/case-studies/CLIENT/` — per-client visuals
-- `content/case-studies/_index.md` — section page (uses `case-studies/list.html`)
-- `content/case-studies/<client>.md` — one per case study (filename = URL slug)
-- `content/case-studies/marketspark.md` (immersive) +
-  `marketspark-article-style.md` (modern) — the two MarketSpark variants
-- `content/case-studies/template.md` — draft-only shortcode gallery
-- `config.yaml` — `ignoreFiles` for `CLAUDE.md` + `*.raw.md`; `tableOfContents`
-  start/end levels
