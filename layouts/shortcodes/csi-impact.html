@@ -1,0 +1,38 @@
+{{/*
+  csi-impact — grid of outcome cards with gradient icon badges. Place INSIDE a
+  csi-section (typically a pine band) for the "Outcomes & Business Impact".
+  Inner: blocks separated by `---`, each block:
+    icon: fa-gauge-high          (FontAwesome solid class)
+    title: Card title
+    body: Body sentence(s). Inline markdown (links, *italic*, **bold**) works.
+*/}}
+{{- $raw := .Inner -}}
+{{- $blocks := split $raw "---" -}}
+<div class="csi-impact">
+  {{- range $blocks -}}
+    {{- $block := trim . " \t\n" -}}
+    {{- if $block -}}
+      {{- $lines := split $block "\n" -}}
+      {{- $icon := "fa-circle-check" -}}
+      {{- $title := "" -}}
+      {{- $body := "" -}}
+      {{- range $lines -}}
+        {{- $line := trim . " \t" -}}
+        {{- if hasPrefix $line "icon:" -}}
+          {{- $icon = trim (strings.TrimPrefix "icon:" $line) " " -}}
+        {{- else if hasPrefix $line "title:" -}}
+          {{- $title = trim (strings.TrimPrefix "title:" $line) " " -}}
+        {{- else if hasPrefix $line "body:" -}}
+          {{- $body = trim (strings.TrimPrefix "body:" $line) " " -}}
+        {{- else if and $line $body -}}
+          {{- $body = printf "%s %s" $body $line -}}
+        {{- end -}}
+      {{- end -}}
+      <div class="csi-impact__card">
+        <div class="csi-impact__icon"><i class="fa-solid {{ $icon }}"></i></div>
+        {{- if $title -}}<h4 class="csi-impact__title">{{ $title | safeHTML }}</h4>{{- end -}}
+        {{- if $body -}}<p class="csi-impact__body">{{ $body | $.Page.RenderString (dict "display" "inline") }}</p>{{- end -}}
+      </div>
+    {{- end -}}
+  {{- end -}}
+</div>

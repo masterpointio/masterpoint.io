@@ -1,0 +1,39 @@
+{{/*
+  csi-testimonial — a self-contained full-bleed quote band with attribution and
+  optional profile photo. Reserve for real quotes.
+  Args:
+    name     attributed person's name
+    title    their role/title
+    company  their company (rendered after the title)
+    photo    optional headshot src
+    variant  band background: pine (default) | pine-deep | cream
+    image    optional full-bleed background image (e.g. /img/bg_our_word.jpg);
+             when set, the quote sits on the left over a scrim, image to the right
+*/}}
+{{- $name := .Get "name" -}}
+{{- $role := .Get "title" -}}
+{{- $company := .Get "company" -}}
+{{- $photo := .Get "photo" -}}
+{{- $variant := .Get "variant" | default "pine" -}}
+{{- $image := .Get "image" -}}
+<section class="csi-section csi-section--{{ $variant }} csi-testimonial-band{{ if $image }} csi-testimonial-band--featured{{ end }}"{{ with $image }} style="--csi-quote-bg: url('{{ . }}')"{{ end }}>
+  <div class="csi-container">
+    <figure class="csi-testimonial" data-aos="fade-up" data-aos-duration="900">
+      <div class="csi-testimonial__mark" aria-hidden="true">&ldquo;</div>
+      <blockquote class="csi-testimonial__quote">
+        {{ .Inner | $.Page.RenderString (dict "display" "block") }}
+      </blockquote>
+      {{- if or $name $photo -}}
+      <figcaption class="csi-testimonial__by">
+        {{- if $photo -}}
+        <span class="csi-testimonial__avatar"><img src="{{ $photo }}" alt="{{ $name }}" /></span>
+        {{- end -}}
+        <span class="csi-testimonial__meta">
+          {{- if $name -}}<span class="csi-testimonial__name">{{ $name | safeHTML }}</span>{{- end -}}
+          {{- if or $role $company -}}<span class="csi-testimonial__role">{{ $role | safeHTML }}{{ if and $role $company }}, {{ end }}{{ $company | safeHTML }}</span>{{- end -}}
+        </span>
+      </figcaption>
+      {{- end -}}
+    </figure>
+  </div>
+</section>

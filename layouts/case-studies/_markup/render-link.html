@@ -1,0 +1,9 @@
+{{- /*
+  Link render hook for case-study pages: external (http/https) links open in a
+  new tab with safe rel. Internal/anchor links keep default behavior. Applies to
+  markdown links in the body and inside the section shortcodes (RenderString
+  uses the page's render hooks).
+*/ -}}
+{{- $external := strings.HasPrefix .Destination "http" -}}
+<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $external }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .Text | safeHTML }}</a>
+{{- /* trim trailing newline so inline links don't render a space after them */ -}}

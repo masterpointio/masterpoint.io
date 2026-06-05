@@ -4783,78 +4783,6 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
   }
 
   // ---------------------------------------------------------------------------
-  // SHORTCODE: cs-lockup  (client × Masterpoint logo lockup)
-  // ---------------------------------------------------------------------------
-  .cs-lockup {
-    margin: 1rem 0 2.4rem;
-    padding: 1.4rem 1rem;
-    background: transparent;
-    border: 0;
-    text-align: center;
-
-    &__row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 2.4rem;
-      flex-wrap: wrap;
-      @media (max-width: 575px) {
-        gap: 1.2rem;
-      }
-    }
-
-    &__mark {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      img {
-        display: block;
-        max-width: 100%;
-        height: auto;
-        margin: 0;
-        border-radius: 0;
-      }
-
-      &--client img {
-        height: 56px;
-        width: auto;
-        max-width: 280px;
-        @media (max-width: 575px) { height: 42px; }
-      }
-
-      &--mp img {
-        height: 40px;
-        width: auto;
-        max-width: 260px;
-        @media (max-width: 575px) { height: 32px; }
-      }
-    }
-
-    &__x {
-      flex-shrink: 0;
-      font-family: $header-font;
-      font-size: 2.6rem;
-      font-weight: 300;
-      line-height: 1;
-      letter-spacing: 0;
-      @include cs-brand-gradient-text;
-      user-select: none;
-
-      @media (max-width: 575px) {
-        font-size: 2rem;
-      }
-    }
-
-    &__caption {
-      margin-top: 1.2rem;
-      font-size: 0.88rem;
-      line-height: 1.5;
-      color: #6c7c7d;
-      font-style: italic;
-    }
-  }
-
-  // ---------------------------------------------------------------------------
   // SHORTCODE: cs-about  (dedicated "about the client" card)
   // ---------------------------------------------------------------------------
   .cs-about {
@@ -4874,6 +4802,18 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
       right: 0;
       height: 3px;
       @include cs-brand-gradient;
+    }
+
+    &__logo {
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #dde9e8;
+      img {
+        display: block;
+        height: 42px;
+        width: auto;
+        max-width: 220px;
+      }
     }
 
     &__header {
@@ -5040,159 +4980,6 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
   }
 
   // ---------------------------------------------------------------------------
-  // SHORTCODE: cs-figure
-  // ---------------------------------------------------------------------------
-  .cs-figure {
-    margin: 2.4rem 0;
-
-    &__frame {
-      background: $pine;
-      border-radius: 12px;
-      padding: 1.1rem;
-      box-shadow: 0 18px 40px -22px rgba(14, 56, 58, 0.45);
-      img {
-        display: block;
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        margin: 0;
-      }
-    }
-
-    &__caption {
-      margin-top: 0.9rem;
-      font-size: 0.92rem;
-      line-height: 1.5;
-      color: #6c7c7d;
-      text-align: center;
-      font-style: italic;
-    }
-
-    &--wide {
-      @media (min-width: 1200px) {
-        margin-left: -3rem;
-        margin-right: -3rem;
-      }
-    }
-
-    &--plain {
-      .cs-figure__frame {
-        background: transparent;
-        padding: 0;
-        box-shadow: none;
-      }
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // SHORTCODE: cs-stats (inline stat-card grid)
-  // ---------------------------------------------------------------------------
-  .cs-stat-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem;
-    margin: 2rem 0;
-  }
-  .cs-stat-card {
-    padding: 1.5rem 1.4rem;
-    background: $pine;
-    border-radius: 10px;
-    position: relative;
-    overflow: hidden;
-    color: #fff;
-    border: 1px solid rgba(42, 217, 194, 0.25);
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      @include cs-brand-gradient;
-    }
-
-    &__value {
-      font-size: 1.85rem;
-      line-height: 1.1;
-      font-weight: 900;
-      @include cs-brand-gradient-text;
-      letter-spacing: -0.01em;
-    }
-
-    &__label {
-      margin-top: 0.5rem;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.35;
-    }
-
-    &__note {
-      margin-top: 0.3rem;
-      font-size: 0.82rem;
-      color: #a8b8b9;
-      line-height: 1.4;
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // SHORTCODE: cs-callout
-  // ---------------------------------------------------------------------------
-  .cs-callout {
-    margin: 2rem 0;
-    padding: 1.4rem 1.6rem;
-    border-radius: 10px;
-    background: $cs-mint-faint;
-    border-left: 4px solid $cs-mint;
-    color: $pine;
-
-    &__header {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 0.5rem;
-    }
-    &__icon {
-      color: $cs-mint;
-    }
-    &__title {
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      font-weight: 800;
-      color: $pine;
-    }
-    &__body {
-      font-size: 1rem;
-      line-height: 1.65;
-      color: #2a3a3b;
-      p:last-child {
-        margin-bottom: 0;
-      }
-    }
-
-    &--info {
-      background: $cs-mint-faint;
-      border-left-color: $cs-mint;
-    }
-    &--warning {
-      background: rgba(237, 228, 151, 0.18);
-      border-left-color: #c9b840;
-      .cs-callout__icon {
-        color: #c9b840;
-      }
-    }
-    &--accent {
-      background: rgba(216, 145, 206, 0.12);
-      border-left-color: $pink;
-      .cs-callout__icon {
-        color: $pink;
-      }
-    }
-  }
-
-  // ---------------------------------------------------------------------------
   // SHORTCODE: cs-pullquote
   // ---------------------------------------------------------------------------
   .cs-pullquote {
@@ -5271,90 +5058,6 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
         letter-spacing: 0.12em;
         text-transform: uppercase;
         font-size: 0.78rem;
-      }
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // SHORTCODE: cs-beforeafter / cs-pane
-  // ---------------------------------------------------------------------------
-  .cs-beforeafter {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.4rem;
-    margin: 2rem 0;
-    @media (max-width: 767px) {
-      grid-template-columns: 1fr;
-    }
-  }
-  .cs-pane {
-    position: relative;
-    padding: 1.6rem 1.5rem 1.4rem;
-    border-radius: 10px;
-    background: #f6f9f9;
-    border: 1px solid #e1ebeb;
-
-    &__pill {
-      display: inline-block;
-      font-size: 0.7rem;
-      letter-spacing: 0.22em;
-      font-weight: 800;
-      padding: 0.25rem 0.6rem;
-      border-radius: 3px;
-      margin-bottom: 0.6rem;
-      background: $cs-pine-soft;
-      color: #fff;
-    }
-    &__title {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: $pine;
-      margin-top: 0 !important;
-      margin-bottom: 0.6rem;
-    }
-    &__body {
-      font-size: 1rem;
-      line-height: 1.55;
-      color: #2a3a3b;
-      ul {
-        padding-left: 1.3rem;
-        margin: 0.4rem 0 0;
-        li {
-          font-size: 0.98rem;
-          margin-bottom: 0.4rem;
-        }
-      }
-      p:last-child {
-        margin-bottom: 0;
-      }
-    }
-
-    &--before {
-      background: linear-gradient(180deg, #fbeef0 0%, #f6e1e5 100%);
-      border-color: #ecccd2;
-      .cs-pane__pill {
-        background: $pink;
-        color: #2a1416;
-      }
-      .cs-pane__title {
-        color: #6b3863;
-      }
-      .cs-pane__body ul li::marker {
-        color: $pink;
-      }
-    }
-    &--after {
-      background: linear-gradient(180deg, #eaf8f5 0%, #def4f0 100%);
-      border-color: #b6e3d9;
-      .cs-pane__pill {
-        background: $cs-mint;
-        color: #003a36;
-      }
-      .cs-pane__title {
-        color: #0a4f48;
-      }
-      .cs-pane__body ul li::marker {
-        color: $cs-mint;
       }
     }
   }
@@ -5462,52 +5165,6 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
     }
   }
 
-  // ---------------------------------------------------------------------------
-  // SHORTCODE: cs-todo (visible TODO marker for draft work)
-  // ---------------------------------------------------------------------------
-  .cs-todo {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.8rem;
-    margin: 1.6rem 0;
-    padding: 0.85rem 1rem;
-    background: repeating-linear-gradient(
-      135deg,
-      rgba(237, 228, 151, 0.18) 0 14px,
-      rgba(237, 228, 151, 0.08) 14px 28px
-    );
-    border: 1px dashed #c9b840;
-    border-radius: 8px;
-    color: #5b4a08;
-    font-size: 0.95rem;
-    line-height: 1.5;
-
-    &__tag {
-      flex-shrink: 0;
-      display: inline-block;
-      padding: 0.18rem 0.55rem;
-      background: #c9b840;
-      color: #2a1f00;
-      font-size: 0.68rem;
-      font-weight: 900;
-      letter-spacing: 0.18em;
-      border-radius: 3px;
-      margin-top: 0.1rem;
-    }
-
-    &__body {
-      flex: 1;
-      p {
-        margin: 0;
-        font-size: 0.95rem;
-        color: #5b4a08;
-      }
-      strong {
-        color: #2a1f00;
-      }
-    }
-  }
-
   // Floating sidebar TOC is not used on case studies.
   .floating-toc {
     display: none !important;
@@ -5521,3 +5178,746 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
     padding-top: 3rem;
   }
 }
+
+// =============================================================================
+// IMMERSIVE CASE STUDY — BODY  (.case-study-immersive)
+// -----------------------------------------------------------------------------
+// The body carries BOTH `case-study-modern` and `case-study-immersive`, so the
+// hero + at-a-glance stat strip reuse the `.case-study-modern .cs-*` rules above
+// (top is byte-identical to modern). EVERYTHING here is scoped to `.csi-*` —
+// never bare element selectors — so it can't touch the modern hero/stats.
+//
+// Body = a stack of contained, rounded CARDS on the pine page backdrop, the
+// faces ROTATING light ↔ dark like the marketing pages (services / who-we-are),
+// each with a subtle gradient "photo" background. Brand palette only, and
+// deliberately NO yellow (#ECE295) per the brand guidelines preference: accents
+// are teal (#2ad9c2 / #55C1B4) → pink (#D191BF).
+// =============================================================================
+
+$csi-ink: #14302f; // headline ink on light cards
+$csi-ink-soft: #46595a; // body ink on light cards
+$csi-link: #0b7d72; // readable teal link on light cards
+$csi-line: #e7edec; // hairline on light cards
+
+// text gradient on LIGHT cards (darkened teal→pink so it reads on white)
+@mixin csi-grad-light {
+  background: linear-gradient(95deg, #0e8a7e 0%, #16a597 45%, #c45cb3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+// text gradient on DARK cards (bright teal→pink)
+@mixin csi-grad-bright {
+  background: linear-gradient(95deg, #5fe0cf 0%, #2ad9c2 42%, #e2a7d7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+// solid accent gradient for bars / icon badges / bullets (brand ~40°, no yellow)
+@mixin csi-grad-solid {
+  background: linear-gradient(40deg, #2ad9c2 0%, #55c1b4 42%, #d191bf 100%);
+}
+
+.case-study-immersive {
+  .csi-container {
+    width: 100%;
+    max-width: none;
+    margin: 0 auto;
+    padding: 0;
+  }
+  .csi-grad {
+    @include csi-grad-light;
+  }
+
+  .csi-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: $pine;
+    margin-bottom: 1.15rem;
+    &::before {
+      content: "";
+      width: 30px;
+      height: 3px;
+      border-radius: 2px;
+      flex: 0 0 auto;
+      @include csi-grad-solid;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // CARD STACK on the pine page backdrop
+  // ---------------------------------------------------------------------------
+  .csi-main {
+    position: relative;
+    padding: 1.6rem 2rem 4.5rem;
+    @media (max-width: 575px) {
+      padding: 1rem 0.85rem 3rem;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+  }
+
+  // One continuous rounded card; the sections become full-width bands that
+  // butt together inside it and rotate light ↔ dark.
+  .csi-article-card {
+    position: relative;
+    z-index: 1;
+    max-width: 1720px;
+    margin: 0 auto;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow:
+      0 30px 70px -40px rgba(0, 0, 0, 0.62),
+      0 0 0 1px rgba(42, 217, 194, 0.1);
+    @media (max-width: 575px) {
+      border-radius: 16px;
+    }
+  }
+
+  .csi-section {
+    position: relative;
+    z-index: 1;
+    padding: 3.9rem 0;
+    @media (max-width: 991px) {
+      padding: 3rem 0;
+    }
+    @media (max-width: 575px) {
+      padding: 2.4rem 0;
+    }
+
+    // bands span the full (wide) card; content stays a readable centred width
+    .csi-container {
+      position: relative;
+      z-index: 1;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 2.6rem;
+      @media (max-width: 575px) {
+        padding: 0 1.4rem;
+      }
+    }
+
+    // ---- LIGHT face (light / cream / mint all map here) ----
+    &--light,
+    &--cream,
+    &--mint {
+      background: linear-gradient(180deg, #ffffff 0%, #f4faf9 100%);
+      color: $csi-ink;
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 95% 6%, rgba(42, 217, 194, 0.09), transparent 50%),
+          radial-gradient(ellipse at 2% 100%, rgba(209, 145, 191, 0.07), transparent 55%);
+      }
+    }
+
+    // ---- DARK face (pine / pine-deep / gradient all map here) ----
+    &--pine,
+    &--pine-deep,
+    &--gradient {
+      background: linear-gradient(165deg, $pine 0%, $cs-pine-deep 100%);
+      color: #c9dad9;
+      // subtle gradient "photo" background (glow mesh)
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 86% 10%, rgba(42, 217, 194, 0.2), transparent 55%),
+          radial-gradient(ellipse at 8% 96%, rgba(209, 145, 191, 0.16), transparent 55%);
+      }
+      // faint dot grid, fading downward
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+        background-size: 26px 26px;
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 88%);
+        -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 88%);
+      }
+      .csi-eyebrow {
+        color: $cs-mint;
+      }
+      .csi-section__title {
+        color: #fff;
+      }
+      .csi-grad {
+        @include csi-grad-bright;
+      }
+      .csi-prose {
+        color: #c4d4d3;
+        a:not(.button) {
+          color: $cs-mint;
+        }
+        strong {
+          color: #fff;
+        }
+        ul > li::before {
+          @include csi-grad-solid;
+        }
+        ol > li::before {
+          color: $cs-pine-dark;
+          background: $cs-mint;
+        }
+      }
+    }
+
+    // Centre the heading (and any intro prose) without centring grid/card text.
+    &--center {
+      .csi-section__head {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .csi-eyebrow {
+        justify-content: center;
+        &::before {
+          display: none;
+        }
+      }
+      .csi-section__rule {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      // centre the prose, but constrain only the PARAGRAPHS to a readable
+      // width — leave grids (which live inside .csi-prose) full-width.
+      .csi-prose {
+        text-align: center;
+        max-width: none;
+        > p {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+      // grids span the full content width with left-aligned card text
+      .csi-steps,
+      .csi-impact {
+        text-align: left;
+      }
+    }
+  }
+
+  .csi-section__head {
+    position: relative;
+    max-width: 860px;
+    margin-bottom: 1.2rem;
+  }
+  .csi-section__title {
+    font-size: clamp(1.95rem, 3.3vw, 2.85rem);
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-transform: none;
+    margin: 0;
+    color: $csi-ink;
+    font-family: $header-font;
+    strong {
+      font-weight: 900;
+    }
+  }
+  .csi-section__num {
+    display: none;
+  }
+  // standalone gradient line accent (eyebrow-less sections)
+  .csi-section__rule {
+    display: block;
+    width: 54px;
+    height: 3px;
+    border-radius: 2px;
+    margin: 0 0 1.4rem;
+    @include csi-grad-solid;
+  }
+
+  // ---------------------------------------------------------------------------
+  // PROSE
+  // ---------------------------------------------------------------------------
+  .csi-prose {
+    font-size: 1.06rem;
+    line-height: 1.7;
+    color: $csi-ink-soft;
+    max-width: 760px;
+
+    p {
+      margin: 0 0 1.15rem;
+    }
+    > :last-child {
+      margin-bottom: 0;
+    }
+    a:not(.button) {
+      color: $csi-link;
+      font-weight: 600;
+      text-decoration: none;
+      background-image: linear-gradient(currentColor, currentColor);
+      background-size: 0 2px;
+      background-position: 0 100%;
+      background-repeat: no-repeat;
+      transition: background-size 0.25s ease;
+      &:hover {
+        background-size: 100% 2px;
+      }
+    }
+    strong {
+      color: $csi-ink;
+      font-weight: 800;
+    }
+    ul,
+    ol {
+      margin: 0 0 1.3rem;
+      padding: 0;
+      list-style: none;
+    }
+    ul > li,
+    ol > li {
+      position: relative;
+      padding-left: 1.75rem;
+      margin-bottom: 0.7rem;
+      line-height: 1.6;
+      &::before {
+        content: none;
+      }
+    }
+    ul > li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.62em;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      @include csi-grad-solid;
+    }
+    ol {
+      counter-reset: csi-ol;
+    }
+    ol > li::before {
+      counter-increment: csi-ol;
+      content: counter(csi-ol);
+      position: absolute;
+      left: 0;
+      top: 0.05em;
+      width: 1.35rem;
+      height: 1.35rem;
+      border-radius: 50%;
+      background: rgba(42, 217, 194, 0.18);
+      color: $pine;
+      font-size: 0.72rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    li ul {
+      margin-top: 0.7rem;
+      margin-bottom: 0;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // SPLIT — text + visual side by side, alternating with --flip
+  // ---------------------------------------------------------------------------
+  .csi-split {
+    .csi-split__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.4rem;
+      align-items: center;
+      @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+        gap: 2.1rem;
+      }
+    }
+    .csi-section__head {
+      max-width: none;
+      margin-bottom: 1.2rem;
+    }
+    .csi-prose {
+      max-width: none;
+    }
+  }
+  // text-wider split (e.g. the About card 65% + small image 35%)
+  .csi-split--65-35 .csi-split__grid {
+    grid-template-columns: 65fr 35fr;
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  .csi-split--flip {
+    .csi-split__text {
+      order: 2;
+    }
+    .csi-split__media {
+      order: 1;
+    }
+    @media (max-width: 900px) {
+      .csi-split__text {
+        order: 1;
+      }
+      .csi-split__media {
+        order: 2;
+      }
+    }
+  }
+  .csi-media {
+    margin: 0;
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 14px;
+    }
+    &__caption {
+      margin-top: 0.9rem;
+      font-size: 0.85rem;
+      line-height: 1.45;
+      text-align: center;
+      color: $csi-ink-soft;
+    }
+  }
+  // diagram cards need a frame to separate from a dark card background
+  .csi-section--pine,
+  .csi-section--pine-deep,
+  .csi-section--gradient {
+    .csi-media img {
+      box-shadow:
+        0 26px 54px -30px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(42, 217, 194, 0.18);
+    }
+    .csi-media__caption {
+      color: #9fb6b5;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // STEPS — numbered process cards
+  // ---------------------------------------------------------------------------
+  .csi-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.3rem;
+    margin-top: 0.5rem;
+    @media (max-width: 900px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 520px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  .csi-step {
+    background: #fff;
+    border: 1px solid $csi-line;
+    border-radius: 14px;
+    padding: 1.6rem 1.4rem;
+    box-shadow: 0 14px 30px -24px rgba(8, 30, 30, 0.35);
+    &__num {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.8rem;
+      @include csi-grad-light;
+    }
+    &__title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin: 0 0 0.5rem;
+      color: $csi-ink;
+    }
+    &__body {
+      font-size: 0.92rem;
+      line-height: 1.55;
+      margin: 0;
+      color: $csi-ink-soft;
+      a {
+        color: $csi-link;
+        font-weight: 600;
+      }
+    }
+  }
+  .csi-section--pine .csi-step,
+  .csi-section--pine-deep .csi-step,
+  .csi-section--gradient .csi-step {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+    .csi-step__num {
+      @include csi-grad-bright;
+    }
+    .csi-step__title {
+      color: #fff;
+    }
+    .csi-step__body {
+      color: #b6cbca;
+      a {
+        color: $cs-mint;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // IMPACT — outcome cards with gradient icon badges
+  // ---------------------------------------------------------------------------
+  .csi-impact {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+    margin-top: 0.5rem;
+    @media (max-width: 900px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+    &__card {
+      background: #fff;
+      border: 1px solid $csi-line;
+      border-radius: 16px;
+      padding: 1.8rem 1.6rem;
+      box-shadow: 0 16px 36px -26px rgba(8, 30, 30, 0.32);
+      transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+      &:hover {
+        transform: translateY(-4px);
+        border-color: rgba(11, 125, 114, 0.4);
+        box-shadow: 0 22px 46px -26px rgba(8, 30, 30, 0.4);
+      }
+    }
+    &__icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      margin-bottom: 1rem;
+      color: $cs-pine-dark;
+      @include csi-grad-solid;
+    }
+    &__title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin: 0 0 0.5rem;
+      color: $csi-ink;
+    }
+    &__body {
+      font-size: 0.93rem;
+      line-height: 1.55;
+      margin: 0;
+      color: $csi-ink-soft;
+      a {
+        color: $csi-link;
+        font-weight: 600;
+      }
+    }
+  }
+  .csi-section--pine .csi-impact__card,
+  .csi-section--pine-deep .csi-impact__card,
+  .csi-section--gradient .csi-impact__card {
+    background: rgba(255, 255, 255, 0.045);
+    border-color: rgba(255, 255, 255, 0.09);
+    box-shadow: none;
+    &:hover {
+      border-color: rgba(42, 217, 194, 0.4);
+      background: rgba(255, 255, 255, 0.065);
+    }
+    .csi-impact__title {
+      color: #fff;
+    }
+    .csi-impact__body {
+      color: #bcd0cf;
+      a {
+        color: $cs-mint;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // TESTIMONIAL — centered editorial quote
+  // ---------------------------------------------------------------------------
+  .csi-testimonial {
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    &__mark {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 4.4rem;
+      line-height: 0.8;
+      margin: 0 0 0.4rem;
+      @include csi-grad-light;
+    }
+    &__quote {
+      border: 0;
+      padding: 0;
+      margin: 0;
+      font-style: normal;
+      font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+      line-height: 1.45;
+      font-weight: 600;
+      color: $csi-ink;
+      p {
+        margin: 0 0 1rem;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+    &__by {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1.6rem;
+    }
+    &__avatar img {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(42, 217, 194, 0.5);
+    }
+    &__meta {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+    &__name {
+      font-weight: 800;
+      color: $csi-ink;
+    }
+    &__role {
+      font-size: 0.88rem;
+      color: $csi-link;
+    }
+  }
+  .csi-section--pine .csi-testimonial,
+  .csi-section--pine-deep .csi-testimonial,
+  .csi-section--gradient .csi-testimonial {
+    .csi-testimonial__mark {
+      @include csi-grad-bright;
+    }
+    .csi-testimonial__quote,
+    .csi-testimonial__name {
+      color: #fff;
+    }
+    .csi-testimonial__role {
+      color: $cs-mint;
+    }
+  }
+
+  // Featured testimonial — reuses the homepage "our word" cosmic image: the
+  // colourful image bleeds in from the right, the quote sits on the left over a
+  // dark scrim (adds colour to the closing quote).
+  .csi-testimonial-band--featured {
+    display: flex;
+    align-items: center;
+    min-height: 420px;
+    background:
+      var(--csi-quote-bg) center right / cover no-repeat,
+      $cs-pine-dark;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: linear-gradient(
+        90deg,
+        rgba(6, 29, 30, 0.95) 0%,
+        rgba(6, 29, 30, 0.82) 40%,
+        rgba(6, 29, 30, 0.32) 68%,
+        rgba(6, 29, 30, 0.04) 100%
+      );
+    }
+    &::after {
+      content: none;
+    }
+    .csi-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+    .csi-testimonial {
+      margin: 0;
+      max-width: 660px;
+      text-align: left;
+    }
+    @media (max-width: 700px) {
+      min-height: 0;
+      background-position: center;
+      &::before {
+        background: linear-gradient(180deg, rgba(6, 29, 30, 0.9), rgba(6, 29, 30, 0.82));
+      }
+      .csi-testimonial {
+        max-width: none;
+      }
+    }
+  }
+
+  // cs-pullquote (modern shortcode) reused inline — centre the card at a
+  // readable width while keeping its own text left-aligned (works inside an
+  // align="center" section, where the prose is otherwise centred).
+  .cs-pullquote {
+    max-width: 820px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+  }
+
+  // ---------------------------------------------------------------------------
+  // CLOSING CTA — the final dark band inside the card (variant--pine paints it)
+  // ---------------------------------------------------------------------------
+  .csi-cta {
+    text-align: center;
+    &__inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    p {
+      font-size: 1.12rem;
+      line-height: 1.6;
+      color: #d3e2e1;
+      margin: 0;
+      strong {
+        color: #fff;
+      }
+    }
+    a:not(.button) {
+      color: $cs-mint;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .button {
+      margin: 0;
+    }
+  }
+}
+
