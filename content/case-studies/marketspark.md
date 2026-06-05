@@ -70,6 +70,8 @@ The original single (1) monolithic AWS account became eleven (11) under the [AWS
 {{< csi-split eyebrow="02 · Infrastructure as Code" title="<strong>100%</strong> of the cloud in <a href='https://aws.amazon.com/what-is/iac/' target='_blank' rel='noopener noreferrer' class='csi-grad' style='text-decoration: underline; text-decoration-color: #16a597; text-decoration-thickness: 2px; text-underline-offset: 4px;'>Infrastructure as Code</a>" media="/img/case-studies/opentofu.jpg" media_alt="Every AWS resource type declared in OpenTofu and stored in Git" caption="<a href='https://opentofu.org/' target='_blank' rel='noopener noreferrer'>OpenTofu</a> is a reliable, enterprise-grade <a href='https://aws.amazon.com/what-is/iac/' target='_blank' rel='noopener noreferrer'>infrastructure as code (IaC)</a> tool under the Linux Foundation." variant="light" flip="true" >}}
 Every cloud resource is now declared in [OpenTofu](https://opentofu.org/), the open-source-licensed successor to Terraform: VPCs, Aurora databases, ECS services, Lambdas, API Gateways, SQS queues, S3 buckets, CloudFront, WAF, and far more. If it runs in MarketSpark's cloud infrastructure, it lives in Git.
 
+That turns infrastructure into software: **reusable**, **consistent**, **version-controlled**, and **self-documenting**.
+
 - **100+ ECS and Lambda services** are codified and consistent across Development, Staging, and Production.
 - **Serverless Fargate.** The ECS fleet migrated from EC2 to [AWS Fargate](https://aws.amazon.com/fargate/)'s serverless compute engine that lets engineers focus on the applications without managing servers.
 - **[Principle of Least Privilege (PoLP)](https://en.wikipedia.org/wiki/Principle_of_least_privilege) applied everywhere.** With every IAM and security resource being rebuilt in IaC, Masterpoint engineers treated it as the perfect opportunity to codify PoLP across all surfaces.
@@ -78,7 +80,7 @@ Every cloud resource is now declared in [OpenTofu](https://opentofu.org/), the o
 {{< csi-split eyebrow="03 · Infrastructure Automation" title="100% of IaC <span class='csi-grad'>automated</span>" media="/img/case-studies/spacelift.jpg" media_alt="Spacelift: provision, configure, govern" variant="pine" >}}
 Nothing ships by hand. Every change is automated through [Spacelift](https://spacelift.io/)'s orchestration: CI plans for GitHub Pull Requests, deployment applies on merge, and evaluated with custom [policy-as-code (OPA)](https://www.openpolicyagent.org/).
 
-Because provisioning is self-service with guardrails (enforced with [Spacelift Policies through OPA Rego](https://docs.spacelift.io/concepts/policy)), MarketSpark's cloud infrastructure growth isn't bottlenecked. The platform scales alongside the business.
+Because provisioning is fully self-service and automated with guardrails (enforced with [Spacelift Policies through OPA Rego](https://docs.spacelift.io/concepts/policy)), MarketSpark's long-term cloud infrastructure growth is never bottlenecked. The platform scales alongside the business as it grows.
 {{< /csi-split >}}
 
 {{< csi-section eyebrow="While We Were Under the Hood" title="A modernization rebuild is the <span class='csi-grad'>perfect time</span> to address technical debt" variant="light" align="center" >}}
@@ -119,11 +121,11 @@ Placeholder pull quote &mdash; a standout line from the engagement, to be replac
 {{< csi-impact >}}
 icon: fa-gauge-high
 title: Faster Product Velocity, Lower Operational Risk
-body: Provisioning and updating application infrastructure takes minutes instead of days through democratized GitOps and automation with Spacelift, versus manually operating by hand in the AWS Console. Centralized observability means MarketSpark catches incidents in minutes instead of hearing about them from customers.
+body: Provisioning and updating application infrastructure takes minutes instead of days through democratized IaC and automation with Spacelift, versus manually operating by hand in the AWS Console. Centralized observability means MarketSpark catches incidents in minutes instead of hearing about them from customers.
 ---
 icon: fa-shield-halved
-title: Hardened Blast-Radius Containment
-body: A misconfiguration in Staging/QA can no longer reach Production. Each environment runs in its own AWS account with its own IAM scope and isolated VPC networking.
+title: Hardened Security & Blast-Radius Containment
+body: A misconfiguration, runaway process, or compromised credential in a lower environment (e.g. Staging/QA) can no longer reach customer facing Production workloads. Each environment runs in its own AWS account with its own IAM scope and isolated VPC networking.
 ---
 icon: fa-life-ring
 title: Full-Region Disaster Recovery in Hours
@@ -134,8 +136,8 @@ title: Less Overhead, Lower Spend
 body: The migration towards AWS Fargate's serverless compute engine enables MarketSpark to run their applications without needing to manage underlying servers. Fargate also reduced compute spend on the same workloads with proper per service right sizing (additionally, [Fargate Spot is utilized where tolerated, delivering up to a 70% AWS discount](https://aws.amazon.com/fargate/pricing/)).
 ---
 icon: fa-book-open
-title: Cloud Infrastructure that Documents Itself
-body: Infrastructure as Code is now the source of truth. Onboarding a new engineer, archaeology questions, or auditing a config no longer depends on tribal knowledge, stale Confluence pages, or screenshots. Documentation no longer drifts from reality because the documentation *is* the reality.
+title: Auditable, Self-Documenting Infrastructure
+body: IaC is now the single source of truth, deploying infrastructure consistently across environments, and every change is version-controlled and peer-reviewed with a full audit trail. Onboarding a new engineer, archaeology questions, or auditing a config no longer depends on tribal knowledge, stale Confluence pages, or screenshots.
 ---
 icon: fa-award
 title: Enterprise-Grade Trust and Compliance Posture
