@@ -49,7 +49,7 @@ MarketSpark is the leading provider of analog replacement solutions for enterpri
 {{< /csi-split >}}
 
 {{< csi-split eyebrow="The Challenge" title="The Starting Point" media="/img/case-studies/marketspark/marketspark-aws.jpg" media_alt="MarketSpark and Masterpoint on AWS" variant="cream" flip="true" >}}
-MarketSpark had outgrown the AWS environment they started on, especially as the company's customer base grew, product surface widened, and they began to get compliance framework requests. All environments (including development, staging, production, and others) all lived inside a single monolithic AWS account, and every change was a manual operation ([ClickOps](https://spacelift.io/blog/what-is-clickops)) in the AWS Console.
+MarketSpark had outgrown the AWS environment they started on, especially as the company's customer base grew, product surface widened, and they began to get compliance framework requests. All environments (including development, staging, production, and others) lived inside a single monolithic AWS account, and every change was a manual operation ([ClickOps](https://spacelift.io/blog/what-is-clickops)) in the AWS Console.
 
 The MarketSpark team felt this. They had already begun planning improvements, and they partnered with Masterpoint for the deep platform expertise to execute.
 {{< /csi-split >}}
