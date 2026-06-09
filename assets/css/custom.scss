@@ -5414,8 +5414,51 @@ $csi-line: #e7edec; // hairline on light cards
       }
       // grids span the full content width with left-aligned card text
       .csi-steps,
-      .csi-impact {
+      .csi-impact,
+      .csi-list {
         text-align: left;
+      }
+    }
+
+    // ---- COMPACT band — applied automatically to any section containing a
+    //      csi-list (no opt-in arg): same content, less vertical real estate.
+    //      Tighter padding, smaller head, denser prose and pull quote.
+    &:has(.csi-list) {
+      padding: 2.5rem 0;
+      @media (max-width: 991px) {
+        padding: 2.1rem 0;
+      }
+      @media (max-width: 575px) {
+        padding: 1.7rem 0;
+      }
+      .csi-section__head {
+        margin-bottom: 0.8rem;
+      }
+      .csi-section__title {
+        font-size: clamp(1.55rem, 2.5vw, 2.15rem);
+      }
+      .csi-prose {
+        font-size: 0.98rem;
+        > p {
+          margin-bottom: 0.9rem;
+        }
+      }
+      .cs-pullquote {
+        margin: 1.4rem auto 0;
+        padding: 1.5rem 1.4rem 1.5rem 3.6rem;
+        .cs-pullquote__mark {
+          font-size: 3.4rem;
+          left: 1rem;
+        }
+        .cs-pullquote__body,
+        .cs-pullquote__body p {
+          font-size: 1.18rem;
+          line-height: 1.4;
+        }
+        .cs-pullquote__attribution {
+          margin-top: 0.7rem;
+          font-size: 0.85rem;
+        }
       }
     }
   }
@@ -5483,13 +5526,15 @@ $csi-line: #e7edec; // hairline on light cards
       color: $csi-ink;
       font-weight: 800;
     }
-    ul,
+    // `:not(.csi-list)` — the compact csi-list ul carries its own grid layout;
+    // keep the prose bullet/spacing treatment off it
+    ul:not(.csi-list),
     ol {
       margin: 0 0 1.3rem;
       padding: 0;
       list-style: none;
     }
-    ul > li,
+    ul:not(.csi-list) > li,
     ol > li {
       position: relative;
       padding-left: 1.75rem;
@@ -5499,7 +5544,7 @@ $csi-line: #e7edec; // hairline on light cards
         content: none;
       }
     }
-    ul > li::before {
+    ul:not(.csi-list) > li::before {
       content: "";
       position: absolute;
       left: 0;
@@ -5725,8 +5770,10 @@ $csi-line: #e7edec; // hairline on light cards
       color: $csi-ink;
     }
     &__body {
-      font-size: 0.93rem;
-      line-height: 1.55;
+      // matches .csi-list__text so impact cards and the compact list read at
+      // the same body scale
+      font-size: 0.92rem;
+      line-height: 1.5;
       margin: 0;
       color: $csi-ink-soft;
       a {
@@ -5735,6 +5782,68 @@ $csi-line: #e7edec; // hairline on light cards
       }
     }
   }
+  // ---------------------------------------------------------------------------
+  // LIST — compact two-column icon rows; the space-saving sibling of csi-impact
+  // for secondary enumerations that shouldn't compete with the outcome grid
+  // ---------------------------------------------------------------------------
+  .csi-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem 2.2rem;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    list-style: none;
+    @media (max-width: 700px) {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+    &__item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+    }
+    &__icon {
+      flex: 0 0 auto;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      margin-top: 0.05rem;
+      color: $cs-pine-dark;
+      @include csi-grad-solid;
+    }
+    &__text {
+      font-size: 0.92rem;
+      line-height: 1.5;
+      margin: 0;
+      color: $csi-ink-soft;
+      a {
+        color: $csi-link;
+        font-weight: 600;
+      }
+    }
+    &__title {
+      color: $csi-ink;
+      font-weight: 800;
+    }
+  }
+  .csi-section--pine .csi-list,
+  .csi-section--pine-deep .csi-list,
+  .csi-section--gradient .csi-list {
+    .csi-list__text {
+      color: #bcd0cf;
+      a {
+        color: $cs-mint;
+      }
+    }
+    .csi-list__title {
+      color: #fff;
+    }
+  }
+
   .csi-section--pine .csi-impact__card,
   .csi-section--pine-deep .csi-impact__card,
   .csi-section--gradient .csi-impact__card {
@@ -5883,11 +5992,11 @@ $csi-line: #e7edec; // hairline on light cards
 
   // cs-pullquote (modern shortcode) reused inline — centre the card at a
   // readable width while keeping its own text left-aligned (works inside an
-  // align="center" section, where the prose is otherwise centred).
+  // align="center" section, where the prose is otherwise centred). The modern
+  // scope's 3rem top margin is too tall next to the compact csi-list.
   .cs-pullquote {
     max-width: 820px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 2rem auto;
     text-align: left;
   }
 

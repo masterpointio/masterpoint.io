@@ -86,14 +86,14 @@ Because provisioning is fully self-service and automated with guardrails (enforc
 {{< csi-section eyebrow="While We Were Under the Hood" title="A modernization rebuild is the <span class='csi-grad'>perfect time</span> to address technical debt" variant="light" align="center" >}}
 With the infrastructure already under the knife, Masterpoint engineers folded in several improvements uncovered during the audit, alongside the core rebuild:
 
-{{< csi-impact >}}
+{{< csi-list >}}
 icon: fa-shield-halved
 title: Tailscale Zero-Trust Access
-body: A [Tailscale](https://tailscale.com/) subnet-router architecture replaced a legacy VPN that needed manual key management, giving identity-aware access to private infrastructure.
+body: Identity-aware [Tailscale](https://tailscale.com/) subnet router architecture replaced a legacy VPN with manual key management.
 ---
 icon: fa-chart-line
 title: Centralized Datadog Observability
-body: We brought in APM, tracing, logs, and monitors, all defined in IaC and baked in, so visibility ships with every service.
+body: APM, tracing, logs, and monitors defined in IaC and baked into services, so visibility ships with every service.
 ---
 icon: fa-database
 title: Databases Upgraded in Flight
@@ -104,13 +104,13 @@ title: Cleaner IoT Connectivity
 body: The IoT VPN path moved from scattered application-layer logic to a clean network-layer concern via a custom [network address translation (NAT)](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat.html).
 ---
 icon: fa-tags
-title: Standardized Naming and Tagging (FinOps)
-body: A uniform naming and tagging strategy gave MarketSpark [FinOps](https://www.ibm.com/think/topics/finops) ready per-environment and per-service cost allocation.
+title: Standardized Naming & Tagging (FinOps)
+body: A uniform strategy unlocked [FinOps](https://www.ibm.com/think/topics/finops)-ready per-environment, per-service cost allocation.
 ---
 icon: fa-lock
 title: TLS Everywhere
-body: All application and services connect to databases through RDS Proxy, and both databases and ElastiCache (Valkey/Redis) connections are enforced over TLS.
-{{< /csi-impact >}}
+body: Databases sit behind RDS Proxy, with database and ElastiCache (Valkey/Redis) connections enforced over TLS.
+{{< /csi-list >}}
 
 {{< cs-pullquote attribution="&mdash; Name, Title, MarketSpark" >}}
 Placeholder pull quote &mdash; a standout line from the engagement, to be replaced with a real MarketSpark voice.

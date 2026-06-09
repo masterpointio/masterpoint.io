@@ -8,6 +8,9 @@
     align    left (default) | center
     num      optional big watermark number (e.g. "01")
     accent   "true" → render just the gradient line accent (no eyebrow text)
+  Note: a section containing a csi-list automatically renders as a denser,
+  compact band (via `.csi-section:has(.csi-list)` in the CSS) — tighter
+  padding, smaller head, denser prose and pull quote.
   Inner is rendered as block markdown (paragraphs, lists, links). Nest other
   csi-* shortcodes (csi-steps, csi-impact, csi-testimonial) inside the inner.
 */}}

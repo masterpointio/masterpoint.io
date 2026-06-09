@@ -1,0 +1,43 @@
+{{/*
+  csi-list — compact two-column icon list. The space-saving sibling of
+  csi-impact: one tight row per item (small icon chip + bold title + inline
+  body) instead of a full card. Use for secondary enumerations (e.g. "while we
+  were under the hood" extras) so they don't visually compete with the
+  csi-impact outcome grid. Place INSIDE a csi-section.
+  Inner: blocks separated by `---`, each block:
+    icon: fa-shield-halved       (FontAwesome solid class)
+    title: Item title
+    body: Short body sentence. Inline markdown (links, *italic*, **bold**) works.
+*/}}
+{{- $raw := .Inner -}}
+{{- $blocks := split $raw "---" -}}
+<ul class="csi-list">
+  {{- range $blocks -}}
+    {{- $block := trim . " \t\n" -}}
+    {{- if $block -}}
+      {{- $lines := split $block "\n" -}}
+      {{- $icon := "fa-circle-check" -}}
+      {{- $title := "" -}}
+      {{- $body := "" -}}
+      {{- range $lines -}}
+        {{- $line := trim . " \t" -}}
+        {{- if hasPrefix $line "icon:" -}}
+          {{- $icon = trim (strings.TrimPrefix "icon:" $line) " " -}}
+        {{- else if hasPrefix $line "title:" -}}
+          {{- $title = trim (strings.TrimPrefix "title:" $line) " " -}}
+        {{- else if hasPrefix $line "body:" -}}
+          {{- $body = trim (strings.TrimPrefix "body:" $line) " " -}}
+        {{- else if and $line $body -}}
+          {{- $body = printf "%s %s" $body $line -}}
+        {{- end -}}
+      {{- end -}}
+      <li class="csi-list__item">
+        <span class="csi-list__icon"><i class="fa-solid {{ $icon }}"></i></span>
+        <p class="csi-list__text">
+          {{- if $title -}}<strong class="csi-list__title">{{ $title | safeHTML }}{{ if $body }}:{{ end }}</strong>{{ if $body }} {{ end }}{{- end -}}
+          {{- if $body -}}{{ $body | $.Page.RenderString (dict "display" "inline") }}{{- end -}}
+        </p>
+      </li>
+    {{- end -}}
+  {{- end -}}
+</ul>
