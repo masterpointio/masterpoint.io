@@ -156,7 +156,6 @@ You can read more on this topic here: [What is ClickOps?](https://spacelift.io/b
 
 <!-- TODO: When the MarketSpark case study is published, link it here as a real-world example of going from 0% to 100% IaC — moving off fully manual ClickOps to reap benefits like disaster recovery and faster infrastructure deployments. -->
 
-
 ## Provider
 
 A provider in TF is a plugin that enables interaction with an API; typically for a specific infrastructure platform or service. Providers serve as the bridge between TF configuration code and the actual infrastructure resources you're managing. Each provider (like AWS, Azure, GCP, Kubernetes, GitHub, CloudFlare, DataDog, etc.) contains resource types and data sources that correspond to services offered by that platform. Providers must be configured in your TF code with the necessary authentication credentials and regional settings before you can use their associated resources.
