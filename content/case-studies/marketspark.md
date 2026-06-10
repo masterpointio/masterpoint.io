@@ -48,7 +48,7 @@ MarketSpark is the leading provider of analog replacement solutions for enterpri
 {{< /cs-about >}}
 {{< /csi-split >}}
 
-{{< csi-split eyebrow="The Challenge" title="The Starting Point" media="/img/case-studies/marketspark/marketspark-aws.jpg" media_alt="MarketSpark and Masterpoint on AWS" variant="cream" flip="true" >}}
+{{< csi-split eyebrow="The Challenge" title="The Starting Point" media="/img/case-studies/marketspark/marketspark-aws.jpg" media_alt="MarketSpark and Masterpoint on AWS" variant="pine" flip="true" >}}
 MarketSpark had outgrown the AWS environment they started on, especially as the company's customer base grew, product surface widened, and they began to get compliance framework requests. All environments (including development, staging, production, and others) lived inside a single monolithic AWS account, and every change was a manual operation ([ClickOps](https://spacelift.io/blog/what-is-clickops)) in the AWS Console.
 
 The MarketSpark team felt this. They had already begun planning improvements, and they partnered with Masterpoint for the deep platform expertise to execute.
@@ -121,11 +121,11 @@ Placeholder pull quote &mdash; a standout line from the engagement, to be replac
 {{< csi-impact >}}
 icon: fa-gauge-high
 title: Faster Product Velocity, Lower Operational Risk
-body: Provisioning and updating application infrastructure takes minutes instead of days through democratized IaC and automation with Spacelift, versus manually operating by hand in the AWS Console. Centralized observability means MarketSpark catches incidents in minutes instead of hearing about them from customers.
+body: Provisioning and updating application infrastructure takes minutes instead of days through democratized IaC and automation with Spacelift, versus manual operations in the AWS Console. Centralized observability means MarketSpark catches incidents in minutes instead of hearing about them from customers.
 ---
 icon: fa-shield-halved
 title: Hardened Security & Blast-Radius Containment
-body: A misconfiguration, runaway process, or compromised credential in a lower environment (e.g. Staging/QA) can no longer reach customer facing Production workloads. Each environment runs in its own AWS account with its own IAM scope and isolated VPC networking.
+body: A misconfiguration, runaway process, or compromised credential in a lower environment (e.g. Staging/QA) can no longer reach customer-facing Production workloads. Each environment runs in its own AWS account with its own IAM scope and isolated VPC networking.
 ---
 icon: fa-life-ring
 title: Full-Region Disaster Recovery in Hours
