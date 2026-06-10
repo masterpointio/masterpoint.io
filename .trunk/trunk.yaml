@@ -4,7 +4,7 @@ cli:
 plugins:
   sources:
     - id: trunk
-      ref: v1.6.8
+      ref: v1.10.1
       uri: https://github.com/trunk-io/plugins
 lint:
   enabled:
@@ -20,6 +20,19 @@ lint:
     - svgo@3.3.2
     - taplo@0.9.3
     - yamllint@1.37.1
+    - zizmor@1.25.2
+  definitions:
+    - name: zizmor
+      environment:
+        # Optional token here so that it's not needed locally, but can be used
+        # when trunk is called from our lint workflow in GHA
+        - name: ZIZMOR_GITHUB_TOKEN
+          value: ${env.GITHUB_TOKEN}
+          optional: true
+      commands:
+        # Set to pedantic so that zizmor will run its stale-action-refs audit rule
+        - name: lint
+          run: zizmor --format=sarif --persona=pedantic ${target}
   ignore:
     - linters: [ALL]
       paths:
