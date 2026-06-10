@@ -5,7 +5,7 @@ title: Terraform + OpenTofu Terminology Breakdown
 slug: terraform-opentofu-terminology-breakdown
 author: Matt Gowie
 date: 2025-05-21
-# date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
+date_modified: 2026-06-10 # Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: List of Terraform and OpenTofu terms with definitions and explanations.
 image: /img/updates/tf-terminology-breakdown.png
 callout: <p>👋 <b>Got a term that you're still confused on in the TF or IaC space that you want us to include here? <a href='/contact'>Get in touch and we'd be happy to add it!</a></b></p>
@@ -30,6 +30,7 @@ callout: <p>👋 <b>Got a term that you're still confused on in the TF or IaC sp
   - [Native TF Testing](#native-tf-testing)
   - [Terratest](#terratest)
 - [Industry Terms](#industry-terms)
+  - [ClickOps](#clickops)
   - [Provider](#provider)
   - [TACOS](#tacos)
   - [TF Frameworks](#tf-frameworks)
@@ -144,6 +145,17 @@ The [native testing framework in Terraform CLI](https://developer.hashicorp.com/
 # Industry Terms
 
 As the TF ecosystem has matured, new terms have emerged beyond the core concepts. These terms represent specialized tools, architectural patterns, and platform-specific nomenclature that you'll encounter when working with TF at scale.
+
+## ClickOps
+
+ClickOps refers to provisioning and managing cloud infrastructure manually by hand, such as one-off commands & scripts or clicking through a provider's web console (the AWS Management Console, Azure Portal, GCP Console, etc.), rather than defining it with code (IaC).
+
+The trouble with ClickOps is that it doesn't scale: manually-created resources aren't version controlled or peer reviewed, are error-prone, and are difficult to reproduce across environments. Anything long-lived should be brought under IaC management, which is especially important at the enterprise level, where ClickOps quietly erodes the governance, auditability, and compliance guarantees that larger organizations depend on, and where a single undocumented manual change can have an outsized blast radius across teams and environments.
+
+You can read more on this topic here: [What is ClickOps?](https://spacelift.io/blog/what-is-clickops)
+
+<!-- TODO: When the MarketSpark case study is published, link it here as a real-world example of going from 0% to 100% IaC — moving off fully manual ClickOps to reap benefits like disaster recovery and faster infrastructure deployments. -->
+
 
 ## Provider
 
