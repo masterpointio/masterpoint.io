@@ -2933,6 +2933,30 @@ footer {
   }
 }
 
+#thank-you {
+  #banner {
+    padding-bottom: 1.5rem;
+  }
+
+  .testimonials-section {
+    color: #fff;
+    padding: 0 0 5rem;
+
+    @media (max-width: 767px) {
+      padding: 0 0 3.5rem;
+    }
+
+    .quoteLabel {
+      margin-bottom: 2.5rem;
+    }
+
+    .flex-control-paging {
+      justify-content: center;
+      padding-top: 2.4rem;
+    }
+  }
+}
+
 #signup {
   padding: 0;
   background: rgb(0, 51, 51);
