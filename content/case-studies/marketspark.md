@@ -44,7 +44,7 @@ sitemap:
   linkedin="https://www.linkedin.com/company/marketspark-inc/"
   industry="Telecommunications · Managed Wireless / 5G Connectivity"
 >}}
-MarketSpark is the leading provider of analog replacement solutions for enterprises on a global scale, with a cloud-enabled platform helping companies move into the world of tomorrow with managed wireless solutions that are 5G ready. From solution design, to installation, to 24/7 maintenance and monitoring, MarketSpark handles it all. MarketSpark serves more than 500 of America's largest enterprises, and partners with telecommunication leaders such as T-Mobile.
+MarketSpark is the leading provider of analog replacement solutions for enterprises on a global scale, with a cloud-enabled platform helping companies move into the world of tomorrow with managed wireless solutions that are 5G ready. From solution design, to installation, to 24/7 maintenance and monitoring, MarketSpark handles it all. MarketSpark serves more than 500 of America’s largest enterprises, and partners with telecommunication leaders such as Verizon and T-Mobile.
 {{< /cs-about >}}
 {{< /csi-split >}}
 
