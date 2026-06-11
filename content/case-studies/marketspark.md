@@ -100,8 +100,8 @@ title: Databases Upgraded in Flight
 body: Aurora PostgreSQL jumped two major versions ahead of AWS end-of-life deprecation.
 ---
 icon: fa-network-wired
-title: Cleaner IoT Connectivity
-body: The IoT VPN path moved from scattered application-layer logic to a clean network-layer concern via a custom [network address translation (NAT)](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat.html).
+title: Rearchitected IoT Connectivity
+body: The IoT VPN path moved from scattered application-layer logic to clean network-layer routing with network address translation (NAT).
 ---
 icon: fa-tags
 title: Standardized Naming & Tagging (FinOps)
