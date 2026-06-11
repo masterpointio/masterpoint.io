@@ -68,7 +68,7 @@ The original single (1) monolithic AWS account became eleven (11) under the [AWS
 {{< /csi-split >}}
 
 {{< csi-split eyebrow="02 · Infrastructure as Code" title="<strong>100%</strong> of the cloud in <a href='https://aws.amazon.com/what-is/iac/' target='_blank' rel='noopener noreferrer' class='csi-grad' style='text-decoration: underline; text-decoration-color: #16a597; text-decoration-thickness: 2px; text-underline-offset: 4px;'>Infrastructure as Code</a>" media="/img/case-studies/opentofu.jpg" media_alt="Every AWS resource type declared in OpenTofu and stored in Git" caption="<a href='https://opentofu.org/' target='_blank' rel='noopener noreferrer'>OpenTofu</a> is a reliable, enterprise-grade <a href='https://aws.amazon.com/what-is/iac/' target='_blank' rel='noopener noreferrer'>infrastructure as code (IaC)</a> tool under the Linux Foundation." variant="light" flip="true" >}}
-Every cloud resource is now declared in [OpenTofu](https://opentofu.org/), the open-source-licensed successor to Terraform: VPCs, Aurora databases, ECS services, Lambdas, API Gateways, SQS queues, S3 buckets, CloudFront, WAF, and far more. If it runs in MarketSpark's cloud infrastructure, it lives in Git.
+Every cloud resource is now declared in [OpenTofu](https://opentofu.org/), the open-source licensed successor to Terraform: VPCs, Aurora databases, ECS services, Lambdas, API Gateways, SQS queues, S3 buckets, CloudFront, WAF, and far more. If it runs in MarketSpark's cloud infrastructure, it lives in Git.
 
 That turns infrastructure into software: **reusable**, **consistent**, **version-controlled**, and **self-documenting**.
 
