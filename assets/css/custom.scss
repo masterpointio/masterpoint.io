@@ -5036,10 +5036,23 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
       font-weight: 700;
       letter-spacing: 0.05em;
     }
-    &__attribution--stacked {
+    &__by {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      letter-spacing: normal;
+    }
+    &__avatar img {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    }
+    &__meta {
       display: flex;
       flex-direction: column;
-      letter-spacing: normal;
     }
     &__name {
       font-weight: 800;
@@ -5922,11 +5935,12 @@ $csi-line: #e7edec; // hairline on light cards
       margin-top: 1.6rem;
     }
     &__avatar img {
-      width: 54px;
-      height: 54px;
+      width: 88px;
+      height: 88px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid rgba(42, 217, 194, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
     }
     &__meta {
       display: flex;

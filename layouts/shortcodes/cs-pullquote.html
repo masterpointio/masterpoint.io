@@ -2,14 +2,20 @@
 {{- $name := .Get "name" -}}
 {{- $role := .Get "title" -}}
 {{- $company := .Get "company" -}}
+{{- $photo := .Get "photo" -}}
 {{- $variant := .Get "variant" | default "dark" -}}
 <aside class="cs-pullquote cs-pullquote--{{ $variant }}" data-aos="fade-up" data-aos-duration="900">
   <div class="cs-pullquote__mark">&ldquo;</div>
   <div class="cs-pullquote__body">{{ .Inner | $.Page.RenderString }}</div>
   {{- if $name -}}
-  <div class="cs-pullquote__attribution cs-pullquote__attribution--stacked">
-    <span class="cs-pullquote__name">{{ $name | safeHTML }}</span>
-    {{- if or $role $company -}}<span class="cs-pullquote__role">{{ $role | safeHTML }}{{ if and $role $company }}, {{ end }}{{ $company | safeHTML }}</span>{{- end -}}
+  <div class="cs-pullquote__attribution cs-pullquote__by">
+    {{- if $photo -}}
+    <span class="cs-pullquote__avatar"><img src="{{ $photo }}" alt="{{ $name }}" /></span>
+    {{- end -}}
+    <span class="cs-pullquote__meta">
+      <span class="cs-pullquote__name">{{ $name | safeHTML }}</span>
+      {{- if or $role $company -}}<span class="cs-pullquote__role">{{ $role | safeHTML }}{{ if and $role $company }}, {{ end }}{{ $company | safeHTML }}</span>{{- end -}}
+    </span>
   </div>
   {{- else if $attribution -}}
   <div class="cs-pullquote__attribution">{{ $attribution | safeHTML }}</div>
