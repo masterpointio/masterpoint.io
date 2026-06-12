@@ -5036,6 +5036,23 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
       font-weight: 700;
       letter-spacing: 0.05em;
     }
+    &__attribution--stacked {
+      display: flex;
+      flex-direction: column;
+      letter-spacing: normal;
+    }
+    &__name {
+      font-weight: 800;
+      font-size: 1.2rem;
+      line-height: 1.1;
+      color: #fff;
+    }
+    &__role {
+      font-weight: 400;
+      font-size: 0.9rem;
+      color: $cs-mint;
+      padding-top: 0.35rem;
+    }
 
     // -- LIGHT variant -- editorial cream/mint card; pine text. Good for an
     //    end-of-article testimonial where it sits next to a dark CTA card.
@@ -5445,6 +5462,7 @@ $csi-line: #e7edec; // hairline on light cards
       }
       .cs-pullquote {
         margin: 1.4rem auto 0;
+        max-width: 1100px;
         padding: 1.5rem 1.4rem 1.5rem 3.6rem;
         .cs-pullquote__mark {
           font-size: 3.4rem;
@@ -5888,7 +5906,7 @@ $csi-line: #e7edec; // hairline on light cards
       font-style: normal;
       font-size: clamp(1.3rem, 2.2vw, 1.8rem);
       line-height: 1.45;
-      font-weight: 600;
+      font-weight: 400;
       color: $csi-ink;
       p {
         margin: 0 0 1rem;
@@ -5918,10 +5936,16 @@ $csi-line: #e7edec; // hairline on light cards
     &__name {
       font-weight: 800;
       color: $csi-ink;
+      font-size: 1.3rem;
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
     }
     &__role {
-      font-size: 0.88rem;
+      font-size: 0.9rem;
+      font-weight: 400;
       color: $csi-link;
+      padding-top: 0.4rem;
     }
   }
   .csi-section--pine .csi-testimonial,
@@ -5933,6 +5957,10 @@ $csi-line: #e7edec; // hairline on light cards
     .csi-testimonial__quote,
     .csi-testimonial__name {
       color: #fff;
+    }
+    .csi-testimonial__quote strong {
+      font-weight: 700;
+      @include csi-grad-bright;
     }
     .csi-testimonial__role {
       color: $cs-mint;
@@ -5960,8 +5988,8 @@ $csi-line: #e7edec; // hairline on light cards
       background: linear-gradient(
         90deg,
         rgba(6, 29, 30, 0.95) 0%,
-        rgba(6, 29, 30, 0.82) 40%,
-        rgba(6, 29, 30, 0.32) 68%,
+        rgba(6, 29, 30, 0.9) 58%,
+        rgba(6, 29, 30, 0.5) 80%,
         rgba(6, 29, 30, 0.04) 100%
       );
     }
@@ -5975,8 +6003,12 @@ $csi-line: #e7edec; // hairline on light cards
     }
     .csi-testimonial {
       margin: 0;
-      max-width: 660px;
+      width: 70%;
+      max-width: 1080px;
       text-align: left;
+    }
+    .csi-testimonial__quote {
+      font-size: clamp(1.2rem, 1.7vw, 1.5rem);
     }
     @media (max-width: 700px) {
       min-height: 0;

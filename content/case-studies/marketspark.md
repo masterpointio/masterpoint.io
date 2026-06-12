@@ -1,6 +1,5 @@
 ---
 # TODO: NEED TO ASK MARKETSPARK FOR PROPER LOGO (dark & light variants)
-# TODO: replace placeholder testimonial with a real MarketSpark quote from the retro
 draft: false # NOT READY FOR RELEASE
 title: "Modernizing MarketSpark's AWS Cloud into a 100% Infrastructure as Code, Automated & Multi-Account Platform"
 weight: 2
@@ -112,8 +111,8 @@ title: TLS Everywhere
 body: Databases sit behind RDS Proxy, with database and ElastiCache (Valkey/Redis) connections enforced over TLS.
 {{< /csi-list >}}
 
-{{< cs-pullquote attribution="&mdash; Name, Title, MarketSpark" >}}
-Placeholder pull quote &mdash; a standout line from the engagement, to be replaced with a real MarketSpark voice.
+{{< cs-pullquote name="&mdash; Adam Pallin" title="Director of Software Engineering" company="MarketSpark" >}}
+<strong>Masterpoint built us our own platform</strong>. And it doesn't feel like boilerplate dropped over everything. They worked within the systems we already had, solved the hard problems like our networking setup, and left us with clean infrastructure code we can actually build on.
 {{< /cs-pullquote >}}
 {{< /csi-section >}}
 
@@ -149,6 +148,6 @@ body: MarketSpark's AWS environment is aligned with industry security and compli
 Knowledge transfer wasn't a final phase, it ran in parallel with the work. We held training sessions, recorded walkthroughs, drew architecture diagrams, and documented operations extensively. By handoff, MarketSpark's engineers weren't inheriting a black box. They were already shipping changes and self-deploying infrastructure against the new platform.
 {{< /csi-section >}}
 
-{{< csi-testimonial name="Name, Title" company="MarketSpark" variant="pine" image="/img/bg_our_word.jpg" >}}
-Placeholder for a closing MarketSpark testimonial &mdash; a client quote about the partnership and the outcome, to be added from the project retro.
+{{< csi-testimonial name="&mdash; Charlie Wilson" title="Chief Technology Officer (CTO)" company="MarketSpark" variant="pine" image="/img/bg_our_word.jpg" >}}
+We chose Masterpoint over the giant consulting firms because <strong>a boutique firm meant a real partnership and actual flexibility to work the problem alongside us</strong>. We've worked with enough of both to know it's always better to work with people making local decisions that affect the outcome than to get an ivory-tower, boilerplate approach. <strong>We're 100% happy with the decision to bring in Masterpoint.</strong>
 {{< /csi-testimonial >}}
