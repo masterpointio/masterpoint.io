@@ -32,9 +32,10 @@ opts into legacy with `layout: legacy`; MarketSpark opts into immersive with
 Why this split exists: Power Digital has heavily customized inline styling
 (see `.case-study-single` block in `assets/css/custom.scss`). The **modern**
 layout was designed from scratch and is the default for new case studies. The
-**immersive** layout keeps the modern hero + stat strip **exactly** (its body
-carries both `case-study-modern` and `case-study-immersive` so the modern
-`.cs-*` hero/stat CSS applies verbatim) and replaces only the body with a stack
+**immersive** layout keeps the modern hero + stat strip **nearly verbatim** (its
+body carries both `case-study-modern` and `case-study-immersive` so the modern
+`.cs-*` hero/stat CSS applies; the only divergence is an optional
+`client_logo_height` hook on the lockup mark) and replaces only the body with a stack
 of rotating light↔dark colour cards (`.csi-*`). Don't merge them; scope every
 selector under its prefix.
 
@@ -51,6 +52,7 @@ description: "..." # used for og + meta description
 eyebrow: "CASE STUDY" # short label above the title
 client: "ClientName" # used in default eyebrow if eyebrow omitted
 client_logo: /img/case-studies/CLIENT/CLIENT-logo.png # white-pill mark in the hero lockup
+client_logo_height: 48px # OPTIONAL (immersive only) — scales the hero client logo via --cs-client-logo-h (default 32px)
 hero_title: "... <span class='text-gradient'>highlighted</span> ..."
 hero_aside_image: /img/case-studies/CLIENT/hero-bg.jpg # OPTIONAL full-bleed hero photo
 hero_aside_alt: "..." # alt text for the bg image
@@ -100,8 +102,8 @@ All shortcodes are in `layouts/shortcodes/cs-*.html` and styled under
 
 | Shortcode                    | Purpose                                                     | Notes                                                                                                                                                                                                                                                                                        |
 | ---------------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- | --------------- |
-| `cs-about`                   | Dedicated "about the client" card at the top of the article | Args: `name`, `url`, `linkedin`, `industry`, `technologies`, `facts`, `eyebrow`. Eyebrow auto-generates as `About {name}`. Website pill + LinkedIn brand mark sit in the top-right of the card. `industry` + `technologies` (or `facts`) render as labeled rows / pill list below the prose. |
-| `cs-pullquote`               | Large quote card with gradient left border + attribution    | Args: `attribution`, `variant` (`dark` default = pine card with vanilla attribution, `light` = cream/mint editorial card with mint attribution). Reserve for actual quotes — not for emphatic bold lines.                                                                                    |
+| `cs-about`                   | Dedicated "about the client" card at the top of the article | Args: `name`, `url`, `linkedin`, `industry`, `technologies`, `facts`, `eyebrow`, `logo` (optional client logo at the top of the card with a divider). Eyebrow auto-generates as `About {name}`. Website pill + LinkedIn brand mark sit in the top-right of the card. `industry` + `technologies` (or `facts`) render as labeled rows / pill list below the prose. |
+| `cs-pullquote`               | Large quote card with gradient left border + attribution    | Args: `attribution` (single-line fallback) OR `name`/`title`/`company` (two-line attribution: bold name over mint `title, company`), `photo` (headshot → avatar-left "portrait" layout), `variant` (`dark` default = pine card, `light` = cream/mint editorial card). With `photo`, gains class `cs-pullquote--portrait` (see Avatar-left portrait layout below). Reserve for actual quotes — not for emphatic bold lines.                                                                                    |
 | `cs-wins`                    | Grid of "win" cards with gradient icon badges               | Used for the Outcomes & Business Impact section. Body lines render inline markdown — links, _italics_, **bold** all work.                                                                                                                                                                    |
 
 ### Shortcode authoring notes
@@ -169,10 +171,13 @@ mint on mint and disappears. Always keep `:not(.button)` on `.cs-article a`.
 Opt in with `layout: immersive`. The body element carries **both**
 `case-study-modern` and `case-study-immersive`:
 
-- **Top (hero + stat strip): identical to modern.** `immersive.html` copies the
-  `.cs-hero` and `.cs-stat-strip` markup verbatim from `single.html`, and the
+- **Top (hero + stat strip): all but identical to modern.** `immersive.html`
+  copies the `.cs-hero` and `.cs-stat-strip` markup from `single.html`, and the
   dual body class means the existing `.case-study-modern .cs-*` rules style them
-  — so the top is byte-for-byte the modern layout. Don't restyle it here.
+  — so the top renders as the modern layout. The one intentional addition is the
+  optional **`client_logo_height`** front-matter hook (sets `--cs-client-logo-h`
+  on the client lockup mark, default 32px; styled in `custom.scss`) so a short
+  client wordmark can be enlarged. Otherwise don't restyle the top here.
 - **Body: a stack of contained, rounded CARDS** on the pine page backdrop, the
   faces **rotating light ↔ dark** like the marketing pages (services /
   who-we-are), each with a subtle gradient "photo" background (glow mesh + faint
@@ -198,7 +203,7 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 | `csi-steps`       | Numbered process cards. Place INSIDE a `csi-section`.          | inner blocks split by `---`, each `title:` / `body:`                                  |
 | `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`                        |
 | `csi-list`        | Compact 2-col icon rows (icon chip + bold title — inline body). Space-saving sibling of `csi-impact` for secondary enumerations (e.g. "under the hood" extras) so they don't mimic the outcome grid. INSIDE a `csi-section`. | same inner format as `csi-impact` (`icon:` / `title:` / `body:`); keep bodies to one short sentence |
-| `csi-testimonial` | Editorial quote band; `image=` makes it a featured cosmic band.| `name`, `title`, `company`, `photo`, `variant`, `image`                               |
+| `csi-testimonial` | Editorial quote band; `image=` makes it a featured cosmic band.| `name`, `title`, `company`, `photo`, `variant`, `image`. With `photo`, uses the avatar-left "portrait" layout (`csi-testimonial--portrait`, see below). |
 
 Two **modern** shortcodes are also reused inside the immersive body (they render
 because the body also carries `case-study-modern`, so `.case-study-modern .cs-*`
@@ -211,6 +216,28 @@ styles them):
 - **`cs-pullquote`** — used inline mid-article (between the impact grid and the
   closing sections) as a standout pull quote, distinct from the closing
   `csi-testimonial`. It's fine to have quotes in multiple places.
+
+#### Avatar-left "portrait" layout (`cs-pullquote` + `csi-testimonial`)
+
+When a `photo` is passed, both shortcodes switch to a shared avatar-left layout
+(`--portrait` modifier class). It's a CSS **grid**, not flex, so the same DOM
+reflows responsively:
+
+- **Desktop** — grid areas `"avatar content" / "avatar attribution"`: the
+  circular headshot sits in the left column, vertically centered, spanning the
+  quote (top-right) and the attribution (bottom-right). The attribution is a
+  **sibling of `__content`** (not nested) precisely so grid can re-place it.
+- **Mobile** (`≤640px` pullquote / `≤700px` testimonial) — grid areas reflow to
+  `"content content" / "avatar attribution"`: the quote spans full width on top,
+  then the author row (avatar + name/title) below.
+- **Avatar** — circular, with a **brand gradient ring** (`@include
+  csi-grad-solid` on the wrapper `padding`, which is the ring thickness: `4px`
+  desktop → `1px` on small screens so it doesn't overwhelm the smaller avatar).
+- **Quote glyph** — the `__mark` hangs in the gap just left of the first line on
+  desktop (decorative, absolute, doesn't shift the quote text); on mobile it
+  drops to a plain block lead-in above the quote.
+- The pullquote card radius is trimmed to `8px` in portrait mode (the
+  `csi-testimonial` featured band stays full-bleed / square by design).
 
 **`variant` = the card's face colour** (drives the light↔dark rotation): `light`
 (white) and `pine` (dark) are the two real faces. `cream`/`mint` alias to light;
@@ -323,7 +350,10 @@ case studies and the marketing pages.
   primary visual marker for major sections — no separate `cs-section`
   shortcode needed.
 - **Pull quotes** (dark variant) are pine cards with a gradient left border
-  and a soft mint serif quote mark; attribution is vanilla.
+  and a soft mint serif quote mark. Attribution is vanilla for the single-line
+  `attribution` arg; when `name`/`title`/`company` are used it renders as a bold
+  name over a mint `title, company` line. With a `photo`, see the avatar-left
+  portrait layout above.
 
 ---
 
@@ -331,7 +361,9 @@ case studies and the marketing pages.
 
 Every modern case study gets an inline **"In This Case Study Success Story"**
 contents card automatically — no shortcode, no per-page wiring. It lists every
-H2 section as a numbered card with a gradient left bar.
+H2 section as a numbered card with a gradient left bar. **Modern layout only** —
+`immersive.html` does not inject the TOC (its body is `csi-*` cards, not H2
+sections), so the immersive MarketSpark page has no contents card.
 
 - **Auto-injected by the layout.** `layouts/case-studies/single.html` renders
   the card from `partials/case-study-toc.html` and splices it into `.Content`
@@ -419,9 +451,10 @@ truth; this log explains the reasoning behind what's still there.
 
 ### Architecture
 
-- **Two-layout split (legacy vs modern).** Power Digital is heavily
-  customized; we don't want to regress it while iterating on new case studies.
-  Route via `layout:` front matter.
+- **Three-layout split (legacy / modern / immersive).** Power Digital is heavily
+  customized (legacy); we don't want to regress it while iterating on new case
+  studies. Modern is the default for new work; immersive is an opt-in
+  card-stack variant (MarketSpark). Route via `layout:` front matter.
 - **Page backdrop = pine, article = white card.** Matches the blog's visual
   language; frames long-form content nicely without competing with figures.
 - **Body content max-width = 1080px** (wider than the blog's ~795px) — case

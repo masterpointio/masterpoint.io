@@ -5490,6 +5490,87 @@ $csi-line: #e7edec; // hairline on light cards
           margin-top: 0.7rem;
           font-size: 0.85rem;
         }
+        // avatar-left layout: large circle on the left spanning the quote +
+        // attribution; on mobile it reflows to quote-on-top, then avatar+name
+        &.cs-pullquote--portrait {
+          display: grid;
+          grid-template-columns: auto minmax(0, 1fr);
+          grid-template-areas:
+            "avatar content"
+            "avatar attribution";
+          align-items: center;
+          column-gap: 2.2rem;
+          row-gap: 0.5rem;
+          padding: 1.8rem 2.2rem;
+          border-radius: 8px;
+          // opening quote glyph hanging in the gap just left of the first
+          // line — purely decorative, the quote text itself is untouched
+          .cs-pullquote__mark {
+            position: absolute;
+            top: 0.1rem;
+            left: -2rem;
+            display: block;
+            margin: 0;
+            font-size: 2.8rem;
+            line-height: 1;
+          }
+          .cs-pullquote__avatar {
+            grid-area: avatar;
+            align-self: center;
+            padding: 4px;
+            border-radius: 50%;
+            @include csi-grad-solid;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+          }
+          .cs-pullquote__avatar img {
+            display: block;
+            width: 132px;
+            height: 132px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+          .cs-pullquote__content {
+            grid-area: content;
+            position: relative;
+            min-width: 0;
+          }
+          .cs-pullquote__attribution {
+            grid-area: attribution;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0;
+            margin-top: 0.4rem;
+            letter-spacing: normal;
+          }
+
+          // mobile: quote spans full width on top, author (avatar + name) below
+          @media (max-width: 640px) {
+            grid-template-areas:
+              "content content"
+              "avatar attribution";
+            align-items: center;
+            column-gap: 1rem;
+            row-gap: 1.1rem;
+            padding: 1.6rem 1.5rem;
+            .cs-pullquote__avatar {
+              padding: 1px;
+            }
+            .cs-pullquote__avatar img {
+              width: 72px;
+              height: 72px;
+            }
+            // no avatar gap on mobile: drop the glyph above the quote as a
+            // plain block lead-in (like the original layout)
+            .cs-pullquote__mark {
+              position: static;
+              display: block;
+              margin: 0 0 0.1rem;
+              font-size: 2.6rem;
+              line-height: 0.9;
+            }
+          }
+        }
       }
     }
   }
@@ -6002,9 +6083,9 @@ $csi-line: #e7edec; // hairline on light cards
       background: linear-gradient(
         90deg,
         rgba(6, 29, 30, 0.95) 0%,
-        rgba(6, 29, 30, 0.9) 58%,
-        rgba(6, 29, 30, 0.5) 80%,
-        rgba(6, 29, 30, 0.04) 100%
+        rgba(6, 29, 30, 0.92) 64%,
+        rgba(6, 29, 30, 0.6) 82%,
+        rgba(6, 29, 30, 0.05) 100%
       );
     }
     &::after {
@@ -6024,6 +6105,62 @@ $csi-line: #e7edec; // hairline on light cards
     .csi-testimonial__quote {
       font-size: clamp(1.2rem, 1.7vw, 1.5rem);
     }
+    // avatar-left layout spanning quote + attribution; reflows on mobile to
+    // quote-on-top, then avatar + name
+    .csi-testimonial--portrait {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-areas:
+        "avatar content"
+        "avatar attribution";
+      align-items: center;
+      column-gap: 2.4rem;
+      row-gap: 0.5rem;
+      width: 82%;
+      max-width: 1180px;
+      // opening quote glyph hanging in the gap just left of the first line —
+      // purely decorative, the quote text itself is untouched
+      .csi-testimonial__mark {
+        position: absolute;
+        top: 0.1rem;
+        left: -2.4rem;
+        display: block;
+        margin: 0;
+        font-size: 2.9rem;
+        line-height: 1;
+        background: none;
+        -webkit-text-fill-color: rgba(42, 217, 194, 0.6);
+        color: rgba(42, 217, 194, 0.6);
+      }
+      .csi-testimonial__avatar {
+        grid-area: avatar;
+        align-self: center;
+        padding: 4px;
+        border-radius: 50%;
+        @include csi-grad-solid;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      }
+      .csi-testimonial__avatar img {
+        display: block;
+        width: 168px;
+        height: 168px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .csi-testimonial__content {
+        grid-area: content;
+        position: relative;
+        min-width: 0;
+      }
+      .csi-testimonial__by {
+        grid-area: attribution;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        margin: 0.4rem 0 0;
+      }
+    }
     @media (max-width: 700px) {
       min-height: 0;
       background-position: center;
@@ -6032,6 +6169,28 @@ $csi-line: #e7edec; // hairline on light cards
       }
       .csi-testimonial {
         max-width: none;
+      }
+      .csi-testimonial--portrait {
+        grid-template-areas:
+          "content content"
+          "avatar attribution";
+        width: 100%;
+        column-gap: 1rem;
+        row-gap: 1.1rem;
+        .csi-testimonial__avatar {
+          padding: 1px;
+        }
+        .csi-testimonial__avatar img {
+          width: 96px;
+          height: 96px;
+        }
+        .csi-testimonial__mark {
+          position: static;
+          display: block;
+          margin: 0 0 0.1rem;
+          font-size: 2.6rem;
+          line-height: 0.9;
+        }
       }
     }
   }
