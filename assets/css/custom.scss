@@ -4247,7 +4247,7 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
       &--client {
         img {
           display: block;
-          height: 32px;
+          height: var(--cs-client-logo-h, 32px);
           width: auto;
           max-width: 225px;
         }
@@ -4261,7 +4261,7 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
         }
       }
       @media (max-width: 575px) {
-        &--client img { height: 26px; }
+        &--client img { height: calc(var(--cs-client-logo-h, 32px) * 0.8); }
         &--mp img     { height: 22px; }
       }
     }

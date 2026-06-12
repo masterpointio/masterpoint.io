@@ -12,9 +12,10 @@ layout: immersive
 eyebrow: "CASE STUDY SUCCESS STORY"
 client: "MarketSpark"
 client_logo: /img/case-studies/marketspark/marketspark-logo.png
+client_logo_height: 48px
 hero_title: "Modernizing MarketSpark's AWS Cloud into a <span class='text-gradient'>100% Infrastructure as Code, Automated &amp; Multi-Account Platform</span>"
 hero_aside_image: /img/case-studies/marketspark/hero-bg.jpg
-hero_aside_alt: "MarketSpark: connectivity in the field"
+hero_aside_alt: "MarketSpark: Connectivity in the Field"
 
 # At-a-glance stat strip (appears under hero)
 stat_bar:
@@ -111,7 +112,7 @@ title: TLS Everywhere
 body: Databases sit behind RDS Proxy, with database and ElastiCache (Valkey/Redis) connections enforced over TLS.
 {{< /csi-list >}}
 
-{{< cs-pullquote name="&mdash; Adam Pallin" title="Director of Software Engineering" company="MarketSpark" >}}
+{{< cs-pullquote name="Adam Pallin" title="Director of Software Engineering" company="MarketSpark" photo="/img/case-studies/marketspark/adam-pallin.jpg" >}}
 <strong>Masterpoint built us our own platform</strong>. And it doesn't feel like boilerplate dropped over everything. They worked within the systems we already had, solved the hard problems like our networking setup, and left us with clean infrastructure code we can actually build on.
 {{< /cs-pullquote >}}
 {{< /csi-section >}}
@@ -148,6 +149,6 @@ body: MarketSpark's AWS environment is aligned with industry security and compli
 Knowledge transfer wasn't a final phase, it ran in parallel with the work. We held training sessions, recorded walkthroughs, drew architecture diagrams, and documented operations extensively. By handoff, MarketSpark's engineers weren't inheriting a black box. They were already shipping changes and self-deploying infrastructure against the new platform.
 {{< /csi-section >}}
 
-{{< csi-testimonial name="&mdash; Charlie Wilson" title="Chief Technology Officer (CTO)" company="MarketSpark" variant="pine" image="/img/bg_our_word.jpg" >}}
+{{< csi-testimonial name="Charlie Wilson" title="Chief Technology Officer (CTO)" company="MarketSpark" variant="pine" photo="/img/case-studies/marketspark/charlie-wilson.jpg" image="/img/bg_our_word.jpg" >}}
 We chose Masterpoint over the giant consulting firms because <strong>a boutique firm meant a real partnership and actual flexibility to work the problem alongside us</strong>. We've worked with enough of both to know it's always better to work with people making local decisions that affect the outcome than to get an ivory-tower, boilerplate approach. <strong>We're 100% happy with the decision to bring in Masterpoint.</strong>
 {{< /csi-testimonial >}}
