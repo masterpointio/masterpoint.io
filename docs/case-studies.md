@@ -1,4 +1,4 @@
-<!-- trunk-ignore-all(markdownlint) -->
+<!-- trunk-ignore-all(markdownlint,prettier) -->
 
 # Case Studies — working guide
 

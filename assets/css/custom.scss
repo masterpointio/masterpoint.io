@@ -4783,25 +4783,6 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
       font-weight: 800;
     }
 
-    // Inline icon prefix used at the start of a bullet item, e.g.:
-    //   - <i class="cs-bullet-icon fa-solid fa-sitemap"></i> **Title.** body
-    // The bullet's mint dot stays (acts like a hanging indent marker) and
-    // this icon sits inline with the title text.
-    .cs-bullet-icon {
-      color: $cs-mint;
-      font-size: 0.95em;
-      margin-right: 0.45em;
-      width: 1.2em;
-      display: inline-block;
-      text-align: center;
-      vertical-align: -1px;
-    }
-
-    // Items with a cs-bullet-icon get a slightly larger gap before content
-    li:has(> .cs-bullet-icon) {
-      padding-left: 0.1rem;
-    }
-
     blockquote {
       margin: 2rem 0;
       padding: 1.4rem 1.8rem 1.4rem 2rem;
