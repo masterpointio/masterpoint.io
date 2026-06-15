@@ -190,6 +190,17 @@ $(document).ready(function(){
 
 // Testimonials Slider
 $(window).on('load', function(){
+    // Randomize testimonial order on every page load (Fisher-Yates) before
+    // flexslider initializes, so no single quote always leads.
+    var $slides = $('#testimonialSlider .slides');
+    var items = $slides.children('li').get();
+    for (var i = items.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = items[i];
+      items[i] = items[j];
+      items[j] = tmp;
+    }
+    $slides.append(items);
     $('.flexslider').flexslider({
       animation: "slide",
       controlNav: true,
