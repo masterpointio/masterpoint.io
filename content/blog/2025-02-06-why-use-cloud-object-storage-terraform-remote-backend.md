@@ -5,8 +5,8 @@ title: "Why Use Cloud Object Storage for Terraform's Remote Backend & State"
 author: Yangci Ou
 slug: why-use-cloud-object-storage-terraform-remote-backend
 date: 2025-02-06
-# date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
-description: Discover why cloud object storage services are the gold standard for Terraform or OpenTofu’s remote state and backend, including the benefits and an example using AWS S3 & DynamoDB.
+date_modified: 2026-06-03 # Be sure to use this if you've updated the post as this helps with SEO and index freshness
+description: Discover why cloud object storage services are the gold standard for Terraform or OpenTofu’s remote state and backend, including the benefits and an example using AWS S3 with native state locking.
 image: /img/updates/cloud-object-storage-terraform-remote-backend/cloud-object-storage-for-terraform-remote-backend.webp
 callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a></p>
 ---
@@ -22,7 +22,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 
 ## Introduction
 
-At Masterpoint, as we build out or modernize many of our clients’ Infrastructure as Code (IaC) projects, one common question that comes up is Terraform/OpenTofu’s backend and remote state. It’s a well-known good practice to have a remote state backend, but why? In this post, we'll dive into the importance of using a remote backend for your IaC project, and why cloud based object storage services should be your go-to choice for a remote backend.
+At Masterpoint, as we build out or modernize many of our clients’ [Infrastructure as Code](https://aws.amazon.com/what-is/iac/) (IaC) projects, one common question that comes up is Terraform/OpenTofu’s backend and remote state. It’s a well-known good practice to have a remote state backend, but why? In this post, we'll dive into the importance of using a remote backend for your IaC project, and why cloud based object storage services should be your go-to choice for a remote backend.
 
 ## What is Remote State and a Remote Backend?
 
@@ -56,10 +56,10 @@ By leveraging cloud object storage for your remote backend, you get enterprise-g
 
 ## How do I create a Remote State Backend?
 
-Setting up a remote state backend is straightforward and simple using any cloud provider. We’ll be using AWS as an example with S3 and DynamoDB. It’s as simple as three steps:
+Setting up a remote state backend is straightforward and simple using any cloud provider. We’ll be using AWS as an example with S3. It’s as simple as three steps:
 
 1. Create an S3 bucket to store your state files. Configure permissions and any additional features such as encryption at rest.
-2. Create a DynamoDB table (with partition key of `LockID` of type `String`, [see detailed documentation](https://developer.hashicorp.com/terraform/language/backend/s3#dynamodb_table)) for state locking. This is strongly recommended to prevent multiple users from using the same state file at once to avoid corrupting the file.
+2. Enable state locking by setting `use_lockfile = true` in your backend configuration ([available in Terraform/OpenTofu 1.10+](https://developer.hashicorp.com/terraform/language/backend/s3#state-locking)). S3 stores a small lock file right alongside your state file, which is strongly recommended to prevent multiple users from modifying the same state at once and corrupting it.
 3. Configure the backend in the IaC. For example, in Terraform:
 
 ```hcl
@@ -67,9 +67,9 @@ terraform {
   backend "s3" {
     bucket               = "my-terraform-state-bucket"
     key                  = "terraform.tfstate"
-    workspace_key_prefix = “your-root-module-name”
+    workspace_key_prefix = "your-root-module-name"
     region               = "us-east-1"
-    dynamodb_table       = "terraform-state-lock-example-table"
+    use_lockfile         = true
     encrypt              = true
   }
 }
@@ -77,14 +77,14 @@ terraform {
 
 Initialize it using `terraform init`, then use TF as normal. Each time the state is modified, the backend ensures the changes are stored safely in AWS S3.
 
-To simplify the process of creating your S3 Backend, you can use open-source modules that are specifically designed for this purpose. These offer best practices and follow strong security practices so you don’t need to reinvent the wheel by writing out TF code for S3 and DynamoDB. [Cloud Posse’s `terraform-aws-tfstate-backend` module](https://github.com/cloudposse/terraform-aws-tfstate-backend) is one we recommend and use across many client accounts.
+To simplify the process of creating your S3 Backend, you can use open-source modules that are specifically designed for this purpose. These offer best practices and follow strong security practices so you don’t need to reinvent the wheel by writing out TF code for S3 and state locking. [Cloud Posse’s `terraform-aws-tfstate-backend` module](https://github.com/cloudposse/terraform-aws-tfstate-backend) is one we recommend and use across many client accounts.
 
 Here’s an example of how it can be used:
 
 ```hcl
 module "terraform_state_backend" {
   source = "cloudposse/tfstate-backend/aws"
-  version = "1.5.0"  # Use the latest version
+  version = "1.9.0"  # Use the latest version
 
   namespace  = "your-namespace"
   stage      = "shared"
@@ -92,11 +92,11 @@ module "terraform_state_backend" {
 
   terraform_backend_config_file_path = "."
   terraform_backend_config_file_name = "backend.tf"
-  force_destroy                      = false
+  s3_state_lock_enabled              = true
 }
 ```
 
-This will create a new `backend.tf` file that defines the backend with newly provisioned state bucket and state lock table - all of these come right out of the box as an open source Terraform module. Read up more on the [GitHub repository](https://github.com/cloudposse/terraform-aws-tfstate-backend)!
+This will create a new `backend.tf` file that defines the backend with newly provisioned state bucket and state locking - all of these come right out of the box as an open source Terraform module. Read up more on the [GitHub repository](https://github.com/cloudposse/terraform-aws-tfstate-backend)!
 
 ## Conclusion
 
@@ -104,4 +104,4 @@ While local backend state might suffice for small personal projects or proof of 
 
 In the world of Infrastructure as Code, your state file is as crucial as the infrastructure that it manages. Be sure to store your state safely in a remote backend. Your future self (and your team) will thank you!
 
-P.S. Interested in exploring more IaC state management readings? We recently published a [case study about migrating over **43,000** resources from Terraform Cloud to Spacelift](https://masterpoint.io/power-digital-case-study/)!
+P.S. Interested in exploring more IaC state management readings? We recently published a [case study about migrating over **43,000** resources from Terraform Cloud to Spacelift, while saving **10x in infrastructure automation costs**](https://masterpoint.io/power-digital-case-study/)!

@@ -1,0 +1,30 @@
+{{- /*
+  case-study-toc — "In This Success Story" contents card.
+
+  Auto-injected before the first <h2> by layouts/case-studies/single.html on
+  every modern case study (unless the page sets `toc: false`). Reads
+  .Fragments, which is populated at the layout/partial stage (.TableOfContents
+  is not usable from a shortcode, but this runs in the layout so either works;
+  .Fragments gives us the structured headings). Fragments nests the real
+  headings under a synthetic Level-0 root, so descend one level, then list the
+  H2 sections as a flat numbered card. Renders nothing when there are no
+  headings. Context (`.`) is the Page.
+*/ -}}
+{{- $title := "In This Success Story" -}}
+{{- $headings := .Fragments.Headings -}}
+{{- if $headings -}}
+  {{- $first := index $headings 0 -}}
+  {{- if eq $first.Level 0 -}}{{- $headings = $first.Headings -}}{{- end -}}
+{{- end -}}
+{{- if $headings -}}
+<nav id="cs-toc" class="cs-toc" aria-label="{{ $title }}">
+  <p class="cs-toc__title">{{ $title }}</p>
+  <ol class="cs-toc__list">
+    {{- range $headings -}}
+    {{- if and .ID .Title -}}
+    <li class="cs-toc__item"><a class="cs-toc__link" href="#{{ .ID }}">{{ .Title | safeHTML }}</a></li>
+    {{- end -}}
+    {{- end -}}
+  </ol>
+</nav>
+{{- end -}}

@@ -1,0 +1,15 @@
+{{/*
+  cs-beforeafter — wrapper for before/after two-pane card.
+  Usage:
+    {{< cs-beforeafter >}}
+    {{< cs-pane variant="before" title="Before" >}}
+    Markdown content for before
+    {{< /cs-pane >}}
+    {{< cs-pane variant="after" title="After" >}}
+    Markdown content for after
+    {{< /cs-pane >}}
+    {{< /cs-beforeafter >}}
+*/}}
+<div class="cs-beforeafter">
+  {{ .Inner | $.Page.RenderString }}
+</div>

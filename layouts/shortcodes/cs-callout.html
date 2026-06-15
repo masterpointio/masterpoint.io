@@ -1,0 +1,14 @@
+{{- $title := .Get "title" -}}
+{{- $variant := .Get "variant" | default "info" -}}
+{{- $icon := .Get "icon" | default "" -}}
+<aside class="cs-callout cs-callout--{{ $variant }}">
+  {{- if $title -}}
+  <div class="cs-callout__header">
+    {{- if $icon -}}<i class="cs-callout__icon fa-solid {{ $icon }}"></i>{{- end -}}
+    <span class="cs-callout__title">{{ $title | safeHTML }}</span>
+  </div>
+  {{- end -}}
+  <div class="cs-callout__body">
+    {{ .Inner | $.Page.RenderString }}
+  </div>
+</aside>
