@@ -29,8 +29,8 @@ stat_bar:
     label: "full-region disaster recovery"
 
 # Optional preview / OG
-preview_image: /img/case-studies/marketspark/preview.svg
-og_img: /img/case-studies/marketspark/preview.svg
+preview_image: /img/case-studies/marketspark/marketspark-aws.png
+og_img: /img/case-studies/marketspark/marketspark-aws.png
 
 sitemap:
   priority: 0
@@ -39,7 +39,7 @@ sitemap:
 {{< csi-split media="/img/case-studies/marketspark/telecommunications.jpg" media_alt="Telecommunications and managed wireless connectivity" variant="light" ratio="65-35" >}}
 {{< cs-about
   name="MarketSpark"
-  logo="/img/case-studies/marketspark/marketspark-logo.png"
+  logo="/img/case-studies/marketspark/marketspark-logo-dark.png"
   url="https://www.marketspark.com/"
   linkedin="https://www.linkedin.com/company/marketspark-inc/"
   industry="Telecommunications · Managed Wireless / 5G Connectivity"
@@ -48,7 +48,7 @@ MarketSpark is the leading provider of analog replacement solutions for enterpri
 {{< /cs-about >}}
 {{< /csi-split >}}
 
-{{< csi-split eyebrow="The Challenge" title="The Starting Point" media="/img/case-studies/marketspark/marketspark-aws.jpg" media_alt="MarketSpark and Masterpoint on AWS" variant="pine" flip="true" >}}
+{{< csi-split eyebrow="The Challenge" title="The Starting Point" media="/img/case-studies/marketspark/marketspark-aws.png" media_alt="MarketSpark and Masterpoint on AWS" variant="pine" flip="true" >}}
 MarketSpark had outgrown the AWS environment they started on, especially as the company's customer base grew, product surface widened, and they began to get compliance framework requests. All environments (including development, staging, production, and others) lived inside a single monolithic AWS account, and every change was a manual operation ([ClickOps](https://masterpoint.io/blog/terraform-opentofu-terminology-breakdown/#clickops)) in the AWS Console.
 
 The MarketSpark team felt this. They had already begun planning improvements, and they partnered with Masterpoint for the deep platform expertise to execute.

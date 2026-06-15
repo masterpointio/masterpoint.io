@@ -41,6 +41,34 @@ selector under its prefix.
 
 ---
 
+## List page (`/case-studies/`)
+
+`layouts/case-studies/list.html` (body `#caseStudiesPage`): hero banner + stacked
+full-width rows (`partials/case-study-entry.html`, each row one `<a>`). Chosen over a
+card grid to stay scannable as the list grows. Card image = each study's
+`preview_image` (`og_img` stays separate for social). Non-obvious bits:
+
+- **Banner background is layered in CSS, not via `banner_image`** — cosmic photo
+  (`/img/bg_our_word.jpg`) + dark scrim (last stop `$pine`, so it fades into the rows)
+  + mint/pink glows + masked dot grid. Header is left **transparent** so the image runs
+  behind it; keep the global `padding-top: 9.9rem` (smaller hides the title under the
+  absolute header).
+- **`banner_tagline` is gradient text with a dash on _both_ ends.**
+- **Image column is 38%** (`flex: 0 0 38%`, `object-fit: cover`).
+- **Title is never clamped** (must always show in full → a long title grows the row);
+  description stays 2-line clamped.
+- **Hover accent is a gradient bar on the _left_ edge** (not the top).
+- **CTA gradient gotcha:** `.cs-card__cta` must be `align-self: flex-start`. As a flex
+  item in the column body it otherwise stretches full-width and the `text-gradient`
+  spreads across the whole column, leaving only the start color on the short word.
+- **A portrait `preview_image` makes its row taller** — `object-fit: cover` in a
+  %-width column with only `min-height` lets a tall poster (Power Digital) drive the
+  height, so rows can be uneven. A fixed `height` on `.cs-card` would crop instead.
+- **SCSS var-order:** `#caseStudiesPage` sits above the `$cs-mint` / `csi-grad-*`
+  defs, so use literal hex/gradients there (globals like `$pine` are fine).
+
+---
+
 ## Modern layout — front matter schema
 
 ```yaml
@@ -69,8 +97,8 @@ stat_bar: # 4-up cards under the hero
     label: "what got dramatically faster"
 
 # Preview / OG ─────────────────────────────────────────────────────
-preview_image: /img/case-studies/CLIENT/preview.svg
-og_img: /img/case-studies/CLIENT/preview.svg
+preview_image: /img/case-studies/CLIENT/foo.png
+og_img: /img/case-studies/CLIENT/foo.png
 
 # End-of-article CTA (optional) ────────────────────────────────────
 # If omitted, the layout renders a generic Masterpoint CTA automatically.
@@ -161,12 +189,6 @@ mint on mint and disappears. Always keep `:not(.button)` on `.cs-article a`.
 ---
 
 ## Immersive layout (MarketSpark)
-
-> **Two MarketSpark variants are maintained for comparison:**
-> `content/case-studies/marketspark.md` (immersive, this section) and
-> `content/case-studies/marketspark-article-style.md` (the old **article style**
-> — no `layout:` override, so it uses the modern `single.html`). They share the
-> same front matter/content; pick one before launch and delete the other.
 
 Opt in with `layout: immersive`. The body element carries **both**
 `case-study-modern` and `case-study-immersive`:
@@ -286,9 +308,8 @@ Authoring rules:
   an `<a>` is injected via `safeHTML` and bypasses the render hook, so add
   `target="_blank" rel="noopener noreferrer"` to the anchor by hand if it should
   open in a new tab.
-- New shortcode files aren't picked up by a running `hugo serve` — restart it.
-  The serve's CSS hot-reload has also been flaky; if a change doesn't show,
-  restart serve and hard-refresh (Cmd+Shift+R).
+- **`hugo serve` CSS hot-reload is flaky** — if a change doesn't show, hard-refresh
+  (Cmd+Shift+R).
 
 ### Scroll animations (AOS)
 
@@ -313,8 +334,7 @@ once: true })`), with styles in `assets/css/aos.scss` (imported by `style.scss`)
   `data-aos` of their own; they reveal with their parent `csi-prose` block, which
   avoids nested-AOS double-animation.
 - Adding `data-aos` to a new shortcode needs no JS wiring — the global
-  `AOS.init` already scans `[data-aos]` (and watches for new nodes). Restart
-  `hugo serve` after creating a new shortcode template.
+  `AOS.init` already scans `[data-aos]` (and watches for new nodes).
 
 ### Page ending
 
@@ -327,33 +347,15 @@ case studies and the marketing pages.
 
 ## Page-level styling decisions
 
-- **Page backdrop** is pine (`$pine = #0e383a`), matching the blog. The
-  article sits on a wide white card (`.cs-article-card`, max-width 1080px)
-  with a soft shadow.
-- **Hero** is darker pine with a gradient + dot grid + soft mint/pink glow,
-  _plus_ the optional full-bleed background image with a dark scrim and
-  frosted title frame.
-- **Hero min-height** is ~720px desktop / 600px tablet / 500px mobile so the
-  photo stays generous even when the frosted box content is lean.
-- **Body content max-width** is wider than the blog (1080px article card vs
-  the blog's ~795px entry) because case studies have more visual content.
-- **Body text size** is 0.98rem (`.cs-article`, `p`, `ul/ol li`) — slightly
-  smaller than the blog's default to keep the wider card readable.
-- **Hero title font** scales 2.7rem → 2.45rem → 1.9rem (desktop / ≤991px /
-  ≤575px). The stat-strip values scale alongside it (2.2rem → 1.8rem → 1.55rem)
-  so the title stays comfortably larger than the stat values at **every**
-  breakpoint — the values must never visually outweigh the title (the 2-up value
-  is 1.8rem, not 2rem, so it doesn't feel oversized at the narrow ~600px end).
-  Stat-cell padding also adapts: 1.7rem (4-up) → 2rem (2-up, more breathing
-  room) → 1.1rem (1-up stack, tight so stacked stats don't sprawl).
-- **Section H2** has a gradient accent bar above it (`::before`). This is the
-  primary visual marker for major sections — no separate `cs-section`
-  shortcode needed.
-- **Pull quotes** (dark variant) are pine cards with a gradient left border
-  and a soft mint serif quote mark. Attribution is vanilla for the single-line
-  `attribution` arg; when `name`/`title`/`company` are used it renders as a bold
-  name over a mint `title, company` line. With a `photo`, see the avatar-left
-  portrait layout above.
+- **Backdrop is pine** (`$pine = #0e383a`, matching the blog); the article sits on
+  a wide white card (`.cs-article-card`, max-width **1080px** — wider than the
+  blog's ~795px because case studies carry more visual content).
+- **Body text is 0.98rem** (smaller than the blog) so the wider card stays readable.
+- **Hero min-height ~720px** (smaller at tablet/mobile) so the photo has room even
+  when the frosted title box is lean.
+- **Hero title must stay larger than the stat-strip values at every breakpoint** —
+  both scale down together, and the 2-up stat value is deliberately held below the
+  title so the numbers never visually outweigh it.
 
 ---
 
@@ -414,10 +416,7 @@ Required because Hugo's CLI build does not catch visual regressions.
 ### Step-by-step
 
 1. Start (or confirm) `hugo serve` is running at http://127.0.0.1:1313/.
-2. Navigate to the case study page. **Slug is derived from filename**, so
-   a file at `content/case-studies/<client>.md` lives at
-   `/case-studies/<client>/`. Don't add a `slug:` field unless you really
-   need filename and URL to diverge.
+2. Navigate to the page (`/case-studies/<client>/` — slug = filename).
 3. After every meaningful CSS/layout change, reload and screenshot to verify.
 4. **Save screenshots in `.screenshots/`** with descriptive filenames
    (`ms-NN-what.png`). They're git-ignored.
@@ -437,92 +436,23 @@ use `hugo --destination /tmp/cs-v && rm -rf /tmp/cs-v` to confirm compilation
 without restarting their server. **Never `kill` an existing hugo process**
 without asking — that's their dev loop.
 
-If a **new** shortcode template is added, the watcher won't pick it up. Tell
-the user to restart `hugo serve` (Ctrl-C + rerun).
-
 ---
 
-## Decision log
+## Decisions & gotchas
 
-Record meaningful decisions about the **current** design, with a one-line
-"why". If a decision is later reversed (feature removed), delete the entry
-rather than leaving a "we used to do X" note. The codebase is the source of
-truth; this log explains the reasoning behind what's still there.
+Only what isn't already obvious from the sections above or the code.
 
-### Architecture
-
-- **Three-layout split (legacy / modern / immersive).** Power Digital is heavily
-  customized (legacy); we don't want to regress it while iterating on new case
-  studies. Modern is the default for new work; immersive is an opt-in
-  card-stack variant (MarketSpark). Route via `layout:` front matter.
-- **Page backdrop = pine, article = white card.** Matches the blog's visual
-  language; frames long-form content nicely without competing with figures.
-- **Body content max-width = 1080px** (wider than the blog's ~795px) — case
-  studies have more visual content.
-- **Body font 0.98rem.** With the wider card, 1.1rem felt oversized for
-  long-form prose.
-
-### Hero
-
-- **Hero min-height ~720px desktop** with smaller breakpoints below. The
-  photo needs room even when the frosted box is lean.
 - **Mobile hero top padding must clear the stacked header.** Below 992px the
-  global header stacks into two rows (logo+MENU, then socials + GET IN TOUCH,
-  ~132–144px tall) and is `position: absolute` over the hero — this is true
-  across the **whole** ≤991 range (verified two-row at 600px and 900px), not
-  just phones. The hero's `padding-top` is what keeps the lockup from hiding
-  behind it, so **both** the ≤991 and ≤575 breakpoints use a large top pad
-  (`10rem`, ~58–62px clearance). Do **not** shrink it (earlier values of `8rem`
-  at ≤991 and `7rem` at ≤575 left the header overlapping / cramping the lockup).
-- **Horizontal scrim** (dark left → clear right) when a hero photo is
-  present. Uniform overlays make the photo unreadable; this lets the photo's
-  subject carry visual weight while keeping the title legible.
-- **Client × Masterpoint lockup in the hero.** Client logo on a white pill
-  (so brand colors stay correct), gradient `×`, then `/img/logo.svg` (white
-  wordmark + gradient icon, perfect for the dark hero box).
-
-### Content patterns
-
-- **End-of-article CTA defaults in the layout.** Every case study auto-gets
-  a generic Masterpoint pitch + "Get in touch" button (the inline link is
-  "Get in touch" too). Override via `callout:` front matter; hide with
-  `callout: false`. CTA visual language matches the blog's `#callout` (white
-  card, 3px mint border).
-- **Automatic inline TOC.** Every modern case study auto-gets an
-  "In This Case Study Success Story" contents card (layout injects
-  `partials/case-study-toc.html` before the first `<h2>`), so authors don't
-  wire it per page; opt out with `toc: false`. Inline (not a floating sidebar)
-  because the layout is a centered single column; visible at every breakpoint.
-  Started as an opt-in `cs-toc` shortcode, then moved to automatic injection at
-  the user's request (and reversed the original "no TOC" decision).
-- **`.cs-article a:not(.button)` is mandatory.** Without the `:not(.button)`,
-  buttons inside the article get the highlight-mint text color, which
-  matches the button background, making text invisible.
-- **`cs-pullquote` for actual quotes only.** Two variants: `dark` (default,
-  pine card) for emphasis; `light` (cream/mint editorial) when adjacent to
-  the dark CTA card (e.g., a closing testimonial above the CTA would
-  otherwise stack two dark cards).
-- **`cs-wins` for the Outcomes section.** Grid of icon cards with bolded
-  titles and short bodies — faster to scan than 6 prose paragraphs.
-- **"What Masterpoint Built" stays as plain bullets**, not cards. The bullets
-  contain detailed prose with hyperlinks that don't compress well into card
-  format.
-
-### Motion
-
-- **Scroll reveals via AOS, not a bespoke observer.** The immersive body reuses
-  the site-wide AOS library (already loaded for the marketing pages) so motion is
-  consistent everywhere. `data-aos="fade-up"` lives in the `csi-*` shortcode
-  templates; per-element `data-aos-duration="900"` overrides the global 1500ms
-  (which felt too slow band-by-band); the hero + stat strip are left un-animated
-  as the kept-verbatim modern top. (A standalone IntersectionObserver version was
-  built first, then replaced with AOS for consistency.)
-
-### Hugo wiring
-
-- **Slug derived from filename.** Don't set `slug:` unless filename and URL
-  need to diverge.
-- **`CLAUDE.md` and `*.raw.md` excluded via `ignoreFiles`** in `config.yaml`.
-  Otherwise Hugo turns every `.md` under `content/` into a publishable page.
-- **Em dash budget under 10 per case study.** They lose punch when overused;
-  prefer parens / commas / colons / periods for in-sentence pauses.
+  global header stacks into two rows and is `position: absolute` over the hero —
+  across the **whole** ≤991 range, not just phones. Both the ≤991 and ≤575
+  breakpoints use a large top pad (`10rem`); don't shrink it or the lockup hides
+  under the nav.
+- **Hero lockup uses a white pill behind the client logo** so the client's
+  brand colors stay correct, then a gradient `×`, then `/img/logo.svg` (white
+  wordmark for the dark hero).
+- **"What Masterpoint Built" stays as plain bullets, not `cs-wins` cards** — the
+  prose + inline links don't compress into card format.
+- **`cs-pullquote` light variant exists for the closing quote** so it doesn't
+  stack two dark cards against the dark CTA below it.
+- **`CLAUDE.md` / `*.raw.md` are excluded via `ignoreFiles`** in `config.yaml`,
+  else Hugo publishes every `.md` under `content/`.
