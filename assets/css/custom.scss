@@ -1508,6 +1508,47 @@ footer {
     line-height: 1.5em;
     padding-top: 0.55em;
   }
+
+  // Portrait variant — for testimonials that supply a `photo` front-matter field.
+  // Mirrors the immersive case-study layout: left-aligned quote on top, then a
+  // footer row with a circular headshot (brand-gradient ring) on the left and
+  // the name/title stacked to its right.
+  &.quoteBx--portrait {
+    text-align: left;
+    max-width: 760px;
+    margin: 0 auto;
+
+    .quoteBy {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+      margin-top: 2rem;
+    }
+    .quoteAvatar {
+      flex: 0 0 auto;
+      padding: 1px;
+      border-radius: 50%;
+      background: linear-gradient(40deg, #2ad9c2 0%, #55c1b4 42%, #d191bf 100%);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      img {
+        display: block;
+        width: 96px;
+        height: 96px;
+        border-radius: 50%;
+        object-fit: cover;
+        @media (max-width: 575px) {
+          width: 76px;
+          height: 76px;
+        }
+      }
+    }
+    .quoteByText {
+      min-width: 0;
+    }
+    .quoteName {
+      padding-top: 0;
+    }
+  }
 }
 .flexslider {
   position: relative;
@@ -2930,6 +2971,30 @@ footer {
 
   #latest-news {
     color: #fff;
+  }
+}
+
+#thank-you {
+  #banner {
+    padding-bottom: 1.5rem;
+  }
+
+  .testimonials-section {
+    color: #fff;
+    padding: 0 0 5rem;
+
+    @media (max-width: 767px) {
+      padding: 0 0 3.5rem;
+    }
+
+    .quoteLabel {
+      margin-bottom: 2.5rem;
+    }
+
+    .flex-control-paging {
+      justify-content: center;
+      padding-top: 2.4rem;
+    }
   }
 }
 

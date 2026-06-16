@@ -1,0 +1,23 @@
+<div id="testimonialSlider" class="flexslider">
+  <ul class="slides clearfix">
+    {{ range where (.Site.RegularPages.ByWeight) "Type" "testimonials" }} {{
+    $name := .Title }}
+    <li>
+      <div class="quoteBx{{ if .Params.photo }} quoteBx--portrait{{ end }}">
+        <div class="quoteTxt">{{ .Content }}</div>
+        <div class="quoteBy">
+          {{ with .Params.photo }}
+          <div class="quoteAvatar">
+            <img src="{{ . }}" alt="{{ $name }}" loading="lazy" />
+          </div>
+          {{ end }}
+          <div class="quoteByText">
+            <div class="quoteName">{{ .Title }}</div>
+            <div class="quotePosition">{{ .Params.position }}</div>
+          </div>
+        </div>
+      </div>
+    </li>
+    {{ end }}
+  </ul>
+</div>
