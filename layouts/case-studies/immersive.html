@@ -1,0 +1,90 @@
+{{/*
+  IMMERSIVE CASE-STUDY LAYOUT  (.case-study-immersive)
+  ---------------------------------------------------------------------------
+  Opt in with `layout: immersive`. The TOP (hero + at-a-glance stat strip) is
+  intentionally IDENTICAL to the modern layout: the body carries BOTH
+  `case-study-modern` and `case-study-immersive`, and the hero/stat markup below
+  is copied verbatim from single.html so the shared `.case-study-modern` CSS
+  styles it exactly. Only the BODY differs — instead of one white article card
+  it is a stack of full-bleed, colour-split "slides" (the csi-* shortcodes),
+  styled under `.case-study-immersive`. Keep the two scopes from colliding:
+  the top uses `.cs-*` classes, the body uses `.csi-*` classes.
+*/}}
+{{ partial "head.html" . }}
+<body {{ if .Params.id }}id='{{ .Params.id }}' {{ end }}class="case-study-modern case-study-immersive">
+    {{ partial "header.html" . }}
+
+    {{/* HERO — verbatim from single.html (modern), do not diverge */}}
+    {{ $bgImg := or .Params.hero_image .Params.hero_aside_image }}
+    <section class="cs-hero{{ if $bgImg }} cs-hero--with-bg{{ end }}">
+        {{ if $bgImg }}
+        <div class="cs-hero__bg">
+            <img src="{{ $bgImg }}" alt="" />
+        </div>
+        {{ end }}
+        <div class="container">
+            <div class="cs-hero__layout">
+                <div class="cs-hero__inner{{ if $bgImg }} cs-hero__inner--framed{{ end }}">
+                    {{ if .Params.client_logo }}
+                    <div class="cs-hero__lockup">
+                        <div class="cs-hero__lockup-mark cs-hero__lockup-mark--client"{{ with .Params.client_logo_height }} style="--cs-client-logo-h: {{ . }}"{{ end }}>
+                            <img src="{{ .Params.client_logo }}" alt="{{ .Params.client | default "" }} logo" />
+                        </div>
+                        <div class="cs-hero__lockup-x" aria-hidden="true">&times;</div>
+                        <div class="cs-hero__lockup-mark cs-hero__lockup-mark--mp">
+                            <img src="/img/logo.svg" alt="Masterpoint logo" />
+                        </div>
+                    </div>
+                    {{ end }}
+                    <div class="cs-hero__eyebrow">
+                        {{ if .Params.eyebrow }}{{ .Params.eyebrow | safeHTML }}{{ else }}CASE STUDY{{ if .Params.client }} &middot; {{ .Params.client }}{{ end }}{{ end }}
+                    </div>
+                    <h1 class="cs-hero__title">
+                        {{ if .Params.hero_title }}
+                        {{ .Params.hero_title | safeHTML }}
+                        {{ else }}
+                        {{ .Title | safeHTML }}
+                        {{ end }}
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{/* AT-A-GLANCE STAT STRIP — verbatim from single.html (modern) */}}
+    {{ if .Params.stat_bar }}
+    <section class="cs-stat-strip">
+        <div class="container">
+            <div class="cs-stat-strip__inner">
+                {{ range .Params.stat_bar }}
+                <div class="cs-stat">
+                    <div class="cs-stat__value">{{ .value | safeHTML }}</div>
+                    <div class="cs-stat__label">{{ .label | safeHTML }}</div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+    {{ end }}
+
+    {{/* BODY — rotating colour cards (csi-* shortcodes) + closing CTA card */}}
+    {{ $defaultCallout := `<p>👋 <strong>Curious if <span class="csi-grad">Masterpoint</span> could help your team too?</strong> We partner with engineering organizations across the full spectrum — from unicorn startups to Fortune 500 enterprises — to deliver infrastructure systems and patterns that truly scale. <a href='https://calendly.com/matt-at-masterpoint/project-chat' target='_blank' rel='noopener'>Get in touch</a> and we'll walk through your environment, your roadmap, and see where we can help.</p>` }}
+    {{ $cta := cond (isset .Params "callout") .Params.callout $defaultCallout }}
+    <main class="csi-main">
+        <div class="csi-article-card">
+            {{ .Content }}
+            {{ if $cta }}
+            <section class="csi-section csi-section--pine csi-cta">
+                <div class="csi-container">
+                    <div class="csi-cta__inner" data-aos="fade-up" data-aos-duration="900">{{ $cta | safeHTML }}</div>
+                </div>
+            </section>
+            {{ end }}
+        </div>
+    </main>
+
+    {{ partial "schedule-assessment.html" . }}
+    {{ partial "footer.html" . }}
+    {{ partial "scripts.html" . }}
+</body>
+</html>

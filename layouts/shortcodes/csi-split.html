@@ -1,0 +1,47 @@
+{{/*
+  csi-split — a full-bleed band split into text + a visual, side by side.
+  Alternate sides down the page with flip="true". The workhorse for the
+  "what we built" solution sections (prose on one side, diagram on the other).
+  Args:
+    eyebrow    small uppercase label above the title
+    title      section headline (HTML allowed: <strong>, <span class="csi-grad">)
+    media      image/SVG src for the visual
+    media_alt  alt text for the visual
+    flip       "true" puts the visual on the LEFT, text on the right
+    variant    band background: light (default) | cream | pine | pine-deep
+    contain    "true" → object-fit:contain (diagrams); default cover-ish
+    caption    optional caption under the visual
+    ratio      column split: "50-50" (default) | "65-35" (text wider)
+*/}}
+{{- $eyebrow := .Get "eyebrow" -}}
+{{- $title := .Get "title" -}}
+{{- $media := .Get "media" -}}
+{{- $alt := .Get "media_alt" | default "" -}}
+{{- $flip := .Get "flip" -}}
+{{- $variant := .Get "variant" | default "light" -}}
+{{- $contain := .Get "contain" -}}
+{{- $caption := .Get "caption" -}}
+{{- $ratio := .Get "ratio" -}}
+<section class="csi-section csi-split csi-section--{{ $variant }}{{ if $flip }} csi-split--flip{{ end }}{{ with $ratio }} csi-split--{{ . }}{{ end }}">
+  <div class="csi-container">
+    <div class="csi-split__grid">
+      <div class="csi-split__text" data-aos="fade-up" data-aos-duration="900">
+        {{- if or $eyebrow $title -}}
+        <div class="csi-section__head">
+          {{- if $eyebrow -}}<div class="csi-eyebrow">{{ $eyebrow | safeHTML }}</div>{{- end -}}
+          {{- if $title -}}<h2 class="csi-section__title">{{ $title | safeHTML }}</h2>{{- end -}}
+        </div>
+        {{- end -}}
+        <div class="csi-prose">
+          {{ .Inner | $.Page.RenderString (dict "display" "block") }}
+        </div>
+      </div>
+      <div class="csi-split__media" data-aos="fade-up" data-aos-delay="120" data-aos-duration="900">
+        <figure class="csi-media{{ if $contain }} csi-media--contain{{ end }}">
+          {{- if $media -}}<img src="{{ $media }}" alt="{{ $alt }}" loading="lazy" />{{- end -}}
+          {{- if $caption -}}<figcaption class="csi-media__caption">{{ $caption | safeHTML }}</figcaption>{{- end -}}
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>

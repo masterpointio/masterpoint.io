@@ -1,0 +1,34 @@
+{{/*
+  csi-steps — a numbered process row (the "how"). Place INSIDE a csi-section
+  so the section provides the eyebrow + title; this emits just the step cards.
+  Inner: blocks separated by `---`, each block:
+    title: Short step name
+    body: One or two sentences. Inline markdown (links, *italic*, **bold**) works.
+*/}}
+{{- $raw := .Inner -}}
+{{- $blocks := split $raw "---" -}}
+<div class="csi-steps">
+  {{- range $i, $block := $blocks -}}
+    {{- $b := trim $block " \t\n" -}}
+    {{- if $b -}}
+      {{- $lines := split $b "\n" -}}
+      {{- $title := "" -}}
+      {{- $body := "" -}}
+      {{- range $lines -}}
+        {{- $line := trim . " \t" -}}
+        {{- if hasPrefix $line "title:" -}}
+          {{- $title = trim (strings.TrimPrefix "title:" $line) " " -}}
+        {{- else if hasPrefix $line "body:" -}}
+          {{- $body = trim (strings.TrimPrefix "body:" $line) " " -}}
+        {{- else if and $line $body -}}
+          {{- $body = printf "%s %s" $body $line -}}
+        {{- end -}}
+      {{- end -}}
+      <div class="csi-step">
+        <span class="csi-step__num">{{ printf "%02d" (add $i 1) }}</span>
+        {{- if $title -}}<h4 class="csi-step__title">{{ $title | safeHTML }}</h4>{{- end -}}
+        {{- if $body -}}<p class="csi-step__body">{{ $body | $.Page.RenderString (dict "display" "inline") }}</p>{{- end -}}
+      </div>
+    {{- end -}}
+  {{- end -}}
+</div>

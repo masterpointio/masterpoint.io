@@ -12,8 +12,14 @@
 {{- $industry := .Get "industry" -}}
 {{- $technologies := .Get "technologies" -}}
 {{- $factsRaw := .Get "facts" -}}
+{{- $logo := .Get "logo" -}}
 {{- $eyebrow := .Get "eyebrow" | default (cond (ne $name "") (printf "About %s" $name) "About the client") -}}
 <aside class="cs-about">
+  {{- if $logo -}}
+  <div class="cs-about__logo">
+    <img src="{{ $logo }}" alt="{{ $name }} logo" />
+  </div>
+  {{- end -}}
   <div class="cs-about__header">
     <div class="cs-about__eyebrow">{{ $eyebrow }}</div>
     {{- if or $url $linkedin -}}

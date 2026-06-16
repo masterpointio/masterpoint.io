@@ -1,5 +1,0 @@
-{{- $label := .Get 0 | default "TODO" -}}
-<aside class="cs-todo" role="note">
-  <span class="cs-todo__tag">{{ $label | upper }}</span>
-  <span class="cs-todo__body">{{ .Inner | $.Page.RenderString }}</span>
-</aside>

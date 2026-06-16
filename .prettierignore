@@ -1,2 +1,9 @@
-# Ignore Hugo template files with Go template syntax that prettier cannot parse
+# Ignore Hugo template files with Go template syntax that prettier cannot parse.
+# Prettier treats `.html` as plain HTML and mangles Hugo's `{{ }}` actions
+# (e.g. exploding `{{ with .X }}` into broken multi-line forms), which can break
+# the `hugo` build.
+layouts/shortcodes/*
 layouts/_default/_markup/render-heading.html
+layouts/case-studies/immersive.html
+layouts/case-studies/_markup/render-link.html
+layouts/partials/case-study-entry.html
