@@ -325,11 +325,16 @@ once: true })`), with styles in `assets/css/aos.scss` (imported by `style.scss`)
   `csi-testimonial`, `cs-pullquote`, and the closing `.csi-cta`.
 - **The hero and stat strip are intentionally NOT animated** — they're above the
   fold and read as the kept-verbatim modern top.
-- **Duration is overridden to `900ms`** per element via `data-aos-duration="900"`
-  (the global default 1500ms felt too slow band-by-band). The per-element
-  attribute out-specifies the global `body[data-aos-duration="1500"]` rule that
-  `AOS.init` sets, so only the case study speeds up — the rest of the site keeps
-  1500ms.
+- **Duration is overridden to `600ms`** per element via `data-aos-duration="600"`
+  (the global default 1500ms felt too slow band-by-band; 900ms still lagged when
+  scrolling fast). The per-element attribute out-specifies the global
+  `body[data-aos-duration="1500"]` rule that `AOS.init` sets, so only the case
+  study speeds up — the rest of the site keeps 1500ms.
+- **Trigger point uses the AOS default offset (120px)** — no per-element
+  `data-aos-offset` override. The reveal fires once an element is ~120px *into*
+  the viewport. To fire reveals earlier (e.g. so fast scrolls don't outrun the
+  fade), add `data-aos-offset="0"` — or a negative value to start the fade before
+  the element enters view — to the relevant `csi-*` shortcode.
 - **No per-card stagger on grids.** `csi-impact`/`cs-wins` cards carry no
   `data-aos` of their own; they reveal with their parent `csi-prose` block, which
   avoids nested-AOS double-animation.

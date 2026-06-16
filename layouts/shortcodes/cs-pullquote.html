@@ -4,7 +4,7 @@
 {{- $company := .Get "company" -}}
 {{- $photo := .Get "photo" -}}
 {{- $variant := .Get "variant" | default "dark" -}}
-<aside class="cs-pullquote cs-pullquote--{{ $variant }}{{ if $photo }} cs-pullquote--portrait{{ end }}" data-aos="fade-up" data-aos-duration="900">
+<aside class="cs-pullquote cs-pullquote--{{ $variant }}{{ if $photo }} cs-pullquote--portrait{{ end }}" data-aos="fade-up" data-aos-duration="600">
   {{- if $photo -}}
   <div class="cs-pullquote__avatar"><img src="{{ $photo }}" alt="{{ $name }}" /></div>
   {{- end -}}

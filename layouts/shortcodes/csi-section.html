@@ -23,14 +23,14 @@
 <section class="csi-section csi-section--{{ $variant }} csi-section--{{ $align }}">
   <div class="csi-container">
     {{- if or $eyebrow $title $accent -}}
-    <div class="csi-section__head" data-aos="fade-up" data-aos-duration="900">
+    <div class="csi-section__head" data-aos="fade-up" data-aos-duration="600">
       {{- if $num -}}<span class="csi-section__num" aria-hidden="true">{{ $num }}</span>{{- end -}}
       {{- if $accent -}}<span class="csi-section__rule" aria-hidden="true"></span>{{- end -}}
       {{- if $eyebrow -}}<div class="csi-eyebrow">{{ $eyebrow | safeHTML }}</div>{{- end -}}
       {{- if $title -}}<h2 class="csi-section__title">{{ $title | safeHTML }}</h2>{{- end -}}
     </div>
     {{- end -}}
-    <div class="csi-prose" data-aos="fade-up" data-aos-delay="100" data-aos-duration="900">
+    <div class="csi-prose" data-aos="fade-up" data-aos-delay="100" data-aos-duration="600">
       {{ .Inner | $.Page.RenderString (dict "display" "block") }}
     </div>
   </div>
