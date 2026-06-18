@@ -6,7 +6,20 @@
       name="viewport"
       content="width=device-width, initial-scale=1, minimum-scale=1"
     />
+    {{ if eq .Section "blog" }}
+    <meta property="og:type" content="article" />
+    <meta
+      property="article:published_time"
+      content="{{ .Date.Format `2006-01-02T15:04:05Z07:00` }}"
+    />
+    {{ if .Params.date_modified }}
+    <meta
+      property="article:modified_time"
+      content="{{ .Params.date_modified | dateFormat `2006-01-02T15:04:05Z07:00` }}"
+    />
+    {{ end }} {{ else }}
     <meta property="og:type" content="website" />
+    {{ end }}
 
     <!-- <title> can be separated from metatitle
         <title>{{ .Title | plainify }} | {{ .Site.Title }}</title>
@@ -124,11 +137,11 @@
     ></script>
 
     <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-  crossorigin="anonymous"
-  referrerpolicy="no-referrer"
-/>
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
     <link rel="stylesheet" href="https://use.typekit.net/noi8hrw.css" />
 
@@ -182,38 +195,38 @@
     {{ if eq .Section "blog" }}
     <!-- Structured Data for Blog Posts -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": {{ .Title | jsonify }},
-      "description": {{ .Description | jsonify }},
-      "author": {
-        "@type": "Person",
-        "name": {{ if .Params.author }}{{ .Params.author | jsonify }}{{ else }}"Masterpoint"{{ end }}
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Masterpoint Consulting",
-        "url": "{{ .Site.BaseURL }}"
-      },
-      "datePublished": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
-      {{ if .Params.date_modified }}
-      "dateModified": {{ .Params.date_modified | dateFormat "2006-01-02T15:04:05Z07:00" | jsonify }},
-      {{ else }}
-      "dateModified": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
-      {{ end }}
-      "url": {{ .Permalink | jsonify }},
-      {{ if .Params.image }}
-      "image": {
-        "@type": "ImageObject",
-        "url": {{ (printf "%s%s" .Site.BaseURL .Params.image) | jsonify }}
-      },
-      {{ end }}
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": {{ .Permalink | jsonify }}
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": {{ .Title | jsonify }},
+        "description": {{ .Description | jsonify }},
+        "author": {
+          "@type": "Person",
+          "name": {{ if .Params.author }}{{ .Params.author | jsonify }}{{ else }}"Masterpoint"{{ end }}
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Masterpoint Consulting",
+          "url": "{{ .Site.BaseURL }}"
+        },
+        "datePublished": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+        {{ if .Params.date_modified }}
+        "dateModified": {{ .Params.date_modified | dateFormat "2006-01-02T15:04:05Z07:00" | jsonify }},
+        {{ else }}
+        "dateModified": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+        {{ end }}
+        "url": {{ .Permalink | jsonify }},
+        {{ if .Params.image }}
+        "image": {
+          "@type": "ImageObject",
+          "url": {{ (printf "%s%s" .Site.BaseURL .Params.image) | jsonify }}
+        },
+        {{ end }}
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": {{ .Permalink | jsonify }}
+        }
       }
-    }
     </script>
     {{ end }}
   </head>
