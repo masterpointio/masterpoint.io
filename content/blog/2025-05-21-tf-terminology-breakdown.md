@@ -148,13 +148,11 @@ As the TF ecosystem has matured, new terms have emerged beyond the core concepts
 
 ## ClickOps
 
-ClickOps refers to provisioning and managing cloud infrastructure manually by hand, such as one-off commands & scripts or clicking through a provider's web console (the AWS Management Console, Azure Portal, GCP Console, etc.), rather than defining it with code (IaC).
+ClickOps refers to provisioning and managing cloud infrastructure manually by hand, such as one-off commands & scripts or clicking through a provider's web console (the AWS Management Console, Azure Portal, GCP Console, etc.), rather than defining it with code (Infrastructure as Code, or IaC).
 
 The trouble with ClickOps is that it doesn't scale: manually-created resources aren't version controlled or peer reviewed, are error-prone, and are difficult to reproduce across environments. Anything long-lived should be brought under IaC management, which is especially important at the enterprise level, where ClickOps quietly erodes the governance, auditability, and compliance guarantees that larger organizations depend on, and where a single undocumented manual change can have an outsized blast radius across teams and environments.
 
-You can read more on this topic here: [What is ClickOps?](https://spacelift.io/blog/what-is-clickops)
-
-<!-- TODO: When the MarketSpark case study is published, link it here as a real-world example of going from 0% to 100% IaC — moving off fully manual ClickOps to reap benefits like disaster recovery and faster infrastructure deployments. -->
+You can read more on this topic here: [What is ClickOps?](https://spacelift.io/blog/what-is-clickops) For a real-world example, read our **[case study success story on how we brought MarketSpark to 100% Infrastructure as Code](/case-studies/marketspark/)** 📈, unlocking benefits such as disaster recovery and faster infrastructure deployments.
 
 ## Provider
 

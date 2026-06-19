@@ -75,7 +75,7 @@ That turns infrastructure into software: **reusable**, **consistent**, **version
 {{< /csi-split >}}
 
 {{< csi-split eyebrow="03 · Infrastructure Automation" title="100% of IaC <span class='csi-grad'>automated</span>" media="/img/case-studies/spacelift.jpg" media_alt="Spacelift: provision, configure, govern" variant="pine" >}}
-Nothing ships by hand. Every change is automated through [Spacelift](https://spacelift.io/)'s orchestration: CI plans for GitHub Pull Requests, deployment applies on merge, and evaluated with custom [policy-as-code (OPA)](https://www.openpolicyagent.org/).
+Nothing ships by hand. Every change is automated through [Spacelift](https://spacelift.io/)'s orchestration: CI plans for GitHub Pull Requests, deployment applies on merge, and evaluated with custom [policy-as-code (OPA)](https://www.openpolicyagent.org/). Even Spacelift itself is automated & managed as code through Masterpoint's open-source [`terraform-spacelift-automation`](https://github.com/masterpointio/terraform-spacelift-automation) module.
 
 Because provisioning is fully self-service and automated with guardrails (enforced with [Spacelift Policies through OPA Rego](https://docs.spacelift.io/concepts/policy)), MarketSpark's long-term cloud infrastructure growth is never bottlenecked. The platform scales alongside the business as it grows.
 {{< /csi-split >}}
