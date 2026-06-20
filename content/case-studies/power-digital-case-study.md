@@ -17,6 +17,7 @@ client: "Power Digital"
 home_blurb: "Migrated 43,000+ resources from Terraform Cloud to Spacelift for a 10x cut in infrastructure automation cost and far faster plan & apply cycles."
 home_metric: "10x"
 home_metric_label: "Lower automation cost"
+home_logo: /img/case-studies/power-logo.png
 stat_bar:
   - value: "10x"
     label: "reduction in infrastructure automation cost"

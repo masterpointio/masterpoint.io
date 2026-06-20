@@ -90,12 +90,23 @@ after `case-studies.scss`).
   "case-studies"` sorted by `weight`, so adding a new case study automatically
   flows into the homepage section (no per-page wiring). `_index.md` is a section
   page so it's excluded.
-- **Ten selectable styles** via `style="1".."10"`: (1) clean card grid,
+- **Eleven selectable styles** via `style="1".."11"`: (1) clean card grid,
   (2) alternating split features, (3) stat-forward dark band, (4) spotlight +
   side list, (5) horizontal scroll-snap rail, (6) bento grid, (7) editorial
   numbered list, (8) glassmorphism gradient cards, (9) cinematic full-bleed
-  spotlight, (10) metrics strip + CTA. Each is scoped under `.csh--s{N}` so they
-  never bleed into each other or the rest of the homepage.
+  spotlight, (10) metrics strip + CTA, (11) featured panel + logo-tab slider
+  (the Microsoft "customer stories" pattern). Each is scoped under `.csh--s{N}`
+  so they never bleed into each other or the rest of the homepage.
+- **Style 11 is interactive** (`.cshx-*`): a large featured story panel (client
+  logo + title + blurb + highlight chips + "Read the story") beside its image,
+  with a **logo-tab strip below that acts as the slider** — clicking a logo
+  switches the featured panel, the active tab gets a gradient underline, and the
+  strip auto-advances (pauses on hover/focus; `data-cshx-autoplay` ms on
+  `.cshx-slider`). The strip scrolls horizontally so it reads as "there's more"
+  as case studies are added. Vanilla JS is emitted **once** by the shortcode
+  (guarded with `.Page.Scratch`), inits every `.cshx-slider` on the page, and is
+  marked `data-cshx-ready` to avoid double-binding. Needs `home_logo` (a
+  light-background logo) per study; falls back to the client name text.
 - **Homepage sections live in** `content/sections/home-cs-NN-*.md`
   (`section_categories: [Home]`, weights 11–20) — one file per style so the team
   can compare all ten on the live page, then **keep one and delete the other
@@ -107,8 +118,9 @@ after `case-studies.scss`).
 - **Homepage-only front matter** read by the shortcode (added to each case study,
   ignored by the case-study layouts themselves): `home_blurb` (short card copy,
   falls back to `description`), `home_metric` + `home_metric_label` (one headline
-  stat for compact styles), and the existing `stat_bar` / `client` /
-  `client_logo` / `preview_image` / `hero_aside_image`. All reads are guarded —
+  stat for compact styles), `home_logo` (logo that reads on a light surface, used
+  by style 11), and the existing `stat_bar` / `client` / `client_logo` /
+  `preview_image` / `hero_aside_image`. All reads are guarded —
   a study missing any field degrades gracefully (e.g. no `client_logo` → the
   client name renders as text).
 - **Brand colours, no yellow-led gradients in metrics** — values use the local

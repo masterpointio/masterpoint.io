@@ -300,5 +300,97 @@
       {{- end }}
     </div>
   </div>
+
+{{- /* ============================== STYLE 11 — Featured panel + logo-tab slider ============================== */ -}}
+{{- else if eq $style "11" }}
+  <div class="cshx-head">
+    <div class="cshx-head__intro">
+      <span class="csh-eyebrow">{{ $eyebrow }}</span>
+      <h2 class="csh-title">{{ $title | safeHTML }}</h2>
+    </div>
+    <a class="button btn-gradient cshx-head__cta" href="{{ $ctaLink }}">{{ $ctaText }}</a>
+  </div>
+
+  <div class="cshx-slider" data-cshx-autoplay="6000">
+    <div class="cshx-stage">
+      {{- range $i, $e := $items }}
+      {{- $img := or (.Param "preview_image") (.Param "hero_aside_image") }}
+      <article class="cshx-panel{{ if eq $i 0 }} is-active{{ end }}" data-cshx-panel="{{ $i }}">
+        <div class="cshx-panel__text">
+          <div class="cshx-panel__logo">
+            {{- with .Param "home_logo" }}<img src="{{ . }}" alt="{{ $e.Param "client" | default $e.Title }}">{{ else }}<span>{{ or ($e.Param "client") $e.Title }}</span>{{ end }}
+          </div>
+          <h3 class="cshx-panel__title">{{ .Title }}</h3>
+          <p class="cshx-panel__desc">{{ or (.Param "home_blurb") .Description }}</p>
+          {{- with .Param "stat_bar" }}
+          <div class="cshx-panel__meta">
+            <span class="cshx-panel__metalabel">Highlights</span>
+            <div class="csh-chiprow">{{ range first 3 . }}<span class="csh-chip">{{ .value | safeHTML }}</span>{{ end }}</div>
+          </div>
+          {{- end }}
+          <a class="button btn-gradient cshx-panel__btn" href="{{ .RelPermalink }}">Read the story</a>
+        </div>
+        <a class="cshx-panel__media" href="{{ .RelPermalink }}" aria-label="{{ .Title }}">
+          {{- with $img }}<img src="{{ . }}" alt="{{ $e.Title }}" loading="lazy">{{ end }}
+        </a>
+      </article>
+      {{- end }}
+    </div>
+
+    <div class="cshx-tabs" role="tablist" aria-label="Customer stories">
+      {{- range $i, $e := $items }}
+      <button type="button" class="cshx-tab{{ if eq $i 0 }} is-active{{ end }}" data-cshx-tab="{{ $i }}" role="tab" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}" aria-label="{{ .Title }}">
+        {{- with .Param "home_logo" }}<img src="{{ . }}" alt="{{ $e.Param "client" | default $e.Title }}">{{ else }}<span>{{ or ($e.Param "client") $e.Title }}</span>{{ end }}
+        <span class="cshx-tab__bar" aria-hidden="true"></span>
+      </button>
+      {{- end }}
+    </div>
+  </div>
+
+  {{- if not (.Page.Scratch.Get "cshx-js") }}{{ .Page.Scratch.Set "cshx-js" true }}
+  <script>
+  (function () {
+    function initSlider(root) {
+      if (root.dataset.cshxReady) return;
+      root.dataset.cshxReady = "1";
+      var panels = root.querySelectorAll("[data-cshx-panel]");
+      var tabs = root.querySelectorAll("[data-cshx-tab]");
+      if (!panels.length || !tabs.length) return;
+      var current = 0, timer = null;
+      var delay = parseInt(root.getAttribute("data-cshx-autoplay") || "0", 10);
+
+      function show(n) {
+        n = (n + panels.length) % panels.length;
+        panels[current].classList.remove("is-active");
+        tabs[current].classList.remove("is-active");
+        tabs[current].setAttribute("aria-selected", "false");
+        current = n;
+        panels[current].classList.add("is-active");
+        tabs[current].classList.add("is-active");
+        tabs[current].setAttribute("aria-selected", "true");
+        tabs[current].scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
+      }
+      function start() { if (delay > 1 && panels.length > 1) timer = setInterval(function () { show(current + 1); }, delay); }
+      function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+      tabs.forEach(function (tab, i) {
+        tab.addEventListener("click", function () { stop(); show(i); start(); });
+      });
+      root.addEventListener("mouseenter", stop);
+      root.addEventListener("mouseleave", start);
+      root.addEventListener("focusin", stop);
+      start();
+    }
+    function initAll() {
+      document.querySelectorAll(".cshx-slider").forEach(initSlider);
+    }
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initAll);
+    } else {
+      initAll();
+    }
+  })();
+  </script>
+  {{- end }}
 {{- end }}
 </div>
