@@ -1,0 +1,304 @@
+{{- /*
+  case-studies-showcase — homepage case-study highlight section.
+
+  Pulls case studies dynamically from content/case-studies/ (sorted by weight)
+  and renders them in one of 10 selectable visual styles so the team can compare
+  and pick a favorite. Once a style is chosen, keep the one section file that
+  calls it and delete the rest (see docs/case-studies.md → "Homepage showcase").
+
+  Params:
+    style      "1".."10"  which visual treatment to render (default "1")
+    eyebrow    small label above the heading (default "Case Studies")
+    title      section heading, HTML allowed (default provided)
+    intro      optional sub-heading paragraph
+    cta_text   text for the "all case studies" link (default "Explore all case studies")
+    cta_link   href for that link (default "/case-studies/")
+    label      optional preview badge text (e.g. "Option 1 — Cards") for the
+               compare-and-pick demo; omit in production.
+
+  Per-case-study data read (all optional, graceful fallbacks):
+    .Title, .RelPermalink, .Description
+    preview_image, hero_aside_image, client, client_logo
+    home_blurb, home_metric, home_metric_label, stat_bar
+*/ -}}
+{{- $style := .Get "style" | default "1" -}}
+{{- $eyebrow := .Get "eyebrow" | default "Case Studies" -}}
+{{- $title := .Get "title" | default "Proven results, <span class='text-gradient'>real business impact</span>" -}}
+{{- $intro := .Get "intro" | default "See how we turn tangled infrastructure into platforms teams can scale — measured in dollars saved, hours returned, and risk removed." -}}
+{{- $ctaText := .Get "cta_text" | default "Explore all case studies" -}}
+{{- $ctaLink := .Get "cta_link" | default "/case-studies/" -}}
+{{- $label := .Get "label" -}}
+{{- $items := sort (where site.RegularPages "Section" "case-studies") "Weight" -}}
+{{- $featured := index $items 0 -}}
+
+<div class="csh csh--s{{ $style }}" data-aos="fade">
+{{- if $label }}
+  <div class="csh-flag"><span class="csh-flag__dot"></span>{{ $label | safeHTML }}</div>
+{{- end }}
+
+{{- /* ============================== STYLE 1 — Clean card grid ============================== */ -}}
+{{- if eq $style "1" }}
+  <div class="csh-head csh-head--center">
+    <span class="csh-eyebrow">{{ $eyebrow }}</span>
+    <h2 class="csh-title">{{ $title | safeHTML }}</h2>
+    <p class="csh-intro">{{ $intro | safeHTML }}</p>
+  </div>
+  <div class="csh-grid">
+    {{- range $items }}
+    {{- $cs := . }}
+    {{- $img := or (.Param "preview_image") (.Param "hero_aside_image") }}
+    <a class="csh-card" href="{{ .RelPermalink }}">
+      <div class="csh-card__media">{{ with $img }}<img src="{{ . }}" alt="{{ $cs.Title }}" loading="lazy">{{ end }}</div>
+      <div class="csh-card__body">
+        {{- with .Param "client" }}<span class="csh-card__client">{{ . }}</span>{{ end }}
+        <h3 class="csh-card__title">{{ .Title }}</h3>
+        <p class="csh-card__desc">{{ or (.Param "home_blurb") .Description }}</p>
+        <span class="csh-card__cta">Read the story <span aria-hidden="true">→</span></span>
+      </div>
+    </a>
+    {{- end }}
+  </div>
+  <div class="csh-foot"><a class="button btn-outline-gradient" href="{{ $ctaLink }}">{{ $ctaText }} ￫</a></div>
+
+{{- /* ============================== STYLE 2 — Alternating split features ============================== */ -}}
+{{- else if eq $style "2" }}
+  <div class="csh-head csh-head--center">
+    <span class="csh-eyebrow">{{ $eyebrow }}</span>
+    <h2 class="csh-title">{{ $title | safeHTML }}</h2>
+  </div>
+  <div class="csh-splits">
+    {{- range $i, $e := $items }}
+    {{- $img := or (.Param "preview_image") (.Param "hero_aside_image") }}
+    <article class="csh-split{{ if eq (mod $i 2) 1 }} csh-split--flip{{ end }}">
+      <div class="csh-split__media">{{ with $img }}<img src="{{ . }}" alt="{{ $e.Title }}" loading="lazy">{{ end }}</div>
+      <div class="csh-split__text">
+        {{- with .Param "client" }}<span class="csh-eyebrow csh-eyebrow--sm">{{ . }}</span>{{ end }}
+        <h3 class="csh-split__title">{{ .Title }}</h3>
+        <p class="csh-split__desc">{{ or (.Param "home_blurb") .Description }}</p>
+        {{- with .Param "stat_bar" }}
+        <div class="csh-split__stats">
+          {{- range first 3 . }}<div class="csh-mini"><b>{{ .value | safeHTML }}</b><span>{{ .label | safeHTML }}</span></div>{{ end }}
+        </div>
+        {{- end }}
+        <a class="csh-textlink" href="{{ .RelPermalink }}">Read the full story <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+    {{- end }}
+  </div>
+
+{{- /* ============================== STYLE 3 — Stat-forward dark band ============================== */ -}}
+{{- else if eq $style "3" }}
+  <div class="csh-head csh-head--center">
+    <span class="csh-eyebrow">{{ $eyebrow }}</span>
+    <h2 class="csh-title">{{ $title | safeHTML }}</h2>
+    <p class="csh-intro">{{ $intro | safeHTML }}</p>
+  </div>
+  <div class="csh-statrows">
+    {{- range $items }}
+    {{- $cs := . }}
+    <a class="csh-statrow" href="{{ .RelPermalink }}">
+      <div class="csh-statrow__id">
+        {{- with .Param "client_logo" }}<img class="csh-statrow__logo" src="{{ . }}" alt="{{ $cs.Param "client" }}">{{ else }}<span class="csh-statrow__name">{{ or ($cs.Param "client") $cs.Title }}</span>{{ end }}
+        <p>{{ or (.Param "home_blurb") .Description }}</p>
+        <span class="csh-textlink">Read the story <span aria-hidden="true">→</span></span>
+      </div>
+      <div class="csh-statrow__stats">
+        {{- with .Param "stat_bar" }}
+          {{- range first 4 . }}<div class="csh-bignum"><b>{{ .value | safeHTML }}</b><span>{{ .label | safeHTML }}</span></div>{{ end }}
+        {{- else }}
+          {{- with .Param "home_metric" }}<div class="csh-bignum"><b>{{ . }}</b><span>{{ $cs.Param "home_metric_label" }}</span></div>{{ end }}
+        {{- end }}
+      </div>
+    </a>
+    {{- end }}
+  </div>
+
+{{- /* ============================== STYLE 4 — Spotlight + side list ============================== */ -}}
+{{- else if eq $style "4" }}
+  <div class="csh-head">
+    <span class="csh-eyebrow">{{ $eyebrow }}</span>
+    <h2 class="csh-title">{{ $title | safeHTML }}</h2>
+  </div>
+  <div class="csh-spotlight">
+    {{- $fimg := or ($featured.Param "hero_aside_image") ($featured.Param "preview_image") }}
+    <a class="csh-feature" href="{{ $featured.RelPermalink }}" style="background-image:url('{{ $fimg }}')">
+      <div class="csh-feature__scrim"></div>
+      <div class="csh-feature__body">
+        <span class="csh-eyebrow csh-eyebrow--sm">Featured · {{ or ($featured.Param "client") "Case Study" }}</span>
+        <h3 class="csh-feature__title">{{ $featured.Title }}</h3>
+        {{- with $featured.Param "stat_bar" }}
+        <div class="csh-feature__stats">{{ range first 3 . }}<div class="csh-mini csh-mini--light"><b>{{ .value | safeHTML }}</b><span>{{ .label | safeHTML }}</span></div>{{ end }}</div>
+        {{- end }}
+        <span class="csh-card__cta csh-card__cta--light">Read the story <span aria-hidden="true">→</span></span>
+      </div>
+    </a>
+    <div class="csh-sidelist">
+      {{- range $items }}
+      {{- $cs := . }}
+      <a class="csh-sideitem" href="{{ .RelPermalink }}">
+        <div class="csh-sideitem__thumb">{{ with (or (.Param "preview_image") (.Param "hero_aside_image")) }}<img src="{{ . }}" alt="{{ $cs.Title }}" loading="lazy">{{ end }}</div>
+        <div>
+          {{- with .Param "client" }}<span class="csh-sideitem__client">{{ . }}</span>{{ end }}
+          <h4 class="csh-sideitem__title">{{ .Title }}</h4>
+          {{- with (or (.Param "home_metric") "") }}<span class="csh-sideitem__metric">{{ . }} · {{ $cs.Param "home_metric_label" }}</span>{{ end }}
+        </div>
+      </a>
+      {{- end }}
+      <a class="csh-textlink" href="{{ $ctaLink }}">{{ $ctaText }} <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+
+{{- /* ============================== STYLE 5 — Horizontal scroll-snap rail ============================== */ -}}
+{{- else if eq $style "5" }}
+  <div class="csh-head csh-head--split">
+    <div>
+      <span class="csh-eyebrow">{{ $eyebrow }}</span>
+      <h2 class="csh-title">{{ $title | safeHTML }}</h2>
+    </div>
+    <a class="csh-textlink csh-textlink--lg" href="{{ $ctaLink }}">{{ $ctaText }} <span aria-hidden="true">→</span></a>
+  </div>
+  <div class="csh-rail">
+    {{- range $items }}
+    {{- $cs := . }}
+    {{- $img := or (.Param "preview_image") (.Param "hero_aside_image") }}
+    <a class="csh-railcard" href="{{ .RelPermalink }}">
+      <div class="csh-railcard__media">{{ with $img }}<img src="{{ . }}" alt="{{ $cs.Title }}" loading="lazy">{{ end }}</div>
+      <div class="csh-railcard__body">
+        {{- with .Param "client" }}<span class="csh-card__client">{{ . }}</span>{{ end }}
+        <h3 class="csh-railcard__title">{{ .Title }}</h3>
+        {{- with .Param "stat_bar" }}<div class="csh-chiprow">{{ range first 2 . }}<span class="csh-chip">{{ .value | safeHTML }}</span>{{ end }}</div>{{ end }}
+        <span class="csh-card__cta">Read the story <span aria-hidden="true">→</span></span>
+      </div>
+    </a>
+    {{- end }}
+    <a class="csh-railcard csh-railcard--cta" href="{{ $ctaLink }}">
+      <span>{{ $ctaText }}</span>
+      <span class="csh-railcard--cta__arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+
+{{- /* ============================== STYLE 6 — Bento grid ============================== */ -}}
+{{- else if eq $style "6" }}
+  <div class="csh-head csh-head--center">
+    <span class="csh-eyebrow">{{ $eyebrow }}</span>
+    <h2 class="csh-title">{{ $title | safeHTML }}</h2>
+  </div>
+  <div class="csh-bento">
+    {{- $fimg := or ($featured.Param "hero_aside_image") ($featured.Param "preview_image") }}
+    <a class="csh-bento__feature" href="{{ $featured.RelPermalink }}" style="background-image:url('{{ $fimg }}')">
+      <div class="csh-feature__scrim"></div>
+      <div class="csh-bento__featurebody">
+        <span class="csh-eyebrow csh-eyebrow--sm">{{ or ($featured.Param "client") "Featured" }}</span>
+        <h3 class="csh-feature__title">{{ $featured.Title }}</h3>
+        <span class="csh-card__cta csh-card__cta--light">Read the story <span aria-hidden="true">→</span></span>
+      </div>
+    </a>
+    <div class="csh-bento__side">
+      {{- with $featured.Param "stat_bar" }}
+      <div class="csh-bento__stats">
+        {{- range first 4 . }}<div class="csh-bignum csh-bignum--sm"><b>{{ .value | safeHTML }}</b><span>{{ .label | safeHTML }}</span></div>{{ end }}
+      </div>
+      {{- end }}
+      {{- range after 1 $items }}
+      <a class="csh-bento__tile" href="{{ .RelPermalink }}">
+        {{- with .Param "client" }}<span class="csh-card__client">{{ . }}</span>{{ end }}
+        <h4 class="csh-bento__tiletitle">{{ .Title }}</h4>
+        <p>{{ or (.Param "home_blurb") .Description }}</p>
+        <span class="csh-textlink">Read the story <span aria-hidden="true">→</span></span>
+      </a>
+      {{- end }}
+    </div>
+  </div>
+
+{{- /* ============================== STYLE 7 — Editorial numbered list ============================== */ -}}
+{{- else if eq $style "7" }}
+  <div class="csh-head csh-head--split">
+    <div>
+      <span class="csh-eyebrow">{{ $eyebrow }}</span>
+      <h2 class="csh-title">{{ $title | safeHTML }}</h2>
+    </div>
+    <p class="csh-intro csh-intro--side">{{ $intro | safeHTML }}</p>
+  </div>
+  <ol class="csh-editorial">
+    {{- range $i, $e := $items }}
+    <li><a class="csh-edrow" href="{{ .RelPermalink }}">
+      <span class="csh-edrow__num">{{ printf "%02d" (add $i 1) }}</span>
+      <div class="csh-edrow__main">
+        {{- with .Param "client" }}<span class="csh-eyebrow csh-eyebrow--sm">{{ . }}</span>{{ end }}
+        <h3 class="csh-edrow__title">{{ .Title }}</h3>
+        <p>{{ or (.Param "home_blurb") .Description }}</p>
+      </div>
+      <div class="csh-edrow__metric">
+        {{- with .Param "home_metric" }}<b>{{ . }}</b><span>{{ $e.Param "home_metric_label" }}</span>{{ end }}
+      </div>
+      <span class="csh-edrow__arrow" aria-hidden="true">→</span>
+    </a></li>
+    {{- end }}
+  </ol>
+
+{{- /* ============================== STYLE 8 — Glassmorphism gradient cards ============================== */ -}}
+{{- else if eq $style "8" }}
+  <div class="csh-head csh-head--center">
+    <span class="csh-eyebrow">{{ $eyebrow }}</span>
+    <h2 class="csh-title">{{ $title | safeHTML }}</h2>
+    <p class="csh-intro">{{ $intro | safeHTML }}</p>
+  </div>
+  <div class="csh-glassgrid">
+    {{- range $items }}
+    {{- $cs := . }}
+    <a class="csh-glass" href="{{ .RelPermalink }}">
+      <div class="csh-glass__inner">
+        <div class="csh-glass__top">
+          {{- with .Param "client_logo" }}<img class="csh-glass__logo" src="{{ . }}" alt="{{ $cs.Param "client" }}">{{ else }}<span class="csh-glass__name">{{ or ($cs.Param "client") $cs.Title }}</span>{{ end }}
+        </div>
+        <h3 class="csh-glass__title">{{ .Title }}</h3>
+        <p class="csh-glass__desc">{{ or (.Param "home_blurb") .Description }}</p>
+        {{- with .Param "stat_bar" }}
+        <div class="csh-chiprow">{{ range first 3 . }}<span class="csh-chip csh-chip--glass">{{ .value | safeHTML }}</span>{{ end }}</div>
+        {{- end }}
+        <span class="csh-card__cta csh-card__cta--light">Read the story <span aria-hidden="true">→</span></span>
+      </div>
+    </a>
+    {{- end }}
+  </div>
+
+{{- /* ============================== STYLE 9 — Cinematic full-bleed spotlight ============================== */ -}}
+{{- else if eq $style "9" }}
+  {{- $fimg := or ($featured.Param "hero_aside_image") ($featured.Param "preview_image") }}
+  <div class="csh-cinema" style="background-image:url('{{ $fimg }}')">
+    <div class="csh-cinema__scrim"></div>
+    <div class="csh-cinema__inner">
+      <span class="csh-eyebrow csh-eyebrow--sm">{{ $eyebrow }} · {{ or ($featured.Param "client") "Featured" }}</span>
+      <h2 class="csh-cinema__title">{{ $featured.Title }}</h2>
+      <p class="csh-cinema__desc">{{ or ($featured.Param "home_blurb") $featured.Description }}</p>
+      {{- with $featured.Param "stat_bar" }}
+      <div class="csh-cinema__stats">{{ range first 4 . }}<div class="csh-bignum csh-bignum--light"><b>{{ .value | safeHTML }}</b><span>{{ .label | safeHTML }}</span></div>{{ end }}</div>
+      {{- end }}
+      <div class="csh-cinema__actions">
+        <a class="button btn-gradient" href="{{ $featured.RelPermalink }}">Read the story ￫</a>
+        <a class="csh-textlink csh-textlink--light" href="{{ $ctaLink }}">{{ $ctaText }} <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+
+{{- /* ============================== STYLE 10 — Metrics strip + logos ============================== */ -}}
+{{- else if eq $style "10" }}
+  <div class="csh-strip">
+    <div class="csh-strip__lead">
+      <span class="csh-eyebrow">{{ $eyebrow }}</span>
+      <h2 class="csh-title csh-title--sm">{{ $title | safeHTML }}</h2>
+      <a class="button btn-outline-gradient" href="{{ $ctaLink }}">{{ $ctaText }} ￫</a>
+    </div>
+    <div class="csh-strip__metrics">
+      {{- range $items }}
+      {{- $m := .Param "home_metric" }}
+      {{- if not $m }}{{ with .Param "stat_bar" }}{{ $first := index . 0 }}{{ $m = $first.value }}{{ end }}{{ end }}
+      <a class="csh-stat" href="{{ .RelPermalink }}">
+        <b>{{ $m | safeHTML }}</b>
+        <span>{{ or (.Param "home_metric_label") (.Param "client") .Title }}</span>
+      </a>
+      {{- end }}
+    </div>
+  </div>
+{{- end }}
+</div>

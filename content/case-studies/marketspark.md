@@ -29,6 +29,11 @@ stat_bar:
 preview_image: /img/case-studies/marketspark/marketspark-aws.png
 og_img: /img/case-studies/marketspark/marketspark-aws.png
 
+# Homepage showcase (read by the case-studies-showcase shortcode only)
+home_blurb: "Rebuilt a single, manually operated AWS account into an 11-account, 100% codified and automated multi-account platform."
+home_metric: "0 → 100%"
+home_metric_label: "Infrastructure as Code"
+
 sitemap:
   priority: 0
 ---

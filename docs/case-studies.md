@@ -78,6 +78,46 @@ card grid to stay scannable as the list grows. Card image = each study's
 
 ---
 
+## Homepage showcase (`case-studies-showcase` shortcode)
+
+To give case studies visibility beyond the nav dropdown, the homepage can feature
+them via the **`case-studies-showcase`** shortcode
+(`layouts/shortcodes/case-studies-showcase.html`), styled under `.csh` in
+`assets/css/case-studies-home.scss` (imported at the end of `custom.scss`, right
+after `case-studies.scss`).
+
+- **Data is pulled dynamically** — `where site.RegularPages "Section"
+  "case-studies"` sorted by `weight`, so adding a new case study automatically
+  flows into the homepage section (no per-page wiring). `_index.md` is a section
+  page so it's excluded.
+- **Ten selectable styles** via `style="1".."10"`: (1) clean card grid,
+  (2) alternating split features, (3) stat-forward dark band, (4) spotlight +
+  side list, (5) horizontal scroll-snap rail, (6) bento grid, (7) editorial
+  numbered list, (8) glassmorphism gradient cards, (9) cinematic full-bleed
+  spotlight, (10) metrics strip + CTA. Each is scoped under `.csh--s{N}` so they
+  never bleed into each other or the rest of the homepage.
+- **Homepage sections live in** `content/sections/home-cs-NN-*.md`
+  (`section_categories: [Home]`, weights 11–20) — one file per style so the team
+  can compare all ten on the live page, then **keep one and delete the other
+  nine**. The kept section's `weight` controls where it lands among the other
+  homepage sections (existing ones are weights 1–5).
+- **Remove the compare badges before shipping** — each demo section passes
+  `label="Option N — …"`, which renders the small `.csh-flag` pill. Drop the
+  `label=` param (or the whole flag) once a style is chosen.
+- **Homepage-only front matter** read by the shortcode (added to each case study,
+  ignored by the case-study layouts themselves): `home_blurb` (short card copy,
+  falls back to `description`), `home_metric` + `home_metric_label` (one headline
+  stat for compact styles), and the existing `stat_bar` / `client` /
+  `client_logo` / `preview_image` / `hero_aside_image`. All reads are guarded —
+  a study missing any field degrades gracefully (e.g. no `client_logo` → the
+  client name renders as text).
+- **Brand colours, no yellow-led gradients in metrics** — values use the local
+  `$csh-grad` (vanilla→mint→pink) for pop; surfaces are pine. Reuses the global
+  `.button.btn-gradient` / `.btn-outline-gradient` and `.text-gradient` (the
+  default `title=` highlights a span with `text-gradient`).
+
+---
+
 ## Modern layout — front matter schema
 
 ```yaml

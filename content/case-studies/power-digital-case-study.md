@@ -11,6 +11,19 @@ preview_image: /img/case-studies/power-digital-case-study-preview.jpg
 sitemap:
   priority: 0
 download_button: /download/power-digital-case-study.pdf
+
+# Homepage showcase (read by the case-studies-showcase shortcode only)
+client: "Power Digital"
+home_blurb: "Migrated 43,000+ resources from Terraform Cloud to Spacelift for a 10x cut in infrastructure automation cost and far faster plan & apply cycles."
+home_metric: "10x"
+home_metric_label: "Lower automation cost"
+stat_bar:
+  - value: "10x"
+    label: "reduction in infrastructure automation cost"
+  - value: "43,000+"
+    label: "resources migrated to Spacelift"
+  - value: "Faster"
+    label: "plan &amp; apply cycles across the platform"
 ---
 
 ![Power Digital x MasterPoint Logos](/img/case-studies/power-digital-x-masterpoint-case-study-logos.png)
