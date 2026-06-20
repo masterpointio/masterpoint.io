@@ -26,8 +26,11 @@
  *     --url   <url>         full page URL (overrides slug-derived URL)
  *     --out   <path>        output PDF path (overrides slug-derived path)
  *     --base  <origin>      origin for slug URLs (default http://localhost:1313)
- *     --paged               paginate to A4 instead of one continuous page
  *     --width <px>          layout/page width in px (default 1200)
+ *     --page-height <px>    page height for the default paged mode (default 1600)
+ *     --single              one continuous page (seamless but slow to open)
+ *     --a4                  standard A4 portrait pages (most compatible)
+ *                           (default, no flag: desktop-width paged — fast + on-brand)
  *
  * REQUIREMENTS
  *   npm install -D playwright   (or:  npx playwright …)
@@ -38,15 +41,27 @@ import { mkdir } from "node:fs/promises";
 import path from "node:path";
 
 function parseArgs(argv) {
-  const opts = { base: "http://localhost:1313", width: 1200, paged: false };
+  // mode: "paged" (default) = desktop-width pages broken between cards — fast to
+  //       open because viewers render page-by-page; "single" = one continuous
+  //       page (looks seamless but an 80in+ page is slow/janky in many viewers);
+  //       "a4" = standard A4 portrait (most universally compatible).
+  const opts = {
+    base: "http://localhost:1313",
+    width: 1200,
+    pageHeight: 1600,
+    mode: "paged",
+  };
   const rest = [];
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
-    if (a === "--paged") opts.paged = true;
+    if (a === "--single") opts.mode = "single";
+    else if (a === "--a4") opts.mode = "a4";
+    else if (a === "--paged") opts.mode = "paged";
     else if (a === "--url") opts.url = argv[++i];
     else if (a === "--out") opts.out = argv[++i];
     else if (a === "--base") opts.base = argv[++i];
     else if (a === "--width") opts.width = Number(argv[++i]);
+    else if (a === "--page-height") opts.pageHeight = Number(argv[++i]);
     else rest.push(a);
   }
   opts.slug = rest[0];
@@ -74,10 +89,12 @@ const EXPORT_CSS = `
   /* The nav header is position:absolute over the hero; once hidden, reclaim its
      top padding so the PDF doesn't open with a tall empty band. */
   .case-study-modern .cs-hero { padding-top: 3.5rem !important; }
-  /* Keep cards from splitting awkwardly across pages in --paged mode. */
-  .csi-section, .cs-stat-strip__inner { break-inside: avoid; }
-  /* Zero out page margins so the continuous-page height math lines up. */
-  html, body { margin: 0 !important; }
+  /* Paged mode: break BETWEEN cards, never through one. Card heights all fit
+     under the page height, so every break lands in a gap. */
+  .cs-hero, .cs-stat-strip, .csi-section, .csi-cta { break-inside: avoid; }
+  /* Zero out page margins so the page-height math lines up, and paint the page
+     backdrop pine so the gaps between cards stay on-brand (not white). */
+  html, body { margin: 0 !important; background: #0e383a !important; }
 `;
 
 async function main() {
@@ -94,11 +111,10 @@ async function main() {
     opts.out ||
     path.join("static", "case-studies", `${opts.slug}.pdf`);
 
-  console.log(`→ rendering ${url}`);
+  console.log(`→ rendering ${url} (mode: ${opts.mode})`);
   const browser = await chromium.launch();
   const page = await browser.newPage({
     viewport: { width: opts.width, height: 1400 },
-    deviceScaleFactor: 2,
   });
 
   await page.goto(url, { waitUntil: "networkidle", timeout: 60000 });
@@ -122,19 +138,22 @@ async function main() {
 
   await page.addStyleTag({ content: EXPORT_CSS });
   await page.emulateMedia({ media: "screen" }); // keep the dark design
+  // Wait for web fonts (the site's brand font, proxima-nova, is loaded from
+  // Adobe Typekit). Needs outbound access to use.typekit.net at render time, or
+  // the PDF falls back to system fonts.
   await page.evaluate(() => document.fonts.ready);
-  await page.waitForTimeout(300);
+  await page.waitForTimeout(400);
 
   await mkdir(path.dirname(out), { recursive: true });
 
   const pdfOpts = { path: out, printBackground: true };
-  if (opts.paged) {
+  if (opts.mode === "a4") {
     pdfOpts.format = "A4";
-    pdfOpts.margin = { top: "12mm", bottom: "12mm", left: "10mm", right: "10mm" };
-  } else {
-    // One continuous page sized to the full document — no mid-card page breaks.
-    // +2px buffer + zero margins keep an overflow sliver from spilling onto a
-    // near-empty second page.
+    pdfOpts.margin = { top: "0", right: "0", bottom: "0", left: "0" };
+  } else if (opts.mode === "single") {
+    // One continuous page sized to the full document — looks seamless, but an
+    // 80in+ tall page is slow/janky to open in many viewers. +2px buffer +
+    // zero margins stop an overflow sliver spilling onto a near-empty 2nd page.
     const height = await page.evaluate(() =>
       Math.max(
         document.body.scrollHeight,
@@ -143,6 +162,14 @@ async function main() {
     );
     pdfOpts.width = `${opts.width}px`;
     pdfOpts.height = `${height + 2}px`;
+    pdfOpts.margin = { top: "0", right: "0", bottom: "0", left: "0" };
+  } else {
+    // Default "paged": desktop-width pages of a fixed height. Cards all fit
+    // under the page height and carry break-inside:avoid, so breaks land
+    // between cards; the pine page backdrop fills the gaps. Renders fast
+    // because viewers paint one normal-sized page at a time.
+    pdfOpts.width = `${opts.width}px`;
+    pdfOpts.height = `${opts.pageHeight}px`;
     pdfOpts.margin = { top: "0", right: "0", bottom: "0", left: "0" };
   }
 

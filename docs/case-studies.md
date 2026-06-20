@@ -384,6 +384,12 @@ node scripts/case-study-pdf.mjs marketspark
 
 Gotchas the script handles (don't remove):
 
+- **Brand fonts come from Adobe Typekit** (`proxima-nova`, loaded via
+  `use.typekit.net` — there are NO local font files). The render machine **must
+  have outbound access to `use.typekit.net`** or the PDF falls back to system
+  fonts (Liberation/Arial) and looks wrong. `hugo serve` on a normal dev machine
+  has this; locked-down/sandboxed CI may not. The script waits on
+  `document.fonts.ready` so the brand font is embedded before printing.
 - **AOS must be neutralized.** The immersive body starts every `csi-*` card at
   `opacity:0` until scrolled into view, so a naive capture renders most of the
   page blank. The script injects CSS forcing `[data-aos]{opacity:1;transform:none}`.
@@ -392,9 +398,14 @@ Gotchas the script handles (don't remove):
 - **`emulateMedia('screen')`** keeps the dark immersive design (with
   `printBackground:true`); without it Chromium would print the (nonexistent) print
   styles.
-- **One continuous page**, not paginated: the script measures full document height
-  and sizes a single page to it (+2px buffer, zero margins) so no card is sliced.
-  Pass `--paged` for A4 pagination instead (cards get `break-inside: avoid`).
+- **Pagination (default) for fast loading.** The default mode renders
+  **desktop-width pages** (1200px wide × `--page-height`, default 1600px). Every
+  card carries `break-inside: avoid` and all cards are shorter than the page, so
+  breaks land in the gaps *between* cards; the page backdrop is painted pine so
+  those gaps stay on-brand. This is the default because a single continuous page
+  (see `--single`) is an 80in+ tall page that loads slowly and can hang/crash
+  PDF viewers. `--a4` gives standard A4 portrait pages (most compatible, but
+  reflows to a narrower column).
 - **It's a snapshot** — re-run the script after editing the case study, or the PDF
   goes stale. Not wired into the Netlify build (kept this a pure-Hugo repo; the
   script's Playwright dep is installed on demand and `node_modules/` is gitignored).
