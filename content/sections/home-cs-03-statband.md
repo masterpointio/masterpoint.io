@@ -6,4 +6,4 @@ section_categories:
 id: cs-showcase-03
 ---
 
-{{< case-studies-showcase style="3" label="Option 3 — Vertical list selector" >}}
+{{< case-studies-showcase style="3" label="Option 3 — Combo (panel + carousel selector)" >}}

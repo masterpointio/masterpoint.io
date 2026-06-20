@@ -1,31 +1,59 @@
 // =============================================================================
 // HOMEPAGE CASE-STUDY SHOWCASE  (.csh)
 // -----------------------------------------------------------------------------
-// Styles for the `case-studies-showcase` shortcode: a featured-story SLIDER in
-// ten selectable treatments (.csh--s1 … .csh--s10), all variations of the same
-// "featured panel + selector, cards that hint there's more" pattern.
-// Designed for the homepage's WHITE background (light mode). Scoped under `.csh`.
-// Imported at the end of custom.scss. See docs/case-studies.md → "Homepage showcase".
+// Styles for the `case-studies-showcase` shortcode: a featured-story SLIDER that
+// sits on a dark, on-brand PINE BAND (the homepage page background is white, so
+// the showcase brings its own dark surface). Three treatments:
+//   .csh--s1  logo tabs        .csh--s2  peek carousel        .csh--s3  combo
+// Scoped under `.csh`. Imported at the end of custom.scss.
+// See docs/case-studies.md → "Homepage showcase".
 // =============================================================================
 
 $csh-pine: #0e383a;
-$csh-pine-deep: #0a2a2c;
+$csh-pine-deep: #07211f;
+$csh-pine-soft: #14474a;
 $csh-mint: #2ad9c2;
-$csh-teal: #0a857a; // deeper teal — readable on white
 $csh-pink: #d891ce;
 $csh-ink: #14302f;
 $csh-ink-soft: #51635f;
 $csh-line: #e4eae9;
-$csh-surface: #f3f7f6; // light card surface that separates from white
+$csh-card: #ffffff;
 $csh-grad: linear-gradient(92deg, #ede497 -1%, #2ad9c2 34%, #d891ce 86%);
 
 .csh {
   position: relative;
   width: 100%;
-  color: $csh-ink;
 
   * {
     box-sizing: border-box;
+  }
+
+  // -- the dark band that frames the whole showcase -------------------------
+  .csh-band {
+    position: relative;
+    overflow: hidden;
+    border-radius: 28px;
+    padding: clamp(1.8rem, 4vw, 3.4rem);
+    color: #fff;
+    background:
+      radial-gradient(60% 80% at 12% 0%, rgba(42, 217, 194, 0.16), transparent 60%),
+      radial-gradient(55% 80% at 92% 12%, rgba(216, 145, 206, 0.16), transparent 60%),
+      linear-gradient(160deg, $csh-pine 0%, $csh-pine-deep 100%);
+
+    // faint dot grid
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 22px 22px;
+      pointer-events: none;
+    }
+
+    > * {
+      position: relative;
+      z-index: 1;
+    }
   }
 
   // -- section head ---------------------------------------------------------
@@ -35,20 +63,20 @@ $csh-grad: linear-gradient(92deg, #ede497 -1%, #2ad9c2 34%, #d891ce 86%);
     letter-spacing: 0.16em;
     text-transform: uppercase;
     font-size: 0.82rem;
-    color: $csh-teal;
+    color: $csh-mint;
     margin-bottom: 0.7rem;
   }
 
   .csh-title {
     font-weight: 800;
     line-height: 1.12;
-    font-size: clamp(1.9rem, 3.4vw, 2.9rem);
-    color: $csh-pine;
+    font-size: clamp(1.9rem, 3.4vw, 2.8rem);
+    color: #fff;
     margin: 0;
   }
 
   .csh-intro {
-    color: $csh-ink-soft;
+    color: rgba(255, 255, 255, 0.8);
     font-size: 1.08rem;
     line-height: 1.55;
     max-width: 640px;
@@ -61,7 +89,7 @@ $csh-grad: linear-gradient(92deg, #ede497 -1%, #2ad9c2 34%, #d891ce 86%);
     align-items: flex-end;
     justify-content: space-between;
     gap: 1.2rem 2rem;
-    margin-bottom: 2.2rem;
+    margin-bottom: 2rem;
 
     &__intro {
       max-width: 760px;
@@ -85,19 +113,18 @@ $csh-grad: linear-gradient(92deg, #ede497 -1%, #2ad9c2 34%, #d891ce 86%);
     font-weight: 800;
     font-size: 0.82rem;
     color: $csh-pine;
-    background: rgba(42, 217, 194, 0.16);
-    border: 1px solid rgba(42, 217, 194, 0.42);
+    background: rgba(42, 217, 194, 0.18);
+    border: 1px solid rgba(42, 217, 194, 0.5);
     border-radius: 999px;
     padding: 0.28em 0.85em;
   }
 
-  // -- shared "read the story" link (compact cards) -------------------------
   .csh-card__cta {
     display: inline-flex;
     align-items: center;
     gap: 0.45em;
     font-weight: 800;
-    color: $csh-teal;
+    color: #0a857a;
     margin-top: auto;
 
     span {
@@ -114,13 +141,12 @@ $csh-grad: linear-gradient(92deg, #ede497 -1%, #2ad9c2 34%, #d891ce 86%);
     font-size: 0.72rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: $csh-pine;
-    background: #fff;
-    border: 1px solid $csh-line;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 999px;
     padding: 0.4em 0.95em;
     margin-bottom: 1.4rem;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
 
     &__dot {
       width: 8px;
@@ -139,20 +165,18 @@ $csh-grad: linear-gradient(92deg, #ede497 -1%, #2ad9c2 34%, #d891ce 86%);
     position: relative;
   }
 
-  // -- featured panel -------------------------------------------------------
+  // -- featured panel (light card on the dark band) -------------------------
   .cshx-stage {
     position: relative;
-    background: $csh-surface;
-    border: 1px solid $csh-line;
-    border-radius: 20px;
+    background: $csh-card;
+    border-radius: 18px;
     overflow: hidden;
-    box-shadow: 0 22px 50px rgba(14, 56, 58, 0.14);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.32);
   }
 
   .cshx-panel {
     display: none;
     grid-template-columns: 0.92fr 1.08fr;
-    gap: 0;
     align-items: stretch;
     min-height: clamp(360px, 36vw, 460px);
 
@@ -228,7 +252,7 @@ $csh-grad: linear-gradient(92deg, #ede497 -1%, #2ad9c2 34%, #d891ce 86%);
       position: relative;
       display: block;
       min-height: 100%;
-      background: linear-gradient(150deg, $csh-pine, $csh-pine-deep);
+      background: linear-gradient(150deg, $csh-pine-soft, $csh-pine-deep);
       overflow: hidden;
 
       img {
@@ -241,21 +265,19 @@ $csh-grad: linear-gradient(92deg, #ede497 -1%, #2ad9c2 34%, #d891ce 86%);
     }
   }
 
-  // -- compact card (track styles) -----------------------------------------
+  // -- compact card (peek carousel) -----------------------------------------
   .cshx-card {
     display: flex;
     flex-direction: column;
-    background: #fff;
-    border: 1px solid $csh-line;
+    background: $csh-card;
     border-radius: 16px;
     overflow: hidden;
     text-decoration: none;
-    box-shadow: 0 16px 38px rgba(14, 56, 58, 0.12);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 
     &:hover {
       transform: translateY(-5px);
-      box-shadow: 0 26px 54px rgba(14, 56, 58, 0.2);
 
       .csh-card__cta span {
         transform: translateX(4px);
@@ -264,7 +286,7 @@ $csh-grad: linear-gradient(92deg, #ede497 -1%, #2ad9c2 34%, #d891ce 86%);
 
     &__media {
       aspect-ratio: 16 / 9;
-      background: linear-gradient(150deg, $csh-pine, $csh-pine-deep);
+      background: linear-gradient(150deg, $csh-pine-soft, $csh-pine-deep);
       overflow: hidden;
 
       img {
@@ -316,12 +338,12 @@ $csh-grad: linear-gradient(92deg, #ede497 -1%, #2ad9c2 34%, #d891ce 86%);
       display: block;
       font-weight: 800;
       font-size: 0.85rem;
-      color: $csh-teal;
+      color: #0a857a;
       margin-bottom: 1.1rem;
     }
   }
 
-  // -- track (horizontal scroll with peek) ----------------------------------
+  // -- horizontal track with peek -------------------------------------------
   .cshx-track {
     display: flex;
     gap: 1.4rem;
@@ -335,39 +357,17 @@ $csh-grad: linear-gradient(92deg, #ede497 -1%, #2ad9c2 34%, #d891ce 86%);
     }
 
     > * {
-      flex: 0 0 66%;
+      flex: 0 0 clamp(280px, 64%, 640px);
       scroll-snap-align: start;
-    }
-
-    &--peek > * {
-      flex-basis: clamp(280px, 64%, 640px);
-    }
-
-    &--film > * {
-      flex-basis: clamp(260px, 31%, 340px);
-    }
-
-    &--center {
-      scroll-padding: 0 15%;
-
-      > * {
-        flex-basis: clamp(300px, 70%, 760px);
-        scroll-snap-align: center;
-        transition: transform 0.3s ease, opacity 0.3s ease;
-      }
     }
   }
 
-  // -- arrows / dots / counter ---------------------------------------------
+  // -- arrows ---------------------------------------------------------------
   .cshx-controls {
     display: flex;
     align-items: center;
     gap: 0.8rem;
     margin-top: 1.2rem;
-
-    &--center {
-      justify-content: center;
-    }
   }
 
   .cshx-arrow {
@@ -381,58 +381,16 @@ $csh-grad: linear-gradient(92deg, #ede497 -1%, #2ad9c2 34%, #d891ce 86%);
     line-height: 1;
     color: $csh-pine;
     background: #fff;
-    border: 1px solid $csh-line;
+    border: 0;
     border-radius: 50%;
     cursor: pointer;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, color 0.2s ease;
 
     &:hover {
-      color: $csh-teal;
-      border-color: $csh-mint;
+      color: #0a857a;
       transform: translateY(-2px);
     }
-  }
-
-  .cshx-dots {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-  }
-
-  .cshx-dot {
-    width: 10px;
-    height: 10px;
-    padding: 0;
-    border: 0;
-    border-radius: 999px;
-    background: #cfdbd9;
-    cursor: pointer;
-    transition: width 0.25s ease, background 0.25s ease;
-
-    &.is-active {
-      width: 30px;
-      background: $csh-grad;
-    }
-  }
-
-  .cshx-counterbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.2rem;
-
-    &__arrows {
-      display: flex;
-      gap: 0.6rem;
-    }
-  }
-
-  .cshx-counter {
-    font-weight: 800;
-    font-size: 1.1rem;
-    color: $csh-pine;
-    font-variant-numeric: tabular-nums;
   }
 }
 
@@ -449,7 +407,7 @@ $csh-grad: linear-gradient(92deg, #ede497 -1%, #2ad9c2 34%, #d891ce 86%);
 }
 
 // =============================================================================
-// STYLE 1 — Logo tabs (Microsoft "customer stories" pattern)
+// STYLE 1 — Logo tabs
 // =============================================================================
 .csh--s1 {
   .cshx-tabs {
@@ -457,9 +415,8 @@ $csh-grad: linear-gradient(92deg, #ede497 -1%, #2ad9c2 34%, #d891ce 86%);
     display: flex;
     margin-top: 1.4rem;
     background: #fff;
-    border: 1px solid $csh-line;
     border-radius: 14px;
-    box-shadow: 0 14px 30px rgba(14, 56, 58, 0.1);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
     overflow-x: auto;
     scrollbar-width: none;
 
@@ -536,43 +493,72 @@ $csh-grad: linear-gradient(92deg, #ede497 -1%, #2ad9c2 34%, #d891ce 86%);
 }
 
 // =============================================================================
-// STYLE 3 — Vertical list selector
+// STYLE 3 — Combo: featured panel + peek-carousel selector
 // =============================================================================
 .csh--s3 {
-  .cshx-vert {
-    display: grid;
-    grid-template-columns: minmax(240px, 0.7fr) 2fr;
-    gap: 1.4rem;
+  .cshx-selrow {
+    margin-top: 1.4rem;
   }
 
-  .cshx-vnav {
+  .cshx-seltrack {
     display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.4rem;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
-  .cshx-vnav__item {
+  .cshx-selcard {
+    flex: 0 0 clamp(260px, 46%, 380px);
+    scroll-snap-align: start;
+    display: flex;
+    gap: 0.9rem;
     text-align: left;
+    padding: 0.7rem;
     background: #fff;
-    border: 1px solid $csh-line;
-    border-left: 3px solid transparent;
-    border-radius: 12px;
-    padding: 1.1rem 1.2rem;
+    border: 2px solid transparent;
+    border-radius: 14px;
     cursor: pointer;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, border-color 0.2s ease;
 
     &:hover {
-      transform: translateX(2px);
+      transform: translateY(-3px);
     }
 
-    .cshx-vnav__logo {
-      height: 26px;
+    &__media {
+      flex: 0 0 96px;
+      align-self: stretch;
+      border-radius: 9px;
+      overflow: hidden;
+      background: linear-gradient(150deg, $csh-pine-soft, $csh-pine-deep);
 
       img {
-        max-height: 26px;
+        width: 100%;
+        height: 100%;
+        min-height: 84px;
+        object-fit: cover;
+      }
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      padding: 0.2rem 0.2rem 0.2rem 0;
+      min-width: 0;
+    }
+
+    &__logo {
+      height: 22px;
+
+      img {
+        max-height: 22px;
         width: auto;
         filter: grayscale(1);
         opacity: 0.7;
@@ -580,268 +566,41 @@ $csh-grad: linear-gradient(92deg, #ede497 -1%, #2ad9c2 34%, #d891ce 86%);
 
       b {
         font-weight: 800;
+        font-size: 0.9rem;
         color: $csh-ink;
       }
     }
 
-    .cshx-vnav__title {
+    &__title {
       font-weight: 800;
-      font-size: 1rem;
-      line-height: 1.3;
+      font-size: 0.95rem;
+      line-height: 1.25;
       color: $csh-pine;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
-    .cshx-vnav__metric {
-      font-weight: 700;
-      font-size: 0.82rem;
-      color: $csh-ink-soft;
+    &__metric {
+      font-weight: 800;
+      font-size: 0.78rem;
+      color: #0a857a;
     }
 
     &.is-active {
-      border-left-color: $csh-mint;
-      box-shadow: 0 12px 26px rgba(14, 56, 58, 0.12);
+      border-color: $csh-mint;
 
-      .cshx-vnav__logo img {
+      .cshx-selcard__logo img {
         filter: none;
         opacity: 1;
       }
     }
   }
 
-  @media (max-width: 860px) {
-    .cshx-vert {
-      grid-template-columns: 1fr;
-    }
-  }
-}
-
-// =============================================================================
-// STYLE 6 — Center coverflow (scaled neighbors)
-// =============================================================================
-.csh--s6 {
-  .cshx-track--center > *:not(:hover) {
-    opacity: 0.92;
-  }
-}
-
-// =============================================================================
-// STYLE 7 — Numbered pills
-// =============================================================================
-.csh--s7 {
-  .cshx-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    margin-top: 1.4rem;
-  }
-
-  .cshx-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    background: #fff;
-    border: 1px solid $csh-line;
-    border-radius: 999px;
-    padding: 0.6rem 1.2rem 0.6rem 0.7rem;
-    cursor: pointer;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-
-    b {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background: $csh-surface;
-      color: $csh-ink-soft;
-      font-size: 0.82rem;
-      font-weight: 800;
-      transition: background 0.25s ease, color 0.25s ease;
-    }
-
-    span {
-      font-weight: 800;
-      color: $csh-ink-soft;
-      transition: color 0.2s ease;
-    }
-
-    &.is-active {
-      border-color: $csh-mint;
-      box-shadow: 0 10px 22px rgba(14, 56, 58, 0.12);
-
-      b {
-        background: $csh-grad;
-        color: #08312e;
-      }
-
-      span {
-        color: $csh-pine;
-      }
-    }
-  }
-}
-
-// =============================================================================
-// STYLE 8 — Image thumbnails
-// =============================================================================
-.csh--s8 {
-  .cshx-thumbs {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1.4rem;
-    overflow-x: auto;
-    scrollbar-width: none;
-    padding-bottom: 0.3rem;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .cshx-thumb {
-    flex: 1 0 clamp(160px, 22%, 240px);
-    background: transparent;
-    border: 0;
-    padding: 0;
-    cursor: pointer;
-    text-align: left;
-
-    &__img {
-      display: block;
-      aspect-ratio: 16 / 10;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 2px solid transparent;
-      background: $csh-surface;
-      transition: border-color 0.2s ease, transform 0.2s ease;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 0.75;
-        transition: opacity 0.2s ease;
-      }
-    }
-
-    &__label {
-      display: block;
-      margin-top: 0.6rem;
-      font-weight: 800;
-      font-size: 0.9rem;
-      color: $csh-ink-soft;
-      transition: color 0.2s ease;
-    }
-
-    &:hover .cshx-thumb__img {
-      transform: translateY(-3px);
-    }
-
-    &.is-active {
-      .cshx-thumb__img {
-        border-color: $csh-mint;
-
-        img {
-          opacity: 1;
-        }
-      }
-
-      .cshx-thumb__label {
-        color: $csh-pine;
-      }
-    }
-  }
-}
-
-// =============================================================================
-// STYLE 10 — Side thumbnail rail
-// =============================================================================
-.csh--s10 {
-  .cshx-railslider {
-    display: grid;
-    grid-template-columns: 2.4fr 0.85fr;
-    gap: 1.4rem;
-  }
-
-  .cshx-vrail {
-    display: flex;
-    flex-direction: column;
-    gap: 0.9rem;
-    max-height: clamp(360px, 36vw, 460px);
-    overflow-y: auto;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .cshx-vthumb {
-    position: relative;
-    flex: 0 0 auto;
-    display: block;
-    background: transparent;
-    border: 0;
-    padding: 0;
-    cursor: pointer;
-    text-align: left;
-
-    &__img {
-      display: block;
-      aspect-ratio: 16 / 10;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 2px solid transparent;
-      background: $csh-surface;
-      transition: border-color 0.2s ease;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 0.7;
-        transition: opacity 0.2s ease;
-      }
-    }
-
-    &__label {
-      display: block;
-      margin-top: 0.45rem;
-      font-weight: 800;
-      font-size: 0.85rem;
-      color: $csh-ink-soft;
-    }
-
-    &.is-active {
-      .cshx-vthumb__img {
-        border-color: $csh-mint;
-
-        img {
-          opacity: 1;
-        }
-      }
-
-      .cshx-vthumb__label {
-        color: $csh-pine;
-      }
-    }
-  }
-
-  @media (max-width: 860px) {
-    .cshx-railslider {
-      grid-template-columns: 1fr;
-    }
-
-    .cshx-vrail {
-      flex-direction: row;
-      max-height: none;
-      overflow-x: auto;
-
-      .cshx-vthumb {
-        flex: 0 0 180px;
-      }
-    }
+  .cshx-controls--combo {
+    justify-content: flex-end;
+    margin-top: 1rem;
   }
 }
 
