@@ -6,4 +6,4 @@ section_categories:
 id: cs-showcase-01
 ---
 
-{{< case-studies-showcase style="1" label="Option 1 — Clean card grid" >}}
+{{< case-studies-showcase style="1" label="Option 1 — Logo tabs (Microsoft pattern)" >}}

@@ -6,4 +6,4 @@ section_categories:
 id: cs-showcase-07
 ---
 
-{{< case-studies-showcase style="7" label="Option 7 — Editorial numbered list" >}}
+{{< case-studies-showcase style="7" label="Option 7 — Numbered pills" >}}

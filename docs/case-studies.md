@@ -86,47 +86,55 @@ them via the **`case-studies-showcase`** shortcode
 `assets/css/case-studies-home.scss` (imported at the end of `custom.scss`, right
 after `case-studies.scss`).
 
+It renders the case studies as an **interactive featured-story slider** (the
+Microsoft "customer stories" pattern): a large featured panel beside its image,
+with a selector below/around it that hints "there's more" as studies are added.
+
+- **Designed for the homepage's WHITE background (light mode).** The page is
+  `body { background: #fff }`, so the section chrome is dark-on-light: eyebrow
+  `$csh-teal` (#0a857a), title `$csh-pine`, body `$csh-ink-soft`; the featured
+  panel sits on a light `$csh-surface` card with a hairline + soft shadow, and
+  the media half is a dark image. (Earlier dark-mode drafts made the title white
+  on white — don't reintroduce light-on-light here.)
 - **Data is pulled dynamically** — `where site.RegularPages "Section"
   "case-studies"` sorted by `weight`, so adding a new case study automatically
-  flows into the homepage section (no per-page wiring). `_index.md` is a section
-  page so it's excluded.
-- **Eleven selectable styles** via `style="1".."11"`: (1) clean card grid,
-  (2) alternating split features, (3) stat-forward dark band, (4) spotlight +
-  side list, (5) horizontal scroll-snap rail, (6) bento grid, (7) editorial
-  numbered list, (8) glassmorphism gradient cards, (9) cinematic full-bleed
-  spotlight, (10) metrics strip + CTA, (11) featured panel + logo-tab slider
-  (the Microsoft "customer stories" pattern). Each is scoped under `.csh--s{N}`
-  so they never bleed into each other or the rest of the homepage.
-- **Style 11 is interactive** (`.cshx-*`): a large featured story panel (client
-  logo + title + blurb + highlight chips + "Read the story") beside its image,
-  with a **logo-tab strip below that acts as the slider** — clicking a logo
-  switches the featured panel, the active tab gets a gradient underline, and the
-  strip auto-advances (pauses on hover/focus; `data-cshx-autoplay` ms on
-  `.cshx-slider`). The strip scrolls horizontally so it reads as "there's more"
-  as case studies are added. Vanilla JS is emitted **once** by the shortcode
-  (guarded with `.Page.Scratch`), inits every `.cshx-slider` on the page, and is
-  marked `data-cshx-ready` to avoid double-binding. Needs `home_logo` (a
-  light-background logo) per study; falls back to the client name text.
+  flows in (no per-page wiring). `_index.md` is excluded.
+- **Ten selectable styles**, all variations of the SAME slider, via
+  `style="1".."10"`: (1) logo tabs, (2) peek carousel, (3) vertical list
+  selector, (4) arrows + dots, (5) counter + arrows, (6) center coverflow,
+  (7) numbered pills, (8) image thumbnails, (9) filmstrip, (10) side thumbnail
+  rail. Each is scoped under `.csh--s{N}`.
+- **Two engines, one script** (`.cshx-*`):
+  - **swap** (`data-cshx-mode="swap"`: styles 1,3,4,5,7,8,10) — one featured
+    `cshx-panel` visible at a time; nav buttons carry `data-cshx-go="{i}"`,
+    optional `data-cshx-prev`/`data-cshx-next`, optional `data-cshx-counter`.
+  - **track** (`data-cshx-mode="track"`: styles 2,6,9) — a horizontally
+    scrollable `[data-cshx-track]` of `cshx-card`s with CSS peek (cards are
+    `< 100%` wide via `.cshx-track--peek/--film/--center`); arrows `scrollBy`
+    one card and loop at the ends.
+  - Both **auto-advance** (`data-cshx-autoplay` ms), **pause on hover/focus**,
+    and `init` is idempotent (marks `data-cshx-ready`). The `<script>` is emitted
+    **once per build** via `site.Store` (page-scoped `.Page.Scratch` would emit
+    once per *section page*, i.e. 10× on the aggregated homepage).
+- **Featured panel / card markup are partials** — `partials/cshx-panel.html`
+  (featured: logo, title, blurb, `Highlights` stat chips, "Read the story" +
+  image) and `partials/cshx-card.html` (compact card for track styles). Both
+  take a `dict` (`page`, `index`, `active`).
 - **Homepage sections live in** `content/sections/home-cs-NN-*.md`
   (`section_categories: [Home]`, weights 11–20) — one file per style so the team
-  can compare all ten on the live page, then **keep one and delete the other
-  nine**. The kept section's `weight` controls where it lands among the other
-  homepage sections (existing ones are weights 1–5).
-- **Remove the compare badges before shipping** — each demo section passes
-  `label="Option N — …"`, which renders the small `.csh-flag` pill. Drop the
-  `label=` param (or the whole flag) once a style is chosen.
+  can compare all ten live, then **keep one and delete the other nine**. The kept
+  section's `weight` controls where it lands among the other homepage sections
+  (existing ones are weights 1–5).
+- **Remove the compare badges before shipping** — each demo passes
+  `label="Option N — …"` (renders the `.csh-flag` pill). Drop `label=` once
+  chosen. The shortcode's `eyebrow`/`title`/`cta_text` default to good copy.
 - **Homepage-only front matter** read by the shortcode (added to each case study,
-  ignored by the case-study layouts themselves): `home_blurb` (short card copy,
-  falls back to `description`), `home_metric` + `home_metric_label` (one headline
-  stat for compact styles), `home_logo` (logo that reads on a light surface, used
-  by style 11), and the existing `stat_bar` / `client` / `client_logo` /
-  `preview_image` / `hero_aside_image`. All reads are guarded —
-  a study missing any field degrades gracefully (e.g. no `client_logo` → the
-  client name renders as text).
-- **Brand colours, no yellow-led gradients in metrics** — values use the local
-  `$csh-grad` (vanilla→mint→pink) for pop; surfaces are pine. Reuses the global
-  `.button.btn-gradient` / `.btn-outline-gradient` and `.text-gradient` (the
-  default `title=` highlights a span with `text-gradient`).
+  ignored by the case-study layouts themselves): `home_blurb` (short copy, falls
+  back to `description`), `home_metric` + `home_metric_label` (compact metric),
+  `home_logo` (a logo that reads on a LIGHT surface — required for the logo
+  selectors; falls back to the client name text), plus the existing `stat_bar`
+  (top 3 become the Highlight chips) / `client` / `preview_image` /
+  `hero_aside_image`. All reads are guarded — a missing field degrades gracefully.
 
 ---
 

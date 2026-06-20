@@ -6,4 +6,4 @@ section_categories:
 id: cs-showcase-05
 ---
 
-{{< case-studies-showcase style="5" label="Option 5 — Horizontal scroll rail" >}}
+{{< case-studies-showcase style="5" label="Option 5 — Counter + arrows" >}}

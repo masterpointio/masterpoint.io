@@ -1,345 +1,60 @@
 {{- /*
-  case-studies-showcase — homepage case-study highlight section.
+  case-studies-showcase — homepage case-study highlight slider.
 
   Pulls case studies dynamically from content/case-studies/ (sorted by weight)
-  and renders them in one of 10 selectable visual styles so the team can compare
-  and pick a favorite. Once a style is chosen, keep the one section file that
-  calls it and delete the rest (see docs/case-studies.md → "Homepage showcase").
+  and renders them as a featured-story SLIDER in one of 10 selectable treatments
+  (all variations of the same "featured panel + selector, cards that hint there's
+  more" pattern) so the team can compare and pick a favorite. Once a style is
+  chosen, keep the one section file that calls it and delete the rest.
+  See docs/case-studies.md → "Homepage showcase".
+
+  Designed for the homepage's WHITE background (light mode).
 
   Params:
-    style      "1".."10"  which visual treatment to render (default "1")
-    eyebrow    small label above the heading (default "Case Studies")
-    title      section heading, HTML allowed (default provided)
-    intro      optional sub-heading paragraph
-    cta_text   text for the "all case studies" link (default "Explore all case studies")
-    cta_link   href for that link (default "/case-studies/")
-    label      optional preview badge text (e.g. "Option 1 — Cards") for the
-               compare-and-pick demo; omit in production.
+    style      "1".."10"  which slider treatment (default "1")
+    eyebrow    small label above the heading (default "Customer Stories")
+    title      section heading, HTML allowed
+    intro      optional sub-heading paragraph (off by default)
+    cta_text   text for the "all case studies" button (default "See all case studies")
+    cta_link   href for that button (default "/case-studies/")
+    label      optional preview badge (e.g. "Option 1 — …"); omit in production.
 
-  Per-case-study data read (all optional, graceful fallbacks):
-    .Title, .RelPermalink, .Description
-    preview_image, hero_aside_image, client, client_logo
-    home_blurb, home_metric, home_metric_label, stat_bar
+  Per-case-study data (all optional, graceful fallbacks): see partials
+  cshx-panel.html / cshx-card.html. Needs `home_logo` for the logo selectors.
 */ -}}
 {{- $style := .Get "style" | default "1" -}}
-{{- $eyebrow := .Get "eyebrow" | default "Case Studies" -}}
-{{- $title := .Get "title" | default "Proven results, <span class='text-gradient'>real business impact</span>" -}}
-{{- $intro := .Get "intro" | default "See how we turn tangled infrastructure into platforms teams can scale — measured in dollars saved, hours returned, and risk removed." -}}
-{{- $ctaText := .Get "cta_text" | default "Explore all case studies" -}}
+{{- $eyebrow := .Get "eyebrow" | default "Customer Stories" -}}
+{{- $title := .Get "title" | default "Hear what our customers are saying" -}}
+{{- $intro := .Get "intro" -}}
+{{- $ctaText := .Get "cta_text" | default "See all case studies" -}}
 {{- $ctaLink := .Get "cta_link" | default "/case-studies/" -}}
 {{- $label := .Get "label" -}}
 {{- $items := sort (where site.RegularPages "Section" "case-studies") "Weight" -}}
-{{- $featured := index $items 0 -}}
+{{- $count := len $items -}}
 
-<div class="csh csh--s{{ $style }}" data-aos="fade">
+<div class="csh csh--s{{ $style }}">
 {{- if $label }}
   <div class="csh-flag"><span class="csh-flag__dot"></span>{{ $label | safeHTML }}</div>
 {{- end }}
 
-{{- /* ============================== STYLE 1 — Clean card grid ============================== */ -}}
-{{- if eq $style "1" }}
-  <div class="csh-head csh-head--center">
-    <span class="csh-eyebrow">{{ $eyebrow }}</span>
-    <h2 class="csh-title">{{ $title | safeHTML }}</h2>
-    <p class="csh-intro">{{ $intro | safeHTML }}</p>
-  </div>
-  <div class="csh-grid">
-    {{- range $items }}
-    {{- $cs := . }}
-    {{- $img := or (.Param "preview_image") (.Param "hero_aside_image") }}
-    <a class="csh-card" href="{{ .RelPermalink }}">
-      <div class="csh-card__media">{{ with $img }}<img src="{{ . }}" alt="{{ $cs.Title }}" loading="lazy">{{ end }}</div>
-      <div class="csh-card__body">
-        {{- with .Param "client" }}<span class="csh-card__client">{{ . }}</span>{{ end }}
-        <h3 class="csh-card__title">{{ .Title }}</h3>
-        <p class="csh-card__desc">{{ or (.Param "home_blurb") .Description }}</p>
-        <span class="csh-card__cta">Read the story <span aria-hidden="true">→</span></span>
-      </div>
-    </a>
-    {{- end }}
-  </div>
-  <div class="csh-foot"><a class="button btn-outline-gradient" href="{{ $ctaLink }}">{{ $ctaText }} ￫</a></div>
-
-{{- /* ============================== STYLE 2 — Alternating split features ============================== */ -}}
-{{- else if eq $style "2" }}
-  <div class="csh-head csh-head--center">
-    <span class="csh-eyebrow">{{ $eyebrow }}</span>
-    <h2 class="csh-title">{{ $title | safeHTML }}</h2>
-  </div>
-  <div class="csh-splits">
-    {{- range $i, $e := $items }}
-    {{- $img := or (.Param "preview_image") (.Param "hero_aside_image") }}
-    <article class="csh-split{{ if eq (mod $i 2) 1 }} csh-split--flip{{ end }}">
-      <div class="csh-split__media">{{ with $img }}<img src="{{ . }}" alt="{{ $e.Title }}" loading="lazy">{{ end }}</div>
-      <div class="csh-split__text">
-        {{- with .Param "client" }}<span class="csh-eyebrow csh-eyebrow--sm">{{ . }}</span>{{ end }}
-        <h3 class="csh-split__title">{{ .Title }}</h3>
-        <p class="csh-split__desc">{{ or (.Param "home_blurb") .Description }}</p>
-        {{- with .Param "stat_bar" }}
-        <div class="csh-split__stats">
-          {{- range first 3 . }}<div class="csh-mini"><b>{{ .value | safeHTML }}</b><span>{{ .label | safeHTML }}</span></div>{{ end }}
-        </div>
-        {{- end }}
-        <a class="csh-textlink" href="{{ .RelPermalink }}">Read the full story <span aria-hidden="true">→</span></a>
-      </div>
-    </article>
-    {{- end }}
-  </div>
-
-{{- /* ============================== STYLE 3 — Stat-forward dark band ============================== */ -}}
-{{- else if eq $style "3" }}
-  <div class="csh-head csh-head--center">
-    <span class="csh-eyebrow">{{ $eyebrow }}</span>
-    <h2 class="csh-title">{{ $title | safeHTML }}</h2>
-    <p class="csh-intro">{{ $intro | safeHTML }}</p>
-  </div>
-  <div class="csh-statrows">
-    {{- range $items }}
-    {{- $cs := . }}
-    <a class="csh-statrow" href="{{ .RelPermalink }}">
-      <div class="csh-statrow__id">
-        {{- with .Param "client_logo" }}<img class="csh-statrow__logo" src="{{ . }}" alt="{{ $cs.Param "client" }}">{{ else }}<span class="csh-statrow__name">{{ or ($cs.Param "client") $cs.Title }}</span>{{ end }}
-        <p>{{ or (.Param "home_blurb") .Description }}</p>
-        <span class="csh-textlink">Read the story <span aria-hidden="true">→</span></span>
-      </div>
-      <div class="csh-statrow__stats">
-        {{- with .Param "stat_bar" }}
-          {{- range first 4 . }}<div class="csh-bignum"><b>{{ .value | safeHTML }}</b><span>{{ .label | safeHTML }}</span></div>{{ end }}
-        {{- else }}
-          {{- with .Param "home_metric" }}<div class="csh-bignum"><b>{{ . }}</b><span>{{ $cs.Param "home_metric_label" }}</span></div>{{ end }}
-        {{- end }}
-      </div>
-    </a>
-    {{- end }}
-  </div>
-
-{{- /* ============================== STYLE 4 — Spotlight + side list ============================== */ -}}
-{{- else if eq $style "4" }}
-  <div class="csh-head">
-    <span class="csh-eyebrow">{{ $eyebrow }}</span>
-    <h2 class="csh-title">{{ $title | safeHTML }}</h2>
-  </div>
-  <div class="csh-spotlight">
-    {{- $fimg := or ($featured.Param "hero_aside_image") ($featured.Param "preview_image") }}
-    <a class="csh-feature" href="{{ $featured.RelPermalink }}" style="background-image:url('{{ $fimg }}')">
-      <div class="csh-feature__scrim"></div>
-      <div class="csh-feature__body">
-        <span class="csh-eyebrow csh-eyebrow--sm">Featured · {{ or ($featured.Param "client") "Case Study" }}</span>
-        <h3 class="csh-feature__title">{{ $featured.Title }}</h3>
-        {{- with $featured.Param "stat_bar" }}
-        <div class="csh-feature__stats">{{ range first 3 . }}<div class="csh-mini csh-mini--light"><b>{{ .value | safeHTML }}</b><span>{{ .label | safeHTML }}</span></div>{{ end }}</div>
-        {{- end }}
-        <span class="csh-card__cta csh-card__cta--light">Read the story <span aria-hidden="true">→</span></span>
-      </div>
-    </a>
-    <div class="csh-sidelist">
-      {{- range $items }}
-      {{- $cs := . }}
-      <a class="csh-sideitem" href="{{ .RelPermalink }}">
-        <div class="csh-sideitem__thumb">{{ with (or (.Param "preview_image") (.Param "hero_aside_image")) }}<img src="{{ . }}" alt="{{ $cs.Title }}" loading="lazy">{{ end }}</div>
-        <div>
-          {{- with .Param "client" }}<span class="csh-sideitem__client">{{ . }}</span>{{ end }}
-          <h4 class="csh-sideitem__title">{{ .Title }}</h4>
-          {{- with (or (.Param "home_metric") "") }}<span class="csh-sideitem__metric">{{ . }} · {{ $cs.Param "home_metric_label" }}</span>{{ end }}
-        </div>
-      </a>
-      {{- end }}
-      <a class="csh-textlink" href="{{ $ctaLink }}">{{ $ctaText }} <span aria-hidden="true">→</span></a>
-    </div>
-  </div>
-
-{{- /* ============================== STYLE 5 — Horizontal scroll-snap rail ============================== */ -}}
-{{- else if eq $style "5" }}
-  <div class="csh-head csh-head--split">
-    <div>
-      <span class="csh-eyebrow">{{ $eyebrow }}</span>
-      <h2 class="csh-title">{{ $title | safeHTML }}</h2>
-    </div>
-    <a class="csh-textlink csh-textlink--lg" href="{{ $ctaLink }}">{{ $ctaText }} <span aria-hidden="true">→</span></a>
-  </div>
-  <div class="csh-rail">
-    {{- range $items }}
-    {{- $cs := . }}
-    {{- $img := or (.Param "preview_image") (.Param "hero_aside_image") }}
-    <a class="csh-railcard" href="{{ .RelPermalink }}">
-      <div class="csh-railcard__media">{{ with $img }}<img src="{{ . }}" alt="{{ $cs.Title }}" loading="lazy">{{ end }}</div>
-      <div class="csh-railcard__body">
-        {{- with .Param "client" }}<span class="csh-card__client">{{ . }}</span>{{ end }}
-        <h3 class="csh-railcard__title">{{ .Title }}</h3>
-        {{- with .Param "stat_bar" }}<div class="csh-chiprow">{{ range first 2 . }}<span class="csh-chip">{{ .value | safeHTML }}</span>{{ end }}</div>{{ end }}
-        <span class="csh-card__cta">Read the story <span aria-hidden="true">→</span></span>
-      </div>
-    </a>
-    {{- end }}
-    <a class="csh-railcard csh-railcard--cta" href="{{ $ctaLink }}">
-      <span>{{ $ctaText }}</span>
-      <span class="csh-railcard--cta__arrow" aria-hidden="true">→</span>
-    </a>
-  </div>
-
-{{- /* ============================== STYLE 6 — Bento grid ============================== */ -}}
-{{- else if eq $style "6" }}
-  <div class="csh-head csh-head--center">
-    <span class="csh-eyebrow">{{ $eyebrow }}</span>
-    <h2 class="csh-title">{{ $title | safeHTML }}</h2>
-  </div>
-  <div class="csh-bento">
-    {{- $fimg := or ($featured.Param "hero_aside_image") ($featured.Param "preview_image") }}
-    <a class="csh-bento__feature" href="{{ $featured.RelPermalink }}" style="background-image:url('{{ $fimg }}')">
-      <div class="csh-feature__scrim"></div>
-      <div class="csh-bento__featurebody">
-        <span class="csh-eyebrow csh-eyebrow--sm">{{ or ($featured.Param "client") "Featured" }}</span>
-        <h3 class="csh-feature__title">{{ $featured.Title }}</h3>
-        <span class="csh-card__cta csh-card__cta--light">Read the story <span aria-hidden="true">→</span></span>
-      </div>
-    </a>
-    <div class="csh-bento__side">
-      {{- with $featured.Param "stat_bar" }}
-      <div class="csh-bento__stats">
-        {{- range first 4 . }}<div class="csh-bignum csh-bignum--sm"><b>{{ .value | safeHTML }}</b><span>{{ .label | safeHTML }}</span></div>{{ end }}
-      </div>
-      {{- end }}
-      {{- range after 1 $items }}
-      <a class="csh-bento__tile" href="{{ .RelPermalink }}">
-        {{- with .Param "client" }}<span class="csh-card__client">{{ . }}</span>{{ end }}
-        <h4 class="csh-bento__tiletitle">{{ .Title }}</h4>
-        <p>{{ or (.Param "home_blurb") .Description }}</p>
-        <span class="csh-textlink">Read the story <span aria-hidden="true">→</span></span>
-      </a>
-      {{- end }}
-    </div>
-  </div>
-
-{{- /* ============================== STYLE 7 — Editorial numbered list ============================== */ -}}
-{{- else if eq $style "7" }}
-  <div class="csh-head csh-head--split">
-    <div>
-      <span class="csh-eyebrow">{{ $eyebrow }}</span>
-      <h2 class="csh-title">{{ $title | safeHTML }}</h2>
-    </div>
-    <p class="csh-intro csh-intro--side">{{ $intro | safeHTML }}</p>
-  </div>
-  <ol class="csh-editorial">
-    {{- range $i, $e := $items }}
-    <li><a class="csh-edrow" href="{{ .RelPermalink }}">
-      <span class="csh-edrow__num">{{ printf "%02d" (add $i 1) }}</span>
-      <div class="csh-edrow__main">
-        {{- with .Param "client" }}<span class="csh-eyebrow csh-eyebrow--sm">{{ . }}</span>{{ end }}
-        <h3 class="csh-edrow__title">{{ .Title }}</h3>
-        <p>{{ or (.Param "home_blurb") .Description }}</p>
-      </div>
-      <div class="csh-edrow__metric">
-        {{- with .Param "home_metric" }}<b>{{ . }}</b><span>{{ $e.Param "home_metric_label" }}</span>{{ end }}
-      </div>
-      <span class="csh-edrow__arrow" aria-hidden="true">→</span>
-    </a></li>
-    {{- end }}
-  </ol>
-
-{{- /* ============================== STYLE 8 — Glassmorphism gradient cards ============================== */ -}}
-{{- else if eq $style "8" }}
-  <div class="csh-head csh-head--center">
-    <span class="csh-eyebrow">{{ $eyebrow }}</span>
-    <h2 class="csh-title">{{ $title | safeHTML }}</h2>
-    <p class="csh-intro">{{ $intro | safeHTML }}</p>
-  </div>
-  <div class="csh-glassgrid">
-    {{- range $items }}
-    {{- $cs := . }}
-    <a class="csh-glass" href="{{ .RelPermalink }}">
-      <div class="csh-glass__inner">
-        <div class="csh-glass__top">
-          {{- with .Param "client_logo" }}<img class="csh-glass__logo" src="{{ . }}" alt="{{ $cs.Param "client" }}">{{ else }}<span class="csh-glass__name">{{ or ($cs.Param "client") $cs.Title }}</span>{{ end }}
-        </div>
-        <h3 class="csh-glass__title">{{ .Title }}</h3>
-        <p class="csh-glass__desc">{{ or (.Param "home_blurb") .Description }}</p>
-        {{- with .Param "stat_bar" }}
-        <div class="csh-chiprow">{{ range first 3 . }}<span class="csh-chip csh-chip--glass">{{ .value | safeHTML }}</span>{{ end }}</div>
-        {{- end }}
-        <span class="csh-card__cta csh-card__cta--light">Read the story <span aria-hidden="true">→</span></span>
-      </div>
-    </a>
-    {{- end }}
-  </div>
-
-{{- /* ============================== STYLE 9 — Cinematic full-bleed spotlight ============================== */ -}}
-{{- else if eq $style "9" }}
-  {{- $fimg := or ($featured.Param "hero_aside_image") ($featured.Param "preview_image") }}
-  <div class="csh-cinema" style="background-image:url('{{ $fimg }}')">
-    <div class="csh-cinema__scrim"></div>
-    <div class="csh-cinema__inner">
-      <span class="csh-eyebrow csh-eyebrow--sm">{{ $eyebrow }} · {{ or ($featured.Param "client") "Featured" }}</span>
-      <h2 class="csh-cinema__title">{{ $featured.Title }}</h2>
-      <p class="csh-cinema__desc">{{ or ($featured.Param "home_blurb") $featured.Description }}</p>
-      {{- with $featured.Param "stat_bar" }}
-      <div class="csh-cinema__stats">{{ range first 4 . }}<div class="csh-bignum csh-bignum--light"><b>{{ .value | safeHTML }}</b><span>{{ .label | safeHTML }}</span></div>{{ end }}</div>
-      {{- end }}
-      <div class="csh-cinema__actions">
-        <a class="button btn-gradient" href="{{ $featured.RelPermalink }}">Read the story ￫</a>
-        <a class="csh-textlink csh-textlink--light" href="{{ $ctaLink }}">{{ $ctaText }} <span aria-hidden="true">→</span></a>
-      </div>
-    </div>
-  </div>
-
-{{- /* ============================== STYLE 10 — Metrics strip + logos ============================== */ -}}
-{{- else if eq $style "10" }}
-  <div class="csh-strip">
-    <div class="csh-strip__lead">
-      <span class="csh-eyebrow">{{ $eyebrow }}</span>
-      <h2 class="csh-title csh-title--sm">{{ $title | safeHTML }}</h2>
-      <a class="button btn-outline-gradient" href="{{ $ctaLink }}">{{ $ctaText }} ￫</a>
-    </div>
-    <div class="csh-strip__metrics">
-      {{- range $items }}
-      {{- $m := .Param "home_metric" }}
-      {{- if not $m }}{{ with .Param "stat_bar" }}{{ $first := index . 0 }}{{ $m = $first.value }}{{ end }}{{ end }}
-      <a class="csh-stat" href="{{ .RelPermalink }}">
-        <b>{{ $m | safeHTML }}</b>
-        <span>{{ or (.Param "home_metric_label") (.Param "client") .Title }}</span>
-      </a>
-      {{- end }}
-    </div>
-  </div>
-
-{{- /* ============================== STYLE 11 — Featured panel + logo-tab slider ============================== */ -}}
-{{- else if eq $style "11" }}
   <div class="cshx-head">
     <div class="cshx-head__intro">
       <span class="csh-eyebrow">{{ $eyebrow }}</span>
       <h2 class="csh-title">{{ $title | safeHTML }}</h2>
+      {{- with $intro }}<p class="csh-intro">{{ . | safeHTML }}</p>{{ end }}
     </div>
     <a class="button btn-gradient cshx-head__cta" href="{{ $ctaLink }}">{{ $ctaText }}</a>
   </div>
 
-  <div class="cshx-slider" data-cshx-autoplay="6000">
+{{- /* ===================== STYLE 1 — Logo tabs (Microsoft pattern) ===================== */ -}}
+{{- if eq $style "1" }}
+  <div class="cshx-slider" data-cshx-mode="swap" data-cshx-autoplay="6000">
     <div class="cshx-stage">
-      {{- range $i, $e := $items }}
-      {{- $img := or (.Param "preview_image") (.Param "hero_aside_image") }}
-      <article class="cshx-panel{{ if eq $i 0 }} is-active{{ end }}" data-cshx-panel="{{ $i }}">
-        <div class="cshx-panel__text">
-          <div class="cshx-panel__logo">
-            {{- with .Param "home_logo" }}<img src="{{ . }}" alt="{{ $e.Param "client" | default $e.Title }}">{{ else }}<span>{{ or ($e.Param "client") $e.Title }}</span>{{ end }}
-          </div>
-          <h3 class="cshx-panel__title">{{ .Title }}</h3>
-          <p class="cshx-panel__desc">{{ or (.Param "home_blurb") .Description }}</p>
-          {{- with .Param "stat_bar" }}
-          <div class="cshx-panel__meta">
-            <span class="cshx-panel__metalabel">Highlights</span>
-            <div class="csh-chiprow">{{ range first 3 . }}<span class="csh-chip">{{ .value | safeHTML }}</span>{{ end }}</div>
-          </div>
-          {{- end }}
-          <a class="button btn-gradient cshx-panel__btn" href="{{ .RelPermalink }}">Read the story</a>
-        </div>
-        <a class="cshx-panel__media" href="{{ .RelPermalink }}" aria-label="{{ .Title }}">
-          {{- with $img }}<img src="{{ . }}" alt="{{ $e.Title }}" loading="lazy">{{ end }}
-        </a>
-      </article>
-      {{- end }}
+      {{- range $i, $e := $items }}{{ partial "cshx-panel.html" (dict "page" . "index" $i "active" (eq $i 0)) }}{{ end }}
     </div>
-
     <div class="cshx-tabs" role="tablist" aria-label="Customer stories">
       {{- range $i, $e := $items }}
-      <button type="button" class="cshx-tab{{ if eq $i 0 }} is-active{{ end }}" data-cshx-tab="{{ $i }}" role="tab" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}" aria-label="{{ .Title }}">
+      <button type="button" class="cshx-tab{{ if eq $i 0 }} is-active{{ end }}" data-cshx-go="{{ $i }}" role="tab" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}" aria-label="{{ .Title }}">
         {{- with .Param "home_logo" }}<img src="{{ . }}" alt="{{ $e.Param "client" | default $e.Title }}">{{ else }}<span>{{ or ($e.Param "client") $e.Title }}</span>{{ end }}
         <span class="cshx-tab__bar" aria-hidden="true"></span>
       </button>
@@ -347,50 +62,216 @@
     </div>
   </div>
 
-  {{- if not (.Page.Scratch.Get "cshx-js") }}{{ .Page.Scratch.Set "cshx-js" true }}
-  <script>
-  (function () {
-    function initSlider(root) {
-      if (root.dataset.cshxReady) return;
-      root.dataset.cshxReady = "1";
-      var panels = root.querySelectorAll("[data-cshx-panel]");
-      var tabs = root.querySelectorAll("[data-cshx-tab]");
-      if (!panels.length || !tabs.length) return;
-      var current = 0, timer = null;
-      var delay = parseInt(root.getAttribute("data-cshx-autoplay") || "0", 10);
+{{- /* ===================== STYLE 2 — Peek carousel ===================== */ -}}
+{{- else if eq $style "2" }}
+  <div class="cshx-slider cshx-trackwrap" data-cshx-mode="track" data-cshx-autoplay="5000">
+    <div class="cshx-track cshx-track--peek" data-cshx-track>
+      {{- range $items }}{{ partial "cshx-card.html" (dict "page" .) }}{{ end }}
+    </div>
+    <div class="cshx-controls">
+      <button type="button" class="cshx-arrow" data-cshx-prev aria-label="Previous">&lsaquo;</button>
+      <button type="button" class="cshx-arrow" data-cshx-next aria-label="Next">&rsaquo;</button>
+    </div>
+  </div>
 
-      function show(n) {
-        n = (n + panels.length) % panels.length;
-        panels[current].classList.remove("is-active");
-        tabs[current].classList.remove("is-active");
-        tabs[current].setAttribute("aria-selected", "false");
-        current = n;
-        panels[current].classList.add("is-active");
-        tabs[current].classList.add("is-active");
-        tabs[current].setAttribute("aria-selected", "true");
-        tabs[current].scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
-      }
-      function start() { if (delay > 1 && panels.length > 1) timer = setInterval(function () { show(current + 1); }, delay); }
-      function stop() { if (timer) { clearInterval(timer); timer = null; } }
+{{- /* ===================== STYLE 3 — Vertical list selector ===================== */ -}}
+{{- else if eq $style "3" }}
+  <div class="cshx-slider cshx-vert" data-cshx-mode="swap" data-cshx-autoplay="6000">
+    <div class="cshx-vnav" role="tablist" aria-label="Customer stories">
+      {{- range $i, $e := $items }}
+      <button type="button" class="cshx-vnav__item{{ if eq $i 0 }} is-active{{ end }}" data-cshx-go="{{ $i }}" role="tab" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}">
+        <span class="cshx-vnav__logo">{{ with .Param "home_logo" }}<img src="{{ . }}" alt="{{ $e.Param "client" | default $e.Title }}">{{ else }}<b>{{ or ($e.Param "client") $e.Title }}</b>{{ end }}</span>
+        <span class="cshx-vnav__title">{{ .Title }}</span>
+        {{- with .Param "home_metric" }}<span class="cshx-vnav__metric">{{ . }} · {{ $e.Param "home_metric_label" }}</span>{{ end }}
+      </button>
+      {{- end }}
+    </div>
+    <div class="cshx-stage">
+      {{- range $i, $e := $items }}{{ partial "cshx-panel.html" (dict "page" . "index" $i "active" (eq $i 0)) }}{{ end }}
+    </div>
+  </div>
 
-      tabs.forEach(function (tab, i) {
-        tab.addEventListener("click", function () { stop(); show(i); start(); });
-      });
-      root.addEventListener("mouseenter", stop);
-      root.addEventListener("mouseleave", start);
-      root.addEventListener("focusin", stop);
-      start();
-    }
-    function initAll() {
-      document.querySelectorAll(".cshx-slider").forEach(initSlider);
-    }
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initAll);
-    } else {
-      initAll();
-    }
-  })();
-  </script>
-  {{- end }}
+{{- /* ===================== STYLE 4 — Arrows + dots ===================== */ -}}
+{{- else if eq $style "4" }}
+  <div class="cshx-slider" data-cshx-mode="swap" data-cshx-autoplay="6000">
+    <div class="cshx-stage">
+      {{- range $i, $e := $items }}{{ partial "cshx-panel.html" (dict "page" . "index" $i "active" (eq $i 0)) }}{{ end }}
+    </div>
+    <div class="cshx-controls cshx-controls--center">
+      <button type="button" class="cshx-arrow" data-cshx-prev aria-label="Previous">&lsaquo;</button>
+      <div class="cshx-dots">
+        {{- range $i, $e := $items }}<button type="button" class="cshx-dot{{ if eq $i 0 }} is-active{{ end }}" data-cshx-go="{{ $i }}" aria-label="{{ .Title }}"></button>{{ end }}
+      </div>
+      <button type="button" class="cshx-arrow" data-cshx-next aria-label="Next">&rsaquo;</button>
+    </div>
+  </div>
+
+{{- /* ===================== STYLE 5 — Counter + arrows ===================== */ -}}
+{{- else if eq $style "5" }}
+  <div class="cshx-slider" data-cshx-mode="swap" data-cshx-autoplay="6000">
+    <div class="cshx-counterbar">
+      <span class="cshx-counter" data-cshx-counter>01 / {{ printf "%02d" $count }}</span>
+      <div class="cshx-counterbar__arrows">
+        <button type="button" class="cshx-arrow" data-cshx-prev aria-label="Previous">&lsaquo;</button>
+        <button type="button" class="cshx-arrow" data-cshx-next aria-label="Next">&rsaquo;</button>
+      </div>
+    </div>
+    <div class="cshx-stage">
+      {{- range $i, $e := $items }}{{ partial "cshx-panel.html" (dict "page" . "index" $i "active" (eq $i 0)) }}{{ end }}
+    </div>
+  </div>
+
+{{- /* ===================== STYLE 6 — Center coverflow ===================== */ -}}
+{{- else if eq $style "6" }}
+  <div class="cshx-slider cshx-trackwrap cshx-cover" data-cshx-mode="track" data-cshx-autoplay="5000">
+    <div class="cshx-track cshx-track--center" data-cshx-track>
+      {{- range $items }}{{ partial "cshx-card.html" (dict "page" .) }}{{ end }}
+    </div>
+    <div class="cshx-controls cshx-controls--center">
+      <button type="button" class="cshx-arrow" data-cshx-prev aria-label="Previous">&lsaquo;</button>
+      <button type="button" class="cshx-arrow" data-cshx-next aria-label="Next">&rsaquo;</button>
+    </div>
+  </div>
+
+{{- /* ===================== STYLE 7 — Numbered pills ===================== */ -}}
+{{- else if eq $style "7" }}
+  <div class="cshx-slider" data-cshx-mode="swap" data-cshx-autoplay="6000">
+    <div class="cshx-stage">
+      {{- range $i, $e := $items }}{{ partial "cshx-panel.html" (dict "page" . "index" $i "active" (eq $i 0)) }}{{ end }}
+    </div>
+    <div class="cshx-pills" role="tablist" aria-label="Customer stories">
+      {{- range $i, $e := $items }}
+      <button type="button" class="cshx-pill{{ if eq $i 0 }} is-active{{ end }}" data-cshx-go="{{ $i }}" role="tab" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}">
+        <b>{{ printf "%02d" (add $i 1) }}</b><span>{{ or ($e.Param "client") $e.Title }}</span>
+      </button>
+      {{- end }}
+    </div>
+  </div>
+
+{{- /* ===================== STYLE 8 — Image thumbnails ===================== */ -}}
+{{- else if eq $style "8" }}
+  <div class="cshx-slider" data-cshx-mode="swap" data-cshx-autoplay="6000">
+    <div class="cshx-stage">
+      {{- range $i, $e := $items }}{{ partial "cshx-panel.html" (dict "page" . "index" $i "active" (eq $i 0)) }}{{ end }}
+    </div>
+    <div class="cshx-thumbs" role="tablist" aria-label="Customer stories">
+      {{- range $i, $e := $items }}
+      {{- $t := or (.Param "preview_image") (.Param "hero_aside_image") }}
+      <button type="button" class="cshx-thumb{{ if eq $i 0 }} is-active{{ end }}" data-cshx-go="{{ $i }}" role="tab" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}" aria-label="{{ .Title }}">
+        <span class="cshx-thumb__img">{{ with $t }}<img src="{{ . }}" alt="" loading="lazy">{{ end }}</span>
+        <span class="cshx-thumb__label">{{ or ($e.Param "client") $e.Title }}</span>
+      </button>
+      {{- end }}
+    </div>
+  </div>
+
+{{- /* ===================== STYLE 9 — Filmstrip ===================== */ -}}
+{{- else if eq $style "9" }}
+  <div class="cshx-slider cshx-trackwrap" data-cshx-mode="track" data-cshx-autoplay="4000">
+    <div class="cshx-track cshx-track--film" data-cshx-track>
+      {{- range $items }}{{ partial "cshx-card.html" (dict "page" .) }}{{ end }}
+    </div>
+    <div class="cshx-controls">
+      <button type="button" class="cshx-arrow" data-cshx-prev aria-label="Previous">&lsaquo;</button>
+      <button type="button" class="cshx-arrow" data-cshx-next aria-label="Next">&rsaquo;</button>
+    </div>
+  </div>
+
+{{- /* ===================== STYLE 10 — Side thumbnail rail ===================== */ -}}
+{{- else if eq $style "10" }}
+  <div class="cshx-slider cshx-railslider" data-cshx-mode="swap" data-cshx-autoplay="6000">
+    <div class="cshx-stage">
+      {{- range $i, $e := $items }}{{ partial "cshx-panel.html" (dict "page" . "index" $i "active" (eq $i 0)) }}{{ end }}
+    </div>
+    <div class="cshx-vrail" role="tablist" aria-label="Customer stories">
+      {{- range $i, $e := $items }}
+      {{- $t := or (.Param "preview_image") (.Param "hero_aside_image") }}
+      <button type="button" class="cshx-vthumb{{ if eq $i 0 }} is-active{{ end }}" data-cshx-go="{{ $i }}" role="tab" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}" aria-label="{{ .Title }}">
+        <span class="cshx-vthumb__img">{{ with $t }}<img src="{{ . }}" alt="" loading="lazy">{{ end }}</span>
+        <span class="cshx-vthumb__label">{{ or ($e.Param "client") $e.Title }}</span>
+      </button>
+      {{- end }}
+    </div>
+  </div>
 {{- end }}
 </div>
+
+{{- if not (site.Store.Get "cshx-js") }}{{ site.Store.Set "cshx-js" true }}
+<script>
+(function () {
+  function init(root) {
+    if (root.dataset.cshxReady) return;
+    root.dataset.cshxReady = "1";
+    var mode = root.getAttribute("data-cshx-mode") || "swap";
+    var delay = parseInt(root.getAttribute("data-cshx-autoplay") || "0", 10);
+    var timer = null;
+
+    if (mode === "track") {
+      var track = root.querySelector("[data-cshx-track]");
+      if (!track) return;
+      var prevT = root.querySelector("[data-cshx-prev]");
+      var nextT = root.querySelector("[data-cshx-next]");
+      function step(dir) {
+        var card = track.children[0];
+        var gap = parseFloat(getComputedStyle(track).columnGap || "20") || 20;
+        var w = card ? card.getBoundingClientRect().width + gap : track.clientWidth * 0.8;
+        var max = track.scrollWidth - track.clientWidth - 4;
+        if (dir > 0 && track.scrollLeft >= max) {
+          track.scrollTo({ left: 0, behavior: "smooth" });
+        } else if (dir < 0 && track.scrollLeft <= 4) {
+          track.scrollTo({ left: track.scrollWidth, behavior: "smooth" });
+        } else {
+          track.scrollBy({ left: dir * w, behavior: "smooth" });
+        }
+      }
+      if (prevT) prevT.addEventListener("click", function () { stop(); step(-1); start(); });
+      if (nextT) nextT.addEventListener("click", function () { stop(); step(1); start(); });
+      function start() { if (delay > 1 && track.children.length > 1) timer = setInterval(function () { step(1); }, delay); }
+      function stop() { if (timer) { clearInterval(timer); timer = null; } }
+      root.addEventListener("mouseenter", stop);
+      root.addEventListener("mouseleave", start);
+      start();
+      return;
+    }
+
+    // swap mode
+    var panels = root.querySelectorAll("[data-cshx-panel]");
+    var navs = root.querySelectorAll("[data-cshx-go]");
+    var prevS = root.querySelector("[data-cshx-prev]");
+    var nextS = root.querySelector("[data-cshx-next]");
+    var counter = root.querySelector("[data-cshx-counter]");
+    if (!panels.length) return;
+    var current = 0;
+    function pad(n) { return (n < 10 ? "0" : "") + n; }
+    function show(n) {
+      n = (n + panels.length) % panels.length;
+      panels[current].classList.remove("is-active");
+      if (navs[current]) { navs[current].classList.remove("is-active"); navs[current].setAttribute("aria-selected", "false"); }
+      current = n;
+      panels[current].classList.add("is-active");
+      if (navs[current]) {
+        navs[current].classList.add("is-active");
+        navs[current].setAttribute("aria-selected", "true");
+        navs[current].scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
+      }
+      if (counter) counter.textContent = pad(current + 1) + " / " + pad(panels.length);
+    }
+    function start() { if (delay > 1 && panels.length > 1) timer = setInterval(function () { show(current + 1); }, delay); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    navs.forEach(function (b, i) { b.addEventListener("click", function () { stop(); show(i); start(); }); });
+    if (prevS) prevS.addEventListener("click", function () { stop(); show(current - 1); start(); });
+    if (nextS) nextS.addEventListener("click", function () { stop(); show(current + 1); start(); });
+    root.addEventListener("mouseenter", stop);
+    root.addEventListener("mouseleave", start);
+    root.addEventListener("focusin", stop);
+    start();
+  }
+  function all() { document.querySelectorAll(".cshx-slider").forEach(init); }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", all);
+  } else {
+    all();
+  }
+})();
+</script>
+{{- end }}

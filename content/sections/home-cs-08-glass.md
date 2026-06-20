@@ -6,4 +6,4 @@ section_categories:
 id: cs-showcase-08
 ---
 
-{{< case-studies-showcase style="8" label="Option 8 — Glassmorphism gradient cards" >}}
+{{< case-studies-showcase style="8" label="Option 8 — Image thumbnails" >}}

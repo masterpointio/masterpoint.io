@@ -6,4 +6,4 @@ section_categories:
 id: cs-showcase-03
 ---
 
-{{< case-studies-showcase style="3" label="Option 3 — Stat-forward dark band" >}}
+{{< case-studies-showcase style="3" label="Option 3 — Vertical list selector" >}}

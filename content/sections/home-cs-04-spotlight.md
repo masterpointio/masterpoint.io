@@ -6,4 +6,4 @@ section_categories:
 id: cs-showcase-04
 ---
 
-{{< case-studies-showcase style="4" label="Option 4 — Spotlight + side list" >}}
+{{< case-studies-showcase style="4" label="Option 4 — Arrows + dots" >}}

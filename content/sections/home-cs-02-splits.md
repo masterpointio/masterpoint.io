@@ -6,4 +6,4 @@ section_categories:
 id: cs-showcase-02
 ---
 
-{{< case-studies-showcase style="2" label="Option 2 — Alternating split features" >}}
+{{< case-studies-showcase style="2" label="Option 2 — Peek carousel" >}}

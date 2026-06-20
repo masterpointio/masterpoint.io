@@ -6,4 +6,4 @@ section_categories:
 id: cs-showcase-06
 ---
 
-{{< case-studies-showcase style="6" label="Option 6 — Bento grid" >}}
+{{< case-studies-showcase style="6" label="Option 6 — Center coverflow" >}}

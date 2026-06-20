@@ -6,4 +6,4 @@ section_categories:
 id: cs-showcase-09
 ---
 
-{{< case-studies-showcase style="9" label="Option 9 — Cinematic full-bleed spotlight" >}}
+{{< case-studies-showcase style="9" label="Option 9 — Filmstrip" >}}

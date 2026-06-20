@@ -1,0 +1,26 @@
+{{- /*
+  cshx-panel — one featured case-study panel for the homepage slider styles.
+  Call: {{ partial "cshx-panel.html" (dict "page" . "index" $i "active" (eq $i 0)) }}
+*/ -}}
+{{- $p := .page -}}
+{{- $i := .index -}}
+{{- $img := or ($p.Param "preview_image") ($p.Param "hero_aside_image") -}}
+<article class="cshx-panel{{ if .active }} is-active{{ end }}" data-cshx-panel="{{ $i }}">
+  <div class="cshx-panel__text">
+    <div class="cshx-panel__logo">
+      {{- with $p.Param "home_logo" }}<img src="{{ . }}" alt="{{ $p.Param "client" | default $p.Title }}">{{ else }}<span>{{ or ($p.Param "client") $p.Title }}</span>{{ end }}
+    </div>
+    <h3 class="cshx-panel__title">{{ $p.Title }}</h3>
+    <p class="cshx-panel__desc">{{ or ($p.Param "home_blurb") $p.Description }}</p>
+    {{- with $p.Param "stat_bar" }}
+    <div class="cshx-panel__meta">
+      <span class="cshx-panel__metalabel">Highlights</span>
+      <div class="csh-chiprow">{{ range first 3 . }}<span class="csh-chip">{{ .value | safeHTML }}</span>{{ end }}</div>
+    </div>
+    {{- end }}
+    <a class="button btn-gradient cshx-panel__btn" href="{{ $p.RelPermalink }}">Read the story</a>
+  </div>
+  <a class="cshx-panel__media" href="{{ $p.RelPermalink }}" aria-label="{{ $p.Title }}">
+    {{- with $img }}<img src="{{ . }}" alt="{{ $p.Title }}" loading="lazy">{{ end }}
+  </a>
+</article>
