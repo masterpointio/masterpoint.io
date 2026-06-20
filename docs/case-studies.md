@@ -359,6 +359,46 @@ partial ("Get a standardized, predictable, and efficient infrastructure
 management process" + Schedule button), then `footer`. Same closing as the modern
 case studies and the marketing pages.
 
+### Downloadable PDF ("Download PDF" button)
+
+Set **`pdf: /case-studies/<slug>.pdf`** in front matter and the immersive hero
+renders a **"Download PDF"** button (`.cs-hero__actions` / `.cs-hero__pdf`, styled
+in `case-studies.scss` under `.cs-hero`) that opens the file in a new tab. Omit
+the field and no button renders. The PDF is a **pre-generated static file** in
+`static/case-studies/` — a real, text-selectable, link-clickable PDF (NOT an
+image capture).
+
+**Regenerate it with `scripts/case-study-pdf.mjs`** (Playwright + Chromium's
+print engine). Why a script, not a JS/canvas library: canvas libraries rasterize
+to an image (text not highlightable, links dead). Chromium's print path keeps
+text selectable and emits real PDF link annotations.
+
+```bash
+# one-time: install the renderer
+npm install -D playwright && npx playwright install chromium
+# then, with the site running locally (hugo serve):
+node scripts/case-study-pdf.mjs marketspark
+#   → reads  http://localhost:1313/case-studies/marketspark/
+#   → writes static/case-studies/marketspark.pdf
+```
+
+Gotchas the script handles (don't remove):
+
+- **AOS must be neutralized.** The immersive body starts every `csi-*` card at
+  `opacity:0` until scrolled into view, so a naive capture renders most of the
+  page blank. The script injects CSS forcing `[data-aos]{opacity:1;transform:none}`.
+- **Site chrome is hidden** in the PDF — nav header, footer, `#schedule-assessment`,
+  and the in-hero `.cs-hero__actions` button itself.
+- **`emulateMedia('screen')`** keeps the dark immersive design (with
+  `printBackground:true`); without it Chromium would print the (nonexistent) print
+  styles.
+- **One continuous page**, not paginated: the script measures full document height
+  and sizes a single page to it (+2px buffer, zero margins) so no card is sliced.
+  Pass `--paged` for A4 pagination instead (cards get `break-inside: avoid`).
+- **It's a snapshot** — re-run the script after editing the case study, or the PDF
+  goes stale. Not wired into the Netlify build (kept this a pure-Hugo repo; the
+  script's Playwright dep is installed on demand and `node_modules/` is gitignored).
+
 ## Page-level styling decisions
 
 - **Backdrop is pine** (`$pine = #0e383a`, matching the blog); the article sits on

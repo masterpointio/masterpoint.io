@@ -29,6 +29,10 @@ stat_bar:
 preview_image: /img/case-studies/marketspark/marketspark-aws.png
 og_img: /img/case-studies/marketspark/marketspark-aws.png
 
+# Pre-generated downloadable PDF (see scripts/case-study-pdf.mjs to regenerate).
+# Renders a "Download PDF" button in the hero that opens this file in a new tab.
+pdf: /case-studies/marketspark.pdf
+
 sitemap:
   priority: 0
 ---

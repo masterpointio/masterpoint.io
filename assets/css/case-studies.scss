@@ -319,6 +319,59 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
       }
     }
 
+    // "Download PDF" action button (immersive layout). Ghost pill on the dark
+    // hero that fills mint on hover. Hidden inside the generated PDF itself.
+    &__actions {
+      margin-top: 1.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    &__pdf {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1.35rem;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: #fff;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(42, 217, 194, 0.5);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+
+      svg {
+        flex: none;
+        color: $cs-mint;
+        transition: color 0.2s ease;
+      }
+
+      &:hover,
+      &:focus-visible {
+        color: #06201f;
+        background: $cs-mint;
+        border-color: transparent;
+        text-decoration: none;
+        transform: translateY(-1px);
+        svg {
+          color: #06201f;
+        }
+      }
+
+      @media (max-width: 575px) {
+        font-size: 0.85rem;
+        padding: 0.6rem 1.1rem;
+      }
+    }
+
     &__meta {
       list-style: none;
       padding: 0;

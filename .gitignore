@@ -6,3 +6,5 @@
 CLAUDE.md
 .claude/*
 .cursor/*
+# Node deps for scripts/case-study-pdf.mjs (Playwright) — installed on demand, never committed
+node_modules/

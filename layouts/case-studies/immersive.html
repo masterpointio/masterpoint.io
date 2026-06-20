@@ -46,6 +46,21 @@
                         {{ .Title | safeHTML }}
                         {{ end }}
                     </h1>
+                    {{/* "Download PDF" — links to a pre-generated, text-selectable PDF
+                         (see scripts/case-study-pdf.mjs). Hidden in the PDF itself by the
+                         generator. Renders only when `pdf:` is set in front matter. */}}
+                    {{ with .Params.pdf }}
+                    <div class="cs-hero__actions">
+                        <a class="cs-hero__pdf" href="{{ . }}" target="_blank" rel="noopener" aria-label="Download this case study as a PDF (opens in a new tab)">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            <span>Download PDF</span>
+                        </a>
+                    </div>
+                    {{ end }}
                 </div>
             </div>
         </div>
