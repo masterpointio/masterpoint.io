@@ -135,7 +135,7 @@
     {{ $sass := resources.Get "css/style.scss" }} {{ $style := $sass | css.Sass
     | minify }}
 
-    <link rel="stylesheet" href="{{ $style.Permalink }}" media="screen" />
+    <link rel="stylesheet" href="{{ $style.Permalink }}" media="all" />
 
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
