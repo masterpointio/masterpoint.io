@@ -28,4 +28,4 @@ faqs:
 
 ### Common Questions {.sectionTitle .big .text-pine .text-center}
 
-{{< accordian >}}
+{{< accordion >}}
