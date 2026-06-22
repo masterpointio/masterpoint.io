@@ -1,0 +1,628 @@
+// =============================================================================
+// HOMEPAGE CASE-STUDY SHOWCASE  (.csh)
+// -----------------------------------------------------------------------------
+// Styles for the `case-studies-showcase` shortcode: a featured-story SLIDER that
+// sits on a dark, on-brand PINE BAND (the homepage page background is white, so
+// the showcase brings its own dark surface). Three treatments:
+//   .csh--s1  logo tabs        .csh--s2  peek carousel        .csh--s3  combo
+// Scoped under `.csh`. Imported at the end of custom.scss.
+// See docs/case-studies.md → "Homepage showcase".
+// =============================================================================
+
+$csh-pine: #0e383a;
+$csh-pine-deep: #07211f;
+$csh-pine-soft: #14474a;
+$csh-mint: #2ad9c2;
+$csh-pink: #d891ce;
+$csh-ink: #14302f;
+$csh-ink-soft: #51635f;
+$csh-line: #e4eae9;
+$csh-card: #ffffff;
+$csh-grad: linear-gradient(92deg, #ede497 -1%, #2ad9c2 34%, #d891ce 86%);
+
+.csh {
+  position: relative;
+  width: 100%;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  // -- the dark band that frames the whole showcase -------------------------
+  .csh-band {
+    position: relative;
+    overflow: hidden;
+    border-radius: 28px;
+    padding: clamp(1.8rem, 4vw, 3.4rem);
+    color: #fff;
+    background:
+      radial-gradient(60% 80% at 12% 0%, rgba(42, 217, 194, 0.16), transparent 60%),
+      radial-gradient(55% 80% at 92% 12%, rgba(216, 145, 206, 0.16), transparent 60%),
+      linear-gradient(160deg, $csh-pine 0%, $csh-pine-deep 100%);
+
+    // faint dot grid
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 22px 22px;
+      pointer-events: none;
+    }
+
+    > * {
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  // -- section head ---------------------------------------------------------
+  .csh-eyebrow {
+    display: inline-block;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-size: 0.82rem;
+    color: $csh-mint;
+    margin-bottom: 0.7rem;
+  }
+
+  .csh-title {
+    font-weight: 800;
+    line-height: 1.12;
+    font-size: clamp(1.9rem, 3.4vw, 2.8rem);
+    color: #fff;
+    margin: 0;
+  }
+
+  .csh-intro {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.08rem;
+    line-height: 1.55;
+    max-width: 640px;
+    margin: 1rem 0 0;
+  }
+
+  .cshx-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.2rem 2rem;
+    margin-bottom: 2rem;
+
+    &__intro {
+      max-width: 760px;
+    }
+
+    &__cta {
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
+  }
+
+  // -- highlight chips ------------------------------------------------------
+  .csh-chiprow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.2rem 0 0;
+  }
+
+  .csh-chip {
+    font-weight: 800;
+    font-size: 0.82rem;
+    color: $csh-pine;
+    background: rgba(42, 217, 194, 0.18);
+    border: 1px solid rgba(42, 217, 194, 0.5);
+    border-radius: 999px;
+    padding: 0.28em 0.85em;
+  }
+
+  .csh-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    font-weight: 800;
+    color: #0a857a;
+    margin-top: auto;
+
+    span {
+      transition: transform 0.2s ease;
+    }
+  }
+
+  // -- preview/compare badge (remove `label=` in production) ----------------
+  .csh-flag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    padding: 0.4em 0.95em;
+    margin-bottom: 1.4rem;
+
+    &__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: $csh-grad;
+    }
+  }
+}
+
+// =============================================================================
+// SHARED SLIDER PRIMITIVES
+// =============================================================================
+.csh {
+  .cshx-slider {
+    position: relative;
+  }
+
+  // -- featured panel (light card on the dark band) -------------------------
+  .cshx-stage {
+    position: relative;
+    background: $csh-card;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.32);
+  }
+
+  .cshx-panel {
+    display: none;
+    grid-template-columns: 0.92fr 1.08fr;
+    align-items: stretch;
+    min-height: clamp(360px, 36vw, 460px);
+
+    &.is-active {
+      display: grid;
+      animation: cshxFade 0.5s ease both;
+    }
+
+    &__text {
+      display: flex;
+      flex-direction: column;
+      padding: clamp(1.8rem, 3vw, 3rem);
+    }
+
+    &__logo {
+      display: inline-flex;
+      align-items: center;
+      min-height: 56px;
+      padding: 0.7rem 1rem;
+      margin-bottom: 1.5rem;
+      background: #fff;
+      border: 1px solid $csh-line;
+      border-radius: 12px;
+      align-self: flex-start;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+
+      img {
+        max-height: 40px;
+        width: auto;
+      }
+
+      span {
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: $csh-ink;
+      }
+    }
+
+    &__title {
+      font-size: clamp(1.4rem, 2.1vw, 1.95rem);
+      font-weight: 800;
+      line-height: 1.2;
+      color: $csh-pine;
+      margin: 0 0 1rem;
+    }
+
+    &__desc {
+      color: $csh-ink-soft;
+      font-size: 1.06rem;
+      line-height: 1.6;
+      margin: 0 0 1.5rem;
+      max-width: 46ch;
+    }
+
+    &__meta {
+      margin-bottom: 1.7rem;
+    }
+
+    &__metalabel {
+      display: block;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: $csh-pine;
+      margin-bottom: 0.7rem;
+    }
+
+    &__btn {
+      align-self: flex-start;
+      margin-top: auto;
+    }
+
+    &__media {
+      position: relative;
+      display: block;
+      min-height: 100%;
+      background: linear-gradient(150deg, $csh-pine-soft, $csh-pine-deep);
+      overflow: hidden;
+
+      img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  // -- compact card (peek carousel) -----------------------------------------
+  .cshx-card {
+    display: flex;
+    flex-direction: column;
+    background: $csh-card;
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+
+      .csh-card__cta span {
+        transform: translateX(4px);
+      }
+    }
+
+    &__media {
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(150deg, $csh-pine-soft, $csh-pine-deep);
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 1.5rem 1.6rem 1.7rem;
+    }
+
+    &__logo {
+      height: 30px;
+      margin-bottom: 1rem;
+
+      img {
+        max-height: 30px;
+        width: auto;
+      }
+
+      b {
+        font-weight: 800;
+        font-size: 1rem;
+        color: $csh-ink;
+      }
+    }
+
+    &__title {
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: $csh-pine;
+      line-height: 1.3;
+      margin: 0 0 0.6rem;
+    }
+
+    &__desc {
+      color: $csh-ink-soft;
+      font-size: 0.96rem;
+      line-height: 1.55;
+      margin: 0 0 1rem;
+    }
+
+    &__metric {
+      display: block;
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: #0a857a;
+      margin-bottom: 1.1rem;
+    }
+  }
+
+  // -- horizontal track with peek -------------------------------------------
+  .cshx-track {
+    display: flex;
+    gap: 1.4rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 0.4rem 0 1.2rem;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    > * {
+      flex: 0 0 clamp(280px, 64%, 640px);
+      scroll-snap-align: start;
+    }
+  }
+
+  // -- arrows ---------------------------------------------------------------
+  .cshx-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 1.2rem;
+  }
+
+  .cshx-arrow {
+    width: 46px;
+    height: 46px;
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: $csh-pine;
+    background: #fff;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      color: #0a857a;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+@keyframes cshxFade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// =============================================================================
+// STYLE 1 — Logo tabs
+// =============================================================================
+.csh--s1 {
+  .cshx-tabs {
+    position: relative;
+    display: flex;
+    margin-top: 1.4rem;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .cshx-tab {
+    position: relative;
+    flex: 1 0 clamp(150px, 18%, 240px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 104px;
+    padding: 1.4rem 1.2rem;
+    background: transparent;
+    border: 0;
+    border-left: 1px solid $csh-line;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:first-child {
+      border-left: 0;
+    }
+
+    &:hover {
+      background: #f6f9f9;
+    }
+
+    img {
+      max-height: 38px;
+      max-width: 80%;
+      width: auto;
+      filter: grayscale(1);
+      opacity: 0.6;
+      transition: filter 0.25s ease, opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    span {
+      font-weight: 800;
+      color: $csh-ink-soft;
+      transition: color 0.25s ease;
+    }
+
+    &__bar {
+      position: absolute;
+      left: 14%;
+      right: 14%;
+      bottom: 0;
+      height: 3px;
+      border-radius: 3px 3px 0 0;
+      background: $csh-grad;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    &.is-active {
+      img {
+        filter: none;
+        opacity: 1;
+        transform: scale(1.04);
+      }
+
+      span {
+        color: $csh-pine;
+      }
+
+      .cshx-tab__bar {
+        transform: scaleX(1);
+      }
+    }
+  }
+}
+
+// =============================================================================
+// STYLE 3 — Combo: featured panel + peek-carousel selector
+// =============================================================================
+.csh--s3 {
+  .cshx-selrow {
+    margin-top: 1.4rem;
+  }
+
+  .cshx-seltrack {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.4rem;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .cshx-selcard {
+    flex: 0 0 clamp(260px, 46%, 380px);
+    scroll-snap-align: start;
+    display: flex;
+    gap: 0.9rem;
+    text-align: left;
+    padding: 0.7rem;
+    background: #fff;
+    border: 2px solid transparent;
+    border-radius: 14px;
+    cursor: pointer;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+      transform: translateY(-3px);
+    }
+
+    &__media {
+      flex: 0 0 96px;
+      align-self: stretch;
+      border-radius: 9px;
+      overflow: hidden;
+      background: linear-gradient(150deg, $csh-pine-soft, $csh-pine-deep);
+
+      img {
+        width: 100%;
+        height: 100%;
+        min-height: 84px;
+        object-fit: cover;
+      }
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      padding: 0.2rem 0.2rem 0.2rem 0;
+      min-width: 0;
+    }
+
+    &__logo {
+      height: 22px;
+
+      img {
+        max-height: 22px;
+        width: auto;
+        filter: grayscale(1);
+        opacity: 0.7;
+      }
+
+      b {
+        font-weight: 800;
+        font-size: 0.9rem;
+        color: $csh-ink;
+      }
+    }
+
+    &__title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      line-height: 1.25;
+      color: $csh-pine;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    &__metric {
+      font-weight: 800;
+      font-size: 0.78rem;
+      color: #0a857a;
+    }
+
+    &.is-active {
+      border-color: $csh-mint;
+
+      .cshx-selcard__logo img {
+        filter: none;
+        opacity: 1;
+      }
+    }
+  }
+
+  .cshx-controls--combo {
+    justify-content: flex-end;
+    margin-top: 1rem;
+  }
+}
+
+// =============================================================================
+// Shared responsive: stack the featured panel on small screens
+// =============================================================================
+.csh {
+  @media (max-width: 768px) {
+    .cshx-panel {
+      &.is-active {
+        grid-template-columns: 1fr;
+      }
+
+      &__media {
+        order: -1;
+        min-height: 220px;
+        aspect-ratio: 16 / 9;
+      }
+    }
+
+    .cshx-head {
+      align-items: flex-start;
+    }
+  }
+}

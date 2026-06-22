@@ -78,6 +78,72 @@ card grid to stay scannable as the list grows. Card image = each study's
 
 ---
 
+## Homepage showcase (`case-studies-showcase` shortcode)
+
+To give case studies visibility beyond the nav dropdown, the homepage can feature
+them via the **`case-studies-showcase`** shortcode
+(`layouts/shortcodes/case-studies-showcase.html`), styled under `.csh` in
+`assets/css/case-studies-home.scss` (imported at the end of `custom.scss`, right
+after `case-studies.scss`).
+
+It renders the case studies as an **interactive featured-story slider** on a
+dark, on-brand **pine band** (the Microsoft "customer stories" pattern): a large
+featured panel beside its image, with a selector that hints "there's more" as
+studies are added.
+
+- **The showcase brings its own dark surface.** The homepage page background is
+  white (`body { background: #fff }`), so the whole showcase sits inside
+  `.csh-band` — a rounded pine gradient card (mint/pink radial glows + faint dot
+  grid). Section chrome is light-on-dark: eyebrow `$csh-mint`, title white, body
+  white-alpha. The **featured panel and cards are light** (`#fff`) so they pop on
+  the band and the client logos (which read on light) stay visible. Don't put the
+  showcase straight on the white page (the early drafts did, and it looked flat /
+  the title went white-on-white).
+- **Data is pulled dynamically** — `where site.RegularPages "Section"
+  "case-studies"` sorted by `weight`, so adding a new case study automatically
+  flows in (no per-page wiring). `_index.md` is excluded.
+- **Three selectable styles** (all the same slider), via `style="1".."3"`:
+  - **`1` Logo tabs** — featured `cshx-panel` + a logo-tab selector strip below
+    (active tab gets a gradient underline).
+  - **`2` Peek carousel** — a horizontally scrollable row of `cshx-card`s with
+    the next card peeking; prev/next arrows.
+  - **`3` Combo** — featured panel (style 1) **+** a peek-carousel of compact
+    cards beneath that doubles as the selector (style 2). Clicking a card swaps
+    the featured panel; the active card gets a mint border and scrolls into view.
+- **Two engines, one script** (`.cshx-*`):
+  - **swap** (`data-cshx-mode="swap"`: styles 1 & 3) — one `cshx-panel` visible
+    at a time; nav buttons carry `data-cshx-go="{i}"`, optional
+    `data-cshx-prev`/`data-cshx-next`.
+  - **track** (`data-cshx-mode="track"`: style 2) — a scrollable
+    `[data-cshx-track]` with CSS peek (cards `< 100%` wide); arrows `scrollBy`
+    one card and loop at the ends.
+  - Both **auto-advance** (`data-cshx-autoplay` ms), **pause on hover/focus**,
+    and `init` is idempotent (marks `data-cshx-ready`). The `<script>` is emitted
+    **once per build** via `site.Store` (page-scoped `.Page.Scratch` would emit
+    once per *section page*, i.e. once per demo on the aggregated homepage).
+- **Featured panel / card markup are partials** — `partials/cshx-panel.html`
+  (featured: logo pill, title, blurb, `Highlights` stat chips, "Read the story" +
+  image) and `partials/cshx-card.html` (compact card for the peek carousel). Both
+  take a `dict` (`page`, `index`, `active`). Style 3's selector card markup is
+  inline in the shortcode (it's a `<button>`, not the `<a>` card).
+- **Homepage sections live in** `content/sections/home-cs-0N-*.md`
+  (`section_categories: [Home]`, weights 11–13) — one file per style so the team
+  can compare them live, then **keep one and delete the others**. The kept
+  section's `weight` controls where it lands among the other homepage sections
+  (existing ones are weights 1–5).
+- **Remove the compare badges before shipping** — each demo passes
+  `label="Option N — …"` (renders the `.csh-flag` pill). Drop `label=` once
+  chosen. The shortcode's `eyebrow`/`title`/`cta_text` default to good copy.
+- **Homepage-only front matter** read by the shortcode (added to each case study,
+  ignored by the case-study layouts themselves): `home_blurb` (short copy, falls
+  back to `description`), `home_metric` + `home_metric_label` (compact metric),
+  `home_logo` (a logo that reads on a LIGHT surface — required for the logo
+  selectors; falls back to the client name text), plus the existing `stat_bar`
+  (top 3 become the Highlight chips) / `client` / `preview_image` /
+  `hero_aside_image`. All reads are guarded — a missing field degrades gracefully.
+
+---
+
 ## Modern layout — front matter schema
 
 ```yaml

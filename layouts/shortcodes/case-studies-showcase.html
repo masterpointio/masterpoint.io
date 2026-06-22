@@ -1,0 +1,182 @@
+{{- /*
+  case-studies-showcase — homepage case-study highlight slider.
+
+  Pulls case studies dynamically from content/case-studies/ (sorted by weight)
+  and renders them as a featured-story SLIDER on a dark, on-brand pine band.
+  Three treatments to compare:
+    style="1"  Logo tabs (Microsoft "customer stories" pattern): featured panel
+               + logo-tab selector strip below.
+    style="2"  Peek carousel: horizontally scrollable cards, the next peeking.
+    style="3"  Combo: featured panel (style 1) + a peek-carousel of cards that
+               doubles as the selector (style 2).
+
+  Params:
+    style      "1".."3"  (default "1")
+    eyebrow    small label above the heading (default "Customer Stories")
+    title      section heading, HTML allowed
+    intro      optional sub-heading paragraph (off by default)
+    cta_text   "all case studies" button text (default "See all case studies")
+    cta_link   href for that button (default "/case-studies/")
+    label      optional preview badge (e.g. "Option 1 — …"); omit in production.
+
+  Per-case-study data (all optional, graceful fallbacks): see partials
+  cshx-panel.html / cshx-card.html. `home_logo` should read on a LIGHT surface.
+*/ -}}
+{{- $style := .Get "style" | default "1" -}}
+{{- $eyebrow := .Get "eyebrow" | default "Customer Stories" -}}
+{{- $title := .Get "title" | default "Hear what our customers are saying" -}}
+{{- $intro := .Get "intro" -}}
+{{- $ctaText := .Get "cta_text" | default "See all case studies" -}}
+{{- $ctaLink := .Get "cta_link" | default "/case-studies/" -}}
+{{- $label := .Get "label" -}}
+{{- $items := sort (where site.RegularPages "Section" "case-studies") "Weight" -}}
+
+<div class="csh csh--s{{ $style }}">
+  <div class="csh-band">
+{{- if $label }}
+    <div class="csh-flag"><span class="csh-flag__dot"></span>{{ $label | safeHTML }}</div>
+{{- end }}
+
+    <div class="cshx-head">
+      <div class="cshx-head__intro">
+        <span class="csh-eyebrow">{{ $eyebrow }}</span>
+        <h2 class="csh-title">{{ $title | safeHTML }}</h2>
+        {{- with $intro }}<p class="csh-intro">{{ . | safeHTML }}</p>{{ end }}
+      </div>
+      <a class="button btn-gradient cshx-head__cta" href="{{ $ctaLink }}">{{ $ctaText }}</a>
+    </div>
+
+{{- /* ===================== STYLE 1 — Logo tabs ===================== */ -}}
+{{- if eq $style "1" }}
+    <div class="cshx-slider" data-cshx-mode="swap" data-cshx-autoplay="6000">
+      <div class="cshx-stage">
+        {{- range $i, $e := $items }}{{ partial "cshx-panel.html" (dict "page" . "index" $i "active" (eq $i 0)) }}{{ end }}
+      </div>
+      <div class="cshx-tabs" role="tablist" aria-label="Customer stories">
+        {{- range $i, $e := $items }}
+        <button type="button" class="cshx-tab{{ if eq $i 0 }} is-active{{ end }}" data-cshx-go="{{ $i }}" role="tab" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}" aria-label="{{ .Title }}">
+          {{- with .Param "home_logo" }}<img src="{{ . }}" alt="{{ $e.Param "client" | default $e.Title }}">{{ else }}<span>{{ or ($e.Param "client") $e.Title }}</span>{{ end }}
+          <span class="cshx-tab__bar" aria-hidden="true"></span>
+        </button>
+        {{- end }}
+      </div>
+    </div>
+
+{{- /* ===================== STYLE 2 — Peek carousel ===================== */ -}}
+{{- else if eq $style "2" }}
+    <div class="cshx-slider cshx-trackwrap" data-cshx-mode="track" data-cshx-autoplay="5000">
+      <div class="cshx-track cshx-track--peek" data-cshx-track>
+        {{- range $items }}{{ partial "cshx-card.html" (dict "page" .) }}{{ end }}
+      </div>
+      <div class="cshx-controls">
+        <button type="button" class="cshx-arrow" data-cshx-prev aria-label="Previous">&lsaquo;</button>
+        <button type="button" class="cshx-arrow" data-cshx-next aria-label="Next">&rsaquo;</button>
+      </div>
+    </div>
+
+{{- /* ===================== STYLE 3 — Combo (panel + peek-carousel selector) ===================== */ -}}
+{{- else if eq $style "3" }}
+    <div class="cshx-slider cshx-combo" data-cshx-mode="swap" data-cshx-autoplay="6000">
+      <div class="cshx-stage">
+        {{- range $i, $e := $items }}{{ partial "cshx-panel.html" (dict "page" . "index" $i "active" (eq $i 0)) }}{{ end }}
+      </div>
+      <div class="cshx-selrow">
+        <div class="cshx-seltrack" role="tablist" aria-label="Customer stories">
+          {{- range $i, $e := $items }}
+          {{- $t := or (.Param "preview_image") (.Param "hero_aside_image") }}
+          <button type="button" class="cshx-selcard{{ if eq $i 0 }} is-active{{ end }}" data-cshx-go="{{ $i }}" role="tab" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}" aria-label="{{ .Title }}">
+            <span class="cshx-selcard__media">{{ with $t }}<img src="{{ . }}" alt="" loading="lazy">{{ end }}</span>
+            <span class="cshx-selcard__body">
+              <span class="cshx-selcard__logo">{{ with .Param "home_logo" }}<img src="{{ . }}" alt="{{ $e.Param "client" | default $e.Title }}">{{ else }}<b>{{ or ($e.Param "client") $e.Title }}</b>{{ end }}</span>
+              <span class="cshx-selcard__title">{{ .Title }}</span>
+              {{- with .Param "home_metric" }}<span class="cshx-selcard__metric">{{ . }} · {{ $e.Param "home_metric_label" }}</span>{{ end }}
+            </span>
+          </button>
+          {{- end }}
+        </div>
+        <div class="cshx-controls cshx-controls--combo">
+          <button type="button" class="cshx-arrow" data-cshx-prev aria-label="Previous">&lsaquo;</button>
+          <button type="button" class="cshx-arrow" data-cshx-next aria-label="Next">&rsaquo;</button>
+        </div>
+      </div>
+    </div>
+{{- end }}
+  </div>
+</div>
+
+{{- if not (site.Store.Get "cshx-js") }}{{ site.Store.Set "cshx-js" true }}
+<script>
+(function () {
+  function init(root) {
+    if (root.dataset.cshxReady) return;
+    root.dataset.cshxReady = "1";
+    var mode = root.getAttribute("data-cshx-mode") || "swap";
+    var delay = parseInt(root.getAttribute("data-cshx-autoplay") || "0", 10);
+    var timer = null;
+
+    if (mode === "track") {
+      var track = root.querySelector("[data-cshx-track]");
+      if (!track) return;
+      var prevT = root.querySelector("[data-cshx-prev]");
+      var nextT = root.querySelector("[data-cshx-next]");
+      function step(dir) {
+        var card = track.children[0];
+        var gap = parseFloat(getComputedStyle(track).columnGap || "20") || 20;
+        var w = card ? card.getBoundingClientRect().width + gap : track.clientWidth * 0.8;
+        var max = track.scrollWidth - track.clientWidth - 4;
+        if (dir > 0 && track.scrollLeft >= max) {
+          track.scrollTo({ left: 0, behavior: "smooth" });
+        } else if (dir < 0 && track.scrollLeft <= 4) {
+          track.scrollTo({ left: track.scrollWidth, behavior: "smooth" });
+        } else {
+          track.scrollBy({ left: dir * w, behavior: "smooth" });
+        }
+      }
+      if (prevT) prevT.addEventListener("click", function () { stop(); step(-1); start(); });
+      if (nextT) nextT.addEventListener("click", function () { stop(); step(1); start(); });
+      function start() { if (delay > 1 && track.children.length > 1) timer = setInterval(function () { step(1); }, delay); }
+      function stop() { if (timer) { clearInterval(timer); timer = null; } }
+      root.addEventListener("mouseenter", stop);
+      root.addEventListener("mouseleave", start);
+      start();
+      return;
+    }
+
+    // swap mode
+    var panels = root.querySelectorAll("[data-cshx-panel]");
+    var navs = root.querySelectorAll("[data-cshx-go]");
+    var prevS = root.querySelector("[data-cshx-prev]");
+    var nextS = root.querySelector("[data-cshx-next]");
+    if (!panels.length) return;
+    var current = 0;
+    function show(n) {
+      n = (n + panels.length) % panels.length;
+      panels[current].classList.remove("is-active");
+      if (navs[current]) { navs[current].classList.remove("is-active"); navs[current].setAttribute("aria-selected", "false"); }
+      current = n;
+      panels[current].classList.add("is-active");
+      if (navs[current]) {
+        navs[current].classList.add("is-active");
+        navs[current].setAttribute("aria-selected", "true");
+        navs[current].scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
+      }
+    }
+    function start() { if (delay > 1 && panels.length > 1) timer = setInterval(function () { show(current + 1); }, delay); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    navs.forEach(function (b, i) { b.addEventListener("click", function () { stop(); show(i); start(); }); });
+    if (prevS) prevS.addEventListener("click", function () { stop(); show(current - 1); start(); });
+    if (nextS) nextS.addEventListener("click", function () { stop(); show(current + 1); start(); });
+    root.addEventListener("mouseenter", stop);
+    root.addEventListener("mouseleave", start);
+    root.addEventListener("focusin", stop);
+    start();
+  }
+  function all() { document.querySelectorAll(".cshx-slider").forEach(init); }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", all);
+  } else {
+    all();
+  }
+})();
+</script>
+{{- end }}

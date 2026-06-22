@@ -1,0 +1,18 @@
+{{- /*
+  cshx-card — compact case-study card used by the track-based slider styles
+  (peek carousel, coverflow, filmstrip). Call: {{ partial "cshx-card.html" (dict "page" .) }}
+*/ -}}
+{{- $p := .page -}}
+{{- $img := or ($p.Param "preview_image") ($p.Param "hero_aside_image") -}}
+<a class="cshx-card" href="{{ $p.RelPermalink }}">
+  <div class="cshx-card__media">{{ with $img }}<img src="{{ . }}" alt="{{ $p.Title }}" loading="lazy">{{ end }}</div>
+  <div class="cshx-card__body">
+    <div class="cshx-card__logo">
+      {{- with $p.Param "home_logo" }}<img src="{{ . }}" alt="{{ $p.Param "client" | default $p.Title }}">{{ else }}<b>{{ or ($p.Param "client") $p.Title }}</b>{{ end }}
+    </div>
+    <h3 class="cshx-card__title">{{ $p.Title }}</h3>
+    <p class="cshx-card__desc">{{ or ($p.Param "home_blurb") $p.Description }}</p>
+    {{- with $p.Param "home_metric" }}<span class="cshx-card__metric">{{ . }} · {{ $p.Param "home_metric_label" }}</span>{{ end }}
+    <span class="csh-card__cta">Read the story <span aria-hidden="true">→</span></span>
+  </div>
+</a>
