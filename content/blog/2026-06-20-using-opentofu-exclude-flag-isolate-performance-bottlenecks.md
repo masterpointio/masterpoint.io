@@ -4,7 +4,7 @@ draft: false
 title: "Using OpenTofu's Exclude Flag to Isolate Performance Bottlenecks"
 author: Yangci Ou
 slug: using-opentofu-exclude-flag-isolate-performance-bottlenecks
-date: 2026-06-20
+date: 2026-06-22
 # date_modified: 2026-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: "Pair OpenTofu's exclude flag with OpenTelemetry tracing to isolate and prove Terraform performance bottlenecks. A real-world story of cutting plan times from 7 minutes to 2 by pinpointing AWS Route 53 API rate limiting."
 image: /img/updates/opentofu-exclude-flag-performance-bottlenecks/opentofu-exclude-flag.png
