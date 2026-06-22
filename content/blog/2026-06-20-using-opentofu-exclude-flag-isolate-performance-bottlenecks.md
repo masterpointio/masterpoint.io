@@ -46,7 +46,7 @@ OpenTelemetry traces locate the problem and using TF and the exclude flag proves
 
 In one particular instance we saw, the root module workspace managed around 3,000 resources, so nobody expected instant plans. They averaged about 4-5 minutes, but intermittently, on busy afternoons, the same module would **crawl to ~7 minutes**.
 
-During the execution of `terraform plan/apply` or `tofu plan/apply`, TF refreshes the state by calling the [provider](https://registry.terraform.io/browse/providers) (e.g. AWS/Azure/GCP) through API requests. These requests examine the live infrastructure to compare against the TF infrastructure code. That happens even when nothing in your TF code changed, so even if only one resource is modified within a root module with a thousand resources, it fires thousands API requests per plan.
+During the execution of `terraform plan/apply` or `tofu plan/apply`, TF refreshes the state by calling the [provider](https://registry.terraform.io/browse/providers) (e.g. AWS/Azure/GCP) through API requests. These requests examine the live infrastructure to compare against the TF infrastructure code. That happens even when nothing in your TF code changed, so even if **only one resource is modified** within a root module with a thousand resources, **it fires thousands API requests** per plan.
 
 One TF execution in isolation is fine, but an enterprise is never that quiet. At any given moment the same AWS API is being hit from every direction: multiple pull requests triggering TF for CI/CD, engineers clicking around the console (API requests under the hood), and even internal tooling. Because some AWS rate limits are account-level, those draw from the same bucket.
 
@@ -117,12 +117,12 @@ Then I ran it multiple times and compared the time it took before and after. I r
 
 <div style="display:flex; flex-wrap:wrap; gap:1rem; margin:2rem 0 1rem;">
   <div style="flex:1 1 260px; border-radius:10px; padding:1.5rem; background:#f7f2f6; border:1px solid #ecd9e8;">
-    <div style="font-size:.8rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#b066a4;">Before</div>
+    <div style="font-size:.8rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#b066a4;">Before (full plan)</div>
     <div style="font-size:2.4rem; font-weight:800; color:#0e383a; line-height:1; margin:.4rem 0;">~5–7<span style="font-size:1rem; font-weight:600; color:#7f7e97;"> min / plan</span></div>
     <div style="color:#555; font-size:.95rem;">OpenTelemetry traces showing Route53 resources taking the longest, with logs showing API throttling.</div>
   </div>
   <div style="flex:1 1 260px; border-radius:10px; padding:1.5rem; background:#eef9f9; border:1px solid #c7eaea;">
-    <div style="font-size:.8rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#00a4a4;">After</div>
+    <div style="font-size:.8rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#00a4a4;">After (excluding Route53)</div>
     <div style="font-size:2.4rem; font-weight:800; color:#0e383a; line-height:1; margin:.4rem 0;">~2<span style="font-size:1rem; font-weight:600; color:#7f7e97;"> min / plan</span></div>
     <div style="color:#555; font-size:.95rem;">No rate limiting anywhere in the debug logs.</div>
   </div>
@@ -130,9 +130,9 @@ Then I ran it multiple times and compared the time it took before and after. I r
 
 <div style="margin:0 0 2rem; padding:.9rem 1.25rem; border-radius:10px; background:#0e383a; color:#fff; text-align:center; font-weight:600;">Over <span style="background:linear-gradient(90deg,#ede497,#2ad9c2,#d891ce); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; font-weight:800;">2× faster</span>: 10% of the TF workspace drove more than <strong style="color:#ede497;">50% of the runtime</strong>.</div>
 
-The same root module, refreshing the other ~2,600 TF resources with AWS API requests, had a performance improvement of over 2x. The savings (~3 minutes) far exceed the 80-second theoretical AWS Route 53 floor mentioned earlier. That gap is the contention tax: throttled Route 53 API requests backing off and retrying behind the same account quota bucket.
+The same root module, refreshing the other ~2,600 TF resources with AWS API requests, had a performance improvement of over 2x. The savings far exceed the 80-second theoretical AWS Route 53 floor mentioned earlier. That gap is the contention tax: throttled Route 53 API requests backing off and retrying behind the same account quota bucket.
 
-Using the `-exclude` flag confirmed the hypothesis and proved that the Route 53 resources were the source of the bottleneck. 400 Route 53 records (roughly ~10% of a 3,000-resource workspace) accounted for more than 50% of every plan's runtime.
+Using the `-exclude` flag confirmed the hypothesis and **<u>proved that the Route 53 resources were the source of the bottleneck</u>**. 400 Route 53 records (roughly ~10% of a 3,000-resource workspace) accounted for more than 50% of every plan's runtime.
 
 ## The Line Between Debugging and Avoidance
 

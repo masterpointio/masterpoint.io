@@ -8,4 +8,4 @@
 - [ ] PowerDigital case study into immersive style, while maintaining existing PDF for long form book.
 - [ ] After ^, audit .css and remove any dead styles and the dead legacy long article form
 - [ ] OpenTofu Exclude Flag Blog Post: cross link to Cursor case study as a way to see where we took use of this feature or something like that, at the bottom callout section.
-- [ ] Make blog posts PDF exportable and printable.
+- [ ] OpenTofu Exclude Flag -- link to a dedicated OpenTofu OpenTelemetry blog araticle
