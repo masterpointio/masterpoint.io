@@ -124,18 +124,18 @@
     ></script>
 
     <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-  crossorigin="anonymous"
-  referrerpolicy="no-referrer"
-/>
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
     <link rel="stylesheet" href="https://use.typekit.net/noi8hrw.css" />
 
     {{ $sass := resources.Get "css/style.scss" }} {{ $style := $sass | css.Sass
     | minify }}
 
-    <link rel="stylesheet" href="{{ $style.Permalink }}" media="screen" />
+    <link rel="stylesheet" href="{{ $style.Permalink }}" media="all" />
 
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
@@ -182,38 +182,38 @@
     {{ if eq .Section "blog" }}
     <!-- Structured Data for Blog Posts -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": {{ .Title | jsonify }},
-      "description": {{ .Description | jsonify }},
-      "author": {
-        "@type": "Person",
-        "name": {{ if .Params.author }}{{ .Params.author | jsonify }}{{ else }}"Masterpoint"{{ end }}
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Masterpoint Consulting",
-        "url": "{{ .Site.BaseURL }}"
-      },
-      "datePublished": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
-      {{ if .Params.date_modified }}
-      "dateModified": {{ .Params.date_modified | dateFormat "2006-01-02T15:04:05Z07:00" | jsonify }},
-      {{ else }}
-      "dateModified": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
-      {{ end }}
-      "url": {{ .Permalink | jsonify }},
-      {{ if .Params.image }}
-      "image": {
-        "@type": "ImageObject",
-        "url": {{ (printf "%s%s" .Site.BaseURL .Params.image) | jsonify }}
-      },
-      {{ end }}
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": {{ .Permalink | jsonify }}
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": {{ .Title | jsonify }},
+        "description": {{ .Description | jsonify }},
+        "author": {
+          "@type": "Person",
+          "name": {{ if .Params.author }}{{ .Params.author | jsonify }}{{ else }}"Masterpoint"{{ end }}
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Masterpoint Consulting",
+          "url": "{{ .Site.BaseURL }}"
+        },
+        "datePublished": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+        {{ if .Params.date_modified }}
+        "dateModified": {{ .Params.date_modified | dateFormat "2006-01-02T15:04:05Z07:00" | jsonify }},
+        {{ else }}
+        "dateModified": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+        {{ end }}
+        "url": {{ .Permalink | jsonify }},
+        {{ if .Params.image }}
+        "image": {
+          "@type": "ImageObject",
+          "url": {{ (printf "%s%s" .Site.BaseURL .Params.image) | jsonify }}
+        },
+        {{ end }}
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": {{ .Permalink | jsonify }}
+        }
       }
-    }
     </script>
     {{ end }}
   </head>

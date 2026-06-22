@@ -1,4 +1,4 @@
-<!-- trunk-ignore-all(markdownlint) -->
+<!-- trunk-ignore-all(markdownlint,prettier) -->
 
 # Case Studies — working guide
 
@@ -9,26 +9,72 @@ file before ending the session. If something is removed from the codebase,
 remove its mention from this file too (don't keep "we used to have X" notes —
 the codebase is the source of truth, this file describes what IS).
 
+IN THE FUTURE, WE WILL DEPRECATE THE LEGACY LAYOUT AND ONLY USE THE MODERN (RENAMED TO ARTICLE LAYOUT) AND IMMERSIVE LAYOUTS.
+
 ---
 
 ## Architecture overview
 
-There are **two case-study layouts** in this codebase. They are kept isolated
-so visual changes to one never affect the other.
+There are **three case-study layouts** in this codebase. They are kept isolated
+so visual changes to one never affect the others.
 
-| Layout     | Template                           | Used by                                                 | Body class          | Style prefix         |
-| ---------- | ---------------------------------- | ------------------------------------------------------- | ------------------- | -------------------- |
-| **Legacy** | `layouts/case-studies/legacy.html` | Power Digital (opt-in via `layout: legacy`)             | `case-study-single` | `.case-study-single` |
-| **Modern** | `layouts/case-studies/single.html` | Default for any case study without a `layout:` override | `case-study-modern` | `.case-study-modern` |
+| Layout        | Template                              | Used by                                                 | Body class                          | Style prefix            |
+| ------------- | ------------------------------------- | ------------------------------------------------------- | ----------------------------------- | ----------------------- |
+| **Legacy**    | `layouts/case-studies/legacy.html`    | Power Digital (opt-in via `layout: legacy`)             | `case-study-single`                 | `.case-study-single`    |
+| **Modern**    | `layouts/case-studies/single.html`    | Default for any case study without a `layout:` override | `case-study-modern`                 | `.case-study-modern`    |
+| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark (opt-in via `layout: immersive`)            | `case-study-modern case-study-immersive` | `.case-study-immersive` |
 
 Routing is via Hugo's `layout:` front matter param. A case study that does
 **not** specify `layout:` uses `single.html` (the modern layout). Power Digital
-opts into the legacy layout with `layout: legacy` in its front matter.
+opts into legacy with `layout: legacy`; MarketSpark opts into immersive with
+`layout: immersive`.
 
 Why this split exists: Power Digital has heavily customized inline styling
-(see `.case-study-single` block in `assets/css/custom.scss`). The modern
-layout was designed from scratch and is what every new case study should use.
-Don't merge them.
+(see `.case-study-single` block in `assets/css/custom.scss`). The **modern**
+layout was designed from scratch and is the default for new case studies. The
+**immersive** layout keeps the modern hero + stat strip **nearly verbatim** (its
+body carries both `case-study-modern` and `case-study-immersive` so the modern
+`.cs-*` hero/stat CSS applies; the only divergence is an optional
+`client_logo_height` hook on the lockup mark) and replaces only the body with a stack
+of rotating light↔dark colour cards (`.csi-*`). Don't merge them; scope every
+selector under its prefix.
+
+**Stylesheet location:** the **modern** and **immersive** CSS — everything under
+`.case-study-modern` / `.case-study-immersive` (the `.cs-*` and `.csi-*` rules, the
+`$cs-*` vars and the `cs-brand-gradient` mixins) — lives in its own partial,
+`assets/css/case-studies.scss`, which is `@import`ed at the **end** of
+`custom.scss` so the cascade order is unchanged (compiled output is byte-identical).
+The **legacy** `.case-study-single` block and the `#caseStudiesPage` list-page grid
+stay in `custom.scss`. THIS WILL BE REMOVED SOON AFTER WE MIGRATE ALL CASE STUDIES TO THE NEW LAYOUT.
+
+---
+
+## List page (`/case-studies/`)
+
+`layouts/case-studies/list.html` (body `#caseStudiesPage`): hero banner + stacked
+full-width rows (`partials/case-study-entry.html`, each row one `<a>`). Chosen over a
+card grid to stay scannable as the list grows. Card image = each study's
+`preview_image` (`og_img` stays separate for social). Non-obvious bits:
+
+- **Banner background is layered in CSS, not via `banner_image`** — cosmic photo
+  (`/img/bg_our_word.jpg`) + dark scrim (last stop `$pine`, so it fades into the rows)
+  + mint/pink glows + masked dot grid. Header is left **transparent** so the image runs
+  behind it; keep the global `padding-top: 9.9rem` (smaller hides the title under the
+  absolute header).
+- **`banner_tagline` is gradient text with a dash on _both_ ends.**
+- **Image column is 38%** (`flex: 0 0 38%`, `object-fit: cover`).
+- **Title is never clamped** (must always show in full → a long title grows the row);
+  description stays 2-line clamped.
+- **Hover accent is a gradient bar on the _left_ edge** (not the top).
+- **CTA gradient gotcha:** `.cs-card__cta` must be `align-self: flex-start`. As a flex
+  item in the column body it otherwise stretches full-width and the `text-gradient`
+  spreads across the whole column, leaving only the start color on the short word.
+- **A portrait `preview_image` makes its row taller** — `object-fit: cover` in a
+  %-width column with only `min-height` lets a tall poster (Power Digital) drive the
+  height, so rows can be uneven. A fixed `height` on `.cs-card` would crop instead.
+- **SCSS var-order:** `#caseStudiesPage` (in `custom.scss`) sits above the
+  `@import "case-studies.scss"` line, where the `$cs-mint` / `csi-grad-*` defs now
+  live, so use literal hex/gradients here (globals like `$pine` are fine).
 
 ---
 
@@ -43,6 +89,7 @@ description: "..." # used for og + meta description
 eyebrow: "CASE STUDY" # short label above the title
 client: "ClientName" # used in default eyebrow if eyebrow omitted
 client_logo: /img/case-studies/CLIENT/CLIENT-logo.png # white-pill mark in the hero lockup
+client_logo_height: 48px # OPTIONAL (immersive only) — scales the hero client logo via --cs-client-logo-h (default 32px)
 hero_title: "... <span class='text-gradient'>highlighted</span> ..."
 hero_aside_image: /img/case-studies/CLIENT/hero-bg.jpg # OPTIONAL full-bleed hero photo
 hero_aside_alt: "..." # alt text for the bg image
@@ -59,8 +106,8 @@ stat_bar: # 4-up cards under the hero
     label: "what got dramatically faster"
 
 # Preview / OG ─────────────────────────────────────────────────────
-preview_image: /img/case-studies/CLIENT/preview.svg
-og_img: /img/case-studies/CLIENT/preview.svg
+preview_image: /img/case-studies/CLIENT/foo.png
+og_img: /img/case-studies/CLIENT/foo.png
 
 # End-of-article CTA (optional) ────────────────────────────────────
 # If omitted, the layout renders a generic Masterpoint CTA automatically.
@@ -88,29 +135,22 @@ Notes:
 ## Shortcodes
 
 All shortcodes are in `layouts/shortcodes/cs-*.html` and styled under
-`.case-study-modern` in `assets/css/custom.scss`.
+`.case-study-modern` in `assets/css/case-studies.scss`.
 
 | Shortcode                    | Purpose                                                     | Notes                                                                                                                                                                                                                                                                                        |
 | ---------------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- | --------------- |
-| `cs-about`                   | Dedicated "about the client" card at the top of the article | Args: `name`, `url`, `linkedin`, `industry`, `technologies`, `facts`, `eyebrow`. Eyebrow auto-generates as `About {name}`. Website pill + LinkedIn brand mark sit in the top-right of the card. `industry` + `technologies` (or `facts`) render as labeled rows / pill list below the prose. |
-| `cs-figure`                  | Visual figure with dark pine frame + caption                | Use `wide="true"` for full-card-width visuals. `variant="plain"` removes the dark frame.                                                                                                                                                                                                     |
-| `cs-stats`                   | Inline grid of stat cards                                   | Inner content is line-delimited `value                                                                                                                                                                                                                                                       | label | optional note`. |
-| `cs-callout`                 | Highlighted aside paragraph                                 | Variants: `info` (mint), `warning` (yellow), `accent` (pink). Optional `title` + `icon` (FontAwesome class).                                                                                                                                                                                 |
-| `cs-pullquote`               | Large quote card with gradient left border + attribution    | Args: `attribution`, `variant` (`dark` default = pine card with vanilla attribution, `light` = cream/mint editorial card with mint attribution). Reserve for actual quotes — not for emphatic bold lines.                                                                                    |
-| `cs-beforeafter` + `cs-pane` | Two-pane before/after card                                  | `cs-pane variant="before                                                                                                                                                                                                                                                                     | after | neutral"`.      |
+| `cs-about`                   | Dedicated "about the client" card at the top of the article | Args: `name`, `url`, `linkedin`, `industry`, `technologies`, `facts`, `eyebrow`, `logo` (optional client logo at the top of the card with a divider). Eyebrow auto-generates as `About {name}`. Website pill + LinkedIn brand mark sit in the top-right of the card. `industry` + `technologies` (or `facts`) render as labeled rows / pill list below the prose. |
+| `cs-pullquote`               | Large quote card with gradient left border + attribution    | Args: `attribution` (single-line fallback) OR `name`/`title`/`company` (two-line attribution: bold name over mint `title, company`), `photo` (headshot → avatar-left "portrait" layout), `variant` (`dark` default = pine card, `light` = cream/mint editorial card). With `photo`, gains class `cs-pullquote--portrait` (see Avatar-left portrait layout below). Reserve for actual quotes — not for emphatic bold lines.                                                                                    |
 | `cs-wins`                    | Grid of "win" cards with gradient icon badges               | Used for the Outcomes & Business Impact section. Body lines render inline markdown — links, _italics_, **bold** all work.                                                                                                                                                                    |
-| `cs-lockup`                  | Client × Masterpoint logo lockup                            | Standalone version; the hero already includes an in-place lockup via the layout.                                                                                                                                                                                                             |
-| `cs-todo`                    | Yellow striped TODO badge                                   | Visible in draft so placeholder work isn't lost. Optional first positional arg sets the tag label.                                                                                                                                                                                           |
 
 ### Shortcode authoring notes
 
 - **`cs-wins` body uses `RenderString` inline** — `{{ $body | $.Page.RenderString
 (dict "display" "inline") }}`. Plain `safeHTML` was wrong: it showed literal
   `*italic*` and `[link](url)` syntax instead of rendering it.
-- **`cs-stats` and `cs-wins` parse inner content as pipe-delimited /
-  key-value lines.** Use `index $parts N` + `trim … " "` for field
-  extraction — passing trim through a pipe with a backtick char did **not**
-  work reliably (see git history).
+- **`cs-wins` parses inner content as key-value lines.** Use `index $parts N`
+  + `trim … " "` for field extraction — passing trim through a pipe with a
+  backtick char did **not** work reliably (see git history).
 - **New shortcode files in `layouts/shortcodes/` are not picked up by a
   running `hugo serve`.** Restart serve after creating a new shortcode
   template. Modifying an existing one hot-reloads fine.
@@ -157,76 +197,258 @@ mint on mint and disappears. Always keep `:not(.button)` on `.cs-article a`.
 
 ---
 
-## Visualizations
+## Immersive layout (MarketSpark)
 
-Two flavors:
+Opt in with `layout: immersive`. The body element carries **both**
+`case-study-modern` and `case-study-immersive`:
 
-1. **Custom on-brand SVG diagrams** under `static/img/case-studies/CLIENT/`.
-   Pine + brand gradient (`#ede497 → #2ad9c2 → #d891ce`), Proxima Nova
-   typography, soft drop shadow. Use for _concept_ visuals (architecture,
-   before/after, workflow).
-2. **Real photographic backgrounds** for the hero (downloaded from Unsplash).
-   Always store under `static/img/case-studies/CLIENT/`. Avoid stock-image
-   clichés (handshakes, generic computers) — prefer abstract or domain-themed
-   imagery.
+- **Top (hero + stat strip): all but identical to modern.** `immersive.html`
+  copies the `.cs-hero` and `.cs-stat-strip` markup from `single.html`, and the
+  dual body class means the existing `.case-study-modern .cs-*` rules style them
+  — so the top renders as the modern layout. The one intentional addition is the
+  optional **`client_logo_height`** front-matter hook (sets `--cs-client-logo-h`
+  on the client lockup mark, default 32px; styled in `case-studies.scss`) so a short
+  client wordmark can be enlarged. Otherwise don't restyle the top here.
+- **Body: a stack of contained, rounded CARDS** on the pine page backdrop, the
+  faces **rotating light ↔ dark** like the marketing pages (services /
+  who-we-are), each with a subtle gradient "photo" background (glow mesh + faint
+  dot grid on dark cards). Not full-bleed slides and not one flat article card.
+  All body CSS is scoped to `.csi-*` under `.case-study-immersive` (search
+  `// IMMERSIVE CASE STUDY — BODY`) — never bare element selectors — so it can't
+  touch the modern hero/stats.
+- **No yellow.** Per the brand guidelines preference, the body deliberately omits
+  the brand yellow (`#ECE295`); all accents are teal (`#2ad9c2` / `#55C1B4`) →
+  pink (`#D191BF`) via the local `csi-grad-*` mixins (the global
+  `cs-brand-gradient` is NOT used in the body because it leads with yellow). The
+  modern hero title keeps its standard `text-gradient` (that's the kept top).
 
-When the user asks for an image, ask whether they want SVG-illustrated or a
-real photo before committing. The hero specifically takes a real photo for
-mood; in-article figures are typically SVG.
+### Card shortcodes (`csi-*`)
 
-### Downloading hero images
+Author the body as **only** `csi-*` blocks separated by blank lines; prose lives
+_inside_ each block. Each emits a `<section class="csi-section …">` card.
 
-```bash
-curl -sL "https://images.unsplash.com/photo-XXXX?w=1200&q=80" \
-  -o static/img/case-studies/CLIENT/hero-bg.jpg
-```
+| Shortcode         | Purpose                                                        | Key args                                                                              |
+| ----------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `csi-section`     | A card (eyebrow + headline + block prose).                     | `eyebrow`, `title` (HTML ok), `variant`, `align`, `num`, `accent`                     |
+| `csi-split`       | Text + visual side-by-side; `flip="true"` alternates sides.    | `eyebrow`, `title`, `media`, `media_alt`, `flip`, `contain`, `caption`, `variant`, `ratio` |
+| `csi-steps`       | Numbered process cards. Place INSIDE a `csi-section`.          | inner blocks split by `---`, each `title:` / `body:`                                  |
+| `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`                        |
+| `csi-list`        | Compact 2-col icon rows (icon chip + bold title — inline body). Space-saving sibling of `csi-impact` for secondary enumerations (e.g. "under the hood" extras) so they don't mimic the outcome grid. INSIDE a `csi-section`. | same inner format as `csi-impact` (`icon:` / `title:` / `body:`); keep bodies to one short sentence |
+| `csi-testimonial` | Editorial quote band; `image=` makes it a featured cosmic band.| `name`, `title`, `company`, `photo`, `variant`, `image`. With `photo`, uses the avatar-left "portrait" layout (`csi-testimonial--portrait`, see below). |
 
-Unsplash URLs are stable; the `photo-XXXX` ID can be found by browsing
-unsplash.com and copying any image link.
+Two **modern** shortcodes are also reused inside the immersive body (they render
+because the body also carries `case-study-modern`, so `.case-study-modern .cs-*`
+styles them):
 
-### Per-client folder discipline
+- **`cs-about`** — the client/about card (first light band, nested inside a
+  `csi-split`). Gained an optional **`logo`** arg that renders the client logo at
+  the top of the card with a divider. Its `csi-split` uses `ratio="65-35"` so the
+  card is wider than its image (`telecommunications.jpg`).
+- **`cs-pullquote`** — used inline mid-article (between the impact grid and the
+  closing sections) as a standout pull quote, distinct from the closing
+  `csi-testimonial`. It's fine to have quotes in multiple places.
 
-Keep only files actually referenced in content. A typical per-client folder
-shape:
+#### Avatar-left "portrait" layout (`cs-pullquote` + `csi-testimonial`)
 
-```
-static/img/case-studies/CLIENT/
-├── CLIENT-logo.png   # client_logo
-├── hero-bg.jpg       # hero_aside_image
-└── preview.svg       # preview_image + og_img
-```
+When a `photo` is passed, both shortcodes switch to a shared avatar-left layout
+(`--portrait` modifier class). It's a CSS **grid**, not flex, so the same DOM
+reflows responsively:
 
-Delete unused SVGs/images as work converges — the codebase is the source of
-truth, not "what might come back later".
+- **Desktop** — grid areas `"avatar content" / "avatar attribution"`: the
+  circular headshot sits in the left column, vertically centered, spanning the
+  quote (top-right) and the attribution (bottom-right). The attribution is a
+  **sibling of `__content`** (not nested) precisely so grid can re-place it.
+- **Mobile** (`≤640px` pullquote / `≤700px` testimonial) — grid areas reflow to
+  `"content content" / "avatar attribution"`: the quote spans full width on top,
+  then the author row (avatar + name/title) below.
+- **Avatar** — circular, with a **brand gradient ring** (`@include
+  csi-grad-solid` on the wrapper `padding`, which is the ring thickness: `4px`
+  desktop → `1px` on small screens so it doesn't overwhelm the smaller avatar).
+- **Quote glyph** — the `__mark` hangs in the gap just left of the first line on
+  desktop (decorative, absolute, doesn't shift the quote text); on mobile it
+  drops to a plain block lead-in above the quote.
+- The pullquote card radius is trimmed to `8px` in portrait mode (the
+  `csi-testimonial` featured band stays full-bleed / square by design).
 
----
+**`variant` = the card's face colour** (drives the light↔dark rotation): `light`
+(white) and `pine` (dark) are the two real faces. `cream`/`mint` alias to light;
+`pine-deep`/`gradient` alias to dark (kept so older content still renders). Steps,
+impact cards, and the testimonial auto-recolour on the dark faces. Alternate
+`light`/`pine` down the page for the rotation.
+
+Notable args:
+
+- **`align="center"`** (csi-section) — centres the eyebrow + headline + intro
+  prose. Grids (`csi-steps`/`csi-impact`/`csi-list`) inside stay full-width with
+  their card text left-aligned (the `--center` rule constrains only `> p`, not
+  the grids).
+- **`accent="true"`** (csi-section) — renders just the gradient line accent
+  instead of an eyebrow (omit `eyebrow=`). Used on "Built so the team could own it".
+- **Compact band is automatic with `csi-list`** — a `csi-section` containing a
+  `csi-list` renders denser by default via `.csi-section:has(.csi-list)` (no
+  arg): tighter padding, smaller headline, denser prose and `cs-pullquote`.
+  Same content, less vertical real estate. Seen on "While We Were Under the
+  Hood".
+- **`ratio="65-35"`** (csi-split) — text column wider than the visual (default is
+  `50-50`). Used by the About section so the card is bigger than the photo.
+- **`image="…"`** (csi-testimonial) — full-bleed background image (e.g.
+  `/img/bg_our_word.jpg`, the homepage "our word" cosmic image); the quote sits
+  left over a dark scrim, colour bleeds in from the right. Used by the closing
+  testimonial. Without `image=`, it's a plain centred quote band.
+
+Authoring rules:
+
+- **Headline / inline emphasis:** `<strong>…</strong>` for bold,
+  `<span class='csi-grad'>…</span>` for the brand-gradient run (darkened on light
+  cards, bright clip on dark — never yellow). `csi-grad` is also sprinkled on a
+  handful of body phrases (one per section) for pop.
+- **Section heads are `<div class="csi-section__head">`, NOT `<header>`** — a
+  `<header>` collides with the scoped site-header rule and paints a pine box.
+- `csi-section`/`csi-split`/`csi-testimonial` render inner as `display "block"`;
+  `csi-steps`/`csi-impact`/`csi-list` bodies as `display "inline"`.
+- **External links open in a new tab** via
+  `layouts/case-studies/_markup/render-link.html` — a case-studies-scoped link
+  render hook that adds `target="_blank" rel="noopener noreferrer"` to any
+  `http(s)` link. Applies to body prose and shortcode-rendered prose. The hook
+  template must **not** end in a trailing newline (it's trimmed with a closing
+  `{{- /* … */ -}}`): because the hook replaces links inline, a trailing newline
+  renders as a literal space after every link (e.g. `OpenTofu ,`).
+- **Caption links are hand-written, not hook-processed.** A `caption=` containing
+  an `<a>` is injected via `safeHTML` and bypasses the render hook, so add
+  `target="_blank" rel="noopener noreferrer"` to the anchor by hand if it should
+  open in a new tab.
+- **`hugo serve` CSS hot-reload is flaky** — if a change doesn't show, hard-refresh
+  (Cmd+Shift+R).
+
+### Scroll animations (AOS)
+
+The immersive body reveals on scroll using **AOS** (Animate On Scroll) — the same
+library the marketing pages use, so motion is consistent site-wide rather than a
+bespoke per-page system. AOS is bundled in `assets/js/plugins.js` and initialized
+globally (`AOS.init({ easing: 'ease-out-cubic', duration: 1500, mirror: false,
+once: true })`), with styles in `assets/css/aos.scss` (imported by `style.scss`).
+
+- **Declarative `data-aos` attributes live in the `csi-*` shortcode templates**,
+  not in content. All use `fade-up`: `csi-section` (head, then prose at
+  `data-aos-delay="100"`), `csi-split` (text, then media at `delay="120"`),
+  `csi-testimonial`, `cs-pullquote`, and the closing `.csi-cta`.
+- **The hero and stat strip are intentionally NOT animated** — they're above the
+  fold and read as the kept-verbatim modern top.
+- **Duration is overridden to `600ms`** per element via `data-aos-duration="600"`
+  (the global default 1500ms felt too slow band-by-band; 900ms still lagged when
+  scrolling fast). The per-element attribute out-specifies the global
+  `body[data-aos-duration="1500"]` rule that `AOS.init` sets, so only the case
+  study speeds up — the rest of the site keeps 1500ms.
+- **Trigger point uses the AOS default offset (120px)** — no per-element
+  `data-aos-offset` override. The reveal fires once an element is ~120px *into*
+  the viewport. To fire reveals earlier (e.g. so fast scrolls don't outrun the
+  fade), add `data-aos-offset="0"` — or a negative value to start the fade before
+  the element enters view — to the relevant `csi-*` shortcode.
+- **No per-card stagger on grids.** `csi-impact`/`cs-wins` cards carry no
+  `data-aos` of their own; they reveal with their parent `csi-prose` block, which
+  avoids nested-AOS double-animation.
+- Adding `data-aos` to a new shortcode needs no JS wiring — the global
+  `AOS.init` already scans `[data-aos]` (and watches for new nodes).
+
+### Page ending
+
+`immersive.html` closes the body with the **`.csi-cta`** band — the "Curious if
+Masterpoint could help your team too?" callout, now with an **inline underlined
+"Get in touch" link (no button)** — then the shared **`schedule-assessment.html`**
+partial ("Get a standardized, predictable, and efficient infrastructure
+management process" + Schedule button), then `footer`. Same closing as the modern
+case studies and the marketing pages.
 
 ## Page-level styling decisions
 
-- **Page backdrop** is pine (`$pine = #0e383a`), matching the blog. The
-  article sits on a wide white card (`.cs-article-card`, max-width 1080px)
-  with a soft shadow.
-- **Hero** is darker pine with a gradient + dot grid + soft mint/pink glow,
-  _plus_ the optional full-bleed background image with a dark scrim and
-  frosted title frame.
-- **Hero min-height** is ~720px desktop / 600px tablet / 500px mobile so the
-  photo stays generous even when the frosted box content is lean.
-- **Body content max-width** is wider than the blog (1080px article card vs
-  the blog's ~795px entry) because case studies have more visual content.
-- **Body text size** is 0.98rem (`.cs-article`, `p`, `ul/ol li`) — slightly
-  smaller than the blog's default to keep the wider card readable.
-- **Hero title font** scales 2.7rem → 2.45rem → 1.9rem (desktop / ≤991px /
-  ≤575px). The stat-strip values scale alongside it (2.2rem → 1.8rem → 1.55rem)
-  so the title stays comfortably larger than the stat values at **every**
-  breakpoint — the values must never visually outweigh the title (the 2-up value
-  is 1.8rem, not 2rem, so it doesn't feel oversized at the narrow ~600px end).
-  Stat-cell padding also adapts: 1.7rem (4-up) → 2rem (2-up, more breathing
-  room) → 1.1rem (1-up stack, tight so stacked stats don't sprawl).
-- **Section H2** has a gradient accent bar above it (`::before`). This is the
-  primary visual marker for major sections — no separate `cs-section`
-  shortcode needed.
-- **Pull quotes** (dark variant) are pine cards with a gradient left border
-  and a soft mint serif quote mark; attribution is vanilla.
+- **Backdrop is pine** (`$pine = #0e383a`, matching the blog); the article sits on
+  a wide white card (`.cs-article-card`, max-width **1080px** — wider than the
+  blog's ~795px because case studies carry more visual content).
+- **Body text is 0.98rem** (smaller than the blog) so the wider card stays readable.
+- **Hero min-height ~720px** (smaller at tablet/mobile) so the photo has room even
+  when the frosted title box is lean.
+- **Hero title must stay larger than the stat-strip values at every breakpoint** —
+  both scale down together, and the 2-up stat value is deliberately held below the
+  title so the numbers never visually outweigh it.
+
+---
+
+## Print / PDF
+
+Case studies print (Ctrl/Cmd+P → Save as PDF) styled to match the screen.
+
+- **The site stylesheet loads with `media="all"`** (`partials/head.html`), not
+  `media="screen"`. With `media="screen"` the browser ignored the entire
+  stylesheet when printing and dumped raw unstyled HTML — that was the original
+  "no styles in print" bug.
+- **A `@media print` block at the end of `case-studies.scss`** (scoped to
+  `body.case-study-modern` / `body.case-study-immersive`) handles everything print
+  needs that screen doesn't:
+  1. **`print-color-adjust: exact`** on the whole subtree so browsers keep our
+     backgrounds and gradients instead of dropping them to white for ink saving
+     (these layouts are almost entirely backgrounds).
+  2. **AOS reset — the critical one.** Every `csi-*` card carries `data-aos`,
+     which starts it at `opacity: 0` until scrolled into view. Nothing scrolls
+     when printing, so without an override the **entire animated body prints
+     blank** (empty colour cards — this was the original "things get cut off"
+     bug). The block forces `[data-aos] { opacity:1; transform:none;
+     visibility:visible; transition:none }`. Don't remove this.
+  3. **Gradient-clipped text fallback.** `-webkit-background-clip: text` +
+     transparent fill does not render reliably in Chrome's PDF path: the run
+     stops wrapping and gets sliced by the hero card's `overflow:hidden`, or the
+     gradient paints as a solid rectangle. So `.text-gradient` / `.csi-grad` /
+     `.cs-hero__lockup-x` fall back to a solid brand colour (`#2ad9c2`) in print.
+     The on-screen multi-stop gradient becomes a single teal in the PDF — an
+     intentional, reliable trade.
+  4. **Hero frosted card** drops `backdrop-filter` (unsupported in print) and
+     `overflow: hidden` so the title can wrap freely instead of being clipped.
+  5. **Hides site chrome** so the PDF is a standalone document: `#sitewideNote`,
+     `header[aria-label="header"]`, `#schedule-assessment`,
+     `footer[role=contentinfo]`, `#preloader`, and the cookie-consent banner
+     (`#cc-main` / `.cc-window`, orestbida CookieConsent v3 — it's injected into
+     `<body>` and otherwise overlays the page in the PDF).
+  6. **Performance — prevents the PDF/print-preview lag and crash.** Print
+     rasterizes at ~300+ DPI (~100x the pixels of screen), and several decorative
+     effects that are cheap on screen explode at that scale: `backdrop-filter` /
+     `filter: blur()` (blur kernel scales with DPI), the tiled 1px dot-grid
+     overlays (`background-size:~28px` on full-bleed `inset:0` `::after`s —
+     millions of dots), and their `mask-image` (extra offscreen buffer per
+     section). `print-color-adjust:exact` (item 1) forces all of it to actually
+     paint, so memory blows up and Chrome's renderer dies. The block zeroes
+     `backdrop-filter` / `filter` / `mask-image` / `box-shadow` on `*` and drops
+     `::before`/`::after` `background-image` for print. (Same effects are why
+     on-screen scrolling can feel slow — they re-composite on the GPU per frame.)
+  7. **Page-break control — prevents cards clipping across page boundaries.**
+     `break-inside: avoid` on the **small, repeating** cards (`.cs-stat`,
+     `.cs-pullquote`, `.csi-testimonial`, `.csi-impact__card`) pushes a whole
+     card to the next page rather than slicing its top/bottom edge. **Only apply
+     it to small cards** — putting it on large one-off blocks (the About panel,
+     article/screenshot cards) backfires: shoving a big block whole to the next
+     page leaves a huge blank gap on the page it left, which looks worse than the
+     occasional slice. Those large blocks fit on their own, so let them flow.
+- To **keep** a chrome element in the PDF, drop it from that `display: none` list.
+- **When you add a new case-study element / shortcode / CSS class, check this
+  print checklist.** Most additions need NOTHING — the perf and colour-accuracy
+  rules use universal selectors (`*`, `*::before`, `*::after`), so new elements
+  inherit them automatically. Only touch the `@media print` block if the new
+  thing falls into one of these three buckets:
+  1. **Gradient-clipped text** (`-webkit-background-clip: text` + transparent
+     fill)? → add its class to the solid-colour fallback list (item 3 above), or
+     it prints sliced / as a stray coloured rectangle.
+  2. **A small, self-contained card** that would look broken if sliced across a
+     page break? → add it to the `break-inside: avoid` list (item 7). Do NOT add
+     large/one-off blocks or full-bleed section bands (see the dense-flow note).
+  3. **New site chrome injected into `<body>`** (banner, modal, widget) that
+     shouldn't appear in the PDF? → add its selector to the `display: none` list
+     (item 5).
+  A genuinely new heavy effect (e.g. a new `filter`/`mask` that the universal
+  resets don't already cover) is the only other reason to edit the block.
+- **Verify print changes with a real PDF**, not screen DevTools — Chrome's print
+  path diverges (AOS, backdrop-filter, background-clip:text all behave
+  differently). Generate one headless and read it back:
+  `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new
+  --disable-gpu --no-pdf-header-footer --print-to-pdf=out.pdf
+  http://localhost:1313/case-studies/marketspark/`
 
 ---
 
@@ -234,12 +456,14 @@ truth, not "what might come back later".
 
 Every modern case study gets an inline **"In This Case Study Success Story"**
 contents card automatically — no shortcode, no per-page wiring. It lists every
-H2 section as a numbered card with a gradient left bar.
+H2 section as a numbered card with a gradient left bar. **Modern layout only** —
+`immersive.html` does not inject the TOC (its body is `csi-*` cards, not H2
+sections), so the immersive MarketSpark page has no contents card.
 
 - **Auto-injected by the layout.** `layouts/case-studies/single.html` renders
   the card from `partials/case-study-toc.html` and splices it into `.Content`
   **before the first `<h2>`** via `replaceRE` (limit 1), so it lands right after
-  the `cs-about` block (no shortcode emits `<h2>` — cs-wins/cs-pane use `<h4>`,
+  the `cs-about` block (no shortcode emits `<h2>` — cs-wins uses `<h4>`,
   cs-about a `<div>` — so the first `<h2>` is always the first real section).
   The partial output is `$`-escaped (`replace … "$" "$$"`) before it becomes the
   replaceRE replacement, so a `$` in a heading title isn't read as a group ref.
@@ -253,7 +477,7 @@ H2 section as a numbered card with a gradient left bar.
 - **Built from `.Fragments`**, listing the top-level (H2) sections. See the
   authoring note for why `.TableOfContents` can't be read from a shortcode (the
   reason this is a layout-stage partial, not a shortcode).
-- **Styled under `#cs-toc`** in `custom.scss` — the id is what lets the card's
+- **Styled under `#cs-toc`** in `case-studies.scss` — the id is what lets the card's
   link/list rules out-specify the broad `.cs-article` descendant rules without
   `!important` (and avoids the `&__` + id SCSS trap).
 - **Anchor links** rely on the heading render hook (`render-heading.html`),
@@ -285,34 +509,16 @@ Required because Hugo's CLI build does not catch visual regressions.
 ### Step-by-step
 
 1. Start (or confirm) `hugo serve` is running at http://127.0.0.1:1313/.
-2. Navigate to the case study page. **Slug is derived from filename**, so
-   a file at `content/case-studies/<client>.md` lives at
-   `/case-studies/<client>/`. Don't add a `slug:` field unless you really
-   need filename and URL to diverge.
+2. Navigate to the page (`/case-studies/<client>/` — slug = filename).
 3. After every meaningful CSS/layout change, reload and screenshot to verify.
 4. **Save screenshots in `.screenshots/`** with descriptive filenames
    (`ms-NN-what.png`). They're git-ignored.
 5. **Delete `.screenshots/*` at the end of the session.** Don't ship screenshot
    artifacts — they bloat the repo and aren't reproducible.
 
-### Useful Chrome DevTools snippets
+### Hunting CSS specificity issues
 
-```js
-// Inspect computed style on an element
-() => {
-  const el = document.querySelector("SELECTOR");
-  const s = getComputedStyle(el);
-  return {
-    fontSize: s.fontSize,
-    color: s.color,
-    textTransform: s.textTransform,
-  };
-};
-```
-
-For specificity hunts: walk parents and check styles, or iterate
-`document.styleSheets` and test `el.matches(rule.selectorText)`. When a rule
-that "should" match doesn't, **read the compiled CSS** in
+When a rule that "should" match doesn't, **read the compiled CSS** at
 `http://127.0.0.1:1313/css/style.min.css` — SCSS `&` nesting can produce
 unexpected selectors (see the double-`&` trap above).
 
@@ -323,120 +529,23 @@ use `hugo --destination /tmp/cs-v && rm -rf /tmp/cs-v` to confirm compilation
 without restarting their server. **Never `kill` an existing hugo process**
 without asking — that's their dev loop.
 
-If a **new** shortcode template is added, the watcher won't pick it up. Tell
-the user to restart `hugo serve` (Ctrl-C + rerun).
-
 ---
 
-## Template preview page
+## Decisions & gotchas
 
-`content/case-studies/template.md` (`draft: true`) is a living gallery showing
-every `cs-*` shortcode with boilerplate content. To preview locally, restart
-with `hugo serve -D`. Netlify's production build (`hugo --gc --minify`, no
-`-D`) excludes it. Use this to show examples.
+Only what isn't already obvious from the sections above or the code.
 
----
-
-## Decision log
-
-Record meaningful decisions about the **current** design, with a one-line
-"why". If a decision is later reversed (feature removed), delete the entry
-rather than leaving a "we used to do X" note. The codebase is the source of
-truth; this log explains the reasoning behind what's still there.
-
-### Architecture
-
-- **Two-layout split (legacy vs modern).** Power Digital is heavily
-  customized; we don't want to regress it while iterating on new case studies.
-  Route via `layout:` front matter.
-- **Page backdrop = pine, article = white card.** Matches the blog's visual
-  language; frames long-form content nicely without competing with figures.
-- **Body content max-width = 1080px** (wider than the blog's ~795px) — case
-  studies have more visual content.
-- **Body font 0.98rem.** With the wider card, 1.1rem felt oversized for
-  long-form prose.
-
-### Hero
-
-- **Hero min-height ~720px desktop** with smaller breakpoints below. The
-  photo needs room even when the frosted box is lean.
 - **Mobile hero top padding must clear the stacked header.** Below 992px the
-  global header stacks into two rows (logo+MENU, then socials + GET IN TOUCH,
-  ~132–144px tall) and is `position: absolute` over the hero — this is true
-  across the **whole** ≤991 range (verified two-row at 600px and 900px), not
-  just phones. The hero's `padding-top` is what keeps the lockup from hiding
-  behind it, so **both** the ≤991 and ≤575 breakpoints use a large top pad
-  (`10rem`, ~58–62px clearance). Do **not** shrink it (earlier values of `8rem`
-  at ≤991 and `7rem` at ≤575 left the header overlapping / cramping the lockup).
-- **Horizontal scrim** (dark left → clear right) when a hero photo is
-  present. Uniform overlays make the photo unreadable; this lets the photo's
-  subject carry visual weight while keeping the title legible.
-- **Client × Masterpoint lockup in the hero.** Client logo on a white pill
-  (so brand colors stay correct), gradient `×`, then `/img/logo.svg` (white
-  wordmark + gradient icon, perfect for the dark hero box). Standalone
-  `cs-lockup` shortcode uses `/img/logo_footer.svg` (pine wordmark) for use
-  on white backgrounds.
-
-### Content patterns
-
-- **End-of-article CTA defaults in the layout.** Every case study auto-gets
-  a generic Masterpoint pitch + "Get in touch" button (the inline link is
-  "Get in touch" too). Override via `callout:` front matter; hide with
-  `callout: false`. CTA visual language matches the blog's `#callout` (white
-  card, 3px mint border).
-- **Automatic inline TOC.** Every modern case study auto-gets an
-  "In This Case Study Success Story" contents card (layout injects
-  `partials/case-study-toc.html` before the first `<h2>`), so authors don't
-  wire it per page; opt out with `toc: false`. Inline (not a floating sidebar)
-  because the layout is a centered single column; visible at every breakpoint.
-  Started as an opt-in `cs-toc` shortcode, then moved to automatic injection at
-  the user's request (and reversed the original "no TOC" decision).
-- **`.cs-article a:not(.button)` is mandatory.** Without the `:not(.button)`,
-  buttons inside the article get the highlight-mint text color, which
-  matches the button background, making text invisible.
-- **`cs-pullquote` for actual quotes only.** Two variants: `dark` (default,
-  pine card) for emphasis; `light` (cream/mint editorial) when adjacent to
-  the dark CTA card (e.g., a closing testimonial above the CTA would
-  otherwise stack two dark cards).
-- **`cs-wins` for the Outcomes section.** Grid of icon cards with bolded
-  titles and short bodies — faster to scan than 6 prose paragraphs.
-- **"What Masterpoint Built" stays as plain bullets**, not cards. The bullets
-  contain detailed prose with hyperlinks that don't compress well into card
-  format.
-
-### Hugo wiring
-
-- **Slug derived from filename.** Don't set `slug:` unless filename and URL
-  need to diverge.
-- **`CLAUDE.md` and `*.raw.md` excluded via `ignoreFiles`** in `config.yaml`.
-  Otherwise Hugo turns every `.md` under `content/` into a publishable page.
-- **Em dash budget under 10 per case study.** They lose punch when overused;
-  prefer parens / commas / colons / periods for in-sentence pauses.
-
-### `public/` orphans
-
-`hugo serve` doesn't garbage-collect old build artifacts, so stale slugs
-from earlier experiments (`market-spark`, `synthmind-ai`, etc.) can keep
-getting served locally. Netlify production builds use `hugo --gc --minify`
-and are clean by default — orphans are a local dev-loop problem only. Fix:
-`rm -rf public/ && hugo serve` (or `hugo --gc` once).
-
----
-
-## Files this layout touches
-
-- `layouts/case-studies/single.html` — modern layout (hero, stat strip,
-  article card, auto-injected TOC, default CTA wiring)
-- `layouts/case-studies/legacy.html` — Power Digital's untouched layout
-- `layouts/shortcodes/cs-*.html` — all case-study shortcodes
-- `layouts/partials/case-study-toc.html` — "In This Case Study Success Story"
-  contents card, auto-injected by `single.html` before the first `<h2>`
-- `layouts/partials/scripts.html` — blog floating-toc JS (gated to blog only)
-- `assets/css/custom.scss` — search for `// MODERN CASE STUDY LAYOUT` to find
-  the scoped block under `.case-study-modern`
-- `static/img/case-studies/CLIENT/` — per-client visuals
-- `content/case-studies/_index.md` — section page (uses `case-studies/list.html`)
-- `content/case-studies/<client>.md` — one per case study (filename = URL slug)
-- `content/case-studies/template.md` — draft-only shortcode gallery
-- `config.yaml` — `ignoreFiles` for `CLAUDE.md` + `*.raw.md`; `tableOfContents`
-  start/end levels
+  global header stacks into two rows and is `position: absolute` over the hero —
+  across the **whole** ≤991 range, not just phones. Both the ≤991 and ≤575
+  breakpoints use a large top pad (`10rem`); don't shrink it or the lockup hides
+  under the nav.
+- **Hero lockup uses a white pill behind the client logo** so the client's
+  brand colors stay correct, then a gradient `×`, then `/img/logo.svg` (white
+  wordmark for the dark hero).
+- **"What Masterpoint Built" stays as plain bullets, not `cs-wins` cards** — the
+  prose + inline links don't compress into card format.
+- **`cs-pullquote` light variant exists for the closing quote** so it doesn't
+  stack two dark cards against the dark CTA below it.
+- **`CLAUDE.md` / `*.raw.md` are excluded via `ignoreFiles`** in `config.yaml`,
+  else Hugo publishes every `.md` under `content/`.
