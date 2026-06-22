@@ -39,6 +39,14 @@ body carries both `case-study-modern` and `case-study-immersive` so the modern
 of rotating light↔dark colour cards (`.csi-*`). Don't merge them; scope every
 selector under its prefix.
 
+**Stylesheet location:** the **modern** and **immersive** CSS — everything under
+`.case-study-modern` / `.case-study-immersive` (the `.cs-*` and `.csi-*` rules, the
+`$cs-*` vars and the `cs-brand-gradient` mixins) — lives in its own partial,
+`assets/css/case-studies.scss`, which is `@import`ed at the **end** of
+`custom.scss` so the cascade order is unchanged (compiled output is byte-identical).
+The **legacy** `.case-study-single` block and the `#caseStudiesPage` list-page grid
+stay in `custom.scss`. THIS WILL BE REMOVED SOON AFTER WE MIGRATE ALL CASE STUDIES TO THE NEW LAYOUT.
+
 ---
 
 ## List page (`/case-studies/`)
@@ -64,8 +72,9 @@ card grid to stay scannable as the list grows. Card image = each study's
 - **A portrait `preview_image` makes its row taller** — `object-fit: cover` in a
   %-width column with only `min-height` lets a tall poster (Power Digital) drive the
   height, so rows can be uneven. A fixed `height` on `.cs-card` would crop instead.
-- **SCSS var-order:** `#caseStudiesPage` sits above the `$cs-mint` / `csi-grad-*`
-  defs, so use literal hex/gradients there (globals like `$pine` are fine).
+- **SCSS var-order:** `#caseStudiesPage` (in `custom.scss`) sits above the
+  `@import "case-studies.scss"` line, where the `$cs-mint` / `csi-grad-*` defs now
+  live, so use literal hex/gradients here (globals like `$pine` are fine).
 
 ---
 
@@ -126,7 +135,7 @@ Notes:
 ## Shortcodes
 
 All shortcodes are in `layouts/shortcodes/cs-*.html` and styled under
-`.case-study-modern` in `assets/css/custom.scss`.
+`.case-study-modern` in `assets/css/case-studies.scss`.
 
 | Shortcode                    | Purpose                                                     | Notes                                                                                                                                                                                                                                                                                        |
 | ---------------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- | --------------- |
@@ -198,7 +207,7 @@ Opt in with `layout: immersive`. The body element carries **both**
   dual body class means the existing `.case-study-modern .cs-*` rules style them
   — so the top renders as the modern layout. The one intentional addition is the
   optional **`client_logo_height`** front-matter hook (sets `--cs-client-logo-h`
-  on the client lockup mark, default 32px; styled in `custom.scss`) so a short
+  on the client lockup mark, default 32px; styled in `case-studies.scss`) so a short
   client wordmark can be enlarged. Otherwise don't restyle the top here.
 - **Body: a stack of contained, rounded CARDS** on the pine page backdrop, the
   faces **rotating light ↔ dark** like the marketing pages (services /
@@ -389,7 +398,7 @@ sections), so the immersive MarketSpark page has no contents card.
 - **Built from `.Fragments`**, listing the top-level (H2) sections. See the
   authoring note for why `.TableOfContents` can't be read from a shortcode (the
   reason this is a layout-stage partial, not a shortcode).
-- **Styled under `#cs-toc`** in `custom.scss` — the id is what lets the card's
+- **Styled under `#cs-toc`** in `case-studies.scss` — the id is what lets the card's
   link/list rules out-specify the broad `.cs-article` descendant rules without
   `!important` (and avoids the `&__` + id SCSS trap).
 - **Anchor links** rely on the heading render hook (`render-heading.html`),

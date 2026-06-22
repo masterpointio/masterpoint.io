@@ -1,0 +1,2232 @@
+// Case study layouts — modern (.case-study-modern) + immersive (.case-study-immersive).
+// Extracted from custom.scss and @imported there in place to preserve cascade order.
+// The legacy .case-study-single layout and the #caseStudiesPage index grid remain in custom.scss.
+
+@keyframes csHeroAsideFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes csLockupPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.08); opacity: 0.82; }
+}
+
+// =============================================================================
+// MODERN CASE STUDY LAYOUT  (.case-study-modern)
+// Used by content/case-studies/*.md unless they specify `layout: legacy`.
+// Power Digital uses the legacy layout (`.case-study-single`) — keep that
+// untouched. Everything below is scoped under `.case-study-modern`.
+// =============================================================================
+
+$cs-mint: #2ad9c2;
+$cs-pine-dark: #061d1e;
+$cs-pine-deep: #0a2a2c;
+$cs-pine-soft: #13474a;
+$cs-pine-line: #1f5a5d;
+$cs-mint-soft: rgba(42, 217, 194, 0.12);
+$cs-mint-faint: rgba(42, 217, 194, 0.06);
+
+@mixin cs-brand-gradient {
+  background: linear-gradient(92deg, #ede497 -0.66%, #2ad9c2 26%, #d891ce 59.55%);
+}
+@mixin cs-brand-gradient-text {
+  @include cs-brand-gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.case-study-modern {
+  background: $pine;
+
+  header {
+    background: $pine;
+  }
+
+  // ---------------------------------------------------------------------------
+  // HERO  — clean gradient pine, subtle decorative grid only.
+  // ---------------------------------------------------------------------------
+  .cs-hero {
+    position: relative;
+    padding: 9.4rem 0 4.8rem;
+    min-height: 720px;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(180deg, $pine 0%, $cs-pine-deep 60%, $cs-pine-dark 100%);
+    color: #fff;
+    overflow: hidden;
+
+    // ≤991px the global header stacks into two rows (logo+MENU, then socials +
+    // GET IN TOUCH ≈ 132–144px tall) and is position:absolute over the hero, so
+    // the top padding has to clear it across this whole range — keep it large
+    // (≈10rem). Do NOT shrink it for smaller phones; the header stays two-row.
+    @media (max-width: 991px) {
+      min-height: 600px;
+      padding: 10rem 0 4rem;
+    }
+    @media (max-width: 575px) {
+      min-height: 500px;
+      padding: 10rem 0 3.2rem;
+    }
+
+    > .container {
+      width: 100%;
+    }
+
+    // full-bleed background image + lighter horizontal scrim:
+    // dark on the left where the title frame sits, mostly clear on the right
+    // so the subject of the photo (worker / cables / etc.) reads through.
+    &__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 70% center; // bias toward the right of the photo
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(
+            90deg,
+            rgba(6, 29, 30, 0.78) 0%,
+            rgba(6, 29, 30, 0.55) 40%,
+            rgba(6, 29, 30, 0.15) 70%,
+            rgba(6, 29, 30, 0.05) 100%
+          ),
+          linear-gradient(180deg, rgba(14, 56, 58, 0.10) 0%, rgba(6, 29, 30, 0.25) 100%);
+      }
+    }
+
+    // decorative element: soft mint-glow + faint dotted grid (suppressed when bg image present)
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 88% 18%, rgba(42, 217, 194, 0.18), transparent 55%),
+        radial-gradient(ellipse at 10% 90%, rgba(216, 145, 206, 0.10), transparent 50%);
+      pointer-events: none;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 80%);
+      -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 80%);
+      pointer-events: none;
+    }
+
+    &--with-bg {
+      &::before,
+      &::after {
+        opacity: 0.35;
+      }
+    }
+
+    &__layout {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    &__inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+    }
+
+    // Frosted card so title stays readable over the hero background image.
+    &__inner--framed {
+      padding: 1.8rem 2rem 1.6rem;
+      max-width: 720px;
+      background: linear-gradient(135deg, rgba(6, 29, 30, 0.72) 0%, rgba(14, 56, 58, 0.62) 100%);
+      backdrop-filter: blur(8px) saturate(120%);
+      -webkit-backdrop-filter: blur(8px) saturate(120%);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow:
+        0 30px 60px -25px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        @include cs-brand-gradient;
+      }
+
+      @media (max-width: 575px) {
+        padding: 1.4rem 1.2rem 1.2rem;
+        border-radius: 12px;
+        max-width: 100%;
+      }
+    }
+
+    &__aside {
+      position: relative;
+      z-index: 1;
+      margin-top: 0.5rem;
+
+      img {
+        width: 100%;
+        height: auto;
+        max-height: 320px;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        border-radius: 14px;
+        box-shadow:
+          0 30px 60px -20px rgba(0, 0, 0, 0.55),
+          0 0 0 1px rgba(42, 217, 194, 0.25);
+      }
+
+      // soft mint frame glow
+      &::after {
+        content: "";
+        position: absolute;
+        inset: -10px;
+        border-radius: 18px;
+        background: linear-gradient(135deg, rgba(42, 217, 194, 0.16), rgba(216, 145, 206, 0.06));
+        z-index: -1;
+        filter: blur(24px);
+        opacity: 0.55;
+      }
+
+      @media (max-width: 575px) {
+        img {
+          max-height: 220px;
+          border-radius: 10px;
+        }
+      }
+    }
+
+    &__eyebrow {
+      font-size: 0.85rem;
+      letter-spacing: 0.35em;
+      font-weight: 800;
+      color: $vanilla;
+      text-transform: uppercase;
+      padding-bottom: 1.5rem;
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0.4rem;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        @include cs-brand-gradient;
+      }
+    }
+
+    &__logo {
+      display: inline-flex;
+      margin-bottom: 1.4rem;
+      padding: 0.6rem 0.95rem;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.45);
+      img {
+        height: 40px;
+        width: auto;
+        max-width: 260px;
+        display: block;
+      }
+      @media (max-width: 575px) {
+        img { height: 32px; }
+      }
+    }
+
+    // Hero in-place client × Masterpoint lockup
+    &__lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    &__lockup-mark {
+      display: inline-flex;
+      align-items: center;
+      &--client {
+        img {
+          display: block;
+          height: var(--cs-client-logo-h, 32px);
+          width: auto;
+          max-width: 225px;
+        }
+      }
+      &--mp {
+        img {
+          display: block;
+          height: 26px;
+          width: auto;
+          max-width: 225px;
+        }
+      }
+      @media (max-width: 575px) {
+        &--client img { height: calc(var(--cs-client-logo-h, 32px) * 0.8); }
+        &--mp img     { height: 22px; }
+      }
+    }
+
+    &__lockup-x {
+      font-family: $header-font;
+      font-size: 1.8rem;
+      font-weight: 300;
+      line-height: 1;
+      @include cs-brand-gradient-text;
+      user-select: none;
+      @media (max-width: 575px) {
+        font-size: 1.4rem;
+      }
+    }
+
+    &__title {
+      font-size: 2.7rem;
+      line-height: 1.12;
+      font-weight: 900;
+      letter-spacing: -0.015em;
+      padding-bottom: 0;
+      color: #fff;
+      max-width: 880px;
+      text-transform: none; // override global #banner h1 uppercase
+      .text-gradient {
+        @include cs-brand-gradient-text;
+      }
+      @media (max-width: 991px) {
+        font-size: 2.45rem;
+      }
+      @media (max-width: 575px) {
+        font-size: 1.9rem;
+      }
+    }
+
+    &__meta {
+      list-style: none;
+      padding: 0;
+      margin: 2.4rem 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.4rem 3.5rem;
+
+      li {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        padding-left: 0;
+        margin-bottom: 0;
+        &::before {
+          display: none;
+        }
+      }
+    }
+    &__meta-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: $cs-mint;
+      font-weight: 800;
+    }
+    &__meta-value {
+      font-size: 1.05rem;
+      color: #e8efef;
+      font-weight: 600;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // AT-A-GLANCE STAT STRIP
+  // ---------------------------------------------------------------------------
+  .cs-stat-strip {
+    background: $pine;
+    position: relative;
+    z-index: 2;
+    padding: 0;
+    color: #fff;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+
+    &__inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      background: $cs-pine-deep;
+      border-radius: 14px;
+      overflow: hidden;
+      transform: translateY(-2.5rem);
+      box-shadow:
+        0 30px 60px -20px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(42, 217, 194, 0.25);
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        @include cs-brand-gradient;
+      }
+
+      @media (max-width: 991px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      @media (max-width: 575px) {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  .cs-stat {
+    padding: 1.7rem 1.6rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.07);
+    text-align: left;
+
+    &:last-child {
+      border-right: 0;
+    }
+    @media (max-width: 991px) {
+      // 2-up grid: give each cell a touch more breathing room
+      padding: 2rem 1.6rem;
+      &:nth-child(2n) {
+        border-right: 0;
+      }
+      &:nth-child(-n+2) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      }
+    }
+    @media (max-width: 575px) {
+      // 1-up stack: tighten the padding so stacked stats don't sprawl
+      padding: 1.1rem 1.4rem;
+      border-right: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+
+    &__value {
+      font-size: 2.2rem;
+      line-height: 1.1;
+      font-weight: 900;
+      @include cs-brand-gradient-text;
+      letter-spacing: -0.01em;
+
+      // Keep the value comfortably below the hero title at every breakpoint
+      // (title is 2.45rem ≤991 / 1.9rem ≤575), so it never visually outweighs
+      // the title — especially at the narrow end of the 2-up range (~600px).
+      @media (max-width: 991px) {
+        font-size: 1.8rem;
+      }
+      @media (max-width: 575px) {
+        font-size: 1.55rem;
+      }
+    }
+    &__label {
+      margin-top: 0.4rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      color: #b8c7c8;
+      line-height: 1.4;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // MAIN ARTICLE  — pine page backdrop + white content card on top.
+  // ---------------------------------------------------------------------------
+  .cs-main {
+    background: $pine;
+    padding: 1rem 0 4.5rem;
+    color: #2a3a3b;
+    position: relative;
+
+    .container {
+      max-width: 1320px;
+    }
+  }
+
+  .cs-article-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 3.4rem 3.8rem 3rem;
+    box-shadow:
+      0 30px 80px -30px rgba(0, 0, 0, 0.45),
+      0 0 0 1px rgba(255, 255, 255, 0.04);
+    max-width: 1080px;
+    margin: 0 auto;
+
+    @media (max-width: 991px) {
+      padding: 2.4rem 1.8rem 2rem;
+      border-radius: 10px;
+    }
+    @media (max-width: 575px) {
+      padding: 1.6rem 1.2rem 1.5rem;
+      border-radius: 8px;
+    }
+  }
+
+  // Compact metadata bar at the top of the article card — replaces the
+  // bulky client_meta list that used to live inside the hero.
+  .cs-meta-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.2rem 1.6rem;
+    padding: 1rem 0 1.4rem;
+    margin: 0 0 1.6rem;
+    border-bottom: 1px solid #e1ebeb;
+
+    &__item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    &__label {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: $cs-mint;
+    }
+    &__value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: $pine;
+      line-height: 1.4;
+    }
+  }
+
+  .cs-article {
+    font-size: 0.98rem;
+    line-height: 1.68;
+    color: #2a3a3b;
+
+    > * + * {
+      margin-top: 1.2rem;
+    }
+    > p {
+      margin-top: 0;
+      margin-bottom: 1.4rem;
+    }
+
+    h2 {
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: $pine;
+      margin-top: 3.6rem;
+      margin-bottom: 0.6rem;
+      padding-bottom: 0.4rem;
+      letter-spacing: -0.01em;
+      position: relative;
+
+      &::before {
+        content: "";
+        display: block;
+        width: 56px;
+        height: 4px;
+        @include cs-brand-gradient;
+        margin-bottom: 1.1rem;
+        border-radius: 2px;
+      }
+      @media (max-width: 575px) {
+        font-size: 1.7rem;
+      }
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: $pine;
+      margin-top: 2.4rem;
+      margin-bottom: 0.4rem;
+    }
+
+    h4 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: $pine;
+      margin-top: 1.8rem;
+      margin-bottom: 0.4rem;
+    }
+
+    p {
+      font-size: 0.98rem;
+      line-height: 1.68;
+      color: #2a3a3b;
+    }
+
+    strong {
+      color: $pine;
+      font-weight: 800;
+    }
+
+    a:not(.button) {
+      color: $highlight;
+      text-decoration: underline;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 3px;
+      &:hover {
+        color: darken($highlight, 8%);
+      }
+    }
+
+    // Heading anchor wrappers shouldn't carry the body-link underline.
+    h2, h3, h4, h5 {
+      a, a:hover {
+        color: inherit;
+        text-decoration: none;
+      }
+      .heading-anchor-symbol { color: $cs-mint; }
+      .heading-text::after { background-color: $cs-mint; }
+    }
+
+    ul,
+    ol {
+      padding-left: 1.5rem;
+      margin: 1rem 0 1.4rem;
+      li {
+        font-size: 0.95rem;
+        line-height: 1.62;
+        margin-bottom: 0.6rem;
+        padding-left: 0.3rem;
+      }
+    }
+
+    ul li::marker {
+      color: $cs-mint;
+    }
+    ol li::marker {
+      color: $pine;
+      font-weight: 800;
+    }
+
+    blockquote {
+      margin: 2rem 0;
+      padding: 1.4rem 1.8rem 1.4rem 2rem;
+      background: linear-gradient(180deg, #f6fbfb 0%, #eef7f6 100%);
+      border-left: 4px solid transparent;
+      border-image: linear-gradient(180deg, #ede497 0%, #2ad9c2 50%, #d891ce 100%) 1;
+      border-radius: 4px;
+      font-style: normal;
+      font-weight: 500;
+      color: $pine;
+      font-size: 1.15rem;
+      line-height: 1.6;
+
+      p {
+        font-size: 1.15rem;
+        margin-bottom: 0.6rem;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+      strong {
+        color: $pine;
+      }
+    }
+
+    hr {
+      margin: 3rem 0;
+      border: 0;
+      border-top: 1px dashed #cdd9d9;
+    }
+
+    code {
+      background: $cs-mint-soft;
+      color: $pine;
+      padding: 0.15em 0.4em;
+      border-radius: 3px;
+      font-size: 0.92em;
+    }
+
+    // Block code: terminal-style dark card.
+    pre,
+    .highlight pre {
+      background: $cs-pine-deep;
+      color: #e8efef;
+      padding: 1.1rem 1.3rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      margin: 1.4rem 0;
+      border: 1px solid rgba(42, 217, 194, 0.18);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+      code {
+        background: transparent;
+        color: inherit;
+        padding: 0;
+        font-size: inherit;
+        border-radius: 0;
+      }
+    }
+
+    // Code blocks nested in a list item shouldn't carry the list marker styling.
+    li > .highlight,
+    li > pre {
+      margin: 0.7rem 0 0.9rem;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin: 1.5rem 0;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // "ON THIS PAGE" CONTENTS CARD  (cs-toc shortcode)
+  // Rendered inside .cs-article (usually right after the cs-about block). Lists
+  // the page's H2 sections. Everything is keyed off the #cs-toc id (not BEM &__
+  // under the id — that hits the SCSS id+& trap) so these rules out-specify the
+  // broad .cs-article descendant rules (p, a, ol, li …) without !important.
+  // ---------------------------------------------------------------------------
+  #cs-toc {
+    position: relative;
+    margin: 1.8rem 0 2.6rem;
+    padding: 1.1rem 1.4rem 1.2rem 1.6rem;
+    background: linear-gradient(180deg, #fbfdfd 0%, #f0f7f6 100%);
+    border: 1px solid #dde9e8;
+    border-radius: 12px;
+    overflow: hidden;
+
+    // gradient left accent bar (echoes the blockquote treatment)
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 4px;
+      background: linear-gradient(180deg, #ede497 0%, #2ad9c2 50%, #d891ce 100%);
+    }
+
+    .cs-toc__title {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: $pine;
+      margin: 0 0 0.55rem;
+      line-height: 1.3;
+    }
+
+    .cs-toc__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      counter-reset: cs-toc-counter;
+    }
+
+    .cs-toc__item {
+      counter-increment: cs-toc-counter;
+      margin: 0;
+      padding: 0;
+      font-size: 0.95rem;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid #e4eeed;
+      }
+    }
+
+    .cs-toc__link {
+      display: flex;
+      align-items: baseline;
+      gap: 0.7rem;
+      padding: 0.5rem 0.45rem;
+      color: $pine;
+      font-weight: 600;
+      line-height: 1.35;
+      text-decoration: none;
+      border-radius: 6px;
+      transition:
+        color 0.18s ease,
+        background 0.18s ease;
+
+      &::before {
+        content: counter(cs-toc-counter);
+        flex: 0 0 auto;
+        min-width: 1.5em;
+        font-size: 0.82rem;
+        font-weight: 800;
+        color: $cs-mint;
+        text-align: center;
+      }
+
+      &:hover {
+        color: $highlight;
+        background: $cs-mint-faint;
+        text-decoration: none;
+      }
+    }
+
+    @media (max-width: 575px) {
+      padding: 0.95rem 1.1rem 1rem 1.3rem;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // SHORTCODE: cs-about  (dedicated "about the client" card)
+  // ---------------------------------------------------------------------------
+  .cs-about {
+    position: relative;
+    margin: 0.5rem 0 2.4rem;
+    padding: 1.25rem 1.5rem 1.3rem;
+    background: linear-gradient(180deg, #fbfdfd 0%, #f0f7f6 100%);
+    border: 1px solid #dde9e8;
+    border-radius: 12px;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      @include cs-brand-gradient;
+    }
+
+    &__logo {
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #dde9e8;
+      img {
+        display: block;
+        height: 42px;
+        width: auto;
+        max-width: 220px;
+      }
+    }
+
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.6rem 1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    &__eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: $pine;
+      margin: 0;
+    }
+
+    &__links {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+    }
+
+    &__url {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: $highlight;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      background: $cs-mint-soft;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: rgba(42, 217, 194, 0.22);
+        text-decoration: none;
+      }
+    }
+
+    &__url-icon {
+      font-size: 0.65rem;
+      opacity: 0.85;
+    }
+
+    &__social {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      text-decoration: none;
+      transition: transform 0.18s ease, opacity 0.18s ease;
+
+      i {
+        font-size: 1.55rem;
+        line-height: 1;
+      }
+
+      &:hover {
+        transform: translateY(-1px);
+        text-decoration: none;
+      }
+
+      &--linkedin {
+        color: #0a66c2; // LinkedIn brand blue
+        &:hover {
+          color: #084c92;
+        }
+      }
+    }
+
+    &__body {
+      font-size: 0.98rem;
+      line-height: 1.65;
+      color: #2a3a3b;
+
+      p {
+        margin-bottom: 0;
+        font-size: 0.98rem;
+        line-height: 1.65;
+      }
+    }
+
+    &__meta {
+      margin: 1.05rem 0 0;
+      padding-top: 1rem;
+      border-top: 1px dashed #c5d6d6;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.55rem 1rem;
+    }
+
+    &__meta-row {
+      display: grid;
+      grid-template-columns: 7rem minmax(0, 1fr);
+      gap: 0.4rem 0.9rem;
+      align-items: baseline;
+
+      @media (max-width: 575px) {
+        grid-template-columns: 1fr;
+        gap: 0.15rem;
+      }
+    }
+
+    &__meta-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: $cs-mint;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    &__meta-value {
+      font-size: 0.92rem;
+      color: $pine;
+      font-weight: 500;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    &__facts {
+      list-style: none !important;
+      padding: 0 !important;
+      margin: 1.1rem 0 0 !important;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.55rem;
+
+      li {
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: $pine;
+        padding: 0.35rem 0.7rem;
+        background: #fff;
+        border: 1px solid #d9e8e7;
+        border-radius: 999px;
+        margin: 0;
+        line-height: 1;
+
+        &::marker {
+          display: none;
+        }
+        &::before {
+          display: none !important;
+        }
+      }
+    }
+
+    @media (max-width: 575px) {
+      padding: 1.4rem 1.3rem 1.3rem;
+      border-radius: 10px;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // SHORTCODE: cs-pullquote
+  // ---------------------------------------------------------------------------
+  .cs-pullquote {
+    position: relative;
+    margin: 3rem 0;
+    padding: 2rem 1.5rem 2rem 4rem;
+    background: linear-gradient(135deg, $pine 0%, $cs-pine-deep 100%);
+    color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.35);
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+      @include cs-brand-gradient;
+    }
+
+    &__mark {
+      position: absolute;
+      top: 0.3rem;
+      left: 1.2rem;
+      font-family: Georgia, serif;
+      font-size: 4.5rem;
+      line-height: 1;
+      color: rgba(42, 217, 194, 0.35);
+      pointer-events: none;
+    }
+
+    &__body {
+      font-size: 1.45rem;
+      font-weight: 600;
+      line-height: 1.45;
+      color: #fff;
+      p {
+        font-size: 1.45rem;
+        line-height: 1.45;
+        margin-bottom: 0;
+        color: #fff;
+      }
+      strong {
+        @include cs-brand-gradient-text;
+      }
+    }
+
+    &__attribution {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: $vanilla;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    &__by {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      letter-spacing: normal;
+    }
+    &__avatar img {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    }
+    &__meta {
+      display: flex;
+      flex-direction: column;
+    }
+    &__name {
+      font-weight: 800;
+      font-size: 1.2rem;
+      line-height: 1.1;
+      color: #fff;
+    }
+    &__role {
+      font-weight: 400;
+      font-size: 0.9rem;
+      color: $cs-mint;
+      padding-top: 0.35rem;
+    }
+
+    // -- LIGHT variant -- editorial cream/mint card; pine text. Good for an
+    //    end-of-article testimonial where it sits next to a dark CTA card.
+    &--light {
+      background: linear-gradient(180deg, #fbfdfd 0%, #f0f7f6 100%);
+      border: 1px solid #dde9e8;
+      color: $pine;
+      box-shadow: none;
+
+      .cs-pullquote__mark {
+        color: rgba(42, 217, 194, 0.55);
+      }
+      .cs-pullquote__body,
+      .cs-pullquote__body p {
+        color: $pine;
+      }
+      .cs-pullquote__attribution {
+        color: $cs-mint;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-size: 0.78rem;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // SHORTCODE: cs-wins  (additional wins grid)
+  // ---------------------------------------------------------------------------
+  .cs-wins {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.2rem;
+    margin: 2rem 0 2.4rem;
+  }
+  .cs-win {
+    padding: 1.5rem 1.4rem 1.3rem;
+    background: #fff;
+    border: 1px solid #e1ebeb;
+    border-radius: 10px;
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 30px -20px rgba(14, 56, 58, 0.3);
+      border-color: #c5dada;
+    }
+
+    &__icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: $pine;
+      font-size: 1.15rem;
+      margin-bottom: 0.9rem;
+      @include cs-brand-gradient;
+    }
+
+    &__title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: $pine;
+      margin: 0 0 0.5rem;
+      padding-bottom: 0;
+      line-height: 1.3;
+      &::before {
+        display: none;
+      }
+    }
+
+    &__body {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: #4a5a5b;
+      margin: 0;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // ARTICLE-END CALLOUT (.cs-article__callout)
+  // ---------------------------------------------------------------------------
+  // End-of-article CTA — matches the blog post `#callout` treatment:
+  // white card, 3px mint border, default text. Sits below the article body.
+  .cs-article__callout {
+    margin: 2.4rem 0 0.5rem;
+    padding: 24px;
+    background: #fff;
+    border: 3px solid $highlight;
+    border-radius: 3px;
+    color: $default;
+    font-size: 1rem;
+    line-height: 1.6;
+
+    p {
+      color: $default;
+      margin: 0 0 1rem;
+      font-size: 1rem;
+      line-height: 1.6;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    strong {
+      color: $pine;
+    }
+
+    a:not(.button) {
+      color: $highlight;
+      font-weight: 700;
+      text-decoration: underline;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 3px;
+
+      &:hover {
+        color: darken($highlight, 8%);
+      }
+    }
+
+    // Button keeps the global `.button` look (mint background, white uppercase)
+    a.button {
+      margin-top: 0.4rem;
+    }
+  }
+
+  // Floating sidebar TOC is not used on case studies.
+  .floating-toc {
+    display: none !important;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Schedule-assessment section override (lighten transition)
+  // ---------------------------------------------------------------------------
+  #schedule-assessment {
+    background: #fff;
+    padding-top: 3rem;
+  }
+}
+
+// =============================================================================
+// IMMERSIVE CASE STUDY — BODY  (.case-study-immersive)
+// -----------------------------------------------------------------------------
+// The body carries BOTH `case-study-modern` and `case-study-immersive`, so the
+// hero + at-a-glance stat strip reuse the `.case-study-modern .cs-*` rules above
+// (top is byte-identical to modern). EVERYTHING here is scoped to `.csi-*` —
+// never bare element selectors — so it can't touch the modern hero/stats.
+//
+// Body = a stack of contained, rounded CARDS on the pine page backdrop, the
+// faces ROTATING light ↔ dark like the marketing pages (services / who-we-are),
+// each with a subtle gradient "photo" background. Brand palette only, and
+// deliberately NO yellow (#ECE295) per the brand guidelines preference: accents
+// are teal (#2ad9c2 / #55C1B4) → pink (#D191BF).
+// =============================================================================
+
+$csi-ink: #14302f; // headline ink on light cards
+$csi-ink-soft: #46595a; // body ink on light cards
+$csi-link: #0b7d72; // readable teal link on light cards
+$csi-line: #e7edec; // hairline on light cards
+
+// text gradient on LIGHT cards (darkened teal→pink so it reads on white)
+@mixin csi-grad-light {
+  background: linear-gradient(95deg, #0e8a7e 0%, #16a597 45%, #c45cb3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+// text gradient on DARK cards (bright teal→pink)
+@mixin csi-grad-bright {
+  background: linear-gradient(95deg, #5fe0cf 0%, #2ad9c2 42%, #e2a7d7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+// solid accent gradient for bars / icon badges / bullets (brand ~40°, no yellow)
+@mixin csi-grad-solid {
+  background: linear-gradient(40deg, #2ad9c2 0%, #55c1b4 42%, #d191bf 100%);
+}
+
+.case-study-immersive {
+  .csi-container {
+    width: 100%;
+    max-width: none;
+    margin: 0 auto;
+    padding: 0;
+  }
+  .csi-grad {
+    @include csi-grad-light;
+  }
+
+  .csi-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: $pine;
+    margin-bottom: 1.15rem;
+    &::before {
+      content: "";
+      width: 30px;
+      height: 3px;
+      border-radius: 2px;
+      flex: 0 0 auto;
+      @include csi-grad-solid;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // CARD STACK on the pine page backdrop
+  // ---------------------------------------------------------------------------
+  .csi-main {
+    position: relative;
+    padding: 1.6rem 2rem 4.5rem;
+    @media (max-width: 575px) {
+      padding: 1rem 0.85rem 3rem;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+  }
+
+  // One continuous rounded card; the sections become full-width bands that
+  // butt together inside it and rotate light ↔ dark.
+  .csi-article-card {
+    position: relative;
+    z-index: 1;
+    max-width: 1720px;
+    margin: 0 auto;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow:
+      0 30px 70px -40px rgba(0, 0, 0, 0.62),
+      0 0 0 1px rgba(42, 217, 194, 0.1);
+    @media (max-width: 575px) {
+      border-radius: 16px;
+    }
+  }
+
+  .csi-section {
+    position: relative;
+    z-index: 1;
+    padding: 3.9rem 0;
+    @media (max-width: 991px) {
+      padding: 3rem 0;
+    }
+    @media (max-width: 575px) {
+      padding: 2.4rem 0;
+    }
+
+    // bands span the full (wide) card; content stays a readable centred width
+    .csi-container {
+      position: relative;
+      z-index: 1;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 2.6rem;
+      @media (max-width: 575px) {
+        padding: 0 1.4rem;
+      }
+    }
+
+    // ---- LIGHT face (light / cream / mint all map here) ----
+    &--light,
+    &--cream,
+    &--mint {
+      background: linear-gradient(180deg, #ffffff 0%, #f4faf9 100%);
+      color: $csi-ink;
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 95% 6%, rgba(42, 217, 194, 0.09), transparent 50%),
+          radial-gradient(ellipse at 2% 100%, rgba(209, 145, 191, 0.07), transparent 55%);
+      }
+    }
+
+    // ---- DARK face (pine / pine-deep / gradient all map here) ----
+    &--pine,
+    &--pine-deep,
+    &--gradient {
+      background: linear-gradient(165deg, $pine 0%, $cs-pine-deep 100%);
+      color: #c9dad9;
+      // subtle gradient "photo" background (glow mesh)
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 86% 10%, rgba(42, 217, 194, 0.2), transparent 55%),
+          radial-gradient(ellipse at 8% 96%, rgba(209, 145, 191, 0.16), transparent 55%);
+      }
+      // faint dot grid, fading downward
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+        background-size: 26px 26px;
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 88%);
+        -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 88%);
+      }
+      .csi-eyebrow {
+        color: $cs-mint;
+      }
+      .csi-section__title {
+        color: #fff;
+      }
+      .csi-grad {
+        @include csi-grad-bright;
+      }
+      .csi-prose {
+        color: #c4d4d3;
+        a:not(.button) {
+          color: $cs-mint;
+        }
+        strong {
+          color: #fff;
+        }
+        ul > li::before {
+          @include csi-grad-solid;
+        }
+        ol > li::before {
+          color: $cs-pine-dark;
+          background: $cs-mint;
+        }
+      }
+    }
+
+    // Centre the heading (and any intro prose) without centring grid/card text.
+    &--center {
+      .csi-section__head {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .csi-eyebrow {
+        justify-content: center;
+        &::before {
+          display: none;
+        }
+      }
+      .csi-section__rule {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      // centre the prose, but constrain only the PARAGRAPHS to a readable
+      // width — leave grids (which live inside .csi-prose) full-width.
+      .csi-prose {
+        text-align: center;
+        max-width: none;
+        > p {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+      // grids span the full content width with left-aligned card text
+      .csi-steps,
+      .csi-impact,
+      .csi-list {
+        text-align: left;
+      }
+    }
+
+    // ---- COMPACT band — applied automatically to any section containing a
+    //      csi-list (no opt-in arg): same content, less vertical real estate.
+    //      Tighter padding, smaller head, denser prose and pull quote.
+    &:has(.csi-list) {
+      padding: 2.5rem 0;
+      @media (max-width: 991px) {
+        padding: 2.1rem 0;
+      }
+      @media (max-width: 575px) {
+        padding: 1.7rem 0;
+      }
+      .csi-section__head {
+        margin-bottom: 0.8rem;
+      }
+      .csi-section__title {
+        font-size: clamp(1.55rem, 2.5vw, 2.15rem);
+      }
+      .csi-prose {
+        font-size: 0.98rem;
+        > p {
+          margin-bottom: 0.9rem;
+        }
+      }
+      .cs-pullquote {
+        margin: 1.4rem auto 0;
+        max-width: 1100px;
+        padding: 1.5rem 1.4rem 1.5rem 3.6rem;
+        .cs-pullquote__mark {
+          font-size: 3.4rem;
+          left: 1rem;
+        }
+        .cs-pullquote__body,
+        .cs-pullquote__body p {
+          font-size: 1.18rem;
+          line-height: 1.4;
+        }
+        .cs-pullquote__attribution {
+          margin-top: 0.7rem;
+          font-size: 0.85rem;
+        }
+        // avatar-left layout: large circle on the left spanning the quote +
+        // attribution; on mobile it reflows to quote-on-top, then avatar+name
+        &.cs-pullquote--portrait {
+          display: grid;
+          grid-template-columns: auto minmax(0, 1fr);
+          grid-template-areas:
+            "avatar content"
+            "avatar attribution";
+          align-items: center;
+          column-gap: 2.2rem;
+          row-gap: 0.5rem;
+          padding: 1.8rem 2.2rem;
+          border-radius: 8px;
+          // opening quote glyph hanging in the gap just left of the first
+          // line — purely decorative, the quote text itself is untouched
+          .cs-pullquote__mark {
+            position: absolute;
+            top: 0.1rem;
+            left: -2rem;
+            display: block;
+            margin: 0;
+            font-size: 2.8rem;
+            line-height: 1;
+          }
+          .cs-pullquote__avatar {
+            grid-area: avatar;
+            align-self: center;
+            padding: 1px;
+            border-radius: 50%;
+            @include csi-grad-solid;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+          }
+          .cs-pullquote__avatar img {
+            display: block;
+            width: 116px;
+            height: 116px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+          .cs-pullquote__content {
+            grid-area: content;
+            position: relative;
+            min-width: 0;
+          }
+          .cs-pullquote__attribution {
+            grid-area: attribution;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0;
+            margin-top: 0.4rem;
+            letter-spacing: normal;
+          }
+
+          // mobile: quote spans full width on top, author (avatar + name) below
+          @media (max-width: 640px) {
+            grid-template-areas:
+              "content content"
+              "avatar attribution";
+            align-items: center;
+            column-gap: 1rem;
+            row-gap: 1.1rem;
+            padding: 1.6rem 1.5rem;
+            .cs-pullquote__avatar img {
+              width: 72px;
+              height: 72px;
+            }
+            // no avatar gap on mobile: drop the glyph above the quote as a
+            // plain block lead-in (like the original layout)
+            .cs-pullquote__mark {
+              position: static;
+              display: block;
+              margin: 0 0 0.1rem;
+              font-size: 2.6rem;
+              line-height: 0.9;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .csi-section__head {
+    position: relative;
+    max-width: 860px;
+    margin-bottom: 1.2rem;
+  }
+  .csi-section__title {
+    font-size: clamp(1.95rem, 3.3vw, 2.85rem);
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-transform: none;
+    margin: 0;
+    color: $csi-ink;
+    font-family: $header-font;
+    strong {
+      font-weight: 900;
+    }
+  }
+  .csi-section__num {
+    display: none;
+  }
+  // standalone gradient line accent (eyebrow-less sections)
+  .csi-section__rule {
+    display: block;
+    width: 54px;
+    height: 3px;
+    border-radius: 2px;
+    margin: 0 0 1.4rem;
+    @include csi-grad-solid;
+  }
+
+  // ---------------------------------------------------------------------------
+  // PROSE
+  // ---------------------------------------------------------------------------
+  .csi-prose {
+    font-size: 1.06rem;
+    line-height: 1.7;
+    color: $csi-ink-soft;
+    max-width: 760px;
+
+    p {
+      margin: 0 0 1.15rem;
+    }
+    > :last-child {
+      margin-bottom: 0;
+    }
+    a:not(.button) {
+      color: $csi-link;
+      font-weight: 600;
+      text-decoration: none;
+      background-image: linear-gradient(currentColor, currentColor);
+      background-size: 0 2px;
+      background-position: 0 100%;
+      background-repeat: no-repeat;
+      transition: background-size 0.25s ease;
+      &:hover {
+        background-size: 100% 2px;
+      }
+    }
+    strong {
+      color: $csi-ink;
+      font-weight: 800;
+    }
+    // `:not(.csi-list)` — the compact csi-list ul carries its own grid layout;
+    // keep the prose bullet/spacing treatment off it
+    ul:not(.csi-list),
+    ol {
+      margin: 0 0 1.3rem;
+      padding: 0;
+      list-style: none;
+    }
+    ul:not(.csi-list) > li,
+    ol > li {
+      position: relative;
+      padding-left: 1.75rem;
+      margin-bottom: 0.7rem;
+      line-height: 1.6;
+      &::before {
+        content: none;
+      }
+    }
+    ul:not(.csi-list) > li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.62em;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      @include csi-grad-solid;
+    }
+    ol {
+      counter-reset: csi-ol;
+    }
+    ol > li::before {
+      counter-increment: csi-ol;
+      content: counter(csi-ol);
+      position: absolute;
+      left: 0;
+      top: 0.05em;
+      width: 1.35rem;
+      height: 1.35rem;
+      border-radius: 50%;
+      background: rgba(42, 217, 194, 0.18);
+      color: $pine;
+      font-size: 0.72rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    li ul {
+      margin-top: 0.7rem;
+      margin-bottom: 0;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // SPLIT — text + visual side by side, alternating with --flip
+  // ---------------------------------------------------------------------------
+  .csi-split {
+    .csi-split__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.4rem;
+      align-items: center;
+      @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+        gap: 2.1rem;
+      }
+    }
+    .csi-section__head {
+      max-width: none;
+      margin-bottom: 1.2rem;
+    }
+    .csi-prose {
+      max-width: none;
+    }
+  }
+  // text-wider split (e.g. the About card 65% + small image 35%)
+  .csi-split--65-35 .csi-split__grid {
+    grid-template-columns: 65fr 35fr;
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  .csi-split--flip {
+    .csi-split__text {
+      order: 2;
+    }
+    .csi-split__media {
+      order: 1;
+    }
+    @media (max-width: 900px) {
+      .csi-split__text {
+        order: 1;
+      }
+      .csi-split__media {
+        order: 2;
+      }
+    }
+  }
+  .csi-media {
+    margin: 0;
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 14px;
+    }
+    &__caption {
+      margin-top: 0.9rem;
+      font-size: 0.85rem;
+      line-height: 1.45;
+      text-align: center;
+      color: $csi-ink-soft;
+    }
+  }
+  // diagram cards need a frame to separate from a dark card background
+  .csi-section--pine,
+  .csi-section--pine-deep,
+  .csi-section--gradient {
+    .csi-media img {
+      box-shadow:
+        0 26px 54px -30px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(42, 217, 194, 0.18);
+    }
+    .csi-media__caption {
+      color: #9fb6b5;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // STEPS — numbered process cards
+  // ---------------------------------------------------------------------------
+  .csi-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.3rem;
+    margin-top: 0.5rem;
+    @media (max-width: 900px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 520px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  .csi-step {
+    background: #fff;
+    border: 1px solid $csi-line;
+    border-radius: 14px;
+    padding: 1.6rem 1.4rem;
+    box-shadow: 0 14px 30px -24px rgba(8, 30, 30, 0.35);
+    &__num {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.8rem;
+      @include csi-grad-light;
+    }
+    &__title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin: 0 0 0.5rem;
+      color: $csi-ink;
+    }
+    &__body {
+      font-size: 0.92rem;
+      line-height: 1.55;
+      margin: 0;
+      color: $csi-ink-soft;
+      a {
+        color: $csi-link;
+        font-weight: 600;
+      }
+    }
+  }
+  .csi-section--pine .csi-step,
+  .csi-section--pine-deep .csi-step,
+  .csi-section--gradient .csi-step {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+    .csi-step__num {
+      @include csi-grad-bright;
+    }
+    .csi-step__title {
+      color: #fff;
+    }
+    .csi-step__body {
+      color: #b6cbca;
+      a {
+        color: $cs-mint;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // IMPACT — outcome cards with gradient icon badges
+  // ---------------------------------------------------------------------------
+  .csi-impact {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+    margin-top: 0.5rem;
+    @media (max-width: 900px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+    &__card {
+      background: #fff;
+      border: 1px solid $csi-line;
+      border-radius: 16px;
+      padding: 1.8rem 1.6rem;
+      box-shadow: 0 16px 36px -26px rgba(8, 30, 30, 0.32);
+      transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+      &:hover {
+        transform: translateY(-4px);
+        border-color: rgba(11, 125, 114, 0.4);
+        box-shadow: 0 22px 46px -26px rgba(8, 30, 30, 0.4);
+      }
+    }
+    &__icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      margin-bottom: 1rem;
+      color: $cs-pine-dark;
+      @include csi-grad-solid;
+    }
+    &__title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin: 0 0 0.5rem;
+      color: $csi-ink;
+    }
+    &__body {
+      // matches .csi-list__text so impact cards and the compact list read at
+      // the same body scale
+      font-size: 0.92rem;
+      line-height: 1.5;
+      margin: 0;
+      color: $csi-ink-soft;
+      a {
+        color: $csi-link;
+        font-weight: 600;
+      }
+    }
+  }
+  // ---------------------------------------------------------------------------
+  // LIST — compact two-column icon rows; the space-saving sibling of csi-impact
+  // for secondary enumerations that shouldn't compete with the outcome grid
+  // ---------------------------------------------------------------------------
+  .csi-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem 2.2rem;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    list-style: none;
+    @media (max-width: 700px) {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+    &__item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+    }
+    &__icon {
+      flex: 0 0 auto;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      margin-top: 0.05rem;
+      color: $cs-pine-dark;
+      @include csi-grad-solid;
+    }
+    &__text {
+      font-size: 0.92rem;
+      line-height: 1.5;
+      margin: 0;
+      color: $csi-ink-soft;
+      a {
+        color: $csi-link;
+        font-weight: 600;
+      }
+    }
+    &__title {
+      color: $csi-ink;
+      font-weight: 800;
+    }
+  }
+  .csi-section--pine .csi-list,
+  .csi-section--pine-deep .csi-list,
+  .csi-section--gradient .csi-list {
+    .csi-list__text {
+      color: #bcd0cf;
+      a {
+        color: $cs-mint;
+      }
+    }
+    .csi-list__title {
+      color: #fff;
+    }
+  }
+
+  .csi-section--pine .csi-impact__card,
+  .csi-section--pine-deep .csi-impact__card,
+  .csi-section--gradient .csi-impact__card {
+    background: rgba(255, 255, 255, 0.045);
+    border-color: rgba(255, 255, 255, 0.09);
+    box-shadow: none;
+    &:hover {
+      border-color: rgba(42, 217, 194, 0.4);
+      background: rgba(255, 255, 255, 0.065);
+    }
+    .csi-impact__title {
+      color: #fff;
+    }
+    .csi-impact__body {
+      color: #bcd0cf;
+      a {
+        color: $cs-mint;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // TESTIMONIAL — centered editorial quote
+  // ---------------------------------------------------------------------------
+  .csi-testimonial {
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    &__mark {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 4.4rem;
+      line-height: 0.8;
+      margin: 0 0 0.4rem;
+      @include csi-grad-light;
+    }
+    &__quote {
+      border: 0;
+      padding: 0;
+      margin: 0;
+      font-style: normal;
+      font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+      line-height: 1.45;
+      font-weight: 400;
+      color: $csi-ink;
+      p {
+        margin: 0 0 1rem;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+    &__by {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1.6rem;
+    }
+    &__avatar img {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    }
+    &__meta {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+    &__name {
+      font-weight: 800;
+      color: $csi-ink;
+      font-size: 1.3rem;
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    &__role {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: $csi-link;
+      padding-top: 0.4rem;
+    }
+  }
+  .csi-section--pine .csi-testimonial,
+  .csi-section--pine-deep .csi-testimonial,
+  .csi-section--gradient .csi-testimonial {
+    .csi-testimonial__mark {
+      @include csi-grad-bright;
+    }
+    .csi-testimonial__quote,
+    .csi-testimonial__name {
+      color: #fff;
+    }
+    .csi-testimonial__quote strong {
+      font-weight: 700;
+      @include csi-grad-bright;
+    }
+    .csi-testimonial__role {
+      color: $cs-mint;
+    }
+  }
+
+  // Featured testimonial — reuses the homepage "our word" cosmic image: the
+  // colourful image bleeds in from the right, the quote sits on the left over a
+  // dark scrim (adds colour to the closing quote).
+  .csi-testimonial-band--featured {
+    display: flex;
+    align-items: center;
+    min-height: 420px;
+    background:
+      var(--csi-quote-bg) center right / cover no-repeat,
+      $cs-pine-dark;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: linear-gradient(
+        90deg,
+        rgba(6, 29, 30, 0.95) 0%,
+        rgba(6, 29, 30, 0.92) 64%,
+        rgba(6, 29, 30, 0.6) 82%,
+        rgba(6, 29, 30, 0.05) 100%
+      );
+    }
+    &::after {
+      content: none;
+    }
+    .csi-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+    .csi-testimonial {
+      margin: 0;
+      width: 70%;
+      max-width: 1080px;
+      text-align: left;
+    }
+    .csi-testimonial__quote {
+      font-size: clamp(1.2rem, 1.7vw, 1.5rem);
+    }
+    // avatar-left layout spanning quote + attribution; reflows on mobile to
+    // quote-on-top, then avatar + name
+    .csi-testimonial--portrait {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-areas:
+        "avatar content"
+        "avatar attribution";
+      align-items: center;
+      column-gap: 2.4rem;
+      row-gap: 0.5rem;
+      width: 82%;
+      max-width: 1180px;
+      // opening quote glyph hanging in the gap just left of the first line —
+      // purely decorative, the quote text itself is untouched
+      .csi-testimonial__mark {
+        position: absolute;
+        top: 0.1rem;
+        left: -2.4rem;
+        display: block;
+        margin: 0;
+        font-size: 2.9rem;
+        line-height: 1;
+        background: none;
+        -webkit-text-fill-color: rgba(42, 217, 194, 0.6);
+        color: rgba(42, 217, 194, 0.6);
+      }
+      .csi-testimonial__avatar {
+        grid-area: avatar;
+        align-self: center;
+        padding: 1px;
+        border-radius: 50%;
+        @include csi-grad-solid;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      }
+      .csi-testimonial__avatar img {
+        display: block;
+        width: 148px;
+        height: 148px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .csi-testimonial__content {
+        grid-area: content;
+        position: relative;
+        min-width: 0;
+      }
+      .csi-testimonial__by {
+        grid-area: attribution;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        margin: 0.4rem 0 0;
+      }
+    }
+    @media (max-width: 700px) {
+      min-height: 0;
+      background-position: center;
+      &::before {
+        background: linear-gradient(180deg, rgba(6, 29, 30, 0.9), rgba(6, 29, 30, 0.82));
+      }
+      .csi-testimonial {
+        max-width: none;
+      }
+      .csi-testimonial--portrait {
+        grid-template-areas:
+          "content content"
+          "avatar attribution";
+        width: 100%;
+        column-gap: 1rem;
+        row-gap: 1.1rem;
+        .csi-testimonial__avatar img {
+          width: 96px;
+          height: 96px;
+        }
+        .csi-testimonial__mark {
+          position: static;
+          display: block;
+          margin: 0 0 0.1rem;
+          font-size: 2.6rem;
+          line-height: 0.9;
+        }
+      }
+    }
+  }
+
+  // cs-pullquote (modern shortcode) reused inline — centre the card at a
+  // readable width while keeping its own text left-aligned (works inside an
+  // align="center" section, where the prose is otherwise centred). The modern
+  // scope's 3rem top margin is too tall next to the compact csi-list.
+  .cs-pullquote {
+    max-width: 820px;
+    margin: 2rem auto;
+    text-align: left;
+  }
+
+  // ---------------------------------------------------------------------------
+  // CLOSING CTA — the final dark band inside the card (variant--pine paints it)
+  // ---------------------------------------------------------------------------
+  .csi-cta {
+    text-align: center;
+    &__inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    p {
+      font-size: 1.12rem;
+      line-height: 1.6;
+      color: #d3e2e1;
+      margin: 0;
+      strong {
+        color: #fff;
+      }
+    }
+    a:not(.button) {
+      color: $cs-mint;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .button {
+      margin: 0;
+    }
+  }
+}
