@@ -2230,3 +2230,133 @@ $csi-line: #e7edec; // hairline on light cards
     }
   }
 }
+
+// ───────────────────────────────────────────────────────────────────────────
+// PRINT / PDF — make the case study print exactly like the screen.
+// The site stylesheet now loads with media="all" (see partials/head.html), so
+// the styles apply when printing. Two extra things are needed for the result to
+// match the screen: (1) browsers strip background colours/images/gradients from
+// print by default, and these case studies are almost entirely backgrounds and
+// clipped gradient text — so force colour-accurate printing; (2) hide the site
+// chrome (sitewide note, nav header, schedule CTA, footer) so the PDF reads as
+// a standalone document.
+// ───────────────────────────────────────────────────────────────────────────
+@media print {
+  body.case-study-modern,
+  body.case-study-immersive {
+    // Keep our backgrounds / gradients / gradient-clipped text instead of
+    // letting the browser drop them to white for ink saving.
+    &,
+    *,
+    *::before,
+    *::after {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    // PERFORMANCE — this is what makes the PDF/print-preview lag and crash.
+    // Print rasterizes at ~300+ DPI (~10x screen linear, ~100x the pixels), and
+    // these decorative effects are cheap on screen but explode at that scale:
+    //   • backdrop-filter / filter: blur() — blur radius scales with DPI, so an
+    //     8–24px blur becomes a huge convolution kernel over a full-bleed layer.
+    //   • the tiled 1px dot-grids (background-size ~28px on inset:0 ::after) —
+    //     millions of dots painted across the full page height at print DPI.
+    //   • mask-image on those full-bleed layers — forces an extra offscreen
+    //     compositing buffer per section, again at print DPI.
+    // print-color-adjust:exact (above) forces all of it to actually paint
+    // instead of being dropped, so memory blows up and Chrome's renderer dies.
+    // None of it is load-bearing for a printed document — kill it outright.
+    // (This is also why on-screen scrolling feels slow: backdrop-filter and the
+    // masked dot-grids re-composite on the GPU as you scroll.)
+    *,
+    *::before,
+    *::after {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      filter: none !important;
+      mask-image: none !important;
+      -webkit-mask-image: none !important;
+      box-shadow: none !important;
+    }
+
+    // Drop the tiled dot-grid / glow overlays entirely (purely decorative, and
+    // the tiled ones are the single most expensive thing to rasterize for print).
+    *::before,
+    *::after {
+      background-image: none !important;
+    }
+
+    // CRITICAL: AOS (Animate On Scroll) starts every `[data-aos]` block at
+    // opacity:0 and only reveals it once scrolled into view. Nothing scrolls
+    // when printing, so without this the entire animated body prints BLANK
+    // (empty colour cards). Force every reveal element to its final state.
+    [data-aos] {
+      opacity: 1 !important;
+      transform: none !important;
+      visibility: visible !important;
+      transition: none !important;
+    }
+
+    // Site chrome that doesn't belong in the printed document.
+    #preloader,
+    #sitewideNote,
+    header[aria-label="header"],
+    #schedule-assessment,
+    footer[role="contentinfo"],
+    #cc-main, // orestbida CookieConsent v3 banner/modal
+    .cc-window {
+      display: none !important;
+    }
+
+    // Gradient-CLIPPED text (`-webkit-background-clip: text` + transparent
+    // fill) does not render reliably in Chrome's print/PDF path: the run stops
+    // wrapping and gets sliced, or the gradient paints as a solid block instead
+    // of clipping to the glyphs (the stray coloured rectangle in the hero). Fall
+    // back to a solid brand colour so every heading prints fully and legibly.
+    .text-gradient,
+    .csi-grad,
+    .cs-hero__title .text-gradient {
+      background: none !important;
+      -webkit-background-clip: border-box !important;
+      background-clip: border-box !important;
+      -webkit-text-fill-color: #2ad9c2 !important;
+      color: #2ad9c2 !important;
+    }
+    .cs-hero__lockup-x {
+      background: none !important;
+      -webkit-background-clip: border-box !important;
+      background-clip: border-box !important;
+      -webkit-text-fill-color: #d3e2e1 !important;
+      color: #d3e2e1 !important;
+    }
+
+    // The frosted hero card relied on `backdrop-filter` (unsupported in print)
+    // and `overflow: hidden`, which together clipped the title. Drop both so the
+    // title wraps freely inside the card; the card keeps its solid gradient bg.
+    .cs-hero,
+    .cs-hero__inner--framed {
+      overflow: visible !important;
+    }
+    .cs-hero__inner--framed {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    // Avoid slicing self-contained blocks across page breaks. A page break that
+    // lands mid-card chops off its top/bottom edge (the clipping seen on the
+    // Business Impact cards). `break-inside: avoid` pushes the whole block to the
+    // next page instead of splitting it.
+    //
+    // ONLY apply this to SMALL, repeating cards. Applying it to large one-off
+    // blocks (the About panel, article/screenshot cards) backfires: shoving a
+    // big block whole to the next page leaves a huge blank gap on the page it
+    // left — worse than the occasional slice. Those large blocks fit fine on
+    // their own, so let them flow naturally.
+    .cs-stat,
+    .cs-pullquote,
+    .csi-testimonial,
+    .csi-impact__card {
+      break-inside: avoid;
+    }
+  }
+}

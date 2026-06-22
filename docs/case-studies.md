@@ -373,6 +373,85 @@ case studies and the marketing pages.
 
 ---
 
+## Print / PDF
+
+Case studies print (Ctrl/Cmd+P → Save as PDF) styled to match the screen.
+
+- **The site stylesheet loads with `media="all"`** (`partials/head.html`), not
+  `media="screen"`. With `media="screen"` the browser ignored the entire
+  stylesheet when printing and dumped raw unstyled HTML — that was the original
+  "no styles in print" bug.
+- **A `@media print` block at the end of `case-studies.scss`** (scoped to
+  `body.case-study-modern` / `body.case-study-immersive`) handles everything print
+  needs that screen doesn't:
+  1. **`print-color-adjust: exact`** on the whole subtree so browsers keep our
+     backgrounds and gradients instead of dropping them to white for ink saving
+     (these layouts are almost entirely backgrounds).
+  2. **AOS reset — the critical one.** Every `csi-*` card carries `data-aos`,
+     which starts it at `opacity: 0` until scrolled into view. Nothing scrolls
+     when printing, so without an override the **entire animated body prints
+     blank** (empty colour cards — this was the original "things get cut off"
+     bug). The block forces `[data-aos] { opacity:1; transform:none;
+     visibility:visible; transition:none }`. Don't remove this.
+  3. **Gradient-clipped text fallback.** `-webkit-background-clip: text` +
+     transparent fill does not render reliably in Chrome's PDF path: the run
+     stops wrapping and gets sliced by the hero card's `overflow:hidden`, or the
+     gradient paints as a solid rectangle. So `.text-gradient` / `.csi-grad` /
+     `.cs-hero__lockup-x` fall back to a solid brand colour (`#2ad9c2`) in print.
+     The on-screen multi-stop gradient becomes a single teal in the PDF — an
+     intentional, reliable trade.
+  4. **Hero frosted card** drops `backdrop-filter` (unsupported in print) and
+     `overflow: hidden` so the title can wrap freely instead of being clipped.
+  5. **Hides site chrome** so the PDF is a standalone document: `#sitewideNote`,
+     `header[aria-label="header"]`, `#schedule-assessment`,
+     `footer[role=contentinfo]`, `#preloader`, and the cookie-consent banner
+     (`#cc-main` / `.cc-window`, orestbida CookieConsent v3 — it's injected into
+     `<body>` and otherwise overlays the page in the PDF).
+  6. **Performance — prevents the PDF/print-preview lag and crash.** Print
+     rasterizes at ~300+ DPI (~100x the pixels of screen), and several decorative
+     effects that are cheap on screen explode at that scale: `backdrop-filter` /
+     `filter: blur()` (blur kernel scales with DPI), the tiled 1px dot-grid
+     overlays (`background-size:~28px` on full-bleed `inset:0` `::after`s —
+     millions of dots), and their `mask-image` (extra offscreen buffer per
+     section). `print-color-adjust:exact` (item 1) forces all of it to actually
+     paint, so memory blows up and Chrome's renderer dies. The block zeroes
+     `backdrop-filter` / `filter` / `mask-image` / `box-shadow` on `*` and drops
+     `::before`/`::after` `background-image` for print. (Same effects are why
+     on-screen scrolling can feel slow — they re-composite on the GPU per frame.)
+  7. **Page-break control — prevents cards clipping across page boundaries.**
+     `break-inside: avoid` on the **small, repeating** cards (`.cs-stat`,
+     `.cs-pullquote`, `.csi-testimonial`, `.csi-impact__card`) pushes a whole
+     card to the next page rather than slicing its top/bottom edge. **Only apply
+     it to small cards** — putting it on large one-off blocks (the About panel,
+     article/screenshot cards) backfires: shoving a big block whole to the next
+     page leaves a huge blank gap on the page it left, which looks worse than the
+     occasional slice. Those large blocks fit on their own, so let them flow.
+- To **keep** a chrome element in the PDF, drop it from that `display: none` list.
+- **When you add a new case-study element / shortcode / CSS class, check this
+  print checklist.** Most additions need NOTHING — the perf and colour-accuracy
+  rules use universal selectors (`*`, `*::before`, `*::after`), so new elements
+  inherit them automatically. Only touch the `@media print` block if the new
+  thing falls into one of these three buckets:
+  1. **Gradient-clipped text** (`-webkit-background-clip: text` + transparent
+     fill)? → add its class to the solid-colour fallback list (item 3 above), or
+     it prints sliced / as a stray coloured rectangle.
+  2. **A small, self-contained card** that would look broken if sliced across a
+     page break? → add it to the `break-inside: avoid` list (item 7). Do NOT add
+     large/one-off blocks or full-bleed section bands (see the dense-flow note).
+  3. **New site chrome injected into `<body>`** (banner, modal, widget) that
+     shouldn't appear in the PDF? → add its selector to the `display: none` list
+     (item 5).
+  A genuinely new heavy effect (e.g. a new `filter`/`mask` that the universal
+  resets don't already cover) is the only other reason to edit the block.
+- **Verify print changes with a real PDF**, not screen DevTools — Chrome's print
+  path diverges (AOS, backdrop-filter, background-clip:text all behave
+  differently). Generate one headless and read it back:
+  `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new
+  --disable-gpu --no-pdf-header-footer --print-to-pdf=out.pdf
+  http://localhost:1313/case-studies/marketspark/`
+
+---
+
 ## Table of contents (automatic)
 
 Every modern case study gets an inline **"In This Case Study Success Story"**

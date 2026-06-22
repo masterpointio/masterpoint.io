@@ -1509,6 +1509,73 @@ footer {
     padding-top: 0.55em;
   }
 
+  // "Read the case study" CTA — rendered when a testimonial declares a
+  // `case_study` front-matter field. A separate brand-gradient hairline pill
+  // below the attribution (left-aligned, wraps below on mobile via the break
+  // helper) with a gradient arrow chip that fills with the gradient on hover.
+  .quoteCaseLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1.4rem; // spacing for the centered (no-photo) variant
+    padding: 0.7rem 1.5rem;
+    border-radius: 100px;
+    border: 1.5px solid transparent;
+    background:
+      linear-gradient(#0c302d, #0c302d) padding-box,
+      linear-gradient(95deg, #2ad9c2 0%, #55c1b4 45%, #d191bf 100%) border-box;
+    color: #fff;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 0.74rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background 0.3s ease,
+      color 0.3s ease,
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+
+    .quoteCaseLink__arrow {
+      font-size: 1.05rem;
+      line-height: 1;
+      color: #44e7d2;
+      transition:
+        transform 0.3s ease,
+        color 0.3s ease;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background:
+        linear-gradient(95deg, #2ad9c2 0%, #55c1b4 45%, #d191bf 100%)
+          padding-box,
+        linear-gradient(95deg, #2ad9c2 0%, #55c1b4 45%, #d191bf 100%)
+          border-box;
+      color: #06302e;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(42, 217, 194, 0.26);
+
+      .quoteCaseLink__arrow {
+        color: #06302e;
+        transform: translateX(3px);
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba(255, 255, 255, 0.7);
+      outline-offset: 3px;
+    }
+  }
+
+  // Flexbox line-break helper — drops the CTA onto its own line in the portrait
+  // attribution row (see the portrait block below). Hidden by default.
+  .quoteCaseLink__break {
+    display: none;
+  }
+
   // Portrait variant — for testimonials that supply a `photo` front-matter field.
   // Mirrors the immersive case-study layout: left-aligned quote on top, then a
   // footer row with a circular headshot (brand-gradient ring) on the left and
@@ -1521,7 +1588,9 @@ footer {
     .quoteBy {
       display: flex;
       align-items: center;
-      gap: 1.4rem;
+      flex-wrap: wrap;
+      column-gap: 1.4rem;
+      row-gap: 0; // CTA spacing is controlled by its own margin-top
       margin-top: 2rem;
     }
     .quoteAvatar {
@@ -1547,6 +1616,21 @@ footer {
     }
     .quoteName {
       padding-top: 0;
+    }
+
+    // CTA drops onto its own line below the attribution, left-aligned. The
+    // break helper forces the wrap so the pill stays sized to its content;
+    // row-gap is 0 on .quoteBy so spacing is controlled solely by margin-top.
+    .quoteCaseLink__break {
+      display: block;
+      flex-basis: 100%;
+      height: 0;
+      margin: 0;
+    }
+    .quoteCaseLink {
+      margin-top: 1.3rem;
+      margin-left: 0;
+      align-self: flex-start;
     }
   }
 }
