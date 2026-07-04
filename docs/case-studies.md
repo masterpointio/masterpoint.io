@@ -9,7 +9,7 @@ file before ending the session. If something is removed from the codebase,
 remove its mention from this file too (don't keep "we used to have X" notes —
 the codebase is the source of truth, this file describes what IS).
 
-IN THE FUTURE, WE WILL DEPRECATE THE LEGACY LAYOUT AND ONLY USE THE MODERN (RENAMED TO ARTICLE LAYOUT) AND IMMERSIVE LAYOUTS.
+ALL CASE STUDIES NOW USE THE MODERN OR IMMERSIVE LAYOUT. THE LEGACY LAYOUT IS NO LONGER USED BY ANY CASE STUDY AND IS A CANDIDATE FOR REMOVAL (THE `layouts/case-studies/legacy.html` FILE + THE `.case-study-single` CSS BLOCK).
 
 ---
 
@@ -20,17 +20,19 @@ so visual changes to one never affect the others.
 
 | Layout        | Template                              | Used by                                                 | Body class                          | Style prefix            |
 | ------------- | ------------------------------------- | ------------------------------------------------------- | ----------------------------------- | ----------------------- |
-| **Legacy**    | `layouts/case-studies/legacy.html`    | Power Digital (opt-in via `layout: legacy`)             | `case-study-single`                 | `.case-study-single`    |
+| **Legacy**    | `layouts/case-studies/legacy.html`    | _None_ — unused; all case studies have migrated off it  | `case-study-single`                 | `.case-study-single`    |
 | **Modern**    | `layouts/case-studies/single.html`    | Default for any case study without a `layout:` override | `case-study-modern`                 | `.case-study-modern`    |
-| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark (opt-in via `layout: immersive`)            | `case-study-modern case-study-immersive` | `.case-study-immersive` |
+| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark, Power Digital (opt-in via `layout: immersive`) | `case-study-modern case-study-immersive` | `.case-study-immersive` |
 
 Routing is via Hugo's `layout:` front matter param. A case study that does
-**not** specify `layout:` uses `single.html` (the modern layout). Power Digital
-opts into legacy with `layout: legacy`; MarketSpark opts into immersive with
-`layout: immersive`.
+**not** specify `layout:` uses `single.html` (the modern layout). MarketSpark and
+Power Digital opt into immersive with `layout: immersive`. No case study currently
+uses the legacy layout.
 
-Why this split exists: Power Digital has heavily customized inline styling
-(see `.case-study-single` block in `assets/css/custom.scss`). The **modern**
+Why this split exists: the **legacy** layout (`.case-study-single` block in
+`assets/css/custom.scss`) carries heavily customized inline styling Power Digital
+originally depended on. Power Digital has since been rebuilt on the immersive
+layout, so legacy is now unused (kept only until the CSS is pruned). The **modern**
 layout was designed from scratch and is the default for new case studies. The
 **immersive** layout keeps the modern hero + stat strip **nearly verbatim** (its
 body carries both `case-study-modern` and `case-study-immersive` so the modern
@@ -45,7 +47,8 @@ selector under its prefix.
 `assets/css/case-studies.scss`, which is `@import`ed at the **end** of
 `custom.scss` so the cascade order is unchanged (compiled output is byte-identical).
 The **legacy** `.case-study-single` block and the `#caseStudiesPage` list-page grid
-stay in `custom.scss`. THIS WILL BE REMOVED SOON AFTER WE MIGRATE ALL CASE STUDIES TO THE NEW LAYOUT.
+stay in `custom.scss`. All case studies have now migrated off the legacy layout, so the
+`.case-study-single` block (and `layouts/case-studies/legacy.html`) is unused and safe to remove.
 
 ---
 
@@ -197,7 +200,7 @@ mint on mint and disappears. Always keep `:not(.button)` on `.cs-article a`.
 
 ---
 
-## Immersive layout (MarketSpark)
+## Immersive layout (MarketSpark, Power Digital)
 
 Opt in with `layout: immersive`. The body element carries **both**
 `case-study-modern` and `case-study-immersive`:
@@ -358,6 +361,39 @@ Masterpoint could help your team too?" callout, now with an **inline underlined
 partial ("Get a standardized, predictable, and efficient infrastructure
 management process" + Schedule button), then `footer`. Same closing as the modern
 case studies and the marketing pages.
+
+### Per-page notes (MarketSpark vs Power Digital)
+
+Both immersive case studies share the same `csi-*` toolkit; only the content and a
+few per-page choices differ.
+
+- **Quotes / testimonials.** MarketSpark has two real, attributed client quotes
+  (Adam Pallin in a mid-article `cs-pullquote`, Charlie Wilson in the closing
+  featured `csi-testimonial`). Power Digital's source case study has **no
+  attributed client quotes**, so it deliberately uses an **unattributed
+  `cs-pullquote`** (`variant="light"`) for the closing standout line rather than
+  fabricating a testimonial. Both `cs-pullquote` and `csi-testimonial` render fine
+  with no `name`/`attribution` — don't invent quotes to fill the slot.
+- **Body shape.** Power Digital is an 11-card stack with strict `light`↔`pine`
+  alternation: about → challenge (Terralith) → symptoms → solution+`csi-steps` →
+  Spacelift → decompose → OpenTofu → results(10x) → impact grid (`csi-impact`) →
+  knowledge transfer (`csi-list`) → takeaways. The closing `cs-pullquote` is
+  `light` so it doesn't stack dark-on-dark against the pine `.csi-cta`.
+- **Reused brand imagery.** Power Digital's Spacelift / OpenTofu split visuals reuse
+  the same polished brand images as MarketSpark (`spacelift.jpg`, `opentofu.jpg`).
+  The client's own infographics (`25min-to-3min.png`, the `$5000→$500`
+  `tdlr-…-infographic-1.png`, `63-hours-…png`, the scalability chart) carry the
+  challenge/results splits with **`contain="true"`** so the baked-in text is never
+  cropped. White-background infographics sit fine inside the media frame on `pine`
+  cards (they read as a clean framed image, same as MarketSpark's diagram splits).
+- **Hero.** Power Digital uses the clean cosmic tower
+  (`/img/landing/power-digital-case-study.png`, the PDF cover art _without_ text) as
+  `hero_aside_image`, and the purple **Power** wordmark in the lockup at
+  `client_logo_height: 40px`.
+- **Preserving the PDF download.** The immersive layout has no `download_button`
+  hook (legacy did), so Power Digital keeps its downloadable PDF via a **custom
+  `callout`** that links `/download/power-digital-case-study.pdf` alongside the
+  "Get in touch" link.
 
 ## Page-level styling decisions
 
