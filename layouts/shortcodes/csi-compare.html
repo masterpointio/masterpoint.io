@@ -1,0 +1,73 @@
+{{/*
+  csi-compare — split "Then / Now" comparison card for migration stories.
+  Place INSIDE a csi-section (works on light or pine bands: the card carries
+  its own dark "then" face and light "now" face, so it reads on either).
+  Args:
+    then_label  header chip for the before column (default "Then")
+    now_label   header chip for the after column (default "Now")
+    then_sub    small line under the then label (e.g. the old stack)
+    now_sub     small line under the now label (e.g. the new stack)
+  Inner: blocks separated by `---`, each block one before/after pair:
+    then: the before state. Inline markdown (links, *italic*, **bold**) works.
+    now: the after state.
+*/}}
+{{- $thenLabel := .Get "then_label" | default "Then" -}}
+{{- $nowLabel := .Get "now_label" | default "Now" -}}
+{{- $thenSub := .Get "then_sub" -}}
+{{- $nowSub := .Get "now_sub" -}}
+{{- $thens := slice -}}
+{{- $nows := slice -}}
+{{- range split .Inner "---" -}}
+  {{- $block := trim . " \t\n" -}}
+  {{- if $block -}}
+    {{- $then := "" -}}
+    {{- $now := "" -}}
+    {{- $cur := "" -}}
+    {{- range split $block "\n" -}}
+      {{- $line := trim . " \t" -}}
+      {{- if hasPrefix $line "then:" -}}
+        {{- $then = trim (strings.TrimPrefix "then:" $line) " " -}}
+        {{- $cur = "then" -}}
+      {{- else if hasPrefix $line "now:" -}}
+        {{- $now = trim (strings.TrimPrefix "now:" $line) " " -}}
+        {{- $cur = "now" -}}
+      {{- else if and $line (eq $cur "then") -}}
+        {{- $then = printf "%s %s" $then $line -}}
+      {{- else if and $line (eq $cur "now") -}}
+        {{- $now = printf "%s %s" $now $line -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if $then -}}{{- $thens = $thens | append $then -}}{{- end -}}
+    {{- if $now -}}{{- $nows = $nows | append $now -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
+<div class="csi-compare">
+  <div class="csi-compare__col csi-compare__col--then">
+    <div class="csi-compare__head">
+      <span class="csi-compare__label">{{ $thenLabel | safeHTML }}</span>
+      {{- with $thenSub -}}<span class="csi-compare__sub">{{ . | safeHTML }}</span>{{- end -}}
+    </div>
+    <ul class="csi-compare__rows">
+      {{- range $thens }}
+      <li class="csi-compare__row">
+        <span class="csi-compare__mark" aria-hidden="true"><i class="fa-solid fa-xmark"></i></span>
+        <span class="csi-compare__text">{{ . | $.Page.RenderString (dict "display" "inline") }}</span>
+      </li>
+      {{- end }}
+    </ul>
+  </div>
+  <div class="csi-compare__col csi-compare__col--now">
+    <div class="csi-compare__head">
+      <span class="csi-compare__label">{{ $nowLabel | safeHTML }}</span>
+      {{- with $nowSub -}}<span class="csi-compare__sub">{{ . | safeHTML }}</span>{{- end -}}
+    </div>
+    <ul class="csi-compare__rows">
+      {{- range $nows }}
+      <li class="csi-compare__row">
+        <span class="csi-compare__mark" aria-hidden="true"><i class="fa-solid fa-check"></i></span>
+        <span class="csi-compare__text">{{ . | $.Page.RenderString (dict "display" "inline") }}</span>
+      </li>
+      {{- end }}
+    </ul>
+  </div>
+</div>

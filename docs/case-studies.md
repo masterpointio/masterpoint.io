@@ -20,14 +20,18 @@ so visual changes to one never affect the others.
 
 | Layout        | Template                              | Used by                                                 | Body class                          | Style prefix            |
 | ------------- | ------------------------------------- | ------------------------------------------------------- | ----------------------------------- | ----------------------- |
-| **Legacy**    | `layouts/case-studies/legacy.html`    | Power Digital (opt-in via `layout: legacy`)             | `case-study-single`                 | `.case-study-single`    |
+| **Legacy**    | `layouts/case-studies/legacy.html`    | Nothing (unused since Power Digital moved to immersive; candidate for removal) | `case-study-single`                 | `.case-study-single`    |
 | **Modern**    | `layouts/case-studies/single.html`    | Default for any case study without a `layout:` override | `case-study-modern`                 | `.case-study-modern`    |
-| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark (opt-in via `layout: immersive`)            | `case-study-modern case-study-immersive` | `.case-study-immersive` |
+| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark, Power Digital (opt-in via `layout: immersive`) | `case-study-modern case-study-immersive` | `.case-study-immersive` |
 
 Routing is via Hugo's `layout:` front matter param. A case study that does
-**not** specify `layout:` uses `single.html` (the modern layout). Power Digital
-opts into legacy with `layout: legacy`; MarketSpark opts into immersive with
-`layout: immersive`.
+**not** specify `layout:` uses `single.html` (the modern layout). MarketSpark
+and Power Digital opt into immersive with `layout: immersive`. No page uses
+legacy anymore — `legacy.html` and its `.case-study-single` CSS block in
+`custom.scss` can be deleted once we're confident nothing else links to them
+(the separate `/power-digital-case-study/` LANDING page under
+`content/landing/` is unrelated: it's the PDF-download page and uses the
+landing layout, not the legacy case-study layout).
 
 Why this split exists: Power Digital has heavily customized inline styling
 (see `.case-study-single` block in `assets/css/custom.scss`). The **modern**
@@ -197,7 +201,7 @@ mint on mint and disappears. Always keep `:not(.button)` on `.cs-article a`.
 
 ---
 
-## Immersive layout (MarketSpark)
+## Immersive layout (MarketSpark, Power Digital)
 
 Opt in with `layout: immersive`. The body element carries **both**
 `case-study-modern` and `case-study-immersive`:
@@ -235,6 +239,7 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 | `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`                        |
 | `csi-list`        | Compact 2-col icon rows (icon chip + bold title — inline body). Space-saving sibling of `csi-impact` for secondary enumerations (e.g. "under the hood" extras) so they don't mimic the outcome grid. INSIDE a `csi-section`. | same inner format as `csi-impact` (`icon:` / `title:` / `body:`); keep bodies to one short sentence |
 | `csi-testimonial` | Editorial quote band; `image=` makes it a featured cosmic band.| `name`, `title`, `company`, `photo`, `variant`, `image`. With `photo`, uses the avatar-left "portrait" layout (`csi-testimonial--portrait`, see below). |
+| `csi-compare`     | Split "Then / Now" card for migration stories (dark before-face with `×` rows, light after-face with gradient `✓` rows). INSIDE a `csi-section`; self-contained faces, so it reads on light AND pine bands with no variant arg. Used by Power Digital's Outcomes section. | `then_label`/`now_label` (chips, default "Then"/"Now"), `then_sub`/`now_sub` (small stack-name line beside each chip). Inner blocks split by `---`, each one before/after pair: `then:` / `now:` lines (inline markdown works). |
 
 Two **modern** shortcodes are also reused inside the immersive body (they render
 because the body also carries `case-study-modern`, so `.case-study-modern .cs-*`
@@ -319,6 +324,25 @@ Authoring rules:
   open in a new tab.
 - **`hugo serve` CSS hot-reload is flaky** — if a change doesn't show, hard-refresh
   (Cmd+Shift+R).
+- **A `csi-prose` ul that carries its own grid layout must be excluded from the
+  prose bullet treatment.** The prose rules use
+  `ul:not(.csi-list):not(.csi-compare__rows)`; if a new shortcode emits its own
+  `<ul>` inside prose, add its class to those three `:not()` chains or every row
+  grows a gradient square bullet and `padding-left`.
+
+### Differentiating immersive case studies
+
+The hero + stat strip + light↔pine rotation is the shared brand frame; the
+**section mix inside it should fit each client's story** so the pages don't read
+as clones. MarketSpark (a platform *build-out*) uses three numbered `csi-split`
+sections, a `csi-list` "under the hood" band, a 6-card `csi-impact` outcome
+grid, and client quotes. Power Digital (a *migration*) instead leads its middle
+with a 4-step `csi-steps` "migration playbook", and its Outcomes section pairs a
+`csi-compare` Then/Now card (the quantitative wins) with a slim 3-card
+`csi-impact` grid (the qualitative wins); it has no testimonial (no attributed
+client quote exists for it), so it closes on a "three questions" `csi-steps`
+takeaway band instead. Pick the shape from the story: builds → component
+splits, migrations → playbook + before/after.
 
 ### Scroll animations (AOS)
 
