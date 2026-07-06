@@ -1,0 +1,52 @@
+{{/* Terralith decomposition figure — CSS-drawn (no image asset): one monolithic
+state block shattering into a grid of isolated per-client stacks. Rendered in a
+csi-split media slot via `figure="terralith"`. Pure HTML/CSS so it inherits the
+page fonts, recolours per card face, and stays crisp in print. */}}
+<div
+  class="csi-fig csi-fig--terralith"
+  role="img"
+  aria-label="Diagram: one monolithic Terraform state containing every client decomposed into isolated per-client stacks, each with its own state and blast radius"
+>
+  <div class="csi-fig-terralith__mono" aria-hidden="true">
+    <span class="csi-fig-terralith__chip">1 state file</span>
+    <div class="csi-fig-terralith__cells">
+      {{- range seq 60 }}<i></i>{{ end -}}
+    </div>
+    <div class="csi-fig-terralith__label">
+      <strong>The Terralith</strong>
+      <span
+        >43,000+ resources &middot; every client &middot; one blast radius</span
+      >
+    </div>
+  </div>
+  <div class="csi-fig-terralith__arrow" aria-hidden="true">
+    <span class="csi-grad">&darr;</span>
+  </div>
+  <div class="csi-fig-terralith__stacks" aria-hidden="true">
+    <div class="csi-fig-terralith__stack">
+      <span class="csi-fig-terralith__dot"></span>client-a
+    </div>
+    <div class="csi-fig-terralith__stack">
+      <span class="csi-fig-terralith__dot"></span>client-b
+    </div>
+    <div class="csi-fig-terralith__stack">
+      <span class="csi-fig-terralith__dot"></span>client-c
+    </div>
+    <div class="csi-fig-terralith__stack">
+      <span class="csi-fig-terralith__dot"></span>client-d
+    </div>
+    <div class="csi-fig-terralith__stack">
+      <span class="csi-fig-terralith__dot"></span>client-e
+    </div>
+    <div class="csi-fig-terralith__stack csi-fig-terralith__stack--more">
+      + 100s more
+    </div>
+  </div>
+  <div
+    class="csi-fig-terralith__label csi-fig-terralith__label--stacks"
+    aria-hidden="true"
+  >
+    <strong>Isolated client stacks</strong>
+    <span>own state &middot; own resources &middot; own blast radius</span>
+  </div>
+</div>

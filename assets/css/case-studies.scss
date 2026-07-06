@@ -1637,15 +1637,15 @@ $csi-line: #e7edec; // hairline on light cards
       color: $csi-ink;
       font-weight: 800;
     }
-    // `:not(.csi-list)` — the compact csi-list ul carries its own grid layout;
-    // keep the prose bullet/spacing treatment off it
-    ul:not(.csi-list),
+    // `:not(.csi-list):not(.csi-compare__rows)` — those uls carry their own
+    // grid/ledger layout; keep the prose bullet/spacing treatment off them
+    ul:not(.csi-list):not(.csi-compare__rows),
     ol {
       margin: 0 0 1.3rem;
       padding: 0;
       list-style: none;
     }
-    ul:not(.csi-list) > li,
+    ul:not(.csi-list):not(.csi-compare__rows) > li,
     ol > li {
       position: relative;
       padding-left: 1.75rem;
@@ -1655,7 +1655,7 @@ $csi-line: #e7edec; // hairline on light cards
         content: none;
       }
     }
-    ul:not(.csi-list) > li::before {
+    ul:not(.csi-list):not(.csi-compare__rows) > li::before {
       content: "";
       position: absolute;
       left: 0;
@@ -1973,6 +1973,488 @@ $csi-line: #e7edec; // hairline on light cards
       a {
         color: $cs-mint;
       }
+    }
+  }
+
+  // 2-up impact grid (`cols="2"`) — for a slimmed, qualitative 4-card set that
+  // sits under a csi-compare ledger (the ledger owns the numbers). Capped to
+  // the same width as csi-compare so the two stack as one visual unit.
+  .csi-impact--cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // COMPARE — "then / now" migration ledger (csi-compare). Old world reads
+  // muted on the left, new world bold on the right, gradient arrow between.
+  // ---------------------------------------------------------------------------
+  .csi-compare {
+    max-width: 980px;
+    margin: 0.5rem auto 0;
+    background: #fff;
+    border: 1px solid $csi-line;
+    border-radius: 16px;
+    box-shadow: 0 16px 36px -26px rgba(8, 30, 30, 0.32);
+    overflow: hidden;
+    text-align: left;
+
+    &__head,
+    &__row {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr) 2.2rem minmax(0, 1fr);
+      align-items: center;
+      column-gap: 0.7rem;
+    }
+    &__head {
+      padding: 0.8rem 1.6rem;
+      background: rgba(20, 48, 47, 0.03);
+      border-bottom: 1px solid $csi-line;
+    }
+    &__col {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      &--before {
+        color: #8aa09f;
+      }
+      &--after {
+        color: $csi-link;
+      }
+    }
+    &__rows {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    &__row {
+      padding: 1rem 1.6rem;
+    }
+    &__metric {
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: $csi-ink;
+    }
+    &__before,
+    &__after {
+      font-size: 0.98rem;
+      line-height: 1.4;
+      min-width: 0;
+    }
+    &__before {
+      color: #7d9291;
+    }
+    &__after {
+      font-weight: 800;
+      color: $csi-ink;
+    }
+    &__arrow {
+      text-align: center;
+      font-size: 1.05rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+    // per-cell Before/After tags — mobile only (the header row hides there)
+    &__tag {
+      display: none;
+    }
+  }
+  // sibling rule as a literal selector (the `&__` + `+` combo mis-expands)
+  .csi-compare__row + .csi-compare__row {
+    border-top: 1px solid $csi-line;
+  }
+  @media (max-width: 700px) {
+    .csi-compare__head {
+      display: none;
+    }
+    .csi-compare__row {
+      grid-template-columns: minmax(0, 1fr) 1.5rem minmax(0, 1fr);
+      grid-template-areas:
+        "metric metric metric"
+        "before arrow after";
+      row-gap: 0.55rem;
+      padding: 0.95rem 1.1rem;
+    }
+    .csi-compare__metric {
+      grid-area: metric;
+    }
+    .csi-compare__before {
+      grid-area: before;
+    }
+    .csi-compare__arrow {
+      grid-area: arrow;
+    }
+    .csi-compare__after {
+      grid-area: after;
+    }
+    .csi-compare__tag {
+      display: block;
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.15rem;
+      color: #8aa09f;
+    }
+    .csi-compare__after .csi-compare__tag {
+      color: $csi-link;
+    }
+  }
+  .csi-section--pine,
+  .csi-section--pine-deep,
+  .csi-section--gradient {
+    .csi-compare {
+      background: rgba(255, 255, 255, 0.045);
+      border-color: rgba(255, 255, 255, 0.09);
+      box-shadow: none;
+    }
+    .csi-compare__head {
+      background: rgba(255, 255, 255, 0.04);
+      border-bottom-color: rgba(255, 255, 255, 0.09);
+    }
+    .csi-compare__col--before {
+      color: #8fa6a5;
+    }
+    .csi-compare__col--after {
+      color: $cs-mint;
+    }
+    .csi-compare__metric,
+    .csi-compare__after {
+      color: #fff;
+    }
+    .csi-compare__before {
+      color: #9fb6b5;
+    }
+    .csi-compare__row + .csi-compare__row {
+      border-top-color: rgba(255, 255, 255, 0.09);
+    }
+    .csi-compare__tag {
+      color: #8fa6a5;
+    }
+    .csi-compare__after .csi-compare__tag {
+      color: $cs-mint;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // FIGURE — TERRALITH (csi-split figure="terralith"). CSS-drawn monolith →
+  // isolated stacks: no image asset, inherits page fonts, recolours per face,
+  // crisp in print. Vertical composition (mono → arrow → stack grid) so it
+  // reads the same in the split's media column at every width.
+  // ---------------------------------------------------------------------------
+  .csi-fig--terralith {
+    max-width: 440px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .csi-fig-terralith__mono {
+    position: relative;
+    background: #fff;
+    border: 1px solid $csi-line;
+    border-radius: 14px;
+    padding: 1.7rem 1.3rem 1.1rem;
+    box-shadow: 0 14px 30px -24px rgba(8, 30, 30, 0.35);
+  }
+  .csi-fig-terralith__chip {
+    position: absolute;
+    top: -0.72rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 0.24rem 0.65rem;
+    border-radius: 999px;
+    color: $cs-pine-dark;
+    @include csi-grad-solid;
+  }
+  .csi-fig-terralith__cells {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 5px;
+    i {
+      display: block;
+      aspect-ratio: 1;
+      border-radius: 2px;
+      background: rgba(20, 48, 47, 0.14);
+      &:nth-child(4n) {
+        background: rgba(42, 217, 194, 0.35);
+      }
+      &:nth-child(7n) {
+        background: rgba(209, 145, 191, 0.32);
+      }
+    }
+  }
+  .csi-fig-terralith__label {
+    margin-top: 0.85rem;
+    line-height: 1.35;
+    strong {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: $csi-ink;
+    }
+    span {
+      display: block;
+      font-size: 0.78rem;
+      color: $csi-ink-soft;
+    }
+  }
+  .csi-fig-terralith__arrow {
+    margin: 0.55rem 0;
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .csi-fig-terralith__stacks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.55rem;
+  }
+  .csi-fig-terralith__stack {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    background: #fff;
+    border: 1px solid $csi-line;
+    border-radius: 10px;
+    padding: 0.6rem 0.35rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: $csi-ink;
+    box-shadow: 0 10px 22px -18px rgba(8, 30, 30, 0.3);
+    &--more {
+      border-style: dashed;
+      background: transparent;
+      box-shadow: none;
+      font-family: inherit;
+      font-weight: 600;
+      color: $csi-ink-soft;
+    }
+  }
+  .csi-fig-terralith__dot {
+    flex: 0 0 auto;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    @include csi-grad-solid;
+  }
+  .csi-section--pine,
+  .csi-section--pine-deep,
+  .csi-section--gradient {
+    .csi-fig-terralith__mono {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: none;
+    }
+    .csi-fig-terralith__cells i {
+      background: rgba(255, 255, 255, 0.14);
+      &:nth-child(4n) {
+        background: rgba(42, 217, 194, 0.45);
+      }
+      &:nth-child(7n) {
+        background: rgba(209, 145, 191, 0.4);
+      }
+    }
+    .csi-fig-terralith__label {
+      strong {
+        color: #fff;
+      }
+      span {
+        color: #9fb6b5;
+      }
+    }
+    .csi-fig-terralith__stack {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      box-shadow: none;
+      &--more {
+        background: transparent;
+        color: #9fb6b5;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // PARALLEL — two-lane zero-downtime migration timeline (csi-parallel).
+  // Everything sits on a 12-column track; bars/markers place via inline
+  // grid-column from the shortcode, so the diagram scales fluidly.
+  // ---------------------------------------------------------------------------
+  .csi-parallel {
+    max-width: 980px;
+    margin: 2rem auto 0;
+    padding: 1.5rem 1.6rem 1.2rem;
+    background: #fff;
+    border: 1px solid $csi-line;
+    border-radius: 16px;
+    box-shadow: 0 16px 36px -26px rgba(8, 30, 30, 0.32);
+    text-align: left;
+
+    &__phases {
+      display: grid;
+      column-gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+    &__phase {
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: $csi-ink-soft;
+      padding-top: 0.45rem;
+      border-top: 2px solid $csi-line;
+    }
+    &__lane-label {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 0.65rem 0 0.35rem;
+      &--a {
+        color: #8aa09f;
+      }
+      &--b {
+        color: $csi-link;
+      }
+    }
+    &__lane {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      align-items: center;
+    }
+    &__bar {
+      height: 15px;
+      border-radius: 999px;
+      &--a {
+        background: rgba(20, 48, 47, 0.16);
+      }
+      &--b {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        height: 22px;
+        @include csi-grad-solid;
+      }
+    }
+    &__bar-note {
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      padding-right: 0.7rem;
+      color: $cs-pine-dark;
+    }
+    &__cap {
+      justify-self: start;
+      padding-left: 0.5rem;
+      span {
+        display: inline-block;
+        font-size: 0.6rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        padding: 0.16rem 0.55rem;
+        border: 1px dashed rgba(20, 48, 47, 0.28);
+        border-radius: 999px;
+        color: #8aa09f;
+      }
+    }
+    &__markers {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      row-gap: 0.3rem;
+      margin-top: 0.55rem;
+    }
+    &__marker {
+      justify-self: start;
+      font-size: 0.72rem;
+      font-weight: 600;
+      line-height: 1.3;
+      color: $csi-ink-soft;
+    }
+    // real element (not ::before) so the dot survives print, where
+    // pseudo-element background-images are dropped
+    &__dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 0.4rem;
+      @include csi-grad-solid;
+    }
+    &__caption {
+      margin: 1.1rem 0 0;
+      font-size: 0.85rem;
+      line-height: 1.45;
+      text-align: center;
+      color: $csi-ink-soft;
+    }
+    @media (max-width: 700px) {
+      padding: 1.1rem 0.9rem 0.95rem;
+      .csi-parallel__phase {
+        font-size: 0.53rem;
+        letter-spacing: 0.05em;
+      }
+      .csi-parallel__marker {
+        font-size: 0.7rem;
+        // the shortcode positions markers via inline grid-column (that's the
+        // "when" on desktop); at phone width the positioned labels collide, so
+        // stack them full-width in chronological order instead. !important is
+        // required to beat the inline style.
+        grid-column: 1 / -1 !important;
+      }
+      .csi-parallel__bar-note {
+        display: none;
+      }
+      .csi-parallel__cap span {
+        font-size: 0.53rem;
+        padding: 0.12rem 0.4rem;
+      }
+    }
+  }
+  .csi-section--pine,
+  .csi-section--pine-deep,
+  .csi-section--gradient {
+    .csi-parallel {
+      background: rgba(255, 255, 255, 0.045);
+      border-color: rgba(255, 255, 255, 0.09);
+      box-shadow: none;
+    }
+    .csi-parallel__phase {
+      color: #9fb6b5;
+      border-top-color: rgba(255, 255, 255, 0.12);
+    }
+    .csi-parallel__lane-label--a {
+      color: #8fa6a5;
+    }
+    .csi-parallel__lane-label--b {
+      color: $cs-mint;
+    }
+    .csi-parallel__bar--a {
+      background: rgba(255, 255, 255, 0.16);
+    }
+    .csi-parallel__cap span {
+      color: #9fb6b5;
+      border-color: rgba(255, 255, 255, 0.28);
+    }
+    .csi-parallel__marker {
+      color: #bcd0cf;
+    }
+    .csi-parallel__caption {
+      color: #9fb6b5;
     }
   }
 
@@ -2315,6 +2797,8 @@ $csi-line: #e7edec; // hairline on light cards
     // back to a solid brand colour so every heading prints fully and legibly.
     .text-gradient,
     .csi-grad,
+    .csi-step__num,
+    .csi-testimonial__mark,
     .cs-hero__title .text-gradient {
       background: none !important;
       -webkit-background-clip: border-box !important;
@@ -2355,7 +2839,11 @@ $csi-line: #e7edec; // hairline on light cards
     .cs-stat,
     .cs-pullquote,
     .csi-testimonial,
-    .csi-impact__card {
+    .csi-impact__card,
+    .csi-compare__row,
+    .csi-fig-terralith__mono,
+    .csi-fig-terralith__stack,
+    .csi-parallel {
       break-inside: avoid;
     }
   }

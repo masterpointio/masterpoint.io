@@ -1,0 +1,53 @@
+{{/*
+  csi-compare — a "then / now" migration ledger: each metric reads across from
+  the old world (muted) to the new world (gradient-accented). Place INSIDE a
+  csi-section; built for migration stories where the before → after delta IS
+  the outcome. Owns the hard numbers of a page — pair it with a slimmed,
+  qualitative csi-impact grid so the same figure isn't stated twice.
+  Args:
+    before_label   column header for the old world (e.g. "Terraform Cloud")
+    after_label    column header for the new world (e.g. "Spacelift + OpenTofu")
+  Inner: blocks separated by `---`, each block:
+    label: Metric name
+    before: Old-world value
+    after: New-world value      (inline markdown works in all three)
+*/}}
+{{- $beforeLabel := .Get "before_label" | default "Before" -}}
+{{- $afterLabel := .Get "after_label" | default "After" -}}
+{{- $raw := .Inner -}}
+{{- $blocks := split $raw "---" -}}
+<div class="csi-compare" data-aos="fade-up" data-aos-duration="600">
+  <div class="csi-compare__head" aria-hidden="true">
+    <div class="csi-compare__spacer"></div>
+    <div class="csi-compare__col csi-compare__col--before">{{ $beforeLabel | safeHTML }}</div>
+    <div class="csi-compare__spacer"></div>
+    <div class="csi-compare__col csi-compare__col--after">{{ $afterLabel | safeHTML }}</div>
+  </div>
+  <ul class="csi-compare__rows">
+    {{- range $blocks -}}
+      {{- $block := trim . " \t\n" -}}
+      {{- if $block -}}
+        {{- $lines := split $block "\n" -}}
+        {{- $label := "" -}}
+        {{- $before := "" -}}
+        {{- $after := "" -}}
+        {{- range $lines -}}
+          {{- $line := trim . " \t" -}}
+          {{- if hasPrefix $line "label:" -}}
+            {{- $label = trim (strings.TrimPrefix "label:" $line) " " -}}
+          {{- else if hasPrefix $line "before:" -}}
+            {{- $before = trim (strings.TrimPrefix "before:" $line) " " -}}
+          {{- else if hasPrefix $line "after:" -}}
+            {{- $after = trim (strings.TrimPrefix "after:" $line) " " -}}
+          {{- end -}}
+        {{- end -}}
+        <li class="csi-compare__row">
+          <div class="csi-compare__metric">{{ $label | $.Page.RenderString (dict "display" "inline") }}</div>
+          <div class="csi-compare__before"><span class="csi-compare__tag">{{ $beforeLabel | safeHTML }}</span>{{ $before | $.Page.RenderString (dict "display" "inline") }}</div>
+          <div class="csi-compare__arrow" aria-hidden="true"><span class="csi-grad">&rarr;</span></div>
+          <div class="csi-compare__after"><span class="csi-compare__tag">{{ $afterLabel | safeHTML }}</span>{{ $after | $.Page.RenderString (dict "display" "inline") }}</div>
+        </li>
+      {{- end -}}
+    {{- end -}}
+  </ul>
+</div>

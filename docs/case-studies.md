@@ -156,6 +156,22 @@ All shortcodes are in `layouts/shortcodes/cs-*.html` and styled under
 - **New shortcode files in `layouts/shortcodes/` are not picked up by a
   running `hugo serve`.** Restart serve after creating a new shortcode
   template. Modifying an existing one hot-reloads fine.
+- **Any `<ul>`-based shortcode inside `.csi-prose` must be excluded from the
+  prose list rules.** The prose block styles `ul:not(.csi-list):not(.csi-compare__rows)`
+  (margins + gradient square bullets on `> li`); a new list-shaped shortcode
+  will inherit stray bullets/padding until its class joins those `:not()`
+  chains — and it must then reset `list-style`/`margin`/`padding` itself.
+- **CSS-drawn figures beat images for diagrams.** `csi-split figure="…"`
+  renders `layouts/partials/case-studies/figures/<name>.html` in the media
+  slot: inherits page fonts, auto-recolours per card face (style both), prints
+  crisp. Draw with REAL elements, not pseudo-elements — print drops
+  `::before/::after` `background-image`, so gradient bars/cells/dots built as
+  real nodes survive the PDF while pseudo-element decorations vanish.
+- **Overriding a shortcode's inline `style=` positioning needs `!important`.**
+  `csi-parallel` places bars/markers via inline `grid-column`; the ≤700px rule
+  stacks markers full-width with `grid-column: 1 / -1 !important` (inline
+  styles beat any selector otherwise). Positioned markers are desktop
+  information; stacked chronological order is the mobile trade.
 - **The TOC reads `.Fragments`, not `.TableOfContents`.** `.TableOfContents`
   is empty when read from inside a _shortcode_ (it isn't built until after the
   goldmark pass), which is the original reason the TOC moved to a layout-stage
@@ -232,9 +248,11 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 | Shortcode         | Purpose                                                        | Key args                                                                              |
 | ----------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
 | `csi-section`     | A card (eyebrow + headline + block prose).                     | `eyebrow`, `title` (HTML ok), `variant`, `align`, `num`, `accent`                     |
-| `csi-split`       | Text + visual side-by-side; `flip="true"` alternates sides.    | `eyebrow`, `title`, `media`, `media_alt`, `flip`, `contain`, `caption`, `variant`, `ratio` |
+| `csi-split`       | Text + visual side-by-side; `flip="true"` alternates sides.    | `eyebrow`, `title`, `media`, `media_alt`, `figure` (CSS-drawn figure partial from `layouts/partials/case-studies/figures/<name>.html` instead of an image — e.g. `figure="terralith"`), `flip`, `contain`, `caption`, `variant`, `ratio` |
 | `csi-steps`       | Numbered process cards. Place INSIDE a `csi-section`.          | inner blocks split by `---`, each `title:` / `body:`                                  |
-| `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`                        |
+| `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`; `cols="2"` for a slimmed 2-up grid (pairs with `csi-compare`, capped to the same 980px) |
+| `csi-compare`     | "Then / now" migration ledger: each metric reads across from the muted old world to the bold new world (gradient arrow between). INSIDE a `csi-section`. Owns a page's hard numbers — pair with a slimmed qualitative `csi-impact cols="2"` so figures aren't stated twice. Mobile stacks each row (metric on top, before → after beneath, per-cell tags replace the header row). | `before_label`, `after_label`; inner blocks split by `---`, each `label:` / `before:` / `after:` |
+| `csi-parallel`    | Two-lane zero-downtime migration timeline (strangler-fig): old system's muted bar runs until a dashed "retired" cap while the new system's gradient bar ramps alongside; phase ruler on top, gradient-dot event markers below. INSIDE a `csi-section`, typically right after `csi-steps` (steps say WHAT, this shows the moves OVERLAPPED). All positions are grid lines on a 12-col track (1–13, end-exclusive). | `lane_a`/`lane_b`, `a_start`/`a_end`/`b_start`/`b_end`, `a_cap`/`b_cap`, `caption` (also the aria-label); inner blocks: `phase:` lines (equal columns) and `marker:` + `at:` + `span:` blocks |
 | `csi-list`        | Compact 2-col icon rows (icon chip + bold title — inline body). Space-saving sibling of `csi-impact` for secondary enumerations (e.g. "under the hood" extras) so they don't mimic the outcome grid. INSIDE a `csi-section`. | same inner format as `csi-impact` (`icon:` / `title:` / `body:`); keep bodies to one short sentence |
 | `csi-testimonial` | Editorial quote band; `image=` makes it a featured cosmic band.| `name`, `title`, `company`, `photo`, `variant`, `image`. With `photo`, uses the avatar-left "portrait" layout (`csi-testimonial--portrait`, see below). |
 
@@ -371,12 +389,23 @@ from the legacy layout onto immersive. Decisions specific to that page:
   shorter MarketSpark style.
 - **Card flow** (strict light↔pine alternation, then the pine CTA):
   About (light split, 65-35) → Challenge (pine section + `csi-list` pain stats) →
-  playbook (light section + `csi-steps`) → three numbered splits
-  (01 Architecture pine / 02 Platform light / 03 Toolchain pine) →
-  Business Impact (light section + `csi-impact`) → custom `callout` CTA.
+  playbook (light section + `csi-steps` + `csi-parallel` timeline) → three
+  numbered splits (01 Architecture pine w/ `figure="terralith"` / 02 Platform
+  light / 03 Toolchain pine) → Business Impact (light section + `csi-compare`
+  ledger + `csi-impact cols="2"`) → custom `callout` CTA.
 - **First production use of `csi-steps`** — the four-move migration playbook
   ("Audit & Migration Plan" → "Hand Over the Keys"). Verified on light face and
   mobile.
+- **The page's three bespoke elements** (all reusable, born here July 2026,
+  built because Power Digital is a *migration* story — everything meaningful is
+  a before→after delta, which MarketSpark's build-story kit had no language
+  for): the `csi-compare` then/now ledger (owns the hard numbers; the impact
+  grid slimmed 6 → 4 qualitative cards via `cols="2"` so figures aren't
+  triple-stated), the `csi-parallel` zero-downtime timeline (bars: Terralith
+  cols 1–10 + "retired" cap, platform cols 4–13 + "keeps scaling"; markers at
+  4 and 7), and the CSS-drawn `figure="terralith"` decomposition diagram
+  (monolith cell-grid → gradient arrow → per-client stack grid, monospace
+  client labels).
 - **No testimonial/pullquote**: the source material has no attributed client
   quote, and we don't fabricate quotes. If Power Digital ever supplies one, a
   `cs-pullquote` in the playbook section or a closing `csi-testimonial` are the
@@ -387,14 +416,13 @@ from the legacy layout onto immersive. Decisions specific to that page:
 - **Media choices**: hero bg is `/img/landing/power-digital-case-study.png`
   (the neon-tower PDF-cover art *without* baked-in text — the similar-looking
   `preview_image` poster has title text baked in, so it stays list-page-only);
-  `25min-to-3min.png` is the only legacy infographic clean enough for the new
-  aesthetic (used `contain="true"` on the 01 pine split, white-card treatment
-  like MarketSpark's AWS diagram); `spacelift.jpg` / `opentofu.jpg` are
-  **deliberately shared with MarketSpark** — they're generic tool imagery, and
-  reuse keeps the visual system consistent. The other legacy infographics
-  (63-hours clip art, tldr bar chart, results collage, x-logos strip) don't fit
-  the immersive aesthetic and are unused (the old PDF at
-  `/download/power-digital-case-study.pdf` still references them).
+  `spacelift.jpg` / `opentofu.jpg` are **deliberately shared with
+  MarketSpark** — they're generic tool imagery, and reuse keeps the visual
+  system consistent. The legacy infographics (25min-to-3min clocks, 63-hours
+  clip art, tldr bar chart, results collage, x-logos strip) don't fit the
+  immersive aesthetic and are unused — the 01 split's 25→3 story is told by
+  the `csi-compare` ledger and the terralith figure instead (the old PDF at
+  `/download/power-digital-case-study.pdf` still references those images).
 - **`download_button` / `banner_*` front matter removed** — those were
   legacy-layout fields. The immersive page prints well (see Print / PDF), which
   replaces the old "download the PDF" flow; the PDF file itself still exists at
@@ -438,7 +466,10 @@ Case studies print (Ctrl/Cmd+P → Save as PDF) styled to match the screen.
      transparent fill does not render reliably in Chrome's PDF path: the run
      stops wrapping and gets sliced by the hero card's `overflow:hidden`, or the
      gradient paints as a solid rectangle. So `.text-gradient` / `.csi-grad` /
+     `.csi-step__num` / `.csi-testimonial__mark` /
      `.cs-hero__lockup-x` fall back to a solid brand colour (`#2ad9c2`) in print.
+     Any NEW class that includes the `csi-grad-light`/`csi-grad-bright` mixins
+     directly (rather than via `.csi-grad`) must join this list.
      The on-screen multi-stop gradient becomes a single teal in the PDF — an
      intentional, reliable trade.
   4. **Hero frosted card** drops `backdrop-filter` (unsupported in print) and
@@ -461,7 +492,9 @@ Case studies print (Ctrl/Cmd+P → Save as PDF) styled to match the screen.
      on-screen scrolling can feel slow — they re-composite on the GPU per frame.)
   7. **Page-break control — prevents cards clipping across page boundaries.**
      `break-inside: avoid` on the **small, repeating** cards (`.cs-stat`,
-     `.cs-pullquote`, `.csi-testimonial`, `.csi-impact__card`) pushes a whole
+     `.cs-pullquote`, `.csi-testimonial`, `.csi-impact__card`,
+     `.csi-compare__row`, `.csi-fig-terralith__mono`, `.csi-fig-terralith__stack`,
+     `.csi-parallel`) pushes a whole
      card to the next page rather than slicing its top/bottom edge. **Only apply
      it to small cards** — putting it on large one-off blocks (the About panel,
      article/screenshot cards) backfires: shoving a big block whole to the next

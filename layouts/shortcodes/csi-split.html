@@ -7,6 +7,9 @@
     title      section headline (HTML allowed: <strong>, <span class="csi-grad">)
     media      image/SVG src for the visual
     media_alt  alt text for the visual
+    figure     name of a CSS-drawn figure partial in
+               layouts/partials/case-studies/figures/<name>.html — an
+               image-free alternative to media (e.g. figure="terralith")
     flip       "true" puts the visual on the LEFT, text on the right
     variant    band background: light (default) | cream | pine | pine-deep
     contain    "true" → object-fit:contain (diagrams); default cover-ish
@@ -16,6 +19,7 @@
 {{- $eyebrow := .Get "eyebrow" -}}
 {{- $title := .Get "title" -}}
 {{- $media := .Get "media" -}}
+{{- $figure := .Get "figure" -}}
 {{- $alt := .Get "media_alt" | default "" -}}
 {{- $flip := .Get "flip" -}}
 {{- $variant := .Get "variant" | default "light" -}}
@@ -37,8 +41,9 @@
         </div>
       </div>
       <div class="csi-split__media" data-aos="fade-up" data-aos-delay="120" data-aos-duration="600">
-        <figure class="csi-media{{ if $contain }} csi-media--contain{{ end }}">
+        <figure class="csi-media{{ if $contain }} csi-media--contain{{ end }}{{ if $figure }} csi-media--figure{{ end }}">
           {{- if $media -}}<img src="{{ $media }}" alt="{{ $alt }}" loading="lazy" />{{- end -}}
+          {{- if $figure -}}{{ partial (printf "case-studies/figures/%s.html" $figure) . }}{{- end -}}
           {{- if $caption -}}<figcaption class="csi-media__caption">{{ $caption | safeHTML }}</figcaption>{{- end -}}
         </figure>
       </div>

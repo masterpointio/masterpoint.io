@@ -1,0 +1,90 @@
+{{/*
+  csi-parallel — a slim two-lane parallel-run timeline: the old system keeps
+  serving while the new one ramps up alongside it (strangler-fig migrations,
+  zero-downtime rebuilds). Place INSIDE a csi-section, typically right after a
+  csi-steps grid — the steps say WHAT the moves were, this shows they OVERLAPPED.
+  Positions are grid lines on a 12-column track (1–13, end-exclusive, like CSS
+  grid-column).
+  Args:
+    lane_a / lane_b     lane labels (old system / new system)
+    a_start / a_end     lane A bar span (defaults 1 / 9)
+    b_start / b_end     lane B bar span (defaults 4 / 13)
+    a_cap               chip after lane A's bar (e.g. "retired") — spans a_end → 13
+    b_cap               note inside the end of lane B's bar (e.g. "keeps scaling")
+    caption             visible one-liner under the diagram; also the aria-label
+  Inner: blocks separated by `---`:
+    phase: 01 · Phase name          (each phase: line = one equal-width column)
+    marker: Event label             (a moment on the timeline)
+    at: 4                           (grid line 1–12 the marker sits at)
+    span: 4                         (columns its label may occupy, default 4)
+*/}}
+{{- $laneA := .Get "lane_a" | default "Existing system" -}}
+{{- $laneB := .Get "lane_b" | default "New platform" -}}
+{{- $aStart := .Get "a_start" | default "1" -}}
+{{- $aEnd := .Get "a_end" | default "9" -}}
+{{- $bStart := .Get "b_start" | default "4" -}}
+{{- $bEnd := .Get "b_end" | default "13" -}}
+{{- $aCap := .Get "a_cap" -}}
+{{- $bCap := .Get "b_cap" -}}
+{{- $caption := .Get "caption" -}}
+{{- $phases := slice -}}
+{{- $markers := slice -}}
+{{- range split .Inner "---" -}}
+  {{- $block := trim . " \t\n" -}}
+  {{- if $block -}}
+    {{- $label := "" -}}
+    {{- $at := "" -}}
+    {{- $span := "4" -}}
+    {{- $isMarker := false -}}
+    {{- range split $block "\n" -}}
+      {{- $line := trim . " \t" -}}
+      {{- if hasPrefix $line "phase:" -}}
+        {{- $phases = $phases | append (trim (strings.TrimPrefix "phase:" $line) " ") -}}
+      {{- else if hasPrefix $line "marker:" -}}
+        {{- $isMarker = true -}}
+        {{- $label = trim (strings.TrimPrefix "marker:" $line) " " -}}
+      {{- else if hasPrefix $line "at:" -}}
+        {{- $at = trim (strings.TrimPrefix "at:" $line) " " -}}
+      {{- else if hasPrefix $line "span:" -}}
+        {{- $span = trim (strings.TrimPrefix "span:" $line) " " -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if $isMarker -}}
+      {{- $markers = $markers | append (dict "label" $label "at" $at "span" $span) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+<div class="csi-parallel" role="img"{{ with $caption }} aria-label="{{ . | plainify }}"{{ end }} data-aos="fade-up" data-aos-duration="600">
+  <div aria-hidden="true">
+    {{- if $phases -}}
+    <div class="csi-parallel__phases" style="grid-template-columns: repeat({{ len $phases }}, 1fr);">
+      {{- range $phases -}}
+      <div class="csi-parallel__phase">{{ . | safeHTML }}</div>
+      {{- end -}}
+    </div>
+    {{- end -}}
+    <div class="csi-parallel__lane-label csi-parallel__lane-label--a">{{ $laneA | safeHTML }}</div>
+    <div class="csi-parallel__lane">
+      <div class="csi-parallel__bar csi-parallel__bar--a" style="grid-column: {{ $aStart }} / {{ $aEnd }};"></div>
+      {{- if $aCap -}}
+      <div class="csi-parallel__cap" style="grid-column: {{ $aEnd }} / -1;"><span>{{ $aCap | safeHTML }}</span></div>
+      {{- end -}}
+    </div>
+    <div class="csi-parallel__lane-label csi-parallel__lane-label--b">{{ $laneB | safeHTML }}</div>
+    <div class="csi-parallel__lane">
+      <div class="csi-parallel__bar csi-parallel__bar--b" style="grid-column: {{ $bStart }} / {{ $bEnd }};">
+        {{- if $bCap -}}<span class="csi-parallel__bar-note">{{ $bCap | safeHTML }}</span>{{- end -}}
+      </div>
+    </div>
+    {{- if $markers -}}
+    <div class="csi-parallel__markers">
+      {{- range $markers -}}
+      <div class="csi-parallel__marker" style="grid-column: {{ .at }} / span {{ .span }};"><i class="csi-parallel__dot"></i>{{ .label | safeHTML }}</div>
+      {{- end -}}
+    </div>
+    {{- end -}}
+  </div>
+  {{- with $caption -}}
+  <p class="csi-parallel__caption">{{ . | safeHTML }}</p>
+  {{- end -}}
+</div>
