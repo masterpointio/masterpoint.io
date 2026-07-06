@@ -72,6 +72,20 @@ The economics were breaking too. Grandfathered Terraform Cloud pricing meant sca
 {{< csi-section eyebrow="The Approach" title="Replatform, decompose, and <span class='csi-grad'>hand back the keys</span>" variant="light" align="center" >}}
 The engagement started with a full [Infrastructure as Code audit](https://masterpoint.io/services/audit/) of the Terralith and the Terraform Cloud deployment: stakeholder interviews, challenge identification, and a migration strategy built around minimizing downtime, preserving data integrity, and strengthening security standards. Because client onboarding could not stop for a replatform, the migration ran in parallel with production:
 
+{{< csi-timeline marker="62" marker_label="Cutover" >}}
+label: Terralith on Terraform Cloud
+note: existing clients keep running, untouched
+start: 0
+end: 70
+fade: out
+---
+label: Modular platform on Spacelift
+note: new clients onboard here from day one
+start: 30
+end: 100
+fade: in
+{{< /csi-timeline >}}
+
 {{< csi-steps >}}
 title: Build the new system alongside the old
 body: A modular replacement (standardized modules, workspaces, isolated per-client state) came up next to the running Terralith, touching nothing in production.
@@ -92,7 +106,7 @@ After evaluating the options, Masterpoint recommended [Spacelift](https://spacel
 - **Made for decomposition.** Granular resource management lets large configurations break down into manageable modules connected by automation.
 {{< /csi-split >}}
 
-{{< csi-split eyebrow="02 · The Architecture" title="Decomposing the Terralith into <span class='csi-grad'>sub-3-minute deployments</span>" media="/img/case-studies/25min-to-3min.png" media_alt="Clock infographic: plan and apply cycles reduced from 25 minutes to 3 minutes" contain="true" variant="light" flip="true" >}}
+{{< csi-split eyebrow="02 · The Architecture" title="Decomposing the Terralith into <span class='csi-grad'>sub-3-minute deployments</span>" media="/img/case-studies/power-digital/terralith-decomposition.svg" media_alt="Diagram: one monolithic Terraform state file decomposed into a grid of isolated per-client stacks" contain="true" caption="One state file with 43,000+ resources becomes isolated per-client stacks, each with its own state." variant="light" flip="true" >}}
 The monolith became individual client deployments with isolated resources and state. Standardized modules replaced repetitive code across common infrastructure components, workspaces enforced consistent usage patterns, dependencies between modules were made explicit, and the repository was restructured around the modular approach.
 
 The number that closes the argument: plan and apply cycles for new client infrastructure dropped from 25 minutes to <strong>under 3</strong>, sub-1-minute in some cases. (That figure excludes a separate, single-digit-minute Spacelift spin-up step, the same way the original 25-minute figure was measured.)
@@ -105,19 +119,25 @@ Masterpoint is a proud OpenTofu community member; migrations at this scale are w
 {{< /csi-split >}}
 
 {{< csi-section eyebrow="The Results" title="Faster, cheaper, and <span class='csi-grad'>no longer the bottleneck</span>" variant="light" align="center" >}}
+{{< csi-compare before="Terraform Cloud · Terralith" after="Spacelift + OpenTofu" >}}
+label: Projected monthly automation cost
+before: $5,000
+after: under $500
+---
+label: Plan & apply cycle
+before: up to 25 min
+after: under 3 min
+---
+label: Terraform run failure rate
+before: over 50%
+after: near zero
+---
+label: New-client provisioning
+before: manual fallback
+after: fully automated
+{{< /csi-compare >}}
+
 {{< csi-impact >}}
-icon: fa-coins
-title: 10x Lower Automation Costs
-body: Projected infrastructure automation costs dropped 10x versus the required Terraform Cloud upgrade; the new platform runs for under $500/month.
----
-icon: fa-gauge-high
-title: 25 Minutes Down to Under 3
-body: Plan and apply cycles for client infrastructure fell from 25 minutes to sub-3-minute completions, sub-1-minute in some cases.
----
-icon: fa-circle-check
-title: Failed Runs All but Eliminated
-body: The failed plan and apply runs caused by Terraform running out of memory are completely gone, along with the operational toil they generated.
----
 icon: fa-rocket
 title: 100+ Clients in 60 Days
 body: With the platform no longer gating onboarding, Power Digital brought on 100+ new clients in the first 60 days after migration.

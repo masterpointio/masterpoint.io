@@ -1,0 +1,45 @@
+{{/*
+  csi-compare — a Before → After metric table (the migration "delta" band).
+  Built for before/after case studies where the story is the deltas
+  (cost, cycle time, failure rate…). Place INSIDE a csi-section.
+  Args:
+    before  column heading for the "before" state (e.g. "Terraform Cloud · one Terralith")
+    after   column heading for the "after" state (e.g. "Spacelift + OpenTofu · modular stacks")
+  Inner: blocks separated by `---`, each block:
+    label: what the row measures (small caption above the pair)
+    before: the old value (rendered muted)
+    after: the new value (rendered in the brand gradient)
+  Inline markdown works in all three fields.
+*/}}
+{{- $before := .Get "before" -}}
+{{- $after := .Get "after" -}}
+{{- $raw := .Inner -}}
+{{- $blocks := split $raw "---" -}}
+<div class="csi-compare" data-aos="fade-up" data-aos-duration="600">
+  <div class="csi-compare__head csi-compare__head--before">{{ $before | safeHTML }}</div>
+  <div class="csi-compare__vs" aria-hidden="true">&rarr;</div>
+  <div class="csi-compare__head csi-compare__head--after">{{ $after | safeHTML }}</div>
+  {{- range $i, $block := $blocks -}}
+    {{- $b := trim $block " \t\n" -}}
+    {{- if $b -}}
+      {{- $lines := split $b "\n" -}}
+      {{- $label := "" -}}
+      {{- $bval := "" -}}
+      {{- $aval := "" -}}
+      {{- range $lines -}}
+        {{- $line := trim . " \t" -}}
+        {{- if hasPrefix $line "label:" -}}
+          {{- $label = trim (strings.TrimPrefix "label:" $line) " " -}}
+        {{- else if hasPrefix $line "before:" -}}
+          {{- $bval = trim (strings.TrimPrefix "before:" $line) " " -}}
+        {{- else if hasPrefix $line "after:" -}}
+          {{- $aval = trim (strings.TrimPrefix "after:" $line) " " -}}
+        {{- end -}}
+      {{- end -}}
+      <div class="csi-compare__label">{{ $label | $.Page.RenderString (dict "display" "inline") }}</div>
+      <div class="csi-compare__cell csi-compare__cell--before">{{ $bval | $.Page.RenderString (dict "display" "inline") }}</div>
+      <div class="csi-compare__arrow" aria-hidden="true">&rarr;</div>
+      <div class="csi-compare__cell csi-compare__cell--after"><span class="csi-grad">{{ $aval | $.Page.RenderString (dict "display" "inline") }}</span></div>
+    {{- end -}}
+  {{- end -}}
+</div>

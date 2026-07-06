@@ -237,6 +237,8 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 | `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`                        |
 | `csi-list`        | Compact 2-col icon rows (icon chip + bold title — inline body). Space-saving sibling of `csi-impact` for secondary enumerations (e.g. "under the hood" extras) so they don't mimic the outcome grid. INSIDE a `csi-section`. | same inner format as `csi-impact` (`icon:` / `title:` / `body:`); keep bodies to one short sentence |
 | `csi-testimonial` | Editorial quote band; `image=` makes it a featured cosmic band.| `name`, `title`, `company`, `photo`, `variant`, `image`. With `photo`, uses the avatar-left "portrait" layout (`csi-testimonial--portrait`, see below). |
+| `csi-compare`     | Before → After metric table for migration "delta" stories. INSIDE a `csi-section`. Before values muted, after values in `csi-grad` (auto light/bright + print fallback). An adjacent following `csi-impact` gets extra top margin automatically. | `before` / `after` (column headings — keep SHORT, they wrap ugly); inner blocks split by `---`, each `label:` / `before:` / `after:` (inline markdown works) |
+| `csi-timeline`    | Horizontal parallel-track bars for cutover stories ("old system keeps running while the new one comes up"). INSIDE a `csi-section`. Bars are percent-positioned (responsive for free); fades paint on the bar element, not `::before`/`::after`, so they survive print. | `marker` (percent 0–100), `marker_label` (keep short, e.g. "Cutover"); inner blocks split by `---`, each `label:` / `note:` / `start:` / `end:` / `fade:` (`in`\|`out`\|omit) |
 
 Two **modern** shortcodes are also reused inside the immersive body (they render
 because the body also carries `case-study-modern`, so `.case-study-modern .cs-*`
@@ -362,6 +364,17 @@ management process" + Schedule button), then `footer`. Same closing as the moder
 case studies and the marketing pages.
 
 ### Power Digital page specifics
+
+Power Digital is a **migration/before-after story** (MarketSpark is a "breadth of
+what we built" story), so it carries the delta-focused signature elements:
+`csi-compare` opens the Results band (cost / cycle / failure-rate / provisioning
+deltas, replacing what would otherwise be three redundant impact cards),
+`csi-timeline` visualizes the parallel-run cutover in the Approach band, and the
+02 · Architecture split uses a bespoke textless SVG diagram
+(`/img/case-studies/power-digital/terralith-decomposition.svg`, brand palette,
+monolith → isolated tiles) instead of a stock photo. The $5,000 → under $500
+compare row is sourced from the legacy tl;dr infographic ("Then: $5000 … Now
+$500").
 
 - **No client quote exists**, so the page has no `cs-pullquote` / `csi-testimonial`
   (never invent quotes or people). If Power Digital ever provides an attributed

@@ -1977,6 +1977,203 @@ $csi-line: #e7edec; // hairline on light cards
   }
 
   // ---------------------------------------------------------------------------
+  // COMPARE — Before → After metric table (the migration "delta" band).
+  // Grid: [before | arrow | after] per metric, with a full-width caption row
+  // above each pair. Before values render muted, after values in .csi-grad
+  // (which auto-switches light/bright per face and has the print fallback).
+  // ---------------------------------------------------------------------------
+  .csi-compare {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 3.2rem minmax(0, 1fr);
+    align-items: baseline;
+    max-width: 820px;
+    margin: 0.6rem auto 0;
+
+    &__head {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 800;
+      padding-bottom: 0.55rem;
+      &--before {
+        color: #8a9c9b;
+        text-align: right;
+      }
+      &--after {
+        color: $csi-ink;
+        text-align: left;
+      }
+    }
+    &__vs {
+      text-align: center;
+      font-weight: 800;
+      color: #8a9c9b;
+    }
+    &__label {
+      grid-column: 1 / -1;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: $csi-ink-soft;
+      text-align: center;
+      border-top: 1px solid $csi-line;
+      padding-top: 1.1rem;
+      margin-top: 1.1rem;
+    }
+    &__arrow {
+      align-self: center;
+      text-align: center;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #55c1b4;
+    }
+    &__cell {
+      font-size: 1.55rem;
+      font-weight: 800;
+      line-height: 1.25;
+      padding-top: 0.4rem;
+      &--before {
+        color: #8a9c9b;
+        text-align: right;
+      }
+      &--after {
+        text-align: left;
+      }
+    }
+    @media (max-width: 600px) {
+      grid-template-columns: minmax(0, 1fr) 1.9rem minmax(0, 1fr);
+      &__cell {
+        font-size: 1.06rem;
+      }
+      &__arrow {
+        font-size: 0.95rem;
+      }
+      &__label {
+        font-size: 0.64rem;
+      }
+      &__head {
+        font-size: 0.68rem;
+      }
+    }
+  }
+  // breathing room when an impact grid follows the compare table
+  .csi-compare + .csi-impact {
+    margin-top: 2.8rem;
+  }
+  .csi-section--pine .csi-compare,
+  .csi-section--pine-deep .csi-compare,
+  .csi-section--gradient .csi-compare {
+    .csi-compare__label {
+      color: #9fb6b5;
+      border-top-color: rgba(255, 255, 255, 0.1);
+    }
+    .csi-compare__head--before,
+    .csi-compare__cell--before,
+    .csi-compare__vs {
+      color: #7f9695;
+    }
+    .csi-compare__head--after {
+      color: #fff;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // TIMELINE — horizontal parallel-track bars for cutover / migration stories
+  // ("the old system keeps running while the new one comes up"). Bars are
+  // percent-positioned so the same markup reflows at every width; fades paint
+  // on the bar ELEMENT (not ::before/::after) so they survive print.
+  // ---------------------------------------------------------------------------
+  .csi-timeline {
+    position: relative;
+    max-width: 860px;
+    margin: 2.2rem auto 0.4rem;
+    padding-top: 1.55rem; // room for the marker label
+
+    &__marker {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--csi-tl-marker, 60%);
+      border-left: 2px dashed rgba(11, 125, 114, 0.45);
+      pointer-events: none;
+    }
+    &__marker-label {
+      position: absolute;
+      top: -0.3rem;
+      left: 0.55rem;
+      white-space: nowrap;
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: $csi-link;
+    }
+    &__track {
+      margin-bottom: 1.2rem;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    &__meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.25rem 0.7rem;
+      margin-bottom: 0.4rem;
+    }
+    &__label {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: $csi-ink;
+    }
+    &__note {
+      font-size: 0.8rem;
+      color: $csi-ink-soft;
+    }
+    &__rail {
+      position: relative;
+      height: 14px;
+      border-radius: 7px;
+      background: rgba(20, 48, 47, 0.07);
+    }
+    &__bar {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      border-radius: 7px;
+      @include csi-grad-solid;
+      &--fade-out {
+        background: linear-gradient(90deg, #93a8a7 0%, #93a8a7 55%, rgba(147, 168, 167, 0) 100%);
+        border-radius: 7px 0 0 7px;
+      }
+      &--fade-in {
+        background: linear-gradient(90deg, rgba(42, 217, 194, 0) 0%, #2ad9c2 22%, #55c1b4 60%, #d191bf 100%);
+        border-radius: 0 7px 7px 0;
+      }
+    }
+  }
+  .csi-section--pine .csi-timeline,
+  .csi-section--pine-deep .csi-timeline,
+  .csi-section--gradient .csi-timeline {
+    .csi-timeline__marker {
+      border-left-color: rgba(42, 217, 194, 0.5);
+    }
+    .csi-timeline__marker-label {
+      color: $cs-mint;
+    }
+    .csi-timeline__label {
+      color: #fff;
+    }
+    .csi-timeline__note {
+      color: #bcd0cf;
+    }
+    .csi-timeline__rail {
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
   // TESTIMONIAL — centered editorial quote
   // ---------------------------------------------------------------------------
   .csi-testimonial {
@@ -2355,7 +2552,9 @@ $csi-line: #e7edec; // hairline on light cards
     .cs-stat,
     .cs-pullquote,
     .csi-testimonial,
-    .csi-impact__card {
+    .csi-impact__card,
+    .csi-compare,
+    .csi-timeline {
       break-inside: avoid;
     }
   }
