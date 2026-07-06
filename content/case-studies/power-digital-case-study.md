@@ -96,9 +96,33 @@ body: With the new platform proven, the Terralith was [broken apart](/blog/steps
 title: Hand Over the Keys
 body: Hands-on workshops, best-practices sessions, and troubleshooting guides mean Power Digital's engineers own the platform: maintaining it, extending it, and shipping their own improvements.
 {{< /csi-steps >}}
+
+{{< csi-parallel
+  lane_a="Terralith · Terraform Cloud"
+  lane_b="Modular platform · Spacelift + OpenTofu"
+  a_start="1" a_end="10" a_cap="retired"
+  b_start="4" b_end="13" b_cap="keeps scaling"
+  caption="Both systems ran in parallel: existing clients stayed stable on the Terralith while the new platform took over, so the business never stopped shipping."
+>}}
+phase: 01 · Audit & plan
+---
+phase: 02 · Parallel build
+---
+phase: 03 · Decompose & migrate
+---
+phase: 04 · Team-owned
+---
+marker: New clients onboard here
+at: 4
+span: 3
+---
+marker: Existing clients migrate
+at: 7
+span: 6
+{{< /csi-parallel >}}
 {{< /csi-section >}}
 
-{{< csi-split eyebrow="01 · Architecture" title="One Terralith becomes <span class='csi-grad'>isolated client stacks</span>" media="/img/case-studies/25min-to-3min.png" media_alt="Plan and apply cycles reduced from 25 minutes to under 3 minutes" caption="Init/plan/apply for a client's infrastructure: 25-minute cycles down to sub-3-minute completion." contain="true" variant="pine" >}}
+{{< csi-split eyebrow="01 · Architecture" title="One Terralith becomes <span class='csi-grad'>isolated client stacks</span>" figure="terralith" variant="pine" >}}
 Each client deployment now lives in its own stack with isolated resources and state. Standardized modules replaced repetitive one-off code, with workspaces and explicitly managed dependencies connecting the pieces.
 
 - **Blast radius shrank from "every client" to "one client."** A change to one deployment can no longer ripple across the platform.
@@ -127,22 +151,36 @@ Masterpoint is a proud OpenTofu community member. We believe it's the future of 
 {{< /csi-split >}}
 
 {{< csi-section eyebrow="The Outcomes" title="Business Impact" variant="light" align="center" >}}
-{{< csi-impact >}}
-icon: fa-coins
-title: 10x Lower Automation Costs
-body: A projected ~$5,000/month Terraform Cloud bill became under $500/month on Spacelift, with vastly superior capability rather than a compromise.
+{{< csi-compare before_label="Terraform Cloud" after_label="Spacelift + OpenTofu" >}}
+label: Monthly automation cost
+before: ~$5,000 projected
+after: Under $500
 ---
-icon: fa-gauge-high
-title: 25-Minute Cycles Down to 3
-body: Plan and apply cycles for client infrastructure complete in under 3 minutes, sub-minute in some cases, turning deploys from a scheduling event into a non-event.
+label: Plan & apply cycle
+before: Up to 25 minutes
+after: Under 3 minutes
 ---
+label: Run reliability
+before: Over 50% failed
+after: Failures eliminated
+---
+label: New client onboarding
+before: Manual ClickOps
+after: Fully automated
+---
+label: Blast radius of a change
+before: Every client
+after: One client
+{{< /csi-compare >}}
+
+{{< csi-impact cols="2" >}}
 icon: fa-circle-check
-title: Failed Runs Eliminated
-body: The out-of-memory crashes behind a 50%+ failure rate are gone, and the operational toil went with them. The platform team trusts its automation again.
+title: Automation the Team Trusts
+body: The out-of-memory crashes and timeouts are gone, and the operational toil went with them. Deploys turned from a scheduling event into a non-event the platform team barely thinks about.
 ---
 icon: fa-user-plus
-title: 100+ Clients in 60 Days
-body: In the first two months after migration, Power Digital onboarded more than 100 new clients without issue. The platform is no longer the bottleneck on the primary revenue driver.
+title: Revenue Unblocked
+body: Power Digital onboarded 100+ new clients in the first 60 days after migration, without issue. The platform is no longer the bottleneck on the primary revenue driver.
 ---
 icon: fa-shield-halved
 title: Stronger Security & Compliance
