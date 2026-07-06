@@ -20,17 +20,19 @@ so visual changes to one never affect the others.
 
 | Layout        | Template                              | Used by                                                 | Body class                          | Style prefix            |
 | ------------- | ------------------------------------- | ------------------------------------------------------- | ----------------------------------- | ----------------------- |
-| **Legacy**    | `layouts/case-studies/legacy.html`    | Power Digital (opt-in via `layout: legacy`)             | `case-study-single`                 | `.case-study-single`    |
+| **Legacy**    | `layouts/case-studies/legacy.html`    | **Nobody** (Power Digital migrated to immersive, July 2026) | `case-study-single`             | `.case-study-single`    |
 | **Modern**    | `layouts/case-studies/single.html`    | Default for any case study without a `layout:` override | `case-study-modern`                 | `.case-study-modern`    |
-| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark (opt-in via `layout: immersive`)            | `case-study-modern case-study-immersive` | `.case-study-immersive` |
+| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark, Power Digital (opt-in via `layout: immersive`) | `case-study-modern case-study-immersive` | `.case-study-immersive` |
 
 Routing is via Hugo's `layout:` front matter param. A case study that does
-**not** specify `layout:` uses `single.html` (the modern layout). Power Digital
-opts into legacy with `layout: legacy`; MarketSpark opts into immersive with
-`layout: immersive`.
+**not** specify `layout:` uses `single.html` (the modern layout). MarketSpark
+and Power Digital opt into immersive with `layout: immersive`.
 
-Why this split exists: Power Digital has heavily customized inline styling
-(see `.case-study-single` block in `assets/css/custom.scss`). The **modern**
+Why this split exists: Power Digital originally had heavily customized inline
+styling (the `.case-study-single` block in `assets/css/custom.scss`). It has
+since been rebuilt on the immersive layout, so **legacy currently has zero
+users** — `legacy.html` + the `.case-study-single` CSS block are safe to delete
+whenever someone picks that cleanup up. The **modern**
 layout was designed from scratch and is the default for new case studies. The
 **immersive** layout keeps the modern hero + stat strip **nearly verbatim** (its
 body carries both `case-study-modern` and `case-study-immersive` so the modern
@@ -197,7 +199,7 @@ mint on mint and disappears. Always keep `:not(.button)` on `.cs-article a`.
 
 ---
 
-## Immersive layout (MarketSpark)
+## Immersive layout (MarketSpark, Power Digital)
 
 Opt in with `layout: immersive`. The body element carries **both**
 `case-study-modern` and `case-study-immersive`:
@@ -359,6 +361,45 @@ partial ("Get a standardized, predictable, and efficient infrastructure
 management process" + Schedule button), then `footer`. Same closing as the modern
 case studies and the marketing pages.
 
+### Power Digital page notes (July 2026 rebuild)
+
+Power Digital (`content/case-studies/power-digital-case-study.md`) was rebuilt
+from the legacy layout onto immersive. Decisions specific to that page:
+
+- **Filename/URL kept** (`power-digital-case-study.md` → `/case-studies/power-digital-case-study/`)
+  so existing inbound links and SEO stay intact — don't rename it to match the
+  shorter MarketSpark style.
+- **Card flow** (strict light↔pine alternation, then the pine CTA):
+  About (light split, 65-35) → Challenge (pine section + `csi-list` pain stats) →
+  playbook (light section + `csi-steps`) → three numbered splits
+  (01 Architecture pine / 02 Platform light / 03 Toolchain pine) →
+  Business Impact (light section + `csi-impact`) → custom `callout` CTA.
+- **First production use of `csi-steps`** — the four-move migration playbook
+  ("Audit & Migration Plan" → "Hand Over the Keys"). Verified on light face and
+  mobile.
+- **No testimonial/pullquote**: the source material has no attributed client
+  quote, and we don't fabricate quotes. If Power Digital ever supplies one, a
+  `cs-pullquote` in the playbook section or a closing `csi-testimonial` are the
+  natural slots.
+- **Custom `callout:`** (YAML `>-` block scalar) carries the old article's
+  "three questions" takeaway instead of the generic CTA — proves the
+  `isset`-based override works on the immersive layout too.
+- **Media choices**: hero bg is `/img/landing/power-digital-case-study.png`
+  (the neon-tower PDF-cover art *without* baked-in text — the similar-looking
+  `preview_image` poster has title text baked in, so it stays list-page-only);
+  `25min-to-3min.png` is the only legacy infographic clean enough for the new
+  aesthetic (used `contain="true"` on the 01 pine split, white-card treatment
+  like MarketSpark's AWS diagram); `spacelift.jpg` / `opentofu.jpg` are
+  **deliberately shared with MarketSpark** — they're generic tool imagery, and
+  reuse keeps the visual system consistent. The other legacy infographics
+  (63-hours clip art, tldr bar chart, results collage, x-logos strip) don't fit
+  the immersive aesthetic and are unused (the old PDF at
+  `/download/power-digital-case-study.pdf` still references them).
+- **`download_button` / `banner_*` front matter removed** — those were
+  legacy-layout fields. The immersive page prints well (see Print / PDF), which
+  replaces the old "download the PDF" flow; the PDF file itself still exists at
+  `/download/power-digital-case-study.pdf` if anyone wants to link it.
+
 ## Page-level styling decisions
 
 - **Backdrop is pine** (`$pine = #0e383a`, matching the blog); the article sits on
@@ -505,6 +546,13 @@ Reserve em dashes for rhetorical punch lines and attribution lines.
 
 Use the **Chrome DevTools MCP** to visually verify changes during a session.
 Required because Hugo's CLI build does not catch visual regressions.
+
+If the Chrome DevTools MCP browser profile is locked ("browser is already
+running" — another Claude session owns it), fall back to the **Claude Preview**
+tools: add a `hugo` entry to `.claude/launch.json` (fixed `--port`, since Hugo
+ignores the `PORT` env var) and let `preview_start` own the server process —
+it refuses to attach to a hugo it didn't start. Pick a non-1313 port; the user
+usually has their own `hugo serve` running.
 
 ### Step-by-step
 
