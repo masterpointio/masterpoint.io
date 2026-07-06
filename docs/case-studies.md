@@ -9,7 +9,7 @@ file before ending the session. If something is removed from the codebase,
 remove its mention from this file too (don't keep "we used to have X" notes —
 the codebase is the source of truth, this file describes what IS).
 
-IN THE FUTURE, WE WILL DEPRECATE THE LEGACY LAYOUT AND ONLY USE THE MODERN (RENAMED TO ARTICLE LAYOUT) AND IMMERSIVE LAYOUTS.
+THE LEGACY LAYOUT NOW HAS ZERO PAGES USING IT (Power Digital migrated to immersive). It is kept only until we delete `layouts/case-studies/legacy.html` and the `.case-study-single` CSS block; going forward only the MODERN (RENAMED TO ARTICLE LAYOUT) AND IMMERSIVE LAYOUTS are used.
 
 ---
 
@@ -20,17 +20,18 @@ so visual changes to one never affect the others.
 
 | Layout        | Template                              | Used by                                                 | Body class                          | Style prefix            |
 | ------------- | ------------------------------------- | ------------------------------------------------------- | ----------------------------------- | ----------------------- |
-| **Legacy**    | `layouts/case-studies/legacy.html`    | Power Digital (opt-in via `layout: legacy`)             | `case-study-single`                 | `.case-study-single`    |
+| **Legacy**    | `layouts/case-studies/legacy.html`    | Nothing (unused since Power Digital migrated; pending deletion) | `case-study-single`                 | `.case-study-single`    |
 | **Modern**    | `layouts/case-studies/single.html`    | Default for any case study without a `layout:` override | `case-study-modern`                 | `.case-study-modern`    |
-| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark (opt-in via `layout: immersive`)            | `case-study-modern case-study-immersive` | `.case-study-immersive` |
+| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark, Power Digital (opt-in via `layout: immersive`) | `case-study-modern case-study-immersive` | `.case-study-immersive` |
 
 Routing is via Hugo's `layout:` front matter param. A case study that does
-**not** specify `layout:` uses `single.html` (the modern layout). Power Digital
-opts into legacy with `layout: legacy`; MarketSpark opts into immersive with
-`layout: immersive`.
+**not** specify `layout:` uses `single.html` (the modern layout). MarketSpark
+and Power Digital opt into immersive with `layout: immersive`. Nothing opts
+into legacy anymore.
 
-Why this split exists: Power Digital has heavily customized inline styling
-(see `.case-study-single` block in `assets/css/custom.scss`). The **modern**
+Why this split exists: the legacy layout carried Power Digital's original
+heavily customized inline styling (the `.case-study-single` block in
+`assets/css/custom.scss`); both are now unused. The **modern**
 layout was designed from scratch and is the default for new case studies. The
 **immersive** layout keeps the modern hero + stat strip **nearly verbatim** (its
 body carries both `case-study-modern` and `case-study-immersive` so the modern
@@ -45,7 +46,8 @@ selector under its prefix.
 `assets/css/case-studies.scss`, which is `@import`ed at the **end** of
 `custom.scss` so the cascade order is unchanged (compiled output is byte-identical).
 The **legacy** `.case-study-single` block and the `#caseStudiesPage` list-page grid
-stay in `custom.scss`. THIS WILL BE REMOVED SOON AFTER WE MIGRATE ALL CASE STUDIES TO THE NEW LAYOUT.
+stay in `custom.scss`. THE `.case-study-single` BLOCK IS NOW DEAD CODE (no page uses
+the legacy layout) — REMOVE IT TOGETHER WITH `legacy.html` when doing the cleanup pass.
 
 ---
 
@@ -197,7 +199,7 @@ mint on mint and disappears. Always keep `:not(.button)` on `.cs-article a`.
 
 ---
 
-## Immersive layout (MarketSpark)
+## Immersive layout (MarketSpark, Power Digital)
 
 Opt in with `layout: immersive`. The body element carries **both**
 `case-study-modern` and `case-study-immersive`:
@@ -359,6 +361,28 @@ partial ("Get a standardized, predictable, and efficient infrastructure
 management process" + Schedule button), then `footer`. Same closing as the modern
 case studies and the marketing pages.
 
+### Power Digital page specifics
+
+- **No client quote exists**, so the page has no `cs-pullquote` / `csi-testimonial`
+  (never invent quotes or people). If Power Digital ever provides an attributed
+  quote, slot a `cs-pullquote` between the impact grid and the ownership band.
+- **The PDF download is preserved via the custom `callout:`** (inline link to
+  `/download/power-digital-case-study.pdf`). The separate `/power-digital-case-study/`
+  **landing** page (`content/landing/power-digital-case-study.md`) still exists with its
+  own download button and is untouched by the case-study page.
+- **The Challenge band uses `csi-list` as its primary symptom grid** (4 stat-led
+  cards), accepting the automatic compact-band treatment — intentional: the
+  challenge reads as a dense, skimmable brief for engineering leadership.
+- **Stat-strip values must stay short or they wrap** — `25 → 3 min`, not
+  `25 min → 3 min` (the longer form broke onto two lines at desktop).
+- **Images:** reuses the shared `spacelift.jpg` / `opentofu.jpg` brand visuals and
+  `25min-to-3min.png` (with `contain="true"`); the dated legacy infographics
+  (tl;dr $5000→$500, 63-hours cartoon, results collage, website screenshots) were
+  deliberately dropped and remain in `static/img/case-studies/` only because the
+  downloadable PDF still exists.
+- **"Terralith" links to the Terralith blog post** and the audit link points to
+  `/services/audit/`, mirroring MarketSpark's internal-link pattern.
+
 ## Page-level styling decisions
 
 - **Backdrop is pine** (`$pine = #0e383a`, matching the blog); the article sits on
@@ -458,7 +482,7 @@ Every modern case study gets an inline **"In This Case Study Success Story"**
 contents card automatically — no shortcode, no per-page wiring. It lists every
 H2 section as a numbered card with a gradient left bar. **Modern layout only** —
 `immersive.html` does not inject the TOC (its body is `csi-*` cards, not H2
-sections), so the immersive MarketSpark page has no contents card.
+sections), so the immersive pages (MarketSpark, Power Digital) have no contents card.
 
 - **Auto-injected by the layout.** `layouts/case-studies/single.html` renders
   the card from `partials/case-study-toc.html` and splices it into `.Content`
