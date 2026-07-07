@@ -387,11 +387,12 @@ long slug and the deleted top-level PDF landing page).
 
 - **Card flow**: TLDR band (`tldr="true"`) → About (65-35 split, team photo,
   `download` PDF button) → Challenge (pine 75-25 flip split, two images via
-  `media2`) → playbook (`csi-steps` + `csi-timeline`) → 01/02 splits (01:
-  `figure="power-digital/terralith"`; 02 merges Spacelift + OpenTofu, one
-  image) → Business Impact pine (`csi-compare` + `csi-impact cols="4"`) →
-  Takeaways light (`csi-questions` + outro) → `callout` CTA (classic copy +
-  PDF link; `callout: ""` would suppress the card entirely).
+  `media2`) → playbook (`csi-steps` + `csi-timeline`) → Architecture split
+  (`figure="power-digital/terralith"`) → Platform & Tooling split (Spacelift +
+  OpenTofu merged, one image; eyebrows carry no numbers) → Business Impact
+  pine (white `csi-compare` + `csi-impact cols="4"`) → Takeaways light
+  (`csi-questions` + outro) → `callout` CTA (classic copy + PDF link;
+  `callout: ""` would suppress the card entirely).
 - **No attributed quote** (we don't fabricate; the TLDR band is deliberately
   unattributed). **Media** lives in `static/img/case-studies/power-digital/`
   (shared `spacelift.jpg`/`opentofu.jpg` stay in the parent); client logo is
