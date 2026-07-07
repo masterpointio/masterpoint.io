@@ -2847,7 +2847,7 @@ footer {
 //   }
 // }
 
-#spacelift-service {
+.service-section#page-spacelift-services {
   padding: 7.5rem 0 6.4rem;
   background: #000;
   color: #fff;
@@ -3981,7 +3981,8 @@ footer {
   }
 }
 
-#page-iac-audit-services {
+#page-iac-audit-services,
+#page-spacelift-services {
   position: relative;
   header {
     position: relative;
@@ -4105,7 +4106,8 @@ font-size: 2.8rem;
   }
 }
 
-#iac-what-we-do {
+#iac-what-we-do,
+#spacelift-what-we-do {
   padding: 3.7rem 0 20px;
   position: relative;
 }
@@ -4133,7 +4135,8 @@ font-size: 2.8rem;
   }
 }
 
-#iac-the-results {
+#iac-the-results,
+#spacelift-results {
   padding: 23px 0 3.7rem;
   background: #fff;
 }
@@ -4172,7 +4175,8 @@ padding: 2.5rem; border-radius: 1.5rem;
   }
 }
 
-#iac-what-you-get {
+#iac-what-you-get,
+#spacelift-case-studies {
   padding: 4.65rem 0 5rem;
   background: $pine;
   color: #fff;
@@ -4255,7 +4259,8 @@ font-size: 1.55rem;
   }
 }
 
-#iac-questions {
+#iac-questions,
+#spacelift-questions {
   padding: 4.2rem 0 4.55rem;
   background: #fff;
   position: relative;
@@ -4306,13 +4311,127 @@ font-size: 1.55rem;
   }
 }
 
-#iac-cta {
+#iac-cta,
+#spacelift-cta {
 	padding: 4.32rem 0 4.9rem;
 	color: #fff; background: $pine;
   .bg-image{
     width: 100%; height: 100%; position: absolute;
     &:before{
       display: none;
+    }
+  }
+}
+
+/* Spacelift landing page (/spacelift/) — shares the iac-audit section system above */
+#spacelift-trusted-by {
+  padding: 2.75rem 0;
+  background: #fff;
+  .container {
+    max-width: 100%;
+    padding: 0;
+  }
+}
+
+#page-spacelift-services {
+  #banner {
+    background: $pine;
+    padding-bottom: 4.6rem;
+    &:before,
+    &:after {
+      display: none;
+    }
+    .bannerTxtBx {
+      color: rgba(255, 255, 255, 0.92);
+    }
+    h3 {
+      color: #fff;
+    }
+    .btn-outline-gradient {
+      color: #fff;
+    }
+    .bannerBtn {
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+#spacelift-what-we-do {
+  .platform-tile {
+    padding-top: 5.5rem;
+  }
+  .platformIcon {
+    font-size: 2.05rem;
+    color: #0f393b;
+    opacity: 0.85;
+  }
+}
+
+#spacelift-results {
+  .iac-results-tile a:not(.button) {
+    color: $vanilla;
+    text-decoration: underline;
+  }
+}
+
+#spacelift-case-studies {
+  .card a {
+    color: $vanilla;
+    font-weight: 700;
+  }
+}
+
+#spacelift-quotes {
+  padding: 3.85rem 0 4.35rem;
+  background: #f4f4f4;
+  #spacelift-quotes-row {
+    margin-top: 1.4rem;
+    justify-content: center;
+    .col {
+      margin-top: 0.7rem;
+      margin-bottom: 0.7rem;
+    }
+    .card {
+      border: none;
+      border-radius: 1.5rem;
+      padding: 1.4rem 1.6rem;
+      .icon {
+        color: $highlight;
+        font-size: 1.6rem;
+        padding-bottom: 0.4rem;
+      }
+      p {
+        font-size: 1.11rem;
+        line-height: 1.4em;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+#spacelift-beyond {
+  padding: 4.2rem 0 4.35rem;
+  background: #fff;
+  ul.checked-list li {
+    padding-bottom: 1rem;
+    p {
+      margin-bottom: 0;
+    }
+  }
+}
+
+#spacelift-why-us {
+  padding: 3.85rem 0 4.35rem;
+  background: #f4f4f4;
+  .spacelift-badge {
+    max-width: 240px;
+    width: 100%;
+  }
+  ul.checked-list li {
+    padding-bottom: 1rem;
+    p {
+      margin-bottom: 0;
     }
   }
 }

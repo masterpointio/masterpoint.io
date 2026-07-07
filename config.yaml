@@ -58,6 +58,15 @@ menu:
     - name: Our Services
       url: /services/
       weight: 20
+      identifier: services
+    - name: All Services
+      url: /services/
+      weight: 10
+      parent: services
+    - name: Spacelift
+      url: /spacelift/
+      weight: 20
+      parent: services
     - name: Who We Are
       url: /who-we-are/
       weight: 30

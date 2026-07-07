@@ -107,6 +107,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 - `{{< process >}}` - Process steps
 - `{{< supports >}}` - Support/technology logos
 - `{{< client-logos >}}` - Client logo displays
+- `{{< trusted-by >}}` - "Trusted by innovators at every scale" heading + client logo carousel (used on homepage and /spacelift/)
 
 ## Code Quality & Linting
 
