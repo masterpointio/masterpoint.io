@@ -132,7 +132,7 @@ After weighing the options, Masterpoint recommended [Spacelift](https://spacelif
 All 43,000+ resources moved off Terraform Cloud without issue. Spacelift is a platform Masterpoint works with extensively.
 {{< /csi-split >}}
 
-{{< csi-split eyebrow="03 · Toolchain" title="Terraform → <span class='csi-grad'>OpenTofu</span>" media="/img/case-studies/opentofu.jpg" media_alt="OpenTofu, the open-source infrastructure as code tool" caption="<a href='https://opentofu.org/' target='_blank' rel='noopener noreferrer'>OpenTofu</a> is the open-source Terraform successor under the Linux Foundation." variant="pine" >}}
+{{< csi-split eyebrow="03 · Toolchain" title="Terraform → <span class='csi-grad'>OpenTofu</span>" media="/img/case-studies/opentofu.jpg" media_alt="OpenTofu, the open-source infrastructure as code tool" caption="<a href='https://opentofu.org/' target='_blank' rel='noopener noreferrer'>OpenTofu</a> is a reliable, enterprise-grade infrastructure as code (IaC) tool under the Linux Foundation." variant="pine" >}}
 In the same migration, every resource moved from Terraform to [OpenTofu](https://opentofu.org/), the open-source successor to Terraform:
 
 - **Licensing risk, eliminated.** No exposure to Terraform's license changes, legal uncertainty, or future commercial pricing decisions.
