@@ -16,14 +16,14 @@ hero_aside_alt: "Neon-lit skyline artwork from the Power Digital case study"
 
 # At-a-glance stat strip (appears under hero)
 stat_bar:
+  - value: "100+"
+    label: "new clients onboarded in the first 60 days after migration"
   - value: "10x"
     label: "lower infrastructure automation costs"
   - value: "25 → 3 min"
     label: "plan & apply cycles for client infrastructure"
   - value: "43,000+"
     label: "resources migrated to <a href='https://spacelift.io/' target='_blank' rel='noopener'>Spacelift</a> & <a href='https://opentofu.org/' target='_blank' rel='noopener'>OpenTofu</a>"
-  - value: "100+"
-    label: "new clients onboarded in the first 60 days after migration"
 
 # Preview / OG
 preview_image: /img/case-studies/power-digital-case-study-preview.jpg
