@@ -17,11 +17,11 @@ hero_aside_alt: "Neon-lit skyline artwork from the Power Digital case study"
 # At-a-glance stat strip (appears under hero)
 stat_bar:
   - value: "100+"
-    label: "new clients onboarded in the first 60 days after migration"
+    label: "<strong class='csi-grad'>new clients</strong> onboarded in the first 60 days after migration"
+  - value: "25 → 3 min"
+    label: "plan & apply deployment cycles"
   - value: "10x"
     label: "lower infrastructure automation costs"
-  - value: "25 → 3 min"
-    label: "plan & apply cycles for client infrastructure"
   - value: "43,000+"
     label: "resources migrated to <a href='https://spacelift.io/' target='_blank' rel='noopener'>Spacelift</a> & <a href='https://opentofu.org/' target='_blank' rel='noopener'>OpenTofu</a>"
 
@@ -80,7 +80,7 @@ body: Spent waiting on plan/apply loops and debugging broken runs instead of shi
 None of this was a design failure: the original system did its job until the business outgrew it. But with client onboarding, the primary revenue driver, running at the speed of the slowest Terraform run, the ceiling had become a business problem, not just an engineering one.
 {{< /csi-split >}}
 
-{{< csi-section eyebrow="What Masterpoint Did" title="A migration engineered so <span class='csi-grad'>the business never paused</span>" variant="light" align="center" >}}
+{{< csi-section eyebrow="What Masterpoint Did" title="A modernization project engineered so <span class='csi-grad'>the business never paused</span>" variant="light" align="center" >}}
 You can't put a revenue-critical platform on hold to rebuild it. The engagement opened with Masterpoint's [deep-dive Infrastructure as Code audit](/services/audit/): mapping the Terralith, interviewing stakeholders across teams, and defining the future state with Power Digital's leadership.
 
 {{< csi-steps >}}
@@ -196,7 +196,7 @@ body: Also no. A 50%+ run failure rate, 25-minute plans, and at least 63 lost en
 ---
 question: Can it meet future demands?
 body: The one that matters most, and it's okay if the answer is no. Asking it early turns a forced migration into a deliberate one.
+---
+outro: It's okay if an answer is "no" — this story wasn't a failure of the original design, it was an evolution to remove scaling limits. A good problem to have, and one [Masterpoint](/contact/) solves every day.
 {{< /csi-questions >}}
-
-It's okay if an answer is "no" — this story wasn't a failure of the original design, it was an evolution to remove scaling limits. A good problem to have, and one [Masterpoint](/contact/) solves every day.
 {{< /csi-section >}}
