@@ -42,7 +42,7 @@ Uncover the inefficiencies in your infrastructure with our IaC Audit.
 <li>We’ll talk goals</li>
 <li>Interview your team</li>
 <li>Assess your setup</li>
-<li>and provide practical recommendations that will set your team up for success.</li>
+<li>Provide practical recommendations that will set your team up for success.</li>
 </ol>
 </div>
 </div>

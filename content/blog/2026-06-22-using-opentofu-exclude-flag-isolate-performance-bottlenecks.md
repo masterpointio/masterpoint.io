@@ -40,7 +40,10 @@ There's a better, less common use case: **pair `-exclude` with OpenTelemetry tra
   </div>
 </div>
 
-OpenTelemetry traces locate the problem and using TF and the exclude flag proves it.
+<div style="margin:2rem 0; padding:1.25rem 1.5rem; background:#f6faf7; border:1px solid #d6e6d8; border-left:4px solid #00a4a4; border-radius:0 10px 10px 0;">
+  <div style="font-weight:800; color:#0e383a; margin-bottom:.5rem;">You already know the cause from the traces — so why prove it with <code>-exclude</code>?</div>
+  <div style="color:#333;">The fix usually involves nontrivial engineering work with real blast radius — too big a commitment to make on circumstantial evidence. The exclude flag lets you test that hypothesis in minutes and gives you the hard evidence to justify the work, without changing a line of code or any possibility of affecting real infrastructure.</div>
+</div>
 
 ## Real-World Story: Cutting Plan Times From 7 Minutes to 2 Minutes
 
