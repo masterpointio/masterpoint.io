@@ -128,18 +128,18 @@ Instead of one shared [Terralith](/blog/terralith-monolithic-terraform-architect
 {{< /csi-split >}}
 
 {{< csi-split eyebrow="02 · Platform & Tooling" title="Terraform Cloud → <span class='csi-grad'>Spacelift</span> &amp; OpenTofu" media="/img/case-studies/spacelift.jpg" media_alt="Spacelift: provision, configure, govern" variant="light" flip="true" >}}
-After weighing the options, Masterpoint recommended [Spacelift](https://spacelift.io/), a leading TACOS (Terraform Automation and Collaboration Software) platform:
+Masterpoint recommended [Spacelift](https://spacelift.io/), a leading TACOS (Terraform Automation and Collaboration Software) platform:
 
-- **Pricing that matches usage.** Terraform Cloud bills per resource, so every client signed raises the bill permanently. Spacelift bills on usage: annual costs dropped from ~$60,000 projected in 2024 to under $6,000, a gap that widens with every client added.
-- **Guardrails as code.** Operational and security policies are defined and enforced in the platform itself through [Open Policy Agent](https://www.openpolicyagent.org/), no third-party bolt-ons.
-- **GitOps.** Automated, granular control over stacks and deployments. We manage Spacelift with Spacelift via Infrastructure as Code, so Power Digital can grow and scale without issue.
+- **Pricing that matches usage.** Terraform Cloud bills per resource; Spacelift bills on usage. Annual costs dropped from ~$60,000 projected in 2024 to under $6,000, a gap that widens with every client added.
+- **Guardrails as code.** Operational and security policies enforced in the platform itself through [Open Policy Agent](https://www.openpolicyagent.org/), no bolt-ons.
+- **GitOps.** Granular, automated control over stacks and deployments — we manage Spacelift with Spacelift via Infrastructure as Code.
 
-In the same migration, every resource moved from Terraform to [OpenTofu](https://opentofu.org/), the open-source successor to Terraform:
+The same migration moved every resource from Terraform to [OpenTofu](https://opentofu.org/), its open-source successor:
 
 - **Licensing flexibility.** No exposure to future Terraform license changes or the legal questions that come with them.
-- **No vendor lock-in.** Open source under the Linux Foundation: vendor-neutral governance and a fast-growing contributor ecosystem protect against commercial cost increases.
+- **No vendor lock-in.** Open source under the Linux Foundation, with vendor-neutral governance and a fast-growing contributor ecosystem.
 
-All 43,000+ resources moved without issue. Masterpoint works with Spacelift extensively and is a proud OpenTofu community member — a 43,000-resource migration completed without incident is exactly why we believe it's the future of IaC.
+All 43,000+ resources moved without incident. Masterpoint works with Spacelift extensively and is a proud OpenTofu community member — we believe this stack is the future of IaC.
 {{< /csi-split >}}
 
 {{< csi-section id="the-results" eyebrow="The Outcomes" title="Business Impact" variant="pine" align="center" >}}
