@@ -4324,22 +4324,6 @@ font-size: 1.55rem;
 }
 
 /* Spacelift landing page (/spacelift/) — shares the iac-audit section system above */
-.demo-note {
-  position: sticky;
-  top: 0;
-  z-index: 1030;
-  background: $vanilla;
-  color: $pine;
-  text-align: center;
-  padding: 9px 18px;
-  font-size: 0.95rem;
-  line-height: 1.4em;
-  a {
-    color: $pine;
-    text-decoration: underline;
-  }
-}
-
 #spacelift-trusted-by {
   padding: 2.75rem 0;
   background: #fff;
@@ -4347,11 +4331,6 @@ font-size: 1.55rem;
     max-width: 100%;
     padding: 0;
   }
-}
-
-body#page-spacelift-services {
-  /* `hidden` on body breaks position: sticky (the demo-note); `clip` clips the same without creating a scroll container */
-  overflow-x: clip;
 }
 
 #page-spacelift-services {
