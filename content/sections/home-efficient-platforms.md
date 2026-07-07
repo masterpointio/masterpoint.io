@@ -14,7 +14,7 @@ id: efficient-platforms
 
 <div class="row platform-row">
 
-<div class="col col-12 col-md-4">
+<div class="col col-12 col-sm-6 col-lg-3">
 <div class="platform-tile platform-tile-1">
 <div class="platformIcon"><img src="img/noun-developer-7187679.svg" alt="Developer" /></div>
 <div class="platformCount">2000+</div>
@@ -22,7 +22,7 @@ id: efficient-platforms
 </div>
 </div>
 
-<div class="col col-12 col-md-4">
+<div class="col col-12 col-sm-6 col-lg-3">
 <div class="platform-tile platform-tile-2">
 <div class="platformIcon"><img src="img/noun-cycle-7222105.svg" alt="Cycle" /></div>
 <div class="platformCount">10x</div>
@@ -30,11 +30,19 @@ id: efficient-platforms
 </div>
 </div>
 
-<div class="col col-12 col-md-4">
+<div class="col col-12 col-sm-6 col-lg-3">
 <div class="platform-tile platform-tile-2">
 <div class="platformIcon"><img src="img/noun-reduction-7894266.svg" alt="Reduction" /></div>
 <div class="platformCount">10x</div>
 <div class="platformCTA">Reduction in Infrastructure Automation Costs</div>
+</div>
+</div>
+
+<div class="col col-12 col-sm-6 col-lg-3">
+<div class="platform-tile platform-tile-3">
+<div class="platformIcon"><img src="img/noun-rocket-deploy.svg" alt="Deployment Frequency" /></div>
+<div class="platformCount">150%</div>
+<div class="platformCTA">Increase in Deployment Frequency</div>
 </div>
 </div>
 
