@@ -17,7 +17,7 @@ hero_aside_alt: "Neon-lit skyline artwork from the Power Digital case study"
 # At-a-glance stat strip (appears under hero)
 stat_bar:
   - value: "10x"
-    label: "lower projected infrastructure automation costs"
+    label: "lower infrastructure automation costs"
   - value: "25 → 3 min"
     label: "plan & apply cycles for client infrastructure"
   - value: "43,000+"
