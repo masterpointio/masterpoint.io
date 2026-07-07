@@ -1,6 +1,7 @@
 // Case study layouts — modern (.case-study-modern) + immersive (.case-study-immersive).
 // Extracted from custom.scss and @imported there in place to preserve cascade order.
-// The legacy .case-study-single layout and the #caseStudiesPage index grid remain in custom.scss.
+// The #caseStudiesPage index grid remains in custom.scss. (The legacy
+// .case-study-single layout was deleted in July 2026 — no case study uses it.)
 
 @keyframes csHeroAsideFloat {
   0%, 100% { transform: translateY(0); }
@@ -14,9 +15,8 @@
 
 // =============================================================================
 // MODERN CASE STUDY LAYOUT  (.case-study-modern)
-// Used by content/case-studies/*.md unless they specify `layout: legacy`.
-// Power Digital uses the legacy layout (`.case-study-single`) — keep that
-// untouched. Everything below is scoped under `.case-study-modern`.
+// The default for content/case-studies/*.md without a `layout:` override.
+// Everything below is scoped under `.case-study-modern`.
 // =============================================================================
 
 $cs-mint: #2ad9c2;

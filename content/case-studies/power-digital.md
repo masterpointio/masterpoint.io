@@ -8,7 +8,7 @@ layout: immersive
 # Hero
 eyebrow: "CASE STUDY SUCCESS STORY"
 client: "Power Digital"
-client_logo: /img/case-studies/power-digital-logo.png
+client_logo: /img/case-studies/power-digital-logo-white.png
 client_logo_height: 38px
 hero_title: "How Power Digital Achieved a <span class='text-gradient'>10x Reduction in Infrastructure Automation Costs</span>"
 hero_aside_image: /img/landing/power-digital-case-study.png
@@ -119,7 +119,7 @@ fade: in
 Both systems ran in parallel: existing clients stayed stable on the Terralith while the new platform took over, so the business never stopped shipping.
 {{< /csi-section >}}
 
-{{< csi-split eyebrow="01 · Architecture" title="One Terralith becomes <span class='csi-grad'>isolated client stacks</span>" figure="terralith" variant="pine" >}}
+{{< csi-split eyebrow="01 · Architecture" title="One Terralith becomes <span class='csi-grad'>isolated client stacks</span>" figure="power-digital/terralith" variant="pine" >}}
 Instead of one shared [Terralith](/blog/terralith-monolithic-terraform-architecture/), each client deployment now lives in its own stack with isolated resources and state, connected through workspaces where the pieces need each other.
 
 - **Blast radius shrank from "every client" to one fully isolated client.** A change to one deployment can no longer ripple across the platform.
@@ -137,7 +137,7 @@ After weighing the options, Masterpoint recommended [Spacelift](https://spacelif
 All 43,000+ resources moved off Terraform Cloud without issue. Spacelift is a platform Masterpoint works with extensively.
 {{< /csi-split >}}
 
-{{< csi-split eyebrow="03 · Toolchain" title="Terraform → <span class='csi-grad'>OpenTofu</span>" media="/img/case-studies/opentofu.jpg" media_alt="OpenTofu, the open-source infrastructure as code tool" caption="<a href='https://opentofu.org/' target='_blank' rel='noopener noreferrer'>OpenTofu</a> is a reliable, enterprise-grade infrastructure as code (IaC) tool under the Linux Foundation." variant="pine" >}}
+{{< csi-split eyebrow="03 · Tooling" title="Terraform → OpenTofu" media="/img/case-studies/opentofu.jpg" media_alt="OpenTofu, the open-source infrastructure as code tool" caption="<a href='https://opentofu.org/' target='_blank' rel='noopener noreferrer'>OpenTofu</a> is a reliable, enterprise-grade infrastructure as code (IaC) tool under the Linux Foundation." variant="pine" >}}
 In the same migration, every resource moved from Terraform to [OpenTofu](https://opentofu.org/), the open-source successor to Terraform:
 
 - **Licensing flexibility.** No exposure to future Terraform license changes or the legal questions that come with them.

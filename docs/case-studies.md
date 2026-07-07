@@ -9,18 +9,18 @@ file before ending the session. If something is removed from the codebase,
 remove its mention from this file too (don't keep "we used to have X" notes —
 the codebase is the source of truth, this file describes what IS).
 
-IN THE FUTURE, WE WILL DEPRECATE THE LEGACY LAYOUT AND ONLY USE THE MODERN (RENAMED TO ARTICLE LAYOUT) AND IMMERSIVE LAYOUTS.
-
 ---
 
 ## Architecture overview
 
-There are **three case-study layouts** in this codebase. They are kept isolated
-so visual changes to one never affect the others.
+There are **two case-study layouts** in this codebase. They are kept isolated
+so visual changes to one never affect the other. (A third **legacy** layout —
+`legacy.html` + the `.case-study-single` CSS block in `custom.scss` — was
+deleted in July 2026 once Power Digital, its last user, was rebuilt on
+immersive.)
 
 | Layout        | Template                              | Used by                                                 | Body class                          | Style prefix            |
 | ------------- | ------------------------------------- | ------------------------------------------------------- | ----------------------------------- | ----------------------- |
-| **Legacy**    | `layouts/case-studies/legacy.html`    | **Nobody** (Power Digital migrated to immersive, July 2026) | `case-study-single`             | `.case-study-single`    |
 | **Modern**    | `layouts/case-studies/single.html`    | Default for any case study without a `layout:` override | `case-study-modern`                 | `.case-study-modern`    |
 | **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark, Power Digital (opt-in via `layout: immersive`) | `case-study-modern case-study-immersive` | `.case-study-immersive` |
 
@@ -28,11 +28,7 @@ Routing is via Hugo's `layout:` front matter param. A case study that does
 **not** specify `layout:` uses `single.html` (the modern layout). MarketSpark
 and Power Digital opt into immersive with `layout: immersive`.
 
-Why this split exists: Power Digital originally had heavily customized inline
-styling (the `.case-study-single` block in `assets/css/custom.scss`). It has
-since been rebuilt on the immersive layout, so **legacy currently has zero
-users** — `legacy.html` + the `.case-study-single` CSS block are safe to delete
-whenever someone picks that cleanup up. The **modern**
+The **modern**
 layout was designed from scratch and is the default for new case studies. The
 **immersive** layout keeps the modern hero + stat strip **nearly verbatim** (its
 body carries both `case-study-modern` and `case-study-immersive` so the modern
@@ -46,8 +42,7 @@ selector under its prefix.
 `$cs-*` vars and the `cs-brand-gradient` mixins) — lives in its own partial,
 `assets/css/case-studies.scss`, which is `@import`ed at the **end** of
 `custom.scss` so the cascade order is unchanged (compiled output is byte-identical).
-The **legacy** `.case-study-single` block and the `#caseStudiesPage` list-page grid
-stay in `custom.scss`. THIS WILL BE REMOVED SOON AFTER WE MIGRATE ALL CASE STUDIES TO THE NEW LAYOUT.
+The `#caseStudiesPage` list-page grid stays in `custom.scss`.
 
 ---
 
@@ -247,7 +242,7 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 | Shortcode         | Purpose                                                        | Key args                                                                              |
 | ----------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
 | `csi-section`     | A card (eyebrow + headline + block prose).                     | `eyebrow`, `title` (HTML ok), `variant`, `align`, `num`, `accent`                     |
-| `csi-split`       | Text + visual side-by-side; `flip="true"` alternates sides.    | `eyebrow`, `title`, `media`, `media_alt`, `media2`/`media2_alt` (optional second image stacked under the first in the same column), `figure` (CSS-drawn figure partial from `layouts/partials/case-studies/figures/<name>.html` instead of an image — e.g. `figure="terralith"`), `flip`, `contain`, `caption`, `variant`, `ratio` (`50-50` default / `65-35` / `75-25`, text wider — the ratios auto-reverse their column widths under `flip`, since flip moves the media into the first grid track via `order`) |
+| `csi-split`       | Text + visual side-by-side; `flip="true"` alternates sides.    | `eyebrow`, `title`, `media`, `media_alt`, `media2`/`media2_alt` (optional second image stacked under the first in the same column), `figure` (CSS-drawn figure partial from `layouts/partials/case-studies/figures/<name>.html` instead of an image — subfolders work, e.g. `figure="power-digital/terralith"` for page-specific figures), `flip`, `contain`, `caption`, `variant`, `ratio` (`50-50` default / `65-35` / `75-25`, text wider — the ratios auto-reverse their column widths under `flip`, since flip moves the media into the first grid track via `order`) |
 | `csi-steps`       | Numbered process cards. Place INSIDE a `csi-section`.          | inner blocks split by `---`, each `title:` / `body:`                                  |
 | `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`; `cols="2"` for a slimmed 2-up grid (pairs with `csi-compare`, capped to the same 980px) |
 | `csi-compare`     | "Then / now" migration ledger: each metric reads across from the muted old world to the bold new world (gradient arrow between). INSIDE a `csi-section`. Owns a page's hard numbers — pair with a slimmed qualitative `csi-impact cols="2"` so figures aren't stated twice. Mobile stacks each row (metric on top, before → after beneath, per-cell tags replace the header row). | `before_label`, `after_label`; inner blocks split by `---`, each `label:` / `before:` / `after:` |
@@ -384,18 +379,21 @@ case studies and the marketing pages.
 Power Digital (`content/case-studies/power-digital-case-study.md`) was rebuilt
 from the legacy layout onto immersive. Decisions specific to that page:
 
-- **Filename/URL kept** (`power-digital-case-study.md` → `/case-studies/power-digital-case-study/`)
-  so existing inbound links and SEO stay intact — don't rename it to match the
-  shorter MarketSpark style.
+- **Slug shortened July 2026** (`power-digital.md` → `/case-studies/power-digital/`,
+  matching the MarketSpark style). 301 redirects in `netlify.toml` cover both
+  old URLs: `/case-studies/power-digital-case-study/` (previous immersive slug)
+  and `/power-digital-case-study/` (the deleted top-level PDF landing page).
 - **Card flow** (strict light↔pine alternation, then the pine CTA):
-  About (light split, 65-35, x-logos art, no `technologies` param) →
-  Challenge (pine 75-25 flip split: scalability art at 25% left, prose +
-  `csi-list` pain stats at 75%) →
+  TLDR statement (pine `csi-testimonial tldr="true"` right under the stat
+  strip) → About (light split, 65-35, team photo `power-digital-team.jpg`, no
+  `technologies` param, `download` PDF button on the card) →
+  Challenge (pine 75-25 flip split: scalability art + 63-hours infographic
+  stacked at 25% left via `media2`, prose + `csi-list` pain stats at 75%) →
   playbook (light section + `csi-steps` + `csi-timeline` cutover bars) → three
-  numbered splits (01 Architecture pine w/ `figure="terralith"` / 02 Platform
-  light / 03 Toolchain pine) → Business Impact (light section + `csi-compare`
-  ledger + `csi-impact cols="2"`) → Takeaways (pine section + `csi-questions`
-  three-questions cards) → custom `callout` CTA.
+  numbered splits (01 Architecture pine w/ `figure="power-digital/terralith"` /
+  02 Platform light / 03 Toolchain pine) → Business Impact (light section +
+  `csi-compare` ledger + `csi-impact cols="2"`) → Takeaways (pine section +
+  `csi-questions` three-questions cards + verdict outro) → custom `callout` CTA.
 - **First production use of `csi-steps`** — the four-move migration playbook
   ("Audit & Migration Plan" → "Knowledge Transfer & Trainings"). Verified on
   light face and mobile.
@@ -407,13 +405,15 @@ from the legacy layout onto immersive. Decisions specific to that page:
   so figures aren't triple-stated), the `csi-timeline` cutover bars (Terralith
   0–70% fading out, platform 30–100% fading in, dashed cutover marker at 62%),
   the `csi-questions` takeaways cards (the "three questions worth asking"
-  evaluation framework), and the CSS-drawn `figure="terralith"` decomposition
-  diagram (monolith cell-grid → gradient arrow → per-client stack grid,
-  monospace client labels).
-- **No testimonial/pullquote**: the source material has no attributed client
-  quote, and we don't fabricate quotes. If Power Digital ever supplies one, a
-  `cs-pullquote` in the playbook section or a closing `csi-testimonial` are the
-  natural slots.
+  evaluation framework), and the CSS-drawn `figure="power-digital/terralith"`
+  decomposition diagram (monolith cell-grid → gradient arrow → per-client stack
+  grid, monospace client labels; the partial lives in
+  `figures/power-digital/` since it's specific to this page).
+- **No attributed quote**: the source material has no attributed client quote,
+  and we don't fabricate quotes — the page-top `csi-testimonial tldr="true"`
+  band is explicitly an unattributed TLDR statement (no quote mark). If Power
+  Digital ever supplies a real quote, a `cs-pullquote` in the playbook section
+  or a closing attributed `csi-testimonial` are the natural slots.
 - **Custom `callout:`** (YAML `>-` block scalar) is the classic default CTA
   text plus a "download this case study as a PDF" link
   (`/download/power-digital-case-study.pdf`), rendered as the standard closing
@@ -426,11 +426,14 @@ from the legacy layout onto immersive. Decisions specific to that page:
   `preview_image` poster has title text baked in, so it stays list-page-only);
   `spacelift.jpg` / `opentofu.jpg` are **deliberately shared with
   MarketSpark** — they're generic tool imagery, and reuse keeps the visual
-  system consistent. The legacy infographics (25min-to-3min clocks, 63-hours
-  clip art, tldr bar chart, results collage, x-logos strip) don't fit the
-  immersive aesthetic and are unused — the 01 split's 25→3 story is told by
-  the `csi-compare` ledger and the terralith figure instead (the old PDF at
-  `/download/power-digital-case-study.pdf` still references those images).
+  system consistent. The client logo is the full electric-blue wordmark
+  (`power-digital-logo.png`, from Power Digital's own CDN); the About photo
+  (`power-digital-team.jpg`) likewise. Of the old PDF-era infographics only
+  `63-hours-…​.png` (challenge split, on a white backing) and the scalability
+  graph survive — the rest (25min clocks, tldr bar chart, results collage,
+  x-logos strip, old flag-only logo) were deleted in July 2026 as unused
+  (the old PDF at `/download/power-digital-case-study.pdf` is a static file
+  and unaffected).
 - **`download_button` / `banner_*` front matter removed** — those were
   legacy-layout fields. The immersive page prints well (see Print / PDF), which
   replaces the old "download the PDF" flow; the PDF file itself still exists at

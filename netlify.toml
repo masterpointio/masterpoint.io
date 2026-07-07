@@ -45,6 +45,20 @@ to = "/tying-the-masterpoint-knot/"
 status = 301
 force = true
 
+# case study slug shortened (power-digital-case-study -> power-digital)
+[[redirects]]
+from = "/case-studies/power-digital-case-study/"
+to = "/case-studies/power-digital/"
+status = 301
+force = true
+
+# old top-level landing page for the case study, removed July 2026
+[[redirects]]
+from = "/power-digital-case-study/"
+to = "/case-studies/power-digital/"
+status = 301
+force = true
+
 [[redirects]]
 from = "/*"
 to = "/404.html"
