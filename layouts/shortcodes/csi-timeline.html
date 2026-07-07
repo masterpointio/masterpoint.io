@@ -1,0 +1,59 @@
+{{/*
+  csi-timeline — horizontal parallel-track bars for cutover / migration
+  stories ("the old system keeps running while the new one comes up").
+  Place INSIDE a csi-section.
+  Args:
+    marker        optional vertical marker position, percent 0–100 (e.g. "62")
+    marker_label  short label for the marker (e.g. "Cutover")
+  Inner: blocks separated by `---`, one per track:
+    label: track name (bold)
+    note: short annotation shown after the label (muted)
+    start: bar start percent (0–100)
+    end: bar end percent (0–100)
+    fade: "out" (old system winding down) | "in" (new system ramping up) | omit for solid
+*/}}
+{{- $marker := .Get "marker" -}}
+{{- $markerLabel := .Get "marker_label" -}}
+{{- $raw := .Inner -}}
+{{- $blocks := split $raw "---" -}}
+<div class="csi-timeline" data-aos="fade-up" data-aos-duration="600">
+  {{- if $marker -}}
+  <div class="csi-timeline__marker" style="--csi-tl-marker: {{ $marker }}%">
+    {{- with $markerLabel }}<span class="csi-timeline__marker-label">{{ . | safeHTML }}</span>{{ end -}}
+  </div>
+  {{- end -}}
+  {{- range $i, $block := $blocks -}}
+    {{- $b := trim $block " \t\n" -}}
+    {{- if $b -}}
+      {{- $lines := split $b "\n" -}}
+      {{- $label := "" -}}
+      {{- $note := "" -}}
+      {{- $start := "0" -}}
+      {{- $end := "100" -}}
+      {{- $fade := "" -}}
+      {{- range $lines -}}
+        {{- $line := trim . " \t" -}}
+        {{- if hasPrefix $line "label:" -}}
+          {{- $label = trim (strings.TrimPrefix "label:" $line) " " -}}
+        {{- else if hasPrefix $line "note:" -}}
+          {{- $note = trim (strings.TrimPrefix "note:" $line) " " -}}
+        {{- else if hasPrefix $line "start:" -}}
+          {{- $start = trim (strings.TrimPrefix "start:" $line) " " -}}
+        {{- else if hasPrefix $line "end:" -}}
+          {{- $end = trim (strings.TrimPrefix "end:" $line) " " -}}
+        {{- else if hasPrefix $line "fade:" -}}
+          {{- $fade = trim (strings.TrimPrefix "fade:" $line) " " -}}
+        {{- end -}}
+      {{- end -}}
+      <div class="csi-timeline__track">
+        <div class="csi-timeline__meta">
+          {{- if $label }}<span class="csi-timeline__label">{{ $label | $.Page.RenderString (dict "display" "inline") }}</span>{{ end -}}
+          {{- if $note }}<span class="csi-timeline__note">{{ $note | $.Page.RenderString (dict "display" "inline") }}</span>{{ end -}}
+        </div>
+        <div class="csi-timeline__rail">
+          <span class="csi-timeline__bar{{ with $fade }} csi-timeline__bar--fade-{{ . }}{{ end }}" style="left: {{ $start }}%; width: {{ sub (int $end) (int $start) }}%"></span>
+        </div>
+      </div>
+    {{- end -}}
+  {{- end -}}
+</div>

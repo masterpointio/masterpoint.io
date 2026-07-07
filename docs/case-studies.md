@@ -168,10 +168,9 @@ All shortcodes are in `layouts/shortcodes/cs-*.html` and styled under
   `::before/::after` `background-image`, so gradient bars/cells/dots built as
   real nodes survive the PDF while pseudo-element decorations vanish.
 - **Overriding a shortcode's inline `style=` positioning needs `!important`.**
-  `csi-parallel` places bars/markers via inline `grid-column`; the ≤700px rule
-  stacks markers full-width with `grid-column: 1 / -1 !important` (inline
-  styles beat any selector otherwise). Positioned markers are desktop
-  information; stacked chronological order is the mobile trade.
+  Shortcodes that place elements via inline styles (e.g. `csi-timeline` bars
+  via `left`/`width`) can only be repositioned in a media query with
+  `!important` — inline styles beat any selector otherwise.
 - **The TOC reads `.Fragments`, not `.TableOfContents`.** `.TableOfContents`
   is empty when read from inside a _shortcode_ (it isn't built until after the
   goldmark pass), which is the original reason the TOC moved to a layout-stage
@@ -252,7 +251,8 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 | `csi-steps`       | Numbered process cards. Place INSIDE a `csi-section`.          | inner blocks split by `---`, each `title:` / `body:`                                  |
 | `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`; `cols="2"` for a slimmed 2-up grid (pairs with `csi-compare`, capped to the same 980px) |
 | `csi-compare`     | "Then / now" migration ledger: each metric reads across from the muted old world to the bold new world (gradient arrow between). INSIDE a `csi-section`. Owns a page's hard numbers — pair with a slimmed qualitative `csi-impact cols="2"` so figures aren't stated twice. Mobile stacks each row (metric on top, before → after beneath, per-cell tags replace the header row). | `before_label`, `after_label`; inner blocks split by `---`, each `label:` / `before:` / `after:` |
-| `csi-parallel`    | Two-lane zero-downtime migration timeline (strangler-fig): old system's muted bar runs until a dashed "retired" cap while the new system's gradient bar ramps alongside; phase ruler on top, gradient-dot event markers below. INSIDE a `csi-section`, typically right after `csi-steps` (steps say WHAT, this shows the moves OVERLAPPED). All positions are grid lines on a 12-col track (1–13, end-exclusive). | `lane_a`/`lane_b`, `a_start`/`a_end`/`b_start`/`b_end`, `a_cap`/`b_cap`, `caption` (also the aria-label); inner blocks: `phase:` lines (equal columns) and `marker:` + `at:` + `span:` blocks |
+| `csi-timeline`    | Horizontal parallel-track cutover bars ("the old system keeps running while the new one comes up"): each track is a percent-positioned bar on a muted rail, with `fade: out` (old system winding down, grey→transparent) / `fade: in` (new system ramping up, transparent→gradient) and an optional dashed vertical cutover marker. INSIDE a `csi-section`, typically right after `csi-steps` (steps say WHAT, this shows the moves OVERLAPPED). | `marker` (percent 0–100), `marker_label`; inner blocks split by `---`, each `label:` / `note:` / `start:` / `end:` / `fade:` |
+| `csi-questions`   | Takeaways row of big-numbered question cards ("ask these of your own platform"): oversized gradient numeral, the question as headline, the honest answer underneath; gradient hairline across each card's top edge. 3-up, stacks ≤860px. INSIDE a `csi-section` (both faces styled). | inner blocks split by `---`, each `question:` / `body:` |
 | `csi-list`        | Compact 2-col icon rows (icon chip + bold title — inline body). Space-saving sibling of `csi-impact` for secondary enumerations (e.g. "under the hood" extras) so they don't mimic the outcome grid. INSIDE a `csi-section`. | same inner format as `csi-impact` (`icon:` / `title:` / `body:`); keep bodies to one short sentence |
 | `csi-testimonial` | Editorial quote band; `image=` makes it a featured cosmic band.| `name`, `title`, `company`, `photo`, `variant`, `image`. With `photo`, uses the avatar-left "portrait" layout (`csi-testimonial--portrait`, see below). |
 
@@ -389,30 +389,33 @@ from the legacy layout onto immersive. Decisions specific to that page:
   shorter MarketSpark style.
 - **Card flow** (strict light↔pine alternation, then the pine CTA):
   About (light split, 65-35) → Challenge (pine section + `csi-list` pain stats) →
-  playbook (light section + `csi-steps` + `csi-parallel` timeline) → three
+  playbook (light section + `csi-steps` + `csi-timeline` cutover bars) → three
   numbered splits (01 Architecture pine w/ `figure="terralith"` / 02 Platform
   light / 03 Toolchain pine) → Business Impact (light section + `csi-compare`
-  ledger + `csi-impact cols="2"`) → custom `callout` CTA.
+  ledger + `csi-impact cols="2"`) → Takeaways (pine section + `csi-questions`
+  three-questions cards) → custom `callout` CTA.
 - **First production use of `csi-steps`** — the four-move migration playbook
-  ("Audit & Migration Plan" → "Hand Over the Keys"). Verified on light face and
-  mobile.
-- **The page's three bespoke elements** (all reusable, born here July 2026,
+  ("Audit & Migration Plan" → "Knowledge Transfer & Trainings"). Verified on
+  light face and mobile.
+- **The page's bespoke elements** (all reusable, born here July 2026,
   built because Power Digital is a *migration* story — everything meaningful is
   a before→after delta, which MarketSpark's build-story kit had no language
-  for): the `csi-compare` then/now ledger (owns the hard numbers; the impact
-  grid slimmed 6 → 4 qualitative cards via `cols="2"` so figures aren't
-  triple-stated), the `csi-parallel` zero-downtime timeline (bars: Terralith
-  cols 1–10 + "retired" cap, platform cols 4–13 + "keeps scaling"; markers at
-  4 and 7), and the CSS-drawn `figure="terralith"` decomposition diagram
-  (monolith cell-grid → gradient arrow → per-client stack grid, monospace
-  client labels).
+  for): the `csi-compare` then/now ledger (owns the hard numbers, gradient-text
+  "after" column; the impact grid slimmed 6 → 4 qualitative cards via `cols="2"`
+  so figures aren't triple-stated), the `csi-timeline` cutover bars (Terralith
+  0–70% fading out, platform 30–100% fading in, dashed cutover marker at 62%),
+  the `csi-questions` takeaways cards (the "three questions worth asking"
+  evaluation framework), and the CSS-drawn `figure="terralith"` decomposition
+  diagram (monolith cell-grid → gradient arrow → per-client stack grid,
+  monospace client labels).
 - **No testimonial/pullquote**: the source material has no attributed client
   quote, and we don't fabricate quotes. If Power Digital ever supplies one, a
   `cs-pullquote` in the playbook section or a closing `csi-testimonial` are the
   natural slots.
-- **Custom `callout:`** (YAML `>-` block scalar) carries the old article's
-  "three questions" takeaway instead of the generic CTA — proves the
-  `isset`-based override works on the immersive layout too.
+- **Custom `callout:`** (YAML `>-` block scalar) echoes the "three questions"
+  takeaway instead of the generic CTA — proves the `isset`-based override works
+  on the immersive layout too. The questions themselves live in the Takeaways
+  section (`csi-questions`); the callout is the CTA reprise.
 - **Media choices**: hero bg is `/img/landing/power-digital-case-study.png`
   (the neon-tower PDF-cover art *without* baked-in text — the similar-looking
   `preview_image` poster has title text baked in, so it stays list-page-only);
@@ -494,7 +497,7 @@ Case studies print (Ctrl/Cmd+P → Save as PDF) styled to match the screen.
      `break-inside: avoid` on the **small, repeating** cards (`.cs-stat`,
      `.cs-pullquote`, `.csi-testimonial`, `.csi-impact__card`,
      `.csi-compare__row`, `.csi-fig-terralith__mono`, `.csi-fig-terralith__stack`,
-     `.csi-parallel`) pushes a whole
+     `.csi-timeline`, `.csi-question`) pushes a whole
      card to the next page rather than slicing its top/bottom edge. **Only apply
      it to small cards** — putting it on large one-off blocks (the About panel,
      article/screenshot cards) backfires: shoving a big block whole to the next
