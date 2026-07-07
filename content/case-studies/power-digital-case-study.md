@@ -125,7 +125,7 @@ Instead of one shared [Terralith](/blog/terralith-monolithic-terraform-architect
 {{< csi-split eyebrow="02 · Platform" title="Terraform Cloud → <span class='csi-grad'>Spacelift</span>" media="/img/case-studies/spacelift.jpg" media_alt="Spacelift: provision, configure, govern" variant="light" flip="true" >}}
 After weighing the options, Masterpoint recommended [Spacelift](https://spacelift.io/), a leading TACOS (Terraform Automation and Collaboration Software) platform. The economics and the engineering pointed the same direction:
 
-- **Pricing that matches usage.** Terraform Cloud bills per resource, so every client signed raises the bill permanently — even if their infrastructure never changes after onboarding. Spacelift bills on usage: in 2024 that meant annual costs dropping from ~$60,000 to under $6,000, a gap that widens with every client added.
+- **Pricing that matches usage.** Terraform Cloud bills per resource, so every client signed raises the bill permanently — even if their infrastructure never changes after onboarding. Spacelift bills on usage: annual costs dropped from ~$60,000 projected in 2024 to under $6,000, a gap that widens with every client added.
 - **Guardrails as code.** Operational and security policies are defined and enforced in the platform itself through [Open Policy Agent](https://www.openpolicyagent.org/), with no third-party bolt-ons.
 - **GitOps.** Automated, granular control over stacks and deployments, so large configurations decompose into manageable, connected pieces. We manage Spacelift with Spacelift via Infrastructure as Code, so Power Digital can grow and scale without issue.
 
@@ -145,7 +145,7 @@ Masterpoint is a proud OpenTofu community member. We believe it's the future of 
 {{< csi-section eyebrow="The Outcomes" title="Business Impact" variant="light" align="center" >}}
 {{< csi-compare before_label="Before" after_label="After Engaging with Masterpoint" >}}
 label: Annual automation costs
-before: ~$60,000 projected, growing with every client signed
+before: ~$60,000 projected in 2024, growing with every client signed
 after: Under $6,000
 ---
 label: Plan & apply deployment cycles
