@@ -1,5 +1,5 @@
 ---
-title: "Power Digital Case Study: 10x Infrastructure Automation Cost Reduction with Spacelift & OpenTofu"
+title: "Power Digital: 10x Reduction in Infrastructure Automation Costs, 8x Faster Client Onboarding"
 weight: 3
 description: "Masterpoint migrated Power Digital's 43,000-resource Terraform monolith from Terraform Cloud to Spacelift and OpenTofu: 10x lower projected automation costs, plan/apply cycles down from 25 minutes to under 3, failed runs eliminated, and 100+ new clients onboarded in the first 60 days."
 
@@ -24,6 +24,15 @@ stat_bar:
     label: "lower infrastructure automation costs"
   - value: "43,000+"
     label: "resources migrated to <a href='https://spacelift.io/' target='_blank' rel='noopener'>Spacelift</a> & <a href='https://opentofu.org/' target='_blank' rel='noopener'>OpenTofu</a>"
+
+# Sticky section nav (appears once the hero scrolls out of view)
+sticky_nav:
+  - label: "The Challenge"
+    anchor: "the-challenge"
+  - label: "The Work"
+    anchor: "the-work"
+  - label: "The Results"
+    anchor: "the-results"
 
 # Preview / OG
 preview_image: /img/case-studies/power-digital/power-digital-case-study-preview.jpg
@@ -61,7 +70,7 @@ Power Digital is a modern digital marketing powerhouse working with some of the 
 {{< /cs-about >}}
 {{< /csi-split >}}
 
-{{< csi-split eyebrow="The Challenge" title="43,000 resources. 500+ config files. <span class='csi-grad'>One Terraform state.</span>" media="/img/case-studies/power-digital/scalability-issues-case-study-power-digital.png" media_alt="Resource growth pushing a single Terraform Cloud setup past its limits" media2="/img/case-studies/power-digital/63-hours-of-engineering-time-lost-each-month.png" media2_alt="63 hours of engineering time lost each month" variant="pine" flip="true" ratio="75-25" contain="true" >}}
+{{< csi-split id="the-challenge" eyebrow="The Challenge" title="43,000 resources. 500+ config files. <span class='csi-grad'>One Terraform state.</span>" media="/img/case-studies/power-digital/scalability-issues-case-study-power-digital.png" media_alt="Resource growth pushing a single Terraform Cloud setup past its limits" media2="/img/case-studies/power-digital/63-hours-of-engineering-time-lost-each-month.png" media2_alt="63 hours of engineering time lost each month" variant="pine" flip="true" ratio="75-25" contain="true" >}}
 Rapid growth had produced a [Terralith](/blog/terralith-monolithic-terraform-architecture/): every client deployment living in one monolithic Terraform configuration, in a single state file, deployed through Terraform Cloud. The root module had passed 500 configuration files and grew with every client signed. At 43,000+ resources, Terraform Cloud wasn't just slow, it was continually breaking with uncontrolled costs.
 
 {{< csi-list >}}
@@ -85,7 +94,7 @@ body: Spent waiting on plan/apply loops and debugging broken runs instead of shi
 None of this was a design failure: the original system did its job until the business outgrew it. But with client onboarding, the primary revenue driver, running at the speed of the slowest Terraform run, the ceiling had become a business problem, not just an engineering one.
 {{< /csi-split >}}
 
-{{< csi-section eyebrow="What Masterpoint Did" title="A modernization project engineered so <span class='csi-grad'>the business never paused</span>" variant="light" align="center" >}}
+{{< csi-section id="the-work" eyebrow="What Masterpoint Did" title="A modernization project engineered so <span class='csi-grad'>the business never paused</span>" variant="light" align="center" >}}
 You can't put a revenue-critical platform on hold to rebuild it. The engagement opened with Masterpoint's [deep-dive Infrastructure as Code audit](/services/audit/): mapping the Terralith, interviewing stakeholders across teams, and defining the future state with Power Digital's leadership.
 
 {{< csi-steps >}}
@@ -147,7 +156,7 @@ In the same migration, every resource moved from Terraform to [OpenTofu](https:/
 Masterpoint is a proud OpenTofu community member. We believe it's the future of IaC, and a 43,000-resource migration completed without incident is exactly why.
 {{< /csi-split >}}
 
-{{< csi-section eyebrow="The Outcomes" title="Business Impact" variant="light" align="center" >}}
+{{< csi-section id="the-results" eyebrow="The Outcomes" title="Business Impact" variant="light" align="center" >}}
 {{< csi-compare before_label="Before" after_label="After Engaging with Masterpoint" >}}
 label: Annual automation costs
 before: ~$60,000 projected in 2024, growing with every client signed
@@ -200,7 +209,7 @@ question: Does it meet current needs?
 body: Also no for Power Digital before the engagement. A 50%+ run failure rate, 25-minute plans, and at least 63 lost engineer-hours a month were live problems, not projections.
 ---
 question: Can it meet future demands?
-body: The one that matters most, and it's okay if the answer is no. Asking it early turns a forced migration into a deliberate one.
+body: The one that matters most, and asking it early turns a forced migration into a deliberate one.
 ---
 outro: **It's okay if an answer is "no."** This story was an evolution to remove scaling limits — a good problem to have, because it means the business is growing. **[Masterpoint](/contact/)** works with teams at exactly that point, solving the platform, infrastructure, and engineering problems that come with scale, every day.
 {{< /csi-questions >}}

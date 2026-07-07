@@ -45,13 +45,13 @@ MarketSpark is the leading provider of analog replacement solutions for enterpri
 {{< /cs-about >}}
 {{< /csi-split >}}
 
-{{< csi-split eyebrow="The Challenge" title="The Starting Point" media="/img/case-studies/marketspark/marketspark-aws.png" media_alt="MarketSpark and Masterpoint on AWS" variant="pine" flip="true" >}}
+{{< csi-split id="the-challenge" eyebrow="The Challenge" title="The Starting Point" media="/img/case-studies/marketspark/marketspark-aws.png" media_alt="MarketSpark and Masterpoint on AWS" variant="pine" flip="true" >}}
 MarketSpark had outgrown the AWS environment they started on, especially as the company's customer base grew, product surface widened, and they began to get compliance framework requests. All environments (including development, staging, production, and others) lived inside a single monolithic AWS account, and every change was a manual operation ([ClickOps](https://masterpoint.io/blog/terraform-opentofu-terminology-breakdown/#clickops)) in the AWS Console.
 
 The MarketSpark team felt this. They had already begun planning improvements, and they partnered with Masterpoint for the deep platform expertise to execute.
 {{< /csi-split >}}
 
-{{< csi-section eyebrow="What Masterpoint Built" title="From a single account to a <span class='csi-grad'>platform built to scale</span>" variant="light" align="center" >}}
+{{< csi-section id="the-work" eyebrow="What Masterpoint Built" title="From a single account to a <span class='csi-grad'>platform built to scale</span>" variant="light" align="center" >}}
 Our engagement started with a [deep-dive Infrastructure as Code (IaC) and Amazon Web Services (AWS) audit](https://masterpoint.io/services/audit/). We sat down with stakeholders and engineers, mapped the existing architecture, identified risks, produced recommendations, and delivered a modernization roadmap.
 
 From there, we rebuilt the environment from the ground up.
@@ -114,7 +114,7 @@ body: Databases sit behind RDS Proxy, with database and ElastiCache (Valkey/Redi
 {{< /cs-pullquote >}}
 {{< /csi-section >}}
 
-{{< csi-section eyebrow="The Outcomes" title="Business Impact" variant="pine" align="center" >}}
+{{< csi-section id="the-results" eyebrow="The Outcomes" title="Business Impact" variant="pine" align="center" >}}
 {{< csi-impact >}}
 icon: fa-gauge-high
 title: Faster Product Velocity, Lower Operational Risk

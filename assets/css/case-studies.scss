@@ -450,6 +450,116 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
   }
 
   // ---------------------------------------------------------------------------
+  // STICKY NAV — fixed client × Masterpoint bar with section anchors, slides
+  // in once the hero scrolls out of view (`--visible` toggled by an
+  // IntersectionObserver in the immersive layout). Per-page `sticky_nav:`
+  // front matter.
+  // ---------------------------------------------------------------------------
+  .cs-sticky-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    // pine (site backdrop colour) rather than near-black: on-theme, and the
+    // white logos / #d3e2e1 links keep AA contrast on it
+    background: rgba(14, 56, 58, 0.94);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transform: translateY(-100%);
+    visibility: hidden;
+    transition:
+      transform 0.25s ease,
+      visibility 0.25s;
+    &--visible {
+      transform: translateY(0);
+      visibility: visible;
+    }
+    &__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.6rem 0;
+    }
+    &__lockup {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-shrink: 0;
+    }
+    &__client {
+      display: block;
+      height: 20px;
+      width: auto;
+      max-width: 150px;
+    }
+    &__mp {
+      display: block;
+      height: 15px;
+      width: auto;
+    }
+    &__x {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1;
+      color: #d3e2e1;
+      user-select: none;
+    }
+    &__links {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      a {
+        position: relative;
+        // enough bottom padding to keep the underline INSIDE the box —
+        // anything poking below overflows the overflow-x:auto row and
+        // conjures a stub scrollbar
+        padding: 0.3rem 0;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        color: #d3e2e1;
+        text-decoration: none;
+        &:hover {
+          color: $cs-mint;
+        }
+        // scrollspy state — gradient underline on the section being read
+        &.is-active {
+          color: $cs-mint;
+          &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 2px;
+            border-radius: 2px;
+            @include cs-brand-gradient;
+          }
+        }
+      }
+    }
+    @media (max-width: 575px) {
+      &__client {
+        height: 16px;
+      }
+      &__mp {
+        height: 12px;
+      }
+      &__links {
+        gap: 1rem;
+        a {
+          font-size: 0.68rem;
+        }
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
   // MAIN ARTICLE  — pine page backdrop + white content card on top.
   // ---------------------------------------------------------------------------
   .cs-main {
@@ -1259,7 +1369,16 @@ $csi-line: #e7edec; // hairline on light cards
   background: linear-gradient(40deg, #2ad9c2 0%, #55c1b4 42%, #d191bf 100%);
 }
 
+// smooth-scroll pages that have the sticky section nav
+html:has(.cs-sticky-nav) {
+  scroll-behavior: smooth;
+}
+
 .case-study-immersive {
+  // anchored sections land clear of the fixed sticky nav
+  .csi-section[id] {
+    scroll-margin-top: 64px;
+  }
   .csi-container {
     width: 100%;
     max-width: none;
@@ -2970,7 +3089,8 @@ $csi-line: #e7edec; // hairline on light cards
     #schedule-assessment,
     footer[role="contentinfo"],
     #cc-main, // orestbida CookieConsent v3 banner/modal
-    .cc-window {
+    .cc-window,
+    .cs-sticky-nav {
       display: none !important;
     }
 

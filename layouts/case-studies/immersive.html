@@ -14,6 +14,31 @@
 <body {{ if .Params.id }}id='{{ .Params.id }}' {{ end }}class="case-study-modern case-study-immersive">
     {{ partial "header.html" . }}
 
+    {{/* STICKY NAV — fixed bar that slides in once the hero scrolls out of
+         view (à la Accenture case studies). Configure per page via
+         `sticky_nav:` front matter (label + anchor pairs; anchors are `id`s
+         set on csi-section / csi-split via their `id` arg). */}}
+    {{ if .Params.sticky_nav }}
+    <div class="cs-sticky-nav">
+        <div class="container">
+            <div class="cs-sticky-nav__inner">
+                <div class="cs-sticky-nav__lockup">
+                    {{ if .Params.client_logo }}
+                    <img class="cs-sticky-nav__client" src="{{ .Params.client_logo }}" alt="{{ .Params.client | default "" }} logo" />
+                    <span class="cs-sticky-nav__x" aria-hidden="true">&times;</span>
+                    {{ end }}
+                    <img class="cs-sticky-nav__mp" src="/img/logo.svg" alt="Masterpoint logo" />
+                </div>
+                <nav class="cs-sticky-nav__links" aria-label="Case study sections">
+                    {{ range .Params.sticky_nav }}
+                    <a href="#{{ .anchor }}">{{ .label | safeHTML }}</a>
+                    {{ end }}
+                </nav>
+            </div>
+        </div>
+    </div>
+    {{ end }}
+
     {{/* HERO — verbatim from single.html (modern), do not diverge */}}
     {{ $bgImg := or .Params.hero_image .Params.hero_aside_image }}
     <section class="cs-hero{{ if $bgImg }} cs-hero--with-bg{{ end }}">
@@ -86,5 +111,44 @@
     {{ partial "schedule-assessment.html" . }}
     {{ partial "footer.html" . }}
     {{ partial "scripts.html" . }}
+    {{ if .Params.sticky_nav }}
+    <script>
+      (function () {
+        var nav = document.querySelector(".cs-sticky-nav");
+        var hero = document.querySelector(".cs-hero");
+        if (!nav || !hero || !("IntersectionObserver" in window)) return;
+        new IntersectionObserver(function (entries) {
+          nav.classList.toggle("cs-sticky-nav--visible", !entries[0].isIntersecting);
+        }).observe(hero);
+
+        // scrollspy — a link is active from its section's top until the next
+        // anchored section takes over
+        var links = Array.prototype.slice.call(nav.querySelectorAll(".cs-sticky-nav__links a"));
+        var targets = links.map(function (a) {
+          return document.getElementById((a.getAttribute("href") || "").slice(1));
+        });
+        if (!targets.some(Boolean)) return;
+        var ticking = false;
+        function update() {
+          ticking = false;
+          var pos = window.scrollY + 96; // just below the sticky bar
+          var active = -1;
+          targets.forEach(function (t, i) {
+            if (t && t.getBoundingClientRect().top + window.scrollY <= pos) active = i;
+          });
+          links.forEach(function (a, i) {
+            a.classList.toggle("is-active", i === active);
+          });
+        }
+        window.addEventListener("scroll", function () {
+          if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(update);
+          }
+        }, { passive: true });
+        update();
+      })();
+    </script>
+    {{ end }}
 </body>
 </html>

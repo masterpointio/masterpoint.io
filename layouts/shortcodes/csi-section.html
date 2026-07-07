@@ -20,7 +20,8 @@
 {{- $align := .Get "align" | default "left" -}}
 {{- $num := .Get "num" -}}
 {{- $accent := .Get "accent" -}}
-<section class="csi-section csi-section--{{ $variant }} csi-section--{{ $align }}">
+{{- $id := .Get "id" -}}
+<section{{ with $id }} id="{{ . }}"{{ end }} class="csi-section csi-section--{{ $variant }} csi-section--{{ $align }}">
   <div class="csi-container">
     {{- if or $eyebrow $title $accent -}}
     <div class="csi-section__head" data-aos="fade-up" data-aos-duration="600">

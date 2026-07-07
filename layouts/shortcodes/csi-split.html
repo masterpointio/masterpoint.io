@@ -30,7 +30,8 @@
 {{- $contain := .Get "contain" -}}
 {{- $caption := .Get "caption" -}}
 {{- $ratio := .Get "ratio" -}}
-<section class="csi-section csi-split csi-section--{{ $variant }}{{ if $flip }} csi-split--flip{{ end }}{{ with $ratio }} csi-split--{{ . }}{{ end }}">
+{{- $id := .Get "id" -}}
+<section{{ with $id }} id="{{ . }}"{{ end }} class="csi-section csi-split csi-section--{{ $variant }}{{ if $flip }} csi-split--flip{{ end }}{{ with $ratio }} csi-split--{{ . }}{{ end }}">
   <div class="csi-container">
     <div class="csi-split__grid">
       <div class="csi-split__text" data-aos="fade-up" data-aos-duration="600">

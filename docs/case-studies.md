@@ -230,7 +230,7 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 
 | Shortcode         | Purpose                                                        | Key args                                                                              |
 | ----------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `csi-section`     | A card (eyebrow + headline + block prose).                     | `eyebrow`, `title` (HTML ok), `variant`, `align`, `num`, `accent`                     |
+| `csi-section`     | A card (eyebrow + headline + block prose).                     | `eyebrow`, `title` (HTML ok), `variant`, `align`, `num`, `accent`, `id` (anchor target, e.g. for `sticky_nav`; also on `csi-split`) |
 | `csi-split`       | Text + visual side-by-side; `flip="true"` alternates sides.    | `eyebrow`, `title`, `media`, `media_alt`, `media2`/`media2_alt` (second image stacked below the first), `figure` (CSS-drawn figure partial from `figures/<name>.html` instead of an image; subfolders work — `figure="power-digital/terralith"`), `flip`, `contain`, `caption`, `variant`, `ratio` (`50-50` default / `65-35` / `75-25`, text wider; ratios auto-reverse under `flip` since flip puts the media in the first grid track via `order`) |
 | `csi-steps`       | Numbered process cards. Place INSIDE a `csi-section`.          | inner blocks split by `---`, each `title:` / `body:`                                  |
 | `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`; `cols="2"` for a slimmed 2-up grid (pairs with `csi-compare`, capped to the same 980px) |
@@ -362,6 +362,17 @@ Masterpoint could help your team too?" callout, now with an **inline underlined
 partial ("Get a standardized, predictable, and efficient infrastructure
 management process" + Schedule button), then `footer`. Same closing as the modern
 case studies and the marketing pages.
+
+### Sticky section nav
+
+`sticky_nav:` front matter (list of `label` + `anchor` pairs) renders a fixed
+client × Masterpoint bar that slides in once the hero scrolls out of view
+(IntersectionObserver) with scrollspy-highlighted anchor links — anchors are
+`id`s set on `csi-section`/`csi-split`. Both case studies use
+the-challenge / the-work / the-results. Hidden in print; anchored sections get
+`scroll-margin-top` so they land clear of the bar. Keep the active-link
+underline INSIDE the link box — the links row is `overflow-x: auto` and any
+overhang conjures a stub scrollbar.
 
 ### Power Digital page notes (July 2026 rebuild)
 
