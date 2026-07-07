@@ -11,6 +11,7 @@ url: /spacelift/
 aliases:
   - /services/spacelift/
 description: "Masterpoint is one of Spacelift's first and primary partners. We launch, migrate, automate, and govern Spacelift for engineering teams."
+banner_tagline: "<img src='/img/cloud/spacelift.svg' alt='Spacelift logo' class='hero-spacelift-logo' />"
 banner_title: "The <span class='text-gradient'>Spacelift</span> experts."
 banner_text: "Masterpoint is one of Spacelift's first and primary partners. We launch, migrate, automate, and govern Spacelift for engineering teams — from your first stack to a compliance-grade, self-service platform."
 banner_btn_label: Schedule a Discovery Call
@@ -18,7 +19,7 @@ banner_btn_link: https://calendly.com/matt-at-masterpoint/project-chat
 banner_link_label: See Client Results →
 banner_link: "#spacelift-results"
 sections: "spacelift"
-demo_note: "⚠️ <b>AI-generated one-shot demo</b> — this page is a work-in-progress example, to be fleshed out with full details. It is only accessible via this preview link and is not live on masterpoint.io."
+demo_note: "⚠️ <b>AI-generated demo from Masterpoint's internal company docs</b> — this page is a work-in-progress example, to be fleshed out with full details. It is only accessible via this preview link and is not live on masterpoint.io."
 sitemap:
   priority: 1
 ---

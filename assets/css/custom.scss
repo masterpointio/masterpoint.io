@@ -4349,6 +4349,11 @@ font-size: 1.55rem;
   }
 }
 
+body#page-spacelift-services {
+  /* `hidden` on body breaks position: sticky (the demo-note); `clip` clips the same without creating a scroll container */
+  overflow-x: clip;
+}
+
 #page-spacelift-services {
   #banner {
     position: relative;
@@ -4378,11 +4383,31 @@ font-size: 1.55rem;
       position: relative;
       z-index: 1;
     }
+    .row .col {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
     .bannerTxtBx {
       color: rgba(255, 255, 255, 0.92);
+      max-width: 1000px;
+    }
+    .bannerTagline .hero-spacelift-logo {
+      height: 68px;
+      width: auto;
+      margin-bottom: 1rem;
+      @media (max-width: 767px) {
+        height: 48px;
+      }
     }
     h3 {
       color: #fff;
+      font-size: 3.5rem;
+      @media (max-width: 991px) {
+        font-size: 2.7rem;
+      }
+      @media (max-width: 575px) {
+        font-size: 2.2rem;
+      }
     }
     .btn-outline-gradient {
       color: #fff;
