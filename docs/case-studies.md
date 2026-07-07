@@ -13,7 +13,7 @@ the codebase is the source of truth, this file describes what IS).
 
 ## Future Case Study
 
-Because the existing case studies are already built, we are maintaining them as is. But for future ones, we want to make sure they are short and concise and to the point, intended for engineering leadership. It should consist primarily of the TLDR, About, The Challenge, What Masterpoint Did, The Results (emphasis), and CTA, where each section is a single card, no more.
+Because the existing case studies are already built, we are maintaining them as is. But for future ones, we want to make sure they are short and concise and to the point, intended for engineering leadership. It should consist primarily of the TLDR, About, The Challenge, What Masterpoint Did, The Results (emphasis), and CTA, where each section is a single card, no more. Idea/approach: https://masterpoint.slack.com/archives/C04ATBLEJAV/p1783456382247289
 
 ## Architecture overview
 
