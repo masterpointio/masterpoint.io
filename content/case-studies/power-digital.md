@@ -9,7 +9,7 @@ layout: immersive
 eyebrow: "CASE STUDY SUCCESS STORY"
 client: "Power Digital"
 client_logo: /img/case-studies/power-digital/power-digital-logo-white.png
-client_logo_height: 38px
+client_logo_height: 34px
 hero_title: "How Power Digital Achieved a <span class='text-gradient'>10x Reduction in Infrastructure Automation Costs</span>"
 hero_aside_image: /img/landing/power-digital-case-study.png
 hero_aside_alt: "Neon-lit skyline artwork from the Power Digital case study"
@@ -170,7 +170,7 @@ before: Every client
 after: One client
 {{< /csi-compare >}}
 
-{{< csi-impact cols="2" >}}
+{{< csi-impact cols="4" >}}
 icon: fa-circle-check
 title: Automation the Team Trusts
 body: The out-of-memory crashes and timeouts are gone, and the operational toil went with them. Deploys turned from a scheduling event into a non-event the platform team barely thinks about.

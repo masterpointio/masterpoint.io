@@ -2029,6 +2029,24 @@ $csi-line: #e7edec; // hairline on light cards
       grid-template-columns: 1fr;
     }
   }
+  // 4-up impact row (`cols="4"`) — all four qualitative cards on one line;
+  // denser cards, folds to 2×2 on tablets and a single column on phones
+  .csi-impact--cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    .csi-impact__card {
+      padding: 1.3rem 1.2rem 1.2rem;
+    }
+    .csi-impact__body {
+      font-size: 0.88rem;
+    }
+    @media (max-width: 1100px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+  }
 
   // ---------------------------------------------------------------------------
   // COMPARE — "then / now" migration ledger (csi-compare). Old world reads
@@ -2109,6 +2127,11 @@ $csi-line: #e7edec; // hairline on light cards
   // sibling rule as a literal selector (the `&__` + `+` combo mis-expands)
   .csi-compare__row + .csi-compare__row {
     border-top: 1px solid $csi-line;
+  }
+  // breathing room between the ledger and a following impact grid — the two
+  // read as one unit but shouldn't touch
+  .csi-compare + .csi-impact {
+    margin-top: 2.4rem;
   }
   @media (max-width: 700px) {
     .csi-compare__head {
