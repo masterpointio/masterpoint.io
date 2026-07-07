@@ -61,7 +61,7 @@ Power Digital is a modern digital marketing powerhouse working with some of the 
 {{< /cs-about >}}
 {{< /csi-split >}}
 
-{{< csi-split id="the-challenge" eyebrow="The Challenge" title="43,000 resources. 500+ config files. <span class='csi-grad'>One Terraform state.</span>" media="/img/case-studies/power-digital/scalability-issues-case-study-power-digital.png" media_alt="Resource growth pushing a single Terraform Cloud setup past its limits" media2="/img/case-studies/power-digital/63-hours-of-engineering-time-lost-each-month.png" media2_alt="63 hours of engineering time lost each month" variant="pine" flip="true" ratio="75-25" contain="true" >}}
+{{< csi-split id="the-challenge" eyebrow="The Challenge" title="A business growing faster than its <span class='csi-grad'>infrastructure could handle</span>" media="/img/case-studies/power-digital/scalability-issues-case-study-power-digital.png" media_alt="Resource growth pushing a single Terraform Cloud setup past its limits" media2="/img/case-studies/power-digital/63-hours-of-engineering-time-lost-each-month.png" media2_alt="63 hours of engineering time lost each month" variant="pine" flip="true" ratio="75-25" contain="true" >}}
 Power Digital's rapid growth was a testament to its success, but it brought infrastructure challenges that began to slow further expansion, causing a [Terralith](/blog/terralith-monolithic-terraform-architecture/): every client deployment living in one monolithic Terraform configuration, in a single state file, deployed through Terraform Cloud. The root module had passed 500 configuration files and grew with every client signed. At 43,000+ resources, Terraform Cloud wasn't just slow, it was continually breaking with uncontrolled costs.
 
 {{< csi-list >}}
