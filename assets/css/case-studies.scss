@@ -2291,43 +2291,8 @@ html:has(.cs-sticky-nav) {
       color: $csi-link;
     }
   }
-  .csi-section--pine,
-  .csi-section--pine-deep,
-  .csi-section--gradient {
-    .csi-compare {
-      background: rgba(255, 255, 255, 0.045);
-      border-color: rgba(255, 255, 255, 0.09);
-      box-shadow: none;
-    }
-    .csi-compare__head {
-      background: rgba(255, 255, 255, 0.04);
-      border-bottom-color: rgba(255, 255, 255, 0.09);
-    }
-    .csi-compare__col--before {
-      color: #8fa6a5;
-    }
-    .csi-compare__col--after {
-      color: $cs-mint;
-    }
-    .csi-compare__metric {
-      color: #fff;
-    }
-    .csi-compare__after {
-      @include csi-grad-bright;
-    }
-    .csi-compare__before {
-      color: #9fb6b5;
-    }
-    .csi-compare__row + .csi-compare__row {
-      border-top-color: rgba(255, 255, 255, 0.09);
-    }
-    .csi-compare__tag {
-      color: #8fa6a5;
-    }
-    .csi-compare__after .csi-compare__tag {
-      color: $cs-mint;
-    }
-  }
+  // NOTE: the ledger stays a WHITE card on dark faces too (no pine override)
+  // — the hard numbers read best on white, and the card pops off the band.
 
   // ---------------------------------------------------------------------------
   // FIGURE — TERRALITH (csi-split figure="terralith"). CSS-drawn monolith →

@@ -119,7 +119,7 @@ fade: in
 Both systems ran in parallel: existing clients stayed stable on the Terralith while the new platform took over, so the business never stopped shipping.
 {{< /csi-section >}}
 
-{{< csi-split eyebrow="01 · Architecture" title="Monolithic Terraform becomes <span class='csi-grad'>Isolated Client Stacks</span>" figure="power-digital/terralith" variant="pine" >}}
+{{< csi-split eyebrow="Architecture" title="Monolithic Terraform becomes <span class='csi-grad'>Isolated Client Stacks</span>" figure="power-digital/terralith" variant="pine" >}}
 Instead of one shared [Terralith](/blog/terralith-monolithic-terraform-architecture/), each client deployment now lives in its own stack with isolated resources and state, connected through workspaces where the pieces need each other.
 
 - **Blast radius shrank from "every client" to one fully isolated client.** A change to one deployment can no longer ripple across the platform.
@@ -127,7 +127,7 @@ Instead of one shared [Terralith](/blog/terralith-monolithic-terraform-architect
 - **Standardization through reusable modules.** Shared modules for common infrastructure components replaced repetitive copy-paste configuration, with dependencies explicitly defined — and the repository restructured around them, making the codebase navigable again and collaboration straightforward.
 {{< /csi-split >}}
 
-{{< csi-split eyebrow="02 · Platform & Tooling" title="Terraform Cloud → <span class='csi-grad'>Spacelift</span> &amp; OpenTofu" media="/img/case-studies/spacelift.jpg" media_alt="Spacelift: provision, configure, govern" variant="light" flip="true" >}}
+{{< csi-split eyebrow="Platform & Tooling" title="Terraform Cloud → <span class='csi-grad'>Spacelift</span> &amp; OpenTofu" media="/img/case-studies/spacelift.jpg" media_alt="Spacelift: provision, configure, govern" variant="light" flip="true" >}}
 Masterpoint recommended [Spacelift](https://spacelift.io/), a leading TACOS (Terraform Automation and Collaboration Software) platform:
 
 - **Pricing that matches usage.** Terraform Cloud bills per resource, even when nothing changes — a client onboarded once and never updated is still billed. Spacelift bills on usage: annual costs dropped from ~$60,000 projected in 2024 to under $6,000, a gap that widens with every client added.
@@ -139,7 +139,7 @@ The same migration moved every resource from Terraform to [OpenTofu](https://ope
 - **Licensing flexibility.** No exposure to future Terraform license changes or the legal questions that come with them.
 - **No vendor lock-in.** Open source under the Linux Foundation, with vendor-neutral governance and a fast-growing contributor ecosystem.
 
-All 43,000+ resources were smoothly migrated without downtime or incident. Masterpoint works with Spacelift extensively and is a proud OpenTofu community member — we believe this stack is the future of IaC.
+All 43,000+ resources were smoothly migrated without downtime or incident.
 {{< /csi-split >}}
 
 {{< csi-section id="the-results" eyebrow="The Outcomes" title="Business Impact" variant="pine" align="center" >}}
