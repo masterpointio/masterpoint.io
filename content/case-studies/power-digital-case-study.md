@@ -49,10 +49,10 @@ callout: >-
   logo="/img/case-studies/power-logo.png"
   url="https://powerdigitalmarketing.com/"
   linkedin="https://www.linkedin.com/company/power-digital-marketing/"
-  industry="Digital & Growth Marketing"
+  industry="Digital Marketing · Technology-Driven Growth Agency"
   technologies="Spacelift · OpenTofu · Terraform"
 >}}
-Power Digital is a tech-enabled growth marketing firm working with some of the world's most recognizable brands, including Stripe, Figma, and Casper. Its marketing services run on a technology platform: every client the agency signs gets dedicated infrastructure, provisioned through Infrastructure as Code. That makes onboarding speed a revenue number, and the platform team's Terraform setup the engine room of the business.
+Power Digital is a modern digital marketing powerhouse working with some of the world's most recognizable brands, including Stripe, Figma, and Casper. Its services run on a technology platform where every new client gets its own provisioned infrastructure, which makes the platform team's Infrastructure as Code pipeline a direct revenue path: when onboarding slows, the business slows.
 {{< /cs-about >}}
 {{< /csi-split >}}
 
@@ -81,7 +81,7 @@ None of this was a design failure: the original system did its job until the bus
 {{< /csi-section >}}
 
 {{< csi-section eyebrow="What Masterpoint Did" title="A migration engineered so <span class='csi-grad'>the business never paused</span>" variant="light" align="center" >}}
-You can't put a revenue-critical platform on hold to rebuild it. The engagement opened with Masterpoint's [deep-dive Infrastructure as Code audit](/services/audit/): mapping the Terralith, interviewing stakeholders across teams, and defining the future state with Power Digital's leadership. From there, four moves:
+You can't put a revenue-critical platform on hold to rebuild it. The engagement opened with Masterpoint's [deep-dive Infrastructure as Code audit](/services/audit/): mapping the Terralith, interviewing stakeholders across teams, and defining the future state with Power Digital's leadership.
 
 {{< csi-steps >}}
 title: Audit & Migration Plan
@@ -93,48 +93,41 @@ body: A modular architecture on Spacelift ran alongside the existing Terralith. 
 title: Decompose & Migrate
 body: With the new platform proven, the Terralith was [broken apart](/blog/steps-to-break-up-a-terralith/) into standardized per-client deployments and every existing client migrated over, all 43,000+ resources, without issue.
 ---
-title: Hand Over the Keys
+title: Knowledge Transfer & Trainings for Power Digital's Engineering Team
 body: Hands-on workshops, best-practices sessions, and troubleshooting guides mean Power Digital's engineers own the platform: maintaining it, extending it, and shipping their own improvements.
 {{< /csi-steps >}}
 
-{{< csi-parallel
-  lane_a="Terralith · Terraform Cloud"
-  lane_b="Modular platform · Spacelift + OpenTofu"
-  a_start="1" a_end="10" a_cap="retired"
-  b_start="4" b_end="13" b_cap="keeps scaling"
-  caption="Both systems ran in parallel: existing clients stayed stable on the Terralith while the new platform took over, so the business never stopped shipping."
->}}
-phase: 01 · Audit & plan
+{{< csi-timeline marker="62" marker_label="Cutover" >}}
+label: Terralith on Terraform Cloud
+note: existing clients keep running, untouched
+start: 0
+end: 70
+fade: out
 ---
-phase: 02 · Parallel build
----
-phase: 03 · Decompose & migrate
----
-phase: 04 · Team-owned
----
-marker: New clients onboard here
-at: 4
-span: 3
----
-marker: Existing clients migrate
-at: 7
-span: 6
-{{< /csi-parallel >}}
+label: Modular platform on Spacelift + OpenTofu
+note: new clients onboard here from day one
+start: 30
+end: 100
+fade: in
+{{< /csi-timeline >}}
+
+Both systems ran in parallel: existing clients stayed stable on the Terralith while the new platform took over, so the business never stopped shipping.
 {{< /csi-section >}}
 
 {{< csi-split eyebrow="01 · Architecture" title="One Terralith becomes <span class='csi-grad'>isolated client stacks</span>" figure="terralith" variant="pine" >}}
-Each client deployment now lives in its own stack with isolated resources and state. Standardized modules replaced repetitive one-off code, with workspaces and explicitly managed dependencies connecting the pieces.
+Each client deployment now lives in its own stack with isolated resources and state, connected through workspaces where the pieces need each other.
 
-- **Blast radius shrank from "every client" to "one client."** A change to one deployment can no longer ripple across the platform.
+- **Blast radius shrank from "every client" to one fully isolated client.** A change to one deployment can no longer ripple across the platform.
 - **Feedback collapsed from 25 minutes to under 3.** Full init/plan/apply cycles for a client's infrastructure complete in sub-3 minutes, sub-minute in some cases.
+- **Standardization through reusable modules.** Shared modules for common infrastructure components replaced repetitive copy-paste configuration, with dependencies explicitly defined.
 - **The repository was restructured around the modules,** making the codebase navigable again and collaboration straightforward for the platform team.
 {{< /csi-split >}}
 
 {{< csi-split eyebrow="02 · Platform" title="Terraform Cloud → <span class='csi-grad'>Spacelift</span>" media="/img/case-studies/spacelift.jpg" media_alt="Spacelift: provision, configure, govern" variant="light" flip="true" >}}
 After weighing the options, Masterpoint recommended [Spacelift](https://spacelift.io/), a leading TACOS (Terraform Automation and Collaboration Software) platform. The economics and the engineering pointed the same direction:
 
-- **Pricing that matches usage.** Vastly superior automation for under $500/month, against a Terraform Cloud renewal projected around $5,000.
-- **Policy as code, built in.** Deep [Open Policy Agent](https://www.openpolicyagent.org/) integration lets the team enforce operational and security guardrails directly in the platform, no third-party bolt-ons.
+- **Pricing that matches how the platform is actually used.** Terraform Cloud bills per resource, so every client signed raises the bill permanently, even though a client's infrastructure may only change once a year after onboarding. Spacelift bills on usage instead. In 2024 that meant monthly costs dropping from ~$5,000 to under $500, and the gap only widens as the client roster grows.
+- **Guardrails as code.** Operational and security policies are defined and enforced in the platform itself through [Open Policy Agent](https://www.openpolicyagent.org/), with no third-party bolt-ons.
 - **Designed for many small stacks.** Granular control per stack and easy automation connecting them: exactly the shape of the new modular architecture.
 
 All 43,000+ resources moved off Terraform Cloud without issue. Spacelift is a platform [Masterpoint works with extensively](/services/spacelift/).
@@ -151,12 +144,12 @@ Masterpoint is a proud OpenTofu community member. We believe it's the future of 
 {{< /csi-split >}}
 
 {{< csi-section eyebrow="The Outcomes" title="Business Impact" variant="light" align="center" >}}
-{{< csi-compare before_label="Terraform Cloud" after_label="Spacelift + OpenTofu" >}}
-label: Monthly automation cost
-before: ~$5,000 projected
-after: Under $500
+{{< csi-compare before_label="Before" after_label="After Engaging with Masterpoint" >}}
+label: Annual automation costs
+before: ~$60,000 projected, growing with every client signed
+after: Under $6,000
 ---
-label: Plan & apply cycle
+label: Plan & apply deployment cycles
 before: Up to 25 minutes
 after: Under 3 minutes
 ---
@@ -179,15 +172,32 @@ title: Automation the Team Trusts
 body: The out-of-memory crashes and timeouts are gone, and the operational toil went with them. Deploys turned from a scheduling event into a non-event the platform team barely thinks about.
 ---
 icon: fa-user-plus
-title: Revenue Unblocked
-body: Power Digital onboarded 100+ new clients in the first 60 days after migration, without issue. The platform is no longer the bottleneck on the primary revenue driver.
+title: 100+ Clients in 60 Days
+body: With the platform no longer gating onboarding, Power Digital brought on 100+ new clients in the first 60 days after migration.
 ---
 icon: fa-shield-halved
 title: Stronger Security & Compliance
-body: Isolated state and resources per client, improved access control, better audit trails, and standardized security practices across every deployment.
+body: Improved access control, better audit trails, and standardized security practices across every client deployment.
 ---
 icon: fa-life-ring
 title: Disaster Recovery at Speed
 body: Fast cycles, reliable automation, and hard isolation between clients mean the team can stand up replacement infrastructure quickly when an outage demands a nimble response.
 {{< /csi-impact >}}
+{{< /csi-section >}}
+
+{{< csi-section eyebrow="Takeaways" title="Three questions worth asking about <span class='csi-grad'>your own platform</span>" variant="pine" align="center" >}}
+Power Digital's original system was not a design failure. It was a system the business outgrew, and outgrowing your infrastructure is a good problem to have. The evaluation that led to this project comes down to three questions:
+
+{{< csi-questions >}}
+question: Is it cost-effective?
+body: For Power Digital the answer was no: staying put meant an exponentially more expensive Terraform Cloud plan with no guarantee of better performance.
+---
+question: Does it meet current needs?
+body: Also no. A 50%+ run failure rate, 25-minute plans, and at least 63 lost engineer-hours a month were live problems, not projections.
+---
+question: Can it meet future demands?
+body: The one that matters most, and it's okay if the answer is no. Asking it early turns a forced migration into a deliberate one.
+{{< /csi-questions >}}
+
+It's okay if an answer is "no" — this story wasn't a failure of the original design, it was an evolution to remove scaling limits. A good problem to have, and one [Masterpoint](/contact/) solves every day.
 {{< /csi-section >}}
