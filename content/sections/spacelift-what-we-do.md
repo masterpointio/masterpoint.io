@@ -8,16 +8,16 @@ id: spacelift-what-we-do
 platform_tiles:
   - icon: '<i class="fa-solid fa-rocket"></i>'
     title: "Launch"
-    intro: "Net-new Spacelift implementation: stack architecture, OIDC cloud auth, SSO, policies, and onboarding that has your team shipping through Spacelift in weeks."
+    intro: "Net-new implementation: stack architecture, OIDC, SSO, policies, and onboarding — shipping in weeks."
   - icon: '<i class="fa-solid fa-right-left"></i>'
     title: "Migrate"
-    intro: "Move from Terraform Cloud/Enterprise, Atlantis, Jenkins, or homegrown pipelines onto Spacelift — and from Terraform to OpenTofu — without downtime."
+    intro: "Off Terraform Cloud, Atlantis, Jenkins, or homegrown pipelines — and onto OpenTofu — without downtime."
   - icon: '<i class="fa-solid fa-gears"></i>'
     title: "Automate"
-    intro: "Turn a manually managed Spacelift account into a self-service platform: PR-driven stack creation, drift detection, and notification policies engineers actually read."
+    intro: "Self-service Spacelift: PR-driven stack creation, drift detection, and notification policies."
   - icon: '<i class="fa-solid fa-shield-halved"></i>'
     title: "Govern"
-    intro: "Compliance-grade guardrails: OPA/Rego policies, tiered approval workflows, audit trails, and private workers — built for SOC 2, HIPAA, and even GxP."
+    intro: "OPA/Rego policies, tiered approvals, audit trails, and private workers — for SOC 2, HIPAA, and GxP."
 ---
 
 <div class="row justify-content-center text-center">

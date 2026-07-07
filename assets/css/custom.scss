@@ -4324,6 +4324,22 @@ font-size: 1.55rem;
 }
 
 /* Spacelift landing page (/spacelift/) — shares the iac-audit section system above */
+.demo-note {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  background: $vanilla;
+  color: $pine;
+  text-align: center;
+  padding: 9px 18px;
+  font-size: 0.95rem;
+  line-height: 1.4em;
+  a {
+    color: $pine;
+    text-decoration: underline;
+  }
+}
+
 #spacelift-trusted-by {
   padding: 2.75rem 0;
   background: #fff;
@@ -4335,11 +4351,32 @@ font-size: 1.55rem;
 
 #page-spacelift-services {
   #banner {
-    background: $pine;
+    position: relative;
+    background: $pine url(/img/services/bg_platform.jpg) no-repeat center / cover;
     padding-bottom: 4.6rem;
-    &:before,
+    &:before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      aspect-ratio: auto;
+      top: 0;
+      left: 0;
+      right: auto;
+      bottom: auto;
+      background: linear-gradient(
+        180deg,
+        rgba(14, 56, 58, 0.85) 0%,
+        rgba(14, 56, 58, 0.45) 55%,
+        rgba(14, 56, 58, 0.7) 100%
+      );
+    }
     &:after {
       display: none;
+    }
+    .container {
+      position: relative;
+      z-index: 1;
     }
     .bannerTxtBx {
       color: rgba(255, 255, 255, 0.92);
@@ -4358,8 +4395,16 @@ font-size: 1.55rem;
 }
 
 #spacelift-what-we-do {
+  background: #f4f4f4;
+  padding: 3.7rem 0 4.2rem;
   .platform-tile {
-    padding-top: 5.5rem;
+    padding-top: 5rem;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(14, 56, 58, 0.07);
+  }
+  .platform-tile .platform-intro {
+    font-size: 1rem;
+    line-height: 1.35em;
   }
   .platformIcon {
     font-size: 2.05rem;
@@ -4379,6 +4424,19 @@ font-size: 1.55rem;
   .card a {
     color: $vanilla;
     font-weight: 700;
+  }
+  #what-get-row .icon {
+    height: auto;
+    margin-bottom: 0.9rem;
+    img {
+      width: auto;
+      height: 58px;
+      max-width: 220px;
+      object-fit: contain;
+      background: #fff;
+      padding: 13px 22px;
+      border-radius: 40px;
+    }
   }
 }
 
@@ -4400,6 +4458,12 @@ font-size: 1.55rem;
         color: $highlight;
         font-size: 1.6rem;
         padding-bottom: 0.4rem;
+        img {
+          width: auto;
+          height: 30px;
+          max-width: 170px;
+          object-fit: contain;
+        }
       }
       p {
         font-size: 1.11rem;

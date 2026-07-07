@@ -2,6 +2,9 @@
 
 <body {{ if .Params.id }}id='{{ .Params.id }}' {{end}}
     class="page-default sections-template {{if .Params.banner_image}} withBannerImg {{end}}">
+    {{ with .Params.demo_note }}
+    <div class="demo-note">{{ . | safeHTML }}</div>
+    {{ end }}
     {{ partial "header.html" . }}
     <section id="banner">
         {{if .Params.banner_image}} <div class="banner-image bg-image"><img src="{{.Params.banner_image}}" /></div>
