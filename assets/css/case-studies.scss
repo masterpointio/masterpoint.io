@@ -1773,6 +1773,14 @@ $csi-line: #e7edec; // hairline on light cards
       height: auto;
       border-radius: 14px;
     }
+    // contained infographics carry baked-in dark text — give them a white
+    // backing on dark faces so they stay readable
+    .csi-section--pine &--contain img,
+    .csi-section--pine-deep &--contain img,
+    .csi-section--gradient &--contain img {
+      background: #fff;
+      padding: 0.9rem;
+    }
     &__caption {
       margin-top: 0.9rem;
       font-size: 0.85rem;
@@ -2433,7 +2441,8 @@ $csi-line: #e7edec; // hairline on light cards
       }
     }
     // "the verdict" panel — the section's real takeaway, styled as a wide
-    // card with a gradient lead line so it reads bigger than the Q&A cards
+    // card with a gradient lead line, with the get-in-touch CTA divided
+    // below it so takeaway → CTA reads as one thought
     &__outro {
       position: relative;
       max-width: 920px;
@@ -2457,6 +2466,9 @@ $csi-line: #e7edec; // hairline on light cards
         border-radius: 0 0 3px 3px;
         @include csi-grad-solid;
       }
+    }
+    &__outro-main {
+      margin: 0;
       strong {
         display: block;
         font-size: clamp(1.2rem, 1.9vw, 1.45rem);
@@ -2464,6 +2476,16 @@ $csi-line: #e7edec; // hairline on light cards
         font-weight: 800;
         margin-bottom: 0.35rem;
         @include csi-grad-light;
+      }
+    }
+    &__cta {
+      margin: 1.05rem 0 0;
+      padding-top: 1.05rem;
+      border-top: 1px solid $csi-line;
+      font-size: 0.97rem;
+      strong {
+        font-weight: 800;
+        color: $csi-ink;
       }
     }
   }
@@ -2519,8 +2541,14 @@ $csi-line: #e7edec; // hairline on light cards
       border-color: rgba(255, 255, 255, 0.09);
       box-shadow: none;
       color: #bcd0cf;
+    }
+    .csi-questions__outro-main strong {
+      @include csi-grad-bright;
+    }
+    .csi-questions__cta {
+      border-top-color: rgba(255, 255, 255, 0.09);
       strong {
-        @include csi-grad-bright;
+        color: #fff;
       }
     }
     .csi-question {
@@ -2542,8 +2570,9 @@ $csi-line: #e7edec; // hairline on light cards
   // ---------------------------------------------------------------------------
   // TESTIMONIAL — centered editorial quote
   // ---------------------------------------------------------------------------
-  // tldr mode — an unattributed summary statement, not a real quote: slimmer
-  // band, no quote mark (skipped in the template), gradient on **bold** spans
+  // tldr mode — an unattributed summary statement, not a real quote: a dark
+  // left-aligned card with a vertical gradient bar on its left edge, no quote
+  // mark (skipped in the template), gradient on **bold** spans. Slim band.
   .csi-section.csi-testimonial-band--tldr {
     padding: 2.4rem 0;
     @media (max-width: 991px) {
@@ -2553,15 +2582,36 @@ $csi-line: #e7edec; // hairline on light cards
       padding: 1.7rem 0;
     }
   }
-  .csi-testimonial--tldr .csi-testimonial__quote {
-    font-size: clamp(1.15rem, 2vw, 1.55rem);
-    strong {
-      font-weight: 800;
-      @include csi-grad-bright;
+  .csi-testimonial--tldr {
+    position: relative;
+    overflow: hidden;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 1.9rem 2.4rem 1.9rem 2.9rem;
+    text-align: left;
+    border-radius: 16px;
+    background: linear-gradient(135deg, $csi-ink 0%, $cs-pine-deep 100%);
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 9px;
+      background: linear-gradient(180deg, #2ad9c2 0%, #55c1b4 45%, #d191bf 100%);
     }
-  }
-  .csi-section--cream .csi-testimonial--tldr .csi-testimonial__quote strong {
-    @include csi-grad-light;
+    .csi-testimonial__quote {
+      font-size: clamp(1.1rem, 1.9vw, 1.5rem);
+      line-height: 1.5;
+      color: #fff;
+      strong {
+        font-weight: 800;
+        @include csi-grad-bright;
+      }
+    }
+    @media (max-width: 575px) {
+      padding: 1.4rem 1.3rem 1.4rem 1.7rem;
+    }
   }
   .csi-testimonial {
     max-width: 860px;

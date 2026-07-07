@@ -7,11 +7,15 @@
     question: The question itself (short, ends with "?")
     body: The answer / commentary. Inline markdown works.
   or:
-    outro: A closing line rendered large + centered under the cards.
+    outro: A closing verdict line rendered large + centered under the cards.
+  or:
+    cta: A call-to-action paragraph rendered inside the same panel, divided
+         from the outro — ties the takeaway straight into "get in touch".
 */}}
 {{- $raw := .Inner -}}
 {{- $blocks := split $raw "---" -}}
 {{- $outro := "" -}}
+{{- $cta := "" -}}
 <div class="csi-questions" data-aos="fade-up" data-aos-duration="600">
   <div class="csi-questions__grid">
   {{- $n := 0 -}}
@@ -32,10 +36,15 @@
         {{- else if hasPrefix $line "outro:" -}}
           {{- $outro = trim (strings.TrimPrefix "outro:" $line) " " -}}
           {{- $mode = "outro" -}}
+        {{- else if hasPrefix $line "cta:" -}}
+          {{- $cta = trim (strings.TrimPrefix "cta:" $line) " " -}}
+          {{- $mode = "cta" -}}
         {{- else if and $line (eq $mode "body") -}}
           {{- $body = printf "%s %s" $body $line -}}
         {{- else if and $line (eq $mode "outro") -}}
           {{- $outro = printf "%s %s" $outro $line -}}
+        {{- else if and $line (eq $mode "cta") -}}
+          {{- $cta = printf "%s %s" $cta $line -}}
         {{- end -}}
       {{- end -}}
       {{- if $question -}}
@@ -51,7 +60,14 @@
     {{- end -}}
   {{- end -}}
   </div>
-  {{- with $outro -}}
-  <p class="csi-questions__outro">{{ . | $.Page.RenderString (dict "display" "inline") }}</p>
+  {{- if or $outro $cta -}}
+  <div class="csi-questions__outro">
+    {{- with $outro -}}
+    <p class="csi-questions__outro-main">{{ . | $.Page.RenderString (dict "display" "inline") }}</p>
+    {{- end -}}
+    {{- with $cta -}}
+    <p class="csi-questions__cta">{{ . | $.Page.RenderString (dict "display" "inline") }}</p>
+    {{- end -}}
+  </div>
   {{- end -}}
 </div>

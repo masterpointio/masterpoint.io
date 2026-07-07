@@ -252,9 +252,9 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 | `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`; `cols="2"` for a slimmed 2-up grid (pairs with `csi-compare`, capped to the same 980px) |
 | `csi-compare`     | "Then / now" migration ledger: each metric reads across from the muted old world to the bold new world (gradient arrow between). INSIDE a `csi-section`. Owns a page's hard numbers — pair with a slimmed qualitative `csi-impact cols="2"` so figures aren't stated twice. Mobile stacks each row (metric on top, before → after beneath, per-cell tags replace the header row). | `before_label`, `after_label`; inner blocks split by `---`, each `label:` / `before:` / `after:` |
 | `csi-timeline`    | Horizontal parallel-track cutover bars ("the old system keeps running while the new one comes up"): each track is a percent-positioned bar on a muted rail, with `fade: out` (old system winding down, grey→transparent) / `fade: in` (new system ramping up, transparent→gradient) and an optional dashed vertical cutover marker. INSIDE a `csi-section`, typically right after `csi-steps` (steps say WHAT, this shows the moves OVERLAPPED). | `marker` (percent 0–100), `marker_label`; inner blocks split by `---`, each `label:` / `note:` / `start:` / `end:` / `fade:` |
-| `csi-questions`   | Takeaways row of compact numbered question cards ("ask these of your own platform"): gradient numeral inline with the question, the honest answer underneath, gradient hairline across each card's top edge, plus an optional `outro:` "verdict" panel under the row (wide centered card, gradient hairline; a leading `**bold**` span renders as a block gradient lead line). Sections containing a `csi-questions` auto-compact like `csi-list` ones. 3-up, stacks ≤860px. INSIDE a `csi-section` (both faces styled). | inner blocks split by `---`, each `question:` / `body:`; one block may instead carry `outro:` (inline markdown works) |
+| `csi-questions`   | Takeaways row of compact numbered question cards ("ask these of your own platform"): gradient numeral inline with the question, the honest answer underneath, gradient hairline across each card's top edge, plus an optional `outro:` "verdict" panel under the row (wide centered card, gradient hairline; a leading `**bold**` span renders as a block gradient lead line) and an optional `cta:` paragraph divided below the outro inside the same panel — ties the takeaway straight into the get-in-touch copy. Sections containing a `csi-questions` auto-compact like `csi-list` ones. 3-up, stacks ≤860px. INSIDE a `csi-section` (both faces styled). | inner blocks split by `---`, each `question:` / `body:`; standalone blocks may carry `outro:` or `cta:` (inline markdown works) |
 | `csi-list`        | Compact 2-col icon rows (icon chip + bold title — inline body). Space-saving sibling of `csi-impact` for secondary enumerations (e.g. "under the hood" extras) so they don't mimic the outcome grid. INSIDE a `csi-section`. | same inner format as `csi-impact` (`icon:` / `title:` / `body:`); keep bodies to one short sentence |
-| `csi-testimonial` | Editorial quote band; `image=` makes it a featured cosmic band.| `name`, `title`, `company`, `photo`, `variant`, `image`, `tldr` (`"true"` → unattributed summary statement: no quote mark, slimmer band, `**bold**` spans render in the brand gradient — used for a page-top TLDR line). With `photo`, uses the avatar-left "portrait" layout (`csi-testimonial--portrait`, see below). |
+| `csi-testimonial` | Editorial quote band; `image=` makes it a featured cosmic band.| `name`, `title`, `company`, `photo`, `variant`, `image`, `tldr` (`"true"` → unattributed summary statement: no quote mark, slim band, and the quote renders as a dark left-aligned card with a vertical gradient bar on its left edge; `**bold**` spans render in the bright brand gradient — used with `variant="light"` for a page-top TLDR line). With `photo`, uses the avatar-left "portrait" layout (`csi-testimonial--portrait`, see below). |
 
 Two **modern** shortcodes are also reused inside the immersive body (they render
 because the body also carries `case-study-modern`, so `.case-study-modern .cs-*`
@@ -414,11 +414,12 @@ from the legacy layout onto immersive. Decisions specific to that page:
   quote, and we don't fabricate quotes. If Power Digital ever supplies one, a
   `cs-pullquote` in the playbook section or a closing `csi-testimonial` are the
   natural slots.
-- **Custom `callout:`** (YAML `>-` block scalar) is the classic default CTA
-  text plus a "download this case study as a PDF" link
-  (`/download/power-digital-case-study.pdf`) — the "three questions" copy lives
-  only in the Takeaways section (`csi-questions`) so the callout doesn't
-  duplicate it.
+- **`callout: ""` suppresses the closing CTA card entirely** (the layout's
+  `cond (isset …)` picks up the empty string, then `if $cta` fails). Power
+  Digital uses this: the classic CTA copy (plus the "download this case study
+  as a PDF" link to `/download/power-digital-case-study.pdf`) lives inside the
+  Takeaways `csi-questions` `cta:` block, so takeaway → CTA reads as one
+  panel and nothing is duplicated at the page end.
 - **Media choices**: hero bg is `/img/landing/power-digital-case-study.png`
   (the neon-tower PDF-cover art *without* baked-in text — the similar-looking
   `preview_image` poster has title text baked in, so it stays list-page-only);
