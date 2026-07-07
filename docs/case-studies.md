@@ -127,8 +127,12 @@ home_highlight:
   (`is-autoplaying` class removed → underline falls back to static full width).
   `prefers-reduced-motion` disables autoplay and the slide transition.
 - **Off-screen slides get `inert` + `aria-hidden`** (toggled in JS) so their
-  CTAs aren't tabbable; logo tabs are `role="tab"` buttons with grayscale
-  inactive / full-color active states.
+  CTAs aren't tabbable. The slider div is a labeled carousel region
+  (`role="region"` + `aria-roledescription="carousel"`); the logo buttons are
+  plain buttons (NOT `role="tab"` — no tabpanel relationship exists) with
+  `aria-current` marking the active one, grayscale inactive / full-color
+  active states, and decorative (`alt=""`) logo images since each button
+  carries an `aria-label`.
 
 ---
 
