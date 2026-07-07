@@ -8,7 +8,7 @@ layout: immersive
 # Hero
 eyebrow: "CASE STUDY SUCCESS STORY"
 client: "Power Digital"
-client_logo: /img/case-studies/power-logo.png
+client_logo: /img/case-studies/power-digital-logo.png
 client_logo_height: 38px
 hero_title: "How Power Digital Achieved a <span class='text-gradient'>10x Reduction in Infrastructure Automation Costs</span>"
 hero_aside_image: /img/landing/power-digital-case-study.png
@@ -33,7 +33,7 @@ sitemap:
   priority: 0
 
 callout: >-
-  <p>👋 <strong>Curious if Masterpoint could help your team too?</strong> We
+  <p>👋 <strong>Curious if <span class='csi-grad'>Masterpoint</span> could help your team too?</strong> We
   partner with engineering organizations across the full spectrum — from
   unicorn startups to Fortune 500 enterprises — to deliver infrastructure
   systems and patterns that truly scale.
@@ -51,7 +51,7 @@ The result was a **10x reduction** in infrastructure automation costs, **signifi
 {{< csi-split media="/img/case-studies/power-digital-team.jpg" media_alt="Power Digital team members collaborating at a workstation in their office" variant="light" ratio="65-35" >}}
 {{< cs-about
   name="Power Digital"
-  logo="/img/case-studies/power-logo.png"
+  logo="/img/case-studies/power-digital-logo.png"
   url="https://powerdigitalmarketing.com/"
   linkedin="https://www.linkedin.com/company/power-digital-marketing/"
   industry="Digital Marketing · Technology-Driven Growth Agency"
@@ -202,6 +202,6 @@ body: Also no for Power Digital before the engagement. A 50%+ run failure rate, 
 question: Can it meet future demands?
 body: The one that matters most, and it's okay if the answer is no. Asking it early turns a forced migration into a deliberate one.
 ---
-outro: **It's okay if an answer is "no."** This story was an evolution to remove scaling limits — a good problem to have, because it means the business is growing. [Masterpoint](/contact/) works with teams at exactly that point, solving the platform, infrastructure, and engineering problems that come with scale, every day.
+outro: **It's okay if an answer is "no."** This story was an evolution to remove scaling limits — a good problem to have, because it means the business is growing. **[Masterpoint](/contact/)** works with teams at exactly that point, solving the platform, infrastructure, and engineering problems that come with scale, every day.
 {{< /csi-questions >}}
 {{< /csi-section >}}
