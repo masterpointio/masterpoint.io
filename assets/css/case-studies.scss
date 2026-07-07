@@ -2586,22 +2586,20 @@ $csi-line: #e7edec; // hairline on light cards
       padding: 1.7rem 0;
     }
   }
-  .csi-testimonial--tldr {
+  .csi-testimonial.csi-testimonial--tldr {
     position: relative;
-    overflow: hidden;
     max-width: 980px;
     margin: 0 auto;
-    padding: 1.9rem 2.4rem 1.9rem 2.9rem;
+    padding: 0.35rem 0 0.35rem 2.1rem;
     text-align: left;
-    border-radius: 16px;
-    background: linear-gradient(135deg, $csi-ink 0%, $cs-pine-deep 100%);
     &::before {
       content: "";
       position: absolute;
       top: 0;
       left: 0;
       bottom: 0;
-      width: 9px;
+      width: 6px;
+      border-radius: 999px;
       background: linear-gradient(180deg, #2ad9c2 0%, #55c1b4 45%, #d191bf 100%);
     }
     .csi-testimonial__quote {
@@ -2614,7 +2612,7 @@ $csi-line: #e7edec; // hairline on light cards
       }
     }
     @media (max-width: 575px) {
-      padding: 1.4rem 1.3rem 1.4rem 1.7rem;
+      padding-left: 1.4rem;
     }
   }
   .csi-testimonial {

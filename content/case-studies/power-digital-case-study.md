@@ -44,7 +44,7 @@ callout: >-
   a PDF</a> to share with your team.</p>
 ---
 
-{{< csi-testimonial tldr="true" variant="light" >}}
+{{< csi-testimonial tldr="true" variant="pine" >}}
 The result was a **10x reduction** in infrastructure automation costs, **significantly faster** plan and apply deployment cycles, and a more **resilient, scalable** infrastructure that can easily onboard new clients.
 {{< /csi-testimonial >}}
 
