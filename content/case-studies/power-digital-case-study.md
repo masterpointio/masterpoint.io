@@ -44,6 +44,10 @@ callout: >-
   a PDF</a> to share with your team.</p>
 ---
 
+{{< csi-testimonial tldr="true" >}}
+The result was a **10x reduction** in infrastructure automation costs, **significantly faster** plan and apply deployment cycles, and a more **resilient, scalable** infrastructure that can easily onboard new clients.
+{{< /csi-testimonial >}}
+
 {{< csi-split media="/img/case-studies/scalability-issues-case-study-power-digital.png" media_alt="Compounding growth visualized as a rising mountain range of data points" variant="light" ratio="65-35" >}}
 {{< cs-about
   name="Power Digital"
@@ -198,6 +202,6 @@ body: Also no. A 50%+ run failure rate, 25-minute plans, and at least 63 lost en
 question: Can it meet future demands?
 body: The one that matters most, and it's okay if the answer is no. Asking it early turns a forced migration into a deliberate one.
 ---
-outro: It's okay if an answer is "no" — this story wasn't a failure of the original design, it was an evolution to remove scaling limits. A good problem to have, and one [Masterpoint](/contact/) solves every day.
+outro: **It's okay if an answer is "no."** This story wasn't a failure of the original design — it was an evolution to remove scaling limits, and that's a good problem to have, because it means the business is growing. [Masterpoint](/contact/) partners with teams at exactly that point, solving the platform, infrastructure, and engineering problems that come with scale, every day.
 {{< /csi-questions >}}
 {{< /csi-section >}}

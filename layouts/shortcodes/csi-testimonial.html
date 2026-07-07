@@ -10,6 +10,9 @@
     variant  band background: pine (default) | pine-deep | cream
     image    optional full-bleed background image (e.g. /img/bg_our_word.jpg);
              when set, the quote sits on the left over a scrim, image to the right
+    tldr     "true" → an unattributed summary statement instead of a real quote:
+             no quote mark, slimmer band, and **bold** spans render in the
+             brand gradient
 */}}
 {{- $name := .Get "name" -}}
 {{- $role := .Get "title" -}}
@@ -17,14 +20,15 @@
 {{- $photo := .Get "photo" -}}
 {{- $variant := .Get "variant" | default "pine" -}}
 {{- $image := .Get "image" -}}
-<section class="csi-section csi-section--{{ $variant }} csi-testimonial-band{{ if $image }} csi-testimonial-band--featured{{ end }}"{{ with $image }} style="--csi-quote-bg: url('{{ . }}')"{{ end }}>
+{{- $tldr := .Get "tldr" -}}
+<section class="csi-section csi-section--{{ $variant }} csi-testimonial-band{{ if $image }} csi-testimonial-band--featured{{ end }}{{ if $tldr }} csi-testimonial-band--tldr{{ end }}"{{ with $image }} style="--csi-quote-bg: url('{{ . }}')"{{ end }}>
   <div class="csi-container">
-    <figure class="csi-testimonial{{ if $photo }} csi-testimonial--portrait{{ end }}" data-aos="fade-up" data-aos-duration="600">
+    <figure class="csi-testimonial{{ if $photo }} csi-testimonial--portrait{{ end }}{{ if $tldr }} csi-testimonial--tldr{{ end }}" data-aos="fade-up" data-aos-duration="600">
       {{- if $photo -}}
       <div class="csi-testimonial__avatar"><img src="{{ $photo }}" alt="{{ $name }}" /></div>
       {{- end -}}
       <div class="csi-testimonial__content">
-        <div class="csi-testimonial__mark" aria-hidden="true">&ldquo;</div>
+        {{- if not $tldr -}}<div class="csi-testimonial__mark" aria-hidden="true">&ldquo;</div>{{- end -}}
         <blockquote class="csi-testimonial__quote">
           {{ .Inner | $.Page.RenderString (dict "display" "block") }}
         </blockquote>
