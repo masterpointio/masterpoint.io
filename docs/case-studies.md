@@ -414,12 +414,13 @@ from the legacy layout onto immersive. Decisions specific to that page:
   quote, and we don't fabricate quotes. If Power Digital ever supplies one, a
   `cs-pullquote` in the playbook section or a closing `csi-testimonial` are the
   natural slots.
-- **`callout: ""` suppresses the closing CTA card entirely** (the layout's
-  `cond (isset …)` picks up the empty string, then `if $cta` fails). Power
-  Digital uses this: the classic CTA copy (plus the "download this case study
-  as a PDF" link to `/download/power-digital-case-study.pdf`) lives inside the
-  Takeaways `csi-questions` `cta:` block, so takeaway → CTA reads as one
-  panel and nothing is duplicated at the page end.
+- **Custom `callout:`** (YAML `>-` block scalar) is the classic default CTA
+  text plus a "download this case study as a PDF" link
+  (`/download/power-digital-case-study.pdf`), rendered as the standard closing
+  CTA card like other case studies. (Note: `callout: ""` would suppress the
+  card entirely — the layout's `cond (isset …)` picks up the empty string and
+  `if $cta` then fails; the Takeaways `csi-questions` also supports a `cta:`
+  block if a page ever wants the CTA merged into the takeaway panel instead.)
 - **Media choices**: hero bg is `/img/landing/power-digital-case-study.png`
   (the neon-tower PDF-cover art *without* baked-in text — the similar-looking
   `preview_image` poster has title text baked in, so it stays list-page-only);

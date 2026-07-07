@@ -32,9 +32,16 @@ og_img: /img/landing/power-digital-case-study.png
 sitemap:
   priority: 0
 
-# Empty callout suppresses the standalone closing CTA card — the CTA lives
-# inside the Takeaways section (csi-questions `cta:` block) instead.
-callout: ""
+callout: >-
+  <p>👋 <strong>Curious if Masterpoint could help your team too?</strong> We
+  partner with engineering organizations across the full spectrum — from
+  unicorn startups to Fortune 500 enterprises — to deliver infrastructure
+  systems and patterns that truly scale.
+  <a href='https://calendly.com/matt-at-masterpoint/project-chat'
+  target='_blank' rel='noopener'>Get in touch</a> and we'll walk through your
+  environment, your roadmap, and see where we can help — or
+  <a href='/download/power-digital-case-study.pdf'>download this case study as
+  a PDF</a> to share with your team.</p>
 ---
 
 {{< csi-testimonial tldr="true" variant="light" >}}
@@ -196,7 +203,5 @@ question: Can it meet future demands?
 body: The one that matters most, and it's okay if the answer is no. Asking it early turns a forced migration into a deliberate one.
 ---
 outro: **It's okay if an answer is "no."** This story was an evolution to remove scaling limits — a good problem to have, because it means the business is growing. [Masterpoint](/contact/) works with teams at exactly that point, solving the platform, infrastructure, and engineering problems that come with scale, every day.
----
-cta: 👋 **Curious if Masterpoint could help your team too?** We partner with engineering organizations across the full spectrum — from unicorn startups to Fortune 500 enterprises — to deliver infrastructure systems and patterns that truly scale. [Get in touch](https://calendly.com/matt-at-masterpoint/project-chat) and we'll walk through your environment, your roadmap, and see where we can help — or [download this case study as a PDF](/download/power-digital-case-study.pdf) to share with your team.
 {{< /csi-questions >}}
 {{< /csi-section >}}
