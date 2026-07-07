@@ -10,7 +10,7 @@ eyebrow: "CASE STUDY SUCCESS STORY"
 client: "Power Digital"
 client_logo: /img/case-studies/power-digital/power-digital-logo-white.png
 client_logo_height: 34px
-hero_title: "How Power Digital Achieved a <span class='text-gradient'>10x Reduction in Infrastructure Automation Costs</span>"
+hero_title: "Power Digital: <span class='text-gradient'>10x Reduction</span> in Infrastructure Automation Costs, <span class='text-gradient'>8x Faster Client Onboarding</span>"
 hero_aside_image: /img/landing/power-digital-case-study.png
 hero_aside_alt: "Neon-lit skyline artwork from the Power Digital case study"
 
@@ -19,7 +19,7 @@ stat_bar:
   - value: "100+"
     label: "<strong class='csi-grad'>new clients</strong> onboarded in the first 60 days after migration"
   - value: "25 → 3 min"
-    label: "plan & apply deployment cycles"
+    label: "plan & apply deployment cycles — <strong class='csi-grad'>8x faster</strong>"
   - value: "10x"
     label: "lower infrastructure automation costs"
   - value: "43,000+"
@@ -123,7 +123,7 @@ Both systems ran in parallel: existing clients stayed stable on the Terralith wh
 Instead of one shared [Terralith](/blog/terralith-monolithic-terraform-architecture/), each client deployment now lives in its own stack with isolated resources and state, connected through workspaces where the pieces need each other.
 
 - **Blast radius shrank from "every client" to one fully isolated client.** A change to one deployment can no longer ripple across the platform.
-- **Feedback collapsed from 25 minutes to under 3.** Full init/plan/apply cycles for a client's infrastructure complete in sub-3 minutes, sub-minute in some cases.
+- **Feedback collapsed from 25 minutes to under 3 — an 8x improvement.** Full init/plan/apply cycles for a client's infrastructure complete in sub-3 minutes, sub-minute in some cases.
 - **Standardization through reusable modules.** Shared modules for common infrastructure components replaced repetitive copy-paste configuration, with dependencies explicitly defined — and the repository restructured around them, making the codebase navigable again and collaboration straightforward.
 {{< /csi-split >}}
 
@@ -155,7 +155,7 @@ after: Under $6,000
 ---
 label: Plan & apply deployment cycles
 before: Up to 25 minutes
-after: Under 3 minutes
+after: Under 3 minutes — 8x faster
 ---
 label: Run reliability
 before: Over 50% failed

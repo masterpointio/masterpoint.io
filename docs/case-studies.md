@@ -13,11 +13,9 @@ the codebase is the source of truth, this file describes what IS).
 
 ## Architecture overview
 
-There are **two case-study layouts** in this codebase. They are kept isolated
-so visual changes to one never affect the other. (A third **legacy** layout —
-`legacy.html` + the `.case-study-single` CSS block in `custom.scss` — was
-deleted in July 2026 once Power Digital, its last user, was rebuilt on
-immersive.)
+There are **two case-study layouts** in this codebase, kept isolated so visual
+changes to one never affect the other. (A legacy third layout was deleted in
+July 2026 once Power Digital, its last user, was rebuilt on immersive.)
 
 | Layout        | Template                              | Used by                                                 | Body class                          | Style prefix            |
 | ------------- | ------------------------------------- | ------------------------------------------------------- | ----------------------------------- | ----------------------- |
@@ -151,21 +149,12 @@ All shortcodes are in `layouts/shortcodes/cs-*.html` and styled under
 - **New shortcode files in `layouts/shortcodes/` are not picked up by a
   running `hugo serve`.** Restart serve after creating a new shortcode
   template. Modifying an existing one hot-reloads fine.
-- **Any `<ul>`-based shortcode inside `.csi-prose` must be excluded from the
-  prose list rules.** The prose block styles `ul:not(.csi-list):not(.csi-compare__rows)`
-  (margins + gradient square bullets on `> li`); a new list-shaped shortcode
-  will inherit stray bullets/padding until its class joins those `:not()`
-  chains — and it must then reset `list-style`/`margin`/`padding` itself.
-- **CSS-drawn figures beat images for diagrams.** `csi-split figure="…"`
-  renders `layouts/partials/case-studies/figures/<name>.html` in the media
-  slot: inherits page fonts, auto-recolours per card face (style both), prints
-  crisp. Draw with REAL elements, not pseudo-elements — print drops
-  `::before/::after` `background-image`, so gradient bars/cells/dots built as
-  real nodes survive the PDF while pseudo-element decorations vanish.
-- **Overriding a shortcode's inline `style=` positioning needs `!important`.**
-  Shortcodes that place elements via inline styles (e.g. `csi-timeline` bars
-  via `left`/`width`) can only be repositioned in a media query with
-  `!important` — inline styles beat any selector otherwise.
+- **`<ul>`-based shortcodes inside `.csi-prose` must join the prose list-rule
+  `:not()` chains** (`ul:not(.csi-list):not(…)`) or they inherit gradient
+  bullets — and must then reset `list-style`/margins themselves.
+- **CSS-drawn figures beat images for diagrams** (`csi-split figure="…"` →
+  `figures/<name>.html`: inherits fonts, recolours per face, prints crisp) —
+  but draw with REAL elements; print drops `::before/::after` `background-image`.
 - **The TOC reads `.Fragments`, not `.TableOfContents`.** `.TableOfContents`
   is empty when read from inside a _shortcode_ (it isn't built until after the
   goldmark pass), which is the original reason the TOC moved to a layout-stage
@@ -242,14 +231,14 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 | Shortcode         | Purpose                                                        | Key args                                                                              |
 | ----------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
 | `csi-section`     | A card (eyebrow + headline + block prose).                     | `eyebrow`, `title` (HTML ok), `variant`, `align`, `num`, `accent`                     |
-| `csi-split`       | Text + visual side-by-side; `flip="true"` alternates sides.    | `eyebrow`, `title`, `media`, `media_alt`, `media2`/`media2_alt` (optional second image stacked under the first in the same column), `figure` (CSS-drawn figure partial from `layouts/partials/case-studies/figures/<name>.html` instead of an image — subfolders work, e.g. `figure="power-digital/terralith"` for page-specific figures), `flip`, `contain`, `caption`, `variant`, `ratio` (`50-50` default / `65-35` / `75-25`, text wider — the ratios auto-reverse their column widths under `flip`, since flip moves the media into the first grid track via `order`) |
+| `csi-split`       | Text + visual side-by-side; `flip="true"` alternates sides.    | `eyebrow`, `title`, `media`, `media_alt`, `media2`/`media2_alt` (second image stacked below the first), `figure` (CSS-drawn figure partial from `figures/<name>.html` instead of an image; subfolders work — `figure="power-digital/terralith"`), `flip`, `contain`, `caption`, `variant`, `ratio` (`50-50` default / `65-35` / `75-25`, text wider; ratios auto-reverse under `flip` since flip puts the media in the first grid track via `order`) |
 | `csi-steps`       | Numbered process cards. Place INSIDE a `csi-section`.          | inner blocks split by `---`, each `title:` / `body:`                                  |
 | `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`; `cols="2"` for a slimmed 2-up grid (pairs with `csi-compare`, capped to the same 980px) |
-| `csi-compare`     | "Then / now" migration ledger: each metric reads across from the muted old world to the bold new world (gradient arrow between). INSIDE a `csi-section`. Owns a page's hard numbers — pair with a slimmed qualitative `csi-impact cols="2"` so figures aren't stated twice. Mobile stacks each row (metric on top, before → after beneath, per-cell tags replace the header row). | `before_label`, `after_label`; inner blocks split by `---`, each `label:` / `before:` / `after:` |
-| `csi-timeline`    | Horizontal parallel-track cutover bars ("the old system keeps running while the new one comes up"): each track is a percent-positioned bar on a muted rail, with `fade: out` (old system winding down, grey→transparent) / `fade: in` (new system ramping up, transparent→gradient) and an optional dashed vertical cutover marker. INSIDE a `csi-section`, typically right after `csi-steps` (steps say WHAT, this shows the moves OVERLAPPED). | `marker` (percent 0–100), `marker_label`; inner blocks split by `---`, each `label:` / `note:` / `start:` / `end:` / `fade:` |
-| `csi-questions`   | Takeaways row of compact numbered question cards ("ask these of your own platform"): gradient numeral inline with the question, the honest answer underneath, gradient hairline across each card's top edge, plus an optional `outro:` "verdict" panel under the row (wide centered card, gradient hairline; a leading `**bold**` span renders as a block gradient lead line) and an optional `cta:` paragraph divided below the outro inside the same panel — ties the takeaway straight into the get-in-touch copy. Sections containing a `csi-questions` auto-compact like `csi-list` ones. 3-up, stacks ≤860px. INSIDE a `csi-section` (both faces styled). | inner blocks split by `---`, each `question:` / `body:`; standalone blocks may carry `outro:` or `cta:` (inline markdown works) |
+| `csi-compare`     | "Then / now" migration ledger: muted old world → bold gradient new world per metric. Owns a page's hard numbers — pair with a slimmed `csi-impact` so figures aren't stated twice. Mobile stacks each row with per-cell tags. INSIDE a `csi-section`. | `before_label`, `after_label`; inner blocks split by `---`, each `label:` / `before:` / `after:` |
+| `csi-timeline`    | Horizontal parallel-track cutover bars (old system winding down while the new ramps up): percent-positioned bars with `fade: out` / `fade: in` and an optional dashed cutover marker. Typically right after `csi-steps`. INSIDE a `csi-section`. | `marker` (percent 0–100), `marker_label`; inner blocks split by `---`, each `label:` / `note:` / `start:` / `end:` / `fade:` |
+| `csi-questions`   | Takeaways row of compact numbered question cards (gradient numeral inline with the question), plus an optional `outro:` "verdict" panel (leading `**bold**` renders as a block gradient lead line) and optional `cta:` paragraph divided inside the same panel. Sections containing one auto-compact like `csi-list` ones. 3-up, stacks ≤860px. INSIDE a `csi-section`. | inner blocks split by `---`, each `question:` / `body:`; standalone blocks may carry `outro:` or `cta:` (inline markdown works) |
 | `csi-list`        | Compact 2-col icon rows (icon chip + bold title — inline body). Space-saving sibling of `csi-impact` for secondary enumerations (e.g. "under the hood" extras) so they don't mimic the outcome grid. INSIDE a `csi-section`. | same inner format as `csi-impact` (`icon:` / `title:` / `body:`); keep bodies to one short sentence |
-| `csi-testimonial` | Editorial quote band; `image=` makes it a featured cosmic band.| `name`, `title`, `company`, `photo`, `variant`, `image`, `tldr` (`"true"` → unattributed summary statement: no quote mark, slim band, no card surface — the left-aligned text sits directly on the band with a rounded vertical gradient bar on its left edge; `**bold**` spans render in the bright brand gradient — used on a `pine` band for the page-top TLDR line so it flows straight out of the dark hero/stat strip). With `photo`, uses the avatar-left "portrait" layout (`csi-testimonial--portrait`, see below). |
+| `csi-testimonial` | Editorial quote band; `image=` makes it a featured cosmic band.| `name`, `title`, `company`, `photo`, `variant`, `image`, `tldr` (`"true"` → unattributed page-top summary: no quote mark, slim band, left-aligned text bare on the band with a vertical gradient bar; `**bold**` renders in the bright gradient). With `photo`, uses the avatar-left "portrait" layout (`csi-testimonial--portrait`, see below). |
 
 Two **modern** shortcodes are also reused inside the immersive body (they render
 because the body also carries `case-study-modern`, so `.case-study-modern .cs-*`
@@ -376,71 +365,20 @@ case studies and the marketing pages.
 
 ### Power Digital page notes (July 2026 rebuild)
 
-Power Digital (`content/case-studies/power-digital-case-study.md`) was rebuilt
-from the legacy layout onto immersive. Decisions specific to that page:
+Rebuilt from the (deleted) legacy layout onto immersive as `power-digital.md`;
+slug is `/case-studies/power-digital/` (301s in `netlify.toml` cover the old
+long slug and the deleted top-level PDF landing page).
 
-- **Slug shortened July 2026** (`power-digital.md` → `/case-studies/power-digital/`,
-  matching the MarketSpark style). 301 redirects in `netlify.toml` cover both
-  old URLs: `/case-studies/power-digital-case-study/` (previous immersive slug)
-  and `/power-digital-case-study/` (the deleted top-level PDF landing page).
-- **Card flow** (strict light↔pine alternation, then the pine CTA):
-  TLDR statement (pine `csi-testimonial tldr="true"` right under the stat
-  strip) → About (light split, 65-35, team photo `power-digital-team.jpg`, no
-  `technologies` param, `download` PDF button on the card) →
-  Challenge (pine 75-25 flip split: scalability art + 63-hours infographic
-  stacked at 25% left via `media2`, prose + `csi-list` pain stats at 75%) →
-  playbook (light section + `csi-steps` + `csi-timeline` cutover bars) → three
-  numbered splits (01 Architecture pine w/ `figure="power-digital/terralith"` /
-  02 Platform light / 03 Toolchain pine) → Business Impact (light section +
-  `csi-compare` ledger + `csi-impact cols="2"`) → Takeaways (pine section +
-  `csi-questions` three-questions cards + verdict outro) → custom `callout` CTA.
-- **First production use of `csi-steps`** — the four-move migration playbook
-  ("Audit & Migration Plan" → "Knowledge Transfer & Trainings"). Verified on
-  light face and mobile.
-- **The page's bespoke elements** (all reusable, born here July 2026,
-  built because Power Digital is a *migration* story — everything meaningful is
-  a before→after delta, which MarketSpark's build-story kit had no language
-  for): the `csi-compare` then/now ledger (owns the hard numbers, gradient-text
-  "after" column; the impact grid slimmed 6 → 4 qualitative cards via `cols="2"`
-  so figures aren't triple-stated), the `csi-timeline` cutover bars (Terralith
-  0–70% fading out, platform 30–100% fading in, dashed cutover marker at 62%),
-  the `csi-questions` takeaways cards (the "three questions worth asking"
-  evaluation framework), and the CSS-drawn `figure="power-digital/terralith"`
-  decomposition diagram (monolith cell-grid → gradient arrow → per-client stack
-  grid, monospace client labels; the partial lives in
-  `figures/power-digital/` since it's specific to this page).
-- **No attributed quote**: the source material has no attributed client quote,
-  and we don't fabricate quotes — the page-top `csi-testimonial tldr="true"`
-  band is explicitly an unattributed TLDR statement (no quote mark). If Power
-  Digital ever supplies a real quote, a `cs-pullquote` in the playbook section
-  or a closing attributed `csi-testimonial` are the natural slots.
-- **Custom `callout:`** (YAML `>-` block scalar) is the classic default CTA
-  text plus a "download this case study as a PDF" link
-  (`/download/power-digital-case-study.pdf`), rendered as the standard closing
-  CTA card like other case studies. (Note: `callout: ""` would suppress the
-  card entirely — the layout's `cond (isset …)` picks up the empty string and
-  `if $cta` then fails; the Takeaways `csi-questions` also supports a `cta:`
-  block if a page ever wants the CTA merged into the takeaway panel instead.)
-- **Media choices** (page-specific images live in
-  `static/img/case-studies/power-digital/`, mirroring the `marketspark/`
-  folder; only the MarketSpark-shared `spacelift.jpg` / `opentofu.jpg` stay in
-  the parent folder): hero bg is `/img/landing/power-digital-case-study.png`
-  (the neon-tower PDF-cover art *without* baked-in text — the similar-looking
-  `preview_image` poster has title text baked in, so it stays list-page-only);
-  `spacelift.jpg` / `opentofu.jpg` are **deliberately shared with
-  MarketSpark** — they're generic tool imagery, and reuse keeps the visual
-  system consistent. The client logo is the full electric-blue wordmark
-  (`power-digital-logo.png`, from Power Digital's own CDN); the About photo
-  (`power-digital-team.jpg`) likewise. Of the old PDF-era infographics only
-  `63-hours-…​.png` (challenge split, on a white backing) and the scalability
-  graph survive — the rest (25min clocks, tldr bar chart, results collage,
-  x-logos strip, old flag-only logo) were deleted in July 2026 as unused
-  (the old PDF at `/download/power-digital-case-study.pdf` is a static file
-  and unaffected).
-- **`download_button` / `banner_*` front matter removed** — those were
-  legacy-layout fields. The immersive page prints well (see Print / PDF), which
-  replaces the old "download the PDF" flow; the PDF file itself still exists at
-  `/download/power-digital-case-study.pdf` if anyone wants to link it.
+- **Card flow**: TLDR band (`tldr="true"`) → About (65-35 split, team photo,
+  `download` PDF button) → Challenge (pine 75-25 flip split, two images via
+  `media2`) → playbook (`csi-steps` + `csi-timeline`) → 01/02/03 splits (01:
+  `figure="power-digital/terralith"`) → Business Impact (`csi-compare` +
+  `csi-impact cols="4"`) → Takeaways (`csi-questions` + outro) → `callout` CTA
+  (classic copy + PDF link; `callout: ""` would suppress the card entirely).
+- **No attributed quote** (we don't fabricate; the TLDR band is deliberately
+  unattributed). **Media** lives in `static/img/case-studies/power-digital/`
+  (shared `spacelift.jpg`/`opentofu.jpg` stay in the parent); client logo is
+  the electric-blue wordmark, white-text variant on the dark hero.
 
 ## Page-level styling decisions
 
@@ -480,10 +418,9 @@ Case studies print (Ctrl/Cmd+P → Save as PDF) styled to match the screen.
      transparent fill does not render reliably in Chrome's PDF path: the run
      stops wrapping and gets sliced by the hero card's `overflow:hidden`, or the
      gradient paints as a solid rectangle. So `.text-gradient` / `.csi-grad` /
-     `.csi-step__num` / `.csi-testimonial__mark` /
-     `.cs-hero__lockup-x` fall back to a solid brand colour (`#2ad9c2`) in print.
-     Any NEW class that includes the `csi-grad-light`/`csi-grad-bright` mixins
-     directly (rather than via `.csi-grad`) must join this list.
+     `.csi-step__num` / `.csi-testimonial__mark` / `.cs-hero__lockup-x` fall
+     back to a solid brand colour (`#2ad9c2`) in print — any NEW class using the
+     grad mixins directly (not via `.csi-grad`) must join this list.
      The on-screen multi-stop gradient becomes a single teal in the PDF — an
      intentional, reliable trade.
   4. **Hero frosted card** drops `backdrop-filter` (unsupported in print) and
@@ -506,9 +443,8 @@ Case studies print (Ctrl/Cmd+P → Save as PDF) styled to match the screen.
      on-screen scrolling can feel slow — they re-composite on the GPU per frame.)
   7. **Page-break control — prevents cards clipping across page boundaries.**
      `break-inside: avoid` on the **small, repeating** cards (`.cs-stat`,
-     `.cs-pullquote`, `.csi-testimonial`, `.csi-impact__card`,
-     `.csi-compare__row`, `.csi-fig-terralith__mono`, `.csi-fig-terralith__stack`,
-     `.csi-timeline`, `.csi-question`) pushes a whole
+     `.cs-pullquote`, `.csi-testimonial`, `.csi-impact__card`, `.csi-compare__row`,
+     `.csi-fig-terralith__mono/__stack`, `.csi-timeline`, `.csi-question`) pushes a whole
      card to the next page rather than slicing its top/bottom edge. **Only apply
      it to small cards** — putting it on large one-off blocks (the About panel,
      article/screenshot cards) backfires: shoving a big block whole to the next
@@ -593,13 +529,6 @@ Reserve em dashes for rhetorical punch lines and attribution lines.
 
 Use the **Chrome DevTools MCP** to visually verify changes during a session.
 Required because Hugo's CLI build does not catch visual regressions.
-
-If the Chrome DevTools MCP browser profile is locked ("browser is already
-running" — another Claude session owns it), fall back to the **Claude Preview**
-tools: add a `hugo` entry to `.claude/launch.json` (fixed `--port`, since Hugo
-ignores the `PORT` env var) and let `preview_start` own the server process —
-it refuses to attach to a hugo it didn't start. Pick a non-1313 port; the user
-usually has their own `hugo serve` running.
 
 ### Step-by-step
 
