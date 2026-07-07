@@ -421,7 +421,10 @@ from the legacy layout onto immersive. Decisions specific to that page:
   card entirely — the layout's `cond (isset …)` picks up the empty string and
   `if $cta` then fails; the Takeaways `csi-questions` also supports a `cta:`
   block if a page ever wants the CTA merged into the takeaway panel instead.)
-- **Media choices**: hero bg is `/img/landing/power-digital-case-study.png`
+- **Media choices** (page-specific images live in
+  `static/img/case-studies/power-digital/`, mirroring the `marketspark/`
+  folder; only the MarketSpark-shared `spacelift.jpg` / `opentofu.jpg` stay in
+  the parent folder): hero bg is `/img/landing/power-digital-case-study.png`
   (the neon-tower PDF-cover art *without* baked-in text — the similar-looking
   `preview_image` poster has title text baked in, so it stays list-page-only);
   `spacelift.jpg` / `opentofu.jpg` are **deliberately shared with

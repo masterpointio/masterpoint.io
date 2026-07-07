@@ -45,7 +45,7 @@ to = "/tying-the-masterpoint-knot/"
 status = 301
 force = true
 
-# case study slug shortened (power-digital-case-study -> power-digital)
+# case study slug shortened for consistency (power-digital-case-study -> power-digital)
 [[redirects]]
 from = "/case-studies/power-digital-case-study/"
 to = "/case-studies/power-digital/"
