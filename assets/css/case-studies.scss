@@ -491,9 +491,11 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
     }
     &__client {
       display: block;
-      height: 20px;
+      // scale from the page's hero logo height so wide lockups (MarketSpark
+      // 48px) and compact ones (Power Digital 34px) both read balanced
+      height: calc(var(--cs-client-logo-h, 36px) * 0.6);
       width: auto;
-      max-width: 150px;
+      max-width: 170px;
     }
     &__mp {
       display: block;
@@ -545,7 +547,7 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
     }
     @media (max-width: 575px) {
       &__client {
-        height: 16px;
+        height: calc(var(--cs-client-logo-h, 36px) * 0.48);
       }
       &__mp {
         height: 12px;

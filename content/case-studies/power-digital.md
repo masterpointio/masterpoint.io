@@ -25,15 +25,6 @@ stat_bar:
   - value: "43,000+"
     label: "resources migrated to <a href='https://spacelift.io/' target='_blank' rel='noopener'>Spacelift</a> & <a href='https://opentofu.org/' target='_blank' rel='noopener'>OpenTofu</a>"
 
-# Sticky section nav (appears once the hero scrolls out of view)
-sticky_nav:
-  - label: "The Challenge"
-    anchor: "the-challenge"
-  - label: "The Work"
-    anchor: "the-work"
-  - label: "The Results"
-    anchor: "the-results"
-
 # Preview / OG
 preview_image: /img/case-studies/power-digital/power-digital-case-study-preview.jpg
 og_img: /img/landing/power-digital-case-study.png
@@ -203,10 +194,10 @@ Power Digital's original system was not a design failure — it was a system the
 
 {{< csi-questions >}}
 question: Is it cost-effective?
-body: For Power Digital the answer was no: staying put meant an exponentially more expensive Terraform Cloud plan with no guarantee of better performance.
+body: For Power Digital the answer was "no": staying put meant an exponentially more expensive Terraform Cloud plan with no guarantee of better performance.
 ---
 question: Does it meet current needs?
-body: Also no for Power Digital before the engagement. A 50%+ run failure rate, 25-minute plans, and at least 63 lost engineer-hours a month were live problems, not projections.
+body: Before the engagement with Masterpoint, this was also a "no" for Power Digital. A 50%+ run failure rate, 25-minute cycles, and hours of lost engineering time were real problems, not projections.
 ---
 question: Can it meet future demands?
 body: The one that matters most, and asking it early turns a forced migration into a deliberate one.

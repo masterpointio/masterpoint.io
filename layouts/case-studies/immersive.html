@@ -15,14 +15,21 @@
     {{ partial "header.html" . }}
 
     {{/* STICKY NAV — fixed bar that slides in once the hero scrolls out of
-         view (à la Accenture case studies). Configure per page via
-         `sticky_nav:` front matter (label + anchor pairs; anchors are `id`s
-         set on csi-section / csi-split via their `id` arg). */}}
-    {{ if .Params.sticky_nav }}
+         view. ON BY DEFAULT for every case study: the default links assume
+         sections carry the conventional the-challenge / the-work /
+         the-results `id`s (csi-section/csi-split `id` arg). Override the
+         labels/anchors — or suppress with `sticky_nav: []` — via front
+         matter. */}}
+    {{ $defaultStickyNav := slice
+        (dict "label" "The Challenge" "anchor" "the-challenge")
+        (dict "label" "The Work" "anchor" "the-work")
+        (dict "label" "The Results" "anchor" "the-results") }}
+    {{ $stickyNav := cond (isset .Params "sticky_nav") .Params.sticky_nav $defaultStickyNav }}
+    {{ if $stickyNav }}
     <div class="cs-sticky-nav">
         <div class="container">
             <div class="cs-sticky-nav__inner">
-                <div class="cs-sticky-nav__lockup">
+                <div class="cs-sticky-nav__lockup"{{ with .Params.client_logo_height }} style="--cs-client-logo-h: {{ . }}"{{ end }}>
                     {{ if .Params.client_logo }}
                     <img class="cs-sticky-nav__client" src="{{ .Params.client_logo }}" alt="{{ .Params.client | default "" }} logo" />
                     <span class="cs-sticky-nav__x" aria-hidden="true">&times;</span>
@@ -30,7 +37,7 @@
                     <img class="cs-sticky-nav__mp" src="/img/logo.svg" alt="Masterpoint logo" />
                 </div>
                 <nav class="cs-sticky-nav__links" aria-label="Case study sections">
-                    {{ range .Params.sticky_nav }}
+                    {{ range $stickyNav }}
                     <a href="#{{ .anchor }}">{{ .label | safeHTML }}</a>
                     {{ end }}
                 </nav>
@@ -111,7 +118,7 @@
     {{ partial "schedule-assessment.html" . }}
     {{ partial "footer.html" . }}
     {{ partial "scripts.html" . }}
-    {{ if .Params.sticky_nav }}
+    {{ if $stickyNav }}
     <script>
       (function () {
         var nav = document.querySelector(".cs-sticky-nav");

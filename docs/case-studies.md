@@ -365,14 +365,15 @@ case studies and the marketing pages.
 
 ### Sticky section nav
 
-`sticky_nav:` front matter (list of `label` + `anchor` pairs) renders a fixed
-client × Masterpoint bar that slides in once the hero scrolls out of view
-(IntersectionObserver) with scrollspy-highlighted anchor links — anchors are
-`id`s set on `csi-section`/`csi-split`. Both case studies use
-the-challenge / the-work / the-results. Hidden in print; anchored sections get
-`scroll-margin-top` so they land clear of the bar. Keep the active-link
-underline INSIDE the link box — the links row is `overflow-x: auto` and any
-overhang conjures a stub scrollbar.
+Every immersive case study gets a fixed client × Masterpoint bar that slides
+in once the hero scrolls out of view (IntersectionObserver), with
+scrollspy-highlighted anchor links. Default links are The Challenge / The Work
+/ The Results → the conventional `the-challenge`/`the-work`/`the-results`
+`id`s on `csi-section`/`csi-split`; override the pairs (or suppress with
+`sticky_nav: []`) via `sticky_nav:` front matter. Hidden in print; anchored
+sections get `scroll-margin-top` so they land clear of the bar. Keep the
+active-link underline INSIDE the link box — the links row is
+`overflow-x: auto` and any overhang conjures a stub scrollbar.
 
 ### Power Digital page notes (July 2026 rebuild)
 
