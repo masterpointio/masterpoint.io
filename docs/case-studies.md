@@ -247,7 +247,7 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 | Shortcode         | Purpose                                                        | Key args                                                                              |
 | ----------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
 | `csi-section`     | A card (eyebrow + headline + block prose).                     | `eyebrow`, `title` (HTML ok), `variant`, `align`, `num`, `accent`                     |
-| `csi-split`       | Text + visual side-by-side; `flip="true"` alternates sides.    | `eyebrow`, `title`, `media`, `media_alt`, `figure` (CSS-drawn figure partial from `layouts/partials/case-studies/figures/<name>.html` instead of an image — e.g. `figure="terralith"`), `flip`, `contain`, `caption`, `variant`, `ratio` |
+| `csi-split`       | Text + visual side-by-side; `flip="true"` alternates sides.    | `eyebrow`, `title`, `media`, `media_alt`, `figure` (CSS-drawn figure partial from `layouts/partials/case-studies/figures/<name>.html` instead of an image — e.g. `figure="terralith"`), `flip`, `contain`, `caption`, `variant`, `ratio` (`50-50` default / `65-35` / `75-25`, text wider) |
 | `csi-steps`       | Numbered process cards. Place INSIDE a `csi-section`.          | inner blocks split by `---`, each `title:` / `body:`                                  |
 | `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`; `cols="2"` for a slimmed 2-up grid (pairs with `csi-compare`, capped to the same 980px) |
 | `csi-compare`     | "Then / now" migration ledger: each metric reads across from the muted old world to the bold new world (gradient arrow between). INSIDE a `csi-section`. Owns a page's hard numbers — pair with a slimmed qualitative `csi-impact cols="2"` so figures aren't stated twice. Mobile stacks each row (metric on top, before → after beneath, per-cell tags replace the header row). | `before_label`, `after_label`; inner blocks split by `---`, each `label:` / `before:` / `after:` |
@@ -388,7 +388,9 @@ from the legacy layout onto immersive. Decisions specific to that page:
   so existing inbound links and SEO stay intact — don't rename it to match the
   shorter MarketSpark style.
 - **Card flow** (strict light↔pine alternation, then the pine CTA):
-  About (light split, 65-35) → Challenge (pine section + `csi-list` pain stats) →
+  About (light split, 65-35, x-logos art, no `technologies` param) →
+  Challenge (pine 75-25 flip split: scalability art at 25% left, prose +
+  `csi-list` pain stats at 75%) →
   playbook (light section + `csi-steps` + `csi-timeline` cutover bars) → three
   numbered splits (01 Architecture pine w/ `figure="terralith"` / 02 Platform
   light / 03 Toolchain pine) → Business Impact (light section + `csi-compare`
@@ -412,10 +414,11 @@ from the legacy layout onto immersive. Decisions specific to that page:
   quote, and we don't fabricate quotes. If Power Digital ever supplies one, a
   `cs-pullquote` in the playbook section or a closing `csi-testimonial` are the
   natural slots.
-- **Custom `callout:`** (YAML `>-` block scalar) echoes the "three questions"
-  takeaway instead of the generic CTA — proves the `isset`-based override works
-  on the immersive layout too. The questions themselves live in the Takeaways
-  section (`csi-questions`); the callout is the CTA reprise.
+- **Custom `callout:`** (YAML `>-` block scalar) is the classic default CTA
+  text plus a "download this case study as a PDF" link
+  (`/download/power-digital-case-study.pdf`) — the "three questions" copy lives
+  only in the Takeaways section (`csi-questions`) so the callout doesn't
+  duplicate it.
 - **Media choices**: hero bg is `/img/landing/power-digital-case-study.png`
   (the neon-tower PDF-cover art *without* baked-in text — the similar-looking
   `preview_image` poster has title text baked in, so it stays list-page-only);

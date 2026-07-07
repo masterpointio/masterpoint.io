@@ -1720,6 +1720,12 @@ $csi-line: #e7edec; // hairline on light cards
       grid-template-columns: 1fr;
     }
   }
+  .csi-split--75-25 .csi-split__grid {
+    grid-template-columns: 75fr 25fr;
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
   .csi-split--flip {
     .csi-split__text {
       order: 2;
