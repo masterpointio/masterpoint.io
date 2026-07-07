@@ -127,7 +127,7 @@ After weighing the options, Masterpoint recommended [Spacelift](https://spacelif
 
 - **Pricing that matches usage.** Terraform Cloud bills per resource, so every client signed raises the bill permanently — even if their infrastructure never changes after onboarding. Spacelift bills on usage: in 2024 that meant annual costs dropping from ~$60,000 to under $6,000, a gap that widens with every client added.
 - **Guardrails as code.** Operational and security policies are defined and enforced in the platform itself through [Open Policy Agent](https://www.openpolicyagent.org/), with no third-party bolt-ons.
-- **Designed for many small stacks.** Granular control per stack and easy automation connecting them: exactly the shape of the new modular architecture.
+- **GitOps.** Automated, granular control over stacks and deployments, so large configurations decompose into manageable, connected pieces. We manage Spacelift with Spacelift via Infrastructure as Code, so Power Digital can grow and scale without issue.
 
 All 43,000+ resources moved off Terraform Cloud without issue. Spacelift is a platform Masterpoint works with extensively.
 {{< /csi-split >}}
