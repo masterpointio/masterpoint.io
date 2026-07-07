@@ -379,25 +379,6 @@ sections get `scroll-margin-top` so they land clear of the bar. Keep the
 active-link underline INSIDE the link box — the links row is
 `overflow-x: auto` and any overhang conjures a stub scrollbar.
 
-### Power Digital page notes (July 2026 rebuild)
-
-Rebuilt from the (deleted) legacy layout onto immersive as `power-digital.md`;
-slug is `/case-studies/power-digital/` (301s in `netlify.toml` cover the old
-long slug and the deleted top-level PDF landing page).
-
-- **Card flow**: TLDR band (`tldr="true"`) → About (65-35 split, team photo,
-  `download` PDF button) → Challenge (pine 75-25 flip split, two images via
-  `media2`) → playbook (`csi-steps` + `csi-timeline`) → Architecture split
-  (`figure="power-digital/terralith"`) → Platform & Tooling split (Spacelift +
-  OpenTofu merged, one image; eyebrows carry no numbers) → Business Impact
-  pine (white `csi-compare` + `csi-impact cols="4"`) → Takeaways light
-  (`csi-questions` + outro) → `callout` CTA (classic copy + PDF link;
-  `callout: ""` would suppress the card entirely).
-- **No attributed quote** (we don't fabricate; the TLDR band is deliberately
-  unattributed). **Media** lives in `static/img/case-studies/power-digital/`
-  (shared `spacelift.jpg`/`opentofu.jpg` stay in the parent); client logo is
-  the electric-blue wordmark, white-text variant on the dark hero.
-
 ## Page-level styling decisions
 
 - **Backdrop is pine** (`$pine = #0e383a`, matching the blog); the article sits on
