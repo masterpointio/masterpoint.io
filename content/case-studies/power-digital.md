@@ -119,7 +119,7 @@ fade: in
 Both systems ran in parallel: existing clients stayed stable on the Terralith while the new platform took over, so the business never stopped shipping.
 {{< /csi-section >}}
 
-{{< csi-split eyebrow="01 · Architecture" title="One Terralith becomes <span class='csi-grad'>isolated client stacks</span>" figure="power-digital/terralith" variant="pine" >}}
+{{< csi-split eyebrow="01 · Architecture" title="Monolithic Terraform becomes <span class='csi-grad'>Isolated Client Stacks</span>" figure="power-digital/terralith" variant="pine" >}}
 Instead of one shared [Terralith](/blog/terralith-monolithic-terraform-architecture/), each client deployment now lives in its own stack with isolated resources and state, connected through workspaces where the pieces need each other.
 
 - **Blast radius shrank from "every client" to one fully isolated client.** A change to one deployment can no longer ripple across the platform.
@@ -127,7 +127,7 @@ Instead of one shared [Terralith](/blog/terralith-monolithic-terraform-architect
 - **Standardization through reusable modules.** Shared modules for common infrastructure components replaced repetitive copy-paste configuration, with dependencies explicitly defined — and the repository restructured around them, making the codebase navigable again and collaboration straightforward.
 {{< /csi-split >}}
 
-{{< csi-split eyebrow="02 · Platform & Tooling" title="Terraform Cloud → <span class='csi-grad'>Spacelift</span>, Terraform → OpenTofu" media="/img/case-studies/spacelift.jpg" media_alt="Spacelift: provision, configure, govern" variant="light" flip="true" >}}
+{{< csi-split eyebrow="02 · Platform & Tooling" title="Terraform Cloud → <span class='csi-grad'>Spacelift</span> &amp; OpenTofu" media="/img/case-studies/spacelift.jpg" media_alt="Spacelift: provision, configure, govern" variant="light" flip="true" >}}
 After weighing the options, Masterpoint recommended [Spacelift](https://spacelift.io/), a leading TACOS (Terraform Automation and Collaboration Software) platform:
 
 - **Pricing that matches usage.** Terraform Cloud bills per resource, so every client signed raises the bill permanently. Spacelift bills on usage: annual costs dropped from ~$60,000 projected in 2024 to under $6,000, a gap that widens with every client added.
