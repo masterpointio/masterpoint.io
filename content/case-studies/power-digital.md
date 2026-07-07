@@ -127,27 +127,22 @@ Instead of one shared [Terralith](/blog/terralith-monolithic-terraform-architect
 - **Standardization through reusable modules.** Shared modules for common infrastructure components replaced repetitive copy-paste configuration, with dependencies explicitly defined — and the repository restructured around them, making the codebase navigable again and collaboration straightforward.
 {{< /csi-split >}}
 
-{{< csi-split eyebrow="02 · Platform" title="Terraform Cloud → <span class='csi-grad'>Spacelift</span>" media="/img/case-studies/spacelift.jpg" media_alt="Spacelift: provision, configure, govern" variant="light" flip="true" >}}
-After weighing the options, Masterpoint recommended [Spacelift](https://spacelift.io/), a leading TACOS (Terraform Automation and Collaboration Software) platform. The economics and the engineering pointed the same direction:
+{{< csi-split eyebrow="02 · Platform & Tooling" title="Terraform Cloud → <span class='csi-grad'>Spacelift</span>, Terraform → OpenTofu" media="/img/case-studies/spacelift.jpg" media_alt="Spacelift: provision, configure, govern" variant="light" flip="true" >}}
+After weighing the options, Masterpoint recommended [Spacelift](https://spacelift.io/), a leading TACOS (Terraform Automation and Collaboration Software) platform:
 
-- **Pricing that matches usage.** Terraform Cloud bills per resource, so every client signed raises the bill permanently — even if their infrastructure never changes after onboarding. Spacelift bills on usage: annual costs dropped from ~$60,000 projected in 2024 to under $6,000, a gap that widens with every client added.
-- **Guardrails as code.** Operational and security policies are defined and enforced in the platform itself through [Open Policy Agent](https://www.openpolicyagent.org/), with no third-party bolt-ons.
-- **GitOps.** Automated, granular control over stacks and deployments, so large configurations decompose into manageable, connected pieces. We manage Spacelift with Spacelift via Infrastructure as Code, so Power Digital can grow and scale without issue.
+- **Pricing that matches usage.** Terraform Cloud bills per resource, so every client signed raises the bill permanently. Spacelift bills on usage: annual costs dropped from ~$60,000 projected in 2024 to under $6,000, a gap that widens with every client added.
+- **Guardrails as code.** Operational and security policies are defined and enforced in the platform itself through [Open Policy Agent](https://www.openpolicyagent.org/), no third-party bolt-ons.
+- **GitOps.** Automated, granular control over stacks and deployments. We manage Spacelift with Spacelift via Infrastructure as Code, so Power Digital can grow and scale without issue.
 
-All 43,000+ resources moved off Terraform Cloud without issue. Spacelift is a platform Masterpoint works with extensively.
-{{< /csi-split >}}
-
-{{< csi-split eyebrow="03 · Tooling" title="Terraform → OpenTofu" media="/img/case-studies/opentofu.jpg" media_alt="OpenTofu, the open-source infrastructure as code tool" caption="<a href='https://opentofu.org/' target='_blank' rel='noopener noreferrer'>OpenTofu</a> is a reliable, enterprise-grade infrastructure as code (IaC) tool under the Linux Foundation." variant="pine" >}}
 In the same migration, every resource moved from Terraform to [OpenTofu](https://opentofu.org/), the open-source successor to Terraform:
 
 - **Licensing flexibility.** No exposure to future Terraform license changes or the legal questions that come with them.
-- **No vendor lock-in.** Independence from commercial Terraform protects against future cost increases.
-- **Open source under the Linux Foundation.** Vendor-neutral governance and a fast-growing contributor ecosystem give enterprises open standards to build on, with the tooling and support momentum to match.
+- **No vendor lock-in.** Open source under the Linux Foundation: vendor-neutral governance and a fast-growing contributor ecosystem protect against commercial cost increases.
 
-Masterpoint is a proud OpenTofu community member. We believe it's the future of IaC, and a 43,000-resource migration completed without incident is exactly why.
+All 43,000+ resources moved without issue. Masterpoint works with Spacelift extensively and is a proud OpenTofu community member — a 43,000-resource migration completed without incident is exactly why we believe it's the future of IaC.
 {{< /csi-split >}}
 
-{{< csi-section id="the-results" eyebrow="The Outcomes" title="Business Impact" variant="light" align="center" >}}
+{{< csi-section id="the-results" eyebrow="The Outcomes" title="Business Impact" variant="pine" align="center" >}}
 {{< csi-compare before_label="Before" after_label="After Engaging with Masterpoint" >}}
 label: Annual automation costs
 before: ~$60,000 projected in 2024, growing with every client signed
@@ -189,7 +184,7 @@ body: Fast cycles, reliable automation, and hard isolation between clients mean 
 {{< /csi-impact >}}
 {{< /csi-section >}}
 
-{{< csi-section eyebrow="Takeaways" title="Three questions worth asking about <span class='csi-grad'>your own platform</span>" variant="pine" align="center" >}}
+{{< csi-section eyebrow="Takeaways" title="Three questions worth asking about <span class='csi-grad'>your own platform</span>" variant="light" align="center" >}}
 Power Digital's original system was not a design failure — it was a system the business outgrew. The evaluation that led to this project comes down to three questions:
 
 {{< csi-questions >}}
