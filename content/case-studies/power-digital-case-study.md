@@ -10,7 +10,7 @@ eyebrow: "CASE STUDY SUCCESS STORY"
 client: "Power Digital"
 client_logo: /img/case-studies/power-logo.png
 client_logo_height: 38px
-hero_title: "How Power Digital Achieved a <span class='text-gradient'>10x Reduction in Infrastructure Automation Costs</span> at 43,000-Resource Scale"
+hero_title: "How Power Digital Achieved a <span class='text-gradient'>10x Reduction in Infrastructure Automation Costs</span>"
 hero_aside_image: /img/landing/power-digital-case-study.png
 hero_aside_alt: "Neon-lit skyline artwork from the Power Digital case study"
 
