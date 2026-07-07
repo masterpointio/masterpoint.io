@@ -51,6 +51,7 @@ callout: >-
   url="https://powerdigitalmarketing.com/"
   linkedin="https://www.linkedin.com/company/power-digital-marketing/"
   industry="Digital Marketing · Technology-Driven Growth Agency"
+  download="/download/power-digital-case-study.pdf"
 >}}
 Power Digital is a modern digital marketing powerhouse working with some of the world's most recognizable brands, including Stripe, Figma, and Casper. Its services run on a technology platform where every new client gets its own provisioned infrastructure, which makes the platform team's Infrastructure as Code pipeline a direct revenue path: when onboarding slows, the business slows.
 {{< /cs-about >}}

@@ -806,6 +806,13 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
       @include cs-brand-gradient;
     }
 
+    &__download {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-top: 1.2rem;
+    }
+
     &__logo {
       margin-bottom: 1rem;
       padding-bottom: 1rem;
