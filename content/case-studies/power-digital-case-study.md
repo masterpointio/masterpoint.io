@@ -44,7 +44,7 @@ callout: >-
   a PDF</a> to share with your team.</p>
 ---
 
-{{< csi-split media="/img/case-studies/power-digital-x-masterpoint-case-study-logos.png" media_alt="Power Digital and Masterpoint" variant="light" ratio="65-35" contain="true" >}}
+{{< csi-split media="/img/case-studies/scalability-issues-case-study-power-digital.png" media_alt="Compounding growth visualized as a rising mountain range of data points" variant="light" ratio="65-35" >}}
 {{< cs-about
   name="Power Digital"
   logo="/img/case-studies/power-logo.png"
@@ -125,7 +125,7 @@ Instead of one shared [Terralith](/blog/terralith-monolithic-terraform-architect
 {{< csi-split eyebrow="02 · Platform" title="Terraform Cloud → <span class='csi-grad'>Spacelift</span>" media="/img/case-studies/spacelift.jpg" media_alt="Spacelift: provision, configure, govern" variant="light" flip="true" >}}
 After weighing the options, Masterpoint recommended [Spacelift](https://spacelift.io/), a leading TACOS (Terraform Automation and Collaboration Software) platform. The economics and the engineering pointed the same direction:
 
-- **Pricing that matches usage.** Terraform Cloud bills per resource, so every client signed raises the bill permanently — even if their infrastructure never changes after onboarding. Spacelift bills on usage: in 2024 that meant monthly costs dropping from ~$5,000 to under $500, a gap that widens with every client added.
+- **Pricing that matches usage.** Terraform Cloud bills per resource, so every client signed raises the bill permanently — even if their infrastructure never changes after onboarding. Spacelift bills on usage: in 2024 that meant annual costs dropping from ~$60,000 to under $6,000, a gap that widens with every client added.
 - **Guardrails as code.** Operational and security policies are defined and enforced in the platform itself through [Open Policy Agent](https://www.openpolicyagent.org/), with no third-party bolt-ons.
 - **Designed for many small stacks.** Granular control per stack and easy automation connecting them: exactly the shape of the new modular architecture.
 
