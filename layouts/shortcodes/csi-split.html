@@ -7,6 +7,8 @@
     title      section headline (HTML allowed: <strong>, <span class="csi-grad">)
     media      image/SVG src for the visual
     media_alt  alt text for the visual
+    media2     optional second image stacked under the first in the same column
+    media2_alt alt text for the second image
     figure     name of a CSS-drawn figure partial in
                layouts/partials/case-studies/figures/<name>.html — an
                image-free alternative to media (e.g. figure="terralith")
@@ -19,8 +21,10 @@
 {{- $eyebrow := .Get "eyebrow" -}}
 {{- $title := .Get "title" -}}
 {{- $media := .Get "media" -}}
+{{- $media2 := .Get "media2" -}}
 {{- $figure := .Get "figure" -}}
 {{- $alt := .Get "media_alt" | default "" -}}
+{{- $alt2 := .Get "media2_alt" | default "" -}}
 {{- $flip := .Get "flip" -}}
 {{- $variant := .Get "variant" | default "light" -}}
 {{- $contain := .Get "contain" -}}
@@ -43,6 +47,7 @@
       <div class="csi-split__media" data-aos="fade-up" data-aos-delay="120" data-aos-duration="600">
         <figure class="csi-media{{ if $contain }} csi-media--contain{{ end }}{{ if $figure }} csi-media--figure{{ end }}">
           {{- if $media -}}<img src="{{ $media }}" alt="{{ $alt }}" loading="lazy" />{{- end -}}
+          {{- if $media2 -}}<img src="{{ $media2 }}" alt="{{ $alt2 }}" loading="lazy" />{{- end -}}
           {{- if $figure -}}{{ partial (printf "case-studies/figures/%s.html" $figure) . }}{{- end -}}
           {{- if $caption -}}<figcaption class="csi-media__caption">{{ $caption | safeHTML }}</figcaption>{{- end -}}
         </figure>

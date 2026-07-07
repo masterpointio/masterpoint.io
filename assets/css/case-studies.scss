@@ -1773,6 +1773,10 @@ $csi-line: #e7edec; // hairline on light cards
       height: auto;
       border-radius: 14px;
     }
+    // stacked second image (csi-split media2)
+    img + img {
+      margin-top: 0.9rem;
+    }
     // contained infographics carry baked-in dark text — give them a white
     // backing on dark faces so they stay readable
     .csi-section--pine &--contain img,

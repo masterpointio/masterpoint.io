@@ -54,7 +54,7 @@ Power Digital is a modern digital marketing powerhouse working with some of the 
 {{< /cs-about >}}
 {{< /csi-split >}}
 
-{{< csi-split eyebrow="The Challenge" title="43,000 resources. 500+ config files. <span class='csi-grad'>One Terraform state.</span>" media="/img/case-studies/63-hours-of-engineering-time-lost-each-month.png" media_alt="63 hours of engineering time lost each month" variant="pine" flip="true" ratio="75-25" contain="true" >}}
+{{< csi-split eyebrow="The Challenge" title="43,000 resources. 500+ config files. <span class='csi-grad'>One Terraform state.</span>" media="/img/case-studies/scalability-issues-case-study-power-digital.png" media_alt="Resource growth pushing a single Terraform Cloud setup past its limits" media2="/img/case-studies/63-hours-of-engineering-time-lost-each-month.png" media2_alt="63 hours of engineering time lost each month" variant="pine" flip="true" ratio="75-25" contain="true" >}}
 Rapid growth had produced a [Terralith](/blog/terralith-monolithic-terraform-architecture/): every client deployment living in one monolithic Terraform configuration, in a single state file, deployed through Terraform Cloud. The root module had passed 500 configuration files and grew with every client signed. At 43,000+ resources, Terraform Cloud wasn't just slow, it was continually breaking with uncontrolled costs.
 
 {{< csi-list >}}
@@ -195,7 +195,7 @@ body: Also no for Power Digital before the engagement. A 50%+ run failure rate, 
 question: Can it meet future demands?
 body: The one that matters most, and it's okay if the answer is no. Asking it early turns a forced migration into a deliberate one.
 ---
-outro: **It's okay if an answer is "no."** This story was an evolution to remove scaling limits — a good problem to have, because it means the business is growing. [Masterpoint](/contact/) partners with teams at exactly that point, solving the platform, infrastructure, and engineering problems that come with scale, every day.
+outro: **It's okay if an answer is "no."** This story was an evolution to remove scaling limits — a good problem to have, because it means the business is growing. [Masterpoint](/contact/) works with teams at exactly that point, solving the platform, infrastructure, and engineering problems that come with scale, every day.
 ---
 cta: 👋 **Curious if Masterpoint could help your team too?** We partner with engineering organizations across the full spectrum — from unicorn startups to Fortune 500 enterprises — to deliver infrastructure systems and patterns that truly scale. [Get in touch](https://calendly.com/matt-at-masterpoint/project-chat) and we'll walk through your environment, your roadmap, and see where we can help — or [download this case study as a PDF](/download/power-digital-case-study.pdf) to share with your team.
 {{< /csi-questions >}}
