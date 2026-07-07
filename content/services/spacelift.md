@@ -19,7 +19,6 @@ banner_btn_link: https://calendly.com/matt-at-masterpoint/project-chat
 banner_link_label: See Client Results →
 banner_link: "#spacelift-results"
 sections: "spacelift"
-demo_note: "⚠️ <b>AI-generated demo from Masterpoint's internal company docs</b> — this page is a work-in-progress example, to be fleshed out with full details. It is only accessible via this preview link and is not live on masterpoint.io."
 sitemap:
   priority: 1
 ---
