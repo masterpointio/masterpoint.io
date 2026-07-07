@@ -1,0 +1,181 @@
+{{- /*
+  Homepage featured case-studies slider.
+  Pulls every case study with a `home_highlight` front-matter block,
+  ordered by the page `weight`. Renders a Microsoft-style featured card
+  (logo, category, title, description, metrics, CTA, photo) plus a
+  clickable client-logo tab strip + prev/next arrows below it.
+  Autoplay is driven by the tab underline CSS animation (see cshTabFill
+  in custom.scss); JS advances on animationend and stops on interaction.
+*/ -}}
+{{- $studies := where (where site.RegularPages "Type" "case-studies") "Params.home_highlight" "!=" nil -}}
+{{- $studies = $studies.ByWeight -}}
+{{- $count := len $studies -}}
+{{- if gt $count 0 -}}
+<div class="csh-head">
+  <div class="csh-head__text">
+    <div class="csh-head__eyebrow">Case Study Success Stories</div>
+    <h3 class="csh-head__title groupTitle">
+      See How Teams <span class="text-gradient">Master Their Infrastructure</span>
+    </h3>
+  </div>
+  <div class="csh-head__cta">
+    <a href="/case-studies/" class="button btn-outline-gradient text-pine">See all case studies →</a>
+  </div>
+</div>
+
+<div class="csh-slider" id="cshSlider">
+  <div class="csh-viewport">
+    <div class="csh-track">
+      {{- range $i, $p := $studies }}
+      {{- $h := $p.Params.home_highlight }}
+      <article
+        class="csh-card{{ if eq $i 0 }} is-active{{ end }}"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="{{ add $i 1 }} of {{ $count }}"
+      >
+        <div class="csh-card__body">
+          <div class="csh-card__logo">
+            <img src="{{ $h.logo }}" alt="{{ $h.logo_alt | default (printf "%s logo" $p.Title) }}" loading="lazy" />
+          </div>
+          <div class="csh-card__category">{{ $h.category }}</div>
+          <h4 class="csh-card__title">{{ $h.title | safeHTML }}</h4>
+          <p class="csh-card__desc">{{ $h.description }}</p>
+          {{- with $h.metrics }}
+          <div class="csh-card__metrics">
+            {{- range . }}
+            <div class="csh-metric">
+              <div class="csh-metric__value">{{ .value }}</div>
+              <div class="csh-metric__label">{{ .label }}</div>
+            </div>
+            {{- end }}
+          </div>
+          {{- end }}
+          <a class="button csh-card__cta" href="{{ $p.RelPermalink }}">Read the case study →</a>
+        </div>
+        <div class="csh-card__media">
+          <img src="{{ $h.image }}" alt="{{ $h.image_alt }}" loading="lazy"{{ with $h.image_position }} style="object-position: {{ . }}"{{ end }} />
+        </div>
+      </article>
+      {{- end }}
+    </div>
+  </div>
+
+  <div class="csh-nav">
+    <button type="button" class="csh-arrow csh-arrow--prev" aria-label="Previous case study">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="csh-tabs" role="tablist" aria-label="Case studies">
+      {{- range $i, $p := $studies }}
+      {{- $h := $p.Params.home_highlight }}
+      <button
+        type="button"
+        class="csh-tab{{ if eq $i 0 }} is-active{{ end }}"
+        role="tab"
+        aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}"
+        data-index="{{ $i }}"
+      >
+        <img src="{{ $h.logo }}" alt="{{ $h.logo_alt | default (printf "%s logo" $p.Title) }}" loading="lazy" />
+      </button>
+      {{- end }}
+    </div>
+    <button type="button" class="csh-arrow csh-arrow--next" aria-label="Next case study">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var slider = document.getElementById("cshSlider");
+    if (!slider) return;
+    var track = slider.querySelector(".csh-track");
+    var cards = [].slice.call(track.children);
+    var tabs = [].slice.call(slider.querySelectorAll(".csh-tab"));
+    var prev = slider.querySelector(".csh-arrow--prev");
+    var next = slider.querySelector(".csh-arrow--next");
+    var count = cards.length;
+    var current = 0;
+
+    function goTo(i) {
+      current = ((i % count) + count) % count;
+      track.style.transform = "translateX(-" + current * 100 + "%)";
+      cards.forEach(function (card, k) {
+        card.classList.toggle("is-active", k === current);
+        card.toggleAttribute("inert", k !== current);
+        card.setAttribute("aria-hidden", k === current ? "false" : "true");
+      });
+      tabs.forEach(function (tab, k) {
+        tab.classList.toggle("is-active", k === current);
+        tab.setAttribute("aria-selected", k === current ? "true" : "false");
+      });
+    }
+
+    function stopAutoplay() {
+      slider.classList.remove("is-autoplaying");
+    }
+
+    tabs.forEach(function (tab, k) {
+      tab.addEventListener("click", function () {
+        stopAutoplay();
+        goTo(k);
+      });
+    });
+    prev.addEventListener("click", function () {
+      stopAutoplay();
+      goTo(current - 1);
+    });
+    next.addEventListener("click", function () {
+      stopAutoplay();
+      goTo(current + 1);
+    });
+
+    // Arrow-key navigation within the logo tab strip.
+    slider.querySelector(".csh-tabs").addEventListener("keydown", function (e) {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      stopAutoplay();
+      goTo(e.key === "ArrowLeft" ? current - 1 : current + 1);
+      tabs[current].focus();
+    });
+
+    // Autoplay: the active tab's underline fills via the cshTabFill CSS
+    // animation; advance when it completes. Hover/focus pause is pure CSS
+    // (animation-play-state), so the underline progress stays in sync.
+    slider.addEventListener("animationend", function (e) {
+      if (e.animationName === "cshTabFill" && slider.classList.contains("is-autoplaying")) {
+        goTo(current + 1);
+      }
+    });
+
+    // Basic swipe support.
+    var startX = null;
+    var viewport = slider.querySelector(".csh-viewport");
+    viewport.addEventListener(
+      "touchstart",
+      function (e) {
+        startX = e.touches[0].clientX;
+      },
+      { passive: true }
+    );
+    viewport.addEventListener(
+      "touchend",
+      function (e) {
+        if (startX === null) return;
+        var dx = e.changedTouches[0].clientX - startX;
+        startX = null;
+        if (Math.abs(dx) > 48) {
+          stopAutoplay();
+          goTo(dx < 0 ? current + 1 : current - 1);
+        }
+      },
+      { passive: true }
+    );
+
+    goTo(0);
+    if (count > 1 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      slider.classList.add("is-autoplaying");
+    }
+  })();
+</script>
+{{- end -}}

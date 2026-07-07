@@ -78,6 +78,60 @@ card grid to stay scannable as the list grows. Card image = each study's
 
 ---
 
+## Homepage featured slider (`home_highlight`)
+
+The homepage has a **featured case-studies slider** section (`#case-studies-home`,
+between the "Efficient Platforms" stat tiles and the testimonials band), styled
+after Microsoft's Windows 365 customer-stories carousel: one large featured card
+(client logo, category eyebrow, title, description, **two metrics**, CTA, photo)
+with a **client-logo tab strip + prev/next arrows** below it acting as the
+slider navigation.
+
+- **Rendered by `partials/case-studies-featured.html`** (all markup + inline
+  vanilla JS — no jQuery/owl/flexslider dependency), called via the
+  `{{</* case-studies-featured */>}}` shortcode from
+  `content/sections/home-case-studies.md` (weight 5 in the Home sections;
+  `home-our-word.md` was bumped to 6 to make room).
+- **Data-driven from case-study front matter.** Any case study with a
+  `home_highlight:` block appears as a slide, ordered by the page's existing
+  `weight`. No `home_highlight` → not featured. Schema:
+
+```yaml
+home_highlight:
+  category: "AWS Modernization + Infrastructure as Code" # uppercase eyebrow
+  title: "How <strong>Client</strong> Did X" # HTML ok (safeHTML)
+  description: "One–two sentence summary." # plain text
+  logo: /img/case-studies/CLIENT/logo-dark.png # dark-on-transparent (white card + tab)
+  logo_alt: "Client logo"
+  image: /img/case-studies/CLIENT/photo.jpg # right half of the card, object-fit cover
+  image_alt: "..."
+  image_position: "78% 50%" # OPTIONAL object-position (fix bad center crops)
+  metrics: # two value/label pairs (keep to 2)
+    - value: "0% → 100%"
+      label: "Infrastructure as Code coverage"
+    - value: "1 → 11"
+      label: "AWS accounts under one Organization"
+```
+
+- **Styling** lives in `assets/css/custom.scss` under the `#case-studies-home`
+  block (`.csh-*` prefix), appended right after the `#home` block. Everything is
+  scoped under the section id except `@keyframes cshTabFill` and a
+  `prefers-reduced-motion` override. Gradient text uses the **darkened**
+  teal→pink stops (same as `csi-grad-light`) because the global `.text-gradient`
+  leads with pale vanilla and washes out on this light section.
+- **Autoplay is CSS-driven**: the active tab's gradient underline is a 7s
+  `cshTabFill` width animation (doubles as the progress bar); JS listens for
+  `animationend` and advances. Hover/`focus-within` pause is pure CSS
+  (`animation-play-state: paused`), so the progress stays honest. Any manual
+  interaction (tab/arrow/swipe/arrow-key) stops autoplay permanently
+  (`is-autoplaying` class removed → underline falls back to static full width).
+  `prefers-reduced-motion` disables autoplay and the slide transition.
+- **Off-screen slides get `inert` + `aria-hidden`** (toggled in JS) so their
+  CTAs aren't tabbable; logo tabs are `role="tab"` buttons with grayscale
+  inactive / full-color active states.
+
+---
+
 ## Modern layout — front matter schema
 
 ```yaml

@@ -29,6 +29,22 @@ stat_bar:
 preview_image: /img/case-studies/marketspark/marketspark-aws.png
 og_img: /img/case-studies/marketspark/marketspark-aws.png
 
+# Homepage featured slider card (partials/case-studies-featured.html)
+home_highlight:
+  category: "AWS Modernization + Infrastructure as Code"
+  title: "How <strong>MarketSpark</strong> Modernized Their AWS Cloud into a 100% Codified, Automated Platform"
+  description: "Masterpoint rebuilt MarketSpark's single manually-operated AWS account into an 11-account AWS Organization: fully codified in OpenTofu, automated with Spacelift, and secured with least-privilege access."
+  logo: /img/case-studies/marketspark/marketspark-logo-dark.png
+  logo_alt: "MarketSpark logo"
+  image: /img/case-studies/marketspark/hero-bg.jpg
+  image_alt: "Telecommunications towers against a clear blue sky"
+  image_position: "78% 50%"
+  metrics:
+    - value: "0% → 100%"
+      label: "Infrastructure as Code coverage"
+    - value: "1 → 11"
+      label: "AWS accounts under one Organization"
+
 sitemap:
   priority: 0
 ---

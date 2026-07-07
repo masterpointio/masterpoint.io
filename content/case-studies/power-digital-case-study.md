@@ -11,6 +11,21 @@ preview_image: /img/case-studies/power-digital-case-study-preview.jpg
 sitemap:
   priority: 0
 download_button: /download/power-digital-case-study.pdf
+
+# Homepage featured slider card (partials/case-studies-featured.html)
+home_highlight:
+  category: "IaC Automation + Cost Optimization"
+  title: "How <strong>Power Digital</strong> Achieved a 10x Reduction in Infrastructure Automation Costs"
+  description: "Masterpoint migrated 43,000+ resources from Terraform Cloud to Spacelift, cutting automation costs by 10x, dramatically speeding up plan & apply cycles, and nearly eliminating failed runs."
+  logo: /img/case-studies/power-logo.png
+  logo_alt: "Power Digital logo"
+  image: /img/landing/power-digital-case-study.png
+  image_alt: "Abstract skyscraper visualization in vibrant gradient colors"
+  metrics:
+    - value: "10x"
+      label: "reduction in infrastructure automation costs"
+    - value: "25 → 3 min"
+      label: "plan & apply cycle times"
 ---
 
 ![Power Digital x MasterPoint Logos](/img/case-studies/power-digital-x-masterpoint-case-study-logos.png)

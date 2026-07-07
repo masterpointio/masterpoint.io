@@ -2042,6 +2042,351 @@ footer {
     }
   }
 }
+
+// ─────────────────────────────────────────────────────────────────────────
+// HOME — FEATURED CASE STUDIES SLIDER (#case-studies-home, .csh-*)
+// Rendered by partials/case-studies-featured.html. A Microsoft-style
+// featured card (text + metrics left, photo right) with a client-logo tab
+// strip + arrows below acting as the slider navigation. The active tab's
+// gradient underline doubles as the autoplay progress bar (cshTabFill).
+// ─────────────────────────────────────────────────────────────────────────
+#case-studies-home {
+  padding: 4.15rem 0 4.4rem;
+  background: linear-gradient(180deg, #f7fbfa 0%, #e8f4f1 100%);
+
+  .csh-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 2.2rem;
+    text-align: left;
+
+    &__eyebrow {
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #16a597;
+      margin-bottom: 0.65rem;
+    }
+    &__title {
+      color: $pine;
+      margin: 0;
+      line-height: 1.08em;
+      // The global .text-gradient leads with pale vanilla, which washes out
+      // on this light section — swap in the darkened teal→pink used for
+      // gradient text on light case-study cards (csi-grad-light).
+      .text-gradient {
+        background: linear-gradient(95deg, #0e8a7e 0%, #16a597 45%, #c45cb3 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+    &__cta {
+      flex-shrink: 0;
+      padding-bottom: 0.35rem;
+    }
+
+    @media (max-width: 767px) {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 1.6rem;
+      &__cta {
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  .csh-viewport {
+    overflow: hidden;
+    border-radius: 2rem;
+    box-shadow: 0 22px 55px rgba(14, 56, 58, 0.12);
+    @media (max-width: 575px) {
+      border-radius: 1.4rem;
+    }
+  }
+  .csh-track {
+    display: flex;
+    transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .csh-card {
+    flex: 0 0 100%;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 44%;
+    background: #fff;
+    border-radius: 2rem;
+    overflow: hidden;
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 2.8rem 3rem 2.7rem;
+      min-height: 460px;
+    }
+    &__logo img {
+      height: 38px;
+      width: auto;
+      max-width: 200px;
+      object-fit: contain;
+    }
+    &__category {
+      font-weight: 800;
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #16a597;
+      margin-top: 1.7rem;
+    }
+    &__title {
+      color: $pine;
+      font-size: 1.72rem;
+      font-weight: 600;
+      line-height: 1.28em;
+      margin: 0.7rem 0 0;
+      strong {
+        font-weight: 800;
+      }
+    }
+    &__desc {
+      color: #46605e;
+      font-size: 1.02rem;
+      line-height: 1.55em;
+      margin: 1rem 0 0;
+      max-width: 560px;
+    }
+    &__metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem 3.2rem;
+      margin-top: auto;
+      padding-top: 1.8rem;
+    }
+    &__cta {
+      margin-top: 2rem;
+      background: linear-gradient(92deg, #ede497 -0.66%, #2ad9c2 26%, #d891ce 59.55%);
+      color: #033;
+    }
+    &__media {
+      position: relative;
+      min-height: 260px;
+      img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .csh-metric {
+    &__value {
+      font-weight: 800;
+      font-size: 2.6rem;
+      line-height: 1em;
+      background: linear-gradient(95deg, #0e8a7e 0%, #16a597 45%, #c45cb3 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    &__label {
+      color: #5a716f;
+      font-size: 0.95rem;
+      line-height: 1.35em;
+      margin-top: 0.45rem;
+      max-width: 230px;
+    }
+  }
+
+  // Navigation: prev/next arrows flanking the client-logo tab strip.
+  .csh-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.1rem;
+    margin-top: 1.7rem;
+  }
+  .csh-arrow {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(14, 56, 58, 0.16);
+    background: #fff;
+    color: $pine;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition:
+      background $transition,
+      color $transition;
+    &:hover {
+      background: $pine;
+      color: #fff;
+    }
+  }
+  .csh-tabs {
+    display: flex;
+    gap: 1rem;
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 4px;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .csh-tab {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 230px;
+    padding: 1.25rem 2.2rem 1.45rem;
+    background: #fff;
+    border: 1px solid rgba(14, 56, 58, 0.1);
+    border-radius: 16px;
+    cursor: pointer;
+    transition:
+      box-shadow $transition,
+      transform $transition;
+    img {
+      height: 32px;
+      width: auto;
+      max-width: 170px;
+      object-fit: contain;
+      filter: grayscale(1);
+      opacity: 0.5;
+      transition:
+        filter $transition,
+        opacity $transition;
+    }
+    // Gradient underline: static when idle, autoplay progress bar when
+    // .is-autoplaying is on the slider (see cshTabFill below).
+    &:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 4px;
+      width: 0;
+      background: linear-gradient(92deg, #ede497 -0.66%, #2ad9c2 40%, #d891ce 90%);
+    }
+    &:hover img {
+      filter: none;
+      opacity: 1;
+    }
+    &.is-active {
+      box-shadow: 0 10px 26px rgba(14, 56, 58, 0.13);
+      img {
+        filter: none;
+        opacity: 1;
+      }
+    }
+  }
+  .csh-tab.is-active:after {
+    width: 100%;
+  }
+  .csh-slider.is-autoplaying .csh-tab.is-active:after {
+    animation: cshTabFill 7s linear forwards;
+  }
+  // Pausing the underline animation pauses the autoplay itself (JS advances
+  // on animationend), so hover/focus genuinely holds the current slide.
+  .csh-slider.is-autoplaying:hover .csh-tab.is-active:after,
+  .csh-slider.is-autoplaying:focus-within .csh-tab.is-active:after {
+    animation-play-state: paused;
+  }
+
+  .csh-tab:focus-visible,
+  .csh-arrow:focus-visible {
+    outline: 3px solid #2ad9c2;
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 991px) {
+    .csh-card {
+      grid-template-columns: minmax(0, 1fr) 38%;
+      &__body {
+        padding: 2.2rem 2.2rem 2.1rem;
+        min-height: 420px;
+      }
+      &__title {
+        font-size: 1.45rem;
+      }
+    }
+    .csh-metric__value {
+      font-size: 2.1rem;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .csh-card {
+      grid-template-columns: 1fr;
+      &__media {
+        order: -1;
+        min-height: 0;
+        height: 215px;
+        img {
+          position: static;
+        }
+      }
+      &__body {
+        min-height: 0;
+        padding: 1.9rem 1.6rem 2rem;
+      }
+      &__metrics {
+        gap: 1rem 2rem;
+      }
+    }
+    .csh-nav {
+      gap: 0.75rem;
+    }
+    .csh-arrow {
+      width: 42px;
+      height: 42px;
+    }
+    .csh-tabs {
+      justify-content: flex-start;
+    }
+    .csh-tab {
+      min-width: 160px;
+      padding: 1rem 1.3rem 1.2rem;
+      img {
+        height: 26px;
+        max-width: 130px;
+      }
+    }
+  }
+}
+
+@keyframes cshTabFill {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #case-studies-home {
+    .csh-track {
+      transition: none;
+    }
+    .csh-slider.is-autoplaying .csh-tab.is-active:after {
+      animation: none;
+      width: 100%;
+    }
+  }
+}
 .platform-row {
   position: relative;
   &:before {
