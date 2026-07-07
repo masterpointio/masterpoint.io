@@ -120,4 +120,4 @@ In the end, IaC automation failure notifications aren’t just a nice-to-have, t
 
 By implementing this tailored notification approach, we’ve transformed TF Apply failure notifications from an ignored annoyance to a valuable tool for operational stability. This proactive strategy keeps our IaC workflow streamlined, and prevents failures from snowballing into larger issues.
 
-_P.S. Interested in exploring more about Spacelift for managing Infrastructure as Code? We recently published a [case study about migrating over **43,000** resources from Terraform Cloud to Spacelift](https://masterpoint.io/power-digital-case-study/)!_
+_P.S. Interested in exploring more about Spacelift for managing Infrastructure as Code? We recently published a [case study about migrating over **43,000** resources from Terraform Cloud to Spacelift](/case-studies/power-digital/)!_

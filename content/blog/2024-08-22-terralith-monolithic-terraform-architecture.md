@@ -111,4 +111,4 @@ By understanding the pitfalls of the Terralith architecture, you and your teams 
 
 Stay tuned for one of our upcoming post featuring practical tips on breaking down a Terralith, as well as a case study detailing how we helped a client decompose their Terralith to achieve a more scalable and maintainable infrastructure!
 
-_**12/2/2024 Update:** We've published the case study where we decomposed a 43,000+ resource Terralith. [Take a read here!](https://masterpoint.io/power-digital-case-study/)_
+_**12/2/2024 Update:** We've published the case study where we decomposed a 43,000+ resource Terralith. [Take a read here!](/case-studies/power-digital/)_

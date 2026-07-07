@@ -1,14 +1,18 @@
 {{/*
   csi-impact — grid of outcome cards with gradient icon badges. Place INSIDE a
   csi-section (typically a pine band) for the "Outcomes & Business Impact".
+  Args:
+    cols: "2"                    optional — 2-up grid for a slimmed 4-card set
+                                 (default is the 3-up grid)
   Inner: blocks separated by `---`, each block:
     icon: fa-gauge-high          (FontAwesome solid class)
     title: Card title
     body: Body sentence(s). Inline markdown (links, *italic*, **bold**) works.
 */}}
+{{- $cols := .Get "cols" -}}
 {{- $raw := .Inner -}}
 {{- $blocks := split $raw "---" -}}
-<div class="csi-impact">
+<div class="csi-impact{{ with $cols }} csi-impact--cols-{{ . }}{{ end }}">
   {{- range $blocks -}}
     {{- $block := trim . " \t\n" -}}
     {{- if $block -}}

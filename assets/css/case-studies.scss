@@ -1,6 +1,7 @@
 // Case study layouts — modern (.case-study-modern) + immersive (.case-study-immersive).
 // Extracted from custom.scss and @imported there in place to preserve cascade order.
-// The legacy .case-study-single layout and the #caseStudiesPage index grid remain in custom.scss.
+// The #caseStudiesPage index grid remains in custom.scss. (The legacy
+// .case-study-single layout was deleted in July 2026 — no case study uses it.)
 
 @keyframes csHeroAsideFloat {
   0%, 100% { transform: translateY(0); }
@@ -14,9 +15,8 @@
 
 // =============================================================================
 // MODERN CASE STUDY LAYOUT  (.case-study-modern)
-// Used by content/case-studies/*.md unless they specify `layout: legacy`.
-// Power Digital uses the legacy layout (`.case-study-single`) — keep that
-// untouched. Everything below is scoped under `.case-study-modern`.
+// The default for content/case-studies/*.md without a `layout:` override.
+// Everything below is scoped under `.case-study-modern`.
 // =============================================================================
 
 $cs-mint: #2ad9c2;
@@ -450,6 +450,118 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
   }
 
   // ---------------------------------------------------------------------------
+  // STICKY NAV — fixed client × Masterpoint bar with section anchors, slides
+  // in once the hero scrolls out of view (`--visible` toggled by an
+  // IntersectionObserver in the immersive layout). Per-page `sticky_nav:`
+  // front matter.
+  // ---------------------------------------------------------------------------
+  .cs-sticky-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    // pine (site backdrop colour) rather than near-black: on-theme, and the
+    // white logos / #d3e2e1 links keep AA contrast on it
+    background: rgba(14, 56, 58, 0.94);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transform: translateY(-100%);
+    visibility: hidden;
+    transition:
+      transform 0.25s ease,
+      visibility 0.25s;
+    &--visible {
+      transform: translateY(0);
+      visibility: visible;
+    }
+    &__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.6rem 0;
+    }
+    &__lockup {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-shrink: 0;
+    }
+    &__client {
+      display: block;
+      // scale from the page's hero logo height so wide lockups (MarketSpark
+      // 48px) and compact ones (Power Digital 34px) both read balanced
+      height: calc(var(--cs-client-logo-h, 36px) * 0.6);
+      width: auto;
+      max-width: 170px;
+    }
+    &__mp {
+      display: block;
+      height: 15px;
+      width: auto;
+    }
+    &__x {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1;
+      color: #d3e2e1;
+      user-select: none;
+    }
+    &__links {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      a {
+        position: relative;
+        // enough bottom padding to keep the underline INSIDE the box —
+        // anything poking below overflows the overflow-x:auto row and
+        // conjures a stub scrollbar
+        padding: 0.3rem 0;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        color: #d3e2e1;
+        text-decoration: none;
+        &:hover {
+          color: $cs-mint;
+        }
+        // scrollspy state — gradient underline on the section being read
+        &.is-active {
+          color: $cs-mint;
+          &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 2px;
+            border-radius: 2px;
+            @include cs-brand-gradient;
+          }
+        }
+      }
+    }
+    @media (max-width: 575px) {
+      &__client {
+        height: calc(var(--cs-client-logo-h, 36px) * 0.48);
+      }
+      &__mp {
+        height: 12px;
+      }
+      &__links {
+        gap: 1rem;
+        a {
+          font-size: 0.68rem;
+        }
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
   // MAIN ARTICLE  — pine page backdrop + white content card on top.
   // ---------------------------------------------------------------------------
   .cs-main {
@@ -804,6 +916,13 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
       right: 0;
       height: 3px;
       @include cs-brand-gradient;
+    }
+
+    &__download {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-top: 1.2rem;
     }
 
     &__logo {
@@ -1252,7 +1371,16 @@ $csi-line: #e7edec; // hairline on light cards
   background: linear-gradient(40deg, #2ad9c2 0%, #55c1b4 42%, #d191bf 100%);
 }
 
+// smooth-scroll pages that have the sticky section nav
+html:has(.cs-sticky-nav) {
+  scroll-behavior: smooth;
+}
+
 .case-study-immersive {
+  // anchored sections land clear of the fixed sticky nav
+  .csi-section[id] {
+    scroll-margin-top: 64px;
+  }
   .csi-container {
     width: 100%;
     max-width: none;
@@ -1453,9 +1581,11 @@ $csi-line: #e7edec; // hairline on light cards
     }
 
     // ---- COMPACT band — applied automatically to any section containing a
-    //      csi-list (no opt-in arg): same content, less vertical real estate.
-    //      Tighter padding, smaller head, denser prose and pull quote.
-    &:has(.csi-list) {
+    //      csi-list or csi-questions (no opt-in arg): same content, less
+    //      vertical real estate. Tighter padding, smaller head, denser prose
+    //      and pull quote.
+    &:has(.csi-list),
+    &:has(.csi-questions) {
       padding: 2.5rem 0;
       @media (max-width: 991px) {
         padding: 2.1rem 0;
@@ -1637,15 +1767,15 @@ $csi-line: #e7edec; // hairline on light cards
       color: $csi-ink;
       font-weight: 800;
     }
-    // `:not(.csi-list)` — the compact csi-list ul carries its own grid layout;
-    // keep the prose bullet/spacing treatment off it
-    ul:not(.csi-list),
+    // `:not(.csi-list):not(.csi-compare__rows)` — those uls carry their own
+    // grid/ledger layout; keep the prose bullet/spacing treatment off them
+    ul:not(.csi-list):not(.csi-compare__rows),
     ol {
       margin: 0 0 1.3rem;
       padding: 0;
       list-style: none;
     }
-    ul:not(.csi-list) > li,
+    ul:not(.csi-list):not(.csi-compare__rows) > li,
     ol > li {
       position: relative;
       padding-left: 1.75rem;
@@ -1655,7 +1785,7 @@ $csi-line: #e7edec; // hairline on light cards
         content: none;
       }
     }
-    ul:not(.csi-list) > li::before {
+    ul:not(.csi-list):not(.csi-compare__rows) > li::before {
       content: "";
       position: absolute;
       left: 0;
@@ -1720,6 +1850,26 @@ $csi-line: #e7edec; // hairline on light cards
       grid-template-columns: 1fr;
     }
   }
+  .csi-split--75-25 .csi-split__grid {
+    grid-template-columns: 75fr 25fr;
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  // flipped splits place the media in the FIRST grid track (via `order`), so
+  // the asymmetric ratios must reverse their column widths to keep text wide
+  .csi-split--flip.csi-split--65-35 .csi-split__grid {
+    grid-template-columns: 35fr 65fr;
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  .csi-split--flip.csi-split--75-25 .csi-split__grid {
+    grid-template-columns: 25fr 75fr;
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
   .csi-split--flip {
     .csi-split__text {
       order: 2;
@@ -1743,6 +1893,18 @@ $csi-line: #e7edec; // hairline on light cards
       width: 100%;
       height: auto;
       border-radius: 14px;
+    }
+    // stacked second image (csi-split media2)
+    img + img {
+      margin-top: 0.9rem;
+    }
+    // contained infographics carry baked-in dark text — give them a white
+    // backing on dark faces so they stay readable
+    .csi-section--pine &--contain img,
+    .csi-section--pine-deep &--contain img,
+    .csi-section--gradient &--contain img {
+      background: #fff;
+      padding: 0.9rem;
     }
     &__caption {
       margin-top: 0.9rem;
@@ -1976,9 +2138,599 @@ $csi-line: #e7edec; // hairline on light cards
     }
   }
 
+  // 2-up impact grid (`cols="2"`) — for a slimmed, qualitative 4-card set that
+  // sits under a csi-compare ledger (the ledger owns the numbers). Capped to
+  // the same width as csi-compare so the two stack as one visual unit.
+  .csi-impact--cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  // 4-up impact row (`cols="4"`) — all four qualitative cards on one line;
+  // denser cards, folds to 2×2 on tablets and a single column on phones
+  .csi-impact--cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    .csi-impact__card {
+      padding: 1.3rem 1.2rem 1.2rem;
+    }
+    .csi-impact__body {
+      font-size: 0.88rem;
+    }
+    @media (max-width: 1100px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // COMPARE — "then / now" migration ledger (csi-compare). Old world reads
+  // muted on the left, new world bold on the right, gradient arrow between.
+  // ---------------------------------------------------------------------------
+  .csi-compare {
+    max-width: 980px;
+    margin: 0.5rem auto 0;
+    background: #fff;
+    border: 1px solid $csi-line;
+    border-radius: 16px;
+    box-shadow: 0 16px 36px -26px rgba(8, 30, 30, 0.32);
+    overflow: hidden;
+    text-align: left;
+
+    &__head,
+    &__row {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr) 2.2rem minmax(0, 1fr);
+      align-items: center;
+      column-gap: 0.7rem;
+    }
+    &__head {
+      padding: 0.8rem 1.6rem;
+      background: rgba(20, 48, 47, 0.03);
+      border-bottom: 1px solid $csi-line;
+    }
+    &__col {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      &--before {
+        color: #8aa09f;
+      }
+      &--after {
+        @include csi-grad-light;
+      }
+    }
+    &__rows {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    &__row {
+      padding: 1rem 1.6rem;
+    }
+    &__metric {
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: $csi-ink;
+    }
+    &__before,
+    &__after {
+      font-size: 0.98rem;
+      line-height: 1.4;
+      min-width: 0;
+    }
+    &__before {
+      color: #7d9291;
+    }
+    &__after {
+      font-weight: 800;
+      @include csi-grad-light;
+    }
+    &__arrow {
+      text-align: center;
+      font-size: 1.05rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+    // per-cell Before/After tags — mobile only (the header row hides there)
+    &__tag {
+      display: none;
+    }
+  }
+  // sibling rule as a literal selector (the `&__` + `+` combo mis-expands)
+  .csi-compare__row + .csi-compare__row {
+    border-top: 1px solid $csi-line;
+  }
+  // breathing room between the ledger and a following impact grid — the two
+  // read as one unit but shouldn't touch
+  .csi-compare + .csi-impact {
+    margin-top: 2.4rem;
+  }
+  @media (max-width: 700px) {
+    .csi-compare__head {
+      display: none;
+    }
+    .csi-compare__row {
+      grid-template-columns: minmax(0, 1fr) 1.5rem minmax(0, 1fr);
+      grid-template-areas:
+        "metric metric metric"
+        "before arrow after";
+      row-gap: 0.55rem;
+      padding: 0.95rem 1.1rem;
+    }
+    .csi-compare__metric {
+      grid-area: metric;
+    }
+    .csi-compare__before {
+      grid-area: before;
+    }
+    .csi-compare__arrow {
+      grid-area: arrow;
+    }
+    .csi-compare__after {
+      grid-area: after;
+    }
+    .csi-compare__tag {
+      display: block;
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.15rem;
+      color: #8aa09f;
+    }
+    .csi-compare__after .csi-compare__tag {
+      color: $csi-link;
+    }
+  }
+  // NOTE: the ledger stays a WHITE card on dark faces too (no pine override)
+  // — the hard numbers read best on white, and the card pops off the band.
+
+  // ---------------------------------------------------------------------------
+  // FIGURE — TERRALITH (csi-split figure="terralith"). CSS-drawn monolith →
+  // isolated stacks: no image asset, inherits page fonts, recolours per face,
+  // crisp in print. Vertical composition (mono → arrow → stack grid) so it
+  // reads the same in the split's media column at every width.
+  // ---------------------------------------------------------------------------
+  .csi-fig--terralith {
+    max-width: 440px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .csi-fig-terralith__mono {
+    position: relative;
+    background: #fff;
+    border: 1px solid $csi-line;
+    border-radius: 14px;
+    padding: 1.7rem 1.3rem 1.1rem;
+    box-shadow: 0 14px 30px -24px rgba(8, 30, 30, 0.35);
+  }
+  .csi-fig-terralith__chip {
+    position: absolute;
+    top: -0.72rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 0.24rem 0.65rem;
+    border-radius: 999px;
+    color: $cs-pine-dark;
+    @include csi-grad-solid;
+  }
+  .csi-fig-terralith__cells {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 5px;
+    i {
+      display: block;
+      aspect-ratio: 1;
+      border-radius: 2px;
+      background: rgba(20, 48, 47, 0.14);
+      &:nth-child(4n) {
+        background: rgba(42, 217, 194, 0.35);
+      }
+      &:nth-child(7n) {
+        background: rgba(209, 145, 191, 0.32);
+      }
+    }
+  }
+  .csi-fig-terralith__label {
+    margin-top: 0.85rem;
+    line-height: 1.35;
+    strong {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: $csi-ink;
+    }
+    span {
+      display: block;
+      font-size: 0.78rem;
+      color: $csi-ink-soft;
+    }
+  }
+  .csi-fig-terralith__arrow {
+    margin: 0.55rem 0;
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .csi-fig-terralith__stacks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.55rem;
+  }
+  .csi-fig-terralith__stack {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    background: #fff;
+    border: 1px solid $csi-line;
+    border-radius: 10px;
+    padding: 0.6rem 0.35rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: $csi-ink;
+    box-shadow: 0 10px 22px -18px rgba(8, 30, 30, 0.3);
+    &--more {
+      border-style: dashed;
+      background: transparent;
+      box-shadow: none;
+      font-family: inherit;
+      font-weight: 600;
+      color: $csi-ink-soft;
+    }
+  }
+  .csi-fig-terralith__dot {
+    flex: 0 0 auto;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    @include csi-grad-solid;
+  }
+  .csi-section--pine,
+  .csi-section--pine-deep,
+  .csi-section--gradient {
+    .csi-fig-terralith__mono {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: none;
+    }
+    .csi-fig-terralith__cells i {
+      background: rgba(255, 255, 255, 0.14);
+      &:nth-child(4n) {
+        background: rgba(42, 217, 194, 0.45);
+      }
+      &:nth-child(7n) {
+        background: rgba(209, 145, 191, 0.4);
+      }
+    }
+    .csi-fig-terralith__label {
+      strong {
+        color: #fff;
+      }
+      span {
+        color: #9fb6b5;
+      }
+    }
+    .csi-fig-terralith__stack {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      box-shadow: none;
+      &--more {
+        background: transparent;
+        color: #9fb6b5;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // TIMELINE — horizontal parallel-track bars for cutover / migration stories
+  // ("the old system keeps running while the new one comes up"). Bars are
+  // percent-positioned so the same markup reflows at every width; fades paint
+  // on the bar ELEMENT (not ::before/::after) so they survive print.
+  // ---------------------------------------------------------------------------
+  .csi-timeline {
+    position: relative;
+    max-width: 860px;
+    margin: 2.2rem auto 0.4rem;
+    padding-top: 1.55rem; // room for the marker label
+
+    &__marker {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--csi-tl-marker, 60%);
+      border-left: 2px dashed rgba(11, 125, 114, 0.45);
+      pointer-events: none;
+    }
+    &__marker-label {
+      position: absolute;
+      top: -0.3rem;
+      left: 0.55rem;
+      white-space: nowrap;
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: $csi-link;
+    }
+    &__track {
+      margin-bottom: 1.2rem;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    &__meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.25rem 0.7rem;
+      margin-bottom: 0.4rem;
+    }
+    &__label {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: $csi-ink;
+    }
+    &__note {
+      font-size: 0.8rem;
+      color: $csi-ink-soft;
+    }
+    &__rail {
+      position: relative;
+      height: 14px;
+      border-radius: 7px;
+      background: rgba(20, 48, 47, 0.07);
+    }
+    &__bar {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      border-radius: 7px;
+      @include csi-grad-solid;
+      &--fade-out {
+        background: linear-gradient(90deg, #93a8a7 0%, #93a8a7 55%, rgba(147, 168, 167, 0) 100%);
+        border-radius: 7px 0 0 7px;
+      }
+      &--fade-in {
+        background: linear-gradient(90deg, rgba(42, 217, 194, 0) 0%, #2ad9c2 22%, #55c1b4 60%, #d191bf 100%);
+        border-radius: 0 7px 7px 0;
+      }
+    }
+  }
+  .csi-section--pine .csi-timeline,
+  .csi-section--pine-deep .csi-timeline,
+  .csi-section--gradient .csi-timeline {
+    .csi-timeline__marker {
+      border-left-color: rgba(42, 217, 194, 0.5);
+    }
+    .csi-timeline__marker-label {
+      color: $cs-mint;
+    }
+    .csi-timeline__label {
+      color: #fff;
+    }
+    .csi-timeline__note {
+      color: #bcd0cf;
+    }
+    .csi-timeline__rail {
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // QUESTIONS — takeaways row of numbered question cards (csi-questions).
+  // Compact cards: gradient numeral inline with the question, the honest
+  // answer underneath, and an emphasized centered outro line below the row.
+  // ---------------------------------------------------------------------------
+  .csi-questions {
+    max-width: 1080px;
+    margin: 1.5rem auto 0;
+
+    &__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      text-align: left;
+      @media (max-width: 860px) {
+        grid-template-columns: 1fr;
+        max-width: 620px;
+        margin: 0 auto;
+      }
+    }
+    // "the verdict" panel — the section's real takeaway, styled as a wide
+    // card with a gradient lead line, with the get-in-touch CTA divided
+    // below it so takeaway → CTA reads as one thought
+    &__outro {
+      position: relative;
+      max-width: 920px;
+      margin: 1.5rem auto 0;
+      padding: 1.25rem 1.6rem 1.3rem;
+      text-align: center;
+      background: #fff;
+      border: 1px solid $csi-line;
+      border-radius: 14px;
+      box-shadow: 0 16px 36px -26px rgba(8, 30, 30, 0.32);
+      font-size: 1rem;
+      line-height: 1.55;
+      color: $csi-ink-soft;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 14px;
+        right: 14px;
+        height: 3px;
+        border-radius: 0 0 3px 3px;
+        @include csi-grad-solid;
+      }
+    }
+    &__outro-main {
+      margin: 0;
+      // every bold in the outro is a gradient run; only the FIRST one is the
+      // big block lead line ("It's okay if an answer is no.")
+      strong {
+        font-weight: 800;
+        @include csi-grad-light;
+        a {
+          text-decoration: none;
+        }
+      }
+      > strong:first-child {
+        display: block;
+        font-size: clamp(1.2rem, 1.9vw, 1.45rem);
+        line-height: 1.3;
+        margin-bottom: 0.35rem;
+      }
+    }
+    &__cta {
+      margin: 1.05rem 0 0;
+      padding-top: 1.05rem;
+      border-top: 1px solid $csi-line;
+      font-size: 0.97rem;
+      strong {
+        font-weight: 800;
+        color: $csi-ink;
+      }
+    }
+  }
+  .csi-question {
+    position: relative;
+    padding: 1.15rem 1.25rem 1.1rem;
+    background: #fff;
+    border: 1px solid $csi-line;
+    border-radius: 14px;
+    box-shadow: 0 16px 36px -26px rgba(8, 30, 30, 0.32);
+    // gradient hairline across the top edge of each card
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 14px;
+      right: 14px;
+      height: 3px;
+      border-radius: 0 0 3px 3px;
+      @include csi-grad-solid;
+    }
+    &__head {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      margin-bottom: 0.45rem;
+    }
+    &__num {
+      font-size: 1.35rem;
+      font-weight: 800;
+      line-height: 1;
+      @include csi-grad-light;
+    }
+    &__q {
+      font-size: 1.06rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin: 0;
+      color: $csi-ink;
+    }
+    &__a {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 0;
+      color: $csi-ink-soft;
+    }
+  }
+  .csi-section--pine,
+  .csi-section--pine-deep,
+  .csi-section--gradient {
+    .csi-questions__outro {
+      background: rgba(255, 255, 255, 0.045);
+      border-color: rgba(255, 255, 255, 0.09);
+      box-shadow: none;
+      color: #bcd0cf;
+    }
+    .csi-questions__outro-main strong {
+      @include csi-grad-bright;
+    }
+    .csi-questions__cta {
+      border-top-color: rgba(255, 255, 255, 0.09);
+      strong {
+        color: #fff;
+      }
+    }
+    .csi-question {
+      background: rgba(255, 255, 255, 0.045);
+      border-color: rgba(255, 255, 255, 0.09);
+      box-shadow: none;
+    }
+    .csi-question__num {
+      @include csi-grad-bright;
+    }
+    .csi-question__q {
+      color: #fff;
+    }
+    .csi-question__a {
+      color: #bcd0cf;
+    }
+  }
+
   // ---------------------------------------------------------------------------
   // TESTIMONIAL — centered editorial quote
   // ---------------------------------------------------------------------------
+  // tldr mode — an unattributed summary statement, not a real quote: a dark
+  // left-aligned card with a vertical gradient bar on its left edge, no quote
+  // mark (skipped in the template), gradient on **bold** spans. Slim band.
+  .csi-section.csi-testimonial-band--tldr {
+    padding: 2.4rem 0;
+    @media (max-width: 991px) {
+      padding: 2rem 0;
+    }
+    @media (max-width: 575px) {
+      padding: 1.7rem 0;
+    }
+  }
+  .csi-testimonial.csi-testimonial--tldr {
+    position: relative;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0.35rem 0 0.35rem 2.1rem;
+    text-align: left;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 6px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #2ad9c2 0%, #55c1b4 45%, #d191bf 100%);
+    }
+    .csi-testimonial__quote {
+      font-size: clamp(1.1rem, 1.9vw, 1.5rem);
+      line-height: 1.5;
+      color: #fff;
+      strong {
+        font-weight: 800;
+        @include csi-grad-bright;
+      }
+    }
+    @media (max-width: 575px) {
+      padding-left: 1.4rem;
+    }
+  }
   .csi-testimonial {
     max-width: 860px;
     margin: 0 auto;
@@ -2304,7 +3056,8 @@ $csi-line: #e7edec; // hairline on light cards
     #schedule-assessment,
     footer[role="contentinfo"],
     #cc-main, // orestbida CookieConsent v3 banner/modal
-    .cc-window {
+    .cc-window,
+    .cs-sticky-nav {
       display: none !important;
     }
 
@@ -2315,6 +3068,8 @@ $csi-line: #e7edec; // hairline on light cards
     // back to a solid brand colour so every heading prints fully and legibly.
     .text-gradient,
     .csi-grad,
+    .csi-step__num,
+    .csi-testimonial__mark,
     .cs-hero__title .text-gradient {
       background: none !important;
       -webkit-background-clip: border-box !important;
@@ -2355,7 +3110,12 @@ $csi-line: #e7edec; // hairline on light cards
     .cs-stat,
     .cs-pullquote,
     .csi-testimonial,
-    .csi-impact__card {
+    .csi-impact__card,
+    .csi-compare__row,
+    .csi-fig-terralith__mono,
+    .csi-fig-terralith__stack,
+    .csi-timeline,
+    .csi-question {
       break-inside: avoid;
     }
   }

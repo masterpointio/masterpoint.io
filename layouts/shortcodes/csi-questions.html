@@ -1,0 +1,73 @@
+{{/*
+  csi-questions — a takeaways row of numbered question cards ("ask these of
+  your own platform"). Place INSIDE a csi-section so the section provides the
+  eyebrow + title; this emits the compact question cards plus an optional
+  emphasized outro line.
+  Inner: blocks separated by `---`, each either:
+    question: The question itself (short, ends with "?")
+    body: The answer / commentary. Inline markdown works.
+  or:
+    outro: A closing verdict line rendered large + centered under the cards.
+  or:
+    cta: A call-to-action paragraph rendered inside the same panel, divided
+         from the outro — ties the takeaway straight into "get in touch".
+*/}}
+{{- $raw := .Inner -}}
+{{- $blocks := split $raw "---" -}}
+{{- $outro := "" -}}
+{{- $cta := "" -}}
+<div class="csi-questions" data-aos="fade-up" data-aos-duration="600">
+  <div class="csi-questions__grid">
+  {{- $n := 0 -}}
+  {{- range $blocks -}}
+    {{- $b := trim . " \t\n" -}}
+    {{- if $b -}}
+      {{- $lines := split $b "\n" -}}
+      {{- $question := "" -}}
+      {{- $body := "" -}}
+      {{- $mode := "" -}}
+      {{- range $lines -}}
+        {{- $line := trim . " \t" -}}
+        {{- if hasPrefix $line "question:" -}}
+          {{- $question = trim (strings.TrimPrefix "question:" $line) " " -}}
+        {{- else if hasPrefix $line "body:" -}}
+          {{- $body = trim (strings.TrimPrefix "body:" $line) " " -}}
+          {{- $mode = "body" -}}
+        {{- else if hasPrefix $line "outro:" -}}
+          {{- $outro = trim (strings.TrimPrefix "outro:" $line) " " -}}
+          {{- $mode = "outro" -}}
+        {{- else if hasPrefix $line "cta:" -}}
+          {{- $cta = trim (strings.TrimPrefix "cta:" $line) " " -}}
+          {{- $mode = "cta" -}}
+        {{- else if and $line (eq $mode "body") -}}
+          {{- $body = printf "%s %s" $body $line -}}
+        {{- else if and $line (eq $mode "outro") -}}
+          {{- $outro = printf "%s %s" $outro $line -}}
+        {{- else if and $line (eq $mode "cta") -}}
+          {{- $cta = printf "%s %s" $cta $line -}}
+        {{- end -}}
+      {{- end -}}
+      {{- if $question -}}
+        {{- $n = add $n 1 -}}
+        <div class="csi-question">
+          <div class="csi-question__head">
+            <span class="csi-question__num" aria-hidden="true">{{ printf "%02d" $n }}</span>
+            <h4 class="csi-question__q">{{ $question | safeHTML }}</h4>
+          </div>
+          {{- if $body -}}<p class="csi-question__a">{{ $body | $.Page.RenderString (dict "display" "inline") }}</p>{{- end -}}
+        </div>
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  </div>
+  {{- if or $outro $cta -}}
+  <div class="csi-questions__outro">
+    {{- with $outro -}}
+    <p class="csi-questions__outro-main">{{ . | $.Page.RenderString (dict "display" "inline") }}</p>
+    {{- end -}}
+    {{- with $cta -}}
+    <p class="csi-questions__cta">{{ . | $.Page.RenderString (dict "display" "inline") }}</p>
+    {{- end -}}
+  </div>
+  {{- end -}}
+</div>

@@ -13,6 +13,8 @@
 {{- $technologies := .Get "technologies" -}}
 {{- $factsRaw := .Get "facts" -}}
 {{- $logo := .Get "logo" -}}
+{{- $download := .Get "download" -}}
+{{- $downloadText := .Get "download_text" | default "Download this case study as a PDF" -}}
 {{- $eyebrow := .Get "eyebrow" | default (cond (ne $name "") (printf "About %s" $name) "About the client") -}}
 <aside class="cs-about">
   {{- if $logo -}}
@@ -64,5 +66,8 @@
       {{- if $f -}}<li>{{ $f | safeHTML }}</li>{{- end -}}
     {{- end -}}
   </ul>
+  {{- end -}}
+  {{- if $download -}}
+  <a class="button cs-about__download" href="{{ $download }}">{{ $downloadText }}&nbsp;<i class="fa-solid fa-download" aria-hidden="true"></i></a>
   {{- end -}}
 </aside>

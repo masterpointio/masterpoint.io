@@ -9,28 +9,28 @@ file before ending the session. If something is removed from the codebase,
 remove its mention from this file too (don't keep "we used to have X" notes —
 the codebase is the source of truth, this file describes what IS).
 
-IN THE FUTURE, WE WILL DEPRECATE THE LEGACY LAYOUT AND ONLY USE THE MODERN (RENAMED TO ARTICLE LAYOUT) AND IMMERSIVE LAYOUTS.
-
 ---
+
+## Future Case Study
+
+Because the existing case studies are already built, we are maintaining them as is. But for future ones, we want to make sure they are short and concise and to the point, intended for engineering leadership. It should consist primarily of the TLDR, About, The Challenge, What Masterpoint Did, The Results (emphasis), and CTA, where each section is a single card, no more. Idea/approach: https://masterpoint.slack.com/archives/C04ATBLEJAV/p1783456382247289
 
 ## Architecture overview
 
-There are **three case-study layouts** in this codebase. They are kept isolated
-so visual changes to one never affect the others.
+There are **two case-study layouts** in this codebase, kept isolated so visual
+changes to one never affect the other. (A legacy third layout was deleted in
+July 2026 once Power Digital, its last user, was rebuilt on immersive.)
 
 | Layout        | Template                              | Used by                                                 | Body class                          | Style prefix            |
 | ------------- | ------------------------------------- | ------------------------------------------------------- | ----------------------------------- | ----------------------- |
-| **Legacy**    | `layouts/case-studies/legacy.html`    | Power Digital (opt-in via `layout: legacy`)             | `case-study-single`                 | `.case-study-single`    |
 | **Modern**    | `layouts/case-studies/single.html`    | Default for any case study without a `layout:` override | `case-study-modern`                 | `.case-study-modern`    |
-| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark (opt-in via `layout: immersive`)            | `case-study-modern case-study-immersive` | `.case-study-immersive` |
+| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark, Power Digital (opt-in via `layout: immersive`) | `case-study-modern case-study-immersive` | `.case-study-immersive` |
 
 Routing is via Hugo's `layout:` front matter param. A case study that does
-**not** specify `layout:` uses `single.html` (the modern layout). Power Digital
-opts into legacy with `layout: legacy`; MarketSpark opts into immersive with
-`layout: immersive`.
+**not** specify `layout:` uses `single.html` (the modern layout). MarketSpark
+and Power Digital opt into immersive with `layout: immersive`.
 
-Why this split exists: Power Digital has heavily customized inline styling
-(see `.case-study-single` block in `assets/css/custom.scss`). The **modern**
+The **modern**
 layout was designed from scratch and is the default for new case studies. The
 **immersive** layout keeps the modern hero + stat strip **nearly verbatim** (its
 body carries both `case-study-modern` and `case-study-immersive` so the modern
@@ -44,8 +44,7 @@ selector under its prefix.
 `$cs-*` vars and the `cs-brand-gradient` mixins) — lives in its own partial,
 `assets/css/case-studies.scss`, which is `@import`ed at the **end** of
 `custom.scss` so the cascade order is unchanged (compiled output is byte-identical).
-The **legacy** `.case-study-single` block and the `#caseStudiesPage` list-page grid
-stay in `custom.scss`. THIS WILL BE REMOVED SOON AFTER WE MIGRATE ALL CASE STUDIES TO THE NEW LAYOUT.
+The `#caseStudiesPage` list-page grid stays in `custom.scss`.
 
 ---
 
@@ -139,7 +138,7 @@ All shortcodes are in `layouts/shortcodes/cs-*.html` and styled under
 
 | Shortcode                    | Purpose                                                     | Notes                                                                                                                                                                                                                                                                                        |
 | ---------------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- | --------------- |
-| `cs-about`                   | Dedicated "about the client" card at the top of the article | Args: `name`, `url`, `linkedin`, `industry`, `technologies`, `facts`, `eyebrow`, `logo` (optional client logo at the top of the card with a divider). Eyebrow auto-generates as `About {name}`. Website pill + LinkedIn brand mark sit in the top-right of the card. `industry` + `technologies` (or `facts`) render as labeled rows / pill list below the prose. |
+| `cs-about`                   | Dedicated "about the client" card at the top of the article | Args: `name`, `url`, `linkedin`, `industry`, `technologies`, `facts`, `eyebrow`, `logo` (optional client logo at the top of the card with a divider), `download` + `download_text` (optional PDF button at the bottom of the card; text defaults to "Download this case study as a PDF"). Eyebrow auto-generates as `About {name}`. Website pill + LinkedIn brand mark sit in the top-right of the card. `industry` + `technologies` (or `facts`) render as labeled rows / pill list below the prose. |
 | `cs-pullquote`               | Large quote card with gradient left border + attribution    | Args: `attribution` (single-line fallback) OR `name`/`title`/`company` (two-line attribution: bold name over mint `title, company`), `photo` (headshot → avatar-left "portrait" layout), `variant` (`dark` default = pine card, `light` = cream/mint editorial card). With `photo`, gains class `cs-pullquote--portrait` (see Avatar-left portrait layout below). Reserve for actual quotes — not for emphatic bold lines.                                                                                    |
 | `cs-wins`                    | Grid of "win" cards with gradient icon badges               | Used for the Outcomes & Business Impact section. Body lines render inline markdown — links, _italics_, **bold** all work.                                                                                                                                                                    |
 
@@ -154,6 +153,12 @@ All shortcodes are in `layouts/shortcodes/cs-*.html` and styled under
 - **New shortcode files in `layouts/shortcodes/` are not picked up by a
   running `hugo serve`.** Restart serve after creating a new shortcode
   template. Modifying an existing one hot-reloads fine.
+- **`<ul>`-based shortcodes inside `.csi-prose` must join the prose list-rule
+  `:not()` chains** (`ul:not(.csi-list):not(…)`) or they inherit gradient
+  bullets — and must then reset `list-style`/margins themselves.
+- **CSS-drawn figures beat images for diagrams** (`csi-split figure="…"` →
+  `figures/<name>.html`: inherits fonts, recolours per face, prints crisp) —
+  but draw with REAL elements; print drops `::before/::after` `background-image`.
 - **The TOC reads `.Fragments`, not `.TableOfContents`.** `.TableOfContents`
   is empty when read from inside a _shortcode_ (it isn't built until after the
   goldmark pass), which is the original reason the TOC moved to a layout-stage
@@ -197,7 +202,7 @@ mint on mint and disappears. Always keep `:not(.button)` on `.cs-article a`.
 
 ---
 
-## Immersive layout (MarketSpark)
+## Immersive layout (MarketSpark, Power Digital)
 
 Opt in with `layout: immersive`. The body element carries **both**
 `case-study-modern` and `case-study-immersive`:
@@ -229,12 +234,15 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 
 | Shortcode         | Purpose                                                        | Key args                                                                              |
 | ----------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `csi-section`     | A card (eyebrow + headline + block prose).                     | `eyebrow`, `title` (HTML ok), `variant`, `align`, `num`, `accent`                     |
-| `csi-split`       | Text + visual side-by-side; `flip="true"` alternates sides.    | `eyebrow`, `title`, `media`, `media_alt`, `flip`, `contain`, `caption`, `variant`, `ratio` |
+| `csi-section`     | A card (eyebrow + headline + block prose).                     | `eyebrow`, `title` (HTML ok), `variant`, `align`, `num`, `accent`, `id` (anchor target, e.g. for `sticky_nav`; also on `csi-split`) |
+| `csi-split`       | Text + visual side-by-side; `flip="true"` alternates sides.    | `eyebrow`, `title`, `media`, `media_alt`, `media2`/`media2_alt` (second image stacked below the first), `figure` (CSS-drawn figure partial from `figures/<name>.html` instead of an image; subfolders work — `figure="power-digital/terralith"`), `flip`, `contain`, `caption`, `variant`, `ratio` (`50-50` default / `65-35` / `75-25`, text wider; ratios auto-reverse under `flip` since flip puts the media in the first grid track via `order`) |
 | `csi-steps`       | Numbered process cards. Place INSIDE a `csi-section`.          | inner blocks split by `---`, each `title:` / `body:`                                  |
-| `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`                        |
+| `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`; `cols="2"` for a slimmed 2-up grid (pairs with `csi-compare`, capped to the same 980px) |
+| `csi-compare`     | "Then / now" migration ledger: muted old world → bold gradient new world per metric. Owns a page's hard numbers — pair with a slimmed `csi-impact` so figures aren't stated twice. Mobile stacks each row with per-cell tags. INSIDE a `csi-section`. | `before_label`, `after_label`; inner blocks split by `---`, each `label:` / `before:` / `after:` |
+| `csi-timeline`    | Horizontal parallel-track cutover bars (old system winding down while the new ramps up): percent-positioned bars with `fade: out` / `fade: in` and an optional dashed cutover marker. Typically right after `csi-steps`. INSIDE a `csi-section`. | `marker` (percent 0–100), `marker_label`; inner blocks split by `---`, each `label:` / `note:` / `start:` / `end:` / `fade:` |
+| `csi-questions`   | Takeaways row of compact numbered question cards (gradient numeral inline with the question), plus an optional `outro:` "verdict" panel (leading `**bold**` renders as a block gradient lead line) and optional `cta:` paragraph divided inside the same panel. Sections containing one auto-compact like `csi-list` ones. 3-up, stacks ≤860px. INSIDE a `csi-section`. | inner blocks split by `---`, each `question:` / `body:`; standalone blocks may carry `outro:` or `cta:` (inline markdown works) |
 | `csi-list`        | Compact 2-col icon rows (icon chip + bold title — inline body). Space-saving sibling of `csi-impact` for secondary enumerations (e.g. "under the hood" extras) so they don't mimic the outcome grid. INSIDE a `csi-section`. | same inner format as `csi-impact` (`icon:` / `title:` / `body:`); keep bodies to one short sentence |
-| `csi-testimonial` | Editorial quote band; `image=` makes it a featured cosmic band.| `name`, `title`, `company`, `photo`, `variant`, `image`. With `photo`, uses the avatar-left "portrait" layout (`csi-testimonial--portrait`, see below). |
+| `csi-testimonial` | Editorial quote band; `image=` makes it a featured cosmic band.| `name`, `title`, `company`, `photo`, `variant`, `image`, `tldr` (`"true"` → unattributed page-top summary: no quote mark, slim band, left-aligned text bare on the band with a vertical gradient bar; `**bold**` renders in the bright gradient). With `photo`, uses the avatar-left "portrait" layout (`csi-testimonial--portrait`, see below). |
 
 Two **modern** shortcodes are also reused inside the immersive body (they render
 because the body also carries `case-study-modern`, so `.case-study-modern .cs-*`
@@ -359,6 +367,18 @@ partial ("Get a standardized, predictable, and efficient infrastructure
 management process" + Schedule button), then `footer`. Same closing as the modern
 case studies and the marketing pages.
 
+### Sticky section nav
+
+Every immersive case study gets a fixed client × Masterpoint bar that slides
+in once the hero scrolls out of view (IntersectionObserver), with
+scrollspy-highlighted anchor links. Default links are The Challenge / The Work
+/ The Results → the conventional `the-challenge`/`the-work`/`the-results`
+`id`s on `csi-section`/`csi-split`; override the pairs (or suppress with
+`sticky_nav: []`) via `sticky_nav:` front matter. Hidden in print; anchored
+sections get `scroll-margin-top` so they land clear of the bar. Keep the
+active-link underline INSIDE the link box — the links row is
+`overflow-x: auto` and any overhang conjures a stub scrollbar.
+
 ## Page-level styling decisions
 
 - **Backdrop is pine** (`$pine = #0e383a`, matching the blog); the article sits on
@@ -397,7 +417,9 @@ Case studies print (Ctrl/Cmd+P → Save as PDF) styled to match the screen.
      transparent fill does not render reliably in Chrome's PDF path: the run
      stops wrapping and gets sliced by the hero card's `overflow:hidden`, or the
      gradient paints as a solid rectangle. So `.text-gradient` / `.csi-grad` /
-     `.cs-hero__lockup-x` fall back to a solid brand colour (`#2ad9c2`) in print.
+     `.csi-step__num` / `.csi-testimonial__mark` / `.cs-hero__lockup-x` fall
+     back to a solid brand colour (`#2ad9c2`) in print — any NEW class using the
+     grad mixins directly (not via `.csi-grad`) must join this list.
      The on-screen multi-stop gradient becomes a single teal in the PDF — an
      intentional, reliable trade.
   4. **Hero frosted card** drops `backdrop-filter` (unsupported in print) and
@@ -420,7 +442,8 @@ Case studies print (Ctrl/Cmd+P → Save as PDF) styled to match the screen.
      on-screen scrolling can feel slow — they re-composite on the GPU per frame.)
   7. **Page-break control — prevents cards clipping across page boundaries.**
      `break-inside: avoid` on the **small, repeating** cards (`.cs-stat`,
-     `.cs-pullquote`, `.csi-testimonial`, `.csi-impact__card`) pushes a whole
+     `.cs-pullquote`, `.csi-testimonial`, `.csi-impact__card`, `.csi-compare__row`,
+     `.csi-fig-terralith__mono/__stack`, `.csi-timeline`, `.csi-question`) pushes a whole
      card to the next page rather than slicing its top/bottom edge. **Only apply
      it to small cards** — putting it on large one-off blocks (the About panel,
      article/screenshot cards) backfires: shoving a big block whole to the next
