@@ -27,7 +27,7 @@ stat_bar:
 
 # Preview / OG
 preview_image: /img/case-studies/power-digital/power-digital-case-study-preview.jpg
-og_img: /img/landing/power-digital-case-study.png
+og_img: /img/case-studies/power-digital/power-digital-case-study-preview.jpg
 
 sitemap:
   priority: 0

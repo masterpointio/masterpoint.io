@@ -25,7 +25,7 @@ stat_bar:
   - value: "hours, not weeks"
     label: "full-region disaster recovery"
 
-# Optional preview / OG
+# Preview / OG
 preview_image: /img/case-studies/marketspark/marketspark-aws.png
 og_img: /img/case-studies/marketspark/marketspark-aws.png
 
