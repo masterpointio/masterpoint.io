@@ -139,9 +139,32 @@ trunk check path/to/file.md
 6. **Redirects**: Add to `netlify.toml` (e.g., `/updates/*` → `/blog/*`)
 7. **Blog Naming**: Use date-prefixed format: `YYYY-MM-DD-title.md`
 
+## Pull Request & Commit Conventions
+
+This repo uses [release-please](https://github.com/googleapis/release-please) semantics, enforced on every PR by the `lint` CI workflow's `action-semantic-pull-request` check. **The PR title** (not each individual commit) must start with a valid [Conventional Commits](https://www.conventionalcommits.org/) type prefix, or CI fails with "No release type found in pull request title":
+
+```text
+<type>(optional-scope): <description>
+```
+
+Valid types:
+
+- `feat` - A new feature
+- `fix` - A bug fix
+- `docs` - Documentation only changes
+- `style` - Changes that do not affect meaning (white-space, formatting, missing semi-colons, etc.)
+- `refactor` - A code change that neither fixes a bug nor adds a feature
+- `perf` - A code change that improves performance
+- `test` - Adding or correcting tests
+- `build` - Changes to the build system or external dependencies
+- `ci` - Changes to CI configuration files and scripts
+- `chore` - Other changes that don't modify src or test files (e.g. removing/updating team or content-only changes)
+
+Examples: `feat: add case study for Acme Corp`, `fix: correct broken link in footer`, `chore: remove former team member`.
+
 ## Deployment Process
 
-1. Push to Git repository (main branch)
+1. Push to Git repository (master branch)
 2. Netlify automatically builds and deploys
 3. Preview deployments created for pull requests
 4. Production URL: https://masterpoint.io
