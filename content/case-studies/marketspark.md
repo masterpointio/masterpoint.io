@@ -29,6 +29,20 @@ stat_bar:
 preview_image: /img/case-studies/marketspark/marketspark-aws.png
 og_img: /img/case-studies/marketspark/marketspark-aws.png
 
+# Homepage highlight card (see docs/case-studies.md → Homepage slider)
+highlight:
+  eyebrow: "AWS · Infrastructure as Code"
+  title: "MarketSpark's cloud, rebuilt as a <span class='text-gradient'>100% IaC multi-account platform</span>"
+  blurb: "Masterpoint rebuilt MarketSpark's single manually-operated AWS account into an 11-account AWS Organization: fully codified, automated, and ready to scale."
+  image: /img/case-studies/marketspark/telecommunications.jpg
+  image_alt: "City lights glowing across Earth at night, seen from orbit"
+  logo: /img/case-studies/marketspark/marketspark-logo-dark.png
+  stats:
+    - value: "0% → 100%"
+      label: "Infrastructure as Code, automated end to end"
+    - value: "1 → 11"
+      label: "monolithic account to a full AWS Organization"
+
 sitemap:
   priority: 0
 ---
