@@ -2051,8 +2051,14 @@ footer {
 // gradient underline doubles as the autoplay progress bar (cshTabFill).
 // ─────────────────────────────────────────────────────────────────────────
 #case-studies-home {
-  padding: 4.15rem 0 4.4rem;
-  background: linear-gradient(180deg, #f7fbfa 0%, #e8f4f1 100%);
+  padding: 4.3rem 0 4.6rem;
+  color: #fff;
+  // Dark pine band with soft mint/pink glows — same family as the
+  // case-study pages' pine backdrop and the site's other dark sections.
+  background:
+    radial-gradient(46% 42% at 10% 12%, rgba(42, 217, 194, 0.13) 0%, rgba(42, 217, 194, 0) 100%),
+    radial-gradient(42% 44% at 90% 85%, rgba(216, 145, 206, 0.12) 0%, rgba(216, 145, 206, 0) 100%),
+    linear-gradient(180deg, #0b2f31 0%, $pine 55%, #0a2b2d 100%);
 
   .csh-head {
     display: flex;
@@ -2067,22 +2073,21 @@ footer {
       font-size: 0.95rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: #16a597;
       margin-bottom: 0.65rem;
+      // gradient text with a dash on both ends, echoing the case-studies
+      // list hero tagline
+      @extend .text-gradient;
+      &:before {
+        content: "— ";
+      }
+      &:after {
+        content: " —";
+      }
     }
     &__title {
-      color: $pine;
+      color: #fff;
       margin: 0;
       line-height: 1.08em;
-      // The global .text-gradient leads with pale vanilla, which washes out
-      // on this light section — swap in the darkened teal→pink used for
-      // gradient text on light case-study cards (csi-grad-light).
-      .text-gradient {
-        background: linear-gradient(95deg, #0e8a7e 0%, #16a597 45%, #c45cb3 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
     }
     &__cta {
       flex-shrink: 0;
@@ -2102,7 +2107,7 @@ footer {
   .csh-viewport {
     overflow: hidden;
     border-radius: 2rem;
-    box-shadow: 0 22px 55px rgba(14, 56, 58, 0.12);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
     @media (max-width: 575px) {
       border-radius: 1.4rem;
     }
@@ -2216,9 +2221,9 @@ footer {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    border: 1px solid rgba(14, 56, 58, 0.16);
-    background: #fff;
-    color: $pine;
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    background: transparent;
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2228,8 +2233,8 @@ footer {
       background $transition,
       color $transition;
     &:hover {
-      background: $pine;
-      color: #fff;
+      background: #fff;
+      color: $pine;
     }
   }
   .csh-tabs {
@@ -2251,20 +2256,20 @@ footer {
     justify-content: center;
     min-width: 230px;
     padding: 1.25rem 2.2rem 1.45rem;
-    background: #fff;
-    border: 1px solid rgba(14, 56, 58, 0.1);
+    background: rgba(255, 255, 255, 0.86);
+    border: 0;
     border-radius: 16px;
     cursor: pointer;
     transition:
-      box-shadow $transition,
-      transform $transition;
+      background $transition,
+      box-shadow $transition;
     img {
       height: 32px;
       width: auto;
       max-width: 170px;
       object-fit: contain;
       filter: grayscale(1);
-      opacity: 0.5;
+      opacity: 0.55;
       transition:
         filter $transition,
         opacity $transition;
@@ -2280,12 +2285,16 @@ footer {
       width: 0;
       background: linear-gradient(92deg, #ede497 -0.66%, #2ad9c2 40%, #d891ce 90%);
     }
-    &:hover img {
-      filter: none;
-      opacity: 1;
+    &:hover {
+      background: #fff;
+      img {
+        filter: none;
+        opacity: 1;
+      }
     }
     &.is-active {
-      box-shadow: 0 10px 26px rgba(14, 56, 58, 0.13);
+      background: #fff;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
       img {
         filter: none;
         opacity: 1;

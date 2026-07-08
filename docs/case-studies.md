@@ -116,9 +116,14 @@ home_highlight:
 - **Styling** lives in `assets/css/custom.scss` under the `#case-studies-home`
   block (`.csh-*` prefix), appended right after the `#home` block. Everything is
   scoped under the section id except `@keyframes cshTabFill` and a
-  `prefers-reduced-motion` override. Gradient text uses the **darkened**
-  teal→pink stops (same as `csi-grad-light`) because the global `.text-gradient`
-  leads with pale vanilla and washes out on this light section.
+  `prefers-reduced-motion` override. The section is a **dark pine band with
+  soft mint/pink radial glows** (matching the site's other dark sections and
+  the case-study pages' pine backdrop) with a white featured card on top. The
+  header eyebrow is gradient text with a dash on both ends (echoing the
+  case-studies list hero tagline) and the heading uses the standard bright
+  `.text-gradient`. **Inside the white card**, metric values use the darkened
+  teal→pink stops (same as `csi-grad-light`) because the bright global gradient
+  washes out on white.
 - **Autoplay is CSS-driven**: the active tab's gradient underline is a 7s
   `cshTabFill` width animation (doubles as the progress bar); JS listens for
   `animationend` and advances. Hover/`focus-within` pause is pure CSS
