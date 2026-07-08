@@ -164,7 +164,7 @@ Examples: `feat: add case study for Acme Corp`, `fix: correct broken link in foo
 
 ## Deployment Process
 
-1. Push to Git repository (main branch)
+1. Push to Git repository (master branch)
 2. Netlify automatically builds and deploys
 3. Preview deployments created for pull requests
 4. Production URL: https://masterpoint.io
