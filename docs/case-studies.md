@@ -72,6 +72,95 @@ card grid to stay scannable as the list grows. Card image = each study's
 
 ---
 
+## Homepage highlights slider
+
+The homepage has a featured case-study slider (section
+`content/sections/home-case-studies.md`, id `#case-study-highlights`, weight 5 —
+between "Efficient Platforms" and the testimonials). It renders one full-width
+dark pine card per case study (client logo on a white pill, category eyebrow,
+short title, blurb, **two headline metrics**, CTA, photo) on a sliding track,
+navigated by a client-logo tab strip — the Microsoft-customer-stories pattern.
+
+- **Markup + JS:** `layouts/shortcodes/case-study-slider.html` (self-contained
+  vanilla JS; no jQuery). It iterates `where site.RegularPages "Section"
+  "case-studies"` **ByWeight**, so case-study `weight:` also orders the slides.
+- **Styles:** `.csh-*` block in `assets/css/custom.scss` (directly above the
+  `case-studies.scss` import). Scoped to `.csh-`; literal hex colors since the
+  `$cs-*` vars aren't defined at that point in the cascade.
+- **Content comes from an optional `highlight:` front-matter map** on each case
+  study (see marketspark.md / power-digital.md):
+
+  ```yaml
+  highlight:
+    eyebrow: "AWS · Infrastructure as Code" # category label, mint uppercase
+    title: "... <span class='text-gradient'>...</span>" # short card title (HTML ok)
+    blurb: "One or two sentences."
+    image: /img/case-studies/CLIENT/photo.jpg # card photo (right column)
+    image_alt: "..."
+    logo: /img/case-studies/CLIENT/CLIENT-logo-dark.png # DARK logo variant — used on the white tab strip AND the white card pill
+    stats: # exactly two headline metrics
+      - value: "10x"
+        label: "lower infrastructure automation costs"
+      - value: "25 → 3 min"
+        label: "plan & apply deployment cycles"
+  ```
+
+  Every field falls back sensibly if omitted: `title` → page title, `blurb` →
+  `description`, `image` → `preview_image`, `stats` → first 2 `stat_bar`
+  entries, `logo` → `client_logo`, `eyebrow` → `Case Study · {client}`.
+  Set `highlight: false` to keep a case study out of the slider entirely. Any
+  other **non-map** value (`highlight: true`, a string, …) includes the study
+  with pure fallbacks — the template only reads fields after a `reflect.IsMap`
+  check, so a scalar can't crash the build (`$h.foo` on a bool is a fatal
+  template error; `| default dict` does NOT replace `true`).
+- **Use the dark logo variant** for `highlight.logo` — it sits on white
+  surfaces (tab strip + card pill). The hero `client_logo` may be a white
+  variant (Power Digital), which would vanish there; that's why the field
+  exists. A study with no logo at all gets its client name as a text tab
+  (`.csh-nav__name`).
+- **Slider mechanics:** custom vanilla JS in the shortcode, NOT flexslider/owl —
+  plugins.js initializes ALL `.flexslider` elements globally with dot controls,
+  which would fight the logo-tab navigation. Autoplay is driven by the active
+  tab's progress-bar CSS animation (8s, `cshProgress` keyframes): JS advances on
+  `animationend`, so pausing the animation pauses the slider exactly in sync
+  with the bar. The bar is a full-width gradient revealed via `clip-path` (a
+  width animation would stretch the colors). Touch swipe + roving-tabindex
+  arrow keys included; off-screen slides are `visibility: hidden` (delayed
+  until the track transition ends) with their links untabbable.
+- **Autoplay gating — four independent conditions, all in CSS classes:**
+  - `.csh--inview` (IntersectionObserver): on once ≥25% visible, off only when
+    fully off-screen. Gate on `intersectionRatio`, not bare `isIntersecting` —
+    that flips true at the first visible pixel regardless of `threshold`.
+  - `.csh--paused` (transient): mouse hover OR keyboard focus, tracked as two
+    separate booleans — `focusout` only clears it if focus actually left the
+    root (`relatedTarget` check), so mouse-leave can't resume rotation while
+    focus is still inside (an auto-advance would hide the focused element).
+    Hover uses `pointerenter`/`pointerleave` gated to `pointerType === "mouse"`
+    — a tap's synthetic `mouseenter` never gets a matching `mouseleave` on
+    touch screens and would freeze rotation forever.
+  - `.csh--stopped` (persistent): the pause/play toggle button before the tab
+    strip — the WCAG 2.2.2 / APG-required rotation control, first in the
+    carousel's tab order, `aria-pressed` + swapped `aria-label`.
+  - `prefers-reduced-motion: reduce` disables the animation outright → no
+    `animationend` → no autoplay (manual navigation still works).
+- **Specificity gotcha:** the `animation:` shorthand resets
+  `animation-play-state` to `running`, so the paused/stopped rules must MATCH
+  the run rule's 5-class specificity and come after it. A shorter
+  `.csh.csh--paused .csh-nav__progress` rule silently loses — hover-pause
+  then never works.
+- **Single-slide degradation:** with one highlighted study the tab strip,
+  toggle, and autoplay are omitted and the slide renders WITHOUT
+  `role="tabpanel"`/`aria-labelledby` (they'd reference a tab that doesn't
+  exist — dangling ARIA idrefs fail axe).
+- **Tab strip centering:** `justify-content: center` lives on the OUTER
+  `.csh-nav` row; the inner `.csh-nav__tabs` group is the `overflow-x: auto`
+  scroller. Centering the scroll container itself would clip its left end once
+  tabs overflow.
+- The section heading/intro and the "See All Case Studies" button live in the
+  section content file, not the shortcode.
+
+---
+
 ## Modern layout — front matter schema
 
 ```yaml

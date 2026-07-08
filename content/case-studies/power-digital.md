@@ -29,6 +29,20 @@ stat_bar:
 preview_image: /img/case-studies/power-digital/power-digital-case-study-preview.jpg
 og_img: /img/case-studies/power-digital/power-digital-case-study-preview.jpg
 
+# Homepage highlight card (see docs/case-studies.md → Homepage slider)
+highlight:
+  eyebrow: "IaC Automation · Cost Optimization"
+  title: "Power Digital cut automation costs <span class='text-gradient'>10x</span> and onboards clients <span class='text-gradient'>8x faster</span>"
+  blurb: "Masterpoint migrated Power Digital's 43,000-resource Terraform monolith to Spacelift and OpenTofu, and the platform onboarded 100+ new clients in the first 60 days."
+  image: /img/case-studies/power-digital/power-digital-team.jpg
+  image_alt: "Power Digital team collaborating in their office"
+  logo: /img/case-studies/power-digital/power-digital-logo.png
+  stats:
+    - value: "10x"
+      label: "lower infrastructure automation costs"
+    - value: "25 → 3 min"
+      label: "plan & apply deployment cycles"
+
 sitemap:
   priority: 0
 
