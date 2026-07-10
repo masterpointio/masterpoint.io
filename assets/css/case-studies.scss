@@ -1588,6 +1588,20 @@ html:has(.cs-sticky-nav) {
       }
     }
 
+    // ---- ARTICLE mode (`align="article"`) — for long consolidated cards
+    //      that carry several in-card subsections (h3/h4) in one band. The
+    //      text column is widened and CENTERED in the card (text itself stays
+    //      left-aligned) so the band doesn't read as a left-hugging strip
+    //      with a large empty right half.
+    &--article {
+      .csi-section__head,
+      .csi-prose {
+        max-width: 920px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
     // ---- COMPACT band — applied automatically to any section containing a
     //      csi-list or csi-questions (no opt-in arg): same content, less
     //      vertical real estate. Tighter padding, smaller head, denser prose

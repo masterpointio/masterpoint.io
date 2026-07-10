@@ -66,7 +66,7 @@ body: The median Terraform run now touches 5 resources instead of 54 — a 91% s
 {{< /csi-impact >}}
 {{< /csi-section >}}
 
-{{< csi-section id="the-challenge" eyebrow="The Problem" title="Infrastructure That <span class='csi-grad'>Couldn't Keep Up</span>" variant="pine" >}}
+{{< csi-section id="the-challenge" eyebrow="The Problem" title="Infrastructure That <span class='csi-grad'>Couldn't Keep Up</span>" variant="pine" align="article" >}}
 By late 2025, Cursor's Terraform setup had become one of the biggest friction points in the engineering org. The company behind the Cursor IDE experienced issues familiar to fast-growing startups: infrastructure code written quickly, then scaled by copy-pasta rather than through careful design.
 
 Those early Terraform patterns were replicated at machine speed as engineers dogfooded Cursor. They were copied and instantiated hundreds of times without the architectural guardrails needed to keep the system manageable. The result was a classic **[terralith](/blog/terralith-monolithic-terraform-architecture/)**: critical infrastructure was managed as a single monolithic production workspace with over 7,000 resources in one state file.
@@ -97,7 +97,7 @@ The existing platform, Terraform Cloud, introduced some friction too:
 - TFC's resource-under-management (RUM) pricing model made it daunting to scale.
 {{< /csi-section >}}
 
-{{< csi-section id="the-work" eyebrow="The Engagement" title="What <span class='csi-grad'>Masterpoint</span> Did" variant="light" >}}
+{{< csi-section id="the-work" eyebrow="The Engagement" title="What <span class='csi-grad'>Masterpoint</span> Did" variant="light" align="article" >}}
 Masterpoint came in for a systematic overhaul, working across the architecture, the platform, and the developer workflow.
 
 ### November 2025 - Audit and High Leverage Fixes
@@ -197,7 +197,7 @@ The AI agent skills and rules help us build our IaC correctly while at the same 
 Every IaC optimization Masterpoint delivered was paired with instructions to prevent anti-patterns from being reintroduced.
 {{< /csi-section >}}
 
-{{< csi-section id="the-results" accent="true" title="The <span class='csi-grad'>Results</span>" variant="pine" >}}
+{{< csi-section id="the-results" accent="true" title="The <span class='csi-grad'>Results</span>" variant="pine" align="article" >}}
 
 ### What Cursor's Infrastructure as Code Manages
 
@@ -276,7 +276,7 @@ Looking beyond the controlled same-cohort set of engineers, 89% of all engineers
 Previously, workspace creation required manual ClickOps and admin access. Today, engineers create and manage their own stacks. The number of separately managed modules went from 26 to 100+. Engineers are now creating their own product/domain scoped infrastructure instead of jumbling it in the primary monolithic workspace.
 {{< /csi-section >}}
 
-{{< csi-section eyebrow="After the Engagement" title="What Changed <span class='csi-grad'>for the Team</span>" variant="light" >}}
+{{< csi-section eyebrow="After the Engagement" title="What Changed <span class='csi-grad'>for the Team</span>" variant="light" align="article" >}}
 
 #### Engineers know what an IaC Terraform change will touch
 

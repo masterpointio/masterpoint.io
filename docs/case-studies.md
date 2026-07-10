@@ -410,6 +410,12 @@ active-link underline INSIDE the link box — the links row is
   text in a self-anchor `<a>` — `.csi-prose h3 a`/`h4 a` overrides (in BOTH
   the base prose block and the pine variant block) keep it heading-colored
   instead of link-mint.
+- **`align="article"` (csi-section)** — the mode the consolidated cards use:
+  widens the head + prose column to 920px and CENTERS it in the card (text
+  stays left-aligned). Without it, a long text-only card is a 760px
+  left-hugging strip with a large empty right half. Use it for any
+  multi-subsection article-style band; plain `left` remains right for
+  csi-split and short sections.
 - **Graphics flow inline in prose** (`![alt](src)`), not via `csi-split` —
   styled by `.csi-prose img` (block, rounded, centered, capped at the prose
   column). No stock spacelift/opentofu images; only the branded mp-cursor-*
