@@ -1587,6 +1587,21 @@ html:has(.cs-sticky-nav) {
       }
     }
 
+    // ---- Default LEFT alignment — the content renders as a CENTERED article
+    //      column (text stays left-aligned, the column centres in the band) so
+    //      wide viewports don't leave a dead right half. Only csi-section
+    //      emits --left (csi-split carries its own grid and no align class),
+    //      and every MarketSpark / Power Digital section is --center, so this
+    //      only shapes the consolidated narrative bands (Cursor).
+    &--left {
+      .csi-section__head,
+      .csi-prose {
+        max-width: 860px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
     // ---- COMPACT band — applied automatically to any section containing a
     //      csi-list or csi-questions (no opt-in arg): same content, less
     //      vertical real estate. Tighter padding, smaller head, denser prose

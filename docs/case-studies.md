@@ -170,8 +170,13 @@ All shortcodes are in `layouts/shortcodes/cs-*.html` and styled under
   recolour on pine); markdown images render as rounded, shadowed cards
   (`.csi-prose img`, full column width, in the print `break-inside` list);
   `csi-figure` drops a CSS figure inline; and `roomy="true"` keeps the band
-  full-sized despite containing a `csi-list`. Alternation still holds — the
-  page is pine/light alternating with the cosmic testimonial + CTA closing.
+  full-sized despite containing a `csi-list`. Default-left sections render the
+  head + prose as a **centered 860px article column** (text left-aligned, the
+  column centred in the band — `.csi-section--left` rule) so wide viewports
+  don't get a dead right half; only `csi-section` emits `--left`, and all
+  MarketSpark/Power Digital sections are `--center`, so the rule is
+  Cursor-only in practice. Alternation still holds — the page is pine/light
+  alternating with the cosmic testimonial + CTA closing.
 - **Match image backgrounds to card faces.** The Cursor graphics exist in
   white-background and pine-background variants. Inline in prose, dark charts
   blend into `pine` bands and white stat cards pop like the ledger's white
