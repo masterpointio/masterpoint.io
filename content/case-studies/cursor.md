@@ -97,25 +97,11 @@ The existing platform, Terraform Cloud, introduced some friction too:
 - TFC's resource-under-management (RUM) pricing model made it daunting to scale.
 {{< /csi-section >}}
 
-{{< csi-section id="the-work" eyebrow="The Engagement" title="What <span class='csi-grad'>Masterpoint</span> Did" variant="light" align="center" >}}
+{{< csi-section id="the-work" eyebrow="The Engagement" title="What <span class='csi-grad'>Masterpoint</span> Did" variant="light" >}}
 Masterpoint came in for a systematic overhaul, working across the architecture, the platform, and the developer workflow.
 
-{{< csi-steps >}}
-title: Audit and High Leverage Fixes
-body: November 2025
----
-title: Spacelift Migration Begins
-body: December 2025
----
-title: Bulk Migration
-body: January to February 2026
----
-title: AI Agent Guardrails And Additional Improvements
-body: February to May 2026
-{{< /csi-steps >}}
-{{< /csi-section >}}
+### November 2025 - Audit and High Leverage Fixes
 
-{{< csi-section eyebrow="Phase 01 &middot; November 2025" title="Audit and <span class='csi-grad'>High Leverage Fixes</span>" variant="pine" >}}
 The engagement opened with an [audit](/services/audit/) of Cursor's infrastructure:
 
 - cloud environments
@@ -155,9 +141,9 @@ after: 184 runs
 {{< /csi-compare >}}
 
 This was accomplished without touching the workspace structure, but the systems could still be improved.
-{{< /csi-section >}}
 
-{{< csi-split eyebrow="Phase 02 &middot; December 2025" title="<span class='csi-grad'>Spacelift</span> Migration Begins" media="/img/case-studies/spacelift.jpg" media_alt="Spacelift: provision, configure, govern" variant="light" flip="true" ratio="65-35" >}}
+### December 2025 - Spacelift Migration Begins
+
 With the first phase complete, Masterpoint turned to the platform.
 
 As mentioned above, TFC's ClickOps workspace management, SSO troubles, and resource-under-management pricing were all inhibiting Cursor's velocity and growth.
@@ -173,17 +159,17 @@ The team kicked off the Spacelift migration in mid-December, starting with the g
 Rather than migrating everything at once, a low-risk pilot Spacelift stack (the equivalent of a TFC workspace) was used to validate the approach. The end-to-end fully automated pilot project was completed within days.
 
 Masterpoint also began evaluating a full migration from the Terraform runtime to [OpenTofu](https://opentofu.org/).
-{{< /csi-split >}}
 
-{{< csi-split eyebrow="Phase 03 &middot; January to February 2026" title="Bulk <span class='csi-grad'>Migration</span>" media="/img/case-studies/opentofu.jpg" media_alt="OpenTofu: the open source infrastructure as code tool" variant="pine" ratio="65-35" >}}
+### January to February 2026 - Bulk Migration
+
 With a plan covering a migration of dozens of TFC workspaces across four phases, the team worked systematically. By late January, the bulk of workspaces had been migrated to Spacelift stacks with no operational downtime for the Cursor engineering organization.
 
 By February, the migration was done. All workspaces had been moved from TFC to Spacelift and the runtime was converted from Terraform to OpenTofu. Migrating to OpenTofu freed Cursor from licensing constraints and unlocked capabilities unavailable or paywalled in Terraform, such as state encryption, OpenTelemetry support, and provider iteration.
 
 As part of the final migration work, the production workspace was reduced by splitting out various provider-aliased resources into dedicated stacks, continuing the decomposition work that had started with IAM deduplication in November.
-{{< /csi-split >}}
 
-{{< csi-section eyebrow="Phase 04 &middot; February to May 2026" title="AI Agent Guardrails And <span class='csi-grad'>Additional Improvements</span>" variant="light" >}}
+### February to May 2026 - AI Agent Guardrails And Additional Improvements
+
 After the migration was completed, Masterpoint continued to improved system usability and speed by:
 
 - restructuring Route53 DNS API requests into optimized, dedicated TF modules to address AWS's strict 5 requests/second limit
@@ -196,28 +182,13 @@ Because Cursor's engineering team uses Cursor to write Terraform, Masterpoint em
 
 This AI context encodes the decisions that AI models cannot anticipate on their own:
 
-{{< csi-list >}}
-icon: fa-diagram-project
-title: when to create a new root module vs. extend an existing one
----
-icon: fa-bullseye
-title: how to scope blast radius in a root module
----
-icon: fa-object-ungroup
-title: how to break up a high blast radius monolithic root module
----
-icon: fa-database
-title: data source patterns and optimizations
----
-icon: fa-boxes-stacked
-title: how to use OCI-sourced child modules
----
-icon: fa-shield-halved
-title: security practices, such as TF module SHA pinning
----
-icon: fa-magnifying-glass-chart
-title: debugging performance bottlenecks, through methods such as logging and OpenTelemetry traces
-{{< /csi-list >}}
+- when to create a new root module vs. extend an existing one
+- how to scope blast radius in a root module
+- how to break up a high blast radius monolithic root module
+- data source patterns and optimizations
+- how to use OCI-sourced child modules
+- security practices, such as TF module SHA pinning
+- debugging performance bottlenecks, through methods such as logging and OpenTelemetry traces
 
 {{< cs-pullquote name="Ravi Rahman" title="software engineer" company="Cursor" >}}
 The AI agent skills and rules help us build our IaC correctly while at the same time moving faster.
@@ -226,7 +197,10 @@ The AI agent skills and rules help us build our IaC correctly while at the same 
 Every IaC optimization Masterpoint delivered was paired with instructions to prevent anti-patterns from being reintroduced.
 {{< /csi-section >}}
 
-{{< csi-section id="the-results" eyebrow="The Results" title="What Cursor's <span class='csi-grad'>Infrastructure as Code</span> Manages" variant="pine" align="center" >}}
+{{< csi-section id="the-results" accent="true" title="The <span class='csi-grad'>Results</span>" variant="pine" >}}
+
+### What Cursor's Infrastructure as Code Manages
+
 The Cursor infrastructure today includes:
 
 {{< csi-impact >}}
@@ -248,9 +222,9 @@ title: in the triple digits of ALB and NLB load balancers
 {{< /csi-impact >}}
 
 In all 40k+ Terraform resources are managed using the new platform. All of this exists in 100+ narrow, independent root modules, with [OpenTofu](https://opentofu.org/), on [Spacelift](https://spacelift.io/), using Okta SSO, stored in S3-backed state, and paired with AI agent rules to keep the architecture clean as the codebase grows.
-{{< /csi-section >}}
 
-{{< csi-section eyebrow="Before &rarr; After" title="Numbers That <span class='csi-grad'>Matter</span>" variant="light" align="center" >}}
+### Numbers That Matter
+
 {{< csi-compare >}}
 label: Median plan time (production)
 before: ~8 min
@@ -264,19 +238,23 @@ label: Median resources affected
 before: 54
 after: **5** (91% reduction in blast radius)
 {{< /csi-compare >}}
-{{< /csi-section >}}
 
-{{< csi-split eyebrow="Speed" title="Plan time went from 10+ minutes <span class='csi-grad'>to 2 minutes</span>" media="/img/case-studies/anysphere/mp-cursor-plan-time-dial.png" media_alt="Terraform plan + apply: 80% of the wait, gone. A typical run dropped from 10+ minutes to a steady 2 minutes" variant="pine" contain="true" >}}
+### Plan time went from 10+ minutes to 2 minutes
+
+![Terraform plan + apply: 80% of the wait, gone. A typical run dropped from 10+ minutes to a steady 2 minutes](/img/case-studies/anysphere/mp-cursor-plan-time-dial.png)
+
 The production workspace plan time dropped from over 10+ minutes, with spikes to 15 minutes, during the November baseline to around 2 minutes by mid 2026.
 
 This is an improvement of roughly 75% from where the engagement started, and more than 80% from the pre-engagement peak.
-{{< /csi-split >}}
 
-{{< csi-split eyebrow="Velocity" title="Deployment frequency <span class='csi-grad'>increased</span>" media="/img/case-studies/anysphere/mp-cursor-deploy-frequency-stat.png" media_alt="2.6x more PRs shipped: from 194 to 500+ changes shipped every week, a 157% jump in deployment frequency" variant="light" flip="true" contain="true" >}}
+### Deployment frequency increased
+
+![2.6x more PRs shipped: from 194 to 500+ changes shipped every week, a 157% jump in deployment frequency](/img/case-studies/anysphere/mp-cursor-deploy-frequency-stat.png)
+
 Weekly merged PRs against infrastructure as code went from approximately 194 per week to over 500 a week, a 157% increase. They've only accelerated since then.
-{{< /csi-split >}}
 
-{{< csi-section eyebrow="Productivity" title="The productivity lift was <span class='csi-grad'>significant</span>" variant="pine" align="center" >}}
+### The productivity lift was significant
+
 This gain wasn't from growing the engineering organization: a controlled same-cohort analysis of 34 engineers active both before and after the Masterpoint engagement found that PR throughput grew by 121%.
 
 {{< csi-compare before_label="Pre-engagement" after_label="End of Engagement" >}}
@@ -288,15 +266,20 @@ label: Per-active-week cadence
 before: 5.37 PRs/author/wk
 after: **9.19 PRs/author/wk** (+71%)
 {{< /csi-compare >}}
-{{< /csi-section >}}
 
-{{< csi-split eyebrow="Ownership" title="Infrastructure became <span class='csi-grad'>democratized</span>" media="/img/case-studies/anysphere/mp-cursor-tf-workspaces.png" media_alt="Terraform root module workspaces grew from 21 to 141: infrastructure, democratized" variant="light" contain="true" >}}
+### Infrastructure became democratized
+
+![Terraform root module workspaces grew from 21 to 141: infrastructure, democratized](/img/case-studies/anysphere/mp-cursor-tf-workspaces.png)
+
 Looking beyond the controlled same-cohort set of engineers, 89% of all engineers who work with infrastructure now ship Terraform PRs each month.
 
 Previously, workspace creation required manual ClickOps and admin access. Today, engineers create and manage their own stacks. The number of separately managed modules went from 26 to 100+. Engineers are now creating their own product/domain scoped infrastructure instead of jumbling it in the primary monolithic workspace.
-{{< /csi-split >}}
+{{< /csi-section >}}
 
-{{< csi-split eyebrow="What Changed for the Team" title="Engineers know what an IaC Terraform change <span class='csi-grad'>will touch</span>" media="/img/case-studies/anysphere/mp-cursor-dependency-graph.png" media_alt="91% reduction in blast radius: a median Terraform run once touched 54 resources, now it averages just 5" variant="pine" flip="true" contain="true" >}}
+{{< csi-section eyebrow="After the Engagement" title="What Changed <span class='csi-grad'>for the Team</span>" variant="light" >}}
+
+#### Engineers know what an IaC Terraform change will touch
+
 Before the engagement, engineers couldn't predict what a change would actually touch in a workspace. A database might live in a workspace named for networking infrastructure, so even finding where something was managed required tribal knowledge. Dependencies between workspaces were just as opaque: touching one piece of infrastructure could ripple into systems that had nothing to do with the change — or surface long-standing drift that did. Plans intended for one system would silently queue in unrelated workspaces, waiting for the next person to find them with no context on where they came from or whether they were safe to apply.
 
 {{< cs-pullquote name="Ravi Rahman" title="software engineer" company="Cursor" >}}
@@ -304,17 +287,19 @@ The Terraform experience has gotten way better. For the first time since I've be
 {{< /cs-pullquote >}}
 
 With smaller, focused stacks, plans are scoped to the change at hand. The median Terraform run now touches just 5 resources instead of 54 — a 91% smaller blast radius — so engineers know precisely what a plan will affect before they run it.
-{{< /csi-split >}}
 
-{{< csi-section accent="true" title="Architectural flexibility <span class='csi-grad'>enables the business</span> and product delivery" variant="light" >}}
+![91% reduction in blast radius: a median Terraform run once touched 54 resources, now it averages just 5](/img/case-studies/anysphere/mp-cursor-dependency-graph.png)
+
+#### Architectural flexibility enables the business and product delivery
+
 Before the engagement, the terralith made architectural changes expensive and risky. Touching one piece of infrastructure meant disrupting unconnected components.
 
 With narrow stacks owning a focused piece of infrastructure, the Cursor engineering team can more easily modify their architecture.
 
 New services, providers, and cloud targets can be added as their own stacks, which is a foundation that directly enables expansion into multi-cloud infrastructure as Cursor continues to scale.
-{{< /csi-section >}}
 
-{{< csi-section accent="true" title="Cursor's agents are set up for <span class='csi-grad'>future success</span>" variant="pine" >}}
+#### Cursor's agents are set up for future success
+
 Since Cursor's engineers rely on Cursor to write their own Terraform, Masterpoint embedded the new architecture into AI agent rules and skills that sit directly within the codebase.
 
 These rules capture the patterns and decisions that LLMs can't figure out on their own, setting the team up to consistently ship high-quality infrastructure code, now and as the system evolves.

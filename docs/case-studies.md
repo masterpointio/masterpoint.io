@@ -400,10 +400,20 @@ active-link underline INSIDE the link box — the links row is
   default-black paths) and invisible on the pine hero/sticky bar. If the logo
   ever updates, recolor again (add `fill="#ffffff"` on the root AND replace the
   inline `style="fill:…"`).
-- **"Phase map" `csi-steps` pattern** — the engagement-intro band uses
-  csi-steps with each phase heading as `title:` and its date range as `body:`,
-  acting as a roadmap for the four detailed phase cards that follow (eyebrows
-  `Phase 0N · <dates>`).
+- **Few consolidated cards, not one band per heading.** The page is exactly
+  seven bands: TLDR → Key Value Delivered → The Problem → What Masterpoint Did
+  (all four phases in ONE card) → The Results (ONE card) → What Changed for
+  the Team → featured testimonial (+ the callout CTA). The draft's H3/H4
+  subsections live INSIDE the cards as markdown `###`/`####` headings, styled
+  by the `.csi-prose h3/h4` rules (h3 gets a short gradient rule above it;
+  both flip to white on pine faces). The heading render hook wraps heading
+  text in a self-anchor `<a>` — `.csi-prose h3 a`/`h4 a` overrides (in BOTH
+  the base prose block and the pine variant block) keep it heading-colored
+  instead of link-mint.
+- **Graphics flow inline in prose** (`![alt](src)`), not via `csi-split` —
+  styled by `.csi-prose img` (block, rounded, centered, capped at the prose
+  column). No stock spacelift/opentofu images; only the branded mp-cursor-*
+  graphics.
 - **CTA "ceilings" chip list** — the closing callout's `<ul
   class='csi-cta__ceilings'>` renders as centered pill chips via a rule in the
   `.csi-cta` block (plus a `p + p` spacing rule for multi-paragraph callouts).
