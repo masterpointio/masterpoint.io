@@ -64,19 +64,19 @@ body: The median Terraform run now touches 5 resources instead of 54 — a 91% s
 {{< /csi-impact >}}
 {{< /csi-section >}}
 
-{{< csi-split id="the-challenge" eyebrow="The Problem" title="Infrastructure That <span class='csi-grad'>Couldn't Keep Up</span>" figure="cursor/terralith" variant="pine" >}}
+{{< csi-section id="the-challenge" eyebrow="The Problem" title="Infrastructure That <span class='csi-grad'>Couldn't Keep Up</span>" variant="pine" >}}
 By late 2025, Cursor's Terraform setup had become one of the biggest friction points in the engineering org. The company behind the Cursor IDE experienced issues familiar to fast-growing startups: infrastructure code written quickly, then scaled by copy-pasta rather than through careful design.
 
 Those early Terraform patterns were replicated at machine speed as engineers dogfooded Cursor. They were copied and instantiated hundreds of times without the architectural guardrails needed to keep the system manageable. The result was a classic **terralith**: critical infrastructure was managed as a single monolithic production workspace with over 7,000 resources in one state file.
 
 And because that workspace was so large, it was too slow.
 
+{{< csi-figure name="cursor/terralith" max="760px" >}}
+
 {{< cs-pullquote name="Travis McPeak" title="Security Lead" company="Cursor" variant="light" >}}
 We had one giant workspace that took way too long to plan. It was killing us.
 {{< /cs-pullquote >}}
-{{< /csi-split >}}
 
-{{< csi-section accent="true" title="The team <span class='csi-grad'>stopped trusting</span> the system" variant="light" >}}
 But the problem wasn't just the lack of speed. It was a lack of engineering confidence in the IaC system. Issues included:
 
 - The AWS console was used to make changes during incidents and these fixes were never rolled into TF, and so were later inadvertently reverted.
@@ -84,7 +84,7 @@ But the problem wasn't just the lack of speed. It was a lack of engineering conf
 
 Over time, the team stopped trusting the system, let alone reading the diffs.
 
-{{< cs-pullquote name="Travis McPeak" title="Security Lead" company="Cursor" >}}
+{{< cs-pullquote name="Travis McPeak" title="Security Lead" company="Cursor" variant="light" >}}
 We would have engineers click apply on prod workspaces that had 120 ECS service changes. The ECS services would change all the time because of drift, so the team became desensitized to large Terraform plan changes.
 {{< /cs-pullquote >}}
 
@@ -97,7 +97,7 @@ The existing platform, Terraform Cloud, introduced some friction too:
 - TFC's resource-under-management (RUM) pricing model made it daunting to scale.
 {{< /csi-section >}}
 
-{{< csi-section id="the-work" eyebrow="The Engagement" title="What <span class='csi-grad'>Masterpoint</span> Did" variant="pine" >}}
+{{< csi-section id="the-work" eyebrow="The Engagement" title="What <span class='csi-grad'>Masterpoint</span> Did" variant="light" >}}
 Masterpoint came in for a systematic overhaul, working across the architecture, the platform, and the developer workflow.
 
 {{< csi-phases >}}
@@ -180,21 +180,21 @@ After the migration was completed, Masterpoint continued to improved system usab
 - implementing child module versioning with OCI registries to enable staged rollouts and safer change control of critical TF resources
 - resolving the ECS drift issue by using the ["Task Definition Template Pattern"](https://newsletter.masterpoint.io/p/deploying-your-apps-into-ecs)
 - implementing OpenTofu's [OTel tracing](https://opentofu.org/docs/internals/tracing/) to set up the Cursor team for longterm visibility into their IaC throughput
-{{< /csi-phase >}}
-{{< /csi-phases >}}
-{{< /csi-section >}}
-
-{{< csi-split title="AI Agent <span class='csi-grad'>Guardrails</span>" figure="cursor/agent-rules" variant="light" flip="true" >}}
-Because Cursor's engineering team uses Cursor to write Terraform, Masterpoint embedded architectural knowledge directly into the codebase as AI agent skills and rules.
-
-This AI context encodes the decisions that AI models cannot anticipate on their own:
-
-Every IaC optimization Masterpoint delivered was paired with instructions to prevent anti-patterns from being reintroduced.
 
 {{< cs-pullquote name="Ravi Rahman" title="software engineer" company="Cursor" >}}
 The AI agent skills and rules help us build our IaC correctly while at the same time moving faster.
 {{< /cs-pullquote >}}
-{{< /csi-split >}}
+
+Because Cursor's engineering team uses Cursor to write Terraform, Masterpoint embedded architectural knowledge directly into the codebase as AI agent skills and rules.
+
+This AI context encodes the decisions that AI models cannot anticipate on their own:
+
+{{< csi-figure name="cursor/agent-rules" max="760px" >}}
+
+Every IaC optimization Masterpoint delivered was paired with instructions to prevent anti-patterns from being reintroduced.
+{{< /csi-phase >}}
+{{< /csi-phases >}}
+{{< /csi-section >}}
 
 {{< csi-section id="the-results" eyebrow="The Results" title="What Cursor's <span class='csi-grad'>Infrastructure as Code</span> Manages" variant="pine" align="center" >}}
 The Cursor infrastructure today includes:
@@ -218,9 +218,9 @@ rest: of ALB and NLB load balancers
 {{< /csi-scale >}}
 
 In all **40k+** Terraform resources are managed using the new platform. All of this exists in **100+ narrow, independent root modules**, with OpenTofu, on Spacelift, using Okta SSO, stored in S3-backed state, and paired with AI agent rules to keep the architecture clean as the codebase grows.
-{{< /csi-section >}}
 
-{{< csi-section accent="true" title="Numbers That <span class='csi-grad'>Matter</span>" variant="light" align="center" >}}
+### Numbers That Matter
+
 {{< csi-compare >}}
 label: Median plan time (production)
 before: ~8 min
@@ -236,19 +236,23 @@ before: 54
 after: 5
 delta: 91% reduction in blast radius
 {{< /csi-compare >}}
-{{< /csi-section >}}
 
-{{< csi-split title="Plan time went from <span class='csi-grad'>10+ minutes to 2 minutes</span>" media="/img/case-studies/cursor/cursor-dial-gauge.png" media_alt="Terraform plan + apply: 80% of the wait, gone — a typical run dropped from 10+ minutes to a steady 2 minutes per run" variant="pine" contain="true" >}}
+### Plan time went from 10+ minutes to 2 minutes
+
+![Terraform plan + apply: 80% of the wait, gone — a typical run dropped from 10+ minutes to a steady 2 minutes per run](/img/case-studies/cursor/cursor-dial-gauge.png)
+
 The production workspace plan time dropped from over 10+ minutes, with spikes to 15 minutes, during the November baseline to around 2 minutes by mid 2026.
 
 This is an improvement of roughly 75% from where the engagement started, and more than 80% from the pre-engagement peak.
-{{< /csi-split >}}
 
-{{< csi-split title="Deployment frequency <span class='csi-grad'>increased</span>" media="/img/case-studies/cursor/cursor-frequency-stat.png" media_alt="Deployment frequency: 2.6x more PRs shipped — from 194 changes per week in October 2025 to 500+ per week in May 2026" variant="light" flip="true" contain="true" >}}
+### Deployment frequency increased
+
+![Deployment frequency: 2.6x more PRs shipped — from 194 changes per week in October 2025 to 500+ per week in May 2026](/img/case-studies/cursor/cursor-frequency-stat.png)
+
 Weekly merged PRs against infrastructure as code went from approximately 194 per week to over 500 a week, a 157% increase. They've only accelerated since then.
-{{< /csi-split >}}
 
-{{< csi-section accent="true" title="The productivity lift was <span class='csi-grad'>significant</span>" variant="pine" align="center" >}}
+### The productivity lift was significant
+
 This gain wasn't from growing the engineering organization: a controlled same-cohort analysis of 34 engineers active both before and after the Masterpoint engagement found that PR throughput grew by 121%.
 
 {{< csi-compare before_label="Pre-engagement" after_label="End of Engagement" >}}
@@ -262,25 +266,29 @@ before: 5.37 PRs/author/wk
 after: 9.19 PRs/author/wk
 delta: +71%
 {{< /csi-compare >}}
-{{< /csi-section >}}
 
-{{< csi-split title="Infrastructure became <span class='csi-grad'>democratized</span>" media="/img/case-studies/cursor/tf-workspaces-growth.png" media_alt="Terraform root module workspaces: infrastructure, democratized — from 21 workspaces in October 2025 to 141 in May 2026, up 571%" variant="light" contain="true" >}}
+### Infrastructure became democratized
+
+![Terraform root module workspaces: infrastructure, democratized — from 21 workspaces in October 2025 to 141 in May 2026, up 571%](/img/case-studies/cursor/tf-workspaces-growth.png)
+
 Looking beyond the controlled same-cohort set of engineers, 89% of all engineers who work with infrastructure now ship Terraform PRs each month.
 
 Previously, workspace creation required manual ClickOps and admin access. Today, engineers create and manage their own stacks. The number of separately managed modules went from 26 to 100+. Engineers are now creating their own product/domain scoped infrastructure instead of jumbling it in the primary monolithic workspace.
-{{< /csi-split >}}
+{{< /csi-section >}}
 
-{{< csi-split eyebrow="What Changed for the Team" title="Engineers know what an IaC Terraform change <span class='csi-grad'>will touch</span>" media="/img/case-studies/cursor/dependency-graph.png" media_alt="Blast radius, median resources affected: 91% reduction — a median Terraform run once touched 54 resources, now it averages just 5" variant="pine" flip="true" contain="true" >}}
+{{< csi-section accent="true" title="What Changed <span class='csi-grad'>for the Team</span>" variant="light" >}}
+### Engineers know what an IaC Terraform change will touch
+
 Before the engagement, engineers couldn't predict what a change would actually touch in a workspace. A database might live in a workspace named for networking infrastructure, so even finding where something was managed required tribal knowledge. Dependencies between workspaces were just as opaque: touching one piece of infrastructure could ripple into systems that had nothing to do with the change — or surface long-standing drift that did. Plans intended for one system would silently queue in unrelated workspaces, waiting for the next person to find them with no context on where they came from or whether they were safe to apply.
 
 With smaller, focused stacks, plans are scoped to the change at hand. The median Terraform run now touches just 5 resources instead of 54 — a 91% smaller blast radius — so engineers know precisely what a plan will affect before they run it.
 
-{{< cs-pullquote name="Ravi Rahman" title="software engineer" company="Cursor" variant="light" >}}
+![Blast radius, median resources affected: 91% reduction — a median Terraform run once touched 54 resources, now it averages just 5](/img/case-studies/cursor/dependency-graph.png)
+
+{{< cs-pullquote name="Ravi Rahman" title="software engineer" company="Cursor" >}}
 The Terraform experience has gotten way better. For the first time since I've been here, we just merge and apply. If something's wrong, the system lets us know. It's fast and moves at the speed we need.
 {{< /cs-pullquote >}}
-{{< /csi-split >}}
 
-{{< csi-section accent="true" variant="light" >}}
 ### Architectural flexibility enables the business and product delivery
 
 Before the engagement, the terralith made architectural changes expensive and risky. Touching one piece of infrastructure meant disrupting unconnected components.

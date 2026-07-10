@@ -1,0 +1,15 @@
+{{/*
+  csi-figure — embed a CSS-drawn figure partial inline in a section's prose
+  (the standalone sibling of csi-split's `figure=` slot, for consolidated
+  single-card sections where a side-by-side split would leave the figure
+  floating beside a very tall text column).
+  Args:
+    name  figure partial under layouts/partials/case-studies/figures/,
+          e.g. name="cursor/terralith"
+    max   optional max-width (e.g. "720px"); default full prose width
+*/}}
+{{- $name := .Get "name" -}}
+{{- $max := .Get "max" -}}
+<div class="csi-inline-figure"{{ with $max }} style="max-width: {{ . }}"{{ end }} data-aos="fade-up" data-aos-duration="600">
+  {{ partial (printf "case-studies/figures/%s.html" $name) . }}
+</div>

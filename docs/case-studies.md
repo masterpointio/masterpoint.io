@@ -254,6 +254,7 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 | `csi-compare`     | "Then / now" migration ledger: muted old world → bold gradient new world per metric. Owns a page's hard numbers — pair with a slimmed `csi-impact` so figures aren't stated twice. Mobile stacks each row with per-cell tags. INSIDE a `csi-section` (or a `csi-phase` — there it hugs the rail column and renders denser). | `before_label`, `after_label`; inner blocks split by `---`, each `label:` / `before:` / `after:` / optional `delta:` (gradient improvement pill under the after value, e.g. "39.3% faster"; the pill sets its own white `-webkit-text-fill-color` to opt back out of the after-cell's gradient text-clip) |
 | `csi-phases` + `csi-phase` | Vertical engagement-journey rail: one continuous gradient rail down the left (a `::before`, so it intentionally drops out of print), a gradient dot + date chip + phase title per node, full block-markdown bodies (paragraphs, lists, links, nested `csi-compare` ledgers all work). Built for dated multi-month engagement stories where a `csi-steps` grid is too small to hold real narrative. Wrap the `csi-phase` blocks in one `csi-phases`; INSIDE a `csi-section` (typically pine). | `csi-phases` takes no args; each `csi-phase`: `date` (chip, e.g. "November 2025"), `title` |
 | `csi-scale`       | Type-specimen "magnitude wall": each row leads with a huge gradient magnitude phrase ("hundreds", "thousands") followed by the rest of the sentence at prose size — for enumerating what a platform manages when the magnitudes ARE the story. The big run carries `.csi-grad`, so dark-face recolouring and the print solid-colour fallback come for free. INSIDE a `csi-section`. | inner blocks split by `---`, each `pre:` (optional lead-in, e.g. "in the") / `big:` / `rest:` |
+| `csi-figure`      | Embed a CSS-drawn figure partial inline in a section's prose — the standalone sibling of `csi-split`'s `figure=` slot, for consolidated single-card sections where a side-by-side split would leave the figure floating beside a very tall text column. | `name` (partial under `figures/`, e.g. `cursor/terralith`), `max` (optional max-width, e.g. `760px`) |
 | `csi-timeline`    | Horizontal parallel-track cutover bars (old system winding down while the new ramps up): percent-positioned bars with `fade: out` / `fade: in` and an optional dashed cutover marker. Typically right after `csi-steps`. INSIDE a `csi-section`. | `marker` (percent 0–100), `marker_label`; inner blocks split by `---`, each `label:` / `note:` / `start:` / `end:` / `fade:` |
 | `csi-questions`   | Takeaways row of compact numbered question cards (gradient numeral inline with the question), plus an optional `outro:` "verdict" panel (leading `**bold**` renders as a block gradient lead line) and optional `cta:` paragraph divided inside the same panel. Sections containing one auto-compact like `csi-list` ones. 3-up, stacks ≤860px. INSIDE a `csi-section`. | inner blocks split by `---`, each `question:` / `body:`; standalone blocks may carry `outro:` or `cta:` (inline markdown works) |
 | `csi-list`        | Compact 2-col icon rows (icon chip + bold title — inline body). Space-saving sibling of `csi-impact` for secondary enumerations (e.g. "under the hood" extras) so they don't mimic the outcome grid. INSIDE a `csi-section`. | same inner format as `csi-impact` (`icon:` / `title:` / `body:`); keep bodies to one short sentence |
@@ -402,12 +403,23 @@ active-link underline INSIDE the link box — the links row is
 
 ### Cursor page notes
 
+- **One card per chapter** (per the content owner's "fewer sections" feedback
+  and this doc's future-case-study direction): TLDR band → Key Value Delivered
+  → The Problem → What Masterpoint Did → The Results → What Changed for the
+  Team → testimonial → CTA, strictly alternating light ↔ pine. Sub-reads
+  inside the big cards are `###` prose subheads; the AI-guardrails content
+  lives inside the rail's February–May phase (where the Notion draft has it),
+  not in its own section.
+- **Charts sit inline in the prose flow** (`.csi-prose img`: block, rounded,
+  shadowed, `break-inside: avoid` in print; a hairline border on pine faces so
+  pine-on-pine exports keep an edge) rather than in `csi-split` media columns.
+  CSS figures embed the same way via `csi-figure`.
 - **All charts are branded exports from the Notion draft** (Cursor ×
   Masterpoint lockup baked in), sized to 1800px wide. Each Notion "duplicate
   pair" contributed ONE in-page image; the spare white-background deploy-time
   column chart became `preview_image`/`og_img` instead of appearing twice.
   Dark-background charts sit on pine bands (near-seamless), white-background
-  charts on light bands — every `csi-split` chart uses `contain="true"`.
+  charts on light bands.
 - **Client logo is the official brand-kit horizontal lockup SVG**
   (`cursor-lockup-white.svg`, the kit's `_DARK` = off-white #edecec variant)
   at `client_logo_height: 30px`.
