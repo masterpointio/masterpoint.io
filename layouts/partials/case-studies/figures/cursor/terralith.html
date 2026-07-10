@@ -1,0 +1,30 @@
+{{/* Cursor terralith figure — CSS-drawn (no image asset): the monolithic
+production workspace as one over-stuffed state file, drawn as an editor-style
+file window (a nod to the Cursor IDE) with drift noise scattered through the
+resource grid and friction tags beneath. Rendered in a csi-split media slot via
+`figure="cursor/terralith"`. Drawn with REAL elements (print drops
+::before/::after background-image), and styled for the PINE face it lives on. */}}
+<div
+  class="csi-fig csi-fig--cursor-terralith"
+  role="img"
+  aria-label="Diagram: one monolithic production workspace holding over 7,000 resources in a single state file, with drift scattered throughout"
+>
+  <div class="csi-fig-cterra__window" aria-hidden="true">
+    <div class="csi-fig-cterra__bar">
+      <span class="csi-fig-cterra__dot"></span><span class="csi-fig-cterra__dot"></span><span class="csi-fig-cterra__dot"></span>
+      <span class="csi-fig-cterra__file">production.tfstate</span>
+    </div>
+    <div class="csi-fig-cterra__cells">
+      {{- range seq 96 }}<i></i>{{ end -}}
+    </div>
+    <div class="csi-fig-cterra__status">
+      <strong>The terralith</strong>
+      <span>a single monolithic production workspace &middot; over 7,000 resources &middot; one state file</span>
+    </div>
+  </div>
+  <div class="csi-fig-cterra__tags" aria-hidden="true">
+    <span class="csi-fig-cterra__tag">constant drift</span>
+    <span class="csi-fig-cterra__tag">spikes of 10+ minutes</span>
+    <span class="csi-fig-cterra__tag">120 ECS service changes</span>
+  </div>
+</div>

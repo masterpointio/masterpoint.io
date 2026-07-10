@@ -1,0 +1,27 @@
+{{/*
+  csi-editor — an editor-window panel that renders each inner line as a
+  numbered "rule" row: stylized window chrome (dots + filename tab), CSS
+  counter line numbers, dark panel on ANY card face. Built for AI-agent-rules
+  content where the rules ARE the deliverable — the text sits inside the same
+  kind of window the engineers see them in. Place INSIDE a csi-section.
+  Args:
+    filename   tab label (default ".cursor/rules")
+  Inner: ONE rule per line — inline markdown works; blank lines are skipped.
+*/}}
+{{- $filename := .Get "filename" | default ".cursor/rules" -}}
+{{- $raw := .Inner -}}
+{{- $lines := split $raw "\n" -}}
+<div class="csi-editor" data-aos="fade-up" data-aos-duration="600" role="figure" aria-label="AI agent rules embedded in the codebase">
+  <div class="csi-editor__chrome" aria-hidden="true">
+    <span class="csi-editor__light"></span><span class="csi-editor__light"></span><span class="csi-editor__light"></span>
+    <span class="csi-editor__tab">{{ $filename }}</span>
+  </div>
+  <ol class="csi-editor__lines">
+    {{- range $lines -}}
+      {{- $line := trim . " \t" -}}
+      {{- if $line -}}
+        <li class="csi-editor__line">{{ $line | $.Page.RenderString (dict "display" "inline") }}</li>
+      {{- end -}}
+    {{- end -}}
+  </ol>
+</div>

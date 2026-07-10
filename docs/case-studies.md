@@ -24,11 +24,11 @@ July 2026 once Power Digital, its last user, was rebuilt on immersive.)
 | Layout        | Template                              | Used by                                                 | Body class                          | Style prefix            |
 | ------------- | ------------------------------------- | ------------------------------------------------------- | ----------------------------------- | ----------------------- |
 | **Modern**    | `layouts/case-studies/single.html`    | Default for any case study without a `layout:` override | `case-study-modern`                 | `.case-study-modern`    |
-| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark, Power Digital (opt-in via `layout: immersive`) | `case-study-modern case-study-immersive` | `.case-study-immersive` |
+| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark, Power Digital, Cursor (opt-in via `layout: immersive`) | `case-study-modern case-study-immersive` | `.case-study-immersive` |
 
 Routing is via Hugo's `layout:` front matter param. A case study that does
-**not** specify `layout:` uses `single.html` (the modern layout). MarketSpark
-and Power Digital opt into immersive with `layout: immersive`.
+**not** specify `layout:` uses `single.html` (the modern layout). MarketSpark,
+Power Digital, and Cursor opt into immersive with `layout: immersive`.
 
 The **modern**
 layout was designed from scratch and is the default for new case studies. The
@@ -153,12 +153,26 @@ All shortcodes are in `layouts/shortcodes/cs-*.html` and styled under
 - **New shortcode files in `layouts/shortcodes/` are not picked up by a
   running `hugo serve`.** Restart serve after creating a new shortcode
   template. Modifying an existing one hot-reloads fine.
-- **`<ul>`-based shortcodes inside `.csi-prose` must join the prose list-rule
-  `:not()` chains** (`ul:not(.csi-list):not(…)`) or they inherit gradient
-  bullets — and must then reset `list-style`/margins themselves.
+- **`<ul>`/`<ol>`-based shortcodes inside `.csi-prose` must join the prose
+  list-rule `:not()` chains** (`ul:not(.csi-list):not(.csi-compare__rows):not(.csi-scale)`
+  and `ol:not(.csi-phases):not(.csi-editor__lines)`) or they inherit gradient
+  bullets / numbered circles — and must then reset `list-style`/margins
+  themselves. The chains exist in TWO places: the base `.csi-prose` rules AND
+  the dark-face override (`&--pine … ul > li::before` / `ol > li::before`) —
+  the mint counter chips painting over `csi-editor` line numbers came from
+  missing the second one.
 - **CSS-drawn figures beat images for diagrams** (`csi-split figure="…"` →
   `figures/<name>.html`: inherits fonts, recolours per face, prints crisp) —
   but draw with REAL elements; print drops `::before/::after` `background-image`.
+  Existing figures: `power-digital/terralith` (mono → stacks decomposition) and
+  `cursor/terralith` (the monolith as an over-stuffed `production.tfstate`
+  editor window with drift-noise cells + friction tags; pine-face only).
+- **`cs-pullquote` two-line attribution on the light variant** — `--light`
+  restates `__name` (pine) and `__role` (teal): they default to white/mint for
+  the dark card, and the name was invisible on the cream face before this.
+- **The immersive CTA (`callout:`) may carry a `<ul>`** — `.csi-cta ul` styles
+  it as a centred block with left-aligned gradient-square bullets (used by
+  Cursor's "Terraform ceilings" closing CTA).
 - **The TOC reads `.Fragments`, not `.TableOfContents`.** `.TableOfContents`
   is empty when read from inside a _shortcode_ (it isn't built until after the
   goldmark pass), which is the original reason the TOC moved to a layout-stage
@@ -202,7 +216,7 @@ mint on mint and disappears. Always keep `:not(.button)` on `.cs-article a`.
 
 ---
 
-## Immersive layout (MarketSpark, Power Digital)
+## Immersive layout (MarketSpark, Power Digital, Cursor)
 
 Opt in with `layout: immersive`. The body element carries **both**
 `case-study-modern` and `case-study-immersive`:
@@ -238,11 +252,15 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 | `csi-split`       | Text + visual side-by-side; `flip="true"` alternates sides.    | `eyebrow`, `title`, `media`, `media_alt`, `media2`/`media2_alt` (second image stacked below the first), `figure` (CSS-drawn figure partial from `figures/<name>.html` instead of an image; subfolders work — `figure="power-digital/terralith"`), `flip`, `contain`, `caption`, `variant`, `ratio` (`50-50` default / `65-35` / `75-25`, text wider; ratios auto-reverse under `flip` since flip puts the media in the first grid track via `order`) |
 | `csi-steps`       | Numbered process cards. Place INSIDE a `csi-section`.          | inner blocks split by `---`, each `title:` / `body:`                                  |
 | `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`; `cols="2"` for a slimmed 2-up grid (pairs with `csi-compare`, capped to the same 980px) |
-| `csi-compare`     | "Then / now" migration ledger: muted old world → bold gradient new world per metric. Owns a page's hard numbers — pair with a slimmed `csi-impact` so figures aren't stated twice. Mobile stacks each row with per-cell tags. INSIDE a `csi-section`. | `before_label`, `after_label`; inner blocks split by `---`, each `label:` / `before:` / `after:` |
+| `csi-compare`     | "Then / now" migration ledger: muted old world → bold gradient new world per metric. Owns a page's hard numbers — pair with a slimmed `csi-impact` so figures aren't stated twice. Mobile stacks each row with per-cell tags. INSIDE a `csi-section`. | `before_label`, `after_label`; inner blocks split by `---`, each `label:` / `before:` / `after:` / optional `delta:` (a source table's "Change" column as a gradient pill after the new value — solid dark text on a gradient chip, with its own print exception so it doesn't inherit the `__after` teal fallback) |
 | `csi-timeline`    | Horizontal parallel-track cutover bars (old system winding down while the new ramps up): percent-positioned bars with `fade: out` / `fade: in` and an optional dashed cutover marker. Typically right after `csi-steps`. INSIDE a `csi-section`. | `marker` (percent 0–100), `marker_label`; inner blocks split by `---`, each `label:` / `note:` / `start:` / `end:` / `fade:` |
 | `csi-questions`   | Takeaways row of compact numbered question cards (gradient numeral inline with the question), plus an optional `outro:` "verdict" panel (leading `**bold**` renders as a block gradient lead line) and optional `cta:` paragraph divided inside the same panel. Sections containing one auto-compact like `csi-list` ones. 3-up, stacks ≤860px. INSIDE a `csi-section`. | inner blocks split by `---`, each `question:` / `body:`; standalone blocks may carry `outro:` or `cta:` (inline markdown works) |
 | `csi-list`        | Compact 2-col icon rows (icon chip + bold title — inline body). Space-saving sibling of `csi-impact` for secondary enumerations (e.g. "under the hood" extras) so they don't mimic the outcome grid. INSIDE a `csi-section`. | same inner format as `csi-impact` (`icon:` / `title:` / `body:`); keep bodies to one short sentence |
 | `csi-testimonial` | Editorial quote band; `image=` makes it a featured cosmic band.| `name`, `title`, `company`, `photo`, `variant`, `image`, `tldr` (`"true"` → unattributed page-top summary: no quote mark, slim band, left-aligned text bare on the band with a vertical gradient bar; `**bold**` renders in the bright gradient). With `photo`, uses the avatar-left "portrait" layout (`csi-testimonial--portrait`, see below). |
+| `csi-phases`      | Engagement roadmap rail: numbered stops (gradient `csi-grad` numeral + REAL-element rail segment, so both print) with a date + phase name. An overview element — each stop pairs with a full phase card below (eyebrow `Phase 0N · <date>`). 4-up, single column ≤900px. INSIDE a `csi-section` (Cursor: "What Masterpoint Did"). | inner blocks split by `---`, each `date:` / `title:` |
+| `csi-scale`       | Order-of-magnitude inventory strip: gradient magnitude word ("hundreds", "thousands") left, what it counts right. The qualitative sibling of `csi-compare` — compare owns exact before/after figures, this owns "how big is the estate today". Recolours per face; stacks ≤640px. INSIDE a `csi-section`. | inner blocks split by `---`, each `value:` / `label:` |
+| `csi-callout`     | Inset spotlight panel: tinted card + gradient left bar + optional uppercase chip. For load-bearing asides that aren't quotes (`cs-pullquote` stays reserved for quotes) — e.g. Cursor's pilot-stack spotlight. Works on both faces. INSIDE a `csi-section`. | `label` (optional chip); inner is block markdown |
+| `csi-editor`      | Editor-window "rules" panel: stylized chrome (dots + filename tab) + one numbered row per inner LINE (CSS-counter numbers are `::before` *content*, so they print). Deliberately a dark panel on every face — reads as a code window, not a card. Built for AI-agent-rules content (Cursor's `.cursor/rules`). INSIDE a `csi-section`. | `filename` (tab label, default `.cursor/rules`); inner = one rule per line, inline markdown works, blank lines skipped |
 
 Two **modern** shortcodes are also reused inside the immersive body (they render
 because the body also carries `case-study-modern`, so `.case-study-modern .cs-*`

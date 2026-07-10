@@ -1,0 +1,13 @@
+{{/*
+  csi-callout — inset spotlight panel inside a section's prose: tinted card
+  with a gradient left bar and an optional small uppercase chip. For a
+  load-bearing aside that isn't a quote (e.g. a pilot-project spotlight) —
+  cs-pullquote stays reserved for actual quotes. Place INSIDE a csi-section.
+  Args:
+    label   optional chip text above the body (e.g. "Pilot")
+  Inner: block markdown.
+*/}}
+<aside class="csi-callout">
+  {{- with .Get "label" -}}<span class="csi-callout__chip">{{ . | safeHTML }}</span>{{- end -}}
+  <div class="csi-callout__body">{{ .Inner | $.Page.RenderString (dict "display" "block") }}</div>
+</aside>

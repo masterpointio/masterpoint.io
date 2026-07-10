@@ -1,0 +1,37 @@
+{{/*
+  csi-scale — order-of-magnitude inventory strip: each row leads with the
+  magnitude ("hundreds", "thousands", "40k+") in gradient display type,
+  followed by what it counts. For scale inventories where the numbers are
+  deliberately qualitative — a csi-compare owns exact before/after figures,
+  this owns "how big is this thing today". Place INSIDE a csi-section.
+  Inner: blocks separated by `---`, each block:
+    value: hundreds
+    label: of ECS services with tens of thousands of live running tasks
+           (inline markdown works in both)
+*/}}
+{{- $raw := .Inner -}}
+{{- $blocks := split $raw "---" -}}
+<ul class="csi-scale" data-aos="fade-up" data-aos-duration="600">
+  {{- range $blocks -}}
+    {{- $block := trim . " \t\n" -}}
+    {{- if $block -}}
+      {{- $lines := split $block "\n" -}}
+      {{- $value := "" -}}
+      {{- $label := "" -}}
+      {{- range $lines -}}
+        {{- $line := trim . " \t" -}}
+        {{- if hasPrefix $line "value:" -}}
+          {{- $value = trim (strings.TrimPrefix "value:" $line) " " -}}
+        {{- else if hasPrefix $line "label:" -}}
+          {{- $label = trim (strings.TrimPrefix "label:" $line) " " -}}
+        {{- else if and $line $label -}}
+          {{- $label = printf "%s %s" $label $line -}}
+        {{- end -}}
+      {{- end -}}
+      <li class="csi-scale__item">
+        <span class="csi-scale__value">{{ $value | $.Page.RenderString (dict "display" "inline") }}</span>
+        <span class="csi-scale__label">{{ $label | $.Page.RenderString (dict "display" "inline") }}</span>
+      </li>
+    {{- end -}}
+  {{- end -}}
+</ul>

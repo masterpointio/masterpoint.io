@@ -1,0 +1,41 @@
+{{/*
+  csi-phases — engagement roadmap rail: the month-by-month arc of an
+  engagement rendered as numbered stops along a gradient rail. Place INSIDE a
+  csi-section (typically the "What Masterpoint Did" intro card) as an overview;
+  each stop pairs with a full phase card further down the page. 4-up on
+  desktop, stacks to a single column on mobile. The rail segments are REAL
+  elements (not pseudo backgrounds) so they survive print.
+  Inner: blocks separated by `---`, each block:
+    date: November 2025            (small uppercase label above the name)
+    title: Audit and High Leverage Fixes
+*/}}
+{{- $raw := .Inner -}}
+{{- $blocks := split $raw "---" -}}
+{{- $n := 0 -}}
+<ol class="csi-phases" data-aos="fade-up" data-aos-duration="600">
+  {{- range $blocks -}}
+    {{- $block := trim . " \t\n" -}}
+    {{- if $block -}}
+      {{- $n = add $n 1 -}}
+      {{- $lines := split $block "\n" -}}
+      {{- $date := "" -}}
+      {{- $title := "" -}}
+      {{- range $lines -}}
+        {{- $line := trim . " \t" -}}
+        {{- if hasPrefix $line "date:" -}}
+          {{- $date = trim (strings.TrimPrefix "date:" $line) " " -}}
+        {{- else if hasPrefix $line "title:" -}}
+          {{- $title = trim (strings.TrimPrefix "title:" $line) " " -}}
+        {{- end -}}
+      {{- end -}}
+      <li class="csi-phase">
+        <span class="csi-phase__marker" aria-hidden="true">
+          <span class="csi-phase__num csi-grad">{{ printf "%02d" $n }}</span>
+          <i class="csi-phase__line"></i>
+        </span>
+        {{- with $date -}}<span class="csi-phase__date">{{ . | safeHTML }}</span>{{- end -}}
+        <strong class="csi-phase__name">{{ $title | safeHTML }}</strong>
+      </li>
+    {{- end -}}
+  {{- end -}}
+</ol>

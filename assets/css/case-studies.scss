@@ -1210,6 +1210,14 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
         text-transform: uppercase;
         font-size: 0.78rem;
       }
+      // two-line name/role attribution (name defaults to white for the dark
+      // card — restate it in pine so it reads on the light face)
+      .cs-pullquote__name {
+        color: $pine;
+      }
+      .cs-pullquote__role {
+        color: #0b7d72; // $csi-link is defined further down (immersive scope)
+      }
     }
   }
 
@@ -1534,10 +1542,10 @@ html:has(.cs-sticky-nav) {
         strong {
           color: #fff;
         }
-        ul > li::before {
+        ul:not(.csi-scale) > li::before {
           @include csi-grad-solid;
         }
-        ol > li::before {
+        ol:not(.csi-phases):not(.csi-editor__lines) > li::before {
           color: $cs-pine-dark;
           background: $cs-mint;
         }
@@ -1767,16 +1775,18 @@ html:has(.cs-sticky-nav) {
       color: $csi-ink;
       font-weight: 800;
     }
-    // `:not(.csi-list):not(.csi-compare__rows)` — those uls carry their own
-    // grid/ledger layout; keep the prose bullet/spacing treatment off them
-    ul:not(.csi-list):not(.csi-compare__rows),
-    ol {
+    // `:not(.csi-list):not(.csi-compare__rows):not(.csi-scale)` (and the ol
+    // equivalents) — those lists carry their own grid/ledger layout; keep the
+    // prose bullet/spacing treatment off them. Any NEW ul/ol-based shortcode
+    // must join these chains or it inherits gradient bullets.
+    ul:not(.csi-list):not(.csi-compare__rows):not(.csi-scale),
+    ol:not(.csi-phases):not(.csi-editor__lines) {
       margin: 0 0 1.3rem;
       padding: 0;
       list-style: none;
     }
-    ul:not(.csi-list):not(.csi-compare__rows) > li,
-    ol > li {
+    ul:not(.csi-list):not(.csi-compare__rows):not(.csi-scale) > li,
+    ol:not(.csi-phases):not(.csi-editor__lines) > li {
       position: relative;
       padding-left: 1.75rem;
       margin-bottom: 0.7rem;
@@ -1785,7 +1795,7 @@ html:has(.cs-sticky-nav) {
         content: none;
       }
     }
-    ul:not(.csi-list):not(.csi-compare__rows) > li::before {
+    ul:not(.csi-list):not(.csi-compare__rows):not(.csi-scale) > li::before {
       content: "";
       position: absolute;
       left: 0;
@@ -1795,10 +1805,10 @@ html:has(.cs-sticky-nav) {
       border-radius: 2px;
       @include csi-grad-solid;
     }
-    ol {
+    ol:not(.csi-phases):not(.csi-editor__lines) {
       counter-reset: csi-ol;
     }
-    ol > li::before {
+    ol:not(.csi-phases):not(.csi-editor__lines) > li::before {
       counter-increment: csi-ol;
       content: counter(csi-ol);
       position: absolute;
@@ -2980,6 +2990,425 @@ html:has(.cs-sticky-nav) {
     .button {
       margin: 0;
     }
+    // custom CTA bullet list (e.g. Cursor's "Terraform ceilings" callout) —
+    // centred band, left-aligned list, gradient square bullets (the pseudo bg
+    // is dropped in print; the list still reads)
+    ul {
+      list-style: none;
+      display: inline-block;
+      margin: 1.1rem auto 1.2rem;
+      padding: 0;
+      text-align: left;
+      li {
+        position: relative;
+        padding-left: 1.35rem;
+        margin: 0.5rem 0;
+        font-size: 1.05rem;
+        line-height: 1.55;
+        color: #d3e2e1;
+        &::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0.5em;
+          width: 9px;
+          height: 9px;
+          border-radius: 3px;
+          @include csi-grad-solid;
+        }
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // PHASES — engagement roadmap rail (csi-phases): the month-by-month arc of
+  // an engagement as numbered stops along a gradient rail. The numeral is real
+  // text with `.csi-grad` (auto face recolour + print fallback) and the rail
+  // segment is a REAL element (not a pseudo background) so it prints.
+  // 4-up on desktop, single column ≤900px.
+  // ---------------------------------------------------------------------------
+  .csi-phases {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0 1.2rem;
+    max-width: 1120px;
+    margin: 2.5rem auto 0;
+    padding: 0;
+    text-align: left;
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+      gap: 1.6rem 0;
+      max-width: 480px;
+    }
+  }
+  .csi-phase {
+    &__marker {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 0.9rem;
+    }
+    &__num {
+      font-family: $header-font;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+    &__line {
+      flex: 1 1 auto;
+      height: 2px;
+      border-radius: 1px;
+      @include csi-grad-solid;
+      opacity: 0.45;
+    }
+    &__date {
+      display: block;
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: $csi-link;
+      margin-bottom: 0.35rem;
+    }
+    &__name {
+      display: block;
+      font-family: $header-font;
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: $csi-ink;
+    }
+  }
+  .csi-section--pine,
+  .csi-section--pine-deep,
+  .csi-section--gradient {
+    .csi-phase__date {
+      color: $cs-mint;
+    }
+    .csi-phase__name {
+      color: #fff;
+    }
+    .csi-phase__line {
+      opacity: 0.6;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // SCALE — order-of-magnitude inventory strip (csi-scale): gradient magnitude
+  // word on the left, what it counts on the right. The qualitative sibling of
+  // the csi-compare ledger — compare owns exact before/after figures, this
+  // owns "how big is the estate today". Recolours per face.
+  // ---------------------------------------------------------------------------
+  .csi-scale {
+    list-style: none;
+    max-width: 860px;
+    margin: 2rem auto 0;
+    padding: 0;
+  }
+  .csi-scale__item {
+    display: grid;
+    grid-template-columns: minmax(0, 0.44fr) minmax(0, 1fr);
+    align-items: baseline;
+    column-gap: 1.5rem;
+    padding: 0.9rem 0;
+    text-align: left;
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
+      row-gap: 0.15rem;
+      padding: 0.8rem 0;
+    }
+  }
+  .csi-scale__item + .csi-scale__item {
+    border-top: 1px solid $csi-line;
+  }
+  .csi-scale__value {
+    font-family: $header-font;
+    font-size: 1.85rem;
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    text-align: right;
+    @include csi-grad-light;
+    @media (max-width: 640px) {
+      text-align: left;
+      font-size: 1.55rem;
+    }
+  }
+  .csi-scale__label {
+    font-size: 1.02rem;
+    line-height: 1.55;
+    color: $csi-ink-soft;
+  }
+  .csi-section--pine,
+  .csi-section--pine-deep,
+  .csi-section--gradient {
+    .csi-scale__value {
+      @include csi-grad-bright;
+    }
+    .csi-scale__label {
+      color: #c4d4d3;
+    }
+  }
+  .csi-section--pine .csi-scale__item + .csi-scale__item,
+  .csi-section--pine-deep .csi-scale__item + .csi-scale__item,
+  .csi-section--gradient .csi-scale__item + .csi-scale__item {
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+
+  // ---------------------------------------------------------------------------
+  // CALLOUT — inset spotlight panel (csi-callout): tinted card, gradient left
+  // bar, optional uppercase chip. For load-bearing asides that aren't quotes
+  // (cs-pullquote stays reserved for quotes). The left bar is a pseudo
+  // (decorative — print drops it); the border + tint keep the panel legible
+  // in the PDF.
+  // ---------------------------------------------------------------------------
+  .csi-callout {
+    position: relative;
+    max-width: 860px;
+    margin: 1.9rem auto;
+    padding: 1.35rem 1.7rem 1.35rem 1.95rem;
+    background: linear-gradient(135deg, rgba(42, 217, 194, 0.09), rgba(209, 145, 191, 0.08));
+    border: 1px solid rgba(42, 217, 194, 0.28);
+    border-radius: 14px;
+    overflow: hidden;
+    text-align: left;
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      @include csi-grad-solid;
+    }
+    &__chip {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.65rem;
+      border-radius: 999px;
+      @include csi-grad-solid;
+      color: #06201f;
+      margin-bottom: 0.7rem;
+    }
+  }
+  .csi-callout__body p {
+    margin: 0;
+    font-size: 1.02rem;
+    line-height: 1.65;
+  }
+  .csi-callout__body p + p {
+    margin-top: 0.7rem;
+  }
+  .csi-section--pine,
+  .csi-section--pine-deep,
+  .csi-section--gradient {
+    .csi-callout__body p {
+      color: #d3e2e1;
+      strong {
+        color: #fff;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // EDITOR — csi-editor rules panel: stylized editor window (chrome dots +
+  // filename tab + CSS-counter line numbers). Deliberately a DARK panel on
+  // every face — it reads as a code window, not a card, so no face overrides.
+  // Line numbers are ::before *content* (text survives print; only pseudo
+  // background-image is dropped).
+  // ---------------------------------------------------------------------------
+  .csi-editor {
+    max-width: 860px;
+    margin: 2rem auto 0;
+    background: $cs-pine-dark;
+    border: 1px solid rgba(42, 217, 194, 0.24);
+    border-radius: 14px;
+    overflow: hidden;
+    text-align: left;
+    box-shadow: 0 26px 54px -34px rgba(0, 0, 0, 0.55);
+    &__chrome {
+      display: flex;
+      align-items: center;
+      gap: 0.42rem;
+      padding: 0.7rem 1rem;
+      background: rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    &__light {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.16);
+    }
+    &__tab {
+      margin-left: 0.7rem;
+      font-family: "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.03em;
+      color: #8fd9cd;
+      padding: 0.26rem 0.7rem;
+      background: rgba(42, 217, 194, 0.1);
+      border: 1px solid rgba(42, 217, 194, 0.25);
+      border-radius: 7px;
+    }
+    &__lines {
+      list-style: none;
+      margin: 0;
+      padding: 0.85rem 0;
+      counter-reset: csi-editor-line;
+    }
+    &__line {
+      counter-increment: csi-editor-line;
+      position: relative;
+      padding: 0.42rem 1.4rem 0.42rem 3.6rem;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: #c9dad9;
+      &:nth-child(odd) {
+        background: rgba(255, 255, 255, 0.025);
+      }
+      &::before {
+        content: counter(csi-editor-line, decimal-leading-zero);
+        position: absolute;
+        left: 1.1rem;
+        top: 0.56rem;
+        font-family: "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.04em;
+        color: rgba(143, 217, 205, 0.55);
+      }
+      a:not(.button) {
+        color: $cs-mint;
+      }
+      strong {
+        color: #fff;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // FIGURE — CURSOR TERRALITH (csi-split figure="cursor/terralith"). The
+  // monolithic production workspace drawn as an over-stuffed editor-style
+  // state-file window (nod to the Cursor IDE) with drift noise in the cell
+  // grid and friction tags beneath. Drawn with REAL elements; styled for the
+  // PINE face it lives on (the challenge split) — no light-face variant.
+  // ---------------------------------------------------------------------------
+  .csi-fig--cursor-terralith {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    width: 100%;
+  }
+  .csi-fig-cterra__window {
+    background: $cs-pine-dark;
+    border: 1px solid rgba(42, 217, 194, 0.24);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 26px 54px -30px rgba(0, 0, 0, 0.6);
+  }
+  .csi-fig-cterra__bar {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 0.95rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .csi-fig-cterra__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.16);
+  }
+  .csi-fig-cterra__file {
+    margin-left: 0.55rem;
+    font-family: "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.03em;
+    color: #8fd9cd;
+  }
+  .csi-fig-cterra__cells {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 4px;
+    padding: 1rem;
+    i {
+      display: block;
+      aspect-ratio: 1;
+      border-radius: 2.5px;
+      background: rgba(42, 217, 194, 0.14);
+      &:nth-child(4n) {
+        background: rgba(42, 217, 194, 0.24);
+      }
+      // drift noise — scattered off-pattern pink cells
+      &:nth-child(7n) {
+        background: rgba(209, 145, 191, 0.42);
+      }
+      &:nth-child(23n) {
+        background: rgba(209, 145, 191, 0.75);
+      }
+    }
+  }
+  .csi-fig-cterra__status {
+    padding: 0.8rem 1rem 0.95rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    strong {
+      display: block;
+      font-family: $header-font;
+      font-size: 0.95rem;
+      color: #fff;
+    }
+    span {
+      font-size: 0.78rem;
+      line-height: 1.5;
+      color: #9fb6b5;
+    }
+  }
+  .csi-fig-cterra__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  .csi-fig-cterra__tag {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid rgba(209, 145, 191, 0.45);
+    color: #e8c9de;
+    background: rgba(209, 145, 191, 0.12);
+  }
+
+  // ---------------------------------------------------------------------------
+  // COMPARE — delta pill (`delta:` inner field): the "Change" column of a
+  // source table as a gradient chip after the new-world value. The pill resets
+  // the clip that csi-compare__after puts on its text (the gradient there is
+  // background-clipped) so the chip keeps solid dark text on a gradient bg —
+  // element backgrounds (not pseudo) survive print.
+  // ---------------------------------------------------------------------------
+  .csi-compare__delta {
+    display: inline-block;
+    margin: 0.28rem 0 0 0.4rem;
+    padding: 0.16rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.35;
+    vertical-align: middle;
+    @include csi-grad-solid;
+    -webkit-background-clip: border-box;
+    background-clip: border-box;
+    color: #06201f;
+    -webkit-text-fill-color: #06201f;
   }
 }
 
@@ -3075,6 +3504,7 @@ html:has(.cs-sticky-nav) {
     .csi-questions__outro-main strong,
     .csi-compare__col--after,
     .csi-compare__after,
+    .csi-scale__value,
     .cs-hero__title .text-gradient {
       background: none !important;
       -webkit-background-clip: border-box !important;
@@ -3120,8 +3550,21 @@ html:has(.cs-sticky-nav) {
     .csi-fig-terralith__mono,
     .csi-fig-terralith__stack,
     .csi-timeline,
-    .csi-question {
+    .csi-question,
+    .csi-phase,
+    .csi-scale__item,
+    .csi-callout,
+    .csi-editor,
+    .csi-fig-cterra__window,
+    .csi-list__item {
       break-inside: avoid;
+    }
+
+    // the compare delta pill keeps solid dark text on its gradient chip (it is
+    // NOT clipped text) — undo the __after solid-teal fallback it would inherit
+    .csi-compare__delta {
+      -webkit-text-fill-color: #06201f !important;
+      color: #06201f !important;
     }
   }
 }
