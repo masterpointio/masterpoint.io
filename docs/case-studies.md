@@ -312,6 +312,13 @@ Notable args:
   prose. Grids (`csi-steps`/`csi-impact`/`csi-list`) inside stay full-width with
   their card text left-aligned (the `--center` rule constrains only `> p`, not
   the grids).
+- **Default (left) sections render as a centred ARTICLE COLUMN** — head +
+  prose block centred at 880px with text left-aligned (`.csi-section--left`
+  rule). Without it, the 760px prose column hugs the left edge of the wide
+  band and the card looks lopsided. MarketSpark and Power Digital are
+  unaffected (they pass `align="center"` on every section); Cursor's
+  consolidated Problem / Work / What-Changed cards are the first `--left`
+  users.
 - **`accent="true"`** (csi-section) — renders just the gradient line accent
   instead of an eyebrow (omit `eyebrow=`). Used on "Built so the team could own it".
 - **Compact band is automatic with `csi-list`** — a `csi-section` containing a

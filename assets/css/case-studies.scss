@@ -1585,6 +1585,21 @@ html:has(.cs-sticky-nav) {
       }
     }
 
+    // ---- LEFT-aligned sections (the consolidated one-card-per-chapter
+    //      pages): the content reads as a centred ARTICLE COLUMN — block
+    //      centred, text left-aligned — rather than a 760px column hugging
+    //      the left edge of a wide band. Safe to define globally: MarketSpark
+    //      and Power Digital pass align="center" on every csi-section, so
+    //      --left only occurs on the consolidated pages (Cursor).
+    &--left {
+      .csi-section__head,
+      .csi-prose {
+        max-width: 880px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
     // ---- COMPACT band — applied automatically to any section containing a
     //      csi-list or csi-questions (no opt-in arg): same content, less
     //      vertical real estate. Tighter padding, smaller head, denser prose
