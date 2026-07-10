@@ -24,11 +24,13 @@ July 2026 once Power Digital, its last user, was rebuilt on immersive.)
 | Layout        | Template                              | Used by                                                 | Body class                          | Style prefix            |
 | ------------- | ------------------------------------- | ------------------------------------------------------- | ----------------------------------- | ----------------------- |
 | **Modern**    | `layouts/case-studies/single.html`    | Default for any case study without a `layout:` override | `case-study-modern`                 | `.case-study-modern`    |
-| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark, Power Digital (opt-in via `layout: immersive`) | `case-study-modern case-study-immersive` | `.case-study-immersive` |
+| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark, Power Digital, Cursor (opt-in via `layout: immersive`) | `case-study-modern case-study-immersive` | `.case-study-immersive` |
 
 Routing is via Hugo's `layout:` front matter param. A case study that does
-**not** specify `layout:` uses `single.html` (the modern layout). MarketSpark
-and Power Digital opt into immersive with `layout: immersive`.
+**not** specify `layout:` uses `single.html` (the modern layout). MarketSpark,
+Power Digital, and Cursor opt into immersive with `layout: immersive`.
+List-page order is `weight:` ascending — Cursor 1, MarketSpark 2, Power
+Digital 3.
 
 The **modern**
 layout was designed from scratch and is the default for new case studies. The
@@ -154,11 +156,22 @@ All shortcodes are in `layouts/shortcodes/cs-*.html` and styled under
   running `hugo serve`.** Restart serve after creating a new shortcode
   template. Modifying an existing one hot-reloads fine.
 - **`<ul>`-based shortcodes inside `.csi-prose` must join the prose list-rule
-  `:not()` chains** (`ul:not(.csi-list):not(…)`) or they inherit gradient
-  bullets — and must then reset `list-style`/margins themselves.
+  `:not()` chains** (`ul:not(.csi-list):not(.csi-compare__rows):not(.csi-scale)`)
+  or they inherit gradient bullets — and must then reset `list-style`/margins
+  themselves. `csi-scale` is the cautionary tale: it shipped with stray
+  gradient squares floating over every row until it joined the chains.
 - **CSS-drawn figures beat images for diagrams** (`csi-split figure="…"` →
   `figures/<name>.html`: inherits fonts, recolours per face, prints crisp) —
   but draw with REAL elements; print drops `::before/::after` `background-image`.
+  Current inventory: `power-digital/terralith` (mono → stacks decomposition),
+  `cursor/terralith` (monolith ONLY — problem-side; the page's real charts carry
+  the after-state), `cursor/agent-rules` (editor window, a nod to the Cursor
+  IDE; its seven rule lines are the case study's verbatim wording, so the prose
+  beside it stays short).
+- **Prose subheads:** `###`/`####` inside any `csi-section`/`csi-split` inner
+  render as compact in-card subheads (1.26rem / 1.08rem ink, white on the dark
+  faces) — for a closing card that carries two related reads without the weight
+  of two sections (see Cursor's "Architectural flexibility" + "agents" card).
 - **The TOC reads `.Fragments`, not `.TableOfContents`.** `.TableOfContents`
   is empty when read from inside a _shortcode_ (it isn't built until after the
   goldmark pass), which is the original reason the TOC moved to a layout-stage
@@ -202,7 +215,7 @@ mint on mint and disappears. Always keep `:not(.button)` on `.cs-article a`.
 
 ---
 
-## Immersive layout (MarketSpark, Power Digital)
+## Immersive layout (MarketSpark, Power Digital, Cursor)
 
 Opt in with `layout: immersive`. The body element carries **both**
 `case-study-modern` and `case-study-immersive`:
@@ -238,7 +251,9 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 | `csi-split`       | Text + visual side-by-side; `flip="true"` alternates sides.    | `eyebrow`, `title`, `media`, `media_alt`, `media2`/`media2_alt` (second image stacked below the first), `figure` (CSS-drawn figure partial from `figures/<name>.html` instead of an image; subfolders work — `figure="power-digital/terralith"`), `flip`, `contain`, `caption`, `variant`, `ratio` (`50-50` default / `65-35` / `75-25`, text wider; ratios auto-reverse under `flip` since flip puts the media in the first grid track via `order`) |
 | `csi-steps`       | Numbered process cards. Place INSIDE a `csi-section`.          | inner blocks split by `---`, each `title:` / `body:`                                  |
 | `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`; `cols="2"` for a slimmed 2-up grid (pairs with `csi-compare`, capped to the same 980px) |
-| `csi-compare`     | "Then / now" migration ledger: muted old world → bold gradient new world per metric. Owns a page's hard numbers — pair with a slimmed `csi-impact` so figures aren't stated twice. Mobile stacks each row with per-cell tags. INSIDE a `csi-section`. | `before_label`, `after_label`; inner blocks split by `---`, each `label:` / `before:` / `after:` |
+| `csi-compare`     | "Then / now" migration ledger: muted old world → bold gradient new world per metric. Owns a page's hard numbers — pair with a slimmed `csi-impact` so figures aren't stated twice. Mobile stacks each row with per-cell tags. INSIDE a `csi-section` (or a `csi-phase` — there it hugs the rail column and renders denser). | `before_label`, `after_label`; inner blocks split by `---`, each `label:` / `before:` / `after:` / optional `delta:` (gradient improvement pill under the after value, e.g. "39.3% faster"; the pill sets its own white `-webkit-text-fill-color` to opt back out of the after-cell's gradient text-clip) |
+| `csi-phases` + `csi-phase` | Vertical engagement-journey rail: one continuous gradient rail down the left (a `::before`, so it intentionally drops out of print), a gradient dot + date chip + phase title per node, full block-markdown bodies (paragraphs, lists, links, nested `csi-compare` ledgers all work). Built for dated multi-month engagement stories where a `csi-steps` grid is too small to hold real narrative. Wrap the `csi-phase` blocks in one `csi-phases`; INSIDE a `csi-section` (typically pine). | `csi-phases` takes no args; each `csi-phase`: `date` (chip, e.g. "November 2025"), `title` |
+| `csi-scale`       | Type-specimen "magnitude wall": each row leads with a huge gradient magnitude phrase ("hundreds", "thousands") followed by the rest of the sentence at prose size — for enumerating what a platform manages when the magnitudes ARE the story. The big run carries `.csi-grad`, so dark-face recolouring and the print solid-colour fallback come for free. INSIDE a `csi-section`. | inner blocks split by `---`, each `pre:` (optional lead-in, e.g. "in the") / `big:` / `rest:` |
 | `csi-timeline`    | Horizontal parallel-track cutover bars (old system winding down while the new ramps up): percent-positioned bars with `fade: out` / `fade: in` and an optional dashed cutover marker. Typically right after `csi-steps`. INSIDE a `csi-section`. | `marker` (percent 0–100), `marker_label`; inner blocks split by `---`, each `label:` / `note:` / `start:` / `end:` / `fade:` |
 | `csi-questions`   | Takeaways row of compact numbered question cards (gradient numeral inline with the question), plus an optional `outro:` "verdict" panel (leading `**bold**` renders as a block gradient lead line) and optional `cta:` paragraph divided inside the same panel. Sections containing one auto-compact like `csi-list` ones. 3-up, stacks ≤860px. INSIDE a `csi-section`. | inner blocks split by `---`, each `question:` / `body:`; standalone blocks may carry `outro:` or `cta:` (inline markdown works) |
 | `csi-list`        | Compact 2-col icon rows (icon chip + bold title — inline body). Space-saving sibling of `csi-impact` for secondary enumerations (e.g. "under the hood" extras) so they don't mimic the outcome grid. INSIDE a `csi-section`. | same inner format as `csi-impact` (`icon:` / `title:` / `body:`); keep bodies to one short sentence |
@@ -254,7 +269,13 @@ styles them):
   card is wider than its image (`telecommunications.jpg`).
 - **`cs-pullquote`** — used inline mid-article (between the impact grid and the
   closing sections) as a standout pull quote, distinct from the closing
-  `csi-testimonial`. It's fine to have quotes in multiple places.
+  `csi-testimonial`. It's fine to have quotes in multiple places. On a PINE band
+  use `variant="light"` (cream card) so the quote pops; on light bands the
+  default dark card does the popping — Cursor alternates the two down the page.
+  The light variant styles the two-line `name`/`title`/`company` attribution:
+  `__name` flips to pine ink there (the base colour is white for the dark card,
+  which is invisible on cream — bug found when Cursor combined light + `name=`
+  for the first time).
 
 #### Avatar-left "portrait" layout (`cs-pullquote` + `csi-testimonial`)
 
@@ -379,6 +400,25 @@ sections get `scroll-margin-top` so they land clear of the bar. Keep the
 active-link underline INSIDE the link box — the links row is
 `overflow-x: auto` and any overhang conjures a stub scrollbar.
 
+### Cursor page notes
+
+- **All charts are branded exports from the Notion draft** (Cursor ×
+  Masterpoint lockup baked in), sized to 1800px wide. Each Notion "duplicate
+  pair" contributed ONE in-page image; the spare white-background deploy-time
+  column chart became `preview_image`/`og_img` instead of appearing twice.
+  Dark-background charts sit on pine bands (near-seamless), white-background
+  charts on light bands — every `csi-split` chart uses `contain="true"`.
+- **Client logo is the official brand-kit horizontal lockup SVG**
+  (`cursor-lockup-white.svg`, the kit's `_DARK` = off-white #edecec variant)
+  at `client_logo_height: 30px`.
+- **Stat-strip values use `&nbsp;`** inside multi-word tokens
+  (`~8&nbsp;min → ~2&nbsp;min`) so narrow columns wrap at the arrow, never
+  mid-token.
+- **Verbatim-text page.** The case-study copy is the Notion draft word-for-word
+  (per the content owner's instruction); layout chrome (eyebrows, figure
+  labels, stat labels) reuses exact phrases from that copy. Don't "fix" source
+  typos here without checking with marketing first.
+
 ## Page-level styling decisions
 
 - **Backdrop is pine** (`$pine = #0e383a`, matching the blog); the article sits on
@@ -443,7 +483,9 @@ Case studies print (Ctrl/Cmd+P → Save as PDF) styled to match the screen.
   7. **Page-break control — prevents cards clipping across page boundaries.**
      `break-inside: avoid` on the **small, repeating** cards (`.cs-stat`,
      `.cs-pullquote`, `.csi-testimonial`, `.csi-impact__card`, `.csi-compare__row`,
-     `.csi-fig-terralith__mono/__stack`, `.csi-timeline`, `.csi-question`) pushes a whole
+     `.csi-fig-terralith__mono/__stack`, `.csi-timeline`, `.csi-question`,
+     `.csi-phase__head`, `.csi-scale__row`, `.csi-fig-cmono__frame`,
+     `.csi-fig-rules__window`) pushes a whole
      card to the next page rather than slicing its top/bottom edge. **Only apply
      it to small cards** — putting it on large one-off blocks (the About panel,
      article/screenshot cards) backfires: shoving a big block whole to the next

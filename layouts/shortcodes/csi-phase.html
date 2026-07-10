@@ -1,0 +1,20 @@
+{{/*
+  csi-phase — one node on the csi-phases rail: a date chip + phase title, with
+  full block-markdown body (paragraphs, lists, links — and nested csi-*
+  shortcodes such as a csi-compare ledger all work).
+  Args:
+    date   period chip above the title (e.g. "November 2025")
+    title  phase headline (HTML allowed)
+*/}}
+{{- $date := .Get "date" -}}
+{{- $title := .Get "title" -}}
+<div class="csi-phase" data-aos="fade-up" data-aos-duration="600">
+  <span class="csi-phase__dot" aria-hidden="true"></span>
+  <div class="csi-phase__head">
+    {{- with $date -}}<span class="csi-phase__date">{{ . | safeHTML }}</span>{{- end -}}
+    {{- with $title -}}<h3 class="csi-phase__title">{{ . | safeHTML }}</h3>{{- end -}}
+  </div>
+  <div class="csi-phase__body csi-prose">
+    {{ .Inner | $.Page.RenderString (dict "display" "block") }}
+  </div>
+</div>

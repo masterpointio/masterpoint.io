@@ -1,0 +1,11 @@
+{{/*
+  csi-phases — vertical engagement-journey rail. Wraps a sequence of
+  `csi-phase` blocks in a single rail container: one continuous gradient line
+  down the left, a gradient dot per phase. Built for dated, multi-month
+  engagement stories (audit → migration → hardening) where a numbered
+  csi-steps grid is too small to hold real narrative, ledgers, and lists.
+  Place INSIDE a csi-section; put one csi-phase per engagement phase inside.
+*/}}
+<div class="csi-phases">
+  {{ .Inner | $.Page.RenderString (dict "display" "block") }}
+</div>

@@ -1,0 +1,36 @@
+{{/*
+  csi-scale — a type-specimen "scale wall": each row leads with a huge
+  gradient magnitude word ("hundreds", "thousands", "dozens") followed by the
+  rest of the sentence at body size. For enumerating what a platform manages
+  when the magnitudes ARE the story. Place INSIDE a csi-section.
+  Inner: blocks separated by `---`, each block:
+    pre:  optional lead-in before the big word (e.g. "in the")
+    big:  the magnitude phrase, rendered huge in the brand gradient
+    rest: remainder of the sentence  (inline markdown works in all three)
+*/}}
+{{- $blocks := split .Inner "---" -}}
+<ul class="csi-scale">
+  {{- range $blocks -}}
+    {{- $block := trim . " \t\n" -}}
+    {{- if $block -}}
+      {{- $pre := "" -}}
+      {{- $big := "" -}}
+      {{- $rest := "" -}}
+      {{- range split $block "\n" -}}
+        {{- $line := trim . " \t" -}}
+        {{- if hasPrefix $line "pre:" -}}
+          {{- $pre = trim (strings.TrimPrefix "pre:" $line) " " -}}
+        {{- else if hasPrefix $line "big:" -}}
+          {{- $big = trim (strings.TrimPrefix "big:" $line) " " -}}
+        {{- else if hasPrefix $line "rest:" -}}
+          {{- $rest = trim (strings.TrimPrefix "rest:" $line) " " -}}
+        {{- end -}}
+      {{- end -}}
+      <li class="csi-scale__row">
+        {{- with $pre -}}<span class="csi-scale__pre">{{ . | $.Page.RenderString (dict "display" "inline") }}</span>{{- end -}}
+        <span class="csi-scale__big csi-grad">{{ $big | $.Page.RenderString (dict "display" "inline") }}</span>
+        <span class="csi-scale__rest">{{ $rest | $.Page.RenderString (dict "display" "inline") }}</span>
+      </li>
+    {{- end -}}
+  {{- end -}}
+</ul>

@@ -1210,6 +1210,11 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
         text-transform: uppercase;
         font-size: 0.78rem;
       }
+      // two-line name/role attribution: the base name colour is white (dark
+      // card); flip it to pine ink or it vanishes on the cream card
+      .cs-pullquote__name {
+        color: $pine;
+      }
     }
   }
 
@@ -1767,15 +1772,27 @@ html:has(.cs-sticky-nav) {
       color: $csi-ink;
       font-weight: 800;
     }
+    // in-card subheads (e.g. a results card carrying a second, related read)
+    h3,
+    h4 {
+      font-size: 1.26rem;
+      font-weight: 800;
+      line-height: 1.3;
+      color: $csi-ink;
+      margin: 2rem 0 0.8rem;
+    }
+    h4 {
+      font-size: 1.08rem;
+    }
     // `:not(.csi-list):not(.csi-compare__rows)` — those uls carry their own
     // grid/ledger layout; keep the prose bullet/spacing treatment off them
-    ul:not(.csi-list):not(.csi-compare__rows),
+    ul:not(.csi-list):not(.csi-compare__rows):not(.csi-scale),
     ol {
       margin: 0 0 1.3rem;
       padding: 0;
       list-style: none;
     }
-    ul:not(.csi-list):not(.csi-compare__rows) > li,
+    ul:not(.csi-list):not(.csi-compare__rows):not(.csi-scale) > li,
     ol > li {
       position: relative;
       padding-left: 1.75rem;
@@ -1785,7 +1802,7 @@ html:has(.cs-sticky-nav) {
         content: none;
       }
     }
-    ul:not(.csi-list):not(.csi-compare__rows) > li::before {
+    ul:not(.csi-list):not(.csi-compare__rows):not(.csi-scale) > li::before {
       content: "";
       position: absolute;
       left: 0;
@@ -1819,6 +1836,14 @@ html:has(.cs-sticky-nav) {
       margin-top: 0.7rem;
       margin-bottom: 0;
     }
+  }
+  // prose subheads flip to white on the dark faces (literal selectors — the
+  // headings set an explicit ink colour, so inheritance can't recolour them)
+  .csi-section--pine .csi-prose h3,
+  .csi-section--pine .csi-prose h4,
+  .csi-section--pine-deep .csi-prose h3,
+  .csi-section--pine-deep .csi-prose h4 {
+    color: #fff;
   }
 
   // ---------------------------------------------------------------------------
@@ -2240,6 +2265,24 @@ html:has(.cs-sticky-nav) {
       font-weight: 900;
       line-height: 1;
     }
+    // optional improvement pill under the after value (`delta:` in the
+    // shortcode). Solid gradient bg + white text — the parent __after cell is
+    // gradient-CLIPPED text, so the pill must opt its own glyphs back out of
+    // the inherited transparent fill.
+    &__delta {
+      display: block;
+      width: fit-content;
+      margin-top: 0.4rem;
+      padding: 0.26rem 0.66rem;
+      border-radius: 999px;
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #fff;
+      -webkit-text-fill-color: #fff;
+      @include csi-grad-solid;
+    }
     // per-cell Before/After tags — mobile only (the header row hides there)
     &__tag {
       display: none;
@@ -2531,6 +2574,332 @@ html:has(.cs-sticky-nav) {
     .csi-timeline__rail {
       background: rgba(255, 255, 255, 0.08);
     }
+  }
+
+  // ---------------------------------------------------------------------------
+  // PHASES — vertical engagement-journey rail (csi-phases / csi-phase): one
+  // continuous gradient rail down the left, a gradient dot + date chip + title
+  // per phase, full prose bodies (ledgers, lists, links) hanging off each
+  // node. The rail line is a ::before, so it intentionally drops out of print;
+  // the dots are real elements and survive.
+  // ---------------------------------------------------------------------------
+  .csi-phases {
+    position: relative;
+    margin-top: 2.4rem;
+    &::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      bottom: 8px;
+      width: 2px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, #2ad9c2 0%, #55c1b4 45%, #d191bf 100%);
+      opacity: 0.55;
+    }
+    @media (max-width: 575px) {
+      &::before {
+        left: 7px;
+      }
+    }
+  }
+  .csi-phase {
+    position: relative;
+    padding: 0 0 2.9rem 3rem;
+    @media (max-width: 575px) {
+      padding-left: 2.1rem;
+      padding-bottom: 2.2rem;
+    }
+  }
+  .csi-phase:last-child {
+    padding-bottom: 0.4rem;
+  }
+  .csi-phase__dot {
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    @include csi-grad-solid;
+    box-shadow: 0 0 0 5px rgba(42, 217, 194, 0.12);
+    @media (max-width: 575px) {
+      width: 16px;
+      height: 16px;
+      left: 0;
+    }
+  }
+  .csi-phase__head {
+    margin-bottom: 0.9rem;
+  }
+  .csi-phase__date {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.28rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(20, 48, 47, 0.05);
+    border: 1px solid $csi-line;
+    color: $csi-link;
+    margin-bottom: 0.65rem;
+  }
+  .csi-phase__title {
+    font-size: 1.32rem;
+    font-weight: 800;
+    line-height: 1.3;
+    color: $csi-ink;
+    margin: 0;
+    @media (max-width: 575px) {
+      font-size: 1.16rem;
+    }
+  }
+  .csi-phase__body {
+    // a ledger inside a phase hugs the rail column instead of centring, and
+    // reads slightly denser than a section-level ledger
+    .csi-compare {
+      margin: 1.4rem 0 1.6rem;
+    }
+    .csi-compare__head {
+      padding: 0.65rem 1.2rem;
+    }
+    .csi-compare__row {
+      padding: 0.85rem 1.2rem;
+    }
+  }
+  // dark-face recolour (the rail typically lives on a pine band)
+  .csi-section--pine .csi-phase__date,
+  .csi-section--pine-deep .csi-phase__date {
+    background: rgba(42, 217, 194, 0.1);
+    border-color: rgba(42, 217, 194, 0.32);
+    color: #7ce8d8;
+  }
+  .csi-section--pine .csi-phase__title,
+  .csi-section--pine-deep .csi-phase__title {
+    color: #fff;
+  }
+
+  // ---------------------------------------------------------------------------
+  // SCALE — type-specimen magnitude wall (csi-scale): each row leads with a
+  // huge gradient magnitude phrase ("hundreds", "thousands"), the rest of the
+  // sentence at prose size. For enumerating what a platform manages when the
+  // magnitudes ARE the story. The big run carries `.csi-grad`, so face
+  // recolouring and the print solid-colour fallback come for free.
+  // ---------------------------------------------------------------------------
+  .csi-scale {
+    list-style: none;
+    margin: 2.1rem auto 2.3rem;
+    padding: 0;
+    max-width: 880px;
+    text-align: left;
+  }
+  .csi-scale__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 0.8rem;
+    row-gap: 0.1rem;
+    padding: 1rem 0;
+  }
+  .csi-scale__row + .csi-scale__row {
+    border-top: 1px solid $csi-line;
+  }
+  .csi-scale__pre,
+  .csi-scale__rest {
+    font-size: 1.04rem;
+    color: $csi-ink-soft;
+  }
+  .csi-scale__big {
+    font-family: $header-font;
+    font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .csi-section--pine .csi-scale__row + .csi-scale__row,
+  .csi-section--pine-deep .csi-scale__row + .csi-scale__row {
+    border-top-color: rgba(255, 255, 255, 0.12);
+  }
+  .csi-section--pine .csi-scale__pre,
+  .csi-section--pine .csi-scale__rest,
+  .csi-section--pine-deep .csi-scale__pre,
+  .csi-section--pine-deep .csi-scale__rest {
+    color: #c9dad9;
+  }
+
+  // ---------------------------------------------------------------------------
+  // FIGURE — CURSOR MONOLITH (csi-split figure="cursor/terralith"). CSS-drawn
+  // single overloaded workspace: dense cell grid (a few "hot" drift cells),
+  // stress chips, label. Problem-side only — the page's real charts carry the
+  // after-state, so this figure never draws the decomposition.
+  // ---------------------------------------------------------------------------
+  .csi-fig--cmono {
+    width: 100%;
+  }
+  .csi-fig-cmono__frame {
+    border-radius: 18px;
+    padding: 1.5rem 1.5rem 1.35rem;
+    background: rgba(6, 26, 27, 0.55);
+    border: 1px solid rgba(42, 217, 194, 0.2);
+  }
+  .csi-fig-cmono__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.1rem;
+  }
+  .csi-fig-cmono__chip {
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    color: #7ce8d8;
+    background: rgba(42, 217, 194, 0.12);
+    border: 1px solid rgba(42, 217, 194, 0.35);
+    &--warn {
+      color: #eebede;
+      background: rgba(209, 145, 191, 0.14);
+      border-color: rgba(209, 145, 191, 0.45);
+    }
+  }
+  .csi-fig-cmono__cells {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 5px;
+    i {
+      display: block;
+      aspect-ratio: 1;
+      border-radius: 3px;
+      background: rgba(42, 217, 194, 0.16);
+    }
+    i:nth-child(5n) {
+      background: rgba(42, 217, 194, 0.28);
+    }
+    i:nth-child(7n) {
+      background: rgba(209, 145, 191, 0.3);
+    }
+    i:nth-child(23n) {
+      background: rgba(226, 167, 215, 0.55);
+    }
+  }
+  .csi-fig-cmono__label {
+    margin-top: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    strong {
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.02rem;
+    }
+    span {
+      color: #a7bfbd;
+      font-size: 0.86rem;
+    }
+  }
+  // light-face fallback (the figure is designed for the pine bands)
+  .csi-section--light .csi-fig-cmono__frame {
+    background: rgba(14, 56, 58, 0.04);
+    border-color: $csi-line;
+  }
+  .csi-section--light .csi-fig-cmono__label strong {
+    color: $csi-ink;
+  }
+  .csi-section--light .csi-fig-cmono__label span {
+    color: $csi-ink-soft;
+  }
+
+  // ---------------------------------------------------------------------------
+  // FIGURE — AGENT RULES (csi-split figure="cursor/agent-rules"). CSS-drawn
+  // editor window (a nod to the Cursor IDE): traffic-dot title bar + numbered
+  // mono rule lines. The rule lines are the case study's own wording,
+  // verbatim — the figure IS the enumeration. Counter numerals live in
+  // ::before `content` (print-safe: only pseudo background-images are dropped).
+  // ---------------------------------------------------------------------------
+  .csi-fig--rules {
+    width: 100%;
+  }
+  .csi-fig-rules__window {
+    background: #fff;
+    border: 1px solid $csi-line;
+    border-radius: 16px;
+    box-shadow: 0 18px 40px -30px rgba(8, 30, 30, 0.35);
+    overflow: hidden;
+  }
+  .csi-fig-rules__bar {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.7rem 1.1rem;
+    background: rgba(20, 48, 47, 0.035);
+    border-bottom: 1px solid $csi-line;
+  }
+  .csi-fig-rules__dots {
+    display: inline-flex;
+    gap: 6px;
+    i {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(20, 48, 47, 0.14);
+    }
+    i:first-child {
+      @include csi-grad-solid;
+    }
+  }
+  .csi-fig-rules__name {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: $csi-ink-soft;
+  }
+  .csi-fig-rules__list {
+    list-style: none;
+    margin: 0;
+    padding: 0.4rem 0 0.55rem;
+    counter-reset: csi-rules;
+    li {
+      counter-increment: csi-rules;
+      display: flex;
+      align-items: baseline;
+      gap: 0.8rem;
+      padding: 0.52rem 1.15rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.84rem;
+      line-height: 1.5;
+      color: $csi-ink-soft;
+      &::before {
+        content: counter(csi-rules, decimal-leading-zero);
+        flex: 0 0 auto;
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: #9fb4b3;
+      }
+    }
+    li + li {
+      border-top: 1px solid rgba(20, 48, 47, 0.05);
+    }
+  }
+  // dark-face recolour (if the window is ever placed on a pine band)
+  .csi-section--pine .csi-fig-rules__window,
+  .csi-section--pine-deep .csi-fig-rules__window {
+    background: rgba(6, 26, 27, 0.55);
+    border-color: rgba(42, 217, 194, 0.2);
+  }
+  .csi-section--pine .csi-fig-rules__bar,
+  .csi-section--pine-deep .csi-fig-rules__bar {
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+  .csi-section--pine .csi-fig-rules__name,
+  .csi-section--pine .csi-fig-rules__list li,
+  .csi-section--pine-deep .csi-fig-rules__name,
+  .csi-section--pine-deep .csi-fig-rules__list li {
+    color: #c9dad9;
   }
 
   // ---------------------------------------------------------------------------
@@ -3120,7 +3489,11 @@ html:has(.cs-sticky-nav) {
     .csi-fig-terralith__mono,
     .csi-fig-terralith__stack,
     .csi-timeline,
-    .csi-question {
+    .csi-question,
+    .csi-phase__head,
+    .csi-scale__row,
+    .csi-fig-cmono__frame,
+    .csi-fig-rules__window {
       break-inside: avoid;
     }
   }

@@ -1,0 +1,32 @@
+{{/* Cursor terralith figure — CSS-drawn (no image asset): the single monolithic
+production workspace as one overloaded state block, every cell another
+replicated resource, with a couple of "hot" cells and stress chips.
+Problem-section counterpart to the Power Digital mono→stacks figure: this one
+deliberately shows ONLY the monolith — the real before/after charts later in the
+page carry the transformation. Rendered via `figure="cursor/terralith"`. Pure
+HTML/CSS so it inherits the page fonts, recolours per card face, and stays crisp
+in print. */}}
+<div
+  class="csi-fig csi-fig--cmono"
+  role="img"
+  aria-label="Diagram: Cursor's single monolithic production Terraform workspace — over 7,000 resources crowded into one state file, with plan times spiking past 10 minutes"
+>
+  <div class="csi-fig-cmono__frame" aria-hidden="true">
+    <div class="csi-fig-cmono__chips">
+      <span class="csi-fig-cmono__chip">one state file</span>
+      <span class="csi-fig-cmono__chip csi-fig-cmono__chip--warn"
+        >spikes of 10+ minutes</span
+      >
+    </div>
+    <div class="csi-fig-cmono__cells">
+      {{- range seq 108 }}<i></i>{{ end -}}
+    </div>
+    <div class="csi-fig-cmono__label">
+      <strong>The terralith</strong>
+      <span
+        >single monolithic production workspace &middot; over 7,000
+        resources</span
+      >
+    </div>
+  </div>
+</div>

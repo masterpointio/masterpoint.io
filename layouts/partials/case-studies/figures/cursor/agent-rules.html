@@ -1,0 +1,30 @@
+{{/* Cursor agent-rules figure — CSS-drawn editor window (a nod to the Cursor
+IDE itself) listing the AI context Masterpoint embedded in the codebase. The
+seven rule lines are the case study's own wording, verbatim — the figure IS the
+enumeration, so the prose beside it can stay short. Rendered via
+`figure="cursor/agent-rules"`. Real elements only (no pseudo-element backgrounds
+carry content) so it prints intact. */}}
+<div
+  class="csi-fig csi-fig--rules"
+  role="img"
+  aria-label="An editor window of AI agent rules: when to create a new root module vs. extend an existing one; how to scope blast radius in a root module; how to break up a high blast radius monolithic root module; data source patterns and optimizations; how to use OCI-sourced child modules; security practices, such as TF module SHA pinning; debugging performance bottlenecks, through methods such as logging and OpenTelemetry traces"
+>
+  <div class="csi-fig-rules__window" aria-hidden="true">
+    <div class="csi-fig-rules__bar">
+      <span class="csi-fig-rules__dots"><i></i><i></i><i></i></span>
+      <span class="csi-fig-rules__name">AI agent skills and rules</span>
+    </div>
+    <ol class="csi-fig-rules__list">
+      <li>when to create a new root module vs. extend an existing one</li>
+      <li>how to scope blast radius in a root module</li>
+      <li>how to break up a high blast radius monolithic root module</li>
+      <li>data source patterns and optimizations</li>
+      <li>how to use OCI-sourced child modules</li>
+      <li>security practices, such as TF module SHA pinning</li>
+      <li>
+        debugging performance bottlenecks, through methods such as logging and
+        OpenTelemetry traces
+      </li>
+    </ol>
+  </div>
+</div>
