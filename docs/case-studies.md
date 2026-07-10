@@ -24,11 +24,11 @@ July 2026 once Power Digital, its last user, was rebuilt on immersive.)
 | Layout        | Template                              | Used by                                                 | Body class                          | Style prefix            |
 | ------------- | ------------------------------------- | ------------------------------------------------------- | ----------------------------------- | ----------------------- |
 | **Modern**    | `layouts/case-studies/single.html`    | Default for any case study without a `layout:` override | `case-study-modern`                 | `.case-study-modern`    |
-| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark, Power Digital (opt-in via `layout: immersive`) | `case-study-modern case-study-immersive` | `.case-study-immersive` |
+| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark, Power Digital, Cursor (opt-in via `layout: immersive`) | `case-study-modern case-study-immersive` | `.case-study-immersive` |
 
 Routing is via Hugo's `layout:` front matter param. A case study that does
-**not** specify `layout:` uses `single.html` (the modern layout). MarketSpark
-and Power Digital opt into immersive with `layout: immersive`.
+**not** specify `layout:` uses `single.html` (the modern layout). MarketSpark,
+Power Digital, and Cursor opt into immersive with `layout: immersive`.
 
 The **modern**
 layout was designed from scratch and is the default for new case studies. The
@@ -378,6 +378,36 @@ scrollspy-highlighted anchor links. Default links are The Challenge / The Work
 sections get `scroll-margin-top` so they land clear of the bar. Keep the
 active-link underline INSIDE the link box — the links row is
 `overflow-x: auto` and any overhang conjures a stub scrollbar.
+
+### Cursor-specific decisions (`content/case-studies/cursor.md`)
+
+- **Text is verbatim from the Notion draft** ("[Anysphere] Case Study" →
+  "Cursor Case Study Draft"). Wording must not be changed — only arrangement
+  (which shortcode/section a passage lives in) is editorial. Structural labels
+  (eyebrows like "Phase 01 · November 2025", compare column headers) come from
+  the draft's own headings/tables.
+- **Branded graphics** exported from the Notion page live in
+  `static/img/case-studies/anysphere/` (`mp-cursor-*.png`, 2048×1152, Cursor ×
+  Masterpoint footer lockup). Dark-background ones (dial, frequency-growth,
+  tf-workspaces, dependency-graph) pair with `variant="pine"` splits;
+  white-background ones (plan-time-columns, deploy-frequency-stat) pair with
+  `variant="light"` so they blend into the card. `deploy-frequency-growth`
+  (dark line chart) is the `preview_image`/`og_img`; `plan-time-columns` is the
+  unused duplicate of the dial. All splits with these graphics use
+  `contain="true"`.
+- **`cursor-logo-white.svg`** (same dir) is `static/img/logos/cursor.svg`
+  recolored to white — the source SVG is dark (`fill:#26251e` inline style +
+  default-black paths) and invisible on the pine hero/sticky bar. If the logo
+  ever updates, recolor again (add `fill="#ffffff"` on the root AND replace the
+  inline `style="fill:…"`).
+- **"Phase map" `csi-steps` pattern** — the engagement-intro band uses
+  csi-steps with each phase heading as `title:` and its date range as `body:`,
+  acting as a roadmap for the four detailed phase cards that follow (eyebrows
+  `Phase 0N · <dates>`).
+- **CTA "ceilings" chip list** — the closing callout's `<ul
+  class='csi-cta__ceilings'>` renders as centered pill chips via a rule in the
+  `.csi-cta` block (plus a `p + p` spacing rule for multi-paragraph callouts).
+  Reusable by any case study callout needing a short list.
 
 ## Page-level styling decisions
 

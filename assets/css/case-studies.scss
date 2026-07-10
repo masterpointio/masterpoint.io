@@ -2971,6 +2971,29 @@ html:has(.cs-sticky-nav) {
         color: #fff;
       }
     }
+    p + p {
+      margin-top: 0.9rem;
+    }
+    // "ceilings" chip list (Cursor CTA) — a plain <ul> in the callout HTML
+    // rendered as centered pill chips instead of a bullet list
+    ul.csi-cta__ceilings {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0;
+      margin: 1.1rem 0 1.3rem;
+      li {
+        font-size: 0.92rem;
+        line-height: 1.4;
+        color: #d3e2e1;
+        padding: 0.45rem 1.05rem;
+        border: 1px solid rgba(42, 217, 194, 0.35);
+        border-radius: 999px;
+        background: rgba(42, 217, 194, 0.07);
+      }
+    }
     a:not(.button) {
       color: $cs-mint;
       font-weight: 700;
