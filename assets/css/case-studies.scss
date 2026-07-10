@@ -2295,6 +2295,81 @@ html:has(.cs-sticky-nav) {
   // — the hard numbers read best on white, and the card pops off the band.
 
   // ---------------------------------------------------------------------------
+  // TABLE — csi-table: a compact metric table for numbers that outgrow the
+  // two-column csi-compare ledger (an extra "Change"/"Improvement" delta
+  // column). Same rule as the ledger: it stays a WHITE card on dark faces.
+  // The delta column (`accent="true"`) carries the brand gradient — its
+  // classes are registered in the print gradient-fallback list.
+  // ---------------------------------------------------------------------------
+  .csi-table {
+    max-width: 980px;
+    margin: 2.2rem auto 0;
+    text-align: left;
+
+    &__card {
+      background: #fff;
+      border: 1px solid $csi-line;
+      border-radius: 16px;
+      box-shadow: 0 16px 36px -26px rgba(8, 30, 30, 0.32);
+      overflow: hidden;
+    }
+    &__title {
+      padding: 1rem 1.4rem 0.9rem;
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: $csi-ink;
+      border-bottom: 1px solid $csi-line;
+    }
+    &__scroll {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+    thead {
+      // strip tint lives on the row, NOT the th — a bg on the th would
+      // out-specify the gradient mixin on th.csi-table__delta-head and leave
+      // its clipped text invisible (flat bg + transparent fill)
+      background: rgba(20, 48, 47, 0.03);
+    }
+    th {
+      padding: 0.8rem 1.4rem;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-align: left;
+      color: #8aa09f;
+      border-bottom: 1px solid $csi-line;
+      white-space: nowrap;
+    }
+    td {
+      padding: 0.95rem 1.4rem;
+      color: #7d9291;
+      line-height: 1.45;
+      vertical-align: top;
+    }
+    td:first-child {
+      font-weight: 700;
+      color: $csi-ink;
+    }
+    tbody tr + tr td {
+      border-top: 1px solid $csi-line;
+    }
+    &__delta-head {
+      @include csi-grad-light;
+    }
+    &__delta {
+      font-weight: 800;
+      @include csi-grad-light;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
   // FIGURE — TERRALITH (csi-split figure="terralith"). CSS-drawn monolith →
   // isolated stacks: no image asset, inherits page fonts, recolours per face,
   // crisp in print. Vertical composition (mono → arrow → stack grid) so it
@@ -3075,6 +3150,8 @@ html:has(.cs-sticky-nav) {
     .csi-questions__outro-main strong,
     .csi-compare__col--after,
     .csi-compare__after,
+    .csi-table__delta-head,
+    .csi-table__delta,
     .cs-hero__title .text-gradient {
       background: none !important;
       -webkit-background-clip: border-box !important;
@@ -3117,6 +3194,7 @@ html:has(.cs-sticky-nav) {
     .csi-testimonial,
     .csi-impact__card,
     .csi-compare__row,
+    .csi-table__card,
     .csi-fig-terralith__mono,
     .csi-fig-terralith__stack,
     .csi-timeline,

@@ -1,0 +1,58 @@
+{{/* Cursor terralith figure — CSS-drawn (no image asset): the monolithic
+production workspace (7,000+ resources in one state file) decomposed into
+narrow, independent root modules. Rendered in a csi-split media slot via
+`figure="cursor/terralith"`. Reuses the shared `.csi-fig-terralith__*` styles
+(see the Power Digital figure) so it inherits fonts, recolours per card face,
+and stays crisp in print. */}}
+<div
+  class="csi-fig csi-fig--terralith"
+  role="img"
+  aria-label="Diagram: Cursor's single monolithic production Terraform workspace, over 7,000 resources in one state file, decomposed into 100+ narrow, independent root modules, each with its own state and a 91% smaller blast radius"
+>
+  <div class="csi-fig-terralith__mono" aria-hidden="true">
+    <span class="csi-fig-terralith__chip">1 state file</span>
+    <div class="csi-fig-terralith__cells">
+      {{- range seq 60 }}<i></i>{{ end -}}
+    </div>
+    <div class="csi-fig-terralith__label">
+      <strong>The terralith</strong>
+      <span
+        >7,000+ resources &middot; one production workspace &middot; 10+ minute
+        plans</span
+      >
+    </div>
+  </div>
+  <div class="csi-fig-terralith__arrow" aria-hidden="true">
+    <span class="csi-grad">&darr;</span>
+  </div>
+  <div class="csi-fig-terralith__stacks" aria-hidden="true">
+    <div class="csi-fig-terralith__stack">
+      <span class="csi-fig-terralith__dot"></span>ecs
+    </div>
+    <div class="csi-fig-terralith__stack">
+      <span class="csi-fig-terralith__dot"></span>iam
+    </div>
+    <div class="csi-fig-terralith__stack">
+      <span class="csi-fig-terralith__dot"></span>route53
+    </div>
+    <div class="csi-fig-terralith__stack">
+      <span class="csi-fig-terralith__dot"></span>ml-infra
+    </div>
+    <div class="csi-fig-terralith__stack">
+      <span class="csi-fig-terralith__dot"></span>staging
+    </div>
+    <div class="csi-fig-terralith__stack csi-fig-terralith__stack--more">
+      + 100 more
+    </div>
+  </div>
+  <div
+    class="csi-fig-terralith__label csi-fig-terralith__label--stacks"
+    aria-hidden="true"
+  >
+    <strong>100+ narrow, independent root modules</strong>
+    <span
+      >own state &middot; 91% smaller blast radius &middot; ~2 minute
+      plans</span
+    >
+  </div>
+</div>

@@ -1,0 +1,47 @@
+{{/*
+  csi-table — a compact metric table for data that doesn't fit csi-compare's
+  two-column ledger shape (e.g. a Before/After PLUS a "Change"/"Improvement"
+  delta column). Place INSIDE a csi-section. Like csi-compare it stays a WHITE
+  card on dark faces — hard numbers read best on white.
+  Args:
+    head    pipe-separated column headers, e.g. "Metric | Before | After | Change"
+    title   optional heading rendered inside the card, above the table (safeHTML)
+    accent  "true" → the LAST column renders bold in the brand gradient
+            (.csi-table__delta — registered in the print gradient-fallback list)
+  Inner: one `row:` line per table row, cells pipe-separated (inline markdown OK):
+    row: Mean | 488.8s (8.1 min) | 296.6s (4.9 min) | 39.3% faster
+*/}}
+{{- $headCells := split (.Get "head") "|" -}}
+{{- $ncols := len $headCells -}}
+{{- $accent := eq (.Get "accent") "true" -}}
+<div class="csi-table" data-aos="fade-up" data-aos-duration="600">
+  <div class="csi-table__card">
+    {{- with .Get "title" }}
+    <div class="csi-table__title">{{ . | safeHTML }}</div>
+    {{- end }}
+    <div class="csi-table__scroll">
+      <table>
+        <thead>
+          <tr>
+            {{- range $i, $h := $headCells }}
+            <th{{ if and $accent (eq $i (sub $ncols 1)) }} class="csi-table__delta-head"{{ end }}>{{ trim $h " " | safeHTML }}</th>
+            {{- end }}
+          </tr>
+        </thead>
+        <tbody>
+          {{- range split .Inner "\n" }}
+            {{- $line := trim . " \t\r" }}
+            {{- if hasPrefix $line "row:" }}
+          <tr>
+              {{- $cells := split (trim (strings.TrimPrefix "row:" $line) " ") "|" }}
+              {{- range $i, $c := $cells }}
+            <td{{ if and $accent (eq $i (sub $ncols 1)) }} class="csi-table__delta"{{ end }}>{{ trim $c " " | $.Page.RenderString (dict "display" "inline") }}</td>
+              {{- end }}
+          </tr>
+            {{- end }}
+          {{- end }}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

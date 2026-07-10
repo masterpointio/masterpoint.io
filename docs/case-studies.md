@@ -24,11 +24,11 @@ July 2026 once Power Digital, its last user, was rebuilt on immersive.)
 | Layout        | Template                              | Used by                                                 | Body class                          | Style prefix            |
 | ------------- | ------------------------------------- | ------------------------------------------------------- | ----------------------------------- | ----------------------- |
 | **Modern**    | `layouts/case-studies/single.html`    | Default for any case study without a `layout:` override | `case-study-modern`                 | `.case-study-modern`    |
-| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark, Power Digital (opt-in via `layout: immersive`) | `case-study-modern case-study-immersive` | `.case-study-immersive` |
+| **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark, Power Digital, Cursor (opt-in via `layout: immersive`) | `case-study-modern case-study-immersive` | `.case-study-immersive` |
 
 Routing is via Hugo's `layout:` front matter param. A case study that does
-**not** specify `layout:` uses `single.html` (the modern layout). MarketSpark
-and Power Digital opt into immersive with `layout: immersive`.
+**not** specify `layout:` uses `single.html` (the modern layout). MarketSpark,
+Power Digital, and Cursor opt into immersive with `layout: immersive`.
 
 The **modern**
 layout was designed from scratch and is the default for new case studies. The
@@ -159,6 +159,19 @@ All shortcodes are in `layouts/shortcodes/cs-*.html` and styled under
 - **CSS-drawn figures beat images for diagrams** (`csi-split figure="…"` →
   `figures/<name>.html`: inherits fonts, recolours per face, prints crisp) —
   but draw with REAL elements; print drops `::before/::after` `background-image`.
+  The `cursor/terralith` figure reuses the shared `.csi-fig-terralith__*`
+  classes from the Power Digital figure with different chips/labels — new
+  terralith-story figures need zero new CSS if they keep that structure.
+- **Match image backgrounds to card faces.** The Cursor graphics exist in
+  white-background and pine-background variants; each is placed on the card
+  face it blends into (white-bg stat cards on `light`, dark charts on `pine`,
+  `contain="true"` on all of them). When only one variant exists, pick the
+  band variant to match the image, not vice versa.
+- **A dark data graphic can be the hero background.** Cursor sets
+  `hero_aside_image` to the dark deploy-frequency line chart — the hero scrim
+  keeps the title legible on the left while the rising line + "500+" label
+  show through on the right. Works because the chart is pine-toned; a busy or
+  light image would fight the frosted title box.
 - **The TOC reads `.Fragments`, not `.TableOfContents`.** `.TableOfContents`
   is empty when read from inside a _shortcode_ (it isn't built until after the
   goldmark pass), which is the original reason the TOC moved to a layout-stage
@@ -239,6 +252,7 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 | `csi-steps`       | Numbered process cards. Place INSIDE a `csi-section`.          | inner blocks split by `---`, each `title:` / `body:`                                  |
 | `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`; `cols="2"` for a slimmed 2-up grid (pairs with `csi-compare`, capped to the same 980px) |
 | `csi-compare`     | "Then / now" migration ledger: muted old world → bold gradient new world per metric. Owns a page's hard numbers — pair with a slimmed `csi-impact` so figures aren't stated twice. Mobile stacks each row with per-cell tags. INSIDE a `csi-section`. | `before_label`, `after_label`; inner blocks split by `---`, each `label:` / `before:` / `after:` |
+| `csi-table`       | Compact metric table for numbers that outgrow the two-column ledger (an extra "Change"/"Improvement" delta column — Cursor's plan-time and cohort tables). Like `csi-compare` it stays a WHITE card on dark faces. Header-strip tint lives on `thead`, NOT `th` (a `th` background out-specifies the gradient mixin on the delta header and renders it invisible). `min-width: 620px` + `overflow-x: auto` wrapper → horizontal scroll on phones. INSIDE a `csi-section`. | `head` (pipe-separated column headers), `title` (optional heading inside the card, above the table), `accent` (`"true"` → last column bold gradient, `.csi-table__delta`); inner is one `row:` line per row, cells pipe-separated, inline markdown OK |
 | `csi-timeline`    | Horizontal parallel-track cutover bars (old system winding down while the new ramps up): percent-positioned bars with `fade: out` / `fade: in` and an optional dashed cutover marker. Typically right after `csi-steps`. INSIDE a `csi-section`. | `marker` (percent 0–100), `marker_label`; inner blocks split by `---`, each `label:` / `note:` / `start:` / `end:` / `fade:` |
 | `csi-questions`   | Takeaways row of compact numbered question cards (gradient numeral inline with the question), plus an optional `outro:` "verdict" panel (leading `**bold**` renders as a block gradient lead line) and optional `cta:` paragraph divided inside the same panel. Sections containing one auto-compact like `csi-list` ones. 3-up, stacks ≤860px. INSIDE a `csi-section`. | inner blocks split by `---`, each `question:` / `body:`; standalone blocks may carry `outro:` or `cta:` (inline markdown works) |
 | `csi-list`        | Compact 2-col icon rows (icon chip + bold title — inline body). Space-saving sibling of `csi-impact` for secondary enumerations (e.g. "under the hood" extras) so they don't mimic the outcome grid. INSIDE a `csi-section`. | same inner format as `csi-impact` (`icon:` / `title:` / `body:`); keep bodies to one short sentence |
@@ -417,7 +431,8 @@ Case studies print (Ctrl/Cmd+P → Save as PDF) styled to match the screen.
      transparent fill does not render reliably in Chrome's PDF path: the run
      stops wrapping and gets sliced by the hero card's `overflow:hidden`, or the
      gradient paints as a solid rectangle. So `.text-gradient` / `.csi-grad` /
-     `.csi-step__num` / `.csi-testimonial__mark` / `.cs-hero__lockup-x` fall
+     `.csi-step__num` / `.csi-testimonial__mark` / `.cs-hero__lockup-x` /
+     `.csi-table__delta` / `.csi-table__delta-head` fall
      back to a solid brand colour (`#2ad9c2`) in print — any NEW class using the
      grad mixins directly (not via `.csi-grad`) must join this list.
      The on-screen multi-stop gradient becomes a single teal in the PDF — an
@@ -443,6 +458,7 @@ Case studies print (Ctrl/Cmd+P → Save as PDF) styled to match the screen.
   7. **Page-break control — prevents cards clipping across page boundaries.**
      `break-inside: avoid` on the **small, repeating** cards (`.cs-stat`,
      `.cs-pullquote`, `.csi-testimonial`, `.csi-impact__card`, `.csi-compare__row`,
+     `.csi-table__card`,
      `.csi-fig-terralith__mono/__stack`, `.csi-timeline`, `.csi-question`) pushes a whole
      card to the next page rather than slicing its top/bottom edge. **Only apply
      it to small cards** — putting it on large one-off blocks (the About panel,
