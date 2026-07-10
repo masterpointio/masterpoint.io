@@ -3022,12 +3022,18 @@ html:has(.cs-sticky-nav) {
 
   // ---------------------------------------------------------------------------
   // ARTICLE SECTIONS — csi-section article="true": a merged, multi-topic card
-  // where one band holds what would otherwise be several sections. Prose text
-  // stays a readable 760px; components (rail, ledgers, editor, scale, inline
-  // charts/figures) breathe at the full 980px. In-card topics are `### h3`
-  // sub-heads, optionally led by a `.csi-prose-kicker` span (the sub-block's
-  // eyebrow). Keep the :not() chains in sync with the prose list rules above.
+  // where one band holds what would otherwise be several sections. The whole
+  // column (head + prose) is CENTRED by capping the section's container to the
+  // content width — without that cap the 1320px container leaves a huge empty
+  // gutter on the right of wide screens. Prose text stays a readable 760px;
+  // components (rail, ledgers, editor, scale, inline charts/figures) breathe
+  // at the full 980px. In-card topics are `### h3` sub-heads, optionally led
+  // by a `.csi-prose-kicker` span (the sub-block's eyebrow). Keep the :not()
+  // chains in sync with the prose list rules above.
   // ---------------------------------------------------------------------------
+  .csi-section--article .csi-container {
+    max-width: calc(980px + 5.2rem); // content + the container's 2.6rem pads
+  }
   .csi-section--article .csi-prose {
     max-width: 980px;
     > p,
