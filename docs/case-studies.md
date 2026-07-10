@@ -162,10 +162,20 @@ All shortcodes are in `layouts/shortcodes/cs-*.html` and styled under
   The `cursor/terralith` figure reuses the shared `.csi-fig-terralith__*`
   classes from the Power Digital figure with different chips/labels — new
   terralith-story figures need zero new CSS if they keep that structure.
+- **Consolidated ("mega") bands — the Cursor page pattern.** Cursor's body is
+  just 7 bands; several source sections live INSIDE one band. The pieces that
+  make that work: markdown `###` subheads inside a section render as in-card
+  chapter heads (`.csi-prose h3` — hairline top divider between chapters,
+  link-colored via the heading render hook; `h4` smaller, no divider; both
+  recolour on pine); markdown images render as rounded, shadowed cards
+  (`.csi-prose img`, full column width, in the print `break-inside` list);
+  `csi-figure` drops a CSS figure inline; and `roomy="true"` keeps the band
+  full-sized despite containing a `csi-list`. Alternation still holds — the
+  page is pine/light alternating with the cosmic testimonial + CTA closing.
 - **Match image backgrounds to card faces.** The Cursor graphics exist in
-  white-background and pine-background variants; each is placed on the card
-  face it blends into (white-bg stat cards on `light`, dark charts on `pine`,
-  `contain="true"` on all of them). When only one variant exists, pick the
+  white-background and pine-background variants. Inline in prose, dark charts
+  blend into `pine` bands and white stat cards pop like the ledger's white
+  card; on `light` bands the reverse. When only one variant exists, pick the
   band variant to match the image, not vice versa.
 - **A dark data graphic can be the hero background.** Cursor sets
   `hero_aside_image` to the dark deploy-frequency line chart — the hero scrim
@@ -247,12 +257,13 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 
 | Shortcode         | Purpose                                                        | Key args                                                                              |
 | ----------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `csi-section`     | A card (eyebrow + headline + block prose).                     | `eyebrow`, `title` (HTML ok), `variant`, `align`, `num`, `accent`, `id` (anchor target, e.g. for `sticky_nav`; also on `csi-split`) |
+| `csi-section`     | A card (eyebrow + headline + block prose).                     | `eyebrow`, `title` (HTML ok), `variant`, `align`, `num`, `accent`, `id` (anchor target, e.g. for `sticky_nav`; also on `csi-split`), `roomy` (`"true"` → opt out of the automatic `csi-list` compact treatment — for long consolidated bands whose bulk is narrative) |
 | `csi-split`       | Text + visual side-by-side; `flip="true"` alternates sides.    | `eyebrow`, `title`, `media`, `media_alt`, `media2`/`media2_alt` (second image stacked below the first), `figure` (CSS-drawn figure partial from `figures/<name>.html` instead of an image; subfolders work — `figure="power-digital/terralith"`), `flip`, `contain`, `caption`, `variant`, `ratio` (`50-50` default / `65-35` / `75-25`, text wider; ratios auto-reverse under `flip` since flip puts the media in the first grid track via `order`) |
 | `csi-steps`       | Numbered process cards. Place INSIDE a `csi-section`.          | inner blocks split by `---`, each `title:` / `body:`                                  |
 | `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`; `cols="2"` for a slimmed 2-up grid (pairs with `csi-compare`, capped to the same 980px) |
 | `csi-compare`     | "Then / now" migration ledger: muted old world → bold gradient new world per metric. Owns a page's hard numbers — pair with a slimmed `csi-impact` so figures aren't stated twice. Mobile stacks each row with per-cell tags. INSIDE a `csi-section`. | `before_label`, `after_label`; inner blocks split by `---`, each `label:` / `before:` / `after:` |
 | `csi-table`       | Compact metric table for numbers that outgrow the two-column ledger (an extra "Change"/"Improvement" delta column — Cursor's plan-time and cohort tables). Like `csi-compare` it stays a WHITE card on dark faces. Header-strip tint lives on `thead`, NOT `th` (a `th` background out-specifies the gradient mixin on the delta header and renders it invisible). `min-width: 620px` + `overflow-x: auto` wrapper → horizontal scroll on phones. INSIDE a `csi-section`. | `head` (pipe-separated column headers), `title` (optional heading inside the card, above the table), `accent` (`"true"` → last column bold gradient, `.csi-table__delta`); inner is one `row:` line per row, cells pipe-separated, inline markdown OK |
+| `csi-figure`      | Drops a CSS-drawn figure partial INLINE in a section's prose flow (vs `csi-split figure=` which puts it in the media column). Used by Cursor's consolidated challenge band to place the terralith mid-narrative. | `name` (path under `layouts/partials/case-studies/figures/`, no extension) |
 | `csi-timeline`    | Horizontal parallel-track cutover bars (old system winding down while the new ramps up): percent-positioned bars with `fade: out` / `fade: in` and an optional dashed cutover marker. Typically right after `csi-steps`. INSIDE a `csi-section`. | `marker` (percent 0–100), `marker_label`; inner blocks split by `---`, each `label:` / `note:` / `start:` / `end:` / `fade:` |
 | `csi-questions`   | Takeaways row of compact numbered question cards (gradient numeral inline with the question), plus an optional `outro:` "verdict" panel (leading `**bold**` renders as a block gradient lead line) and optional `cta:` paragraph divided inside the same panel. Sections containing one auto-compact like `csi-list` ones. 3-up, stacks ≤860px. INSIDE a `csi-section`. | inner blocks split by `---`, each `question:` / `body:`; standalone blocks may carry `outro:` or `cta:` (inline markdown works) |
 | `csi-list`        | Compact 2-col icon rows (icon chip + bold title — inline body). Space-saving sibling of `csi-impact` for secondary enumerations (e.g. "under the hood" extras) so they don't mimic the outcome grid. INSIDE a `csi-section`. | same inner format as `csi-impact` (`icon:` / `title:` / `body:`); keep bodies to one short sentence |

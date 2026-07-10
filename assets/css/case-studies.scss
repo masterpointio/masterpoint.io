@@ -1534,6 +1534,13 @@ html:has(.cs-sticky-nav) {
         strong {
           color: #fff;
         }
+        h3,
+        h4 {
+          color: #fff;
+        }
+        h3 {
+          border-top-color: rgba(255, 255, 255, 0.14);
+        }
         ul > li::before {
           @include csi-grad-solid;
         }
@@ -1583,9 +1590,10 @@ html:has(.cs-sticky-nav) {
     // ---- COMPACT band — applied automatically to any section containing a
     //      csi-list or csi-questions (no opt-in arg): same content, less
     //      vertical real estate. Tighter padding, smaller head, denser prose
-    //      and pull quote.
-    &:has(.csi-list),
-    &:has(.csi-questions) {
+    //      and pull quote. `roomy="true"` (csi-section--roomy) opts a long
+    //      consolidated band back out — its bulk is narrative, not the list.
+    &:has(.csi-list):not(.csi-section--roomy),
+    &:has(.csi-questions):not(.csi-section--roomy) {
       padding: 2.5rem 0;
       @media (max-width: 991px) {
         padding: 2.1rem 0;
@@ -1819,6 +1827,46 @@ html:has(.cs-sticky-nav) {
       margin-top: 0.7rem;
       margin-bottom: 0;
     }
+  }
+
+  // In-card subsection heads + inline media — consolidated bands (Cursor)
+  // carry several source sections inside ONE band: markdown ### become the
+  // in-card chapter heads (hairline divider between chapters), markdown
+  // images the inline charts, and csi-figure drops a CSS-drawn figure into
+  // the prose flow. Pine faces recolour the heads inside the --pine block.
+  .csi-prose h3,
+  .csi-prose h4 {
+    color: $csi-ink;
+    font-weight: 800;
+    line-height: 1.3;
+  }
+  .csi-prose h3 {
+    font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+    margin: 2.8rem 0 1rem;
+    padding-top: 2.4rem;
+    border-top: 1px solid $csi-line;
+  }
+  .csi-prose > h3:first-child {
+    margin-top: 0.4rem;
+    padding-top: 0;
+    border-top: 0;
+  }
+  .csi-prose h4 {
+    font-size: 1.18rem;
+    margin: 2.2rem 0 0.8rem;
+  }
+  .csi-prose img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    margin: 1.7rem auto;
+    box-shadow: 0 18px 44px -28px rgba(8, 30, 30, 0.45);
+  }
+  .csi-figure {
+    display: flex;
+    justify-content: center;
+    margin: 2.2rem auto;
   }
 
   // ---------------------------------------------------------------------------
@@ -3195,6 +3243,7 @@ html:has(.cs-sticky-nav) {
     .csi-impact__card,
     .csi-compare__row,
     .csi-table__card,
+    .csi-prose img,
     .csi-fig-terralith__mono,
     .csi-fig-terralith__stack,
     .csi-timeline,

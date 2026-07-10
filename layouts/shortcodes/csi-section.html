@@ -8,6 +8,9 @@
     align    left (default) | center
     num      optional big watermark number (e.g. "01")
     accent   "true" → render just the gradient line accent (no eyebrow text)
+    roomy    "true" → opt OUT of the automatic compact treatment below; use on
+             long consolidated bands that happen to contain a csi-list but
+             whose bulk is narrative prose (e.g. the Cursor mega-sections)
   Note: a section containing a csi-list automatically renders as a denser,
   compact band (via `.csi-section:has(.csi-list)` in the CSS) — tighter
   padding, smaller head, denser prose and pull quote.
@@ -21,7 +24,8 @@
 {{- $num := .Get "num" -}}
 {{- $accent := .Get "accent" -}}
 {{- $id := .Get "id" -}}
-<section{{ with $id }} id="{{ . }}"{{ end }} class="csi-section csi-section--{{ $variant }} csi-section--{{ $align }}">
+{{- $roomy := eq (.Get "roomy") "true" -}}
+<section{{ with $id }} id="{{ . }}"{{ end }} class="csi-section csi-section--{{ $variant }} csi-section--{{ $align }}{{ if $roomy }} csi-section--roomy{{ end }}">
   <div class="csi-container">
     {{- if or $eyebrow $title $accent -}}
     <div class="csi-section__head" data-aos="fade-up" data-aos-duration="600">

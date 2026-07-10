@@ -1,0 +1,11 @@
+{{/*
+  csi-figure — drop a CSS-drawn figure partial INLINE in a csi-section's prose
+  flow (csi-split's `figure=` arg puts the figure in the media column; this
+  puts it mid-narrative instead — used by consolidated bands).
+  Args:
+    name   path under layouts/partials/case-studies/figures/, no extension —
+           e.g. name="cursor/terralith"
+*/}}
+<div class="csi-figure" data-aos="fade-up" data-aos-duration="600">
+  {{ partial (printf "case-studies/figures/%s.html" (.Get "name")) . }}
+</div>
