@@ -161,6 +161,18 @@ All shortcodes are in `layouts/shortcodes/cs-*.html` and styled under
   the dark-face override (`&--pine … ul > li::before` / `ol > li::before`) —
   the mint counter chips painting over `csi-editor` line numbers came from
   missing the second one.
+- **Article-card sub-heads are `### h3`s in prose** (used with
+  `csi-section article="true"`): styled with a small gradient dash above, and
+  optionally led by `<span class='csi-prose-kicker'>Phase 01 &middot; November
+  2025</span>` for an eyebrow-style kicker inside the heading (goldmark
+  `unsafe: true` permits the inline HTML, incl. `csi-grad` spans). Gotcha: the
+  heading render hook wraps every case-study heading in an anchor link, and
+  the pine-face `.csi-prose a:not(.button)` colour override carries FOUR
+  classes — the `.csi-section .csi-prose h3 a:not(.button)` inherit rule must
+  keep that specificity or headings render mint on dark cards. Inline markdown
+  chart images (`![alt](src)`) get block + radius styling from
+  `.csi-prose img`, plus the mint ring frame on dark faces; both they and
+  `.csi-inline-figure` are in the print `break-inside: avoid` list.
 - **CSS-drawn figures beat images for diagrams** (`csi-split figure="…"` →
   `figures/<name>.html`: inherits fonts, recolours per face, prints crisp) —
   but draw with REAL elements; print drops `::before/::after` `background-image`.
@@ -248,7 +260,7 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 
 | Shortcode         | Purpose                                                        | Key args                                                                              |
 | ----------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `csi-section`     | A card (eyebrow + headline + block prose).                     | `eyebrow`, `title` (HTML ok), `variant`, `align`, `num`, `accent`, `id` (anchor target, e.g. for `sticky_nav`; also on `csi-split`) |
+| `csi-section`     | A card (eyebrow + headline + block prose).                     | `eyebrow`, `title` (HTML ok), `variant`, `align`, `num`, `accent`, `id` (anchor target, e.g. for `sticky_nav`; also on `csi-split`), `article` (`"true"` → merged multi-topic card: one band holds what would otherwise be several sections — prose text stays 760px, components/inline charts breathe at 980px; author in-card topics as `### h3` sub-heads, see authoring notes) |
 | `csi-split`       | Text + visual side-by-side; `flip="true"` alternates sides.    | `eyebrow`, `title`, `media`, `media_alt`, `media2`/`media2_alt` (second image stacked below the first), `figure` (CSS-drawn figure partial from `figures/<name>.html` instead of an image; subfolders work — `figure="power-digital/terralith"`), `flip`, `contain`, `caption`, `variant`, `ratio` (`50-50` default / `65-35` / `75-25`, text wider; ratios auto-reverse under `flip` since flip puts the media in the first grid track via `order`) |
 | `csi-steps`       | Numbered process cards. Place INSIDE a `csi-section`.          | inner blocks split by `---`, each `title:` / `body:`                                  |
 | `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`; `cols="2"` for a slimmed 2-up grid (pairs with `csi-compare`, capped to the same 980px) |
@@ -261,6 +273,7 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 | `csi-scale`       | Order-of-magnitude inventory strip: gradient magnitude word ("hundreds", "thousands") left, what it counts right. The qualitative sibling of `csi-compare` — compare owns exact before/after figures, this owns "how big is the estate today". Recolours per face; stacks ≤640px. INSIDE a `csi-section`. | inner blocks split by `---`, each `value:` / `label:` |
 | `csi-callout`     | Inset spotlight panel: tinted card + gradient left bar + optional uppercase chip. For load-bearing asides that aren't quotes (`cs-pullquote` stays reserved for quotes) — e.g. Cursor's pilot-stack spotlight. Works on both faces. INSIDE a `csi-section`. | `label` (optional chip); inner is block markdown |
 | `csi-editor`      | Editor-window "rules" panel: stylized chrome (dots + filename tab) + one numbered row per inner LINE (CSS-counter numbers are `::before` *content*, so they print). Deliberately a dark panel on every face — reads as a code window, not a card. Built for AI-agent-rules content (Cursor's `.cursor/rules`). INSIDE a `csi-section`. | `filename` (tab label, default `.cursor/rules`); inner = one rule per line, inline markdown works, blank lines skipped |
+| `csi-figure`      | Embed a CSS-drawn figure partial INLINE in a section's prose (instead of in a `csi-split` media column) — for article cards that want the figure mid-flow (Cursor's terralith). INSIDE a `csi-section`. | `name` (figure partial, subfolders work — `"cursor/terralith"`), `max` (CSS max-width, default `640px`) |
 
 Two **modern** shortcodes are also reused inside the immersive body (they render
 because the body also carries `case-study-modern`, so `.case-study-modern .cs-*`

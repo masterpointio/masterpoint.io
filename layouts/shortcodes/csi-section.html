@@ -8,6 +8,12 @@
     align    left (default) | center
     num      optional big watermark number (e.g. "01")
     accent   "true" → render just the gradient line accent (no eyebrow text)
+    article  "true" → merged, multi-topic ARTICLE card: one band holds what
+             would otherwise be several sections. Prose text stays a readable
+             760px but components (csi-phases/-compare/-editor/-scale, inline
+             charts, csi-figure) breathe at the full 980px. Author in-card
+             topics as `### <span class='csi-prose-kicker'>Eyebrow</span>
+             Heading` sub-heads.
   Note: a section containing a csi-list automatically renders as a denser,
   compact band (via `.csi-section:has(.csi-list)` in the CSS) — tighter
   padding, smaller head, denser prose and pull quote.
@@ -20,8 +26,9 @@
 {{- $align := .Get "align" | default "left" -}}
 {{- $num := .Get "num" -}}
 {{- $accent := .Get "accent" -}}
+{{- $article := .Get "article" -}}
 {{- $id := .Get "id" -}}
-<section{{ with $id }} id="{{ . }}"{{ end }} class="csi-section csi-section--{{ $variant }} csi-section--{{ $align }}">
+<section{{ with $id }} id="{{ . }}"{{ end }} class="csi-section csi-section--{{ $variant }} csi-section--{{ $align }}{{ if $article }} csi-section--article{{ end }}">
   <div class="csi-container">
     {{- if or $eyebrow $title $accent -}}
     <div class="csi-section__head" data-aos="fade-up" data-aos-duration="600">

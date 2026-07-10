@@ -3021,6 +3021,103 @@ html:has(.cs-sticky-nav) {
   }
 
   // ---------------------------------------------------------------------------
+  // ARTICLE SECTIONS — csi-section article="true": a merged, multi-topic card
+  // where one band holds what would otherwise be several sections. Prose text
+  // stays a readable 760px; components (rail, ledgers, editor, scale, inline
+  // charts/figures) breathe at the full 980px. In-card topics are `### h3`
+  // sub-heads, optionally led by a `.csi-prose-kicker` span (the sub-block's
+  // eyebrow). Keep the :not() chains in sync with the prose list rules above.
+  // ---------------------------------------------------------------------------
+  .csi-section--article .csi-prose {
+    max-width: 980px;
+    > p,
+    > h3,
+    > ul:not(.csi-list):not(.csi-compare__rows):not(.csi-scale),
+    > ol:not(.csi-phases):not(.csi-editor__lines) {
+      max-width: 760px;
+    }
+  }
+  .csi-prose h3 {
+    font-family: $header-font;
+    font-size: 1.45rem;
+    font-weight: 800;
+    line-height: 1.3;
+    color: $csi-ink;
+    margin: 3.2rem 0 1.1rem;
+    // small gradient dash above each sub-head (decorative pseudo — print drops
+    // it; the heading still reads)
+    &::before {
+      content: "";
+      display: block;
+      width: 34px;
+      height: 3px;
+      border-radius: 2px;
+      @include csi-grad-solid;
+      margin-bottom: 0.85rem;
+    }
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  // markdown headings in prose are wrapped in anchor links by the heading
+  // render hook — keep them heading-coloured, and swap the hover underline +
+  // # symbol to mint. The `.csi-section` prefix is load-bearing: the
+  // pine-face link override (`.csi-section--pine .csi-prose a:not(.button)`)
+  // carries four classes, so this must too or headings render mint on dark.
+  .csi-section .csi-prose h3 a:not(.button) {
+    color: inherit;
+    font-weight: inherit;
+    background-image: none;
+  }
+  .csi-prose h3 .heading-text::after {
+    background-color: $cs-mint;
+  }
+  .csi-prose h3 .heading-anchor-symbol {
+    color: $cs-mint;
+  }
+  // sub-block eyebrow inside an h3 (`<span class='csi-prose-kicker'>…</span>`)
+  .csi-prose-kicker {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: $csi-link;
+    margin-bottom: 0.5rem;
+  }
+  // inline chart images in prose (markdown `![alt](src)`) — block, rounded,
+  // full column width
+  .csi-prose img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    margin: 0.4rem 0 1.5rem;
+  }
+  .csi-section--pine,
+  .csi-section--pine-deep,
+  .csi-section--gradient {
+    .csi-prose h3 {
+      color: #fff;
+    }
+    .csi-prose-kicker {
+      color: $cs-mint;
+    }
+    // charts carried into a dark band need the same frame as csi-media images
+    .csi-prose img {
+      box-shadow:
+        0 26px 54px -30px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(42, 217, 194, 0.18);
+    }
+  }
+  // csi-figure — CSS-drawn figure embedded mid-prose instead of in a split's
+  // media column
+  .csi-inline-figure {
+    max-width: var(--csi-fig-max, 640px);
+    margin: 2.1rem auto;
+  }
+
+  // ---------------------------------------------------------------------------
   // PHASES — engagement roadmap rail (csi-phases): the month-by-month arc of
   // an engagement as numbered stops along a gradient rail. The numeral is real
   // text with `.csi-grad` (auto face recolour + print fallback) and the rail
@@ -3556,7 +3653,9 @@ html:has(.cs-sticky-nav) {
     .csi-callout,
     .csi-editor,
     .csi-fig-cterra__window,
-    .csi-list__item {
+    .csi-list__item,
+    .csi-prose img,
+    .csi-inline-figure {
       break-inside: avoid;
     }
 

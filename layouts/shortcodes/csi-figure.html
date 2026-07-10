@@ -1,0 +1,14 @@
+{{/*
+  csi-figure — embed a CSS-drawn figure partial
+  (layouts/partials/case-studies/figures/<name>.html) INLINE in a
+  csi-section's prose, instead of in a csi-split media column. For merged
+  article-style cards that want the figure mid-flow.
+  Args:
+    name   figure partial name (subfolders work — e.g. "cursor/terralith")
+    max    optional CSS max-width for the figure (default 640px)
+*/}}
+{{- $name := .Get "name" -}}
+{{- $max := .Get "max" | default "640px" -}}
+<div class="csi-inline-figure" style="--csi-fig-max: {{ $max }}" data-aos="fade-up" data-aos-duration="600">
+  {{ partial (printf "case-studies/figures/%s.html" $name) . }}
+</div>
