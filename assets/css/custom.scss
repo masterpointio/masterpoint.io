@@ -1494,6 +1494,9 @@ footer {
       letter-spacing: 0.03em;
       margin-bottom: 0.8em;
     }
+    p:last-child {
+      margin-bottom: 0;
+    }
   }
   .quoteName {
     padding-top: 0.22em;
@@ -1509,16 +1512,40 @@ footer {
     padding-top: 0.55em;
   }
 
-  // "Read the case study" CTA — rendered when a testimonial declares a
-  // `case_study` front-matter field. A separate brand-gradient hairline pill
-  // below the attribution (left-aligned, wraps below on mobile via the break
-  // helper) with a gradient arrow chip that fills with the gradient on hover.
+  // Company logo — rendered when a testimonial declares a `logo` front-matter.
+  // Forced to monochrome white via filter because the source files are
+  // dark-colored and would disappear on the dark section background.
+  .quoteLogo {
+    margin: 0.75rem 0 2.25rem;
+    img {
+      display: inline-block;
+      // Per-testimonial overrides via `logo_height` / `logo_max_width` front
+      // matter (see the slider partial) for marks whose proportions read too
+      // small at the defaults.
+      max-height: var(--quote-logo-h, 34px);
+      // unquote() keeps Sass from trying to evaluate CSS min() itself
+      max-width: unquote("min(var(--quote-logo-w, 260px), 100%)");
+      filter: brightness(0) invert(1);
+    }
+    // Opt out of the white monochrome treatment via `logo_full_color: true`
+    // front matter, for marks whose original colors read on the dark bg.
+    &.quoteLogo--color img {
+      filter: none;
+    }
+    @media (max-width: 575px) {
+      margin-bottom: 2rem;
+      img {
+        max-height: calc(var(--quote-logo-h, 34px) * 0.76);
+        max-width: unquote("min(calc(var(--quote-logo-w, 260px) * 0.8), 100%)");
+      }
+    }
+  }
+
   .quoteCaseLink {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
     margin-top: 1.4rem; // spacing for the centered (no-photo) variant
-    padding: 0.7rem 1.5rem;
+    padding: 0.55rem 1.2rem;
     border-radius: 100px;
     border: 1.5px solid transparent;
     background:
@@ -1527,7 +1554,7 @@ footer {
     color: #fff;
     font-style: normal;
     font-weight: 800;
-    font-size: 0.74rem;
+    font-size: 0.7rem;
     letter-spacing: 0.11em;
     text-transform: uppercase;
     text-decoration: none;
@@ -1537,15 +1564,6 @@ footer {
       color 0.3s ease,
       transform 0.3s ease,
       box-shadow 0.3s ease;
-
-    .quoteCaseLink__arrow {
-      font-size: 1.05rem;
-      line-height: 1;
-      color: #44e7d2;
-      transition:
-        transform 0.3s ease,
-        color 0.3s ease;
-    }
 
     &:hover,
     &:focus-visible {
@@ -1557,11 +1575,6 @@ footer {
       color: #06302e;
       transform: translateY(-2px);
       box-shadow: 0 14px 30px rgba(42, 217, 194, 0.26);
-
-      .quoteCaseLink__arrow {
-        color: #06302e;
-        transform: translateX(3px);
-      }
     }
 
     &:focus-visible {
@@ -1577,21 +1590,22 @@ footer {
   }
 
   // Portrait variant — for testimonials that supply a `photo` front-matter field.
-  // Mirrors the immersive case-study layout: left-aligned quote on top, then a
-  // footer row with a circular headshot (brand-gradient ring) on the left and
-  // the name/title stacked to its right.
+  // Fully centered composition: logo on top, quote, then a centered footer
+  // row with a circular headshot (brand-gradient ring) and the name/title
+  // stacked to its right.
   &.quoteBx--portrait {
-    text-align: left;
-    max-width: 760px;
+    text-align: center;
+    max-width: 880px;
     margin: 0 auto;
 
     .quoteBy {
       display: flex;
       align-items: center;
+      justify-content: center;
       flex-wrap: wrap;
       column-gap: 1.4rem;
       row-gap: 0; // CTA spacing is controlled by its own margin-top
-      margin-top: 2rem;
+      margin-top: 2.25rem; // matches .quoteLogo's margin-bottom above the quote
     }
     .quoteAvatar {
       flex: 0 0 auto;
@@ -1613,14 +1627,15 @@ footer {
     }
     .quoteByText {
       min-width: 0;
+      text-align: left;
     }
     .quoteName {
       padding-top: 0;
     }
 
-    // CTA drops onto its own line below the attribution, left-aligned. The
-    // break helper forces the wrap so the pill stays sized to its content;
-    // row-gap is 0 on .quoteBy so spacing is controlled solely by margin-top.
+    // CTA drops onto its own line below the attribution. The break helper
+    // forces the wrap so the pill stays sized to its content; row-gap is 0
+    // on .quoteBy so spacing is controlled solely by margin-top.
     .quoteCaseLink__break {
       display: block;
       flex-basis: 100%;
@@ -1628,10 +1643,36 @@ footer {
       margin: 0;
     }
     .quoteCaseLink {
-      margin-top: 1.3rem;
-      margin-left: 0;
-      align-self: flex-start;
+      margin-top: 1.2rem;
     }
+  }
+}
+
+// Home "our word" section — center the whole testimonial composition on the
+// screen: the content column (a col-md-7 that otherwise hugs the left of the
+// row), the section heading, and the slider pagination dots all share the
+// centered axis of the slides.
+#our-word {
+  .sectionColTxt {
+    margin-left: auto;
+    margin-right: auto;
+    // Widen the centered content column beyond its col-md-7 base (58%) so
+    // the quote box has room to breathe and the section heading fits on one
+    // line at desktop widths; the scrim keeps the center legible.
+    @media (min-width: 768px) {
+      width: 86%;
+    }
+  }
+  .quoteLabel {
+    text-align: center;
+    // Seats the gradient heading against the brighter, less-scrimmed art
+    // (drop-shadow follows the gradient glyphs; text-shadow can't).
+    filter: drop-shadow(0 2px 14px rgba(3, 30, 31, 0.65));
+  }
+  .flex-control-paging {
+    justify-content: center;
+    padding-left: 0;
+    padding-top: 2.4rem;
   }
 }
 .flexslider {
@@ -1642,6 +1683,13 @@ footer {
     list-style: none;
     width: 100%;
     height: 100%;
+  }
+  .slides {
+    display: flex;
+    align-items: center;
+    > li {
+      flex-shrink: 0;
+    }
   }
   .flex-control-paging {
     margin: 0;
@@ -1905,7 +1953,7 @@ footer {
   }
   #our-word {
     color: #fff;
-    padding: 7.4rem 0 3.75rem;
+    padding: 5.25rem 0 3rem;
     background: $pine;
     &:before {
       content: "";
@@ -1915,13 +1963,28 @@ footer {
       top: 0;
       position: absolute;
       z-index: 2;
+      // Center-weighted scrim: the testimonial composition is centered, so
+      // darkness pools behind the content column and the art stays visible
+      // at the edges. (Was a left-edge gradient when the column hugged left.)
       background:
-        linear-gradient(90deg, #031e1f 15.42%, rgba(14, 56, 58, 0) 48.62%),
-        linear-gradient(0deg, #031e1f 0%, rgba(14, 56, 58, 0) 72.12%);
+        radial-gradient(
+          ellipse 48% 62% at 50% 42%,
+          rgba(3, 30, 31, 0.84) 0%,
+          rgba(3, 30, 31, 0.32) 62%,
+          rgba(3, 30, 31, 0) 100%
+        ),
+        // Rises past mid-height to quiet the rope strand descending the
+        // lower right, fading out before the top-right art
+        linear-gradient(
+          0deg,
+          #031e1f 0%,
+          rgba(3, 30, 31, 0.55) 30%,
+          rgba(14, 56, 58, 0) 62%
+        );
     }
     .bg-image {
-      width: 98%;
-      left: inherit;
+      width: 100%;
+      left: 0;
       right: 0;
       z-index: 1;
       position: absolute;

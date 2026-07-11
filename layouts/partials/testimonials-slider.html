@@ -1,9 +1,29 @@
 <div id="testimonialSlider" class="flexslider">
   <ul class="slides clearfix">
     {{ range where (.Site.RegularPages.ByWeight) "Type" "testimonials" }} {{
-    $name := .Title }}
+    $name := .Title }} {{ $company := .Params.company | default .Title }}
     <li>
       <div class="quoteBx{{ if .Params.photo }} quoteBx--portrait{{ end }}">
+        {{ $fullColor := .Params.logo_full_color }} {{- /* Optional per-logo
+        size overrides for marks whose proportions don't sit well at the default
+        34x260 cap */ -}} {{ $logoStyle := "" }} {{ with .Params.logo_height }}
+        {{ $logoStyle = printf "--quote-logo-h:%dpx;" (int .) }} {{ end }} {{
+        with .Params.logo_max_width }} {{ $logoStyle = printf
+        "%s--quote-logo-w:%dpx;" $logoStyle (int .) }} {{ end }} {{ with
+        .Params.logo }}
+        <div
+          class="quoteLogo{{ if $fullColor }} quoteLogo--color{{ end }}"
+          {{
+          with
+          $logoStyle
+          }}style="{{ . | safeCSS }}"
+          {{
+          end
+          }}
+        >
+          <img src="{{ . }}" alt="{{ $company }} logo" loading="lazy" />
+        </div>
+        {{ end }}
         <div class="quoteTxt">{{ .Content }}</div>
         <div class="quoteBy">
           {{ with .Params.photo }}
@@ -19,7 +39,6 @@
           <span class="quoteCaseLink__break" aria-hidden="true"></span>
           <a class="quoteCaseLink" href="{{ . | relURL }}">
             <span class="quoteCaseLink__text">Read the case study</span>
-            <span class="quoteCaseLink__arrow" aria-hidden="true">&rarr;</span>
           </a>
           {{ end }}
         </div>
