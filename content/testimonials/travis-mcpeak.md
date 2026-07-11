@@ -5,7 +5,7 @@ photo: /img/testimonials/travis-mcpeak.jpeg
 company: Cursor
 logo: /img/logos/cursor-25d-dark-mode.svg
 logo_full_color: true
-logo_height: 44
+logo_height: 44 # requires an override bceause the logo dimensions (by default) is too small
 # case_study: TODO!
 ---
 
