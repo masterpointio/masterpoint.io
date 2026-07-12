@@ -115,7 +115,12 @@
         </div>
     </main>
 
+    {{/* Most immersive studies keep the shared assessment CTA after their
+         in-card callout. Content-heavy studies can suppress it to avoid a
+         second, unrelated closing section with `hide_schedule_assessment`. */}}
+    {{ if not .Params.hide_schedule_assessment }}
     {{ partial "schedule-assessment.html" . }}
+    {{ end }}
     {{ partial "footer.html" . }}
     {{ partial "scripts.html" . }}
     {{ if $stickyNav }}

@@ -2983,6 +2983,531 @@ html:has(.cs-sticky-nav) {
   }
 }
 
+// =============================================================================
+// CURSOR — case-study-specific composition
+// -----------------------------------------------------------------------------
+// Cursor's story is deliberately denser than the other immersive studies:
+// five authored bands contain the full source draft. These scoped components
+// make the long engagement and combined results scan like an infrastructure
+// release log without changing the shared immersive primitives.
+// =============================================================================
+
+body#cursor-case-study.case-study-immersive {
+  --cursor-paper: #f7f8f5;
+  --cursor-charcoal: #171918;
+  --cursor-rule: rgba(20, 48, 47, 0.14);
+
+  // Cursor's source wordmark is dark. A crisp paper chip keeps the original
+  // asset legible in both the dark hero and sticky bar, including print where
+  // filters are intentionally disabled.
+  .cs-hero__lockup-mark--client {
+    padding: 0.45rem 0.7rem;
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 8px;
+    box-shadow: 0 10px 28px -18px rgba(0, 0, 0, 0.65);
+  }
+  .cs-sticky-nav__client {
+    box-sizing: content-box;
+    padding: 0.2rem 0.35rem;
+    background: #fff;
+    border-radius: 5px;
+  }
+
+  // A restrained node-and-grid field references the state graph being split
+  // apart. It is CSS-only, decorative, and never competes with the headline.
+  .cs-hero {
+    background: linear-gradient(135deg, #111817 0%, $pine 58%, #0a292a 100%);
+    &::before {
+      opacity: 0.9;
+      background:
+        radial-gradient(circle at 78% 31%, rgba(226, 167, 215, 0.7) 0 5px, transparent 6px),
+        radial-gradient(circle at 85% 42%, rgba(42, 217, 194, 0.75) 0 4px, transparent 5px),
+        radial-gradient(circle at 72% 54%, rgba(42, 217, 194, 0.55) 0 3px, transparent 4px),
+        radial-gradient(circle at 91% 61%, rgba(226, 167, 215, 0.55) 0 4px, transparent 5px),
+        radial-gradient(ellipse at 82% 42%, rgba(42, 217, 194, 0.16), transparent 38%),
+        radial-gradient(ellipse at 9% 96%, rgba(209, 145, 191, 0.12), transparent 48%);
+    }
+    &::after {
+      opacity: 0.55;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(90deg, transparent 38%, #000 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 38%, #000 100%);
+    }
+  }
+  .cs-stat-strip__inner,
+  .csi-article-card {
+    border-radius: 12px;
+  }
+
+  // Keep the five long-form bands readable without multiplying sections.
+  #the-challenge,
+  #the-work,
+  #the-results,
+  #what-changed {
+    .csi-section__head {
+      max-width: 1080px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  #the-challenge .csi-prose {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  #the-work .csi-prose,
+  #the-results .csi-prose,
+  #what-changed .csi-prose {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  #key-value {
+    .cursor-sidebar-label {
+      display: block;
+      margin-bottom: 0.55rem;
+      color: $csi-link;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .csi-prose > p:first-child {
+      max-width: 900px;
+      font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+      line-height: 1.55;
+      color: $csi-ink;
+    }
+    .csi-impact {
+      max-width: 1080px;
+      margin: 2rem auto 0;
+    }
+    .csi-impact__card {
+      border-radius: 10px;
+      border-top: 3px solid rgba(11, 125, 114, 0.3);
+    }
+  }
+
+  // The problem lists read as compact diagnostic cards instead of another
+  // long bullet column. Source order and wording stay untouched.
+  #the-challenge .csi-prose > ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 0.8rem;
+    margin: 1.1rem 0 1.7rem;
+    > li {
+      min-height: 100%;
+      margin: 0;
+      padding: 1rem 1rem 1rem 2.15rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      &::before {
+        left: 1rem;
+        top: 1.45rem;
+      }
+    }
+  }
+
+  // Engagement release log — all four phases remain articles inside ONE band.
+  .cursor-phase {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 1.1rem;
+    position: relative;
+    max-width: 1040px;
+    margin: 2rem auto 0;
+    text-align: left;
+  }
+  .cursor-phase + .cursor-phase {
+    margin-top: 1.15rem;
+  }
+  .cursor-phase__rail {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 16px;
+      bottom: -2.3rem;
+      width: 1px;
+      background: linear-gradient(180deg, rgba(11, 125, 114, 0.55), rgba(209, 145, 191, 0.3));
+    }
+  }
+  .cursor-phase:last-child .cursor-phase__rail::after {
+    display: none;
+  }
+  .cursor-phase__marker {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin-top: 1.55rem;
+    border: 4px solid #fff;
+    border-radius: 50%;
+    @include csi-grad-solid;
+    box-shadow: 0 0 0 1px rgba(11, 125, 114, 0.28);
+  }
+  .cursor-phase__card {
+    padding: 1.55rem 1.65rem;
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid var(--cursor-rule);
+    border-radius: 10px;
+    box-shadow: 0 18px 40px -32px rgba(7, 31, 30, 0.5);
+  }
+  .cursor-phase__title {
+    margin: 0 0 1rem;
+    color: $csi-ink;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+    font-weight: 800;
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+    text-transform: none;
+  }
+  .cursor-phase__body {
+    color: $csi-ink-soft;
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // Verbatim source tables retain all columns; overflow is local on narrow
+  // screens so the page itself never gains a horizontal scrollbar.
+  .cursor-table {
+    width: 100%;
+    margin: 1.4rem 0;
+    overflow-x: auto;
+    border: 1px solid var(--cursor-rule);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.78);
+    -webkit-overflow-scrolling: touch;
+    &:focus-visible {
+      outline: 3px solid $cs-mint;
+      outline-offset: 3px;
+    }
+    table {
+      width: 100%;
+      min-width: 620px;
+      margin: 0;
+      border: 0;
+      border-collapse: collapse;
+      color: $csi-ink-soft;
+      font-size: 0.9rem;
+      text-align: left;
+    }
+    thead {
+      background: rgba(20, 48, 47, 0.06);
+    }
+    th,
+    td {
+      padding: 0.85rem 0.95rem;
+      border: 0;
+      border-bottom: 1px solid var(--cursor-rule);
+      vertical-align: top;
+    }
+    th {
+      color: $csi-ink;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+    tbody tr:hover {
+      background: rgba(42, 217, 194, 0.06);
+    }
+  }
+
+  // Evidence cards live INSIDE the combined results band. Dark source graphics
+  // blend into the card while the one white graphic keeps its paper field.
+  .cursor-proof {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(340px, 1.1fr);
+    gap: 1.6rem;
+    align-items: center;
+    width: 100%;
+    margin: 1.15rem 0;
+    padding: 1.35rem;
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.045);
+    overflow: hidden;
+  }
+  .cursor-proof--flip {
+    grid-template-columns: minmax(340px, 1.1fr) minmax(0, 0.9fr);
+    .cursor-proof__copy {
+      order: 2;
+    }
+    .cursor-proof__media {
+      order: 1;
+    }
+  }
+  .cursor-proof--no-media {
+    display: block;
+  }
+  .cursor-proof__title {
+    margin: 0 0 0.8rem;
+    color: #fff;
+    font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+    line-height: 1.25;
+    font-weight: 800;
+    text-transform: none;
+  }
+  .cursor-proof__body {
+    color: #c4d4d3;
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+  .cursor-proof__media {
+    margin: 0;
+    min-width: 0;
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 22px 44px -30px rgba(0, 0, 0, 0.7);
+    }
+  }
+  .cursor-proof__media-link {
+    display: block;
+    border-radius: 8px;
+    &:focus-visible {
+      outline: 3px solid $cs-mint;
+      outline-offset: 4px;
+    }
+  }
+  #the-results .cursor-proof:first-of-type .csi-impact {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+    margin: 1rem 0 1.2rem;
+    @media (max-width: 980px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 560px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  #the-results .cursor-proof:first-of-type .csi-impact__card {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  #the-results .cursor-proof:first-of-type .csi-impact__title {
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  // What Changed is still one band: one featured proof plus two compact cards.
+  #what-changed {
+    .cursor-proof-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.8rem;
+      text-align: left;
+    }
+    .cursor-proof {
+      display: block;
+      height: 100%;
+      margin: 0;
+      padding: 1.45rem;
+      color: $csi-ink-soft;
+      background: rgba(255, 255, 255, 0.84);
+      border-color: var(--cursor-rule);
+      box-shadow: 0 18px 40px -32px rgba(7, 31, 30, 0.45);
+    }
+    .cursor-proof--featured {
+      display: grid;
+      grid-column: 1 / -1;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 0.9fr);
+    }
+    .cursor-proof__title {
+      color: $csi-ink;
+    }
+    .cursor-proof__body {
+      color: $csi-ink-soft;
+    }
+    .cs-pullquote {
+      margin: 1.2rem 0;
+    }
+  }
+
+  .cursor-closing-quote {
+    position: relative;
+    max-width: 1120px;
+    margin: 2rem auto 0;
+    padding: 2.3rem 2.5rem 2.1rem 6rem;
+    overflow: hidden;
+    text-align: left;
+    color: #fff;
+    background: linear-gradient(135deg, var(--cursor-charcoal), $pine);
+    border-radius: 12px;
+    box-shadow: 0 28px 58px -38px rgba(0, 0, 0, 0.7);
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 92% 12%, rgba(42, 217, 194, 0.22), transparent 45%);
+    }
+  }
+  .cursor-closing-quote__mark {
+    position: absolute;
+    z-index: 1;
+    top: 1.7rem;
+    left: 2.2rem;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 5rem;
+    line-height: 1;
+    @include csi-grad-bright;
+  }
+  .cursor-closing-quote__body,
+  .cursor-closing-quote__name {
+    position: relative;
+    z-index: 1;
+  }
+  .cursor-closing-quote__body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: #fff;
+    font-size: clamp(1.2rem, 2.1vw, 1.65rem);
+    font-weight: 700;
+    line-height: 1.5;
+    p {
+      margin: 0;
+    }
+  }
+  .cursor-closing-quote__name {
+    display: block;
+    margin-top: 1rem;
+    color: $cs-mint;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .csi-cta {
+    .cursor-ceilings {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.55rem;
+      margin: 1rem 0;
+      padding: 0;
+      list-style: none;
+      li {
+        margin: 0;
+        padding: 0.45rem 0.85rem;
+        color: #d3e2e1;
+        font-size: 0.9rem;
+        border: 1px solid rgba(42, 217, 194, 0.28);
+        border-radius: 999px;
+        background: rgba(42, 217, 194, 0.06);
+      }
+    }
+    p + p {
+      margin-top: 0.8rem;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .cursor-proof,
+    .cursor-proof--flip,
+    #what-changed .cursor-proof--featured {
+      grid-template-columns: 1fr;
+    }
+    .cursor-proof--flip {
+      .cursor-proof__copy,
+      .cursor-proof__media {
+        order: initial;
+      }
+    }
+    #what-changed .cursor-proof-grid {
+      grid-template-columns: 1fr;
+    }
+    #what-changed .cursor-proof--featured {
+      grid-column: auto;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .cs-sticky-nav__lockup {
+      display: none;
+    }
+    .cs-sticky-nav__inner {
+      justify-content: flex-start;
+    }
+    .cs-sticky-nav__links {
+      width: 100%;
+    }
+    .cs-hero__lockup-mark--client {
+      padding: 0.35rem 0.55rem;
+    }
+    .cursor-phase {
+      grid-template-columns: 24px minmax(0, 1fr);
+      gap: 0.55rem;
+    }
+    .cursor-phase__marker {
+      width: 13px;
+      height: 13px;
+      margin-top: 1.35rem;
+      border-width: 3px;
+    }
+    .cursor-phase__card,
+    .cursor-proof,
+    #what-changed .cursor-proof {
+      padding: 1.05rem;
+    }
+    .cursor-table {
+      margin-left: -0.35rem;
+      width: calc(100% + 0.7rem);
+    }
+    .cursor-proof__media {
+      margin-right: -1.05rem;
+      margin-bottom: -1.05rem;
+      margin-left: -1.05rem;
+    }
+    .cursor-closing-quote {
+      padding: 4.2rem 1.35rem 1.6rem;
+    }
+    .cursor-closing-quote__mark {
+      top: 0.7rem;
+      left: 1.2rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:has(body#cursor-case-study) {
+    scroll-behavior: auto !important;
+  }
+  body#cursor-case-study {
+    [data-aos] {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .cs-sticky-nav,
+    .cursor-phase,
+    .cursor-proof,
+    .csi-impact__card {
+      transition: none !important;
+    }
+  }
+}
+
 // ───────────────────────────────────────────────────────────────────────────
 // PRINT / PDF — make the case study print exactly like the screen.
 // The site stylesheet now loads with media="all" (see partials/head.html), so

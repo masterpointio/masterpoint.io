@@ -1,0 +1,9 @@
+{{/* Final source quote, kept inside Cursor's What Changed band. */}}
+{{- $name := .Get "name" -}}
+<figure class="cursor-closing-quote" data-aos="fade-up" data-aos-duration="600">
+<div class="cursor-closing-quote__mark" aria-hidden="true">&ldquo;</div>
+<blockquote class="cursor-closing-quote__body">
+{{ .Inner | $.Page.RenderString (dict "display" "block") }}
+</blockquote>
+{{- with $name }}<figcaption class="cursor-closing-quote__name">{{ . | safeHTML }}</figcaption>{{ end -}}
+</figure>

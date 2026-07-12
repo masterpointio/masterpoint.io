@@ -1,0 +1,38 @@
+{{/*
+  Responsive, semantic rendering for Cursor's verbatim Markdown-style source
+  tables. The first body cell becomes a row header, and the scroll region can
+  be reached by keyboard on narrow screens.
+*/}}
+{{- $label := .Get "label" -}}
+{{- $lines := split (trim .Inner " \t\r\n") "\n" -}}
+<div class="cursor-table" role="region" tabindex="0"{{ with $label }} aria-label="{{ . }}"{{ end }}>
+<table>
+<thead>
+{{- range $lineIndex, $line := $lines -}}
+  {{- if eq $lineIndex 0 -}}
+    {{- $row := trim $line " \t\r" -}}
+    {{- $row = strings.TrimPrefix "|" $row -}}
+    {{- $row = strings.TrimSuffix "|" $row -}}
+<tr>
+    {{- range (split $row "|") }}<th scope="col">{{ trim . " \t" | safeHTML }}</th>{{ end -}}
+</tr>
+  {{- end -}}
+{{- end }}
+</thead>
+<tbody>
+{{- range $lineIndex, $line := $lines -}}
+  {{- if gt $lineIndex 1 -}}
+    {{- $row := trim $line " \t\r" -}}
+    {{- $row = strings.TrimPrefix "|" $row -}}
+    {{- $row = strings.TrimSuffix "|" $row -}}
+<tr>
+    {{- range $cellIndex, $cell := (split $row "|") -}}
+      {{- if eq $cellIndex 0 }}<th scope="row">{{ trim $cell " \t" | safeHTML }}</th>
+      {{- else }}<td>{{ trim $cell " \t" | safeHTML }}</td>{{ end -}}
+    {{- end }}
+</tr>
+  {{- end -}}
+{{- end }}
+</tbody>
+</table>
+</div>

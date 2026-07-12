@@ -1,0 +1,20 @@
+{{/*
+  cursor-phase — a dated chapter inside Cursor's single engagement band.
+  Keeping phases as articles (not sections) preserves one continuous story
+  while the numbered rail makes the long engagement easy to scan.
+
+  Args:
+    title  exact phase heading from the source draft
+*/}}
+{{- $title := .Get "title" -}}
+<article class="cursor-phase" data-aos="fade-up" data-aos-duration="600">
+<div class="cursor-phase__rail" aria-hidden="true">
+<span class="cursor-phase__marker"></span>
+</div>
+<div class="cursor-phase__card">
+{{- with $title }}<h3 class="cursor-phase__title">{{ . | safeHTML }}</h3>{{ end -}}
+<div class="cursor-phase__body">
+{{ .Inner | $.Page.RenderString (dict "display" "block") }}
+</div>
+</div>
+</article>

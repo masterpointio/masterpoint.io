@@ -1,0 +1,32 @@
+{{/*
+  cursor-proof — an evidence card inside a larger Cursor narrative band.
+  Optional media lets quantitative proof alternate between copy and a source
+  graphic without turning every result into another full-page section.
+
+  Args:
+    title     exact subsection heading from the source draft
+    media     optional image path
+    media_alt accessible image description
+    flip      "true" places media before copy on wide screens
+    featured  "true" spans both columns when nested in cursor-proof-grid
+*/}}
+{{- $title := .Get "title" -}}
+{{- $media := .Get "media" -}}
+{{- $alt := .Get "media_alt" | default "" -}}
+{{- $flip := .Get "flip" -}}
+{{- $featured := .Get "featured" -}}
+<article class="cursor-proof{{ if not $media }} cursor-proof--no-media{{ end }}{{ if $flip }} cursor-proof--flip{{ end }}{{ if $featured }} cursor-proof--featured{{ end }}" data-aos="fade-up" data-aos-duration="600">
+<div class="cursor-proof__copy">
+{{- with $title }}<h3 class="cursor-proof__title">{{ . | safeHTML }}</h3>{{ end -}}
+<div class="cursor-proof__body">
+{{ .Inner | $.Page.RenderString (dict "display" "block") }}
+</div>
+</div>
+{{- with $media }}
+<figure class="cursor-proof__media">
+<a class="cursor-proof__media-link" href="{{ . }}">
+<img src="{{ . }}" alt="{{ $alt }}" width="2048" height="1152" loading="lazy" decoding="async" />
+</a>
+</figure>
+{{- end }}
+</article>

@@ -365,7 +365,9 @@ Masterpoint could help your team too?" callout, now with an **inline underlined
 "Get in touch" link (no button)** — then the shared **`schedule-assessment.html`**
 partial ("Get a standardized, predictable, and efficient infrastructure
 management process" + Schedule button), then `footer`. Same closing as the modern
-case studies and the marketing pages.
+case studies and the marketing pages. Set `hide_schedule_assessment: true` in
+front matter when a content-heavy study already has a complete source-authored
+CTA and the shared assessment band would create a redundant second ending.
 
 ### Sticky section nav
 
