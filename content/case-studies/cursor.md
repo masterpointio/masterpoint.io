@@ -11,6 +11,8 @@ client: "Cursor"
 client_logo: /img/case-studies/cursor/cursor-lockup-white.svg
 client_logo_height: 30px
 hero_title: "<span class='text-gradient'>75% Faster Plans, 2x Daily Applies</span>: How Cursor Rebuilt Its Terraform Workflow with Masterpoint"
+hero_aside_image: /img/case-studies/cursor/hero-bg-cube.png
+hero_aside_alt: "Cursor's three-dimensional cube mark with the CURSOR wordmark, ghosted on a deep pine gradient"
 
 # At-a-glance stat strip (appears under hero)
 stat_bar:
