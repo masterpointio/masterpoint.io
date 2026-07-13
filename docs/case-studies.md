@@ -430,14 +430,13 @@ active-link underline INSIDE the link box — the links row is
 - **Client logo is the official brand-kit horizontal lockup SVG**
   (`cursor-lockup-white.svg`, the kit's `_DARK` = off-white #edecec variant)
   at `client_logo_height: 30px`.
-- **Hero background (`hero-bg-cube.png`) is a generated composite**, not a
-  photo: the brand-kit VERTICAL lockup (`LOCKUP_VERTICAL_25D_DARK.svg`, the
-  2.5D shaded cube above the CURSOR wordmark; rasterized transparent via
-  headless Chrome), seated centre-right at ~27% canvas width on a pine
-  gradient + teal/pink glows + dot grid (PIL-composited from the user's
-  `~/Downloads/cursor-brand-assets/`). Positioned so it clears the frosted
-  title card at 1440. Swap the file for a designer piece or an approved
-  Cursor IDE still anytime.
+- **Hero background is Cursor's homepage team photo**
+  (`cursor-team-photo.webp`, 1920×1080 — an engineer at a chalkboard leading
+  a team discussion), the same photo-under-scrim treatment as MarketSpark's
+  hero. The subject sits centre-right so the frosted title card covers only
+  the darkened chalkboard side. Generated-composite alternatives from earlier
+  iterations (terralith artwork, brand-lockup-on-pine) can be recreated from
+  the brand kit if the photo ever needs replacing.
 - **Stat-strip values use `&nbsp;`** inside multi-word tokens
   (`~8&nbsp;min → ~2&nbsp;min`) so narrow columns wrap at the arrow, never
   mid-token.
