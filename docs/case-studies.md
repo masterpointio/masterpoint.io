@@ -94,6 +94,7 @@ client_logo_height: 48px # OPTIONAL (immersive only) — scales the hero client 
 hero_title: "... <span class='text-gradient'>highlighted</span> ..."
 hero_aside_image: /img/case-studies/CLIENT/hero-bg.jpg # OPTIONAL full-bleed hero photo
 hero_aside_alt: "..." # alt text for the bg image
+hero_bg_start: "25%" # OPTIONAL — inset the photo's left edge that far, left-fading it into the hero's pine (for photos whose left region is dead space on wide screens); omit for full-bleed (MarketSpark)
 
 # At-a-glance stat strip ────────────────────────────────────────────
 stat_bar: # 4-up cards under the hero
@@ -431,10 +432,12 @@ active-link underline INSIDE the link box — the links row is
   (`cursor-lockup-white.svg`, the kit's `_DARK` = off-white #edecec variant)
   at `client_logo_height: 30px`.
 - **Hero background is Cursor's homepage team photo**
-  (`cursor-team-photo.webp`, 1920×1080 — an engineer at a chalkboard leading
-  a team discussion), the same photo-under-scrim treatment as MarketSpark's
-  hero. The subject sits centre-right so the frosted title card covers only
-  the darkened chalkboard side. Generated-composite alternatives from earlier
+  (`cursor-team-photo.webp`, 3840×2160 — the ORIGINAL from Cursor's asset
+  store; the site-served rendition is capped at 1920 and upscales blurry on
+  wide/retina screens), the same photo-under-scrim treatment as MarketSpark's
+  hero, plus `hero_bg_start: "25%"` so the photo starts a quarter in and
+  left-fades into pine — its left quarter is out-of-focus foreground that
+  read as mush on widescreens. Generated-composite alternatives from earlier
   iterations (terralith artwork, brand-lockup-on-pine) can be recreated from
   the brand kit if the photo ever needs replacing.
 - **Stat-strip values use `&nbsp;`** inside multi-word tokens

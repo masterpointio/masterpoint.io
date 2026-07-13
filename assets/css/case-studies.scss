@@ -80,6 +80,11 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
     &__bg {
       position: absolute;
       inset: 0;
+      // optional per-page inset (front matter `hero_bg_start`, e.g. "25%"):
+      // start the photo that far from the left and let the hero's pine
+      // gradient own the title side — for photos whose left region is dead
+      // space (out-of-focus foreground) on wide screens
+      left: var(--cs-hero-bg-start, 0);
       z-index: 0;
       pointer-events: none;
       img {
@@ -102,6 +107,14 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
           ),
           linear-gradient(180deg, rgba(14, 56, 58, 0.10) 0%, rgba(6, 29, 30, 0.25) 100%);
       }
+    }
+    // when the photo is inset (`hero_bg_start` present), fade its left edge
+    // into the pine so there's no hard seam. Attribute-scoped so pages
+    // without the param (MarketSpark) render exactly as before; masks are
+    // already zeroed universally in print.
+    &__bg[style*="--cs-hero-bg-start"] {
+      mask-image: linear-gradient(90deg, transparent 0, #000 22%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 22%);
     }
 
     // decorative element: soft mint-glow + faint dotted grid (suppressed when bg image present)

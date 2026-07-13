@@ -7,7 +7,7 @@
     {{ $bgImg := or .Params.hero_image .Params.hero_aside_image }}
     <section class="cs-hero{{ if $bgImg }} cs-hero--with-bg{{ end }}">
         {{ if $bgImg }}
-        <div class="cs-hero__bg">
+        <div class="cs-hero__bg"{{ with .Params.hero_bg_start }} style="--cs-hero-bg-start: {{ . }}"{{ end }}>
             <img src="{{ $bgImg }}" alt="" />
         </div>
         {{ end }}
