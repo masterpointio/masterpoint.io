@@ -94,7 +94,7 @@ client_logo_height: 48px # OPTIONAL (immersive only) — scales the hero client 
 hero_title: "... <span class='text-gradient'>highlighted</span> ..."
 hero_aside_image: /img/case-studies/CLIENT/hero-bg.jpg # OPTIONAL full-bleed hero photo
 hero_aside_alt: "..." # alt text for the bg image
-hero_bg_start: "25%" # OPTIONAL — inset the photo's left edge that far, left-fading it into the hero's pine (for photos whose left region is dead space on wide screens); omit for full-bleed (MarketSpark)
+hero_bg_start: "40%" # OPTIONAL — pine owns the hero left of this line; the photo renders its FULL frame (contain, right-anchored, no cover-crop) to the right, left edge faded into the pine. ≤991px falls back to full-bleed cover. Omit for classic full-bleed (MarketSpark)
 
 # At-a-glance stat strip ────────────────────────────────────────────
 stat_bar: # 4-up cards under the hero

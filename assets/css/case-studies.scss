@@ -108,13 +108,31 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
           linear-gradient(180deg, rgba(14, 56, 58, 0.10) 0%, rgba(6, 29, 30, 0.25) 100%);
       }
     }
-    // when the photo is inset (`hero_bg_start` present), fade its left edge
-    // into the pine so there's no hard seam. Attribute-scoped so pages
+    // when the photo is inset (`hero_bg_start` present): the pine gradient
+    // owns the left of the line, and the photo renders its FULL frame
+    // (contain, right-anchored — no cover-cropping) to the right of it, with
+    // a faded left edge so there's no hard seam. Attribute-scoped so pages
     // without the param (MarketSpark) render exactly as before; masks are
     // already zeroed universally in print.
     &__bg[style*="--cs-hero-bg-start"] {
       mask-image: linear-gradient(90deg, transparent 0, #000 22%);
       -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 22%);
+      img {
+        object-fit: contain;
+        object-position: right center;
+      }
+      // below the stacked-header breakpoint the title overlays the hero and a
+      // contained photo in a part-width box would render postage-stamp small:
+      // fall back to the standard full-bleed cover treatment
+      @media (max-width: 991px) {
+        left: 0;
+        mask-image: none;
+        -webkit-mask-image: none;
+        img {
+          object-fit: cover;
+          object-position: 70% center;
+        }
+      }
     }
 
     // decorative element: soft mint-glow + faint dotted grid (suppressed when bg image present)
