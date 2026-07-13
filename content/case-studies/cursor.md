@@ -13,7 +13,7 @@ client_logo_height: 30px
 hero_title: "<span class='text-gradient'>75% Faster Plans, 2x Daily Applies</span>: How Cursor Rebuilt Its Terraform Workflow with Masterpoint"
 hero_aside_image: /img/case-studies/cursor/cursor-team-photo.webp
 hero_aside_alt: "A Cursor engineer leads a team discussion at a chalkboard sketched with background-agent architecture"
-hero_bg_start: "25%"
+hero_bg_start: "40%"
 
 # At-a-glance stat strip (appears under hero)
 stat_bar:

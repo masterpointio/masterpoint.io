@@ -435,9 +435,9 @@ active-link underline INSIDE the link box — the links row is
   (`cursor-team-photo.webp`, 3840×2160 — the ORIGINAL from Cursor's asset
   store; the site-served rendition is capped at 1920 and upscales blurry on
   wide/retina screens), the same photo-under-scrim treatment as MarketSpark's
-  hero, plus `hero_bg_start: "25%"` so the photo starts a quarter in and
-  left-fades into pine — its left quarter is out-of-focus foreground that
-  read as mush on widescreens. Generated-composite alternatives from earlier
+  hero, plus `hero_bg_start: "40%"` so the photo starts well right of the
+  title card and left-fades into pine — its left region is out-of-focus
+  foreground that read as mush on widescreens. Generated-composite alternatives from earlier
   iterations (terralith artwork, brand-lockup-on-pine) can be recreated from
   the brand kit if the photo ever needs replacing.
 - **Stat-strip values use `&nbsp;`** inside multi-word tokens
