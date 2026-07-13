@@ -2,6 +2,9 @@
 title: Adam Pallin
 position: Director of Software Engineering, MarketSpark
 photo: /img/testimonials/adam-pallin.jpeg
+company: MarketSpark
+logo: /img/logos/marketspark.png
+logo_height: 54 # requires an override bceause the logo dimensions (by default) is too small
 case_study: /case-studies/marketspark/
 ---
 
