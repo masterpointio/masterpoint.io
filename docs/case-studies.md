@@ -431,12 +431,13 @@ active-link underline INSIDE the link box — the links row is
   (`cursor-lockup-white.svg`, the kit's `_DARK` = off-white #edecec variant)
   at `client_logo_height: 30px`.
 - **Hero background (`hero-bg-cube.png`) is a generated composite**, not a
-  photo: the brand-kit 3D cube icon (greyscaled, dimmed, screen-blended) with
-  the CURSOR wordmark etched across its lower face over a soft dark
-  under-glow, on a pine gradient + teal/pink glows + dot grid (PIL-composited
-  from the user's `~/Downloads/cursor-brand-assets/`). Composition sits
-  centre-right so the full wordmark clears the frosted title card at 1440.
-  Swap the file for a designer piece or an approved Cursor IDE still anytime.
+  photo: the brand-kit VERTICAL lockup (`LOCKUP_VERTICAL_25D_DARK.svg`, the
+  2.5D shaded cube above the CURSOR wordmark; rasterized transparent via
+  headless Chrome), seated centre-right at ~27% canvas width on a pine
+  gradient + teal/pink glows + dot grid (PIL-composited from the user's
+  `~/Downloads/cursor-brand-assets/`). Positioned so it clears the frosted
+  title card at 1440. Swap the file for a designer piece or an approved
+  Cursor IDE still anytime.
 - **Stat-strip values use `&nbsp;`** inside multi-word tokens
   (`~8&nbsp;min → ~2&nbsp;min`) so narrow columns wrap at the arrow, never
   mid-token.
