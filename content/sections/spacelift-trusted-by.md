@@ -1,9 +1,9 @@
 ---
-title: Join Clients Like
+title: Trusted By
 weight: 1
 section_categories:
-  - Home
-id: join-clients
+  - spacelift
+id: spacelift-trusted-by
 ---
 
 {{< trusted-by >}}

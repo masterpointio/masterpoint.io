@@ -141,6 +141,15 @@ AOS.init({
     once: true
 });
 
+// Recompute AOS trigger positions once all images/fonts have loaded.
+// Without this, late layout shifts leave stale positions and the bottom-most
+// section (e.g. the final CTA) can stay at opacity:0 and never animate in.
+window.addEventListener('load', function () {
+    if (window.AOS) {
+        AOS.refresh();
+    }
+});
+
 // Magnific Popup
 $('.open-popup-link').magnificPopup({
     type:'inline',
