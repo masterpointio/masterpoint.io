@@ -33,7 +33,7 @@ og_img: /img/case-studies/cursor/cursor-masterpoint.png
 
 # Homepage highlight card (see docs/case-studies.md → Homepage slider)
 highlight:
-  blurb: "Cursor's AWS infrastructure had outgrown the architecture it was built on: deployments crawled, change diffs were unreadable, and engineers had stopped trusting the system. Masterpoint audited, re-architected, and rebuilt the platform so the whole engineering org now ships infrastructure changes quickly and with confidence."
+  blurb: "Cursor's AWS infrastructure had outgrown the architecture and engineers had stopped trusting the system. Masterpoint audited, re-architected, and modernized the platform so the whole engineering org now ships infrastructure changes quickly and with confidence."
   image: /img/case-studies/cursor/cursor-team-photo.webp
   image_alt: "Cursor engineers having a team whiteboard discussion about AI agent architecture."
   logo: /img/logos/cursor.svg
