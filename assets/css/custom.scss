@@ -4257,7 +4257,7 @@ font-size: 1.55rem;
 // layouts/shortcodes/case-study-slider.html; see docs/case-studies.md.
 // ---------------------------------------------------------------------------
 .csh {
-  margin-top: 2.6rem;
+  margin-top: 1.8rem;
 
   &__viewport {
     overflow: hidden;
@@ -4331,7 +4331,7 @@ font-size: 1.55rem;
     z-index: 1;
     flex: 1 1 55%;
     min-width: 0;
-    padding: 3rem 3rem 2.8rem;
+    padding: 2.2rem 2.8rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -4342,7 +4342,7 @@ font-size: 1.55rem;
   }
 
   &__logo {
-    margin-bottom: 1.6rem;
+    margin-bottom: 1.1rem;
     img {
       display: block;
       height: var(--cs-client-logo-h, 32px);
@@ -4363,7 +4363,7 @@ font-size: 1.55rem;
     color: rgba(255, 255, 255, 0.82);
     font-size: 1rem;
     line-height: 1.55em;
-    margin-bottom: 1.7rem;
+    margin-bottom: 1.3rem;
     max-width: 34rem;
   }
 
@@ -4374,7 +4374,7 @@ font-size: 1.55rem;
   &__media {
     flex: 1 1 45%;
     position: relative;
-    min-height: 300px;
+    min-height: 260px;
     img {
       position: absolute;
       inset: 0;
@@ -4400,7 +4400,7 @@ font-size: 1.55rem;
   // overflows (centering the scroll container itself would clip its left end)
   justify-content: center;
   gap: 0.9rem;
-  margin-top: 1.6rem;
+  margin-top: 1.1rem;
   min-width: 0;
 
   &__tabs {
@@ -4564,7 +4564,7 @@ font-size: 1.55rem;
 }
 
 .csh-see-all {
-  margin-top: 2.4rem;
+  margin-top: 1.6rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
