@@ -12,7 +12,7 @@ client_logo: /img/case-studies/cursor/cursor-lockup-white.svg
 client_logo_height: 40px
 hero_title: "How Cursor Rebuilt Its Terraform Workflow with Masterpoint: <span class='text-gradient'>5x Faster Plans, 2x More Deployments</span>"
 hero_aside_image: /img/case-studies/cursor/cursor-team-photo.webp
-hero_aside_alt: "A Cursor engineer leads a team discussion at a chalkboard sketched with background-agent architecture"
+hero_aside_alt: "Cursor engineers having a team whiteboard discussion about AI agent architecture."
 hero_photo_inset: true # photo sits in the right 75% (25% plain-pine inseam on the left), left-biased crop
 
 # At-a-glance stat strip (appears under hero) — headline % / x increase on top,
@@ -31,12 +31,19 @@ stat_bar:
 preview_image: /img/case-studies/cursor/cursor-masterpoint.png
 og_img: /img/case-studies/cursor/cursor-masterpoint.png
 
+# Homepage highlight card (see docs/case-studies.md → Homepage slider)
+highlight:
+  blurb: "Cursor's AWS infrastructure had outgrown the architecture it was built on: deployments crawled, change diffs were unreadable, and engineers had stopped trusting the system. Masterpoint audited, re-architected, and rebuilt the platform so the whole engineering org now ships infrastructure changes quickly and with confidence."
+  image: /img/case-studies/cursor/cursor-team-photo.webp
+  image_alt: "Cursor engineers having a team whiteboard discussion about AI agent architecture."
+  logo: /img/logos/cursor.svg
+
 sitemap:
   priority: 0
 ---
 
 {{< csi-section accent="true" title="Executive Summary" variant="light" align="center" >}}
-[Cursor is an applied research AI lab](https://cursor.com/), with products used by [over half of the Fortune 500](https://cursor.com/enterprise). Cursor's AWS cloud infrastructure had outgrown the monolithic Terraform architecture it was built on: plans & deployments took 10+ minutes, diffs were noisy and unreadable, and engineers had stopped trusting the system. Masterpoint audited the infrastructure, decomposed the [terralith](https://masterpoint.io/blog/terralith-monolithic-terraform-architecture/), built an [Infrastructure as Code](https://aws.amazon.com/what-is/iac/) platform with a new scalable architecture, migrated to Spacelift & OpenTofu, and embedded AI agent guardrails so the new architecture sticks, along with a series of platform improvements detailed in the story below. Plans now run **5x faster**, engineers ship **2.6x more** infrastructure changes every week, and with a **91% reduction in blast radius**.
+[Cursor is an applied research AI lab](https://cursor.com/), with products used by [over half of the Fortune 500](https://cursor.com/enterprise). Cursor's AWS cloud infrastructure had outgrown the monolithic Terraform architecture it was built on: plans & deployments took 10+ minutes, diffs were noisy and unreadable, and engineers had stopped trusting the system. Masterpoint audited the infrastructure, decomposed the [terralith](https://masterpoint.io/blog/terralith-monolithic-terraform-architecture/), built an [Infrastructure as Code](https://aws.amazon.com/what-is/iac/) platform with a new scalable architecture, migrated to Spacelift & OpenTofu, and embedded AI agent guardrails so the new architecture sticks, along with a series of platform improvements detailed in the story below. Plans now run **5x faster** and engineers ship **2.6x more** infrastructure changes every week, all with a **91% reduction in blast radius**.
 
 {{< csi-carousel >}}
 image: /img/case-studies/cursor/cursor-terraform-5x-faster-masterpoint.png
