@@ -7,3 +7,4 @@
 - [ ] Revamp the index listing page of Case Studies (https://masterpoint.io/case-studies/) once we get more case studies.
 - [ ] OpenTofu Exclude Flag Blog Post: cross link to Cursor case study as a way to see where we took use of this feature or something like that, at the bottom callout section.
 - [ ] OpenTofu Exclude Flag -- link to a dedicated OpenTofu OpenTelemetry blog araticle
+- [ ] Add "drift" in TF terminology breakdown blog post.

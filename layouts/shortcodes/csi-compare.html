@@ -11,6 +11,9 @@
     label: Metric name
     before: Old-world value
     after: New-world value      (inline markdown works in all three)
+    delta: optional improvement pill after the after value (e.g. "39.3% faster")
+    neutral: optional "true" → render the after value in plain ink (no gradient)
+             for counts that aren't improvements (e.g. sample size)
 */}}
 {{- $beforeLabel := .Get "before_label" | default "Before" -}}
 {{- $afterLabel := .Get "after_label" | default "After" -}}
@@ -31,6 +34,8 @@
         {{- $label := "" -}}
         {{- $before := "" -}}
         {{- $after := "" -}}
+        {{- $delta := "" -}}
+        {{- $neutral := false -}}
         {{- range $lines -}}
           {{- $line := trim . " \t" -}}
           {{- if hasPrefix $line "label:" -}}
@@ -39,13 +44,17 @@
             {{- $before = trim (strings.TrimPrefix "before:" $line) " " -}}
           {{- else if hasPrefix $line "after:" -}}
             {{- $after = trim (strings.TrimPrefix "after:" $line) " " -}}
+          {{- else if hasPrefix $line "delta:" -}}
+            {{- $delta = trim (strings.TrimPrefix "delta:" $line) " " -}}
+          {{- else if hasPrefix $line "neutral:" -}}
+            {{- $neutral = eq (lower (trim (strings.TrimPrefix "neutral:" $line) " ")) "true" -}}
           {{- end -}}
         {{- end -}}
         <li class="csi-compare__row">
           <div class="csi-compare__metric">{{ $label | $.Page.RenderString (dict "display" "inline") }}</div>
           <div class="csi-compare__before"><span class="csi-compare__tag">{{ $beforeLabel | safeHTML }}</span>{{ $before | $.Page.RenderString (dict "display" "inline") }}</div>
           <div class="csi-compare__arrow" aria-hidden="true"><span class="csi-grad">&rarr;</span></div>
-          <div class="csi-compare__after"><span class="csi-compare__tag">{{ $afterLabel | safeHTML }}</span>{{ $after | $.Page.RenderString (dict "display" "inline") }}</div>
+          <div class="csi-compare__after{{ if $neutral }} csi-compare__after--plain{{ end }}"><span class="csi-compare__tag">{{ $afterLabel | safeHTML }}</span>{{ $after | $.Page.RenderString (dict "display" "inline") }}{{ with $delta }}<span class="csi-compare__delta">{{ . | $.Page.RenderString (dict "display" "inline") }}</span>{{ end }}</div>
         </li>
       {{- end -}}
     {{- end -}}

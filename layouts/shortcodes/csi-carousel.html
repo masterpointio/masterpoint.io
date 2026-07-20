@@ -1,0 +1,79 @@
+{{/*
+  csi-carousel — scroll-snap slideshow of result charts. Each slide is a chart
+  card with a caption row (gradient stat + one-line takeaway). Slides are
+  narrower than the viewport so the next chart peeks in from the right — that
+  peek (plus the edge fade, arrows and dots) signals there's more to scroll.
+  Place INSIDE a csi-section (designed for the light face).
+  Inner: blocks separated by `---`, each block:
+    image: /img/case-studies/CLIENT/chart.png   (16:9 works best)
+    alt: Descriptive alt text for the chart
+    stat: 80%                                   (big gradient figure)
+    title: Faster plans.                        (bold lead-in, include the period)
+    body: One-sentence takeaway. Inline markdown works.
+*/}}
+{{- $slides := slice -}}
+{{- range split .Inner "---" -}}
+  {{- $block := trim . " \t\n" -}}
+  {{- if $block -}}
+    {{- $s := dict -}}
+    {{- range split $block "\n" -}}
+      {{- $line := trim . " \t" -}}
+      {{- if hasPrefix $line "image:" -}}
+        {{- $s = merge $s (dict "image" (trim (strings.TrimPrefix "image:" $line) " ")) -}}
+      {{- else if hasPrefix $line "alt:" -}}
+        {{- $s = merge $s (dict "alt" (trim (strings.TrimPrefix "alt:" $line) " ")) -}}
+      {{- else if hasPrefix $line "stat:" -}}
+        {{- $s = merge $s (dict "stat" (trim (strings.TrimPrefix "stat:" $line) " ")) -}}
+      {{- else if hasPrefix $line "title:" -}}
+        {{- $s = merge $s (dict "title" (trim (strings.TrimPrefix "title:" $line) " ")) -}}
+      {{- else if hasPrefix $line "body:" -}}
+        {{- $s = merge $s (dict "body" (trim (strings.TrimPrefix "body:" $line) " ")) -}}
+      {{- else if and $line ($s.body) -}}
+        {{- $s = merge $s (dict "body" (printf "%s %s" $s.body $line)) -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $slides = $slides | append $s -}}
+  {{- end -}}
+{{- end -}}
+{{- $count := len $slides -}}
+<div class="csi-carousel" data-aos="fade-up" data-aos-duration="600" data-at-start="true" data-at-end="false">
+  <div class="csi-carousel__viewport">
+    <button class="csi-carousel__arrow csi-carousel__arrow--prev" type="button" aria-label="Previous chart" disabled>
+      <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+    </button>
+    <div class="csi-carousel__scroller" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Result charts — scroll sideways for more">
+      {{- range $i, $s := $slides }}
+      <figure class="csi-carousel__slide" role="group" aria-label="Chart {{ add $i 1 }} of {{ $count }}">
+        <button class="csi-carousel__zoom" type="button" aria-label="View chart {{ add $i 1 }} full size">
+          <img class="csi-carousel__media" src="{{ $s.image }}" alt="{{ $s.alt }}" loading="lazy" decoding="async" />
+        </button>
+        {{- if or $s.stat $s.title $s.body }}
+        <figcaption class="csi-carousel__caption">
+          {{- with $s.stat }}<span class="csi-carousel__stat csi-grad">{{ . }}</span>{{ end -}}
+          <span class="csi-carousel__text">
+            {{- with $s.title }}<strong>{{ . | safeHTML }}</strong> {{ end -}}
+            {{- with $s.body }}{{ . | $.Page.RenderString (dict "display" "inline") }}{{ end -}}
+          </span>
+        </figcaption>
+        {{- end }}
+      </figure>
+      {{- end }}
+    </div>
+    <button class="csi-carousel__arrow csi-carousel__arrow--next" type="button" aria-label="Next chart">
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+    </button>
+  </div>
+  <div class="csi-carousel__dots">
+    {{- range $i, $s := $slides }}
+    <button class="csi-carousel__dot{{ if eq $i 0 }} is-active{{ end }}" type="button" aria-label="Go to chart {{ add $i 1 }}"{{ if eq $i 0 }} aria-current="true"{{ end }}></button>
+    {{- end }}
+  </div>
+  <div class="csi-carousel__hint" aria-hidden="true">Swipe for more <i class="fa-solid fa-arrow-right-long"></i></div>
+  <dialog class="csi-carousel__lightbox" aria-label="Enlarged chart">
+    <button class="csi-carousel__lightbox-close" type="button" aria-label="Close enlarged chart">
+      <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+    </button>
+    <img class="csi-carousel__lightbox-img" alt="" />
+  </dialog>
+</div>
+{{/* Behavior JS lives in layouts/case-studies/immersive.html, gated on .HasShortcode "csi-carousel" — an inline script here would pass through the parent csi-section's markdown render, and goldmark chops long scripts into indented code blocks. */}}

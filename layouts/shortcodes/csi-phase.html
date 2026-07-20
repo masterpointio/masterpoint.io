@@ -1,0 +1,22 @@
+{{/*
+  csi-phase — a dated chapter in an engagement timeline: a wide card hanging off
+  a single gradient rail. Each phase is an <article> so a sequence reads as one
+  continuous story while the rail makes a long engagement easy to scan. Full
+  block markdown works in the body (paragraphs, lists, links, and nested csi-*
+  shortcodes such as a csi-compare ledger). Place phases one after another
+  INSIDE a csi-section — no wrapper element is needed.
+  Args:
+    title  phase heading (HTML allowed) — typically "Month YYYY - Headline"
+*/}}
+{{- $title := .Get "title" -}}
+<article class="csi-phase" data-aos="fade-up" data-aos-duration="600">
+<div class="csi-phase__rail" aria-hidden="true">
+<span class="csi-phase__marker"></span>
+</div>
+<div class="csi-phase__card">
+{{- with $title }}<h3 class="csi-phase__title">{{ . | safeHTML }}</h3>{{ end -}}
+<div class="csi-phase__body csi-prose">
+{{ .Inner | $.Page.RenderString (dict "display" "block") }}
+</div>
+</div>
+</article>

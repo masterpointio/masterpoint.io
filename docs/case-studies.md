@@ -2,12 +2,12 @@
 
 # Case Studies — working guide
 
-This document captures the architecture, conventions, and workflow for building
-case study pages on masterpoint.io. **Keep it current** — every time a new
-decision is made about layout, shortcodes, visuals, or workflow, update this
-file before ending the session. If something is removed from the codebase,
-remove its mention from this file too (don't keep "we used to have X" notes —
-the codebase is the source of truth, this file describes what IS).
+Architecture, conventions, and workflow for building case study pages on
+masterpoint.io. **Keep it current and concise** — update it when a layout,
+shortcode, visual, or workflow decision changes, and delete mentions of anything
+removed from the codebase. Document only what isn't obvious from the code; the
+code is the source of truth, this file describes what IS (no "we used to have X"
+notes).
 
 ---
 
@@ -26,25 +26,20 @@ July 2026 once Power Digital, its last user, was rebuilt on immersive.)
 | **Modern**    | `layouts/case-studies/single.html`    | Default for any case study without a `layout:` override | `case-study-modern`                 | `.case-study-modern`    |
 | **Immersive** | `layouts/case-studies/immersive.html` | MarketSpark, Power Digital (opt-in via `layout: immersive`) | `case-study-modern case-study-immersive` | `.case-study-immersive` |
 
-Routing is via Hugo's `layout:` front matter param. A case study that does
-**not** specify `layout:` uses `single.html` (the modern layout). MarketSpark
-and Power Digital opt into immersive with `layout: immersive`.
+Routing is via Hugo's `layout:` front matter. No `layout:` → `single.html`
+(modern, the default for new case studies, designed from scratch). MarketSpark
+and Power Digital opt in with `layout: immersive`. The **immersive** layout keeps
+the modern hero + stat strip **nearly verbatim** (its body carries both classes
+so the modern `.cs-*` CSS applies; the only divergence is an optional
+`client_logo_height` hook) and replaces only the body with a stack of rotating
+light↔dark colour cards (`.csi-*`). Don't merge them; scope every selector under
+its prefix.
 
-The **modern**
-layout was designed from scratch and is the default for new case studies. The
-**immersive** layout keeps the modern hero + stat strip **nearly verbatim** (its
-body carries both `case-study-modern` and `case-study-immersive` so the modern
-`.cs-*` hero/stat CSS applies; the only divergence is an optional
-`client_logo_height` hook on the lockup mark) and replaces only the body with a stack
-of rotating light↔dark colour cards (`.csi-*`). Don't merge them; scope every
-selector under its prefix.
-
-**Stylesheet location:** the **modern** and **immersive** CSS — everything under
-`.case-study-modern` / `.case-study-immersive` (the `.cs-*` and `.csi-*` rules, the
-`$cs-*` vars and the `cs-brand-gradient` mixins) — lives in its own partial,
-`assets/css/case-studies.scss`, which is `@import`ed at the **end** of
-`custom.scss` so the cascade order is unchanged (compiled output is byte-identical).
-The `#caseStudiesPage` list-page grid stays in `custom.scss`.
+**Stylesheet:** all `.case-study-modern` / `.case-study-immersive` CSS (`.cs-*`
+and `.csi-*` rules, `$cs-*` vars, `cs-brand-gradient` mixins) lives in
+`assets/css/case-studies.scss`, `@import`ed at the **end** of `custom.scss` so
+cascade order is unchanged. The `#caseStudiesPage` list-page grid stays in
+`custom.scss`.
 
 ---
 
@@ -122,12 +117,22 @@ Notes:
 - **No `slug:` field.** Hugo derives the URL from the filename. Prefer renaming
   the file (e.g. `marketspark.md` → `/case-studies/marketspark/`) over setting
   `slug:`, so the filename and URL stay in sync.
-- **`hero_aside_image` is optional.** When present, the hero gets a full-bleed
-  background photo with a horizontal scrim (heavy pine on the left where the
-  title sits, fading to nearly clear on the right where the photo's subject
-  shows through), and the title sits inside a frosted translucent box
-  (`.cs-hero__inner--framed`). When absent, the hero is plain pine gradient +
-  dot grid + soft mint/pink glow with no frosted frame.
+- **`hero_aside_image` is optional.** When present, the **default** is a
+  full-bleed background photo (`.cs-hero__bg img`: `object-fit: cover;
+  object-position: 70% center`) with a horizontal scrim (heavy pine left, fading
+  to clear right) and the title in a frosted box (`.cs-hero__inner--framed`);
+  MarketSpark and Power Digital use this. When absent, the hero is plain pine
+  gradient + dot grid + soft mint/pink glow, no frosted frame.
+- **`hero_photo_inset: true`** (opt-in — currently only Cursor) swaps the
+  full-bleed default for an **inset-right** treatment: photo fills the right 70%
+  (`width: 70%`), left ~30% stays plain pine, scrim dropped. Both shaping rules
+  are scoped to the `.cs-hero--photo-inset` modifier (added by
+  `single.html`/`immersive.html`):
+  - **`object-position: 25% center`** biases the crop toward the photo's LEFT;
+    tune per photo.
+  - A composited `mask-image` (two gradients + `mask-composite: intersect` /
+    `-webkit-mask-composite: source-in`) feathers the **left seam** into pine and
+    softens the **bottom edge** into the stat strip. Top/right flush.
 
 ---
 
@@ -168,6 +173,15 @@ All shortcodes are in `layouts/shortcodes/cs-*.html` and styled under
   node, so the partial descends one level (`(index … 0).Headings`) before
   listing them. Output each heading's `.Title` with `safeHTML` (it arrives
   HTML-encoded, e.g. `&amp;`).
+- **CSS `min()`/`max()` with mixed units fails to compile.** Hugo's LibSass
+  evaluates them itself and rejects `min(74%, 880px)` ("Incompatible units");
+  interpolation doesn't help. Express the cap differently (a `max-width`
+  clamping a `%` flex-basis) or hide it inside `calc()`.
+- **`%` padding and `%` flex-basis resolve against DIFFERENT boxes.** Padding
+  `%` uses the containing-block width; a flex child's basis `%` uses the flex
+  container's CONTENT box (after padding). `csi-carousel` centres slides with
+  side `padding: 13%` + slide `flex-basis: 100%` (⇒ 74%-wide slides) — mixing
+  the two bases put the first snap point ~118px off centre.
 - **SCSS `&__foo` inside nested rules has a trap.** When you write
   `&__toggle:checked ~ &__content` inside `.case-study-modern .parent { … }`,
   the second `&` expands to the **full** ancestor chain, producing selectors
@@ -204,28 +218,24 @@ mint on mint and disappears. Always keep `:not(.button)` on `.cs-article a`.
 
 ## Immersive layout (MarketSpark, Power Digital)
 
-Opt in with `layout: immersive`. The body element carries **both**
-`case-study-modern` and `case-study-immersive`:
+Opt in with `layout: immersive`. Body carries **both** `case-study-modern` and
+`case-study-immersive`:
 
-- **Top (hero + stat strip): all but identical to modern.** `immersive.html`
-  copies the `.cs-hero` and `.cs-stat-strip` markup from `single.html`, and the
-  dual body class means the existing `.case-study-modern .cs-*` rules style them
-  — so the top renders as the modern layout. The one intentional addition is the
-  optional **`client_logo_height`** front-matter hook (sets `--cs-client-logo-h`
-  on the client lockup mark, default 32px; styled in `case-studies.scss`) so a short
-  client wordmark can be enlarged. Otherwise don't restyle the top here.
-- **Body: a stack of contained, rounded CARDS** on the pine page backdrop, the
-  faces **rotating light ↔ dark** like the marketing pages (services /
-  who-we-are), each with a subtle gradient "photo" background (glow mesh + faint
-  dot grid on dark cards). Not full-bleed slides and not one flat article card.
-  All body CSS is scoped to `.csi-*` under `.case-study-immersive` (search
-  `// IMMERSIVE CASE STUDY — BODY`) — never bare element selectors — so it can't
-  touch the modern hero/stats.
-- **No yellow.** Per the brand guidelines preference, the body deliberately omits
-  the brand yellow (`#ECE295`); all accents are teal (`#2ad9c2` / `#55C1B4`) →
-  pink (`#D191BF`) via the local `csi-grad-*` mixins (the global
-  `cs-brand-gradient` is NOT used in the body because it leads with yellow). The
-  modern hero title keeps its standard `text-gradient` (that's the kept top).
+- **Top (hero + stat strip):** `immersive.html` copies the `.cs-hero` /
+  `.cs-stat-strip` markup from `single.html`; the dual body class styles it via
+  the existing `.case-study-modern .cs-*` rules. Don't restyle the top here — the
+  one intentional addition is the optional **`client_logo_height`** hook (sets
+  `--cs-client-logo-h`, default 32px) to enlarge a short client wordmark.
+- **Body: a stack of contained, rounded CARDS** on the pine backdrop, faces
+  **rotating light ↔ dark** like the marketing pages, each with a subtle gradient
+  "photo" background (glow mesh + faint dot grid on dark). Not full-bleed slides,
+  not one flat article card. All body CSS is scoped to `.csi-*` under
+  `.case-study-immersive` (search `// IMMERSIVE CASE STUDY — BODY`), never bare
+  element selectors, so it can't touch the modern hero/stats.
+- **No yellow.** Per brand preference the body omits brand yellow (`#ECE295`); all
+  accents are teal (`#2ad9c2` / `#55C1B4`) → pink (`#D191BF`) via the local
+  `csi-grad-*` mixins (the global `cs-brand-gradient` leads with yellow, so it's
+  unused in the body). The modern hero title keeps its standard `text-gradient`.
 
 ### Card shortcodes (`csi-*`)
 
@@ -238,7 +248,9 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 | `csi-split`       | Text + visual side-by-side; `flip="true"` alternates sides.    | `eyebrow`, `title`, `media`, `media_alt`, `media2`/`media2_alt` (second image stacked below the first), `figure` (CSS-drawn figure partial from `figures/<name>.html` instead of an image; subfolders work — `figure="power-digital/terralith"`), `flip`, `contain`, `caption`, `variant`, `ratio` (`50-50` default / `65-35` / `75-25`, text wider; ratios auto-reverse under `flip` since flip puts the media in the first grid track via `order`) |
 | `csi-steps`       | Numbered process cards. Place INSIDE a `csi-section`.          | inner blocks split by `---`, each `title:` / `body:`                                  |
 | `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`; `cols="2"` for a slimmed 2-up grid (pairs with `csi-compare`, capped to the same 980px) |
-| `csi-compare`     | "Then / now" migration ledger: muted old world → bold gradient new world per metric. Owns a page's hard numbers — pair with a slimmed `csi-impact` so figures aren't stated twice. Mobile stacks each row with per-cell tags. INSIDE a `csi-section`. | `before_label`, `after_label`; inner blocks split by `---`, each `label:` / `before:` / `after:` |
+| `csi-compare`     | "Then / now" migration ledger: muted old world → bold gradient new world per metric. Owns a page's hard numbers — pair with a slimmed `csi-impact` so figures aren't stated twice. Mobile stacks each row with per-cell tags. INSIDE a `csi-section` (also nests inside a `csi-phase`). | `before_label`, `after_label`; inner blocks split by `---`, each `label:` / `before:` / `after:` / optional `delta:` (renders as a solid-gradient pill **inline** after the new-world value — the "Change" figure) |
+| `csi-phase`       | A dated chapter in an engagement timeline: a wide **card** hanging off a single gradient rail (`.csi-phase__card` + `.csi-phase__rail`/`__marker`). Each phase is an `<article>`; place phases one after another INSIDE a `csi-section` — no wrapper element needed. Full block markdown + nested `csi-compare` ledgers work in the body. Used by the Cursor "What Masterpoint Did" timeline. | `title` (HTML ok, typically `"Month YYYY - Headline"`) |
+| `csi-carousel`    | Scroll-snap slideshow of result charts (used by Cursor "Executive Summary"). Slides carry NO card chrome — the chart exports are self-contained white cards, so the image itself gets the `.csi-prose img` radius + shadow. Active slide snaps to the CENTRE; neighbours peek in, with edge fades + arrows + gradient dots as scroll cues. Clicking a slide opens the chart full size in a native `<dialog>` lightbox (Esc / backdrop click / × all close it). CSS scroll-snap does the scrolling; the behavior JS lives in `immersive.html` gated on `.HasShortcode "csi-carousel"` — NOT in the shortcode, because the parent csi-section markdown-renders its Inner and goldmark chops long inline scripts into indented code blocks. Arrows hide ≤700px; there a "Swipe for more →" hint (`__hint`) shows under the dots and fades once `data-swiped` is set by the JS — the mobile peek is deliberately ~25-35px wide (11% gutters, 0.7rem gap; the gap all but ate a 7% gutter) and the mobile edge fade stays narrower than the peek so it doesn't white the neighbour out. Designed for the LIGHT face. INSIDE a `csi-section`. | inner blocks split by `---`, each `image:` / `alt:` and optional `stat:` / `title:` / `body:` (caption renders only if one is present; 16:9 fits best — `aspect-ratio` crops others) |
 | `csi-timeline`    | Horizontal parallel-track cutover bars (old system winding down while the new ramps up): percent-positioned bars with `fade: out` / `fade: in` and an optional dashed cutover marker. Typically right after `csi-steps`. INSIDE a `csi-section`. | `marker` (percent 0–100), `marker_label`; inner blocks split by `---`, each `label:` / `note:` / `start:` / `end:` / `fade:` |
 | `csi-questions`   | Takeaways row of compact numbered question cards (gradient numeral inline with the question), plus an optional `outro:` "verdict" panel (leading `**bold**` renders as a block gradient lead line) and optional `cta:` paragraph divided inside the same panel. Sections containing one auto-compact like `csi-list` ones. 3-up, stacks ≤860px. INSIDE a `csi-section`. | inner blocks split by `---`, each `question:` / `body:`; standalone blocks may carry `outro:` or `cta:` (inline markdown works) |
 | `csi-list`        | Compact 2-col icon rows (icon chip + bold title — inline body). Space-saving sibling of `csi-impact` for secondary enumerations (e.g. "under the hood" extras) so they don't mimic the outcome grid. INSIDE a `csi-section`. | same inner format as `csi-impact` (`icon:` / `title:` / `body:`); keep bodies to one short sentence |
@@ -277,6 +289,36 @@ reflows responsively:
   drops to a plain block lead-in above the quote.
 - The pullquote card radius is trimmed to `8px` in portrait mode (the
   `csi-testimonial` featured band stays full-bleed / square by design).
+
+#### Non-portrait `cs-pullquote` on mobile (`≤640px`)
+
+The plain (no-photo) pull quote has its own `@media (max-width: 640px)` rule on
+the base `.cs-pullquote` (so it applies in **every** section face, not just the
+compact `:has(.csi-list)` band). Without it, the desktop card is too big for a
+phone: the `4rem` left gutter for the absolute quote glyph wastes width, the
+`1.45rem` body overflows, and the `__by` attribution squeezes name + `title,
+company` side by side (the role wraps awkwardly). On mobile it: drops the `__mark`
+into the text flow (`position: static`, small negative bottom margin so the body
+sits right under it — top padding is trimmed to `1.2rem` to match), shrinks the
+body to `1.2rem`, and **stacks** the attribution (`__by` → `flex-direction:
+column`, name over role). Scoped `:not(.cs-pullquote--portrait)` so the portrait
+grid layout above is untouched.
+
+#### `csi-phase` timeline on mobile (`≤575px`)
+
+Desktop is a 2-column grid (`rail | card`); on a phone that rail column + gap
+cramped the copy. Mobile drops to a **single flow column** (`display: block`) and
+absolutely positions the rail in the left gutter (`.csi-phase__rail { position:
+absolute; left: -0.9rem }`) so the marker + line sit just left of the full-width
+card. The shared section gutter (`.csi-section .csi-container`) also trims to
+`0 1rem` at `≤575px` (was `1.4rem`).
+
+#### `csi-compare` delta pill on mobile (`≤700px`)
+
+The `__delta` pill shares the narrow flex `__after` cell with the new-world value,
+so a long label wrapped into a ragged blob under the `999px` radius. On mobile it
+gets its own full-width line (`flex: 0 0 100%`), **centered** text, and a `10px`
+radius so multi-line labels read as a tidy chip; short labels stay one line.
 
 **`variant` = the card's face colour** (drives the light↔dark rotation): `light`
 (white) and `pine` (dark) are the two real faces. `cream`/`mint` alias to light;
@@ -395,83 +437,58 @@ active-link underline INSIDE the link box — the links row is
 
 ## Print / PDF
 
-Case studies print (Ctrl/Cmd+P → Save as PDF) styled to match the screen.
+Case studies print (Ctrl/Cmd+P → Save as PDF) styled to match the screen. Two
+foundations plus a `@media print` block do the work:
 
-- **The site stylesheet loads with `media="all"`** (`partials/head.html`), not
-  `media="screen"`. With `media="screen"` the browser ignored the entire
-  stylesheet when printing and dumped raw unstyled HTML — that was the original
-  "no styles in print" bug.
-- **A `@media print` block at the end of `case-studies.scss`** (scoped to
-  `body.case-study-modern` / `body.case-study-immersive`) handles everything print
-  needs that screen doesn't:
-  1. **`print-color-adjust: exact`** on the whole subtree so browsers keep our
-     backgrounds and gradients instead of dropping them to white for ink saving
-     (these layouts are almost entirely backgrounds).
-  2. **AOS reset — the critical one.** Every `csi-*` card carries `data-aos`,
-     which starts it at `opacity: 0` until scrolled into view. Nothing scrolls
-     when printing, so without an override the **entire animated body prints
-     blank** (empty colour cards — this was the original "things get cut off"
-     bug). The block forces `[data-aos] { opacity:1; transform:none;
-     visibility:visible; transition:none }`. Don't remove this.
+- **Site stylesheet loads with `media="all"`** (`partials/head.html`), not
+  `media="screen"` — with `screen` the browser ignores the stylesheet when
+  printing and dumps raw unstyled HTML.
+- **The `@media print` block** at the end of `case-studies.scss` (scoped to
+  `body.case-study-modern` / `body.case-study-immersive`) handles the rest:
+  1. **`print-color-adjust: exact`** on the subtree so browsers keep our
+     backgrounds/gradients instead of dropping them to white (these layouts are
+     almost entirely backgrounds).
+  2. **AOS reset (critical, don't remove).** Every `csi-*` card starts at
+     `opacity: 0` via `data-aos` until scrolled into view; nothing scrolls when
+     printing, so the whole body would print blank. Forces `[data-aos] {
+     opacity:1; transform:none; visibility:visible; transition:none }`.
   3. **Gradient-clipped text fallback.** `-webkit-background-clip: text` +
-     transparent fill does not render reliably in Chrome's PDF path: the run
-     stops wrapping and gets sliced by the hero card's `overflow:hidden`, or the
-     gradient paints as a solid rectangle. So `.text-gradient` / `.csi-grad` /
-     `.csi-step__num` / `.csi-testimonial__mark` / `.cs-hero__lockup-x` fall
-     back to a solid brand colour (`#2ad9c2`) in print — any NEW class using the
-     grad mixins directly (not via `.csi-grad`) must join this list.
-     The on-screen multi-stop gradient becomes a single teal in the PDF — an
-     intentional, reliable trade.
-  4. **Hero frosted card** drops `backdrop-filter` (unsupported in print) and
-     `overflow: hidden` so the title can wrap freely instead of being clipped.
-  5. **Hides site chrome** so the PDF is a standalone document: `#sitewideNote`,
+     transparent fill is unreliable in Chrome's PDF path (run stops wrapping and
+     is sliced by `overflow:hidden`, or paints as a solid rectangle), so
+     `.text-gradient` / `.csi-grad` / `.csi-step__num` / `.csi-testimonial__mark`
+     / `.cs-hero__lockup-x` fall back to solid `#2ad9c2`. Intentional trade.
+  4. **Hero frosted card** drops `backdrop-filter` (print-unsupported) and
+     `overflow: hidden` so the title wraps freely.
+  5. **Hides site chrome** for a standalone PDF: `#sitewideNote`,
      `header[aria-label="header"]`, `#schedule-assessment`,
-     `footer[role=contentinfo]`, `#preloader`, and the cookie-consent banner
-     (`#cc-main` / `.cc-window`, orestbida CookieConsent v3 — it's injected into
-     `<body>` and otherwise overlays the page in the PDF).
-  6. **Performance — prevents the PDF/print-preview lag and crash.** Print
-     rasterizes at ~300+ DPI (~100x the pixels of screen), and several decorative
-     effects that are cheap on screen explode at that scale: `backdrop-filter` /
-     `filter: blur()` (blur kernel scales with DPI), the tiled 1px dot-grid
-     overlays (`background-size:~28px` on full-bleed `inset:0` `::after`s —
-     millions of dots), and their `mask-image` (extra offscreen buffer per
-     section). `print-color-adjust:exact` (item 1) forces all of it to actually
-     paint, so memory blows up and Chrome's renderer dies. The block zeroes
+     `footer[role=contentinfo]`, `#preloader`, cookie banner (`#cc-main` /
+     `.cc-window`, injected into `<body>`).
+  6. **Performance (prevents print lag/crash).** Print rasterizes at ~300+ DPI,
+     where `backdrop-filter` / `filter: blur()`, the tiled 1px dot-grid `::after`
+     overlays, and their `mask-image` explode — `print-color-adjust:exact` forces
+     them all to paint and Chrome's renderer dies. The block zeroes
      `backdrop-filter` / `filter` / `mask-image` / `box-shadow` on `*` and drops
-     `::before`/`::after` `background-image` for print. (Same effects are why
-     on-screen scrolling can feel slow — they re-composite on the GPU per frame.)
-  7. **Page-break control — prevents cards clipping across page boundaries.**
-     `break-inside: avoid` on the **small, repeating** cards (`.cs-stat`,
-     `.cs-pullquote`, `.csi-testimonial`, `.csi-impact__card`, `.csi-compare__row`,
-     `.csi-fig-terralith__mono/__stack`, `.csi-timeline`, `.csi-question`) pushes a whole
-     card to the next page rather than slicing its top/bottom edge. **Only apply
-     it to small cards** — putting it on large one-off blocks (the About panel,
-     article/screenshot cards) backfires: shoving a big block whole to the next
-     page leaves a huge blank gap on the page it left, which looks worse than the
-     occasional slice. Those large blocks fit on their own, so let them flow.
-- To **keep** a chrome element in the PDF, drop it from that `display: none` list.
-- **When you add a new case-study element / shortcode / CSS class, check this
-  print checklist.** Most additions need NOTHING — the perf and colour-accuracy
-  rules use universal selectors (`*`, `*::before`, `*::after`), so new elements
-  inherit them automatically. Only touch the `@media print` block if the new
-  thing falls into one of these three buckets:
-  1. **Gradient-clipped text** (`-webkit-background-clip: text` + transparent
-     fill)? → add its class to the solid-colour fallback list (item 3 above), or
-     it prints sliced / as a stray coloured rectangle.
-  2. **A small, self-contained card** that would look broken if sliced across a
-     page break? → add it to the `break-inside: avoid` list (item 7). Do NOT add
-     large/one-off blocks or full-bleed section bands (see the dense-flow note).
-  3. **New site chrome injected into `<body>`** (banner, modal, widget) that
-     shouldn't appear in the PDF? → add its selector to the `display: none` list
-     (item 5).
-  A genuinely new heavy effect (e.g. a new `filter`/`mask` that the universal
-  resets don't already cover) is the only other reason to edit the block.
-- **Verify print changes with a real PDF**, not screen DevTools — Chrome's print
-  path diverges (AOS, backdrop-filter, background-clip:text all behave
-  differently). Generate one headless and read it back:
-  `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new
-  --disable-gpu --no-pdf-header-footer --print-to-pdf=out.pdf
-  http://localhost:1313/case-studies/marketspark/`
+     `::before`/`::after` `background-image`. (Same effects make on-screen scroll
+     feel slow.)
+  7. **Page-break control.** `break-inside: avoid` on **small, repeating** cards
+     only (`.cs-stat`, `.cs-pullquote`, `.csi-testimonial`, `.csi-impact__card`,
+     `.csi-compare__row`, `.csi-fig-terralith__mono/__stack`, `.csi-timeline`,
+     `.csi-question`, `.csi-carousel__slide`) so a card isn't sliced across a page
+     boundary. NOT on large one-off blocks (About panel, article/screenshot
+     cards) — shoving a big block whole leaves a worse blank gap; let those flow.
+
+**Adding a new element?** Most need nothing — the perf/colour rules use universal
+selectors (`*`, `::before`, `::after`). Only edit the block if the new thing is:
+gradient-clipped text (→ item 3 list), a small self-contained card (→ item 7
+list, never large/full-bleed blocks), new `<body>` chrome to hide (→ item 5
+list), or a scroll container (`overflow-x: auto` can't scroll on paper — lay
+items out in flow like `csi-carousel`: scroller `display: block`, slides stacked,
+arrows/dots hidden). To **keep** chrome in the PDF, drop it from the item-5 list.
+
+**Verify with a real headless PDF**, not screen DevTools (Chrome's print path
+diverges): `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+--headless=new --disable-gpu --no-pdf-header-footer --print-to-pdf=out.pdf
+http://localhost:1313/case-studies/marketspark/`
 
 ---
 
