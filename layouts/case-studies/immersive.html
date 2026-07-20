@@ -48,10 +48,10 @@
 
     {{/* HERO — verbatim from single.html (modern), do not diverge */}}
     {{ $bgImg := or .Params.hero_image .Params.hero_aside_image }}
-    <section class="cs-hero{{ if $bgImg }} cs-hero--with-bg{{ end }}">
+    <section class="cs-hero{{ if $bgImg }} cs-hero--with-bg{{ end }}{{ if .Params.hero_photo_inset }} cs-hero--photo-inset{{ end }}">
         {{ if $bgImg }}
         <div class="cs-hero__bg">
-            <img src="{{ $bgImg }}" alt="" />
+            <img src="{{ $bgImg }}" alt="{{ .Params.hero_aside_alt | default "" }}" />
         </div>
         {{ end }}
         <div class="container">
@@ -154,6 +154,88 @@
           }
         }, { passive: true });
         update();
+      })();
+    </script>
+    {{ end }}
+    {{ if .HasShortcode "csi-carousel" }}
+    {{/* csi-carousel behavior — lives here (not in the shortcode) because the
+         shortcode's output is markdown-rendered by its parent csi-section and
+         goldmark chops long inline scripts into indented code blocks. */}}
+    <script>
+      (function () {
+        var setup = function () {
+          document.querySelectorAll(".csi-carousel").forEach(function (root) {
+            var scroller = root.querySelector(".csi-carousel__scroller");
+            var slides = Array.prototype.slice.call(scroller.children);
+            var prev = root.querySelector(".csi-carousel__arrow--prev");
+            var next = root.querySelector(".csi-carousel__arrow--next");
+            var dots = Array.prototype.slice.call(root.querySelectorAll(".csi-carousel__dot"));
+            if (!slides.length) return;
+            var base = slides[0].offsetLeft;
+            var current = function () {
+              var x = scroller.scrollLeft, best = 0, dist = Infinity;
+              slides.forEach(function (s, i) {
+                var d = Math.abs(s.offsetLeft - base - x);
+                if (d < dist) { dist = d; best = i; }
+              });
+              return best;
+            };
+            var goTo = function (i) {
+              i = Math.max(0, Math.min(slides.length - 1, i));
+              scroller.scrollTo({ left: slides[i].offsetLeft - base });
+            };
+            var sync = function () {
+              var atStart = scroller.scrollLeft <= 6;
+              var atEnd = scroller.scrollLeft >= scroller.scrollWidth - scroller.clientWidth - 6;
+              root.setAttribute("data-at-start", atStart);
+              root.setAttribute("data-at-end", atEnd);
+              // retire the mobile swipe hint once the reader has swiped
+              if (scroller.scrollLeft > 24) root.setAttribute("data-swiped", "true");
+              prev.disabled = atStart;
+              next.disabled = atEnd;
+              var i = current();
+              dots.forEach(function (d, j) {
+                d.classList.toggle("is-active", j === i);
+                if (j === i) d.setAttribute("aria-current", "true");
+                else d.removeAttribute("aria-current");
+              });
+            };
+            var ticking = false;
+            scroller.addEventListener("scroll", function () {
+              if (ticking) return;
+              ticking = true;
+              requestAnimationFrame(function () { ticking = false; sync(); });
+            });
+            prev.addEventListener("click", function () { goTo(current() - 1); });
+            next.addEventListener("click", function () { goTo(current() + 1); });
+            dots.forEach(function (d, i) {
+              d.addEventListener("click", function () { goTo(i); });
+            });
+            var lightbox = root.querySelector(".csi-carousel__lightbox");
+            if (lightbox) {
+              var lightboxImg = lightbox.querySelector(".csi-carousel__lightbox-img");
+              root.querySelectorAll(".csi-carousel__zoom").forEach(function (btn) {
+                btn.addEventListener("click", function () {
+                  var img = btn.querySelector("img");
+                  lightboxImg.src = img.currentSrc || img.src;
+                  lightboxImg.alt = img.alt;
+                  lightbox.showModal();
+                });
+              });
+              // a click on the ::backdrop targets the dialog element itself
+              lightbox.addEventListener("click", function (e) {
+                if (e.target === lightbox) lightbox.close();
+              });
+              lightbox.querySelector(".csi-carousel__lightbox-close").addEventListener("click", function () {
+                lightbox.close();
+              });
+            }
+            window.addEventListener("resize", sync);
+            sync();
+          });
+        };
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", setup);
+        else setup();
       })();
     </script>
     {{ end }}

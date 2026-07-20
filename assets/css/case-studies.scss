@@ -104,6 +104,33 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
       }
     }
 
+    // Opt-in via front matter `hero_photo_inset: true` (currently only Cursor):
+    // the photo sits in the RIGHT 75% with a plain-pine inseam on the left and a
+    // LEFT-biased crop, replacing the default full-bleed cover + scrim. Scoped
+    // to the modifier class so other case-study heroes are unaffected.
+    &--photo-inset {
+      .cs-hero__bg {
+        &::after {
+          display: none; // no default scrim; the mask does the blending
+        }
+        img {
+          position: absolute; // anchor to the RIGHT so the inseam is on the left
+          top: 0;
+          right: 0;
+          width: 75%; // photo fills the right 75% (25% plain-pine inseam)
+          object-position: 25% center; // favor the LEFT of the photo
+          mask-image:
+            linear-gradient(90deg, transparent 0%, #000 20%),
+            linear-gradient(180deg, #000 0%, #000 90%, transparent 100%);
+          -webkit-mask-image:
+            linear-gradient(90deg, transparent 0%, #000 20%),
+            linear-gradient(180deg, #000 0%, #000 90%, transparent 100%);
+          mask-composite: intersect;
+          -webkit-mask-composite: source-in;
+        }
+      }
+    }
+
     // decorative element: soft mint-glow + faint dotted grid (suppressed when bg image present)
     &::before {
       content: "";
@@ -149,7 +176,7 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
     // Frosted card so title stays readable over the hero background image.
     &__inner--framed {
       padding: 1.8rem 2rem 1.6rem;
-      max-width: 720px;
+      max-width: 800px;
       background: linear-gradient(135deg, rgba(6, 29, 30, 0.72) 0%, rgba(14, 56, 58, 0.62) 100%);
       backdrop-filter: blur(8px) saturate(120%);
       -webkit-backdrop-filter: blur(8px) saturate(120%);
@@ -429,6 +456,7 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
       font-weight: 900;
       @include cs-brand-gradient-text;
       letter-spacing: -0.01em;
+      width: fit-content;
 
       // Keep the value comfortably below the hero title at every breakpoint
       // (title is 2.45rem ≤991 / 1.9rem ≤575), so it never visually outweighs
@@ -486,20 +514,20 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
     &__lockup {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.7rem;
       flex-shrink: 0;
     }
     &__client {
       display: block;
       // scale from the page's hero logo height so wide lockups (MarketSpark
       // 48px) and compact ones (Power Digital 34px) both read balanced
-      height: calc(var(--cs-client-logo-h, 36px) * 0.6);
+      height: calc(var(--cs-client-logo-h, 36px) * 0.72);
       width: auto;
-      max-width: 170px;
+      max-width: 200px;
     }
     &__mp {
       display: block;
-      height: 15px;
+      height: 18px;
       width: auto;
     }
     &__x {
@@ -545,18 +573,19 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
         }
       }
     }
+    // the section links get cut off once the (enlarged) logo lockup crowds the
+    // bar — drop them below the lg breakpoint and let the lockup carry it alone
+    @media (max-width: 991.98px) {
+      &__links {
+        display: none;
+      }
+    }
     @media (max-width: 575px) {
       &__client {
-        height: calc(var(--cs-client-logo-h, 36px) * 0.48);
+        height: calc(var(--cs-client-logo-h, 36px) * 0.68);
       }
       &__mp {
-        height: 12px;
-      }
-      &__links {
-        gap: 1rem;
-        a {
-          font-size: 0.68rem;
-        }
+        height: 18px;
       }
     }
   }
@@ -1136,7 +1165,6 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
 
     &__body {
       font-size: 1.45rem;
-      font-weight: 600;
       line-height: 1.45;
       color: #fff;
       p {
@@ -1164,6 +1192,7 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
       letter-spacing: normal;
     }
     &__avatar img {
+      margin: 0;
       width: 88px;
       height: 88px;
       border-radius: 50%;
@@ -1187,6 +1216,11 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
       color: $cs-mint;
       padding-top: 0.35rem;
     }
+    &:not(.cs-pullquote--portrait) {
+      .cs-pullquote__role {
+        padding-top: 0;
+      }
+    }
 
     // -- LIGHT variant -- editorial cream/mint card; pine text. Good for an
     //    end-of-article testimonial where it sits next to a dark CTA card.
@@ -1209,6 +1243,44 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
         letter-spacing: 0.12em;
         text-transform: uppercase;
         font-size: 0.78rem;
+      }
+      .cs-pullquote__name {
+        color: $pine;
+      }
+    }
+
+    // -- MOBILE -- on a phone the 4rem left gutter + side-by-side attribution
+    //    is too cramped (the role wraps awkwardly next to the name and the big
+    //    body doesn't fit). Drop the quote mark into the text flow so the card
+    //    can use its full width, shrink the body a touch, and stack the name
+    //    above the role. Portrait quotes own their own mobile layout (grid +
+    //    avatar), so leave them alone.
+    @media (max-width: 640px) {
+      padding: 1.2rem 1.4rem 1.5rem;
+
+      .cs-pullquote__body,
+      .cs-pullquote__body p {
+        font-size: 1.2rem;
+        line-height: 1.45;
+      }
+
+      &:not(.cs-pullquote--portrait) {
+        .cs-pullquote__mark {
+          position: static;
+          display: block;
+          margin: 0 0 -0.35rem;
+          font-size: 2.6rem;
+          line-height: 0.7;
+        }
+        .cs-pullquote__by {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.1rem;
+          margin-top: 0.9rem;
+        }
+        .cs-pullquote__role {
+          padding-top: 0.15rem;
+        }
       }
     }
   }
@@ -1466,7 +1538,7 @@ html:has(.cs-sticky-nav) {
       margin: 0 auto;
       padding: 0 2.6rem;
       @media (max-width: 575px) {
-        padding: 0 1.4rem;
+        padding: 0 1rem;
       }
     }
 
@@ -1580,6 +1652,15 @@ html:has(.cs-sticky-nav) {
       }
     }
 
+    &--left {
+      .csi-section__head,
+      .csi-prose {
+        max-width: 880px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
     // ---- COMPACT band — applied automatically to any section containing a
     //      csi-list or csi-questions (no opt-in arg): same content, less
     //      vertical real estate. Tighter padding, smaller head, denser prose
@@ -1656,6 +1737,7 @@ html:has(.cs-sticky-nav) {
           }
           .cs-pullquote__avatar img {
             display: block;
+            margin: 0;
             width: 116px;
             height: 116px;
             border-radius: 50%;
@@ -1767,6 +1849,28 @@ html:has(.cs-sticky-nav) {
       color: $csi-ink;
       font-weight: 800;
     }
+    // in-card subheads — the internal chapters of a consolidated single-card
+    // section (Results, What Changed), so they carry real structural weight
+    h3,
+    h4 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      line-height: 1.3;
+      color: $csi-ink;
+      margin: 2.8rem 0 1rem;
+    }
+    h4 {
+      font-size: 1.08rem;
+      margin-top: 2rem;
+    }
+    // the heading render hook wraps heading text in an anchor — keep it on
+    // the heading colour, not the prose link treatment
+    h3 a:not(.button),
+    h4 a:not(.button) {
+      color: inherit;
+      font-weight: inherit;
+      background-image: none;
+    }
     // `:not(.csi-list):not(.csi-compare__rows)` — those uls carry their own
     // grid/ledger layout; keep the prose bullet/spacing treatment off them
     ul:not(.csi-list):not(.csi-compare__rows),
@@ -1819,6 +1923,36 @@ html:has(.cs-sticky-nav) {
       margin-top: 0.7rem;
       margin-bottom: 0;
     }
+    // inline chart images (consolidated single-card sections place charts in
+    // the prose flow instead of a csi-split media column)
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+      margin: 1.9rem auto;
+      box-shadow: 0 18px 40px -30px rgba(8, 30, 30, 0.45);
+    }
+  }
+  // hairline edge so pine-on-pine chart exports keep a visible card boundary
+  .csi-section--pine .csi-prose img,
+  .csi-section--pine-deep .csi-prose img {
+    border: 1px solid rgba(255, 255, 255, 0.09);
+  }
+  // prose subheads flip to white on the dark faces (literal selectors — the
+  // headings set an explicit ink colour, so inheritance can't recolour them).
+  // The anchor variants out-specify the dark-face prose-link recolour, which
+  // would otherwise paint hook-wrapped heading text mint.
+  .csi-section--pine .csi-prose h3,
+  .csi-section--pine .csi-prose h4,
+  .csi-section--pine-deep .csi-prose h3,
+  .csi-section--pine-deep .csi-prose h4,
+  .csi-section--pine .csi-prose h3 a:not(.button),
+  .csi-section--pine .csi-prose h4 a:not(.button),
+  .csi-section--pine-deep .csi-prose h3 a:not(.button),
+  .csi-section--pine-deep .csi-prose h4 a:not(.button) {
+    color: #fff;
+    background-image: none;
   }
 
   // ---------------------------------------------------------------------------
@@ -2170,6 +2304,323 @@ html:has(.cs-sticky-nav) {
   }
 
   // ---------------------------------------------------------------------------
+  // CAROUSEL — scroll-snap slideshow of result charts (csi-carousel). Slides
+  // are deliberately narrower than the viewport so the next chart PEEKS in
+  // from the right — the peek (plus the edge fade, arrows and dots) is what
+  // tells the reader there's more to scroll. Scrolling itself is native CSS
+  // scroll-snap; the shortcode's small script only syncs the arrows, dots and
+  // the data-at-start / data-at-end attributes that drive the edge fades.
+  // Designed for the LIGHT face (white slide cards on the light band).
+  // ---------------------------------------------------------------------------
+  .csi-carousel {
+    margin-top: 1.9rem;
+    &__viewport {
+      position: relative;
+    }
+    &__scroller {
+      display: flex;
+      gap: 1.4rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      // vertical breathing room so card shadows / the focus ring aren't
+      // clipped; the side padding is half the leftover viewport so EVERY
+      // slide (first and last included) can snap to the exact centre.
+      // Slides are flex-basis 100% of the CONTENT box (width minus this
+      // padding), so 13% side padding ⇒ 74%-wide slides — padding % and
+      // flex-basis % resolve against different boxes, don't mix the bases.
+      padding: 0.25rem 13% 0.6rem;
+      // mobile: a stronger peek — 7% gutters minus the 1.4rem gap left a ~5px
+      // sliver of the next chart, which read as "nothing more here". Wider
+      // gutters + a tighter gap keep ~25px of the neighbour visible.
+      @media (max-width: 700px) {
+        gap: 0.7rem;
+        padding-inline: 11%; // ⇒ 78%-wide slides
+      }
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      &:focus-visible {
+        outline: 2px solid $cs-mint;
+        outline-offset: 4px;
+        border-radius: 8px;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        scroll-behavior: auto;
+      }
+    }
+    &__slide {
+      // 100% of the scroller's padded content box — the scroller's side
+      // padding (above) is what sets the real slide width. NO card chrome
+      // here: the chart exports are already self-contained white cards
+      // (own margins, header, logos), so a wrapper card double-boxes them.
+      // The image carries the same radius + shadow as `.csi-prose img`, so
+      // the carousel charts match the ones in The Results sections.
+      flex: 0 0 100%;
+      scroll-snap-align: center;
+      margin: 0;
+    }
+    &__zoom {
+      display: block;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      border-radius: 16px;
+      cursor: zoom-in;
+      &:focus-visible {
+        outline: 2px solid $cs-mint;
+        outline-offset: 4px;
+      }
+    }
+    &__media {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 18px 40px -30px rgba(8, 30, 30, 0.45);
+      transition: box-shadow 0.25s ease;
+    }
+    // literal nested selectors (3 classes) — the broad `.csi-prose img` rule
+    // (2 classes + element) would otherwise out-specify `&__media` and leak
+    // its 1.9rem margins into the slides
+    .csi-carousel__zoom .csi-carousel__media {
+      margin: 0;
+    }
+    .csi-carousel__zoom:hover .csi-carousel__media,
+    .csi-carousel__zoom:focus-visible .csi-carousel__media {
+      box-shadow: 0 22px 48px -28px rgba(8, 30, 30, 0.6);
+    }
+    // LIGHTBOX — native <dialog>, opened by clicking a slide; Esc, the ×
+    // button, and a backdrop click all close it
+    &__lightbox {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      overflow: visible;
+      &::backdrop {
+        background: rgba(6, 29, 30, 0.88);
+      }
+    }
+    .csi-carousel__lightbox-img {
+      display: block;
+      margin: 0;
+      width: auto;
+      height: auto;
+      max-width: 92vw;
+      max-height: 86vh;
+      border-radius: 14px;
+      box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.7);
+    }
+    &__lightbox-close {
+      position: absolute;
+      top: 0.7rem;
+      right: 0.7rem;
+      z-index: 1;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid $csi-line;
+      background: #fff;
+      color: $csi-ink;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      cursor: pointer;
+      box-shadow: 0 12px 26px -16px rgba(0, 0, 0, 0.6);
+      transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+      &:hover {
+        @include csi-grad-solid;
+        color: $cs-pine-dark;
+        border-color: transparent;
+      }
+      &:focus-visible {
+        outline: 2px solid $cs-mint;
+        outline-offset: 3px;
+      }
+    }
+    &__caption {
+      display: flex;
+      align-items: center;
+      gap: 1.15rem;
+      padding: 1.1rem 1.4rem 1.2rem;
+      text-align: left;
+      @media (max-width: 575px) {
+        gap: 0.85rem;
+        padding: 0.9rem 1rem 1rem;
+      }
+    }
+    &__stat {
+      flex: 0 0 auto;
+      font-size: 2.1rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      @media (max-width: 575px) {
+        font-size: 1.6rem;
+      }
+    }
+    &__text {
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: $csi-ink-soft;
+      strong {
+        color: $csi-ink;
+        font-weight: 800;
+      }
+      a {
+        color: $csi-link;
+        font-weight: 600;
+      }
+      @media (max-width: 575px) {
+        font-size: 0.86rem;
+      }
+    }
+    // edge fades — the soft clip that says "the track continues"; each fades
+    // away (via data-at-start / data-at-end below) once its side is exhausted
+    &__viewport::before,
+    &__viewport::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 76px;
+      z-index: 2;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      // keep the mobile fade narrower than the peek sliver, or it whites the
+      // neighbouring card out entirely
+      @media (max-width: 700px) {
+        width: 20px;
+      }
+    }
+    &__viewport::before {
+      left: 0;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0));
+    }
+    &__viewport::after {
+      right: 0;
+      background: linear-gradient(270deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0));
+    }
+    &__arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid $csi-line;
+      background: #fff;
+      color: $csi-ink;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      cursor: pointer;
+      box-shadow: 0 12px 26px -16px rgba(8, 30, 30, 0.5);
+      transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        opacity 0.25s ease;
+      &:hover:not(:disabled) {
+        @include csi-grad-solid;
+        color: $cs-pine-dark;
+        border-color: transparent;
+      }
+      &:focus-visible {
+        outline: 2px solid $cs-mint;
+        outline-offset: 3px;
+      }
+      &:disabled {
+        opacity: 0;
+        pointer-events: none;
+      }
+      &--prev {
+        left: -8px;
+      }
+      &--next {
+        right: -8px;
+      }
+      @media (max-width: 700px) {
+        display: none; // swipe is the native gesture; peek + dots still cue "more"
+      }
+    }
+    &__dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.15rem;
+    }
+    &__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      border: 0;
+      padding: 0;
+      background: rgba(20, 48, 47, 0.18);
+      cursor: pointer;
+      transition:
+        width 0.25s ease,
+        background 0.25s ease;
+      &:focus-visible {
+        outline: 2px solid $cs-mint;
+        outline-offset: 3px;
+      }
+    }
+    .csi-carousel__dot.is-active {
+      width: 26px;
+      @include csi-grad-solid;
+    }
+    // mobile swipe hint — arrows are hidden ≤700px and the peek is narrow on
+    // a phone, so spell the gesture out; fades once the reader swipes
+    // (data-swiped, set by the layout JS)
+    &__hint {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.7rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(20, 48, 47, 0.5);
+      transition: opacity 0.35s ease;
+      i {
+        font-size: 0.72rem;
+        animation: csi-hint-nudge 1.8s ease-in-out infinite;
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+        }
+      }
+      @media (max-width: 700px) {
+        display: flex;
+      }
+    }
+  }
+  .csi-carousel[data-swiped="true"] .csi-carousel__hint {
+    opacity: 0;
+  }
+  // literal selectors (not `&`-nested) — attribute state on the root toggles
+  // pseudo-elements of a descendant, and `&__` expansion inside nested rules
+  // produces broken ancestor chains (see the SCSS `&__foo` trap in the docs)
+  .csi-carousel[data-at-start="true"] .csi-carousel__viewport::before {
+    opacity: 0;
+  }
+  .csi-carousel[data-at-end="true"] .csi-carousel__viewport::after {
+    opacity: 0;
+  }
+
+  // ---------------------------------------------------------------------------
   // COMPARE — "then / now" migration ledger (csi-compare). Old world reads
   // muted on the left, new world bold on the right, gradient arrow between.
   // ---------------------------------------------------------------------------
@@ -2186,12 +2637,12 @@ html:has(.cs-sticky-nav) {
     &__head,
     &__row {
       display: grid;
-      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr) 2.2rem minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.6fr) 1.9rem minmax(0, 1.5fr);
       align-items: center;
-      column-gap: 0.7rem;
+      column-gap: 0.55rem;
     }
     &__head {
-      padding: 0.8rem 1.6rem;
+      padding: 0.85rem 1.75rem;
       background: rgba(20, 48, 47, 0.03);
       border-bottom: 1px solid $csi-line;
     }
@@ -2202,6 +2653,7 @@ html:has(.cs-sticky-nav) {
       text-transform: uppercase;
       &--before {
         color: #8aa09f;
+        text-align: right;
       }
       &--after {
         @include csi-grad-light;
@@ -2213,7 +2665,7 @@ html:has(.cs-sticky-nav) {
       padding: 0;
     }
     &__row {
-      padding: 1rem 1.6rem;
+      padding: 1.4rem 1.75rem;
     }
     &__metric {
       font-size: 0.95rem;
@@ -2229,16 +2681,44 @@ html:has(.cs-sticky-nav) {
     }
     &__before {
       color: #7d9291;
+      text-align: right;
     }
     &__after {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.5rem;
       font-weight: 800;
       @include csi-grad-light;
+    }
+    &__after--plain {
+      color: $csi-ink;
+      background: none;
+      -webkit-background-clip: border-box;
+      background-clip: border-box;
+      -webkit-text-fill-color: $csi-ink;
     }
     &__arrow {
       text-align: center;
       font-size: 1.05rem;
       font-weight: 900;
       line-height: 1;
+    }
+    &__delta {
+      display: inline-block;
+      margin: 0;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      line-height: 1.35;
+      @include csi-grad-solid;
+      -webkit-background-clip: border-box;
+      background-clip: border-box;
+      color: #06201f;
+      -webkit-text-fill-color: #06201f;
     }
     // per-cell Before/After tags — mobile only (the header row hides there)
     &__tag {
@@ -2271,6 +2751,7 @@ html:has(.cs-sticky-nav) {
     }
     .csi-compare__before {
       grid-area: before;
+      text-align: left;
     }
     .csi-compare__arrow {
       grid-area: arrow;
@@ -2287,8 +2768,23 @@ html:has(.cs-sticky-nav) {
       margin-bottom: 0.15rem;
       color: #8aa09f;
     }
+    // __after is a flex row — force its mobile tag onto its own line above
+    // the value instead of sitting inline with it.
     .csi-compare__after .csi-compare__tag {
+      flex: 0 0 100%;
       color: $csi-link;
+    }
+    // The delta pill sits in the same narrow flex cell as the value, so a long
+    // label ("45.8% reduction in duplication") wrapped into a left-ragged blob
+    // under the 999px radius. Give it its own full-width line, centre the text,
+    // and use a modest radius so multi-line reads as a tidy rounded chip.
+    .csi-compare__after .csi-compare__delta {
+      flex: 0 0 100%;
+      margin-top: 0.35rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 10px;
+      text-align: center;
+      line-height: 1.3;
     }
   }
   // NOTE: the ledger stays a WHITE card on dark faces too (no pine override)
@@ -2530,6 +3026,123 @@ html:has(.cs-sticky-nav) {
     }
     .csi-timeline__rail {
       background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // PHASE CARD — the "What Masterpoint Did" engagement timeline: dated
+  // chapters as wide cards off a single gradient rail (ported verbatim from the
+  // PR 154 design so the boxes match it exactly). Nested csi-compare ledgers
+  // render normally inside the card body (which carries `.csi-prose`).
+  // ---------------------------------------------------------------------------
+  --csi-phase-rule: rgba(20, 48, 47, 0.14);
+  #the-work .csi-prose {
+    max-width: 1040px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #the-work .csi-prose:not(.csi-phase__body) > p {
+    max-width: 880px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .csi-phase {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 1.1rem;
+    position: relative;
+    max-width: 1040px;
+    margin: 2rem auto 0;
+    text-align: left;
+  }
+  .csi-phase + .csi-phase {
+    margin-top: 1.15rem;
+  }
+  .csi-phase__rail {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 16px;
+      bottom: -2.3rem;
+      width: 1px;
+      background: linear-gradient(180deg, rgba(11, 125, 114, 0.55), rgba(209, 145, 191, 0.3));
+    }
+  }
+  .csi-phase:last-child .csi-phase__rail::after {
+    display: none;
+  }
+  .csi-phase__marker {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin-top: 1.55rem;
+    border: 4px solid #fff;
+    border-radius: 50%;
+    @include csi-grad-solid;
+    box-shadow: 0 0 0 1px rgba(11, 125, 114, 0.28);
+  }
+  .csi-phase__card {
+    padding: 1.55rem 1.65rem;
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid var(--csi-phase-rule);
+    border-radius: 10px;
+    box-shadow: 0 18px 40px -32px rgba(7, 31, 30, 0.5);
+  }
+  // Scope to the card so this beats the generic `.csi-prose h3` rule
+  // (which lives at higher specificity and would otherwise force a 2.8rem
+  // top margin — the phase title is a descendant of the section's .csi-prose).
+  .csi-phase__card .csi-phase__title {
+    margin: 0 0 1rem;
+    color: $csi-ink;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+    font-weight: 800;
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+    text-transform: none;
+  }
+  .csi-phase__body {
+    color: $csi-ink-soft;
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+  // ledgers inside a phase need real vertical margin so the card's drop shadow
+  // clears the surrounding copy instead of falling on the text right below it
+  .csi-phase__body .csi-compare {
+    margin-top: 1.6rem;
+    margin-bottom: 1.6rem;
+  }
+  @media (max-width: 575px) {
+    // The rail column + gap ate ~33px of a phone's width, leaving the card body
+    // painfully narrow. On mobile give the card the FULL content width (drop the
+    // grid to a single flow column) and float the decorative rail out into the
+    // left gutter with absolute positioning, so the marker + line sit just left
+    // of the card without stealing any of its width.
+    .csi-phase {
+      display: block;
+      position: relative;
+    }
+    .csi-phase__rail {
+      position: absolute;
+      left: -0.9rem;
+      top: 0;
+      bottom: 0;
+      width: 14px;
+    }
+    .csi-phase__marker {
+      width: 13px;
+      height: 13px;
+      margin-top: 1.35rem;
+      border-width: 3px;
+    }
+    .csi-phase__card {
+      padding: 1rem 0.95rem;
     }
   }
 
@@ -2984,6 +3597,19 @@ html:has(.cs-sticky-nav) {
 }
 
 // ───────────────────────────────────────────────────────────────────────────
+// csi-carousel mobile swipe-hint arrow nudge (root level — @keyframes must
+// not be nested inside a rule)
+@keyframes csi-hint-nudge {
+  0%,
+  55%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(5px);
+  }
+}
+
 // PRINT / PDF — make the case study print exactly like the screen.
 // The site stylesheet now loads with media="all" (see partials/head.html), so
 // the styles apply when printing. Two extra things are needed for the result to
@@ -3120,8 +3746,24 @@ html:has(.cs-sticky-nav) {
     .csi-fig-terralith__mono,
     .csi-fig-terralith__stack,
     .csi-timeline,
-    .csi-question {
+    .csi-question,
+    .csi-phase__card,
+    .csi-carousel__slide,
+    .csi-prose img {
       break-inside: avoid;
+    }
+
+    .csi-carousel__scroller {
+      display: block !important;
+      overflow: visible !important;
+    }
+    .csi-carousel__slide {
+      margin: 0 0 1rem !important;
+    }
+    .csi-carousel__arrow,
+    .csi-carousel__dots,
+    .csi-carousel__hint {
+      display: none !important;
     }
   }
 }

@@ -17,11 +17,11 @@
                     {{ if .Params.client_logo }}
                     <div class="cs-hero__lockup">
                         <div class="cs-hero__lockup-mark cs-hero__lockup-mark--client">
-                            <img src="{{ .Params.client_logo }}" alt="{{ .Params.client | default "" }} logo" />
+                            <img src="{{ .Params.client_logo }}" alt="{{ .Params.client | default `` }} logo">
                         </div>
                         <div class="cs-hero__lockup-x" aria-hidden="true">&times;</div>
                         <div class="cs-hero__lockup-mark cs-hero__lockup-mark--mp">
-                            <img src="/img/logo.svg" alt="Masterpoint logo" />
+                            <img src="/img/logo.svg" alt="Masterpoint logo">
                         </div>
                     </div>
                     {{ end }}
