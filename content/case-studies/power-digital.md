@@ -1,7 +1,7 @@
 ---
 title: "Power Digital: 10x Reduction in Infrastructure Automation Costs, 8x Faster Client Onboarding"
 weight: 3
-description: "Masterpoint migrated Power Digital's 43,000-resource Terraform monolith from Terraform Cloud to Spacelift and OpenTofu: 10x lower projected automation costs, plan/apply cycles down from 25 minutes to under 3, failed runs eliminated, and 100+ new clients onboarded in the first 60 days."
+description: "Masterpoint decomposed & migrated Power Digital's 43,000-resource Terraform monolith from Terraform Cloud to Spacelift and OpenTofu: 10x lower projected automation costs, plan/apply cycles down from 25 minutes to under 3, failed runs eliminated, and 100+ new clients onboarded in the first 60 days."
 
 layout: immersive
 
@@ -28,6 +28,13 @@ stat_bar:
 # Preview / OG
 preview_image: /img/case-studies/power-digital/power-digital-case-study-preview.jpg
 og_img: /img/case-studies/power-digital/power-digital-case-study-preview.jpg
+
+# Homepage highlight card (see docs/case-studies.md → Homepage slider)
+highlight:
+  blurb: "Masterpoint decomposed & migrated Power Digital's 43,000-resource Terraform monolith to Spacelift and OpenTofu, and the platform onboarded 100+ new clients in the first 60 days."
+  image: /img/case-studies/power-digital/power-digital-team.jpg
+  image_alt: "Power Digital team collaborating in their office"
+  logo: /img/case-studies/power-digital/power-digital-logo.png
 
 sitemap:
   priority: 0

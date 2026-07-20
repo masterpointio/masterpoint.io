@@ -1,0 +1,248 @@
+{{- /*
+  Homepage case-study highlights slider (see docs/case-studies.md → Homepage slider).
+  One featured card per case study (logo pill, title, blurb, CTA, photo)
+  sliding in a track, with a client-logo tab strip as the navigation.
+  Card content comes from each case study's optional `highlight:` front matter,
+  falling back to title / description / preview_image / client_logo.
+  Set `highlight: false` on a case study to keep it out of the slider; any other
+  non-map value (e.g. `highlight: true`) includes it with pure fallbacks.
+*/ -}}
+{{- $pages := slice -}}
+{{- range (where site.RegularPages "Section" "case-studies").ByWeight -}}
+  {{- if ne .Params.highlight false -}}{{- $pages = $pages | append . -}}{{- end -}}
+{{- end -}}
+{{- $multi := gt (len $pages) 1 -}}
+<div class="csh" id="csHighlights">
+  <div class="csh__viewport">
+    <div class="csh__track">
+      {{- range $i, $p := $pages -}}
+      {{- $h := dict -}}
+      {{- if reflect.IsMap $p.Params.highlight -}}{{- $h = $p.Params.highlight -}}{{- end -}}
+      {{- $client := $p.Params.client | default $p.Title -}}
+      <article
+        class="csh-slide{{ if eq $i 0 }} is-active{{ end }}"
+        id="csh-panel-{{ $i }}"
+        {{- if $multi }}
+        role="tabpanel"
+        aria-labelledby="csh-tab-{{ $i }}"
+        aria-hidden="{{ if eq $i 0 }}false{{ else }}true{{ end }}"
+        {{- end }}
+      >
+        <div class="csh-card">
+          <span class="csh-card__topline" aria-hidden="true"></span>
+          <div class="csh-card__body">
+            {{- with $h.card_logo | default $p.Params.client_logo }}
+            <div class="csh-card__logo"{{ with $p.Params.client_logo_height }} style="--cs-client-logo-h: {{ . }}"{{ end }}>
+              <img src="{{ . }}" alt="{{ $client }} logo" loading="lazy" />
+            </div>
+            {{- end }}
+            <h4 class="csh-card__title">
+              {{ $h.title | default $p.Params.hero_title | default $p.Title | safeHTML }}
+            </h4>
+            <p class="csh-card__blurb">
+              {{ $h.blurb | default $p.Description | safeHTML }}
+            </p>
+            <a class="button btn-gradient csh-card__cta" href="{{ $p.RelPermalink }}">
+              Read the Case Study &rarr;
+            </a>
+          </div>
+          {{- with $h.image | default $p.Params.preview_image }}
+          <div class="csh-card__media">
+            <img
+              src="{{ . }}"
+              alt="{{ $h.image_alt | default (printf `%s case study` $client) }}"
+              loading="lazy"
+            />
+          </div>
+          {{- end }}
+        </div>
+      </article>
+      {{- end }}
+    </div>
+  </div>
+  {{- if $multi }}
+  <div class="csh-nav">
+    {{- /* Rotation control first in the carousel's tab order (WCAG 2.2.2 / APG) */}}
+    <button
+      type="button"
+      class="csh-nav__toggle"
+      aria-label="Pause automatic slide rotation"
+      aria-pressed="false"
+    >
+      <svg class="csh-nav__icon-pause" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <path d="M4 2h3v12H4zM9 2h3v12H9z" />
+      </svg>
+      <svg class="csh-nav__icon-play" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <path d="M5 2l9 6-9 6z" />
+      </svg>
+    </button>
+    <div class="csh-nav__tabs" role="tablist" aria-label="Case studies">
+      {{- range $i, $p := $pages -}}
+      {{- $h := dict -}}
+      {{- if reflect.IsMap $p.Params.highlight -}}{{- $h = $p.Params.highlight -}}{{- end -}}
+      {{- $client := $p.Params.client | default $p.Title -}}
+      {{- $logo := $h.logo | default $p.Params.client_logo -}}
+      <button
+        type="button"
+        class="csh-nav__tab{{ if eq $i 0 }} is-active{{ end }}"
+        id="csh-tab-{{ $i }}"
+        role="tab"
+        aria-controls="csh-panel-{{ $i }}"
+        aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}"
+        aria-label="Show the {{ $client }} case study"
+      >
+        {{- if $logo }}
+        <img src="{{ $logo }}" alt="" loading="lazy" />
+        {{- else }}
+        <span class="csh-nav__name">{{ $client }}</span>
+        {{- end }}
+        <span class="csh-nav__bar" aria-hidden="true"><span class="csh-nav__progress"></span></span>
+      </button>
+      {{- end }}
+    </div>
+  </div>
+  {{- end }}
+</div>
+<script>
+  (function () {
+    document.querySelectorAll(".csh").forEach(function (root) {
+      var track = root.querySelector(".csh__track");
+      var slides = Array.prototype.slice.call(root.querySelectorAll(".csh-slide"));
+      var tabs = Array.prototype.slice.call(root.querySelectorAll(".csh-nav__tab"));
+      if (slides.length < 2) return;
+      var current = 0;
+
+      function setFocusable(slide, on) {
+        slide.querySelectorAll("a, button").forEach(function (el) {
+          el.tabIndex = on ? 0 : -1;
+        });
+      }
+
+      function go(i) {
+        current = (i + slides.length) % slides.length;
+        track.style.transform = "translateX(" + -100 * current + "%)";
+        slides.forEach(function (s, n) {
+          var on = n === current;
+          s.classList.toggle("is-active", on);
+          s.setAttribute("aria-hidden", on ? "false" : "true");
+          setFocusable(s, on);
+        });
+        tabs.forEach(function (t, n) {
+          var on = n === current;
+          t.classList.toggle("is-active", on);
+          t.setAttribute("aria-selected", on ? "true" : "false");
+          t.tabIndex = on ? 0 : -1;
+        });
+      }
+
+      tabs.forEach(function (t, n) {
+        t.addEventListener("click", function () {
+          go(n);
+        });
+        t.addEventListener("keydown", function (e) {
+          if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+          e.preventDefault();
+          go(current + (e.key === "ArrowRight" ? 1 : -1));
+          tabs[current].focus();
+        });
+      });
+
+      // Autoplay is driven by the active tab's progress-bar animation: when the
+      // bar finishes filling, advance. Pausing the animation pauses the slider.
+      root.querySelectorAll(".csh-nav__progress").forEach(function (p) {
+        p.addEventListener("animationend", function () {
+          go(current + 1);
+        });
+      });
+
+      // Hover and focus each hold the pause independently, so leaving with the
+      // mouse can't resume rotation while keyboard focus is still inside (an
+      // auto-advance would hide the focused element and drop focus to <body>).
+      // pointerType-gated so a tap's synthetic mouseenter (which never gets a
+      // matching mouseleave on touch screens) can't freeze the rotation.
+      var hovered = false;
+      var focused = false;
+      function updatePaused() {
+        root.classList.toggle("csh--paused", hovered || focused);
+      }
+      root.addEventListener("pointerenter", function (e) {
+        if (e.pointerType !== "mouse") return;
+        hovered = true;
+        updatePaused();
+      });
+      root.addEventListener("pointerleave", function (e) {
+        if (e.pointerType !== "mouse") return;
+        hovered = false;
+        updatePaused();
+      });
+      root.addEventListener("focusin", function () {
+        focused = true;
+        updatePaused();
+      });
+      root.addEventListener("focusout", function (e) {
+        focused = root.contains(e.relatedTarget);
+        updatePaused();
+      });
+
+      // Persistent rotation control (WCAG 2.2.2): stops autoplay until toggled
+      // back on, independent of the transient hover/focus pause.
+      var toggle = root.querySelector(".csh-nav__toggle");
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          var stopped = root.classList.toggle("csh--stopped");
+          toggle.setAttribute("aria-pressed", stopped ? "true" : "false");
+          toggle.setAttribute(
+            "aria-label",
+            stopped ? "Resume automatic slide rotation" : "Pause automatic slide rotation"
+          );
+        });
+      }
+
+      // Only run the autoplay while a meaningful part of the slider is on
+      // screen. isIntersecting alone flips true at the first visible pixel, so
+      // gate on the ratio: on once ≥25% visible, off only when fully off-screen.
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              root.classList.toggle(
+                "csh--inview",
+                entry.isIntersecting && entry.intersectionRatio >= 0.2
+              );
+            });
+          },
+          { threshold: [0, 0.25] }
+        ).observe(root);
+      } else {
+        root.classList.add("csh--inview");
+      }
+
+      var x0 = null;
+      var y0 = null;
+      var viewport = root.querySelector(".csh__viewport");
+      viewport.addEventListener(
+        "touchstart",
+        function (e) {
+          x0 = e.touches[0].clientX;
+          y0 = e.touches[0].clientY;
+        },
+        { passive: true }
+      );
+      viewport.addEventListener(
+        "touchend",
+        function (e) {
+          if (x0 === null) return;
+          var dx = e.changedTouches[0].clientX - x0;
+          var dy = e.changedTouches[0].clientY - y0;
+          if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy)) {
+            go(current + (dx < 0 ? 1 : -1));
+          }
+          x0 = y0 = null;
+        },
+        { passive: true }
+      );
+
+      go(0);
+    });
+  })();
+</script>

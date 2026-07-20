@@ -72,6 +72,46 @@ card grid to stay scannable as the list grows. Card image = each study's
 
 ---
 
+## Homepage highlights slider
+
+Featured case-study slider on the homepage (section
+`content/sections/home-case-studies.md`, id `#case-study-highlights`, weight 5).
+One dark pine card per study (logo pill, title, blurb, CTA, photo) on a sliding
+track navigated by a client-logo tab strip.
+
+- **Files:** `layouts/shortcodes/case-study-slider.html` (self-contained vanilla
+  JS, no jQuery — NOT flexslider, which `plugins.js` would hijack) + the `.csh-*`
+  block in `assets/css/custom.scss` (literal hex; `$cs-*` vars aren't defined
+  there yet). Iterates case studies **ByWeight**, so `weight:` orders the slides.
+- **Content: optional `highlight:` front-matter map** (see marketspark.md /
+  power-digital.md), all fields optional with fallbacks:
+
+  ```yaml
+  highlight:
+    title: "... <span class='text-gradient'>...</span>" # → hero_title → page title
+    blurb: "..." # → description
+    image: /img/case-studies/CLIENT/photo.jpg # → preview_image
+    image_alt: "..."
+    logo: /img/case-studies/CLIENT/CLIENT-logo-dark.png # tab strip only (white bg) → DARK variant; falls back to client_logo
+  ```
+
+  Two logo surfaces, two variants: the **card** (dark pine) uses the WHITE
+  `client_logo` — same lockup as the hero / sticky nav, no pill — overridable
+  with `highlight.card_logo`; the **tab strip** (white bg) uses the DARK
+  `highlight.logo`. `highlight: false` excludes a study; any other non-map value
+  includes it with pure fallbacks (template guards with `reflect.IsMap` so a
+  scalar can't crash the build). No logo → client name renders as a text tab.
+- **Autoplay** is driven by the active tab's progress-bar CSS animation (advances
+  on `animationend`). Gated off by four independent CSS classes: `.csh--inview`
+  (≥25% visible), `.csh--paused` (hover/focus), `.csh--stopped` (WCAG pause/play
+  toggle), and `prefers-reduced-motion`. Pause/stop rules must match the run
+  rule's 5-class specificity or they silently lose.
+- **Single study** → tab strip, toggle, autoplay, and tabpanel ARIA all omitted.
+- Section heading/intro and "See All Case Studies" button live in the section
+  content file, not the shortcode.
+
+---
+
 ## Modern layout — front matter schema
 
 ```yaml

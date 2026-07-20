@@ -4250,4 +4250,411 @@ font-size: 1.55rem;
   }
 }
 
+// ---------------------------------------------------------------------------
+// HOME — CASE STUDY HIGHLIGHTS SLIDER (#case-study-highlights, .csh-*)
+// Featured case-study cards on a sliding track, navigated by a client-logo
+// tab strip with an autoplay progress bar. Markup lives in
+// layouts/shortcodes/case-study-slider.html; see docs/case-studies.md.
+// ---------------------------------------------------------------------------
+.csh {
+  margin-top: 1.8rem;
+
+  &__viewport {
+    overflow: hidden;
+    border-radius: 24px;
+    box-shadow: 0 24px 48px -28px rgba(14, 56, 58, 0.45);
+  }
+  &__track {
+    display: flex;
+    transition: transform 0.65s cubic-bezier(0.33, 0, 0.15, 1);
+    will-change: transform;
+  }
+}
+
+.csh-slide {
+  flex: 0 0 100%;
+  min-width: 100%;
+  // Keep off-screen slides out of the accessibility tree / paint until they
+  // slide in: hide only after the track transition has finished.
+  visibility: hidden;
+  transition: visibility 0s 0.65s;
+  &.is-active {
+    visibility: visible;
+    transition-delay: 0s;
+  }
+}
+
+.csh-card {
+  display: flex;
+  height: 100%;
+  min-height: 460px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #0e383a 0%, #0a2a2c 55%, #061d1e 100%);
+  color: #fff;
+
+  // soft mint / pink glows (echoes the case-study hero)
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 85% 15%, rgba(42, 217, 194, 0.16), transparent 55%),
+      radial-gradient(ellipse at 8% 92%, rgba(216, 145, 206, 0.12), transparent 50%);
+    pointer-events: none;
+  }
+  // faint dot grid, fading downward
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 80%);
+    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 80%);
+    pointer-events: none;
+  }
+
+  &__topline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 2;
+    background: linear-gradient(92deg, #ede497 -0.66%, #2ad9c2 26%, #d891ce 59.55%);
+  }
+
+  &__body {
+    position: relative;
+    z-index: 1;
+    flex: 1 1 55%;
+    min-width: 0;
+    padding: 2.2rem 2.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    // slides share the tallest card's height; centering the content group keeps
+    // a shorter card (fewer title lines / blurb) balanced instead of leaving a
+    // dead gap above a bottom-pinned CTA
+    justify-content: center;
+  }
+
+  &__logo {
+    margin-bottom: 1.1rem;
+    img {
+      display: block;
+      height: var(--cs-client-logo-h, 32px);
+      width: auto;
+    }
+  }
+
+  &__title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    line-height: 1.22em;
+    color: #fff;
+    margin-bottom: 0.9rem;
+    max-width: 36rem;
+  }
+
+  &__blurb {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 1rem;
+    line-height: 1.55em;
+    margin-bottom: 1.3rem;
+    max-width: 34rem;
+  }
+
+  &__cta {
+    margin-top: 0.4rem;
+  }
+
+  &__media {
+    flex: 1 1 45%;
+    position: relative;
+    min-height: 260px;
+    img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    // blend the photo into the pine card
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(10, 42, 44, 0.55) 0%, rgba(10, 42, 44, 0) 35%);
+      pointer-events: none;
+    }
+  }
+}
+
+.csh-nav {
+  display: flex;
+  align-items: center;
+  // centered on the outer row; the inner __tabs group scrolls when it
+  // overflows (centering the scroll container itself would clip its left end)
+  justify-content: center;
+  gap: 0.9rem;
+  margin-top: 1.1rem;
+  min-width: 0;
+
+  &__tabs {
+    display: flex;
+    gap: 1rem;
+    min-width: 0;
+    overflow-x: auto;
+    padding: 0.25rem 0.25rem 0.45rem;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  // persistent autoplay pause/play control (WCAG 2.2.2)
+  &__toggle {
+    flex: 0 0 auto;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 1px solid #dfe7e7;
+    border-radius: 50%;
+    cursor: pointer;
+    transition:
+      border-color 0.25s,
+      box-shadow 0.25s;
+    svg {
+      display: block;
+      width: 13px;
+      height: 13px;
+      fill: #0e383a;
+    }
+    .csh-nav__icon-play {
+      display: none;
+    }
+    &:hover,
+    &:focus-visible {
+      border-color: #2ad9c2;
+    }
+    &:focus-visible {
+      outline: 2px solid #2ad9c2;
+      outline-offset: 2px;
+    }
+  }
+
+  // text fallback when a case study has no logo for the tab strip
+  &__name {
+    display: block;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 30px;
+    color: #0e383a;
+    white-space: nowrap;
+  }
+
+  &__tab {
+    flex: 0 0 auto;
+    appearance: none;
+    -webkit-appearance: none;
+    background: #fff;
+    border: 1px solid #dfe7e7;
+    border-radius: 14px;
+    padding: 1.05rem 2.2rem 1.2rem;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition:
+      border-color 0.25s,
+      box-shadow 0.25s;
+
+    img {
+      display: block;
+      height: 30px;
+      width: auto;
+      filter: grayscale(1);
+      opacity: 0.5;
+      transition:
+        filter 0.25s,
+        opacity 0.25s;
+    }
+    &:hover,
+    &:focus-visible {
+      border-color: #b9cdcd;
+      img {
+        filter: none;
+        opacity: 1;
+      }
+    }
+    &:focus-visible {
+      outline: 2px solid #2ad9c2;
+      outline-offset: 2px;
+    }
+    &.is-active {
+      border-color: rgba(42, 217, 194, 0.5);
+      box-shadow: 0 12px 24px -14px rgba(14, 56, 58, 0.4);
+      img {
+        filter: none;
+        opacity: 1;
+      }
+    }
+  }
+
+  &__bar {
+    display: block;
+    position: absolute;
+    // inset 1px so the bar hugs the inside of the tab border and its rounded
+    // corners instead of notching past them
+    left: 1px;
+    right: 1px;
+    bottom: 1px;
+    height: 4px;
+    border-radius: 0 0 13px 13px;
+    overflow: hidden;
+    background: rgba(14, 56, 58, 0.08);
+  }
+  &__progress {
+    display: block;
+    height: 100%;
+    // full-width gradient revealed by the clip-path animation, so the colors
+    // stay put while the bar fills (a width animation would stretch them)
+    width: 100%;
+    background: linear-gradient(92deg, #ede497 -0.66%, #2ad9c2 26%, #d891ce 59.55%);
+    clip-path: inset(0 100% 0 0);
+  }
+}
+
+// Autoplay: the active tab's bar fills over 8s (only while the slider is on
+// screen); the shortcode JS advances on animationend and toggles the classes.
+// The paused/stopped rules must match the run rule's specificity and come
+// AFTER it — the `animation` shorthand resets animation-play-state to
+// `running`, so a lower-specificity pause rule would silently lose.
+.csh.csh--inview .csh-nav__tab.is-active .csh-nav__progress {
+  animation: cshProgress 8s linear forwards;
+}
+.csh.csh--paused .csh-nav__tab.is-active .csh-nav__progress {
+  animation-play-state: paused;
+}
+.csh.csh--stopped .csh-nav__tab.is-active .csh-nav__progress {
+  animation: none;
+}
+.csh.csh--stopped .csh-nav__toggle {
+  .csh-nav__icon-pause {
+    display: none;
+  }
+  .csh-nav__icon-play {
+    display: block;
+  }
+}
+@keyframes cshProgress {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.csh-see-all {
+  margin-top: 1.6rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .csh__track {
+    transition: none;
+  }
+  .csh-slide {
+    transition: none;
+  }
+  .csh .csh-nav__progress {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .csh-card {
+    // media (last child) on top, text below — mirrors the list-page cards
+    flex-direction: column-reverse;
+    min-height: 0;
+
+    &__body {
+      padding: 2.2rem 1.7rem 2rem;
+    }
+    &__title {
+      font-size: 1.45rem;
+    }
+    &__media {
+      flex: 0 0 auto;
+      width: 100%;
+      min-height: 0;
+      height: 240px;
+      &::after {
+        background: linear-gradient(0deg, rgba(10, 42, 44, 0.55) 0%, rgba(10, 42, 44, 0) 40%);
+      }
+    }
+  }
+  .csh-nav__toggle {
+    width: 40px;
+    height: 40px;
+  }
+  .csh-nav__tab {
+    padding: 0.85rem 1.5rem 1rem;
+    border-radius: 12px;
+    img {
+      height: 24px;
+    }
+  }
+  .csh-nav__name {
+    line-height: 24px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .csh {
+    margin-top: 1.8rem;
+  }
+  .csh__viewport {
+    border-radius: 18px;
+  }
+  .csh-card {
+    border-radius: 18px;
+    &__body {
+      padding: 1.9rem 1.3rem 1.8rem;
+    }
+    &__media {
+      height: 200px;
+    }
+  }
+  // tighten the control strip so toggle + both tabs fit a small phone
+  .csh-nav {
+    gap: 0.6rem;
+  }
+  .csh-nav__tabs {
+    gap: 0.6rem;
+  }
+  .csh-nav__toggle {
+    width: 36px;
+    height: 36px;
+  }
+  .csh-nav__tab {
+    padding: 0.7rem 1.1rem 0.85rem;
+    img {
+      height: 22px;
+    }
+  }
+  .csh-nav__name {
+    line-height: 22px;
+    font-size: 0.9rem;
+  }
+}
+
 @import "case-studies.scss";
