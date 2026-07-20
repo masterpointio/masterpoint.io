@@ -1,9 +1,9 @@
 {{- /*
   Homepage case-study highlights slider (see docs/case-studies.md → Homepage slider).
-  One featured card per case study (logo pill, eyebrow, title, blurb, two stats,
-  CTA, photo) sliding in a track, with a client-logo tab strip as the navigation.
+  One featured card per case study (logo pill, title, blurb, CTA, photo)
+  sliding in a track, with a client-logo tab strip as the navigation.
   Card content comes from each case study's optional `highlight:` front matter,
-  falling back to title / description / preview_image / stat_bar / client_logo.
+  falling back to title / description / preview_image / client_logo.
   Set `highlight: false` on a case study to keep it out of the slider; any other
   non-map value (e.g. `highlight: true`) includes it with pure fallbacks.
 */ -}}
@@ -19,7 +19,6 @@
       {{- $h := dict -}}
       {{- if reflect.IsMap $p.Params.highlight -}}{{- $h = $p.Params.highlight -}}{{- end -}}
       {{- $client := $p.Params.client | default $p.Title -}}
-      {{- $stats := $h.stats | default (first 2 ($p.Params.stat_bar | default slice)) -}}
       <article
         class="csh-slide{{ if eq $i 0 }} is-active{{ end }}"
         id="csh-panel-{{ $i }}"
@@ -32,30 +31,17 @@
         <div class="csh-card">
           <span class="csh-card__topline" aria-hidden="true"></span>
           <div class="csh-card__body">
-            {{- with $h.logo | default $p.Params.client_logo }}
-            <div class="csh-card__logo">
+            {{- with $h.card_logo | default $p.Params.client_logo }}
+            <div class="csh-card__logo"{{ with $p.Params.client_logo_height }} style="--cs-client-logo-h: {{ . }}"{{ end }}>
               <img src="{{ . }}" alt="{{ $client }} logo" loading="lazy" />
             </div>
             {{- end }}
-            <div class="csh-card__eyebrow">
-              {{ $h.eyebrow | default (printf "Case Study · %s" $client) | safeHTML }}
-            </div>
             <h4 class="csh-card__title">
-              {{ $h.title | default $p.Title | safeHTML }}
+              {{ $h.title | default $p.Params.hero_title | default $p.Title | safeHTML }}
             </h4>
             <p class="csh-card__blurb">
               {{ $h.blurb | default $p.Description | safeHTML }}
             </p>
-            {{- with $stats }}
-            <div class="csh-card__stats">
-              {{- range . }}
-              <div class="csh-stat">
-                <div class="csh-stat__value">{{ .value | safeHTML }}</div>
-                <div class="csh-stat__label">{{ .label | safeHTML }}</div>
-              </div>
-              {{- end }}
-            </div>
-            {{- end }}
             <a class="button btn-gradient csh-card__cta" href="{{ $p.RelPermalink }}">
               Read the Case Study &rarr;
             </a>

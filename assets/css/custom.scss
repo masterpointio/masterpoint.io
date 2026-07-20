@@ -4335,28 +4335,19 @@ font-size: 1.55rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    // slides share the tallest card's height; centering the content group keeps
+    // a shorter card (fewer title lines / blurb) balanced instead of leaving a
+    // dead gap above a bottom-pinned CTA
+    justify-content: center;
   }
 
   &__logo {
-    background: #fff;
-    border-radius: 10px;
-    padding: 0.6rem 0.95rem;
     margin-bottom: 1.6rem;
-    box-shadow: 0 8px 18px -10px rgba(0, 0, 0, 0.5);
     img {
       display: block;
-      height: 26px;
+      height: var(--cs-client-logo-h, 32px);
       width: auto;
     }
-  }
-
-  &__eyebrow {
-    color: #2ad9c2;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 0.14em;
-    margin-bottom: 0.8rem;
   }
 
   &__title {
@@ -4376,18 +4367,8 @@ font-size: 1.55rem;
     max-width: 34rem;
   }
 
-  &__stats {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.4rem 2rem;
-    align-items: start;
-    width: 100%;
-    max-width: 34rem;
-    margin-bottom: 2rem;
-  }
-
   &__cta {
-    margin-top: auto;
+    margin-top: 0.4rem;
   }
 
   &__media {
@@ -4409,23 +4390,6 @@ font-size: 1.55rem;
       background: linear-gradient(90deg, rgba(10, 42, 44, 0.55) 0%, rgba(10, 42, 44, 0) 35%);
       pointer-events: none;
     }
-  }
-}
-
-.csh-stat {
-  &__value {
-    @extend .text-gradient;
-    font-size: 2.3rem;
-    font-weight: 800;
-    line-height: 1em;
-    white-space: nowrap;
-  }
-  &__label {
-    color: rgba(255, 255, 255, 0.75);
-    font-size: 0.95rem;
-    line-height: 1.35em;
-    max-width: 15rem;
-    padding-top: 0.45em;
   }
 }
 
@@ -4637,14 +4601,6 @@ font-size: 1.55rem;
       }
     }
   }
-  .csh-stat {
-    &__value {
-      font-size: 2rem;
-    }
-    &__label {
-      font-size: 0.9rem;
-    }
-  }
   .csh-nav__toggle {
     width: 40px;
     height: 40px;
@@ -4673,11 +4629,6 @@ font-size: 1.55rem;
     border-radius: 18px;
     &__body {
       padding: 1.9rem 1.3rem 1.8rem;
-    }
-    // single column so wide values ("0% → 100%") never clip
-    &__stats {
-      grid-template-columns: 1fr;
-      gap: 1.1rem;
     }
     &__media {
       height: 200px;

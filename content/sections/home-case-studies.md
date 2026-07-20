@@ -11,7 +11,7 @@ id: case-study-highlights
 
 ### Real Engagements, <span class="text-gradient">Real Results</span> {.groupTitle .text-center .text-rhythm}
 
-<p class="font20 text-pine">See how engineering teams partner with Masterpoint to turn tangled infrastructure into platforms that scale.</p>
+<p class="font20 text-pine">See case study success stories and learn how engineering teams partner with Masterpoint to turn tangled infrastructure into platforms that scale.</p>
 
 </div>
 </div>
