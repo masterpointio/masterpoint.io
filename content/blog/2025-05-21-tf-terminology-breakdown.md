@@ -5,7 +5,7 @@ title: Terraform + OpenTofu Terminology Breakdown
 slug: terraform-opentofu-terminology-breakdown
 author: Matt Gowie
 date: 2025-05-21
-date_modified: 2026-06-10 # Be sure to use this if you've updated the post as this helps with SEO and index freshness
+date_modified: 2026-07-22 # Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: List of Terraform and OpenTofu terms with definitions and explanations.
 image: /img/updates/tf-terminology-breakdown.png
 callout: <p>👋 <b>Got a term that you're still confused on in the TF or IaC space that you want us to include here? <a href='/contact'>Get in touch and we'd be happy to add it!</a></b></p>
@@ -31,6 +31,7 @@ callout: <p>👋 <b>Got a term that you're still confused on in the TF or IaC sp
   - [Terratest](#terratest)
 - [Industry Terms](#industry-terms)
   - [ClickOps](#clickops)
+  - [Drift](#drift)
   - [Provider](#provider)
   - [TACOS](#tacos)
   - [TF Frameworks](#tf-frameworks)
@@ -153,6 +154,12 @@ ClickOps refers to provisioning and managing cloud infrastructure manually by ha
 The trouble with ClickOps is that it doesn't scale: manually-created resources aren't version controlled or peer reviewed, are error-prone, and are difficult to reproduce across environments. Anything long-lived should be brought under IaC management, which is especially important at the enterprise level, where ClickOps quietly erodes the governance, auditability, and compliance guarantees that larger organizations depend on, and where a single undocumented manual change can have an outsized blast radius across teams and environments.
 
 You can read more on this topic here: [What is ClickOps?](https://spacelift.io/blog/what-is-clickops) For a real-world example, read our **[case study success story on how we brought MarketSpark to 100% Infrastructure as Code](/case-studies/marketspark/)** 📈, unlocking benefits such as disaster recovery and faster infrastructure deployments.
+
+## Drift
+
+Drift (sometimes called configuration drift or state drift) is when the real-world state of your infrastructure no longer matches what your code and state file say it should be. This typically happens when changes are made outside of the normal Terraform workflow: someone makes a quick fix in the cloud console ([ClickOps](#clickops)), an automated process modifies a resource, or a cloud provider changes something on its end. It's dangerous because it silently undermines the core promise of IaC: that your code is the source of truth.
+
+You can surface drift by running `terraform plan` (or `tofu plan`) with the `-refresh-only` flag, and many [TACOS](#tacos) platforms offer scheduled drift detection that alerts you when your infrastructure has diverged from code. The long-term fix is process: make all changes through your TF workflow, and when out-of-band changes do happen, reconcile them back into code promptly. Read more [in depth in this article](https://spacelift.io/blog/drift-detection).
 
 ## Provider
 
