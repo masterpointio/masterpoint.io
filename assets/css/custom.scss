@@ -1951,7 +1951,10 @@ footer {
       }
     }
   }
-  #our-word {
+  // /services/audit mirrors this section (content/sections/iac-our-word.md,
+  // same id) — @at-root scopes the treatment to both pages.
+  @at-root #home #our-word,
+    #page-iac-audit-services #our-word {
     color: #fff;
     padding: 5.25rem 0 3rem;
     background: $pine;
@@ -3169,8 +3172,20 @@ footer {
       padding: 0 0 3.5rem;
     }
 
+    .col {
+      @media (min-width: 768px) {
+        width: 86%;
+        max-width: 86%;
+        flex: 0 0 auto;
+      }
+    }
+
     .quoteLabel {
-      margin-bottom: 2.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .flexslider .slides {
+      align-items: flex-start;
     }
 
     .flex-control-paging {

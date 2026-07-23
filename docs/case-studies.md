@@ -77,7 +77,13 @@ card grid to stay scannable as the list grows. Card image = each study's
 Featured case-study slider on the homepage (section
 `content/sections/home-case-studies.md`, id `#case-study-highlights`, weight 5).
 One dark pine card per study (logo pill, title, blurb, CTA, photo) on a sliding
-track navigated by a client-logo tab strip.
+track navigated by a client-logo tab strip. Reused verbatim on `/services/audit/`
+via `content/sections/iac-success-stories.md` (weight 8, after the quotes section,
+before the CTA) — the shortcode and `.csh-*` styles are class-scoped/page-agnostic,
+so keep the two section files' body content in sync when editing either. The
+homepage quotes/testimonials section is likewise mirrored there as
+`content/sections/iac-our-word.md` (weight 7), which reuses `id: our-word` so the
+`#our-word` CSS applies unchanged.
 
 - **Files:** `layouts/shortcodes/case-study-slider.html` (self-contained vanilla
   JS, no jQuery — NOT flexslider, which `plugins.js` would hijack) + the `.csh-*`
