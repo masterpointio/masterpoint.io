@@ -886,9 +886,13 @@ padding-top: 12px;
         border-radius: 4px 0 4px 4px;
       }
       @media (max-width: 575px) {
-        left: 0;
-      }
-      @media (max-width: 575px) {
+        // Keep the dropdown anchored to the right edge of the header (where the
+        // toggle sits) instead of letting `left: 0` push its fixed width off
+        // screen, which cut the menu labels off on narrow viewports. The
+        // max-width is a safety net so it can never overflow the viewport.
+        left: auto;
+        right: 0;
+        max-width: calc(100vw - 40px);
         border-radius: 0 4px 4px 4px;
       }
 
