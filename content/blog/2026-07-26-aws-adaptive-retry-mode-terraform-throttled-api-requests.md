@@ -80,7 +80,7 @@ resource "aws_iam_role" "app" {
 }
 ```
 
-Using [provider aliases with child modules](https://developer.hashicorp.com/terraform/language/modules/develop/providers#passing-providers-explicitly) in the same way via `providers = { aws = aws.adaptive_requests }`. The blast radius is exactly the resources you chose, and it's all greppable.
+Using [provider aliases with child modules](https://developer.hashicorp.com/terraform/language/modules/develop/providers#passing-providers-explicitly) in the same way via `providers = { aws = aws.adaptive_requests }`. The blast radius is exactly the resources you chose, and it's all greppable when it's in code rather than an environment variable that applies to everything.
 
 ## Don't Apply It Everywhere
 
