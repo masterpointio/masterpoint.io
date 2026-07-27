@@ -15,7 +15,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 
 - [Standard Mode, Where Every Request Backs Off Naively](#standard-mode-where-every-request-backs-off-naively)
 - [Adaptive Mode, so the Client Paces Itself When Throttling is Detected](#adaptive-mode-so-the-client-paces-itself-when-throttling-is-detected)
-  - [Why Not Just Raise Max Retries?](#why-not-just-raise-max_retries)
+  - [Why Not Just Raise Max Retries?](#why-not-just-raise-max-retries)
 - [Enable It in the TF Provider Block, Not the Environment](#enable-it-in-the-tf-provider-block-not-the-environment)
 - [Don't Apply It Everywhere](#dont-apply-it-everywhere)
 
