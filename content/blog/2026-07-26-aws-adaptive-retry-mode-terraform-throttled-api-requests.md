@@ -41,7 +41,7 @@ A big Terraform operation against API rate-capped services fits that description
 
 ### Why Not Just Raise `max_retries`?
 
-You might be tempted to just bump max retries ([`max_retries`](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#max_retries-1)), which controls how many times the provider re-attempts a failed AWS API call before it gives up. That doesn't really fix anything though. If you're not addressing the throttling itself, a request that gets rate limited on attempt three is going to get rate limited on attempt thirty as well, since nothing about how you're sending has changed. All you've done is make the operation take longer before it fails. Adaptive mode is different because it slows down how fast the requests go out to prevent errors.
+You might be tempted to just bump max retries ([`max_retries`](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#max_retries-1)), which controls how many times the provider re-attempts a failed AWS API call before it gives up. That doesn't really fix anything though. If you're not addressing the throttling itself, a request that gets rate limited on attempt three is going to get rate limited on attempt thirty as well, since nothing about how you're sending has changed. All you've done is make the operation take longer before it fails if there are multiple runs happening at the same time. Adaptive mode is different because it slows down how fast the requests go out to prevent errors.
 
 ## Enable It in the TF Provider Block, Not the Environment
 
