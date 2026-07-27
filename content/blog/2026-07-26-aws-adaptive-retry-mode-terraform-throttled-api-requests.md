@@ -19,7 +19,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 - [Enable It in the TF Provider Block, Not the Environment](#enable-it-in-the-tf-provider-block-not-the-environment)
 - [Don't Apply It Everywhere](#dont-apply-it-everywhere)
 
-> **TL;DR:** By default, Terraform's AWS provider retries each throttled request with exponential backoff, but it has no idea what its other in-flight requests are doing. With concurrency, the client as a whole keeps slamming AWS' API. Using adaptive retry mode adds a client-wide rate limiter that paces requests once it detects throttling.
+> **TL;DR:** By default, Terraform's AWS provider retries each throttled request with exponential backoff, but every request backs off on its own with no idea what the other in-flight requests are doing. With concurrency, the client as a whole keeps slamming AWS' API, so the operation drags on and can eventually burn through `max_retries` and error out or time out entirely. Adaptive retry mode adds a client-wide rate limiter that paces requests once it detects throttling.
 
 ## Standard Mode, where Every Request Backs Off Naively
 
@@ -29,15 +29,15 @@ The default _standard_ retry mode backs off **per request**: each throttled call
 
 ## Adaptive Mode, so the Client Paces Itself When Throttling is Detected
 
-[Adaptive mode](https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html) keeps everything standard mode does and adds the missing piece, which is a client-side rate limiter that watches for throttling responses and dials the client's send rate up or down accordingly. When throttles appear, it cuts the rate and paces itself instead of blindly firing AWS API requests.
+[Adaptive mode](https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html) keeps everything standard mode does and adds the missing piece, which is a client-side rate limiter that watches for throttling responses and dials the client's send rate up or down accordingly. **When throttles appear, it cuts the rate and paces itself to avoid errors from rate limits, instead of blindly firing AWS API requests.**
+
+- Without this, those requests just keep getting throttled and retried, so the operation ends up far slower than it should be. Eventually a request burns through `max_retries` and **errors out the whole run, or the operation times out before it ever finishes**.
 
 As the [AWS SDKs and Tools documentation on retry behavior](https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html) puts it, adaptive mode "can delay or block the _initial_ request, not just retries, when throttling is detected." That means the client's own sending is governed at the source.
 
-[AWS recommends adaptive mode](https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html) for one specific shape of client.
+[AWS recommends adaptive mode](https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html) if "your client targets a single resource (for example, one DynamoDB table) and you expect frequent throttling responses. This is common in automated workflows, batch processors, or AI workloads that call a single API operation at high volume."
 
-> Your client targets a single resource (for example, one DynamoDB table) and you expect frequent throttling responses. This is common in automated workflows, batch processors, or AI workloads that call a single API operation at high volume.
-
-A big Terraform operation against a rate-capped service fits that description well. [IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-quotas.html) is the classic case, where you might have a monolithic Terraform root module with hundreds of roles and policies, [ALB listener rules](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-limits.html) in the thousands are another, where every rule is a Terraform resource whose refresh hammers the ELB Describe APIs, or [Route 53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/DNSLimitations.html#limits-api-requests-route-53) is hard-capped at five API requests per second per account. **You should always request a Service Quotas increase first, but for limits like these, sometimes it gets denied or doesn't buy you enough headroom.**
+A big Terraform operation against a rate-capped service fits that description well. Examples such as [IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-quotas.html), where you might have a monolithic Terraform root module with hundreds of roles and policies, [ALB listener rules](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-limits.html) in the thousands are another, where every rule is a Terraform resource whose refresh hammers the ELB Describe APIs, or [Route 53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/DNSLimitations.html#limits-api-requests-route-53) is limited to only five API requests per second *per account*. **You should always request a Service Quotas increase first, but for limits like these, sometimes it gets denied or doesn't buy you enough headroom.**
 
 ### Why Not Just Raise `max_retries`?
 
