@@ -23,15 +23,15 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 
 ## Standard Mode, where Every Request Backs Off Naively
 
-By default, the [Terraform AWS provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) (via the AWS SDK underneath it) retries every [throttled and rate-limited API request with exponential backoff and jitter](https://github.com/hashicorp/terraform-provider-aws/blob/main/docs/retries-and-waiters.md#default-aws-go-sdk-retries). If your Terraform or OpenTofu operation is drowning in `ThrottlingException` or `Rate exceeded` errors, it is not because TF forgot to back off.
+By default, the [Terraform AWS provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) (via the AWS SDK underneath it) retries every [throttled and rate-limited API request with exponential backoff](https://github.com/hashicorp/terraform-provider-aws/blob/main/docs/retries-and-waiters.md#default-aws-go-sdk-retries). If your Terraform or OpenTofu operation is drowning in `ThrottlingException` or `Rate exceeded` errors, it is not because TF forgot to back off.
 
 The default _standard_ retry mode backs off **per request**: each throttled call politely waits, doubles, waits again, with no awareness of what any other in-flight request is doing. Terraform is concurrent with a default `-parallelism` of 10 resource operations at once, and each operation is rarely a single API call (there's the create or update, the read-back to refresh state, or a polling waiter checking whether the resource operation is completed). While one request sleeps through its backoff, nine other requests are firing fresh calls, and expired backoffs re-collide with new traffic. In an enterprise setting, where multiple operations are running at the same time from multiple systems, this compounds!
 
 ## Adaptive Mode, so the Client Paces Itself When Throttling is Detected
 
-[Adaptive mode](https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html) keeps everything standard mode does and adds the missing piece, which is a client-side rate limiter that watches for throttling responses and dials the client's send rate up or down accordingly. **When throttles appear, it cuts the rate and paces itself to avoid errors from rate limits, instead of blindly firing AWS API requests.**
+[Adaptive mode](https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html) keeps everything standard mode does and adds the missing piece, which is a client-side rate limiter that watches for throttling responses and dials the client's send rate up or down accordingly, hence the name "adaptive". **When throttles appear, it cuts the rate and paces all requests from the Terraform Provider to avoid errors from rate limits, instead of blindly firing AWS API requests.**
 
-- Without this, those requests just keep getting throttled and retried, so the operation ends up far slower than it should be. Eventually a request burns through `max_retries` and **errors out the whole run, or the operation times out before it ever finishes**.
+- Without this, those requests just keep getting retried and throttled even with the backoff since by default, it doesn't know about the other requests, so the operation ends up far slower than it should be. Eventually the requests burns through `max_retries` and **errors out the whole run, or the operation times out before it ever finishes**.
 
 As the [AWS SDKs and Tools documentation on retry behavior](https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html) puts it, adaptive mode "can delay or block the _initial_ request, not just retries, when throttling is detected." That means the client's own sending is governed at the source.
 
