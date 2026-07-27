@@ -74,7 +74,7 @@ We had one giant workspace that took way too long to plan. It was killing us.
 But the problem wasn't just the lack of speed. It was a lack of engineering confidence in the Infrastructure as Code system. Issues included:
 
 - The AWS console was used to [manually make changes](https://masterpoint.io/blog/terraform-opentofu-terminology-breakdown/#clickops) during incidents and these fixes were never rolled into Terraform, and so were later inadvertently reverted.
-- Managing ECS deployments through Terraform caused constant [drift](https://spacelift.io/blog/drift-detection) in the production terralith, flooding PR diffs with hundreds of unrelated changes.
+- Managing ECS deployments through Terraform caused constant [drift](https://masterpoint.io/blog/terraform-opentofu-terminology-breakdown/#drift) in the production terralith, flooding PR diffs with hundreds of unrelated changes.
 
 Over time, the team stopped trusting the system, let alone reading the diffs.
 
