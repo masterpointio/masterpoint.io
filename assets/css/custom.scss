@@ -886,9 +886,9 @@ padding-top: 12px;
         border-radius: 4px 0 4px 4px;
       }
       @media (max-width: 575px) {
-        left: 0;
-      }
-      @media (max-width: 575px) {
+        left: auto;
+        right: 0;
+        max-width: calc(100vw - 40px);
         border-radius: 0 4px 4px 4px;
       }
 
