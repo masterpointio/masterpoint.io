@@ -8,7 +8,6 @@ date: 2026-07-26 # TODO: Update with correct date
 # date_modified: 2026-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: "Terraform's AWS provider retries throttled requests with exponential backoff, but each request backs off blind to the others. Adaptive retry mode adds a client-wide rate limiter that paces requests once throttling is detected to avoid being rate limited."
 image: /img/updates/aws-adaptive-retry-mode-terraform/aws-adaptive-retry-mode.png
-callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a></p>
 ---
 
 <h2>Table of Contents</h2>
@@ -19,7 +18,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 - [Enable It in the TF Provider Block, Not the Environment](#enable-it-in-the-tf-provider-block-not-the-environment)
 - [Don't Apply It Everywhere](#dont-apply-it-everywhere)
 
-> **TL;DR:** By default, Terraform's AWS provider retries each throttled request with exponential backoff, but every request backs off on its own with no idea what the other in-flight requests are doing. With concurrency, the client as a whole keeps slamming AWS' API, so the operation drags on and can eventually burn through `max_retries` and error out or time out entirely. Adaptive retry mode adds a client-wide rate limiter that paces requests once it detects throttling.
+> **TL;DR:** By default, Terraform's AWS provider retries each throttled request with exponential backoff, but every request backs off on its own with no idea what the other in-flight requests are doing. With Terraform's parallelism, the client as a whole keeps slamming AWS' API, so the operation drags on and can eventually burn through `max_retries` and error out or time out entirely. Adaptive retry mode adds a client-wide rate limiter that paces requests once it detects throttling.
 
 ## Standard Mode, Where Every Request Backs Off Naively
 
