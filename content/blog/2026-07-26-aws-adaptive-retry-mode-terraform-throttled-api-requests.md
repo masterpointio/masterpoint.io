@@ -53,7 +53,7 @@ You _can_ switch modes with the `AWS_RETRY_MODE` environment variable or the sha
 
 <u>**We would recommend using the provider block, not the environment variable.**</u>
 
-An env var is invisible in code & reviews, lives outside version control, and applies to **everything** in that process and shell: every provider configuration in the run, and even the AWS CLI in the same CI job. That's the opposite of what we want, since adaptive should only be on where it's necessary, and reviewers & future readers should be able to _ easily see_ where it's on.
+An env var is invisible in code & reviews, lives outside version control, and applies to **everything** in that process and shell: every provider configuration in the run, and even the AWS CLI in the same CI job. That's the opposite of what we want, since adaptive should only be on where it's necessary, and reviewers & future readers should be able to _easily see_ where it's on.
 
 The provider block gives you both visibility and scoping. Since v5 of the Terraform AWS provider, [`retry_mode` is a natively supported provider argument](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#retry_mode-1):
 
@@ -92,4 +92,4 @@ As per the AWS documentation, [adaptive mode is not recommended as a general def
 
 This is because there are costs. **Typical operations get slower**, since delaying first attempts is the mechanism itself, so a Terraform or OpenTofu workspace that never gets throttled gains nothing and may still pay a latency cost after a transient blip. And that per-client rate limiter is **shared across operations**, so one throttle-prone API surface slows every call the client makes, including ones that were never in trouble (hence the provider aliases above).
 
-The important nuance is that these costs only exist where requests were succeeding in the first place. For resources that are actually being throttled, "slower" is a non-issue because the fast version wasn't going through anyway: an operation stuck cycling through `Rate exceeded` errors has no latency worth protecting, and a **paced request that succeeds beats multiple quick ones that bounce**. So scope it to resources where throttling is expected, where you give up no real speed because standard retries were already getting throttled.
+The important nuance is that these costs only exist where requests were succeeding in the first place. For resources that are actually being throttled, "slower" is a non-issue because it wasn't going through anyway and cycling through `Rate exceeded` errors has no latency worth protecting. A **paced request that succeeds beats multiple quick ones that bounce**, so scope it to resources where throttling is expected, where you give up no real speed because standard retries were already getting throttled.
