@@ -3450,7 +3450,12 @@ footer {
       box-shadow: 0 14px 32px -22px rgba(0, 0, 0, 0.7);
       transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
 
-      // brand accent bar down the left edge, revealed on hover
+      // brand accent bar down the left edge, revealed on hover.
+      // Rounds its own left corners to match the card: on hover the card is
+      // promoted to a compositing layer (transform) and Chrome/Safari stop
+      // applying the rounded `overflow: hidden` clip to the composited
+      // pseudo-element, so a square-cornered bar would poke past the 18px
+      // corners. Tracing the curve here makes the clip irrelevant.
       &::before {
         content: "";
         position: absolute;
@@ -3459,6 +3464,7 @@ footer {
         bottom: 0;
         width: 4px;
         z-index: 2;
+        border-radius: 18px 0 0 18px;
         background: linear-gradient(180deg, #2ad9c2, #55c1b4 45%, #d191bf);
         opacity: 0;
         transition: opacity 0.24s ease;
@@ -3562,6 +3568,7 @@ footer {
           bottom: auto;
           width: auto;
           height: 4px;
+          border-radius: 18px 18px 0 0; // stacked: bar is on the top edge
         }
       }
       .cs-card__media {
