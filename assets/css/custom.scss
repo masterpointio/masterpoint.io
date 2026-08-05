@@ -3451,20 +3451,22 @@ footer {
       transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
 
       // brand accent bar down the left edge, revealed on hover.
-      // Rounds its own left corners to match the card: on hover the card is
-      // promoted to a compositing layer (transform) and Chrome/Safari stop
-      // applying the rounded `overflow: hidden` clip to the composited
-      // pseudo-element, so a square-cornered bar would poke past the 18px
-      // corners. Tracing the curve here makes the clip irrelevant.
+      // Inset past the corner radius (top/bottom 20px > the 18px corner) so the
+      // bar lives only on the straight part of the edge. On hover the card is
+      // promoted to a compositing layer (transform) and Chrome/Safari then stop
+      // applying its rounded `overflow: hidden` clip to the composited
+      // pseudo-element — a bar reaching the corners would poke past them. A 4px
+      // bar can't trace an 18px curve (radius clamps to its width), so instead
+      // we keep it out of the corner zone entirely, making the clip irrelevant.
       &::before {
         content: "";
         position: absolute;
         left: 0;
-        top: 0;
-        bottom: 0;
+        top: 20px;
+        bottom: 20px;
         width: 4px;
         z-index: 2;
-        border-radius: 18px 0 0 18px;
+        border-radius: 0 4px 4px 0;
         background: linear-gradient(180deg, #2ad9c2, #55c1b4 45%, #d191bf);
         opacity: 0;
         transition: opacity 0.24s ease;
@@ -3562,13 +3564,13 @@ footer {
         min-height: 0;
 
         &::before {
-          left: 0;
-          right: 0;
+          left: 20px;
+          right: 20px;
           top: 0;
           bottom: auto;
           width: auto;
           height: 4px;
-          border-radius: 18px 18px 0 0; // stacked: bar is on the top edge
+          border-radius: 0 0 4px 4px; // stacked: bar is on the top edge, inset past the corners
         }
       }
       .cs-card__media {
