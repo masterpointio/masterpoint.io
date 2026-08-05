@@ -3450,21 +3450,22 @@ footer {
       box-shadow: 0 14px 32px -22px rgba(0, 0, 0, 0.7);
       transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
 
-      // Full-height brand accent bar down the left edge, revealed on hover.
-      // Painted as the element's OWN background — a 4px vertical gradient stripe
-      // on a full-size, rounded ::before overlay — not a free-standing child
+      // Full-height brand accent band down the left edge, revealed on hover.
+      // Painted as the element's OWN background — a vertical gradient band on a
+      // full-size, rounded ::before overlay — not a free-standing child
       // rectangle. A background is always clipped to its element's
       // border-radius, even after the hover `transform` promotes the card to a
       // compositing layer (that promotion is what let a z-indexed child bar
-      // escape the rounded `overflow: hidden` clip before). So the stripe traces
+      // escape the rounded `overflow: hidden` clip before). So the band traces
       // the corners and never spills, at full height, with the fade intact.
+      // `background-size` width sets the band width (crisp right edge).
       &::before {
         content: "";
         position: absolute;
         inset: 0;
         z-index: 2;
         border-radius: inherit;
-        background: linear-gradient(180deg, #2ad9c2, #55c1b4 45%, #d191bf) left center / 4px 100% no-repeat;
+        background: linear-gradient(180deg, #2ad9c2, #55c1b4 45%, #d191bf) left center / 50px 100% no-repeat;
         opacity: 0;
         transition: opacity 0.24s ease;
         pointer-events: none;
@@ -3562,10 +3563,10 @@ footer {
         min-height: 0;
 
         &::before {
-          // stacked: the stripe runs along the top edge instead of the left.
+          // stacked: the band runs along the top edge instead of the left.
           // Still the element's own background (clipped to the inherited 18px
           // radius), so it traces the top corners with no spill.
-          background: linear-gradient(90deg, #2ad9c2, #55c1b4 45%, #d191bf) center top / 100% 4px no-repeat;
+          background: linear-gradient(90deg, #2ad9c2, #55c1b4 45%, #d191bf) center top / 100% 40px no-repeat;
         }
       }
       .cs-card__media {
