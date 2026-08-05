@@ -3450,26 +3450,24 @@ footer {
       box-shadow: 0 14px 32px -22px rgba(0, 0, 0, 0.7);
       transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
 
-      // brand accent bar down the left edge, revealed on hover.
-      // Inset past the corner radius (top/bottom 20px > the 18px corner) so the
-      // bar lives only on the straight part of the edge. On hover the card is
-      // promoted to a compositing layer (transform) and Chrome/Safari then stop
-      // applying its rounded `overflow: hidden` clip to the composited
-      // pseudo-element — a bar reaching the corners would poke past them. A 4px
-      // bar can't trace an 18px curve (radius clamps to its width), so instead
-      // we keep it out of the corner zone entirely, making the clip irrelevant.
+      // Full-height brand accent bar down the left edge, revealed on hover.
+      // Painted as the element's OWN background — a 4px vertical gradient stripe
+      // on a full-size, rounded ::before overlay — not a free-standing child
+      // rectangle. A background is always clipped to its element's
+      // border-radius, even after the hover `transform` promotes the card to a
+      // compositing layer (that promotion is what let a z-indexed child bar
+      // escape the rounded `overflow: hidden` clip before). So the stripe traces
+      // the corners and never spills, at full height, with the fade intact.
       &::before {
         content: "";
         position: absolute;
-        left: 0;
-        top: 20px;
-        bottom: 20px;
-        width: 4px;
+        inset: 0;
         z-index: 2;
-        border-radius: 0 4px 4px 0;
-        background: linear-gradient(180deg, #2ad9c2, #55c1b4 45%, #d191bf);
+        border-radius: inherit;
+        background: linear-gradient(180deg, #2ad9c2, #55c1b4 45%, #d191bf) left center / 4px 100% no-repeat;
         opacity: 0;
         transition: opacity 0.24s ease;
+        pointer-events: none;
       }
 
       &:hover,
@@ -3564,13 +3562,10 @@ footer {
         min-height: 0;
 
         &::before {
-          left: 20px;
-          right: 20px;
-          top: 0;
-          bottom: auto;
-          width: auto;
-          height: 4px;
-          border-radius: 0 0 4px 4px; // stacked: bar is on the top edge, inset past the corners
+          // stacked: the stripe runs along the top edge instead of the left.
+          // Still the element's own background (clipped to the inherited 18px
+          // radius), so it traces the top corners with no spill.
+          background: linear-gradient(90deg, #2ad9c2, #55c1b4 45%, #d191bf) center top / 100% 4px no-repeat;
         }
       }
       .cs-card__media {
