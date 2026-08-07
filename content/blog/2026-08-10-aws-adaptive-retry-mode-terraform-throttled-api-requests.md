@@ -98,4 +98,4 @@ This is because there are costs. **Typical operations get slower**, since delayi
 
 The important nuance is that adaptive mode only **pays a latency cost on requests that would have succeeded immediately anyway**. For resources that are already being throttled, there’s no real speed to preserve because standard retries are just bouncing off `Rate exceeded errors`.
 
-We have a practical rule at Masterpoint that is simple: keep the standard mode by default, and use adaptive retry mode where throttling occurs or is expected (Route53, we're looking at you). A paced request that succeeds is better than a burst of fast requests that AWS rejects.
+We have a practical rule at Masterpoint: keep the standard mode by default, and use adaptive retry mode where throttling occurs or is expected (Route53, we're looking at you). A paced request that succeeds is better than a burst of fast requests that AWS rejects.
