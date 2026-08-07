@@ -13,6 +13,7 @@ callout: "<p>👋 <b>Running into IaC performance issues at your organization?</
 
 <h2>Table of Contents</h2>
 
+- [Intro](#intro)
 - [Standard Mode, Where Every Request Backs Off Naively](#standard-mode-where-every-request-backs-off-naively)
 - [Adaptive Mode, so the Client Paces Itself When Throttling is Detected](#adaptive-mode-so-the-client-paces-itself-when-throttling-is-detected)
   - [Why Not Just Raise Max Retries?](#why-not-just-raise-max-retries)
@@ -22,7 +23,7 @@ callout: "<p>👋 <b>Running into IaC performance issues at your organization?</
 
 ## Intro
 
-By default, Terraform's AWS provider retries each throttled request with exponential backoff, but every request backs off on its own with no idea what the other in-flight requests are doing. With Terraform's parallelism, the client as a whole keeps slamming AWS' API, so the operation drags on and can burn through `max_retries`, erroring out or timing out entirely. Adaptive retry mode adds a client-wide rate limiter that paces requests once it detects throttling. We'll dig into this functionality below. 
+By default, Terraform's AWS provider retries each throttled request with exponential backoff, but every request backs off on its own with no idea what the other in-flight requests are doing. With Terraform's parallelism, the client as a whole keeps slamming AWS' API, so the operation drags on and can burn through `max_retries`, erroring out or timing out entirely. Adaptive retry mode adds a client-wide rate limiter that paces requests once it detects throttling. We'll dig into this functionality below.
 
 ## Standard Mode, Where Every Request Backs Off Naively
 
@@ -95,4 +96,6 @@ As per the AWS documentation, [adaptive mode is not recommended as a general def
 
 This is because there are costs. **Typical operations get slower**, since delaying first attempts is the mechanism itself, so a Terraform or OpenTofu workspace that never gets throttled gains nothing and may still pay a latency cost after a transient blip. And that per-client rate limiter is **shared across operations**, so one throttle-prone API surface slows every call the client makes, including ones that were never in trouble (hence the provider aliases above).
 
-The important nuance is that these costs only exist where requests were succeeding in the first place. For resources that are actually being throttled, "slower" is a non-issue because it wasn't going through anyway and cycling through `Rate exceeded` errors has no latency worth protecting. A **paced request that succeeds beats multiple quick ones that bounce**, so scope it to resources where throttling is expected, where you give up no real speed because standard retries were already getting throttled.
+The important nuance is that adaptive mode only **pays a latency cost on requests that would have succeeded immediately anyway**. For resources that are already being throttled, there’s no real speed to preserve because standard retries are just bouncing off `Rate exceeded errors`.
+
+We have a practical rule at Masterpoint that is simple: keep the standard mode by default, and use adaptive retry mode where throttling occurs or is expected (Route53, we're looking at you). A paced request that succeeds is better than a burst of fast requests that AWS rejects.
