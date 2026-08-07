@@ -5,7 +5,7 @@ title: "Using OpenTofu's Exclude Flag to Isolate Performance Bottlenecks"
 author: Yangci Ou
 slug: using-opentofu-exclude-flag-isolate-performance-bottlenecks
 date: 2026-06-22
-# date_modified: 2026-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
+date_modified: 2026-07-22 # Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: "Pair OpenTofu's exclude flag with OpenTelemetry tracing to isolate and prove Terraform performance bottlenecks. A real-world story of cutting plan times from 7 minutes to 2 by pinpointing AWS Route 53 API rate limiting."
 image: /img/updates/opentofu-exclude-flag-performance-bottlenecks/opentofu-exclude-flag.png
 callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a></p>
@@ -70,7 +70,7 @@ Looking at the OpenTelemetry traces, it showed that individual `aws_route53_reco
 </ErrorResponse>
 ```
 
-Route 53 has a [hard cap of five API requests per second, per account](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/DNSLimitations.html#limits-api-requests), according to the official AWS documentation. We even filed a ticket with AWS support to see if there was any way to get it raised; the answer a flat "no" because DNS is critical infrastructure and 5 requests / second is the hard limit. This matches with other [engineers' experiences](https://github.com/rancher/rancher/issues/3257) as well.
+Route 53 has a [five API requests per second rate limit, per account](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/DNSLimitations.html#limits-api-requests), according to the official AWS documentation. We even filed a ticket with AWS support and spoke to an AWS Technical Account Manager (TAM) to see if there was any way to get it raised; the answer a flat "no" because DNS is critical infrastructure and 5 requests / second is the hard limit. This matches with other [engineers' experiences](https://github.com/rancher/rancher/issues/3257) as well.
 
 Buried in the 3,000 resources were 400 AWS Route 53 records, each as its own [TF resource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record), and the provider read each record as individual API requests. 400 records (AWS API requests) at 5 requests per second is 80 seconds. But as mentioned above, in an enterprise environment, there are many dependencies, so the bottleneck compounds well past the theoretical 80 seconds.
 
@@ -152,3 +152,5 @@ The OpenTofu docs are blunt about targeting and exclusion, and they're right to 
 We used OpenTelemetry traces with the exclude flag to isolate the problem & confirm the root cause, then went forward with the refactor. It helped us gain the hard evidence that confirms the benefits to justify the refactor.
 
 When TF runs are mysteriously slow and you suspect a particular resource type or module is the culprit, OpenTofu's excluding feature lets you test that hypothesis in minutes, against your real state, without refactoring a line of code or affecting real infrastructure.
+
+Check out our [case study success story with Cursor](https://masterpoint.io/case-studies/cursor) where we used this technique to isolate and prove a performance bottleneck.

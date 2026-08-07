@@ -886,9 +886,9 @@ padding-top: 12px;
         border-radius: 4px 0 4px 4px;
       }
       @media (max-width: 575px) {
-        left: 0;
-      }
-      @media (max-width: 575px) {
+        left: auto;
+        right: 0;
+        max-width: calc(100vw - 40px);
         border-radius: 0 4px 4px 4px;
       }
 
@@ -1951,7 +1951,10 @@ footer {
       }
     }
   }
-  #our-word {
+  // /services/audit mirrors this section (content/sections/iac-our-word.md,
+  // same id) — @at-root scopes the treatment to both pages.
+  @at-root #home #our-word,
+    #page-iac-audit-services #our-word {
     color: #fff;
     padding: 5.25rem 0 3rem;
     background: $pine;
@@ -3169,8 +3172,20 @@ footer {
       padding: 0 0 3.5rem;
     }
 
+    .col {
+      @media (min-width: 768px) {
+        width: 86%;
+        max-width: 86%;
+        flex: 0 0 auto;
+      }
+    }
+
     .quoteLabel {
-      margin-bottom: 2.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .flexslider .slides {
+      align-items: flex-start;
     }
 
     .flex-control-paging {
@@ -3435,29 +3450,16 @@ footer {
       box-shadow: 0 14px 32px -22px rgba(0, 0, 0, 0.7);
       transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
 
-      // brand accent bar down the left edge, revealed on hover
-      &::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 4px;
-        z-index: 2;
-        background: linear-gradient(180deg, #2ad9c2, #55c1b4 45%, #d191bf);
-        opacity: 0;
-        transition: opacity 0.24s ease;
-      }
-
+      // No left-edge accent bar: the preview image is flush to the left edge, so
+      // any bar would paint over ("spill" onto) the preview on hover. Hover
+      // feedback comes from the lift + brighter border + deeper shadow + image
+      // zoom + arrow slide instead — nothing overlaps the card content.
       &:hover,
       &:focus-visible {
         transform: translateY(-3px);
         border-color: rgba(42, 217, 194, 0.45);
         box-shadow: 0 22px 44px -26px rgba(0, 0, 0, 0.85);
 
-        &::before {
-          opacity: 1;
-        }
         .cs-card__media img {
           transform: scale(1.05);
         }
@@ -3539,15 +3541,6 @@ footer {
       .cs-card {
         flex-direction: column;
         min-height: 0;
-
-        &::before {
-          left: 0;
-          right: 0;
-          top: 0;
-          bottom: auto;
-          width: auto;
-          height: 4px;
-        }
       }
       .cs-card__media {
         flex: none;

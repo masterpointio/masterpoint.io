@@ -1,6 +1,6 @@
 ---
 title: Ready to Own Your Infrastructure?
-weight: 7
+weight: 9
 position: justify-content-center text-center
 size: col-12 col-md-10 col-lg-8
 #section_image: /img/diverse_group_of_doctors.jpg
