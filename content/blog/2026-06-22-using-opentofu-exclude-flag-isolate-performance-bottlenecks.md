@@ -8,7 +8,7 @@ date: 2026-06-22
 date_modified: 2026-07-22 # Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: "Pair OpenTofu's exclude flag with OpenTelemetry tracing to isolate and prove Terraform performance bottlenecks. A real-world story of cutting plan times from 7 minutes to 2 by pinpointing AWS Route 53 API rate limiting."
 image: /img/updates/opentofu-exclude-flag-performance-bottlenecks/opentofu-exclude-flag.png
-callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a></p>
+callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact/'>Get in touch!</a></p>
 ---
 
 <h2>Table of Contents</h2>
@@ -153,4 +153,4 @@ We used OpenTelemetry traces with the exclude flag to isolate the problem & conf
 
 When TF runs are mysteriously slow and you suspect a particular resource type or module is the culprit, OpenTofu's excluding feature lets you test that hypothesis in minutes, against your real state, without refactoring a line of code or affecting real infrastructure.
 
-Check out our [case study success story with Cursor](https://masterpoint.io/case-studies/cursor) where we used this technique to isolate and prove a performance bottleneck.
+Check out our [case study success story with Cursor](https://masterpoint.io/case-studies/cursor/) where we used this technique to isolate and prove a performance bottleneck.

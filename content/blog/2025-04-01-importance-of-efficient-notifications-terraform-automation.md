@@ -8,7 +8,7 @@ date: 2025-04-01
 # date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: Explore how unnoticed Terraform & Infrastructure as Code (IaC) failures can lead to significant problems, and how efficient notification alerts can prevent issues from cascading into major operational disruptions.
 image: /img/updates/efficient-notifications-terraform-automation/terraform-automation-notifications.png
-callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a></p>
+callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact/'>Get in touch!</a></p>
 ---
 
 <h2>Table of Contents</h2>

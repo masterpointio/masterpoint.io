@@ -9,7 +9,7 @@ date: 2024-10-10
 description: "Need to to migrate off Terraform Cloud? We're happy to share some tips about preparation, pitfalls, and the process itself based on Masterpoint's experience."
 image: /img/updates/migrate-off-tfc/main.webp
 preview_image: /img/updates/migrate-off-tfc/preview.webp
-callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a>
+callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact/'>Get in touch!</a>
 ---
 
 # Introduction

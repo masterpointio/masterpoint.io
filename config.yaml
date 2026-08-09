@@ -14,8 +14,8 @@ params:
   rss_link: https://masterpoint.io/blog/index.xml
   #google_analytics: UA-
   sitewide_note: <strong>Masterpoint stands with Ukraine.</strong> Here’s how you can help Ukraine with just a few clicks. >
-  sitewide_note_link: /updates/supporting-ukraine/
-  get_in_touch: /contact
+  sitewide_note_link: /blog/supporting-ukraine/
+  get_in_touch: /contact/
 outputs:
   home:
     - HTML

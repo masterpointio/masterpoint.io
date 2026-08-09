@@ -78,8 +78,11 @@
     <meta name="author" content="{{ .Params.author }}" />
     {{ end }}
 
-    <meta property="og:url" content="{{ .Permalink }}" />
-    <meta name="twitter:url" content="{{ .Permalink }}" />
+    {{ $canonicalURL := .Permalink }}
+    {{ with .Scratch.Get "canonicalURL" }}{{ $canonicalURL = . }}{{ end }}
+    <meta property="og:url" content="{{ $canonicalURL }}" />
+    <meta name="twitter:url" content="{{ $canonicalURL }}" />
+    <link rel="canonical" href="{{ $canonicalURL }}" />
 
     <link
       rel="apple-touch-icon"

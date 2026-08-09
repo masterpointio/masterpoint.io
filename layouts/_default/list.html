@@ -1,3 +1,5 @@
+{{ $paginator := .Paginator 5 }}
+{{ .Scratch.Set "canonicalURL" ($paginator.URL | absURL) }}
 {{ partial "head.html" . }}
 <body {{ if .Params.id }}id='{{ .Params.id }}' {{end}} class="list-default content-list">
     {{ partial "header.html" . }}
@@ -45,7 +47,7 @@
                 </div>
             </div>
             <div class="row">
-                {{ range (.Paginator 5).Pages }}
+                {{ range $paginator.Pages }}
                 {{ partial "news-entry.html" . }}
                 {{ end }}
             </div>

@@ -8,7 +8,7 @@ date: 2024-02-08
 # date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: The post explores how Terraform Controller by Weaveworks can enable GitOps for infrastructure management.
 image: /img/updates/terraform-controller-overview/tf_controller_0.png
-callout: "<p>👋 <b>Interested in platform engineering for your organization</b>, but not sure where to start? <a href='/contact'>Get in touch,</a> we're an expert team of platform engineers who deliver high-quality cloud platforms for startups and SMBs looking to scale. We enable your application engineers to focus on your product and in turn generate more value for your business.</p><a href='/contact' class='button'>Get In Touch &rsaquo;</a>"
+callout: "<p>👋 <b>Interested in platform engineering for your organization</b>, but not sure where to start? <a href='/contact/'>Get in touch,</a> we're an expert team of platform engineers who deliver high-quality cloud platforms for startups and SMBs looking to scale. We enable your application engineers to focus on your product and in turn generate more value for your business.</p><a href='/contact/' class='button'>Get In Touch &rsaquo;</a>"
 ---
 
 <h2>Table of Contents</h2>
@@ -37,7 +37,7 @@ callout: "<p>👋 <b>Interested in platform engineering for your organization</b
 
 In this post, we continue exploring effective tools for bridging the gap between Infrastructure as Code and GitOps. We aim to harness the optimal benefits of these practices as they are fundamental to our thoughts on building great platforms. One such tool that has gained our attention is [Terraform Controller](https://weaveworks.github.io/tf-controller/) by [Weaveworks](https://www.weave.works/), and we'd like to share our experience.
 
-Before going into the details, we recommend reading our experience with a framework called [Crossplane](https://www.crossplane.io/), which we've passed on in our [previous blog post](https://masterpoint.io/updates/passing-on-crossplane/). While Crossplane offers deep Kubernetes integration, treating infrastructure management as a native Kubernetes operation, it also brings certain complexities and limitations. In contrast, Terraform Controller interconnects the Kubernetes ecosystem with Terraform's robust infrastructure management capabilities.
+Before going into the details, we recommend reading our experience with a framework called [Crossplane](https://www.crossplane.io/), which we've passed on in our [previous blog post](https://masterpoint.io/blog/passing-on-crossplane/). While Crossplane offers deep Kubernetes integration, treating infrastructure management as a native Kubernetes operation, it also brings certain complexities and limitations. In contrast, Terraform Controller interconnects the Kubernetes ecosystem with Terraform's robust infrastructure management capabilities.
 A key distinction lies in their operational models - Terraform Controller builds upon Terraform's established state management and operational principles. For those already well-acquainted with Terraform, this offers a certain familiarity, reliability, and feature completeness.
 
 ## In a Nutshell

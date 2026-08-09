@@ -8,7 +8,7 @@ date: 2025-09-17
 # date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: If your IAM trust policy isn't working with AWS IAM Identity Center SSO roles, it might be because us-east-1 does not have the region in the ARN while other regions do.
 image: /img/updates/aws-iam-identity-center-sso-trust-policies.png
-callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a></p>
+callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact/'>Get in touch!</a></p>
 ---
 
 When working with [AWS IAM Identity Center](https://aws.amazon.com/iam/identity-center/) (formerly also known as AWS Single-Sign-on SSO), one of the most frustrating errors you can face is configuring trust policies that properly reference SSO role ARNs created by IAM Identity Center.
