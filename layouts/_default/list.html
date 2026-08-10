@@ -1,4 +1,4 @@
-{{ $paginator := .Paginator 5 }}
+{{ $paginator := .Paginator }}
 {{ .Scratch.Set "canonicalURL" ($paginator.URL | absURL) }}
 {{ partial "head.html" . }}
 <body {{ if .Params.id }}id='{{ .Params.id }}' {{end}} class="list-default content-list">

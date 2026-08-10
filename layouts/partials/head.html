@@ -218,7 +218,7 @@
         {{ else }}
         "dateModified": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
         {{ end }}
-        "url": {{ .Permalink | jsonify }},
+        "url": {{ $canonicalURL | jsonify }},
         {{ if .Params.image }}
         "image": {
           "@type": "ImageObject",
@@ -227,7 +227,7 @@
         {{ end }}
         "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": {{ .Permalink | jsonify }}
+          "@id": {{ $canonicalURL | jsonify }}
         }
       }
     </script>
