@@ -290,7 +290,7 @@ _inside_ each block. Each emits a `<section class="csi-section …">` card.
 
 | Shortcode         | Purpose                                                        | Key args                                                                              |
 | ----------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `csi-section`     | A card (eyebrow + headline + block prose).                     | `eyebrow`, `title` (HTML ok), `variant`, `align`, `num`, `accent`, `id` (anchor target, e.g. for `sticky_nav`; also on `csi-split`) |
+| `csi-section`     | A card (eyebrow + headline + block prose).                     | `eyebrow`, `title` (HTML ok), `variant`, `align`, `num`, `id` (anchor target, e.g. for `sticky_nav`; also on `csi-split`) |
 | `csi-split`       | Text + visual side-by-side; `flip="true"` alternates sides.    | `eyebrow`, `title`, `media`, `media_alt`, `media2`/`media2_alt` (second image stacked below the first), `figure` (CSS-drawn figure partial from `figures/<name>.html` instead of an image; subfolders work — `figure="power-digital/terralith"`), `flip`, `contain`, `caption`, `variant`, `ratio` (`50-50` default / `65-35` / `75-25`, text wider; ratios auto-reverse under `flip` since flip puts the media in the first grid track via `order`) |
 | `csi-steps`       | Numbered process cards. Place INSIDE a `csi-section`.          | inner blocks split by `---`, each `title:` / `body:`                                  |
 | `csi-impact`      | Outcome cards w/ gradient icon badges. INSIDE a `csi-section`. | inner blocks split by `---`, each `icon:` / `title:` / `body:`; `cols="2"` for a slimmed 2-up grid (pairs with `csi-compare`, capped to the same 980px) |
@@ -378,8 +378,6 @@ Notable args:
   prose. Grids (`csi-steps`/`csi-impact`/`csi-list`) inside stay full-width with
   their card text left-aligned (the `--center` rule constrains only `> p`, not
   the grids).
-- **`accent="true"`** (csi-section) — renders just the gradient line accent
-  instead of an eyebrow (omit `eyebrow=`). Used on "Built so the team could own it".
 - **Compact band is automatic with `csi-list`** — a `csi-section` containing a
   `csi-list` renders denser by default via `.csi-section:has(.csi-list)` (no
   arg): tighter padding, smaller headline, denser prose and `cs-pullquote`.
