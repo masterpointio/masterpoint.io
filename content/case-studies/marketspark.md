@@ -149,7 +149,7 @@ body: MarketSpark's AWS environment is aligned with industry security and compli
 {{< /csi-impact >}}
 {{< /csi-section >}}
 
-{{< csi-section accent="true" title="Built so the team could <span class='csi-grad'>own it</span>" variant="light" align="center" >}}
+{{< csi-section title="Built so the team could <span class='csi-grad'>own it</span>" variant="light" align="center" >}}
 Knowledge transfer wasn't a final phase, it ran in parallel with the work. We held training sessions, recorded walkthroughs, drew architecture diagrams, and documented operations extensively. By handoff, MarketSpark's engineers weren't inheriting a black box. They were already shipping changes and self-deploying infrastructure against the new platform.
 {{< /csi-section >}}
 
