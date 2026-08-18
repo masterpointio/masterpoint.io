@@ -1,8 +1,7 @@
 {{ $col := .Get "col" | default "col-md-6" }}
 {{ $id := .Get "id" }}
-{{ $key := .Get "key" | default "cards" }}
 
-{{ with index .Page.Params $key }}
+{{ with .Page.Params.cards }}
 <div class="row row-cards" id="{{ $id }}">
     {{ range . }}
     <div class="col col-12 {{ $col }}">

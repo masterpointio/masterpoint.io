@@ -2772,23 +2772,6 @@ footer {
   @media (max-width: 767px) {
     padding: 3.5rem 0 3rem;
   }
-
-  .bg-image {
-    width: 100%;
-    position: absolute;
-    &:before {
-      background:
-        linear-gradient(
-          180deg,
-          rgba(0, 0, 0, 0.8) -18.07%,
-          rgba(0, 0, 0, 0) 91.05%
-        ),
-        linear-gradient(360deg, $pine 3.27%, rgba(14, 56, 58, 0) 56.1%);
-    }
-    img {
-      opacity: 0.24;
-    }
-  }
 }
 
 .valuesPurpose {
@@ -2817,8 +2800,7 @@ footer {
   }
 }
 
-#values-who-row,
-#values-how-row {
+#values-who-row {
   justify-content: center;
   .col {
     margin-top: 1.22rem;
@@ -2855,17 +2837,6 @@ footer {
         line-height: 1.42em;
         margin-bottom: 0;
       }
-    }
-  }
-}
-
-#values-how-row {
-  .card .card-body {
-    padding: 1.8rem 3.5rem;
-    max-width: 900px;
-    margin: 0 auto;
-    @media (max-width: 767px) {
-      padding: 1.5rem;
     }
   }
 }
