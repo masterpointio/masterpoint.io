@@ -139,7 +139,7 @@ With the first phase complete, Masterpoint turned to the platform.
 
 As mentioned above, TFC's ClickOps workspace management, SSO troubles, and resource-under-management pricing were all inhibiting Cursor's velocity and growth.
 
-Masterpoint recommended a move to [Spacelift](https://spacelift.io/) to address these issues.
+Masterpoint recommended a move to [Spacelift](https://spacelift.io/) to address these issues. For the migration tradeoffs and sequencing, see our guide on [moving off Terraform Cloud](https://masterpoint.io/blog/how-to-migrate-off-tfc/).
 
 The team kicked off the Spacelift migration in mid-December, starting with the groundwork:
 
@@ -167,7 +167,7 @@ After the migration was completed, Masterpoint continued to improved system usab
 - continuing to break up large state files into narrower root modules, allowing for faster plans and decreased blast radius
 - implementing child module versioning with [OCI registries](https://opentofu.org/docs/cli/oci_registries/module-package/) to enable staged rollouts and safer change control of critical TF resources
 - resolving the ECS drift issue by using the ["Task Definition Template Pattern"](https://newsletter.masterpoint.io/p/deploying-your-apps-into-ecs)
-- implementing OpenTofu's [OTel tracing](https://opentofu.org/docs/internals/tracing/) to find other performance bottlenecks and set up the Cursor team for longterm visibility into their IaC throughput
+- implementing OpenTofu's [OTel tracing](https://opentofu.org/docs/internals/tracing/) to find other performance bottlenecks and set up the Cursor team for longterm visibility into their IaC throughput; see how to [isolate and prove a bottleneck with OpenTofu's `-exclude` flag](https://masterpoint.io/blog/using-opentofu-exclude-flag-isolate-performance-bottlenecks/)
 
 Because Cursor's engineering team uses Cursor to write Terraform, Masterpoint embedded architectural knowledge directly into the codebase as AI agent skills and rules.
 

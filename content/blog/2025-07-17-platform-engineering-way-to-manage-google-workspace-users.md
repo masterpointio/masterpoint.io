@@ -4,7 +4,7 @@ draft: false
 title: "The Platform Engineering Way to Manage Google Workspace Users"
 author: Weston Platter
 date: 2025-07-17
-# date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
+date_modified: 2026-08-18
 slug: platform-engineering-way-to-manage-google-workspace-users
 description: "Migrate Google Workspace from ClickOps to Infrastructure as Code with our open source Terraform module. Includes design patterns and import examples."
 tags: ["terraform", "google-workspace", "infrastructure-as-code", "automation"]
@@ -71,7 +71,7 @@ To make the module easy to get up and running with your own Google Workspace, we
 1. **Import existing Google Workspace users and groups**
    We expect most people will use the module with an existing Google Workspace. To make this easy, we included the Terraform and YAML configuration files we used to import our own workspace users and groups.
 
-   The key component is the `imports.tf` file, which shows how to map existing Google Workspace resources to the module's resources. We also included a [Python script](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/debugging-script.py) to help debug by printing out the JSON objects as rendered by the Google APIs.
+   The key component is the [`imports.tf` file](https://masterpoint.io/blog/standard-tf-files/#importstf-resource-import-declarations), which shows how to map existing Google Workspace resources to the module's resources. We also included a [Python script](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/blob/main/examples/import-existing-org/debugging-script.py) to help debug by printing out the JSON objects as rendered by the Google APIs.
 
    Since importing cloud resources into Terraform modules can be tricky, we documented our complete approach in [import-existing-org](https://github.com/masterpointio/terraform-googleworkspace-users-groups-automation/tree/main/examples/import-existing-org). The example includes these key files:
 
@@ -300,6 +300,8 @@ Below are more complex examples validating integration between different provide
    ```
 
 There are 4 more complex tests, helping us ensure this module won't break in the future.
+
+For runtime assertions about the deployed configuration, rather than module tests, use [Terraform `check` blocks](https://masterpoint.io/blog/understanding-terraform-check/).
 
 ### Design Decision #2 - Choosing Intuitive Terraform Variable Structures
 

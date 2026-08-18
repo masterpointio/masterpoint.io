@@ -5,7 +5,7 @@ title: "Importance of Efficient Notifications in Terraform & IaC Automation"
 author: Yangci Ou
 slug: importance-of-efficient-notifications-terraform-automation
 date: 2025-04-01
-# date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
+date_modified: 2026-08-18
 description: Explore how unnoticed Terraform & Infrastructure as Code (IaC) failures can lead to significant problems, and how efficient notification alerts can prevent issues from cascading into major operational disruptions.
 image: /img/updates/efficient-notifications-terraform-automation/terraform-automation-notifications.png
 callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a></p>
@@ -30,7 +30,7 @@ Because there are so many factors involved in cloud infrastructure, there’s mo
 
 But do you know what’s way worse than a failed TF deployment? A deployment failure that doesn’t get noticed **for days**.
 
-In this article, we'll talk through this problem and share how we believe it should be handled. We'll include specifics on how we do this today with [Spacelift](https://spacelift.io/) for our clients.
+In this article, we'll talk through this problem and share how we believe it should be handled. We'll include specifics on how we do this today with [Spacelift](https://spacelift.io/) for our clients. If you are weighing that move, start with our guide on [migrating off Terraform Cloud](https://masterpoint.io/blog/how-to-migrate-off-tfc/).
 
 ## The Silent Failure Problem in IaC Deployments
 
