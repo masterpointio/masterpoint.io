@@ -5,7 +5,7 @@ title: "Using OpenTofu's Exclude Flag to Isolate Performance Bottlenecks"
 author: Yangci Ou
 slug: using-opentofu-exclude-flag-isolate-performance-bottlenecks
 date: 2026-06-22
-date_modified: 2026-07-22 # Be sure to use this if you've updated the post as this helps with SEO and index freshness
+date_modified: 2026-08-18
 description: "Pair OpenTofu's exclude flag with OpenTelemetry tracing to isolate and prove Terraform performance bottlenecks. A real-world story of cutting plan times from 7 minutes to 2 by pinpointing AWS Route 53 API rate limiting."
 image: /img/updates/opentofu-exclude-flag-performance-bottlenecks/opentofu-exclude-flag.png
 callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact/'>Get in touch!</a></p>
@@ -72,7 +72,7 @@ Looking at the OpenTelemetry traces, it showed that individual `aws_route53_reco
 
 Route 53 has a [five API requests per second rate limit, per account](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/DNSLimitations.html#limits-api-requests), according to the official AWS documentation. We even filed a ticket with AWS support and spoke to an AWS Technical Account Manager (TAM) to see if there was any way to get it raised; the answer a flat "no" because DNS is critical infrastructure and 5 requests / second is the hard limit. This matches with other [engineers' experiences](https://github.com/rancher/rancher/issues/3257) as well.
 
-Buried in the 3,000 resources were 400 AWS Route 53 records, each as its own [TF resource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record), and the provider read each record as individual API requests. 400 records (AWS API requests) at 5 requests per second is 80 seconds. But as mentioned above, in an enterprise environment, there are many dependencies, so the bottleneck compounds well past the theoretical 80 seconds.
+Buried in the 3,000 resources were 400 AWS Route 53 records, each as its own [TF resource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record), and the provider read each record as individual API requests. 400 records (AWS API requests) at 5 requests per second is 80 seconds. But as mentioned above, in an enterprise environment, there are many dependencies, so the bottleneck compounds well past the theoretical 80 seconds. Once you've confirmed throttling is the culprit, [AWS adaptive retry mode](https://masterpoint.io/blog/aws-adaptive-retry-mode-terraform-throttled-api-requests/) can pace requests instead of letting retries repeatedly collide with the same rate limit.
 
 <div style="display:flex; align-items:center; justify-content:center; gap:1rem; flex-wrap:wrap; margin:2rem 0; padding:1.5rem; border-radius:10px; background:#f6faf7; border:1px solid #d6e6d8; text-align:center;">
   <span style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:1.5rem; font-weight:800; color:#0e383a;">400 records</span>
@@ -89,7 +89,7 @@ Buried in the 3,000 resources were 400 AWS Route 53 records, each as its own [TF
 
 Because the existing setup is a [Terralith](https://masterpoint.io/blog/terralith-monolithic-terraform-architecture/) — a single monolithic Terraform root module that manages multitudes of infrastructure components through one shared state, so unrelated resources are tightly coupled and can't be changed in isolation — the fix required a refactor. We can take either of the following approaches, or both:
 
-- pull DNS out into its own small root module with its own isolated state
+- pull DNS out into its own [small root module with its own isolated state](https://masterpoint.io/blog/standard-tf-files/)
 - migrate the zone to [`aws_route53_records_exclusive`](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_records_exclusive), which manages all records in a DNS zone as a single resource and [performs a batch AWS API request](https://docs.aws.amazon.com/Route53/latest/APIReference/API_ListResourceRecordSets.html).
 
 Because any refactors would be non-trivial work, before making any architecture proposals, I wanted hard evidence to prove that Route 53 rate limiting / throttling was the bottleneck, not just a plausible story.

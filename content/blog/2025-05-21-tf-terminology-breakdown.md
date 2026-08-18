@@ -5,7 +5,7 @@ title: Terraform + OpenTofu Terminology Breakdown
 slug: terraform-opentofu-terminology-breakdown
 author: Matt Gowie
 date: 2025-05-21
-date_modified: 2026-07-22 # Be sure to use this if you've updated the post as this helps with SEO and index freshness
+date_modified: 2026-08-18
 description: List of Terraform and OpenTofu terms with definitions and explanations.
 image: /img/updates/tf-terminology-breakdown.png
 callout: <p>👋 <b>Got a term that you're still confused on in the TF or IaC space that you want us to include here? <a href='/contact/'>Get in touch and we'd be happy to add it!</a></b></p>
@@ -45,7 +45,7 @@ callout: <p>👋 <b>Got a term that you're still confused on in the TF or IaC sp
 
 # Intro
 
-The Terraform and OpenTofu (collectively referred to as "TF") ecosystem has evolved significantly since HashiCorp's initial release, and the growing sea of tooling and management platforms has led to some interesting (and occasionally frustrating) terminology fragmentation. We're going to break down some essential TF terminology that you'll encounter: workspaces, modules, state management, testing frameworks, and more.
+The Terraform and OpenTofu (collectively referred to as "TF") ecosystem has evolved significantly since HashiCorp's initial release, and the growing sea of tooling and management platforms has led to some interesting (and occasionally frustrating) terminology fragmentation. We're going to break down some essential TF terminology that you'll encounter: workspaces, modules, state management, testing frameworks, and more. For practical examples of what teams manage with TF beyond application infrastructure, see [three Terraform use cases to implement](https://masterpoint.io/blog/terraform-use-cases/).
 
 # Workspaces
 
@@ -73,7 +73,7 @@ Modules are one of the most important elements of TF for organizing your infrast
 
 ## Root Modules
 
-Root modules serve as the main working directory where Terraform or OpenTofu is executed (that is, planned and then applied to bring your infrastructure into line with your IaC config). These modules contain your primary configuration files (main.tf, variables.tf, providers.tf, versions.tf, etc.) and are typically responsible for consuming and composing child modules. Think of root modules as the orchestrators of your infrastructure. They map to one or many state files and they're where you bring together all the pieces of your configuration.
+Root modules serve as the main working directory where Terraform or OpenTofu is executed (that is, planned and then applied to bring your infrastructure into line with your IaC config). These modules contain your primary configuration files (main.tf, variables.tf, providers.tf, versions.tf, etc.) and are typically responsible for consuming and composing child modules. Think of root modules as the orchestrators of your infrastructure. They map to one or many state files and they're where you bring together all the pieces of your configuration. See [the standard Terraform and OpenTofu files](https://masterpoint.io/blog/standard-tf-files/) for what belongs in each one, and the [Terraform versioning guide](https://masterpoint.io/blog/ultimate-terraform-versioning-guide/) for choosing compatible CLI and provider constraints.
 
 ## Child Modules
 

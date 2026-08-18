@@ -5,7 +5,7 @@ title: "How to Migrate off Terraform Cloud"
 author: Veronika Gnilitska
 slug: how-to-migrate-off-tfc
 date: 2024-10-10
-# date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
+date_modified: 2026-08-18
 description: "Need to to migrate off Terraform Cloud? We're happy to share some tips about preparation, pitfalls, and the process itself based on Masterpoint's experience."
 image: /img/updates/migrate-off-tfc/main.webp
 preview_image: /img/updates/migrate-off-tfc/preview.webp
@@ -68,7 +68,7 @@ To migrate the state, you must use the Terraform [API](https://www.terraform.io/
 
 This extra step makes the migration process more labor-intensive compared to other backends. We’ve found [this detailed guide on downloading your Terraform state files to be helpful](https://github.com/hashicorp/terraform/issues/33214#issuecomment-1553223031). It is a GitHub comment by a HashiCorp team member.
 
-Ensure your new storage solution is configured correctly to handle Terraform state files, including appropriate redundancy, access permissions, and encryption settings. While there are other options, we encourage our clients to utilize their primary cloud’s object storage solution, like AWS S3, Google Cloud Storage, or Azure’s Blob Storage, to ensure that the infrastructure management process is secure, reliable, and integrated within the broader cloud environment. If you want a jumpstart on using S3 as your state storage, [check out Cloud Posse’s tfstate-backend module](https://github.com/cloudposse/terraform-aws-tfstate-backend).
+Ensure your new storage solution is configured correctly to handle Terraform state files, including appropriate redundancy, access permissions, and encryption settings. While there are other options, we encourage our clients to utilize their primary cloud’s object storage solution, like AWS S3, Google Cloud Storage, or Azure’s Blob Storage, to ensure that the infrastructure management process is secure, reliable, and integrated within the broader cloud environment. For the rationale and a complete S3 example, see [why cloud object storage is the best Terraform remote backend](https://masterpoint.io/blog/why-use-cloud-object-storage-terraform-remote-backend/). If you want a jumpstart on using S3 as your state storage, [check out Cloud Posse’s tfstate-backend module](https://github.com/cloudposse/terraform-aws-tfstate-backend).
 
 ## Variables and Secrets Management
 
@@ -97,7 +97,7 @@ Consider these questions for your migration plan:
 1. Do you have a cost analysis tool that needs to be implemented in your new solution?
 1. Do you have infrastructure management access policies that need to be implemented in your new solution? Think of Sentinel or OPA.
 1. Do you have any security scanning that needs to be implemented in your new solution? Consider integrating with Snyk or other similar tools.
-1. Do you have any webhooks or notifications executed from Terraform Cloud? You’ll need to migrate the configuration, including tokens, recipients, and anything else.
+1. Do you have any webhooks or notifications executed from Terraform Cloud? You’ll need to migrate the configuration, including tokens, recipients, and anything else. Our guide to [efficient Terraform automation notifications](https://masterpoint.io/blog/importance-of-efficient-notifications-terraform-automation/) covers how to keep failure alerts useful after the move.
 1. Do you run Drift Detection for any of your Terraform Cloud Workspaces? Do you need your new solution to have analogous functionality?
 
 Finding the answers to these questions for your organization and coming up with a plan to deal with each use case in the planning phase will help ensure a smooth migration.
@@ -191,7 +191,7 @@ Here’s the promised [checklist](https://docs.google.com/document/d/1ibwIi3gKIx
 
 Migrating off Terraform Cloud requires careful planning and execution, but by following these tips, you can achieve a smooth transition. Remember to document your migration process, communicate with your team, and continuously test and refine your approach.
 
-With the right preparation, you'll be well on your way to managing your infrastructure with greater control and flexibility.
+With the right preparation, you'll be well on your way to managing your infrastructure with greater control and flexibility. For a 43,000-resource migration from Terraform Cloud to Spacelift and OpenTofu, see the [Power Digital case study](https://masterpoint.io/case-studies/power-digital/).
 
 Finally, feel free to [reach out to us](https://masterpoint.io/contact/) if you need help or a second set of eyes.
 
