@@ -5,7 +5,7 @@ title: "Fix IAM Trust Policy Errors using AWS IAM Identity Center SSO Role Regio
 author: Yangci Ou
 slug: fix-iam-trust-policy-errors-with-aws-sso-regional-arn
 date: 2025-09-17
-# date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
+date_modified: 2026-08-18
 description: If your IAM trust policy isn't working with AWS IAM Identity Center SSO roles, it might be because us-east-1 does not have the region in the ARN while other regions do.
 image: /img/updates/aws-iam-identity-center-sso-trust-policies.png
 callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a></p>
@@ -166,7 +166,7 @@ Here's an example IAM trust policy that allows SSO users from the Administrator 
 }
 ```
 
-If you're using Terraform or OpenTofu, here's a `data` source example:
+If you're using Terraform or OpenTofu, here's a `data` source example. In a conventionally structured configuration, this belongs in [`data.tf`](https://masterpoint.io/blog/standard-tf-files/#datatf-external-data-source-queries):
 
 ```hcl
 data "aws_iam_policy_document" "assume_role_policy" {
@@ -200,4 +200,4 @@ data "aws_iam_policy_document" "assume_role_policy" {
 }
 ```
 
-See more examples in the [AWS documentation](https://docs.aws.amazon.com/singlesignon/latest/userguide/referencingpermissionsets.html#custom-trust-policy-example).
+See more examples in the [AWS documentation](https://docs.aws.amazon.com/singlesignon/latest/userguide/referencingpermissionsets.html#custom-trust-policy-example). To make broader IAM configuration expectations explicit in Terraform runs, [Terraform `check` blocks](https://masterpoint.io/blog/understanding-terraform-check/) can validate conditions without tying them to a single resource.

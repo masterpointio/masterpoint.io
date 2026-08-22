@@ -5,7 +5,7 @@ title: "Steps to Break Up a Terralith"
 author: Veronika Gnilitska
 slug: steps-to-break-up-a-terralith
 date: 2025-03-06
-# date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
+date_modified: 2026-08-18
 description: In this follow-up to our "What Is a Terralith?" article, we shift the focus from describing the problem to providing a detailed migration plan, practical guidance, and a handy checklist for breaking up a Terralith into smaller, more manageable root modules.
 image: /img/updates/steps-to-break-up-a-terralith/main.png
 preview_image: /img/updates/steps-to-break-up-a-terralith/preview.png
@@ -49,7 +49,7 @@ Let’s take a look at the typical symptoms of a Terralith:
 
 - **Large state file(s)**: A large number of resources are stuffed into a single `.tfstate` state file. There’s no universally correct file size or resource count for TF. However, our experience suggests that **if your state files have between a few hundred and 1000+ resources** then you're likely dealing with performance and manageability issues. Not all APIs are the same, so that might not be the case for you, but we're painting with a broad brush here to give you an idea. Ideally, your TF root modules are built around service boundaries that share the same lifecycle, allowing for easy division.
 - **One big root module**: There is no clear separation of concern or logical grouping of services, such as databases, networking, and DNS. While deciding how to segment resources can be complex, a foundational best practice is to place unrelated resources in separate root modules. For example, if a Route 53 alias is only used by Service A — and never by Service B — avoid defining it in the same module as Service B.
-- **Slow plan/apply operations**: Having many resources in a single state file can cause TF `plan` and `apply` operations to slow down considerably. Even if you don’t know the exact file size or resource count, experiencing sluggish performance is a sign. If your plan regularly takes 10 minutes or more, congrats, you have a Terralith! This issue can also arise when a root module manages many of the same resource types, such as DataDog monitors. In these cases, consider restructuring your configuration (e.g., grouping monitors into logical modules based on who owns them in the organization or their business impact).
+- **Slow plan/apply operations**: Having many resources in a single state file can cause TF `plan` and `apply` operations to slow down considerably. Even if you don’t know the exact file size or resource count, experiencing sluggish performance is a sign. If your plan regularly takes 10 minutes or more, congrats, you have a Terralith! This issue can also arise when a root module manages many of the same resource types, such as DataDog monitors. In these cases, consider restructuring your configuration (e.g., grouping monitors into logical modules based on who owns them in the organization or their business impact). Before beginning a breakup, you can [use OpenTofu's `-exclude` flag to isolate the performance bottleneck](https://masterpoint.io/blog/using-opentofu-exclude-flag-isolate-performance-bottlenecks/) and confirm where the time is actually going.
 - **Complex deployments**: If your deployment process frequently relies on partial or “targeted” applies — for example, using `terraform apply -target=<resource>` — or other manual interventions, your root module resources are too entangled.
 - **High blast radius**: If even a small change or upgrade in one part of the infrastructure can affect unrelated components, you probably have a Terralith. This situation increases operational risk.
 
@@ -360,7 +360,7 @@ Ready to move from theory to action? We’ve consolidated everything into a sing
 
 Breaking up a Terralith into smaller, more manageable modules is **crucial** for organizations seeking to improve speed, reduce risk, and follow modular best practices in Infrastructure as Code. While newer Terraform/OpenTofu features like `import` and `remove` blocks have made migrations easier, there is still complexity and potential for error. Hence, our emphasis on scripts, backups, careful planning, and validation.
 
-While the process requires care during planning and execution, the benefits of a modular and maintainable infrastructure are well worth the effort.
+While the process requires care during planning and execution, the benefits of a modular and maintainable infrastructure are well worth the effort. See how we decomposed a 43,000+ resource Terralith for [Power Digital](https://masterpoint.io/case-studies/power-digital/).
 
 If you need assistance or have questions about the process, our team at Masterpoint are the go-to experts in IaC. We’ve done this dozens of times and can help guide you through breaking up your Terralith and setting up future-proof IaC.
 
