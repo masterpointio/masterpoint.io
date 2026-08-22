@@ -8,7 +8,7 @@ date: 2024-05-13
 slug: terraform-use-cases
 description: "Engineering orgs that use IaC tools like Terraform aren’t typically maximizing their leverage. This article highlights at least three uses of Terraform and IaC automation that don’t necessarily center around traditional application workload infrastructure."
 image: /img/updates/tf-use-cases.jpeg
-callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a>
+callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact/'>Get in touch!</a>
 ---
 
 One of the main themes we’ve noticed is that platform teams often struggle when embracing the "as code" philosophy. Sure, they'll use OpenTofu or Terraform (collectively referred to from here on out as “TF”) to manage compute and other cloud resources, but they tend to stop short of applying the same principles to _everything_ in their operational domain.

@@ -9,7 +9,7 @@ date_modified: 2026-08-18
 description: In this follow-up to our "What Is a Terralith?" article, we shift the focus from describing the problem to providing a detailed migration plan, practical guidance, and a handy checklist for breaking up a Terralith into smaller, more manageable root modules.
 image: /img/updates/steps-to-break-up-a-terralith/main.png
 preview_image: /img/updates/steps-to-break-up-a-terralith/preview.png
-callout: <p>👋 <b>If you're ready to take your infrastructure to the next level</b>, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a></p>
+callout: <p>👋 <b>If you're ready to take your infrastructure to the next level</b>, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact/'>Get in touch!</a></p>
 ---
 
 <h2>Table of Contents</h2>
@@ -37,7 +37,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 
 Do you manage your infrastructure with Terraform or OpenTofu (collectively referred to from here on out as TF)? Have you noticed long `plan` and `apply` durations? Or are you concerned about the blast radius of changes? If so, you might be dealing with a **Terralith**. “Terralith” refers to a monolithic TF architecture where all your resources are managed within a single root module and state file. This setup leads to inefficiencies and increased risk when making changes.
 
-In our previous article, [“What Is a Terralith?”](https://masterpoint.io/updates/terralith-monolithic-terraform-architecture/), we explored the challenges associated with Terraliths and why it’s beneficial to break them into smaller, manageable pieces.
+In our previous article, [“What Is a Terralith?”](https://masterpoint.io/blog/terralith-monolithic-terraform-architecture/), we explored the challenges associated with Terraliths and why it’s beneficial to break them into smaller, manageable pieces.
 
 In this guide, we’ll walk you through the steps to break up a Terralith, helping you improve your infrastructure’s maintainability, and overall performance.
 
@@ -121,7 +121,7 @@ You can do this by:
 
 Plan how you’ll manage multiple state files and keep them consistent. The organization of these files may differ based on your needs. We recommend storing your TF state in a reliable cloud storage solution. For example, on AWS, use an S3 bucket in the root or shared-services account as your backend, with DynamoDB for state locking. This solution offers versioning, encryption and enforces access control using IAM. A resource to help you set up state management on S3 is the open-source child module [cloudposse/terraform-aws-tfstate-backend](https://github.com/cloudposse/terraform-aws-tfstate-backend).
 
-We explore this topic in detail in our blog post on [why cloud object storage is the best option for a Terraform remote state and backend](https://masterpoint.io/updates/why-use-cloud-object-storage-terraform-remote-backend/).
+We explore this topic in detail in our blog post on [why cloud object storage is the best option for a Terraform remote state and backend](https://masterpoint.io/blog/why-use-cloud-object-storage-terraform-remote-backend/).
 
 ### Key Organizational and Team Questions
 

@@ -273,7 +273,7 @@ CookieConsent.run({
                     acceptAllBtn: "Accept all",
                     acceptNecessaryBtn: "Reject all",
                     showPreferencesBtn: "Manage preferences",
-                    footer: "<a href=\"/policies/privacy\">Privacy Policy</a>\n<a href=\"/policies/terms\">Terms and conditions</a>"
+                    footer: "<a href=\"/policies/privacy/\">Privacy Policy</a>\n<a href=\"/policies/terms/\">Terms and conditions</a>"
                 },
                 preferencesModal: {
                     title: "Consent Preferences Center",
