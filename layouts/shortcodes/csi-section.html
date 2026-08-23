@@ -7,7 +7,6 @@
     variant  band background: light (default) | cream | pine | pine-deep
     align    left (default) | center
     num      optional big watermark number (e.g. "01")
-    accent   "true" → render just the gradient line accent (no eyebrow text)
   Note: a section containing a csi-list automatically renders as a denser,
   compact band (via `.csi-section:has(.csi-list)` in the CSS) — tighter
   padding, smaller head, denser prose and pull quote.
@@ -19,14 +18,12 @@
 {{- $variant := .Get "variant" | default "light" -}}
 {{- $align := .Get "align" | default "left" -}}
 {{- $num := .Get "num" -}}
-{{- $accent := .Get "accent" -}}
 {{- $id := .Get "id" -}}
 <section{{ with $id }} id="{{ . }}"{{ end }} class="csi-section csi-section--{{ $variant }} csi-section--{{ $align }}">
   <div class="csi-container">
-    {{- if or $eyebrow $title $accent -}}
+    {{- if or $eyebrow $title -}}
     <div class="csi-section__head" data-aos="fade-up" data-aos-duration="600">
       {{- if $num -}}<span class="csi-section__num" aria-hidden="true">{{ $num }}</span>{{- end -}}
-      {{- if $accent -}}<span class="csi-section__rule" aria-hidden="true"></span>{{- end -}}
       {{- if $eyebrow -}}<div class="csi-eyebrow">{{ $eyebrow | safeHTML }}</div>{{- end -}}
       {{- if $title -}}<h2 class="csi-section__title">{{ $title | safeHTML }}</h2>{{- end -}}
     </div>

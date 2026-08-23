@@ -454,7 +454,10 @@ $cs-mint-faint: rgba(42, 217, 194, 0.06);
       font-size: 2.2rem;
       line-height: 1.1;
       font-weight: 900;
-      @include cs-brand-gradient-text;
+      background: linear-gradient(95deg, #ede497 0%, #2ad9c2 70%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       letter-spacing: -0.01em;
       width: fit-content;
 
@@ -1466,21 +1469,12 @@ html:has(.cs-sticky-nav) {
   .csi-eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
     font-size: 0.78rem;
     letter-spacing: 0.26em;
     text-transform: uppercase;
     font-weight: 800;
     color: $pine;
     margin-bottom: 1.15rem;
-    &::before {
-      content: "";
-      width: 30px;
-      height: 3px;
-      border-radius: 2px;
-      flex: 0 0 auto;
-      @include csi-grad-solid;
-    }
   }
 
   // ---------------------------------------------------------------------------
@@ -1625,13 +1619,6 @@ html:has(.cs-sticky-nav) {
       }
       .csi-eyebrow {
         justify-content: center;
-        &::before {
-          display: none;
-        }
-      }
-      .csi-section__rule {
-        margin-left: auto;
-        margin-right: auto;
       }
       // centre the prose, but constrain only the PARAGRAPHS to a readable
       // width — leave grids (which live inside .csi-prose) full-width.
@@ -1806,15 +1793,6 @@ html:has(.cs-sticky-nav) {
   }
   .csi-section__num {
     display: none;
-  }
-  // standalone gradient line accent (eyebrow-less sections)
-  .csi-section__rule {
-    display: block;
-    width: 54px;
-    height: 3px;
-    border-radius: 2px;
-    margin: 0 0 1.4rem;
-    @include csi-grad-solid;
   }
 
   // ---------------------------------------------------------------------------
@@ -3694,6 +3672,7 @@ html:has(.cs-sticky-nav) {
     // back to a solid brand colour so every heading prints fully and legibly.
     .text-gradient,
     .csi-grad,
+    .cs-stat__value,
     .csi-step__num,
     .csi-testimonial__mark,
     .csi-testimonial__quote strong,

@@ -42,7 +42,7 @@ sitemap:
   priority: 0
 ---
 
-{{< csi-section accent="true" title="Executive Summary" variant="light" align="center" >}}
+{{< csi-section title="Executive Summary" variant="light" align="center" >}}
 [Cursor is an applied research AI lab](https://cursor.com/), with products used by [over half of the Fortune 500](https://cursor.com/enterprise). Cursor's AWS cloud infrastructure had outgrown the monolithic Terraform architecture it was built on and engineers had stopped trusting the system. Masterpoint audited the infrastructure, decomposed the [terralith](https://masterpoint.io/blog/terralith-monolithic-terraform-architecture/), built an [Infrastructure as Code](https://aws.amazon.com/what-is/iac/) platform with a new scalable architecture, migrated to Spacelift & OpenTofu, and embedded AI agent guardrails so the new architecture sticks, along with a series of platform improvements detailed in the story below. Plans now run **5x faster** and engineers ship **2.6x more** infrastructure changes every week, all with a **91% reduction in blast radius**.
 
 {{< csi-carousel >}}
@@ -189,7 +189,7 @@ The AI agent skills and rules help us build our IaC correctly while at the same 
 {{< /csi-phase >}}
 {{< /csi-section >}}
 
-{{< csi-section id="the-results" eyebrow="The Results" title="The <span class='csi-grad'>Results</span>" variant="pine" >}}
+{{< csi-section id="the-results" title="The <span class='csi-grad'>Results</span>" variant="pine" >}}
 ### Numbers That <span class='csi-grad'>Matter</span>
 
 {{< csi-compare before_label="Before" after_label="After" >}}
@@ -244,7 +244,7 @@ Previously, workspace creation required manual ClickOps and admin access. Today,
 ![Terraform root module workspaces grew from 21 in October 2025 to 141 in May 2026 — up 571% — as self-service workspaces replaced monolithic antipatterns](/img/case-studies/cursor/cursor-infrastructure-democratized-masterpoint.png)
 {{< /csi-section >}}
 
-{{< csi-section eyebrow="The Results" title="What Changed for the Team" variant="light" >}}
+{{< csi-section eyebrow="Team Impact" title="What Changed for the Team" variant="light" >}}
 {{< cs-pullquote name="Ravi Rahman" title="Software Engineer" company="Cursor" >}}
 The Terraform experience has gotten way better. For the first time since I've been here, we just merge and apply. If something's wrong, the system lets us know. It's fast and moves at the speed we need.
 {{< /cs-pullquote >}}
