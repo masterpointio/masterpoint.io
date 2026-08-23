@@ -5,11 +5,11 @@ title: "The Terralith: Monolithic Architecture of Terraform & Infrastructure as 
 author: Yangci Ou
 slug: terralith-monolithic-terraform-architecture
 date: 2024-08-22
-# date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
+date_modified: 2026-08-18
 description: This article explores the challenges and pitfalls of Terralith, a monolithic Terraform architecture in Infrastructure as Code, and uncovers why a Terralith is not a good practice.
 image: /img/updates/terralith/terralith-article.png
 preview_image: /img/updates/terralith/terralith-preview-image.png # Use preview_image to prevent image overflow, best aspect ratios 270x355 or 600x700
-callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a></p>
+callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact/'>Get in touch!</a></p>
 ---
 
 <h2>Table of Contents</h2>
@@ -71,7 +71,7 @@ Imagine a Terralith’s state file like a single, massive spreadsheet tracking e
 
 In IaC, the workflow first checks all resources against the real infrastructure, then plans the changes from your infrastructure code, and finally executes the plan by applying it. Even if we are trying to modify something as minor as renaming one resource, **the system must verify against every single resource in the state file**.
 
-It’s a domino effect because this not only slows down the development and deployment process, but also increases the vulnerability to transient errors such as credential expirations and API rate limits. At Masterpoint, we've had clients with Terralith codebases which took over 30+ minutes for simple plans and applies. As you can imagine, they often timed out or reached the API limits.
+It’s a domino effect because this not only slows down the development and deployment process, but also increases the vulnerability to transient errors such as credential expirations and API rate limits. At Masterpoint, we've had clients with Terralith codebases which took over 30+ minutes for simple plans and applies. As you can imagine, they often timed out or reached the API limits. If you need to prove which resources are causing the slowdown before committing to a refactor, use [OpenTofu's `-exclude` flag to isolate the performance bottleneck](https://masterpoint.io/blog/using-opentofu-exclude-flag-isolate-performance-bottlenecks/).
 
 ![Terralith API Limit Example](/img/updates/terralith/terralith-api-limit-example.png) <!-- API Limit Screenshot -->
 
@@ -95,7 +95,7 @@ Breaking up a monolithic TF architecture is like splitting each floor of the sky
 
 Of course, there are scenarios where a Terralith might make sense, such as smaller projects, prototyping, and proof of concepts. “But as you evolve, as you have more teams and more complicated setups, you need to think about [blast radius, state management, and architecture],” as said by [Nicki Watt](https://www.hashicorp.com/resources/evolving-infrastructure-terraform-opencredo).
 
-While the specific end structure will vary based on organizational needs, a general approach to breaking up a Terralith involves splitting infrastructure into different services and drawing clear boundaries around them. You have a few options to do this. At Masterpoint, we typically create root modules at the service boundary: AWS RDS clusters, AWS SQS Queues, Lambda Functions, and ECS Services all get their own root module. Then we instantiate instances of these root modules with specific configuration for each time the service is used within our client’s infrastructure. For example, if you have a prod and a staging database, the same AWS RDS root module would be configured differently and used two times.
+While the specific end structure will vary based on organizational needs, a general approach to breaking up a Terralith involves splitting infrastructure into different services and drawing clear boundaries around them. You have a few options to do this. At Masterpoint, we typically create root modules at the service boundary: AWS RDS clusters, AWS SQS Queues, Lambda Functions, and ECS Services all get their own root module. Then we instantiate instances of these root modules with specific configuration for each time the service is used within our client’s infrastructure. For example, if you have a prod and a staging database, the same AWS RDS root module would be configured differently and used two times. For the migration sequence, backups, and state moves, see our guide on [breaking up a Terralith](https://masterpoint.io/blog/steps-to-break-up-a-terralith/).
 
 [TF Workspaces](https://opentofu.org/docs/language/state/workspaces/) is another method to manage this complexity. By leveraging workspaces, teams can maintain separation between environments while reusing the same TF codebase. This approach adheres to the [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle, reducing duplication and helping some of the pitfalls mentioned above.
 

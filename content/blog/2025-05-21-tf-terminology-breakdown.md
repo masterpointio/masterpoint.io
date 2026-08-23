@@ -5,10 +5,10 @@ title: Terraform + OpenTofu Terminology Breakdown
 slug: terraform-opentofu-terminology-breakdown
 author: Matt Gowie
 date: 2025-05-21
-date_modified: 2026-07-22 # Be sure to use this if you've updated the post as this helps with SEO and index freshness
+date_modified: 2026-08-18
 description: List of Terraform and OpenTofu terms with definitions and explanations.
 image: /img/updates/tf-terminology-breakdown.png
-callout: <p>👋 <b>Got a term that you're still confused on in the TF or IaC space that you want us to include here? <a href='/contact'>Get in touch and we'd be happy to add it!</a></b></p>
+callout: <p>👋 <b>Got a term that you're still confused on in the TF or IaC space that you want us to include here? <a href='/contact/'>Get in touch and we'd be happy to add it!</a></b></p>
 ---
 
 # Table of Contents
@@ -45,7 +45,7 @@ callout: <p>👋 <b>Got a term that you're still confused on in the TF or IaC sp
 
 # Intro
 
-The Terraform and OpenTofu (collectively referred to as "TF") ecosystem has evolved significantly since HashiCorp's initial release, and the growing sea of tooling and management platforms has led to some interesting (and occasionally frustrating) terminology fragmentation. We're going to break down some essential TF terminology that you'll encounter: workspaces, modules, state management, testing frameworks, and more.
+The Terraform and OpenTofu (collectively referred to as "TF") ecosystem has evolved significantly since HashiCorp's initial release, and the growing sea of tooling and management platforms has led to some interesting (and occasionally frustrating) terminology fragmentation. We're going to break down some essential TF terminology that you'll encounter: workspaces, modules, state management, testing frameworks, and more. For practical examples of what teams manage with TF beyond application infrastructure, see [three Terraform use cases to implement](https://masterpoint.io/blog/terraform-use-cases/).
 
 # Workspaces
 
@@ -73,7 +73,7 @@ Modules are one of the most important elements of TF for organizing your infrast
 
 ## Root Modules
 
-Root modules serve as the main working directory where Terraform or OpenTofu is executed (that is, planned and then applied to bring your infrastructure into line with your IaC config). These modules contain your primary configuration files (main.tf, variables.tf, providers.tf, versions.tf, etc.) and are typically responsible for consuming and composing child modules. Think of root modules as the orchestrators of your infrastructure. They map to one or many state files and they're where you bring together all the pieces of your configuration.
+Root modules serve as the main working directory where Terraform or OpenTofu is executed (that is, planned and then applied to bring your infrastructure into line with your IaC config). These modules contain your primary configuration files (main.tf, variables.tf, providers.tf, versions.tf, etc.) and are typically responsible for consuming and composing child modules. Think of root modules as the orchestrators of your infrastructure. They map to one or many state files and they're where you bring together all the pieces of your configuration. See [the standard Terraform and OpenTofu files](https://masterpoint.io/blog/standard-tf-files/) for what belongs in each one, and the [Terraform versioning guide](https://masterpoint.io/blog/ultimate-terraform-versioning-guide/) for choosing compatible CLI and provider constraints.
 
 ## Child Modules
 
@@ -117,7 +117,7 @@ State management in Terraform comes in two primary flavors: local and remote bac
 
 **Remote backends**, on the other hand, store state in shared locations like S3 or Azure Storage, enabling multiple engineers to collaborate safely on the same configurations, while also providing better security controls.
 
-We wrote an article on the best Backends to use here: [Why Use Cloud Object Storage for Terraform's Remote Backend & State](https://masterpoint.io/updates/why-use-cloud-object-storage-terraform-remote-backend/)
+We wrote an article on the best Backends to use here: [Why Use Cloud Object Storage for Terraform's Remote Backend & State](https://masterpoint.io/blog/why-use-cloud-object-storage-terraform-remote-backend/)
 
 ## State Locking
 
@@ -133,7 +133,7 @@ Without proper testing, infrastructure changes could potentially lead to costly 
 
 ## Check Blocks
 
-Terraform 1.5 introduced built-in validation through check blocks, which run during the planning phase. These blocks allow you to make assertions about your resource configurations before any changes are applied, providing an additional layer of confidence in your infrastructure changes. [We have an article that breaks down this topic that you can read here](https://masterpoint.io/updates/understanding-terraform-check/).
+Terraform 1.5 introduced built-in validation through check blocks, which run during the planning phase. These blocks allow you to make assertions about your resource configurations before any changes are applied, providing an additional layer of confidence in your infrastructure changes. [We have an article that breaks down this topic that you can read here](https://masterpoint.io/blog/understanding-terraform-check/).
 
 ## Native TF Testing
 
@@ -193,9 +193,9 @@ Platforms like Env0 and Scalr, which provide a more holistic, top-down managemen
 
 ## Terralith Pattern
 
-The [Terralith pattern](https://masterpoint.io/updates/terralith-monolithic-terraform-architecture/) represents a specific approach to TF architecture that opts for a single state file for all infrastructure using a monolithic root module approach. While it's often seen as a natural starting point for new projects, teams should view it as technical debt that needs to be addressed in the future. The pattern's fundamental limitations - from state file locking issues to increased blast radius of changes - make it unsuitable for long-term use or any environment that needs to scale beyond basic infrastructure management.
+The [Terralith pattern](https://masterpoint.io/blog/terralith-monolithic-terraform-architecture/) represents a specific approach to TF architecture that opts for a single state file for all infrastructure using a monolithic root module approach. While it's often seen as a natural starting point for new projects, teams should view it as technical debt that needs to be addressed in the future. The pattern's fundamental limitations - from state file locking issues to increased blast radius of changes - make it unsuitable for long-term use or any environment that needs to scale beyond basic infrastructure management.
 
-Dealing with the Terralith problem and want to know more? [Check out our original post on this topic here](https://masterpoint.io/updates/terralith-monolithic-terraform-architecture/) and then [learn how to break up a Terralith in our follow-up article here](https://masterpoint.io/updates/steps-to-break-up-a-terralith/).
+Dealing with the Terralith problem and want to know more? [Check out our original post on this topic here](https://masterpoint.io/blog/terralith-monolithic-terraform-architecture/) and then [learn how to break up a Terralith in our follow-up article here](https://masterpoint.io/blog/steps-to-break-up-a-terralith/).
 
 ## Demystifying HashiCorp Offerings: Terraform Cloud vs Terraform Enterprise vs HCP Terraform
 

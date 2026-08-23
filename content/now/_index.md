@@ -5,7 +5,7 @@ banner_text: '<a href="https://nownownow.com/about">Inspired by Derek Sivers</a>
 last_update: January 2026
 id: nowPage
 banner_btn_label: Let's Chat!
-banner_btn_link: /contact
+banner_btn_link: /contact/
 ---
 
 ## Masterpoint's Recent Focus
