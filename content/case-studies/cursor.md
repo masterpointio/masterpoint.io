@@ -43,7 +43,7 @@ sitemap:
 ---
 
 {{< csi-section title="Executive Summary" variant="light" align="center" >}}
-[Cursor is an applied research AI lab](https://cursor.com/), with products used by [over half of the Fortune 500](https://cursor.com/enterprise). Cursor's AWS cloud infrastructure had outgrown the monolithic Terraform architecture it was built on and engineers had stopped trusting the system. Masterpoint audited the infrastructure, decomposed the [terralith](https://masterpoint.io/blog/terralith-monolithic-terraform-architecture/), built an [Infrastructure as Code](https://aws.amazon.com/what-is/iac/) platform with a new scalable architecture, migrated to Spacelift & OpenTofu, and embedded AI agent guardrails so the new architecture sticks, along with a series of platform improvements detailed in the story below. Plans now run **5x faster** and engineers ship **2.6x more** infrastructure changes every week, all with a **91% reduction in blast radius**.
+[Cursor is an applied research AI lab](https://cursor.com/), with products used by [over half of the Fortune 500](https://cursor.com/enterprise). Cursor's AWS cloud infrastructure had outgrown the monolithic Terraform architecture it was built on and engineers had stopped trusting the system. Masterpoint audited the infrastructure, decomposed the [terralith](https://masterpoint.io/blog/terralith-monolithic-terraform-architecture/), built an [Infrastructure as Code](https://aws.amazon.com/what-is/iac/) platform with a new scalable architecture, migrated to Spacelift & OpenTofu, and embedded AI agent guardrails so the new architecture sticks, along platform improvements detailed in the story below. Plans now run **5x faster** and engineers ship **2.6x more** infrastructure changes every week, all with a **91% reduction in blast radius**.
 
 {{< csi-carousel >}}
 image: /img/case-studies/cursor/cursor-terraform-5x-faster-masterpoint.png
@@ -105,7 +105,7 @@ The engagement opened with [Masterpoint's audit](https://masterpoint.io/services
 
 Within a week, Masterpoint delivered an audit report, a best practices checklist, and a security scan. The findings included IAM duplication accounted for 70% of the production Terraform state and noisy plan diffs caused engineer review fatigue.
 
-The audit phase targeted the highest-leverage fixes first: IAM resource deduplication, workspace trigger and path filter corrections so plans only ran when relevant code changed, and initial breaking up of the monolithic Terraform workspace to begin isolating Staging and Machine Learning infrastructure.
+The audit phase targeted the highest-leverage fixes first: IAM resource deduplication, workspace trigger and path filter corrections so plans only ran when relevant code changed, and initial breaking up of the monolithic Terraform workspace to isolate separate domain areas such as Staging and Machine Learning infrastructure.
 
 Just one week later, Masterpoint had resolved the IAM duplication, with significant results:
 
@@ -152,19 +152,19 @@ Rather than migrating everything at once, a low-risk pilot Spacelift stack (the 
 Masterpoint also began evaluating a full migration from the Terraform runtime to [OpenTofu](https://opentofu.org/).
 {{< /csi-phase >}}
 
-{{< csi-phase title="January to February 2026 - Bulk Migration & Decomposition of the Monolithic Terraform Workspace" >}}
-With a plan covering a migration of dozens of TFC workspaces across four phases, the team worked systematically. By late January, the bulk of workspaces had been migrated to Spacelift stacks with no operational downtime for the Cursor engineering organization.
+{{< csi-phase title="January to February 2026 - Decomposition of the Monolithic Terraform Workspace into Domain Driven Module Architecture" >}}
+By February, the migration to Spacelift & OpenTofu was completed with no operational downtime for the Cursor engineering organization. OpenTofu freed Cursor from licensing constraints and unlocked capabilities unavailable or paywalled in Terraform, such as state encryption, OpenTelemetry support, and provider iteration.
 
-By February, the migration was done. All workspaces had been moved from TFC to Spacelift and the runtime was converted from Terraform to OpenTofu. Migrating to OpenTofu freed Cursor from licensing constraints and unlocked capabilities unavailable or paywalled in Terraform, such as state encryption, OpenTelemetry support, and provider iteration.
+In parallel, Masterpoint continued to decompose the [terralith](https://masterpoint.io/blog/terralith-monolithic-terraform-architecture/). In the old architecture, all infrastructure lived in monolithic root modules backed by a single state file: every plan evaluated the entire footprint no matter how small the change, collaboration serialized on that one state, and unrelated systems were coupled together, so every apply carried the full monolith's blast radius.
 
-In parallel, Masterpoint also continued to decompose the Terraform monolith into more product and domain scoped root modules.
+The answer wasn't to simply carve that monolith into smaller pieces in place. Masterpoint designed a domain-driven architecture of root modules, each scoped to a product or domain area, and migrated infrastructure out of the terralith into them — cutting cycle times and shrinking blast radius. New domains now get their own workspace from day one instead of accumulating onto the monolith.
 {{< /csi-phase >}}
 
 {{< csi-phase title="February to May 2026 - AI Agent Guardrails And Additional Improvements" >}}
 After the migration was completed, Masterpoint continued to improved system usability and speed by:
 
-- restructuring individual Route53 DNS API requests into batch requests to avoid AWS rate limits (after AWS Support & TAM noted they could not be raised)
-- continuing to break up large state files into narrower root modules, allowing for faster plans and decreased blast radius
+- batching high-volume API requests (in the Terraform Provider) to avoid throttling on aggressively rate-limited cloud APIs, such as AWS Route53 DNS (after AWS Support & TAM noted they could not be raised)
+- continuing to break up large monolithic Terraform state files into narrower domain-driven root modules
 - implementing child module versioning with [OCI registries](https://opentofu.org/docs/cli/oci_registries/module-package/) to enable staged rollouts and safer change control of critical TF resources
 - resolving the ECS drift issue by using the ["Task Definition Template Pattern"](https://newsletter.masterpoint.io/p/deploying-your-apps-into-ecs)
 - implementing OpenTofu's [OTel tracing](https://opentofu.org/docs/internals/tracing/) to find other performance bottlenecks and set up the Cursor team for longterm visibility into their IaC throughput; see how to [isolate and prove a bottleneck with OpenTofu's `-exclude` flag](https://masterpoint.io/blog/using-opentofu-exclude-flag-isolate-performance-bottlenecks/)
@@ -223,7 +223,7 @@ Weekly merged PRs against infrastructure as code went from approximately 194 per
 
 ### The productivity lift was <span class='csi-grad'>significant</span>
 
-This gain wasn't from growing the engineering organization in headcount: a **controlled same-cohort analysis of 34 engineers** active both before and after the Masterpoint engagement found that PR throughput grew by **121%**.
+This gain wasn't from growing engineering headcount: a **controlled same-cohort analysis of 34 engineers** active both before and after the Masterpoint engagement found that PR throughput grew by **121%**.
 
 {{< csi-compare before_label="Pre-engagement" after_label="End of Engagement" >}}
 label: Cohort throughput
