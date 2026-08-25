@@ -210,6 +210,13 @@ All shortcodes are in `layouts/shortcodes/cs-*.html` and styled under
 - **CSS-drawn figures beat images for diagrams** (`csi-split figure="…"` →
   `figures/<name>.html`: inherits fonts, recolours per face, prints crisp) —
   but draw with REAL elements; print drops `::before/::after` `background-image`.
+- **Standalone SVG diagrams must pin one palette.** The site never uses
+  `prefers-color-scheme` (faces are fixed per section), so strip any
+  `@media (prefers-color-scheme: dark)` block from an SVG before committing it,
+  or dark-OS visitors get a dark-palette diagram on a light band. Keep the
+  `prefers-reduced-motion` block if the SVG animates. CSS animations inside an
+  SVG still run via markdown `![…](…)` / `<img>`; scripts don't. Example:
+  `cursor-terralith-scoping-masterpoint.svg` in the Cursor Jan–Feb phase.
 - **The TOC reads `.Fragments`, not `.TableOfContents`.** `.TableOfContents`
   is empty when read from inside a _shortcode_ (it isn't built until after the
   goldmark pass), which is the original reason the TOC moved to a layout-stage

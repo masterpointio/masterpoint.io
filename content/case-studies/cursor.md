@@ -158,6 +158,8 @@ By February, the migration to Spacelift & OpenTofu was completed with no operati
 In parallel, Masterpoint continued to decompose the [terralith](https://masterpoint.io/blog/terralith-monolithic-terraform-architecture/). In the old architecture, all infrastructure lived in monolithic root modules backed by a single state file: every plan evaluated the entire footprint no matter how small the change, collaboration serialized on that one state, and unrelated systems were coupled together, so every apply carried the full monolith's blast radius.
 
 The answer wasn't to simply carve that monolith into smaller pieces in place. Masterpoint designed a domain-driven architecture of root modules, each scoped to a product or domain area, and migrated infrastructure out of the terralith into them — cutting cycle times and shrinking blast radius. New domains now get their own workspace from day one instead of accumulating onto the monolith.
+
+![Before and after the decomposition: one monolithic production workspace where every service's ECS, ALB, network, storage, IAM, and secrets resources are scattered together, versus domain-scoped workspaces where each service's resources live and change together](/img/case-studies/cursor/cursor-terralith-scoping-masterpoint.svg)
 {{< /csi-phase >}}
 
 {{< csi-phase title="February to May 2026 - AI Agent Guardrails And Additional Improvements" >}}
