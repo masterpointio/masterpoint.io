@@ -223,6 +223,13 @@ All shortcodes are in `layouts/shortcodes/cs-*.html` and styled under
   transparent light-palette SVG is unreadable on pine). Keep the
   `prefers-reduced-motion` block if the SVG animates. CSS animations inside an
   SVG still run via markdown `![…](…)` / `<img>`; scripts don't.
+- **Two SVGO passes will silently break animated SVGs** — trunk's `svgo`
+  (ignored via `static/img/**/*.svg` in `.trunk/trunk.yaml`) and Netlify's
+  `netlify-plugin-image-optim`, which has NO ignore option (hardcoded glob +
+  default `svgo()`), so the local `plugins/restore-animated-svgs` build plugin
+  re-copies `static/img` SVGs over the optimized output; it must stay listed
+  AFTER image-optim in `netlify.toml`. Symptom of a missed pass: animations
+  play on `hugo serve` but not on the deployed site.
 - **The TOC reads `.Fragments`, not `.TableOfContents`.** `.TableOfContents`
   is empty when read from inside a _shortcode_ (it isn't built until after the
   goldmark pass), which is the original reason the TOC moved to a layout-stage
