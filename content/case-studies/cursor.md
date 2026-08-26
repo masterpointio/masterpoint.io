@@ -133,7 +133,7 @@ after: 414s (6.9 min)
 delta: 44.7% faster
 {{< /csi-compare >}}
 
-This was accomplished without touching the workspace structure, and without any downtime. At the speed and scale Cursor operates, downtime simply isn't an option. Every improvement had to land safely while the platform kept growing underneath it: even as Masterpoint deduplicated and trimmed resources, Cursor was continuously adding new ones. There was still more the systems could improve on.
+All of this landed without touching the workspace structure and without downtime which is critical at the speed and scale Cursor operates. Every improvement had to land safely while the platform kept growing underneath it: even as Masterpoint deduplicated and trimmed resources, Cursor was continuously adding new ones. There was still more the systems could improve on.
 {{< /csi-phase >}}
 
 {{< csi-phase title="December 2025 - Spacelift Migration Begins" >}}
