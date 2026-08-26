@@ -37,6 +37,8 @@ The default _standard_ retry mode backs off **per request**: each throttled call
 
 - Without this, requests keep getting retried and throttled since the naive backoff never accounts for the other in-flight calls, so the operation drags on far longer than it should. Eventually it burns through `max_retries` and **errors out the whole run, or times out before it ever finishes**.
 
+![Send rate versus the service throttle limit: standard mode stays above it all run and most requests come back throttled, while adaptive mode cuts the rate after the first burst and settles just under it](/img/updates/aws-adaptive-retry-mode-terraform/standard-vs-adaptive-retry-masterpoint.svg "Standard mode never adapts its send rate; adaptive mode paces the client under the limit once throttling is detected. Shapes are illustrative, not from a real run.")
+
 As the [AWS SDKs and Tools documentation on retry behavior](https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html) puts it, adaptive mode "can delay or block the _initial_ request, not just retries, when throttling is detected." The client's own sending is governed at the source.
 
 [AWS recommends adaptive mode](https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html) if "your client targets a single resource (for example, one DynamoDB table) and you expect frequent throttling responses. This is common in automated workflows, batch processors, or AI workloads that call a single API operation at high volume."
