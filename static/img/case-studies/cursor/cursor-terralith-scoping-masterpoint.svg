@@ -3,40 +3,30 @@
 <desc id="d">On the left, one production workspace holds every service's ecs, alb, network, storage, iam and secrets resources with no boundaries; a service's six resources light up one at a time in scattered positions. On the right, the same resources sit inside a workspace per domain and light up together as a group. The highlight cycles through six services.</desc>
 <style>@keyframes onL0{0%,0.0%{opacity:0}2.381%,14.2857%{opacity:1}16.6667%,100%{opacity:0}}@keyframes onL1{0%,0.6548%{opacity:0}3.0357%,14.2857%{opacity:1}16.6667%,100%{opacity:0}}@keyframes onL2{0%,1.3095%{opacity:0}3.6905%,14.2857%{opacity:1}16.6667%,100%{opacity:0}}@keyframes onL3{0%,1.9643%{opacity:0}4.3452%,14.2857%{opacity:1}16.6667%,100%{opacity:0}}@keyframes onL4{0%,2.619%{opacity:0}5.0%,14.2857%{opacity:1}16.6667%,100%{opacity:0}}@keyframes onL5{0%,3.2738%{opacity:0}5.6548%,14.2857%{opacity:1}16.6667%,100%{opacity:0}}@keyframes onR{0%,1.0119%{opacity:0}3.3929%,14.2857%{opacity:1}16.6667%,100%{opacity:0}}@keyframes sweep{from{transform:scaleX(0)}to{transform:scaleX(1)}}
   svg{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif}
-  .panel{fill:none;stroke:#c3c2b7;stroke-width:.5}
+  .card{fill:#f7f6f1;stroke:#e2e1d7;stroke-width:1}
+  .panel{fill:#fff;stroke:#c3c2b7;stroke-width:.5}
   .chip{fill:#f2f1ea;stroke:#d8d7cd;stroke-width:.5}
   .chip-t{fill:#8a8a80;font-size:11px}
   .on-chip{fill:#e4eefb;stroke:#2a78d6;stroke-width:.5}
   .on-chip-t{fill:#0d3f77;font-size:11px}
-  .box{fill:none;stroke:#c3c2b7;stroke-width:.5}
+  .box{fill:#fff;stroke:#c3c2b7;stroke-width:.5}
   .on-box{fill:none;stroke:#2a78d6;stroke-width:1.5}
   .lab{fill:#55554c;font-size:11px}
   .on-lab{fill:#0d3f77;font-size:11px}
-  .head{fill:#16160f;font-size:14px}
+  .head{fill:#16160f;font-size:14px;font-weight:600}
   .cap{fill:#55554c;font-size:12px}
   .track{fill:#d8d7cd}
   .prog{fill:#2a78d6;transform-box:fill-box;transform-origin:0 50%;
         animation:sweep 2.8s linear infinite}
   .on{opacity:0}
-  @media (prefers-color-scheme:dark){
-    .panel,.box{stroke:#45443d}
-    .chip{fill:#22221f;stroke:#33332e}
-    .chip-t{fill:#7e7d75}
-    .on-chip{fill:#14304f;stroke:#4b95ef}
-    .on-chip-t,.on-lab{fill:#a9cdf5}
-    .on-box{stroke:#4b95ef}
-    .lab{fill:#b5b4ab}
-    .head{fill:#f2f1ea}
-    .cap{fill:#b5b4ab}
-    .track{fill:#33332e}
-    .prog{fill:#4b95ef}
-  }
+  
   @media (prefers-reduced-motion:reduce){
     .on{animation:none!important}
     .svc0{opacity:1}
     .prog{animation:none;transform:scaleX(1)}
   }
 </style>
+<rect class="card" x="4" y="4" width="652" height="332" rx="8"/>
 <text class="head" x="20" y="26">before · one production workspace</text>
 <text class="head" x="340" y="26">after · scoped by domain</text>
 <rect class="panel" x="20" y="65" width="300" height="190" rx="6"/>

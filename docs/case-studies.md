@@ -210,13 +210,19 @@ All shortcodes are in `layouts/shortcodes/cs-*.html` and styled under
 - **CSS-drawn figures beat images for diagrams** (`csi-split figure="…"` →
   `figures/<name>.html`: inherits fonts, recolours per face, prints crisp) —
   but draw with REAL elements; print drops `::before/::after` `background-image`.
-- **Standalone SVG diagrams must pin one palette.** The site never uses
-  `prefers-color-scheme` (faces are fixed per section), so strip any
-  `@media (prefers-color-scheme: dark)` block from an SVG before committing it,
-  or dark-OS visitors get a dark-palette diagram on a light band. Keep the
+- **Standalone SVG diagrams must pin the palette to the section face.** The
+  site never uses `prefers-color-scheme` (faces are fixed per section), so an
+  SVG with a dark-mode block would follow the visitor's OS, not the band it
+  sits on. For a **light** section, delete the
+  `@media (prefers-color-scheme: dark)` block
+  (`cursor-terralith-scoping-masterpoint.svg`, Cursor Jan–Feb phase); for a
+  **pine** section, either unwrap it (drop the media wrapper, keep its rules,
+  so the dark palette always applies) or delete it AND bake in a white
+  background rect so the SVG is a self-contained white card like the chart
+  PNGs (`cursor-noisy-plan-diff-masterpoint.svg`, Cursor Problem section — a
+  transparent light-palette SVG is unreadable on pine). Keep the
   `prefers-reduced-motion` block if the SVG animates. CSS animations inside an
-  SVG still run via markdown `![…](…)` / `<img>`; scripts don't. Example:
-  `cursor-terralith-scoping-masterpoint.svg` in the Cursor Jan–Feb phase.
+  SVG still run via markdown `![…](…)` / `<img>`; scripts don't.
 - **The TOC reads `.Fragments`, not `.TableOfContents`.** `.TableOfContents`
   is empty when read from inside a _shortcode_ (it isn't built until after the
   goldmark pass), which is the original reason the TOC moved to a layout-stage

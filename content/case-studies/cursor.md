@@ -76,10 +76,12 @@ But the problem wasn't just the lack of speed. It was a lack of engineering conf
 - The AWS console was used to [manually make changes](https://masterpoint.io/blog/terraform-opentofu-terminology-breakdown/#clickops) during incidents and these fixes were never rolled into Terraform, and so were later inadvertently reverted.
 - Managing ECS deployments through Terraform caused constant [drift](https://masterpoint.io/blog/terraform-opentofu-terminology-breakdown/#drift) in the production terralith, flooding PR diffs with hundreds of unrelated changes.
 
+![A Terraform plan with 122 changes, almost all unrelated ECS task definition drift, hiding two unintended changes: a security group rule opening a CIDR block to the world and an ALB listener rule broadening its path pattern](/img/case-studies/cursor/cursor-noisy-plan-diff-masterpoint.svg)
+
 Over time, the team stopped trusting the system, let alone reading the diffs.
 
 {{< cs-pullquote name="Travis McPeak" title="Security Lead" company="Cursor" >}}
-We would have engineers click apply on prod workspaces that had 120 AWS ECS service changes. The ECS services would change all the time because of drift, so the team became desensitized to large Terraform plan changes.
+We would have engineers click apply on prod workspaces that had ~120 AWS ECS service changes. The ECS services would change all the time because of drift, so the team became desensitized to large Terraform plan changes.
 {{< /cs-pullquote >}}
 
 This confusion caused downtime, such as a network firewall change that caused a 10-minute outage that was lost in the noise of Terraform drift.
@@ -165,11 +167,15 @@ The answer wasn't to simply carve that monolith into smaller pieces in place. Ma
 {{< csi-phase title="February to May 2026 - AI Agent Guardrails And Additional Improvements" >}}
 After the migration was completed, Masterpoint continued to improved system usability and speed by:
 
-- batching high-volume API requests (in the Terraform Provider) to avoid throttling on aggressively rate-limited cloud APIs, such as AWS Route53 DNS (after AWS Support & TAM noted they could not be raised)
+- [batching high volume API requests](https://docs.aws.amazon.com/Route53/latest/APIReference/API_ChangeResourceRecordSets.html) (in the Terraform Provider) to avoid throttling on aggressively rate-limited cloud APIs, such as AWS Route53 DNS (after AWS Support & TAM noted they could not be raised)
 - continuing to break up large monolithic Terraform state files into narrower domain-driven root modules
 - implementing child module versioning with [OCI registries](https://opentofu.org/docs/cli/oci_registries/module-package/) to enable staged rollouts and safer change control of critical TF resources
 - resolving the ECS drift issue by using the ["Task Definition Template Pattern"](https://newsletter.masterpoint.io/p/deploying-your-apps-into-ecs)
 - implementing OpenTofu's [OTel tracing](https://opentofu.org/docs/internals/tracing/) to find other performance bottlenecks and set up the Cursor team for longterm visibility into their IaC throughput; see how to [isolate and prove a bottleneck with OpenTofu's `-exclude` flag](https://masterpoint.io/blog/using-opentofu-exclude-flag-isolate-performance-bottlenecks/)
+
+![OpenTelemetry traces of an OpenTofu run showing Route 53 API calls being throttled and retried](/img/updates/opentofu-exclude-flag-performance-bottlenecks/opentelemetry-traces-route53.png)
+
+![Individual versus batched API calls against a strict rate limit: thirty individual requests mostly get throttled and thrown back, while batched requests carrying the same resources pass under the limit](/img/case-studies/cursor/cursor-dns-batching-masterpoint.svg)
 
 Because Cursor's engineering team uses Cursor to write Terraform, Masterpoint embedded architectural knowledge directly into the codebase as AI agent skills and rules.
 
