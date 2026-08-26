@@ -32,6 +32,12 @@ HUGO_ENABLEGITINFO = "true"
 [[plugins]]
 package = "netlify-plugin-image-optim"
 
+# Runs AFTER image-optim (same-event plugins run in listed order) and copies
+# static/img SVGs back verbatim — image-optim's SVGO pass strips the CSS
+# animations in our diagrams. Mirrors the svgo ignore in .trunk/trunk.yaml.
+[[plugins]]
+package = "./plugins/restore-animated-svgs"
+
 [[redirects]]
 from = "/updates/*"
 to = "/blog/:splat"
