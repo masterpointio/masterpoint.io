@@ -30,401 +30,401 @@
 <text class="head" x="20" y="26">before · one production workspace</text>
 <text class="head" x="340" y="26">after · scoped by domain</text>
 <rect class="panel" x="20" y="65" width="300" height="190" rx="6"/>
-<rect class="chip" x="32" y="77" width="64" height="14" rx="3"/>
-<text class="chip-t" x="37" y="87.5">iam</text>
-<rect class="chip" x="102" y="77" width="64" height="14" rx="3"/>
-<text class="chip-t" x="107" y="87.5">ecs</text>
-<rect class="chip" x="172" y="77" width="64" height="14" rx="3"/>
-<text class="chip-t" x="177" y="87.5">secrets</text>
-<rect class="chip" x="242" y="77" width="64" height="14" rx="3"/>
-<text class="chip-t" x="247" y="87.5">iam</text>
-<rect class="chip" x="32" y="96" width="64" height="14" rx="3"/>
-<text class="chip-t" x="37" y="106.5">storage</text>
-<rect class="chip" x="102" y="96" width="64" height="14" rx="3"/>
-<text class="chip-t" x="107" y="106.5">secrets</text>
-<rect class="chip" x="172" y="96" width="64" height="14" rx="3"/>
-<text class="chip-t" x="177" y="106.5">storage</text>
-<rect class="chip" x="242" y="96" width="64" height="14" rx="3"/>
-<text class="chip-t" x="247" y="106.5">alb</text>
-<rect class="chip" x="32" y="115" width="64" height="14" rx="3"/>
-<text class="chip-t" x="37" y="125.5">iam</text>
-<rect class="chip" x="102" y="115" width="64" height="14" rx="3"/>
-<text class="chip-t" x="107" y="125.5">iam</text>
-<rect class="chip" x="172" y="115" width="64" height="14" rx="3"/>
-<text class="chip-t" x="177" y="125.5">alb</text>
-<rect class="chip" x="242" y="115" width="64" height="14" rx="3"/>
-<text class="chip-t" x="247" y="125.5">ecs</text>
-<rect class="chip" x="32" y="134" width="64" height="14" rx="3"/>
-<text class="chip-t" x="37" y="144.5">network</text>
-<rect class="chip" x="102" y="134" width="64" height="14" rx="3"/>
-<text class="chip-t" x="107" y="144.5">secrets</text>
-<rect class="chip" x="172" y="134" width="64" height="14" rx="3"/>
-<text class="chip-t" x="177" y="144.5">ecs</text>
-<rect class="chip" x="242" y="134" width="64" height="14" rx="3"/>
-<text class="chip-t" x="247" y="144.5">ecs</text>
-<rect class="chip" x="32" y="153" width="64" height="14" rx="3"/>
-<text class="chip-t" x="37" y="163.5">alb</text>
-<rect class="chip" x="102" y="153" width="64" height="14" rx="3"/>
-<text class="chip-t" x="107" y="163.5">network</text>
-<rect class="chip" x="172" y="153" width="64" height="14" rx="3"/>
-<text class="chip-t" x="177" y="163.5">secrets</text>
-<rect class="chip" x="242" y="153" width="64" height="14" rx="3"/>
-<text class="chip-t" x="247" y="163.5">alb</text>
-<rect class="chip" x="32" y="172" width="64" height="14" rx="3"/>
-<text class="chip-t" x="37" y="182.5">storage</text>
-<rect class="chip" x="102" y="172" width="64" height="14" rx="3"/>
-<text class="chip-t" x="107" y="182.5">alb</text>
-<rect class="chip" x="172" y="172" width="64" height="14" rx="3"/>
-<text class="chip-t" x="177" y="182.5">storage</text>
-<rect class="chip" x="242" y="172" width="64" height="14" rx="3"/>
-<text class="chip-t" x="247" y="182.5">iam</text>
-<rect class="chip" x="32" y="191" width="64" height="14" rx="3"/>
-<text class="chip-t" x="37" y="201.5">network</text>
-<rect class="chip" x="102" y="191" width="64" height="14" rx="3"/>
-<text class="chip-t" x="107" y="201.5">network</text>
-<rect class="chip" x="172" y="191" width="64" height="14" rx="3"/>
-<text class="chip-t" x="177" y="201.5">ecs</text>
-<rect class="chip" x="242" y="191" width="64" height="14" rx="3"/>
-<text class="chip-t" x="247" y="201.5">ecs</text>
-<rect class="chip" x="32" y="210" width="64" height="14" rx="3"/>
-<text class="chip-t" x="37" y="220.5">alb</text>
-<rect class="chip" x="102" y="210" width="64" height="14" rx="3"/>
-<text class="chip-t" x="107" y="220.5">network</text>
-<rect class="chip" x="172" y="210" width="64" height="14" rx="3"/>
-<text class="chip-t" x="177" y="220.5">network</text>
-<rect class="chip" x="242" y="210" width="64" height="14" rx="3"/>
-<text class="chip-t" x="247" y="220.5">storage</text>
-<rect class="chip" x="32" y="229" width="64" height="14" rx="3"/>
-<text class="chip-t" x="37" y="239.5">storage</text>
-<rect class="chip" x="102" y="229" width="64" height="14" rx="3"/>
-<text class="chip-t" x="107" y="239.5">secrets</text>
-<rect class="chip" x="172" y="229" width="64" height="14" rx="3"/>
-<text class="chip-t" x="177" y="239.5">secrets</text>
-<rect class="chip" x="242" y="229" width="64" height="14" rx="3"/>
-<text class="chip-t" x="247" y="239.5">iam</text>
+<rect class="chip" x="32" y="77" width="64" height="15" rx="3"/>
+<text class="chip-t" x="37" y="88.5">iam</text>
+<rect class="chip" x="102" y="77" width="64" height="15" rx="3"/>
+<text class="chip-t" x="107" y="88.5">ecs</text>
+<rect class="chip" x="172" y="77" width="64" height="15" rx="3"/>
+<text class="chip-t" x="177" y="88.5">secrets</text>
+<rect class="chip" x="242" y="77" width="64" height="15" rx="3"/>
+<text class="chip-t" x="247" y="88.5">iam</text>
+<rect class="chip" x="32" y="96" width="64" height="15" rx="3"/>
+<text class="chip-t" x="37" y="107.5">storage</text>
+<rect class="chip" x="102" y="96" width="64" height="15" rx="3"/>
+<text class="chip-t" x="107" y="107.5">secrets</text>
+<rect class="chip" x="172" y="96" width="64" height="15" rx="3"/>
+<text class="chip-t" x="177" y="107.5">storage</text>
+<rect class="chip" x="242" y="96" width="64" height="15" rx="3"/>
+<text class="chip-t" x="247" y="107.5">alb</text>
+<rect class="chip" x="32" y="115" width="64" height="15" rx="3"/>
+<text class="chip-t" x="37" y="126.5">iam</text>
+<rect class="chip" x="102" y="115" width="64" height="15" rx="3"/>
+<text class="chip-t" x="107" y="126.5">iam</text>
+<rect class="chip" x="172" y="115" width="64" height="15" rx="3"/>
+<text class="chip-t" x="177" y="126.5">alb</text>
+<rect class="chip" x="242" y="115" width="64" height="15" rx="3"/>
+<text class="chip-t" x="247" y="126.5">ecs</text>
+<rect class="chip" x="32" y="134" width="64" height="15" rx="3"/>
+<text class="chip-t" x="37" y="145.5">network</text>
+<rect class="chip" x="102" y="134" width="64" height="15" rx="3"/>
+<text class="chip-t" x="107" y="145.5">secrets</text>
+<rect class="chip" x="172" y="134" width="64" height="15" rx="3"/>
+<text class="chip-t" x="177" y="145.5">ecs</text>
+<rect class="chip" x="242" y="134" width="64" height="15" rx="3"/>
+<text class="chip-t" x="247" y="145.5">ecs</text>
+<rect class="chip" x="32" y="153" width="64" height="15" rx="3"/>
+<text class="chip-t" x="37" y="164.5">alb</text>
+<rect class="chip" x="102" y="153" width="64" height="15" rx="3"/>
+<text class="chip-t" x="107" y="164.5">network</text>
+<rect class="chip" x="172" y="153" width="64" height="15" rx="3"/>
+<text class="chip-t" x="177" y="164.5">secrets</text>
+<rect class="chip" x="242" y="153" width="64" height="15" rx="3"/>
+<text class="chip-t" x="247" y="164.5">alb</text>
+<rect class="chip" x="32" y="172" width="64" height="15" rx="3"/>
+<text class="chip-t" x="37" y="183.5">storage</text>
+<rect class="chip" x="102" y="172" width="64" height="15" rx="3"/>
+<text class="chip-t" x="107" y="183.5">alb</text>
+<rect class="chip" x="172" y="172" width="64" height="15" rx="3"/>
+<text class="chip-t" x="177" y="183.5">storage</text>
+<rect class="chip" x="242" y="172" width="64" height="15" rx="3"/>
+<text class="chip-t" x="247" y="183.5">iam</text>
+<rect class="chip" x="32" y="191" width="64" height="15" rx="3"/>
+<text class="chip-t" x="37" y="202.5">network</text>
+<rect class="chip" x="102" y="191" width="64" height="15" rx="3"/>
+<text class="chip-t" x="107" y="202.5">network</text>
+<rect class="chip" x="172" y="191" width="64" height="15" rx="3"/>
+<text class="chip-t" x="177" y="202.5">ecs</text>
+<rect class="chip" x="242" y="191" width="64" height="15" rx="3"/>
+<text class="chip-t" x="247" y="202.5">ecs</text>
+<rect class="chip" x="32" y="210" width="64" height="15" rx="3"/>
+<text class="chip-t" x="37" y="221.5">alb</text>
+<rect class="chip" x="102" y="210" width="64" height="15" rx="3"/>
+<text class="chip-t" x="107" y="221.5">network</text>
+<rect class="chip" x="172" y="210" width="64" height="15" rx="3"/>
+<text class="chip-t" x="177" y="221.5">network</text>
+<rect class="chip" x="242" y="210" width="64" height="15" rx="3"/>
+<text class="chip-t" x="247" y="221.5">storage</text>
+<rect class="chip" x="32" y="229" width="64" height="15" rx="3"/>
+<text class="chip-t" x="37" y="240.5">storage</text>
+<rect class="chip" x="102" y="229" width="64" height="15" rx="3"/>
+<text class="chip-t" x="107" y="240.5">secrets</text>
+<rect class="chip" x="172" y="229" width="64" height="15" rx="3"/>
+<text class="chip-t" x="177" y="240.5">secrets</text>
+<rect class="chip" x="242" y="229" width="64" height="15" rx="3"/>
+<text class="chip-t" x="247" y="240.5">iam</text>
 <g class="on svc4" style="animation:onL0 16.8s infinite;animation-delay:11200ms">
-<rect class="on-chip" x="32" y="77" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="37" y="87.5">iam</text>
+<rect class="on-chip" x="32" y="77" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="37" y="88.5">iam</text>
 </g>
 <g class="on svc5" style="animation:onL0 16.8s infinite;animation-delay:14000ms">
-<rect class="on-chip" x="102" y="77" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="107" y="87.5">ecs</text>
+<rect class="on-chip" x="102" y="77" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="107" y="88.5">ecs</text>
 </g>
 <g class="on svc5" style="animation:onL1 16.8s infinite;animation-delay:14000ms">
-<rect class="on-chip" x="172" y="77" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="177" y="87.5">secrets</text>
+<rect class="on-chip" x="172" y="77" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="177" y="88.5">secrets</text>
 </g>
 <g class="on svc3" style="animation:onL0 16.8s infinite;animation-delay:8400ms">
-<rect class="on-chip" x="242" y="77" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="247" y="87.5">iam</text>
+<rect class="on-chip" x="242" y="77" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="247" y="88.5">iam</text>
 </g>
 <g class="on svc1" style="animation:onL0 16.8s infinite;animation-delay:2800ms">
-<rect class="on-chip" x="32" y="96" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="37" y="106.5">storage</text>
+<rect class="on-chip" x="32" y="96" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="37" y="107.5">storage</text>
 </g>
 <g class="on svc4" style="animation:onL1 16.8s infinite;animation-delay:11200ms">
-<rect class="on-chip" x="102" y="96" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="107" y="106.5">secrets</text>
+<rect class="on-chip" x="102" y="96" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="107" y="107.5">secrets</text>
 </g>
 <g class="on svc2" style="animation:onL0 16.8s infinite;animation-delay:5600ms">
-<rect class="on-chip" x="172" y="96" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="177" y="106.5">storage</text>
+<rect class="on-chip" x="172" y="96" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="177" y="107.5">storage</text>
 </g>
 <g class="on svc2" style="animation:onL1 16.8s infinite;animation-delay:5600ms">
-<rect class="on-chip" x="242" y="96" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="247" y="106.5">alb</text>
+<rect class="on-chip" x="242" y="96" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="247" y="107.5">alb</text>
 </g>
 <g class="on svc2" style="animation:onL2 16.8s infinite;animation-delay:5600ms">
-<rect class="on-chip" x="32" y="115" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="37" y="125.5">iam</text>
+<rect class="on-chip" x="32" y="115" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="37" y="126.5">iam</text>
 </g>
 <g class="on svc5" style="animation:onL2 16.8s infinite;animation-delay:14000ms">
-<rect class="on-chip" x="102" y="115" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="107" y="125.5">iam</text>
+<rect class="on-chip" x="102" y="115" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="107" y="126.5">iam</text>
 </g>
 <g class="on svc3" style="animation:onL1 16.8s infinite;animation-delay:8400ms">
-<rect class="on-chip" x="172" y="115" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="177" y="125.5">alb</text>
+<rect class="on-chip" x="172" y="115" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="177" y="126.5">alb</text>
 </g>
 <g class="on svc4" style="animation:onL2 16.8s infinite;animation-delay:11200ms">
-<rect class="on-chip" x="242" y="115" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="247" y="125.5">ecs</text>
+<rect class="on-chip" x="242" y="115" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="247" y="126.5">ecs</text>
 </g>
 <g class="on svc3" style="animation:onL2 16.8s infinite;animation-delay:8400ms">
-<rect class="on-chip" x="32" y="134" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="37" y="144.5">network</text>
+<rect class="on-chip" x="32" y="134" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="37" y="145.5">network</text>
 </g>
 <g class="on svc3" style="animation:onL3 16.8s infinite;animation-delay:8400ms">
-<rect class="on-chip" x="102" y="134" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="107" y="144.5">secrets</text>
+<rect class="on-chip" x="102" y="134" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="107" y="145.5">secrets</text>
 </g>
 <g class="on svc2" style="animation:onL3 16.8s infinite;animation-delay:5600ms">
-<rect class="on-chip" x="172" y="134" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="177" y="144.5">ecs</text>
+<rect class="on-chip" x="172" y="134" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="177" y="145.5">ecs</text>
 </g>
 <g class="on svc3" style="animation:onL4 16.8s infinite;animation-delay:8400ms">
-<rect class="on-chip" x="242" y="134" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="247" y="144.5">ecs</text>
+<rect class="on-chip" x="242" y="134" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="247" y="145.5">ecs</text>
 </g>
 <g class="on svc4" style="animation:onL3 16.8s infinite;animation-delay:11200ms">
-<rect class="on-chip" x="32" y="153" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="37" y="163.5">alb</text>
+<rect class="on-chip" x="32" y="153" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="37" y="164.5">alb</text>
 </g>
 <g class="on svc2" style="animation:onL4 16.8s infinite;animation-delay:5600ms">
-<rect class="on-chip" x="102" y="153" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="107" y="163.5">network</text>
+<rect class="on-chip" x="102" y="153" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="107" y="164.5">network</text>
 </g>
 <g class="on svc0" style="animation:onL0 16.8s infinite;animation-delay:0ms">
-<rect class="on-chip" x="172" y="153" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="177" y="163.5">secrets</text>
+<rect class="on-chip" x="172" y="153" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="177" y="164.5">secrets</text>
 </g>
 <g class="on svc1" style="animation:onL1 16.8s infinite;animation-delay:2800ms">
-<rect class="on-chip" x="242" y="153" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="247" y="163.5">alb</text>
+<rect class="on-chip" x="242" y="153" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="247" y="164.5">alb</text>
 </g>
 <g class="on svc5" style="animation:onL3 16.8s infinite;animation-delay:14000ms">
-<rect class="on-chip" x="32" y="172" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="37" y="182.5">storage</text>
+<rect class="on-chip" x="32" y="172" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="37" y="183.5">storage</text>
 </g>
 <g class="on svc0" style="animation:onL1 16.8s infinite;animation-delay:0ms">
-<rect class="on-chip" x="102" y="172" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="107" y="182.5">alb</text>
+<rect class="on-chip" x="102" y="172" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="107" y="183.5">alb</text>
 </g>
 <g class="on svc0" style="animation:onL2 16.8s infinite;animation-delay:0ms">
-<rect class="on-chip" x="172" y="172" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="177" y="182.5">storage</text>
+<rect class="on-chip" x="172" y="172" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="177" y="183.5">storage</text>
 </g>
 <g class="on svc1" style="animation:onL2 16.8s infinite;animation-delay:2800ms">
-<rect class="on-chip" x="242" y="172" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="247" y="182.5">iam</text>
+<rect class="on-chip" x="242" y="172" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="247" y="183.5">iam</text>
 </g>
 <g class="on svc5" style="animation:onL4 16.8s infinite;animation-delay:14000ms">
-<rect class="on-chip" x="32" y="191" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="37" y="201.5">network</text>
+<rect class="on-chip" x="32" y="191" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="37" y="202.5">network</text>
 </g>
 <g class="on svc1" style="animation:onL3 16.8s infinite;animation-delay:2800ms">
-<rect class="on-chip" x="102" y="191" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="107" y="201.5">network</text>
+<rect class="on-chip" x="102" y="191" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="107" y="202.5">network</text>
 </g>
 <g class="on svc1" style="animation:onL4 16.8s infinite;animation-delay:2800ms">
-<rect class="on-chip" x="172" y="191" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="177" y="201.5">ecs</text>
+<rect class="on-chip" x="172" y="191" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="177" y="202.5">ecs</text>
 </g>
 <g class="on svc0" style="animation:onL3 16.8s infinite;animation-delay:0ms">
-<rect class="on-chip" x="242" y="191" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="247" y="201.5">ecs</text>
+<rect class="on-chip" x="242" y="191" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="247" y="202.5">ecs</text>
 </g>
 <g class="on svc5" style="animation:onL5 16.8s infinite;animation-delay:14000ms">
-<rect class="on-chip" x="32" y="210" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="37" y="220.5">alb</text>
+<rect class="on-chip" x="32" y="210" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="37" y="221.5">alb</text>
 </g>
 <g class="on svc0" style="animation:onL4 16.8s infinite;animation-delay:0ms">
-<rect class="on-chip" x="102" y="210" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="107" y="220.5">network</text>
+<rect class="on-chip" x="102" y="210" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="107" y="221.5">network</text>
 </g>
 <g class="on svc4" style="animation:onL4 16.8s infinite;animation-delay:11200ms">
-<rect class="on-chip" x="172" y="210" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="177" y="220.5">network</text>
+<rect class="on-chip" x="172" y="210" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="177" y="221.5">network</text>
 </g>
 <g class="on svc4" style="animation:onL5 16.8s infinite;animation-delay:11200ms">
-<rect class="on-chip" x="242" y="210" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="247" y="220.5">storage</text>
+<rect class="on-chip" x="242" y="210" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="247" y="221.5">storage</text>
 </g>
 <g class="on svc3" style="animation:onL5 16.8s infinite;animation-delay:8400ms">
-<rect class="on-chip" x="32" y="229" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="37" y="239.5">storage</text>
+<rect class="on-chip" x="32" y="229" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="37" y="240.5">storage</text>
 </g>
 <g class="on svc1" style="animation:onL5 16.8s infinite;animation-delay:2800ms">
-<rect class="on-chip" x="102" y="229" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="107" y="239.5">secrets</text>
+<rect class="on-chip" x="102" y="229" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="107" y="240.5">secrets</text>
 </g>
 <g class="on svc2" style="animation:onL5 16.8s infinite;animation-delay:5600ms">
-<rect class="on-chip" x="172" y="229" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="177" y="239.5">secrets</text>
+<rect class="on-chip" x="172" y="229" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="177" y="240.5">secrets</text>
 </g>
 <g class="on svc0" style="animation:onL5 16.8s infinite;animation-delay:0ms">
-<rect class="on-chip" x="242" y="229" width="64" height="14" rx="3"/>
-<text class="on-chip-t" x="247" y="239.5">iam</text>
+<rect class="on-chip" x="242" y="229" width="64" height="15" rx="3"/>
+<text class="on-chip-t" x="247" y="240.5">iam</text>
 </g>
 <rect class="box" x="340" y="38" width="142" height="76" rx="6"/>
-<text class="lab" x="348" y="54">service a</text>
-<rect class="chip" x="348" y="62" width="60" height="12" rx="3"/>
-<text class="chip-t" x="353" y="70.5">ecs</text>
-<rect class="chip" x="348" y="78" width="60" height="12" rx="3"/>
+<text class="lab" x="348" y="52">service a</text>
+<rect class="chip" x="348" y="56" width="60" height="15" rx="3"/>
+<text class="chip-t" x="353" y="67.5">ecs</text>
+<rect class="chip" x="348" y="75" width="60" height="15" rx="3"/>
 <text class="chip-t" x="353" y="86.5">alb</text>
-<rect class="chip" x="348" y="94" width="60" height="12" rx="3"/>
-<text class="chip-t" x="353" y="102.5">network</text>
-<rect class="chip" x="413" y="62" width="60" height="12" rx="3"/>
-<text class="chip-t" x="418" y="70.5">storage</text>
-<rect class="chip" x="413" y="78" width="60" height="12" rx="3"/>
+<rect class="chip" x="348" y="94" width="60" height="15" rx="3"/>
+<text class="chip-t" x="353" y="105.5">network</text>
+<rect class="chip" x="413" y="56" width="60" height="15" rx="3"/>
+<text class="chip-t" x="418" y="67.5">storage</text>
+<rect class="chip" x="413" y="75" width="60" height="15" rx="3"/>
 <text class="chip-t" x="418" y="86.5">iam</text>
-<rect class="chip" x="413" y="94" width="60" height="12" rx="3"/>
-<text class="chip-t" x="418" y="102.5">secrets</text>
+<rect class="chip" x="413" y="94" width="60" height="15" rx="3"/>
+<text class="chip-t" x="418" y="105.5">secrets</text>
 <rect class="box" x="490" y="38" width="142" height="76" rx="6"/>
-<text class="lab" x="498" y="54">service b</text>
-<rect class="chip" x="498" y="62" width="60" height="12" rx="3"/>
-<text class="chip-t" x="503" y="70.5">ecs</text>
-<rect class="chip" x="498" y="78" width="60" height="12" rx="3"/>
+<text class="lab" x="498" y="52">service b</text>
+<rect class="chip" x="498" y="56" width="60" height="15" rx="3"/>
+<text class="chip-t" x="503" y="67.5">ecs</text>
+<rect class="chip" x="498" y="75" width="60" height="15" rx="3"/>
 <text class="chip-t" x="503" y="86.5">alb</text>
-<rect class="chip" x="498" y="94" width="60" height="12" rx="3"/>
-<text class="chip-t" x="503" y="102.5">network</text>
-<rect class="chip" x="563" y="62" width="60" height="12" rx="3"/>
-<text class="chip-t" x="568" y="70.5">storage</text>
-<rect class="chip" x="563" y="78" width="60" height="12" rx="3"/>
+<rect class="chip" x="498" y="94" width="60" height="15" rx="3"/>
+<text class="chip-t" x="503" y="105.5">network</text>
+<rect class="chip" x="563" y="56" width="60" height="15" rx="3"/>
+<text class="chip-t" x="568" y="67.5">storage</text>
+<rect class="chip" x="563" y="75" width="60" height="15" rx="3"/>
 <text class="chip-t" x="568" y="86.5">iam</text>
-<rect class="chip" x="563" y="94" width="60" height="12" rx="3"/>
-<text class="chip-t" x="568" y="102.5">secrets</text>
+<rect class="chip" x="563" y="94" width="60" height="15" rx="3"/>
+<text class="chip-t" x="568" y="105.5">secrets</text>
 <rect class="box" x="340" y="122" width="142" height="76" rx="6"/>
-<text class="lab" x="348" y="138">service c</text>
-<rect class="chip" x="348" y="146" width="60" height="12" rx="3"/>
-<text class="chip-t" x="353" y="154.5">ecs</text>
-<rect class="chip" x="348" y="162" width="60" height="12" rx="3"/>
+<text class="lab" x="348" y="136">service c</text>
+<rect class="chip" x="348" y="140" width="60" height="15" rx="3"/>
+<text class="chip-t" x="353" y="151.5">ecs</text>
+<rect class="chip" x="348" y="159" width="60" height="15" rx="3"/>
 <text class="chip-t" x="353" y="170.5">alb</text>
-<rect class="chip" x="348" y="178" width="60" height="12" rx="3"/>
-<text class="chip-t" x="353" y="186.5">network</text>
-<rect class="chip" x="413" y="146" width="60" height="12" rx="3"/>
-<text class="chip-t" x="418" y="154.5">storage</text>
-<rect class="chip" x="413" y="162" width="60" height="12" rx="3"/>
+<rect class="chip" x="348" y="178" width="60" height="15" rx="3"/>
+<text class="chip-t" x="353" y="189.5">network</text>
+<rect class="chip" x="413" y="140" width="60" height="15" rx="3"/>
+<text class="chip-t" x="418" y="151.5">storage</text>
+<rect class="chip" x="413" y="159" width="60" height="15" rx="3"/>
 <text class="chip-t" x="418" y="170.5">iam</text>
-<rect class="chip" x="413" y="178" width="60" height="12" rx="3"/>
-<text class="chip-t" x="418" y="186.5">secrets</text>
+<rect class="chip" x="413" y="178" width="60" height="15" rx="3"/>
+<text class="chip-t" x="418" y="189.5">secrets</text>
 <rect class="box" x="490" y="122" width="142" height="76" rx="6"/>
-<text class="lab" x="498" y="138">service d</text>
-<rect class="chip" x="498" y="146" width="60" height="12" rx="3"/>
-<text class="chip-t" x="503" y="154.5">ecs</text>
-<rect class="chip" x="498" y="162" width="60" height="12" rx="3"/>
+<text class="lab" x="498" y="136">service d</text>
+<rect class="chip" x="498" y="140" width="60" height="15" rx="3"/>
+<text class="chip-t" x="503" y="151.5">ecs</text>
+<rect class="chip" x="498" y="159" width="60" height="15" rx="3"/>
 <text class="chip-t" x="503" y="170.5">alb</text>
-<rect class="chip" x="498" y="178" width="60" height="12" rx="3"/>
-<text class="chip-t" x="503" y="186.5">network</text>
-<rect class="chip" x="563" y="146" width="60" height="12" rx="3"/>
-<text class="chip-t" x="568" y="154.5">storage</text>
-<rect class="chip" x="563" y="162" width="60" height="12" rx="3"/>
+<rect class="chip" x="498" y="178" width="60" height="15" rx="3"/>
+<text class="chip-t" x="503" y="189.5">network</text>
+<rect class="chip" x="563" y="140" width="60" height="15" rx="3"/>
+<text class="chip-t" x="568" y="151.5">storage</text>
+<rect class="chip" x="563" y="159" width="60" height="15" rx="3"/>
 <text class="chip-t" x="568" y="170.5">iam</text>
-<rect class="chip" x="563" y="178" width="60" height="12" rx="3"/>
-<text class="chip-t" x="568" y="186.5">secrets</text>
+<rect class="chip" x="563" y="178" width="60" height="15" rx="3"/>
+<text class="chip-t" x="568" y="189.5">secrets</text>
 <rect class="box" x="340" y="206" width="142" height="76" rx="6"/>
-<text class="lab" x="348" y="222">service e</text>
-<rect class="chip" x="348" y="230" width="60" height="12" rx="3"/>
-<text class="chip-t" x="353" y="238.5">ecs</text>
-<rect class="chip" x="348" y="246" width="60" height="12" rx="3"/>
+<text class="lab" x="348" y="220">service e</text>
+<rect class="chip" x="348" y="224" width="60" height="15" rx="3"/>
+<text class="chip-t" x="353" y="235.5">ecs</text>
+<rect class="chip" x="348" y="243" width="60" height="15" rx="3"/>
 <text class="chip-t" x="353" y="254.5">alb</text>
-<rect class="chip" x="348" y="262" width="60" height="12" rx="3"/>
-<text class="chip-t" x="353" y="270.5">network</text>
-<rect class="chip" x="413" y="230" width="60" height="12" rx="3"/>
-<text class="chip-t" x="418" y="238.5">storage</text>
-<rect class="chip" x="413" y="246" width="60" height="12" rx="3"/>
+<rect class="chip" x="348" y="262" width="60" height="15" rx="3"/>
+<text class="chip-t" x="353" y="273.5">network</text>
+<rect class="chip" x="413" y="224" width="60" height="15" rx="3"/>
+<text class="chip-t" x="418" y="235.5">storage</text>
+<rect class="chip" x="413" y="243" width="60" height="15" rx="3"/>
 <text class="chip-t" x="418" y="254.5">iam</text>
-<rect class="chip" x="413" y="262" width="60" height="12" rx="3"/>
-<text class="chip-t" x="418" y="270.5">secrets</text>
+<rect class="chip" x="413" y="262" width="60" height="15" rx="3"/>
+<text class="chip-t" x="418" y="273.5">secrets</text>
 <rect class="box" x="490" y="206" width="142" height="76" rx="6"/>
-<text class="lab" x="498" y="222">service f</text>
-<rect class="chip" x="498" y="230" width="60" height="12" rx="3"/>
-<text class="chip-t" x="503" y="238.5">ecs</text>
-<rect class="chip" x="498" y="246" width="60" height="12" rx="3"/>
+<text class="lab" x="498" y="220">service f</text>
+<rect class="chip" x="498" y="224" width="60" height="15" rx="3"/>
+<text class="chip-t" x="503" y="235.5">ecs</text>
+<rect class="chip" x="498" y="243" width="60" height="15" rx="3"/>
 <text class="chip-t" x="503" y="254.5">alb</text>
-<rect class="chip" x="498" y="262" width="60" height="12" rx="3"/>
-<text class="chip-t" x="503" y="270.5">network</text>
-<rect class="chip" x="563" y="230" width="60" height="12" rx="3"/>
-<text class="chip-t" x="568" y="238.5">storage</text>
-<rect class="chip" x="563" y="246" width="60" height="12" rx="3"/>
+<rect class="chip" x="498" y="262" width="60" height="15" rx="3"/>
+<text class="chip-t" x="503" y="273.5">network</text>
+<rect class="chip" x="563" y="224" width="60" height="15" rx="3"/>
+<text class="chip-t" x="568" y="235.5">storage</text>
+<rect class="chip" x="563" y="243" width="60" height="15" rx="3"/>
 <text class="chip-t" x="568" y="254.5">iam</text>
-<rect class="chip" x="563" y="262" width="60" height="12" rx="3"/>
-<text class="chip-t" x="568" y="270.5">secrets</text>
+<rect class="chip" x="563" y="262" width="60" height="15" rx="3"/>
+<text class="chip-t" x="568" y="273.5">secrets</text>
 <g class="on svc0" style="animation:onR 16.8s infinite;animation-delay:0ms">
 <rect class="on-box" x="340" y="38" width="142" height="76" rx="6"/>
-<text class="on-lab" x="348" y="54">service a</text>
-<rect class="on-chip" x="348" y="62" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="353" y="70.5">ecs</text>
-<rect class="on-chip" x="348" y="78" width="60" height="12" rx="3"/>
+<text class="on-lab" x="348" y="52">service a</text>
+<rect class="on-chip" x="348" y="56" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="353" y="67.5">ecs</text>
+<rect class="on-chip" x="348" y="75" width="60" height="15" rx="3"/>
 <text class="on-chip-t" x="353" y="86.5">alb</text>
-<rect class="on-chip" x="348" y="94" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="353" y="102.5">network</text>
-<rect class="on-chip" x="413" y="62" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="418" y="70.5">storage</text>
-<rect class="on-chip" x="413" y="78" width="60" height="12" rx="3"/>
+<rect class="on-chip" x="348" y="94" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="353" y="105.5">network</text>
+<rect class="on-chip" x="413" y="56" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="418" y="67.5">storage</text>
+<rect class="on-chip" x="413" y="75" width="60" height="15" rx="3"/>
 <text class="on-chip-t" x="418" y="86.5">iam</text>
-<rect class="on-chip" x="413" y="94" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="418" y="102.5">secrets</text>
+<rect class="on-chip" x="413" y="94" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="418" y="105.5">secrets</text>
 </g>
 <g class="on svc1" style="animation:onR 16.8s infinite;animation-delay:2800ms">
 <rect class="on-box" x="490" y="38" width="142" height="76" rx="6"/>
-<text class="on-lab" x="498" y="54">service b</text>
-<rect class="on-chip" x="498" y="62" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="503" y="70.5">ecs</text>
-<rect class="on-chip" x="498" y="78" width="60" height="12" rx="3"/>
+<text class="on-lab" x="498" y="52">service b</text>
+<rect class="on-chip" x="498" y="56" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="503" y="67.5">ecs</text>
+<rect class="on-chip" x="498" y="75" width="60" height="15" rx="3"/>
 <text class="on-chip-t" x="503" y="86.5">alb</text>
-<rect class="on-chip" x="498" y="94" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="503" y="102.5">network</text>
-<rect class="on-chip" x="563" y="62" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="568" y="70.5">storage</text>
-<rect class="on-chip" x="563" y="78" width="60" height="12" rx="3"/>
+<rect class="on-chip" x="498" y="94" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="503" y="105.5">network</text>
+<rect class="on-chip" x="563" y="56" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="568" y="67.5">storage</text>
+<rect class="on-chip" x="563" y="75" width="60" height="15" rx="3"/>
 <text class="on-chip-t" x="568" y="86.5">iam</text>
-<rect class="on-chip" x="563" y="94" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="568" y="102.5">secrets</text>
+<rect class="on-chip" x="563" y="94" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="568" y="105.5">secrets</text>
 </g>
 <g class="on svc2" style="animation:onR 16.8s infinite;animation-delay:5600ms">
 <rect class="on-box" x="340" y="122" width="142" height="76" rx="6"/>
-<text class="on-lab" x="348" y="138">service c</text>
-<rect class="on-chip" x="348" y="146" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="353" y="154.5">ecs</text>
-<rect class="on-chip" x="348" y="162" width="60" height="12" rx="3"/>
+<text class="on-lab" x="348" y="136">service c</text>
+<rect class="on-chip" x="348" y="140" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="353" y="151.5">ecs</text>
+<rect class="on-chip" x="348" y="159" width="60" height="15" rx="3"/>
 <text class="on-chip-t" x="353" y="170.5">alb</text>
-<rect class="on-chip" x="348" y="178" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="353" y="186.5">network</text>
-<rect class="on-chip" x="413" y="146" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="418" y="154.5">storage</text>
-<rect class="on-chip" x="413" y="162" width="60" height="12" rx="3"/>
+<rect class="on-chip" x="348" y="178" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="353" y="189.5">network</text>
+<rect class="on-chip" x="413" y="140" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="418" y="151.5">storage</text>
+<rect class="on-chip" x="413" y="159" width="60" height="15" rx="3"/>
 <text class="on-chip-t" x="418" y="170.5">iam</text>
-<rect class="on-chip" x="413" y="178" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="418" y="186.5">secrets</text>
+<rect class="on-chip" x="413" y="178" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="418" y="189.5">secrets</text>
 </g>
 <g class="on svc3" style="animation:onR 16.8s infinite;animation-delay:8400ms">
 <rect class="on-box" x="490" y="122" width="142" height="76" rx="6"/>
-<text class="on-lab" x="498" y="138">service d</text>
-<rect class="on-chip" x="498" y="146" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="503" y="154.5">ecs</text>
-<rect class="on-chip" x="498" y="162" width="60" height="12" rx="3"/>
+<text class="on-lab" x="498" y="136">service d</text>
+<rect class="on-chip" x="498" y="140" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="503" y="151.5">ecs</text>
+<rect class="on-chip" x="498" y="159" width="60" height="15" rx="3"/>
 <text class="on-chip-t" x="503" y="170.5">alb</text>
-<rect class="on-chip" x="498" y="178" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="503" y="186.5">network</text>
-<rect class="on-chip" x="563" y="146" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="568" y="154.5">storage</text>
-<rect class="on-chip" x="563" y="162" width="60" height="12" rx="3"/>
+<rect class="on-chip" x="498" y="178" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="503" y="189.5">network</text>
+<rect class="on-chip" x="563" y="140" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="568" y="151.5">storage</text>
+<rect class="on-chip" x="563" y="159" width="60" height="15" rx="3"/>
 <text class="on-chip-t" x="568" y="170.5">iam</text>
-<rect class="on-chip" x="563" y="178" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="568" y="186.5">secrets</text>
+<rect class="on-chip" x="563" y="178" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="568" y="189.5">secrets</text>
 </g>
 <g class="on svc4" style="animation:onR 16.8s infinite;animation-delay:11200ms">
 <rect class="on-box" x="340" y="206" width="142" height="76" rx="6"/>
-<text class="on-lab" x="348" y="222">service e</text>
-<rect class="on-chip" x="348" y="230" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="353" y="238.5">ecs</text>
-<rect class="on-chip" x="348" y="246" width="60" height="12" rx="3"/>
+<text class="on-lab" x="348" y="220">service e</text>
+<rect class="on-chip" x="348" y="224" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="353" y="235.5">ecs</text>
+<rect class="on-chip" x="348" y="243" width="60" height="15" rx="3"/>
 <text class="on-chip-t" x="353" y="254.5">alb</text>
-<rect class="on-chip" x="348" y="262" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="353" y="270.5">network</text>
-<rect class="on-chip" x="413" y="230" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="418" y="238.5">storage</text>
-<rect class="on-chip" x="413" y="246" width="60" height="12" rx="3"/>
+<rect class="on-chip" x="348" y="262" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="353" y="273.5">network</text>
+<rect class="on-chip" x="413" y="224" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="418" y="235.5">storage</text>
+<rect class="on-chip" x="413" y="243" width="60" height="15" rx="3"/>
 <text class="on-chip-t" x="418" y="254.5">iam</text>
-<rect class="on-chip" x="413" y="262" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="418" y="270.5">secrets</text>
+<rect class="on-chip" x="413" y="262" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="418" y="273.5">secrets</text>
 </g>
 <g class="on svc5" style="animation:onR 16.8s infinite;animation-delay:14000ms">
 <rect class="on-box" x="490" y="206" width="142" height="76" rx="6"/>
-<text class="on-lab" x="498" y="222">service f</text>
-<rect class="on-chip" x="498" y="230" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="503" y="238.5">ecs</text>
-<rect class="on-chip" x="498" y="246" width="60" height="12" rx="3"/>
+<text class="on-lab" x="498" y="220">service f</text>
+<rect class="on-chip" x="498" y="224" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="503" y="235.5">ecs</text>
+<rect class="on-chip" x="498" y="243" width="60" height="15" rx="3"/>
 <text class="on-chip-t" x="503" y="254.5">alb</text>
-<rect class="on-chip" x="498" y="262" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="503" y="270.5">network</text>
-<rect class="on-chip" x="563" y="230" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="568" y="238.5">storage</text>
-<rect class="on-chip" x="563" y="246" width="60" height="12" rx="3"/>
+<rect class="on-chip" x="498" y="262" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="503" y="273.5">network</text>
+<rect class="on-chip" x="563" y="224" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="568" y="235.5">storage</text>
+<rect class="on-chip" x="563" y="243" width="60" height="15" rx="3"/>
 <text class="on-chip-t" x="568" y="254.5">iam</text>
-<rect class="on-chip" x="563" y="262" width="60" height="12" rx="3"/>
-<text class="on-chip-t" x="568" y="270.5">secrets</text>
+<rect class="on-chip" x="563" y="262" width="60" height="15" rx="3"/>
+<text class="on-chip-t" x="568" y="273.5">secrets</text>
 </g>
 <g class="on svc0" style="animation:onR 16.8s infinite;animation-delay:0ms"><text class="cap" x="20" y="306">service a</text></g>
 <g class="on svc1" style="animation:onR 16.8s infinite;animation-delay:2800ms"><text class="cap" x="20" y="306">service b</text></g>
