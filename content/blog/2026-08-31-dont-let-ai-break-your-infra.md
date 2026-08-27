@@ -8,6 +8,7 @@ tags: ["terraform", "opentofu", "infrastructure-as-code", "ai", "mcp"]
 date: 2026-08-31
 description: "Turn click-ops AWS resources into Terraform/OpenTofu with AI and MCPs, using human review gates, independent verification, and a merge checklist."
 image: /img/updates/dont-let-ai-break-your-infra/clickops-to-iac-main.png
+preview_image: /img/updates/dont-let-ai-break-your-infra/preview.png # portrait thumbnail for the /blog/ listing
 callout: "<p>👋 <b>Sitting on click-ops infrastructure you want to codify?</b> <a href='/contact'>Get in touch</a>, we're the experts at safely migrating manual infrastructure into IaC and we'd love to chat!"
 ---
 
