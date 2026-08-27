@@ -64,7 +64,7 @@ The workflow we recommend has five steps. The agent participates in all of them,
 
 ![A safer click-ops-to-IaC workflow: the agent has read-only cloud access and repo write access, while humans hold all cloud write access across discovery, review, scaffolding, import, and verification](/img/updates/dont-let-ai-break-your-infra/clickops-to-iac-light.png)
 
-1. **Discover with metadata-only access.** In production, especially where the account may contain sensitive data, connect the MCP through a dedicated SSO profile that can inspect resource metadata and configuration but cannot read workload data. Generic read-only access may still allow object/item/secret reads, so reserve it for lower-risk environments. Give it a seed resource (say, a single ECS service ARN) and have it walk the dependency graph to enumerate everything related — task roles, security groups, target groups, autoscaling policies, CloudWatch alarms, ACM certificates — then extract each resource's full configuration, secrets redacted, into *structured YAML files* rather than HCL, since that is diffable and reviewable. This dependency expansion from a single entrypoint is where the workflow saves the most time versus hunting down [click-ops resources](https://masterpoint.io/blog/terraform-opentofu-terminology-breakdown/) by hand.
+1. **Discover with metadata-only access.** In production, especially where the account may contain sensitive data, connect the MCP through a dedicated SSO profile that can inspect resource metadata and configuration but cannot read workload data. Generic read-only access may still allow object/item/secret reads, so reserve it for lower-risk environments. Give it a seed resource (say, a single ECS service ARN) and have it walk the dependency graph to enumerate everything related — task roles, security groups, target groups, autoscaling policies, CloudWatch alarms, ACM certificates — then extract each resource's full configuration, secrets redacted, into _structured YAML files_ rather than HCL, since that is diffable and reviewable. This dependency expansion from a single entrypoint is where the workflow saves the most time versus hunting down [click-ops resources](https://masterpoint.io/blog/terraform-opentofu-terminology-breakdown/) by hand.
 2. **Review the extraction.** Spot-check the extracted data against the console. A YAML inventory is much easier to review than generated TF.
 3. **Scaffold TF from the verified data.** Now let the agent generate modules and root configuration from the extracted files. Provide your org's conventions and file layout as context. Our post on [the standard TF files](https://masterpoint.io/blog/standard-tf-files/) is a useful baseline to hand it.
 4. **Plan the import + human runs it.** Have the agent draft [`import` blocks](https://opentofu.org/docs/language/import/) (available in both OpenTofu and [Terraform 1.5+](https://developer.hashicorp.com/terraform/language/import)) rather than imperative `state` commands. Import blocks surface in the plan. A human runs `tofu plan` and reads it.
@@ -80,15 +80,15 @@ The goal is a zero-change plan confirmed by an independent script. Then wire the
 
 Not every operation deserves the same leash length. This table is how we scope it, distilled from our engineering survey.
 
-| Operation type | Recommended agent autonomy |
-| --- | --- |
-| Read-only discovery and config extraction | High. Let it run with read-only credentials |
-| Writing verification and comparison scripts | High. The script itself is reviewable before it runs |
-| Generating TF from verified, extracted data | Medium. Human review required before merge |
-| Module usage and refactoring | Medium. Verify every input against the real module schema |
-| Import planning | Low. Agent drafts import blocks, human runs the plan |
-| `apply`, `destroy`, `state rm`, `state mv` | None without review. Agent must print exact commands and wait |
-| Security and network changes | None without review. Diff every rule and reject broad CIDRs |
+| Operation type                              | Recommended agent autonomy                                    |
+| ------------------------------------------- | ------------------------------------------------------------- |
+| Read-only discovery and config extraction   | High. Let it run with read-only credentials                   |
+| Writing verification and comparison scripts | High. The script itself is reviewable before it runs          |
+| Generating TF from verified, extracted data | Medium. Human review required before merge                    |
+| Module usage and refactoring                | Medium. Verify every input against the real module schema     |
+| Import planning                             | Low. Agent drafts import blocks, human runs the plan          |
+| `apply`, `destroy`, `state rm`, `state mv`  | None without review. Agent must print exact commands and wait |
+| Security and network changes                | None without review. Diff every rule and reject broad CIDRs   |
 
 The bottom rows are where failures are irreversible or silent. A lost state file has no undo. A security group opened to `0.0.0.0/0` works perfectly and complains to nobody, and we have seen both agents and deadline-pressured humans reach for it when exact CIDRs are unknown. Encode the rule so neither can.
 
@@ -96,12 +96,12 @@ The bottom rows are where failures are irreversible or silent. A lost state file
 
 - Default MCPs and cloud credentials to read-only, granting write access per task and revoking it after. With the [AWS MCP server](https://github.com/awslabs/mcp/tree/main/src/aws-iac-mcp-server) this is two environment settings, with IAM staying the primary control:
 
-    ```json
-    {
-      "READ_OPERATIONS_ONLY": "true",
-      "REQUIRE_MUTATION_CONSENT": "true"
-    }
-    ```
+  ```json
+  {
+    "READ_OPERATIONS_ONLY": "true",
+    "REQUIRE_MUTATION_CONSENT": "true"
+  }
+  ```
 
 - Prefer MCPs that show the underlying CLI or API call, and read those commands before approving them. Allow-list commands only after they earn it.
 - Require the agent to print any mutating command, in full, before running it. Put this in your rules file rather than trusting yourself to remember. It is the difference between the lost-state story above and a non-event.
@@ -180,7 +180,7 @@ This skill assumes the following companion skills or rules are available:
 - **Repository structure** — defines the root module layout, required files, naming conventions, provider configuration, backend configuration, version constraints, tagging conventions, and project organization.
 - **Module development** — defines how reusable modules are structured, documented, versioned, and consumed.
 
-This skill focuses only on migrating existing infrastructure into Terraform/OpenTofu. It relies on the companion skills to determine *how the repository and modules should be organized*.
+This skill focuses only on migrating existing infrastructure into Terraform/OpenTofu. It relies on the companion skills to determine _how the repository and modules should be organized_.
 
 ## Safety boundary
 
