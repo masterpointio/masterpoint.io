@@ -1,0 +1,14 @@
+{{- $result := transform.HighlightCodeBlock . -}} {{- $copy := or (index
+.Attributes "copy") (index .Options "copy") -}} {{- if and $copy (eq (lower
+(printf "%v" $copy)) "true") -}}
+<div class="codeblock-copy-wrap">
+  <button
+    type="button"
+    class="codeblock-copy-btn"
+    aria-label="Copy code to clipboard"
+  >
+    <i class="fa fa-copy"></i> Copy
+  </button>
+  {{ $result.Wrapped }}
+</div>
+{{- else -}} {{ $result.Wrapped }} {{- end -}}

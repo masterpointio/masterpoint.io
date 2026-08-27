@@ -81,15 +81,15 @@ The goal is a zero-change plan confirmed by an independent script. Then wire the
 
 Not every operation deserves the same leash length. This table is how we scope it, distilled from our engineering survey.
 
-| Operation type                              | Recommended agent autonomy                                    |
-| ------------------------------------------- | ------------------------------------------------------------- |
-| Read-only discovery and config extraction   | High. Let it run with read-only credentials                   |
-| Writing verification and comparison scripts | High. The script itself is reviewable before it runs          |
-| Generating TF from verified, extracted data | Medium. Human review required before merge                    |
-| Module usage and refactoring                | Medium. Verify every input against the real module schema     |
-| Import planning                             | Low. Agent drafts import blocks, human runs the plan          |
-| `apply`, `destroy`, `state rm`, `state mv`  | None without review. Agent must print exact commands and wait |
-| Security and network changes                | None without review. Diff every rule and reject broad CIDRs   |
+| Operation type                              | Recommended agent autonomy                                      |
+| ------------------------------------------- | --------------------------------------------------------------- |
+| Read-only discovery and config extraction   | _High._ Let it run with read-only credentials                   |
+| Writing verification and comparison scripts | _High._ The script itself is reviewable before it runs          |
+| Generating TF from verified, extracted data | _Medium._ Human review required before merge                    |
+| Module usage and refactoring                | _Medium._ Verify every input against the real module schema     |
+| Import planning                             | _Low._ Agent drafts import blocks, human runs the plan          |
+| `apply`, `destroy`, `state rm`, `state mv`  | _None_ without review. Agent must print exact commands and wait |
+| Security and network changes                | _None_ without review. Diff every rule and reject broad CIDRs   |
 
 The bottom rows are where failures are irreversible or silent. A lost state file has no undo. A security group opened to `0.0.0.0/0` works perfectly and complains to nobody, and we have seen both agents and deadline-pressured humans reach for it when exact CIDRs are unknown. Encode the rule so neither can.
 
@@ -154,7 +154,7 @@ We suggest packaging the workflow as a reusable skill so the agent follows the s
 
 Keep your organization's repository and module conventions in companion rules or skills (depending on your AI framework), rather than in the migration skill itself. If you don't have any, our guides on [Terraform root module structure](https://masterpoint.io/blog/standard-tf-files/) and [root module sizing](https://newsletter.masterpoint.io/p/how-big-should-a-terraform-root-module-be) are a good starting point.
 
-````markdown
+````markdown {copy=true}
 ---
 name: codify-clickops-iac
 description: Safely codify existing manually-managed AWS infrastructure into Terraform/OpenTofu. Use when importing click-ops resources, migrating existing AWS resources into IaC, or generating TF from live infrastructure.
