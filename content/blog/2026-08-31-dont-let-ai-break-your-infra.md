@@ -154,7 +154,7 @@ We suggest packaging the workflow as a reusable skill so the agent follows the s
 
 Keep your organization's repository and module conventions in companion rules or skills (depending on your AI framework), rather than in the migration skill itself. If you don't have any, our guides on [Terraform root module structure](https://masterpoint.io/blog/standard-tf-files/) and [root module sizing](https://newsletter.masterpoint.io/p/how-big-should-a-terraform-root-module-be) are a good starting point.
 
-````markdown {copy=true}
+````markdown {copy=true collapse=true}
 ---
 name: codify-clickops-iac
 description: Safely codify existing manually-managed AWS infrastructure into Terraform/OpenTofu. Use when importing click-ops resources, migrating existing AWS resources into IaC, or generating TF from live infrastructure.

@@ -2407,14 +2407,14 @@ footer {
       }
     }
 
-    .codeblock-copy-wrap {
+    .codeblock-wrap {
       position: relative;
 
       .codeblock-copy-btn {
         position: absolute;
         top: 10px;
         right: 10px;
-        z-index: 2;
+        z-index: 3;
         display: inline-flex;
         align-items: center;
         gap: 6px;
@@ -2444,6 +2444,50 @@ footer {
 
         i {
           font-size: 0.85em;
+        }
+      }
+
+      .codeblock-expand-btn {
+        display: block;
+        width: 100%;
+        margin-top: -1px;
+        padding: 8px 10px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        color: #fff;
+        background: #34352b; // slightly lighter than the monokai code bg
+        border: none;
+        border-radius: 0 0 4px 4px;
+        cursor: pointer;
+        transition: background 0.15s ease;
+
+        &:hover {
+          background: #414234;
+        }
+      }
+
+      // Collapsed state: cap the code block to ~25 lines with a fade.
+      &.codeblock-collapsible.is-collapsed {
+        .highlight {
+          max-height: 34em;
+          overflow: hidden;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 2.4em; // sit above the expand button
+          height: 5em;
+          pointer-events: none;
+          background: linear-gradient(
+            to bottom,
+            rgba(39, 40, 34, 0),
+            rgba(39, 40, 34, 0.95)
+          );
         }
       }
     }

@@ -13,18 +13,36 @@
   }
 
   function init() {
-    var buttons = document.querySelectorAll(".codeblock-copy-btn");
-    if (!buttons.length) return;
-
-    Array.prototype.forEach.call(buttons, function (btn) {
+    var copyButtons = document.querySelectorAll(".codeblock-copy-btn");
+    Array.prototype.forEach.call(copyButtons, function (btn) {
       btn.addEventListener("click", function () {
-        var wrap = btn.closest(".codeblock-copy-wrap");
+        var wrap = btn.closest(".codeblock-wrap");
         var pre = wrap && wrap.querySelector("pre");
         if (!pre) return;
 
         copyToClipboard(pre.innerText).then(function () {
           showCopiedFeedback(btn);
         });
+      });
+    });
+
+    var expandButtons = document.querySelectorAll(".codeblock-expand-btn");
+    Array.prototype.forEach.call(expandButtons, function (btn) {
+      btn.addEventListener("click", function () {
+        var wrap = btn.closest(".codeblock-wrap");
+        if (!wrap) return;
+
+        var collapsed = wrap.classList.toggle("is-collapsed");
+        btn.setAttribute("aria-expanded", collapsed ? "false" : "true");
+        btn.textContent = collapsed ? "Show more" : "Show less";
+
+        // When re-collapsing, keep the top of the block in view.
+        if (collapsed) {
+          var top = wrap.getBoundingClientRect().top;
+          if (top < 0) {
+            wrap.scrollIntoView({ block: "start" });
+          }
+        }
       });
     });
   }
