@@ -345,16 +345,16 @@ Generated IaC is not complete until both the plan and independent verification s
 
 Run this on every PR where an agent wrote the code. It is a short review, and every item on it traces back to a failure we have hit.
 
-- [ ] Every module input exists in the module's actual `variables.tf`, checked against source, not the agent's word
-- [ ] Resource names, filenames, and paths match the extracted inventory, not a "standard" pattern
-- [ ] Security posture is no looser than what the inventory documents: no broadened network rules or IAM policies, no wildcard principals or actions, no publicly exposed endpoints or storage, no weakened encryption or logging settings
-- [ ] Imports use declarative import blocks, reviewed in the diff, not `state` commands run from a terminal
-- [ ] `plan` output reviewed by a human, with zero unexplained changes or destroys
-- [ ] Inventory files and generated TF contain no secret values, only references to where secrets live, since [secrets land in state in plain text](https://docs.aws.amazon.com/prescriptive-guidance/latest/secure-sensitive-data-secrets-manager-terraform/terraform-state-file.html)
-- [ ] Verification script exists, ran against live infrastructure, and passed
-- [ ] `fmt`, `validate`, tflint, and a security scanner ran clean
-- [ ] The agent's session used read-only cloud credentials, and any write action was executed by a human
-- [ ] Someone who did not prompt the agent reviewed the PR
+- Every module input exists in the module's actual `variables.tf`, checked against source, not the agent's word
+- Resource names, filenames, and paths match the extracted inventory, not a "standard" pattern
+- Security posture is no looser than what the inventory documents: no broadened network rules or IAM policies, no wildcard principals or actions, no publicly exposed endpoints or storage, no weakened encryption or logging settings
+- Imports use declarative import blocks, reviewed in the diff, not `state` commands run from a terminal
+- `plan` output reviewed by a human, with zero unexplained changes or destroys
+- Inventory files and generated TF contain no secret values, only references to where secrets live, since [secrets land in state in plain text](https://docs.aws.amazon.com/prescriptive-guidance/latest/secure-sensitive-data-secrets-manager-terraform/terraform-state-file.html)
+- Verification script exists, ran against live infrastructure, and passed
+- `fmt`, `validate`, tflint, and a security scanner ran clean
+- The agent's session used read-only cloud credentials, and any write action was executed by a human
+- Someone who did not prompt the agent reviewed the PR
 
 ## Codify click-ops without handing AI the keys
 
