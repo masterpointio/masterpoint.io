@@ -6,6 +6,13 @@
 (function () {
   "use strict";
 
+  // Patterns are hoisted so the `replace` calls below stay inside 80 columns.
+  // Past that, oxlint's formatter and prettier disagree about wrapping and
+  // `trunk fmt` aborts with "Check loop aborted after 10 iterations".
+  var URL_LINE = /^(URL: )(\/\/[^\s]*|\/[^\s]*)/m;
+  var LIGHTBOX_IMG = /\{\{<\s*lightboximg\s+"([^"]+)"\s+"([^"]+)"\s*>\}\}/g;
+  var LOOP_VIDEO = /\{\{<\s*loop-video\b[\s\S]*?>\}\}/g;
+
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
   } else {
@@ -60,27 +67,16 @@
 
     function cleanContent(text) {
       // Fix relative or protocol-relative URL line — make it absolute
-      text = text.replace(
-        /^(URL: )(\/\/[^\s]*|\/[^\s]*)/m,
-        function (match, prefix, path) {
-          if (path.startsWith("//")) {
-            return prefix + window.location.protocol + path;
-          }
-          return prefix + window.location.origin + path;
-        },
-      );
+      text = text.replace(URL_LINE, absolutizeUrl);
 
       // Convert lightboximg shortcodes to markdown images
       // {{< lightboximg "/path/to/img.png" "Alt text" >}}
-      text = text.replace(
-        /\{\{<\s*lightboximg\s+"([^"]+)"\s+"([^"]+)"\s*>\}\}/g,
-        "![$2]($1)",
-      );
+      text = text.replace(LIGHTBOX_IMG, "![$2]($1)");
 
       // Reduce loop-video shortcodes to a one-line note, since a silent
       // looping demo has no useful text form
       // {{< loop-video src="..." alt="..." caption="..." >}}
-      text = text.replace(/\{\{<\s*loop-video\b[\s\S]*?>\}\}/g, videoNote);
+      text = text.replace(LOOP_VIDEO, videoNote);
 
       // Remove signup shortcodes
       text = text.replace(/\{\{<\s*signup\s*>\}\}/g, "");
@@ -101,6 +97,14 @@
       text = text.trim();
 
       return text;
+    }
+
+    // Make the URL line absolute, whatever form it arrived in.
+    function absolutizeUrl(match, prefix, path) {
+      if (path.startsWith("//")) {
+        return prefix + window.location.protocol + path;
+      }
+      return prefix + window.location.origin + path;
     }
 
     // Stand in for a loop-video shortcode with its caption, falling back to
