@@ -35,7 +35,7 @@ On a recent client engagement, the task looked mechanical: migrate about 20 AWS 
 
 One of our engineers pointed an AI agent (our choice at Masterpoint is Claude Code), connected to AWS through the [aws-iac-mcp-server MCP server,](https://github.com/awslabs/mcp/tree/main/src/aws-iac-mcp-server) at the source account to pull down each job's configuration and generate the TF for it. It worked, until it didn't. Around the fifth or sixth job, the agent started inventing details, deciding the Python script filename should match the Glue job name because that is the "standard" pattern. The legacy jobs did not follow it. The generated code looked plausible and was quietly wrong.
 
-The fix was not a better model, but a better prompt. The agent wrote a script that extracted every job's configuration into structured markdown, and only after that data was reviewed did it transform the inventory into TF. And after the migration, the agent wrote a verification script that compared every job's configuration key by key across both accounts and flagged the diffs. That script caught the remaining discrepancies and made the result trustworthy.
+The fix was not a better model, but a better process. The agent wrote a script that extracted every job's configuration into structured markdown, and only after that data was reviewed did it transform the inventory into TF. And after the migration, the agent wrote a verification script that compared every job's configuration key by key across both accounts and flagged the diffs. That script caught the remaining discrepancies and made the result trustworthy.
 
 That is the whole thesis of this post in miniature. LLMs are inconsistent at repeating a boring process 20 times. They are excellent at writing the tooling that makes the process deterministic.
 
@@ -57,7 +57,7 @@ The danger shows up when the agent stops reading and starts writing. Across our 
 
 **The non-standard 10%.** When 90% of your codebase follows a naming convention, the agent will steamroll the 10% that does not. Legacy infrastructure is, almost by definition, that 10%, and precisely the code you are trying to import.
 
-None of these four is "the AI wrote bad syntax." The output looked right, but it was wrong. Newer models and live module schemas make every one of them rarer, but they still occur. An agent under pressure still reaches for the plausible pattern that doesn't fit or the shortcut that incorrectly mutates state. So we build guardrails for the direction of failure instead.
+None of these four is "the AI wrote bad syntax." The output _looked_ right, but it was wrong. Newer models and live module schemas make every one of them rarer, but they still occur. An agent under pressure still reaches for the plausible pattern that doesn't fit or the shortcut that incorrectly mutates state. So we build guardrails for the direction of failure instead.
 
 ## A safer workflow for turning manual infrastructure into IaC
 
@@ -362,4 +362,4 @@ Click-ops infrastructure is not a moral failing. It is what happens when teams m
 
 The pattern that works is older than AI: treat untrusted input with narrow interfaces and independent verification. AI accelerates extraction, scaffolding, and validation, but it doesn't change the fundamentals.
 
-Start with one resource group, read-only credentials, and the prompts above. And if you want a second set of eyes on the result or you want to do this at scale, our [IaC audits](https://masterpoint.io/services/) exist for exactly this. 👋
+Start with one resource group, read-only credentials, and the Agent Skill above. And if you want a second set of eyes on the result or you want to do this at scale, our [IaC audits](https://masterpoint.io/services/) exist for exactly this. 👋
