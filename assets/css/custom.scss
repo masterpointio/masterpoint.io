@@ -2497,6 +2497,220 @@ footer {
         }
       }
     }
+
+    // Looping demo clip (the `loop-video` shortcode). The video element carries
+    // width and height attributes, so the frame holds the encode's aspect ratio
+    // from first paint and swapping in the real source costs no layout shift.
+    .loop-video {
+      margin: 2rem 0;
+
+      .loop-video__frame {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(14, 56, 58, 0.15);
+        border-radius: 4px;
+        // Matches the recording's own backdrop so there is no white flash
+        // between the poster painting and the first decoded frame.
+        background: $pine;
+        line-height: 0;
+      }
+
+      .loop-video__el {
+        display: block;
+        width: 100%;
+        height: auto;
+        // Clicking the picture toggles playback, as does space once focused.
+        cursor: pointer;
+
+        // Drawn inside: the frame clips overflow, so an outward ring would be
+        // cut off. Teal rather than white so it reads over both the light and
+        // dark halves of a screen recording.
+        &:focus-visible {
+          outline: 3px solid $highlight;
+          outline-offset: -3px;
+        }
+      }
+
+      // Scrub bar: elapsed time, played/buffered progress, play-pause. Sits
+      // over the bottom of the frame as a translucent pill.
+      .loop-video__controls {
+        position: absolute;
+        right: 12px;
+        bottom: 12px;
+        left: 12px;
+        z-index: 2;
+        display: none;
+        align-items: center;
+        gap: 14px;
+        height: 44px;
+        padding: 0 18px;
+        background: rgba(20, 32, 33, 0.72);
+        border-radius: 999px;
+        opacity: 0;
+        pointer-events: none;
+        user-select: none;
+        transition: opacity 0.18s ease;
+
+        @supports (backdrop-filter: blur(8px)) {
+          backdrop-filter: blur(8px);
+        }
+
+        @media (max-width: 575px) {
+          right: 8px;
+          bottom: 8px;
+          left: 8px;
+          gap: 10px;
+          height: 38px;
+          padding: 0 12px;
+        }
+      }
+
+      .loop-video__time {
+        flex: 0 0 auto;
+        // Fixed width and tabular figures so ticking seconds never nudge the
+        // track sideways.
+        min-width: 2.6em;
+        font-size: 0.85rem;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        line-height: 1;
+        color: #fff;
+      }
+
+      .loop-video__track {
+        position: relative;
+        flex: 1 1 auto;
+        // The rail is 4px, but the padding gives the pointer a 24px target.
+        height: 4px;
+        padding: 10px 0;
+        box-sizing: content-box;
+        cursor: pointer;
+        // Let a drag scrub instead of scrolling the page on touch.
+        touch-action: none;
+
+        &:focus-visible {
+          outline: none;
+
+          .loop-video__rail {
+            outline: 2px solid #fff;
+            outline-offset: 3px;
+          }
+        }
+      }
+
+      .loop-video__rail {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        left: 0;
+        height: 4px;
+        margin-top: -2px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.28);
+        border-radius: 999px;
+      }
+
+      .loop-video__buffered,
+      .loop-video__progress {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        border-radius: inherit;
+      }
+
+      .loop-video__buffered {
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      .loop-video__progress {
+        background: #fff;
+      }
+
+      .loop-video__toggle {
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        padding: 0;
+        font-size: 0.9rem;
+        line-height: 1;
+        color: #fff;
+        background: none;
+        border: 0;
+        cursor: pointer;
+        opacity: 0.9;
+        transition: opacity 0.15s ease;
+
+        &:hover {
+          opacity: 1;
+        }
+
+        &:focus-visible {
+          opacity: 1;
+          outline: 2px solid #fff;
+          outline-offset: 3px;
+          border-radius: 2px;
+        }
+      }
+
+      // Both glyphs ship in the markup; only one is ever shown. Font Awesome's
+      // JS build rewrites the <i> into an <svg>, so the wrapper span is the
+      // stable hook.
+      .loop-video__icon {
+        display: inline-flex;
+      }
+
+      .loop-video__icon--play {
+        display: none;
+      }
+
+      &.is-paused {
+        .loop-video__icon--pause {
+          display: none;
+        }
+
+        .loop-video__icon--play {
+          display: inline-flex;
+        }
+      }
+
+      // The controls only mean anything once lazy-video.js has taken over.
+      &.is-interactive .loop-video__controls {
+        display: flex;
+      }
+
+      // Stay out of the way while the clip runs, but always show up on hover,
+      // while a control has focus, or once the reader has paused it.
+      &:hover .loop-video__controls,
+      &.is-paused .loop-video__controls,
+      .loop-video__controls:focus-within {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      // Touch devices never hover, so the controls have to stay visible there.
+      @media (hover: none) {
+        &.is-interactive .loop-video__controls {
+          opacity: 1;
+          pointer-events: auto;
+        }
+      }
+      .loop-video__caption {
+        margin-top: 0.6rem;
+        font-size: 0.85rem;
+        line-height: 1.5;
+        color: $light-grey;
+        text-align: center;
+
+        p {
+          margin-bottom: 0;
+        }
+      }
+    }
   }
   .postMeta {
     font-weight: 400;
