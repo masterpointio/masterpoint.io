@@ -1,0 +1,23 @@
+{{- $result := transform.HighlightCodeBlock . -}} {{- $copy := or (index
+.Attributes "copy") (index .Options "copy") -}} {{- $copy = and $copy (eq (lower
+(printf "%v" $copy)) "true") -}} {{- $collapse := or (index .Attributes
+"collapse") (index .Options "collapse") -}} {{- $collapse = and $collapse (eq
+(lower (printf "%v" $collapse)) "true") -}} {{- if or $copy $collapse -}}
+<div
+  class="codeblock-wrap{{ if $collapse }} codeblock-collapsible is-collapsed{{ end }}"
+>
+  {{ if $copy }}
+  <button
+    type="button"
+    class="codeblock-copy-btn"
+    aria-label="Copy code to clipboard"
+  >
+    <i class="fa fa-copy"></i> Copy
+  </button>
+  {{ end }} {{ $result.Wrapped }} {{ if $collapse }}
+  <button type="button" class="codeblock-expand-btn" aria-expanded="false">
+    Show more
+  </button>
+  {{ end }}
+</div>
+{{- else -}} {{ $result.Wrapped }} {{- end -}}
