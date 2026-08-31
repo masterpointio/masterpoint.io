@@ -21,7 +21,10 @@ resources.Minify }}
 <script src="{{ $secureJS.Permalink }}"></script>
 
 <script>
-  deferimg("img[data-src],picture,video,audio");
+  // `.loop-video__el` opts out: assets/js/lazy-video.js owns those elements, and
+  // Defer's reveal calls .load() on whatever it touches, which would restart
+  // playback underneath it.
+  deferimg("img[data-src],picture,video:not(.loop-video__el),audio");
   Defer.dom("img.lazy", 200, "loaded");
 </script>
 
@@ -34,4 +37,7 @@ resources.Minify }}
 {{ $codeCopyJS := resources.Get "js/codeblock-copy.js" }} {{ $secureCodeCopyJS
 := $codeCopyJS | resources.Minify }}
 <script src="{{ $secureCodeCopyJS.Permalink }}"></script>
+{{ $lazyVideoJS := resources.Get "js/lazy-video.js" }} {{ $secureLazyVideoJS :=
+$lazyVideoJS | resources.Minify }}
+<script src="{{ $secureLazyVideoJS.Permalink }}"></script>
 {{ end }} {{ partial "lightbox.html" .}}

@@ -154,6 +154,8 @@ We suggest packaging the workflow as a reusable skill so the agent follows the s
 
 Keep your organization's repository and module conventions in companion rules or skills (depending on your AI framework), rather than in the migration skill itself. If you don't have any, our guides on [Terraform root module structure](https://masterpoint.io/blog/standard-tf-files/) and [root module sizing](https://newsletter.masterpoint.io/p/how-big-should-a-terraform-root-module-be) are a good starting point.
 
+{{< loop-video src="/video/dont-let-ai-break-your-infra/converting-ecs-to-terraform.mp4" poster="/img/updates/dont-let-ai-break-your-infra/converting-ecs-to-terraform-poster.jpg" width="1280" height="720" alt="Claude Code running the codify-clickops-iac skill: it walks a live AWS ECS service out to its related resources, writes each one to a YAML inventory, then scaffolds the Terraform from that verified data" caption="The skill in action, expanding an ECS service with its related resources (IAM, network, autoscaling, etc.) into Terraform." >}}
+
 ````markdown {copy=true collapse=true}
 ---
 name: codify-clickops-iac

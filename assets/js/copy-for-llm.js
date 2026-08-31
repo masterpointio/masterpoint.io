@@ -77,6 +77,11 @@
         "![$2]($1)",
       );
 
+      // Reduce loop-video shortcodes to a one-line note, since a silent
+      // looping demo has no useful text form
+      // {{< loop-video src="..." alt="..." caption="..." >}}
+      text = text.replace(/\{\{<\s*loop-video\b[\s\S]*?>\}\}/g, videoNote);
+
       // Remove signup shortcodes
       text = text.replace(/\{\{<\s*signup\s*>\}\}/g, "");
 
@@ -96,6 +101,15 @@
       text = text.trim();
 
       return text;
+    }
+
+    // Stand in for a loop-video shortcode with its caption, falling back to
+    // its alt text.
+    function videoNote(shortcode) {
+      var caption = /caption="([^"]*)"/.exec(shortcode);
+      var alt = /alt="([^"]*)"/.exec(shortcode);
+      var label = (caption && caption[1]) || (alt && alt[1]);
+      return label ? "[Video: " + label + "]" : "";
     }
 
     function copyToClipboard(text) {
