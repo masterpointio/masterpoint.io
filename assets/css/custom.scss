@@ -2519,8 +2519,16 @@ footer {
         display: block;
         width: 100%;
         height: auto;
-        // Clicking the picture toggles playback.
+        // Clicking the picture toggles playback, as does space once focused.
         cursor: pointer;
+
+        // Drawn inside: the frame clips overflow, so an outward ring would be
+        // cut off. Teal rather than white so it reads over both the light and
+        // dark halves of a screen recording.
+        &:focus-visible {
+          outline: 3px solid $highlight;
+          outline-offset: -3px;
+        }
       }
 
       // Scrub bar: elapsed time, played/buffered progress, play-pause. Sits

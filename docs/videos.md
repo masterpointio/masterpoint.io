@@ -112,9 +112,11 @@ doesn't shift when the video loads. Missing params fail the build via `errorf`.
 - Preloads 300px before the frame enters the viewport, plays at 25% visibility,
   pauses when it leaves or the tab is hidden.
 - Muted, looping, `playsinline`.
-- **Clicking the picture toggles playback**, as any video player does. The
-  control bar is layered above the video, so clicks on it don't reach through
-  and double-toggle.
+- **Clicking the picture toggles playback**, as any video player does, and
+  Space or Enter do the same once it has focus — a click focuses it, so
+  click-then-space works. Space is only swallowed while the video holds focus;
+  everywhere else on the page it still scrolls. The control bar is layered
+  above the video, so clicks on it don't reach through and double-toggle.
 - **Scrub bar** — play/pause, elapsed time, then played-over-buffered progress.
   Fades in on hover or keyboard focus; stays visible while paused. Always
   visible on touch (no hover there).

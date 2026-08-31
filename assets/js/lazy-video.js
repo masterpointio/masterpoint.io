@@ -100,7 +100,15 @@
     // Clicking the picture toggles playback, the way any video player does.
     // The control bar is layered above the video, so clicks that land on it
     // never reach here and cannot double-toggle.
-    video.addEventListener("click", togglePlayback);
+    video.addEventListener("click", function () {
+      // Take focus so the space bar works immediately after a click. A
+      // programmatic focus from a mouse click does not match :focus-visible,
+      // so this does not flash a focus ring at mouse users.
+      video.focus();
+      togglePlayback();
+    });
+
+    video.addEventListener("keydown", onVideoKeydown);
 
     video.addEventListener("timeupdate", renderProgress);
     video.addEventListener("seeked", renderProgress);
@@ -143,6 +151,16 @@
       userPaused = !userPaused;
       load();
       sync();
+    }
+
+    // Space and Enter toggle playback while the picture has focus.
+    function onVideoKeydown(event) {
+      var isSpace = event.key === " " || event.key === "Spacebar";
+      if (!isSpace && event.key !== "Enter") return;
+
+      // Space would scroll the page if it got through.
+      event.preventDefault();
+      togglePlayback();
     }
 
     // Swap the deferred sources in once, then let the element pick them up.
