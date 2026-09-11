@@ -32,6 +32,12 @@ HUGO_ENABLEGITINFO = "true"
 [[plugins]]
 package = "netlify-plugin-image-optim"
 
+# Runs AFTER image-optim (same-event plugins run in listed order) and copies
+# static/img SVGs back verbatim — image-optim's SVGO pass strips the CSS
+# animations in our diagrams. Mirrors the svgo ignore in .trunk/trunk.yaml.
+[[plugins]]
+package = "./plugins/restore-animated-svgs"
+
 [[redirects]]
 from = "/updates/*"
 to = "/blog/:splat"
@@ -57,6 +63,23 @@ force = true
 from = "/power-digital-case-study/"
 to = "/case-studies/power-digital/"
 status = 301
+force = true
+########################################################
+
+########################################################
+# Plausible Analytics proxy. Serves the tracker first-party so ad blockers
+# don't strip it. These MUST stay above the catch-all 404 below, and the paths
+# MUST match the script src + endpoint in layouts/partials/plausible.html
+[[redirects]]
+from = "/mpx/js/script.js"
+to = "https://plausible.io/js/pa-J584RNJ6fxr4nE6Fry8ys.js"
+status = 200
+force = true
+
+[[redirects]]
+from = "/mpx/api/event"
+to = "https://plausible.io/api/event"
+status = 200
 force = true
 ########################################################
 

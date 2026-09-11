@@ -135,7 +135,7 @@ Instead of one shared [Terralith](/blog/terralith-monolithic-terraform-architect
 {{< /csi-split >}}
 
 {{< csi-split eyebrow="Platform & Tooling" title="Terraform Cloud → <span class='csi-grad'>Spacelift</span> &amp; OpenTofu" media="/img/case-studies/spacelift.jpg" media_alt="Spacelift: provision, configure, govern" variant="light" flip="true" >}}
-Masterpoint recommended [Spacelift](https://spacelift.io/), a leading TACOS (Terraform Automation and Collaboration Software) platform:
+Masterpoint recommended [Spacelift](https://spacelift.io/), a leading TACOS (Terraform Automation and Collaboration Software) platform. For a detailed migration walkthrough, see [how to move off Terraform Cloud](https://masterpoint.io/blog/how-to-migrate-off-tfc/):
 
 - **Pricing that matches usage.** Terraform Cloud bills per resource, even when nothing changes — a client onboarded once and never updated is still billed. Spacelift bills on usage: annual costs dropped from ~$60,000 projected in 2024 to under $6,000, a gap that widens with every client added.
 - **Guardrails as code.** Operational and security policies enforced in the platform itself through [Open Policy Agent](https://www.openpolicyagent.org/).

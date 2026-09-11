@@ -4,11 +4,11 @@ draft: false
 title: "Using MCPs to Run Terraform"
 author: Weston Platter
 date: 2025-04-17
-# date_modified: 2025-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
+date_modified: 2026-08-18
 slug: using-mcps-to-run-terraform
 description: "We jump into a hands-on exploration of Model Context Protocol (MCP), sharing our experiment using a MCP client to run terraform init, plan, apply. We share our take on where agents add value and highlight security considerations when adding MCPs to your workflow."
 image: /img/updates/using-mcps-to-run-terraform/header5.png
-callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact'>Get in touch!</a>
+callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact/'>Get in touch!</a>
 ---
 
 ## Table of Contents
@@ -99,7 +99,7 @@ Example Cursor `mcp.json` config file
 
 ### Terraform code
 
-From there, I added a `main.tf` file in the configured `TERRAFORM_DIR` and wrote some basic terraform code to provision the Postgres resources:
+From there, I added a [`main.tf` file](https://masterpoint.io/blog/standard-tf-files/#maintf-resource-definitions-and-primary-infrastructure) in the configured `TERRAFORM_DIR` and wrote some basic terraform code to provision the Postgres resources. The example pins its provider version; see our [Terraform versioning guide](https://masterpoint.io/blog/ultimate-terraform-versioning-guide/) for how to choose compatible constraints:
 
 - **Terraform block**: sets the required provider, `cyrilgdn/postgresql`
 - **Provider config**: connects to a local Postgres instance as `admin_user`
@@ -198,7 +198,7 @@ My takeaways from the experience:
 
 {{< lightboximg "/img/updates/using-mcps-to-run-terraform/mcp-collective.png" "Collection of MCPs" >}}
 
-- **Surfacing feedback loops is where agentic tools can shine.** Most of the pain in this experiment came from not seeing the error — not from the error itself. Agentic workflows that help you interpret state, errors, or diff outputs (and offer remediations) are more valuable than abstracting away the command execution. The real unlock isn’t just running `terraform apply` — it’s making sense of what went wrong and suggesting what to do next.
+- **Surfacing feedback loops is where agentic tools can shine.** Most of the pain in this experiment came from not seeing the error — not from the error itself. Agentic workflows that help you interpret state, errors, or diff outputs (and offer remediations) are more valuable than abstracting away the command execution. The real unlock isn’t just running `terraform apply` — it’s making sense of what went wrong and suggesting what to do next. For a testing-focused example of putting AI assistance to work in Terraform code, read [our prompt strategies for test generation](https://masterpoint.io/blog/ai-meets-tf-prompt-strategies-for-test-generation/).
 
 <br>
 

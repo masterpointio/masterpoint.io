@@ -7,7 +7,7 @@ slug: standard-tf-files
 date: 2025-10-06
 description: "A comprehensive guide to the various files that make up a Terraform and OpenTofu project. Learn what belongs in main.tf, variables.tf, outputs.tf, and other essential files for maintainable Infrastructure as Code."
 image: /img/updates/standard-tf-files.png
-callout: <p>👋 <b>If your team is struggling with inconsistent Terraform organization or looking to establish better practices for Infrastructure as Code, we'd love to help. To discuss how we can support your infrastructure goals with proven patterns and strategies, <a href='/contact'>get in touch!</a></b></p>
+callout: <p>👋 <b>If your team is struggling with inconsistent Terraform organization or looking to establish better practices for Infrastructure as Code, we'd love to help. To discuss how we can support your infrastructure goals with proven patterns and strategies, <a href='/contact/'>get in touch!</a></b></p>
 ---
 
 <h2>Table of Contents</h2>
@@ -275,7 +275,7 @@ The required_providers block serves two important functions:
 
 The source attribute is particularly important in organizations that use private provider registries or forks of official providers.
 
-Want to know all about versioning in Terraform and OpenTofu? Read our definitive article on that topic: [The Ultimate Terraform Versioning Guide](/blog/ultimate-terraform-versioning-guide).
+Want to know all about versioning in Terraform and OpenTofu? Read our definitive article on that topic: [The Ultimate Terraform Versioning Guide](/blog/ultimate-terraform-versioning-guide/).
 
 ### .terraform.lock.hcl: The Dependency Lock File
 

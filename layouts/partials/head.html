@@ -78,8 +78,11 @@
     <meta name="author" content="{{ .Params.author }}" />
     {{ end }}
 
-    <meta property="og:url" content="{{ .Permalink }}" />
-    <meta name="twitter:url" content="{{ .Permalink }}" />
+    {{ $canonicalURL := .Permalink }}
+    {{ with .Scratch.Get "canonicalURL" }}{{ $canonicalURL = . }}{{ end }}
+    <meta property="og:url" content="{{ $canonicalURL }}" />
+    <meta name="twitter:url" content="{{ $canonicalURL }}" />
+    <link rel="canonical" href="{{ $canonicalURL }}" />
 
     <link
       rel="apple-touch-icon"
@@ -159,6 +162,8 @@
       src="//static.klaviyo.com/onsite/js/klaviyo.js?company_id=TTc7Za"
     ></script> -->
 
+    {{ partial "plausible.html" . }}
+
     <!-- Google tag (gtag.js) -->
     <script
       type="text/plain"
@@ -215,7 +220,7 @@
         {{ else }}
         "dateModified": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
         {{ end }}
-        "url": {{ .Permalink | jsonify }},
+        "url": {{ $canonicalURL | jsonify }},
         {{ if .Params.image }}
         "image": {
           "@type": "ImageObject",
@@ -224,7 +229,7 @@
         {{ end }}
         "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": {{ .Permalink | jsonify }}
+          "@id": {{ $canonicalURL | jsonify }}
         }
       }
     </script>

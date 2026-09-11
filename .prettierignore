@@ -8,3 +8,4 @@ layouts/case-studies/immersive.html
 layouts/case-studies/single.html
 layouts/case-studies/_markup/render-link.html
 layouts/partials/case-study-entry.html
+layouts/partials/plausible.html

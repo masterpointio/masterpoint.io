@@ -1,0 +1,27 @@
+{{/*
+  Plausible Analytics.
+
+  Deliberately NOT consent-gated. Unlike the GA4/GTM blocks in head.html,
+  Plausible is cookieless and stores no personal data, so it does not require
+  consent. Adding type="text/plain" + data-category="analytics" here would make
+  it inherit the CookieConsent gate and defeat the reason we added it: seeing
+  the traffic GA4 never sees.
+
+  Served through the first-party proxy defined in netlify.toml so ad blockers
+  don't strip it. The paths below MUST stay in sync with those redirect rules.
+
+  Scroll depth and time-on-page are tracked automatically, no config needed.
+*/}}
+{{ if eq (os.Getenv "HUGO_ENV") "production" }}
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="/mpx/js/script.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init({
+    endpoint: "/mpx/api/event",
+    outboundLinks: true,
+    fileDownloads: true,
+    formSubmissions: true
+  })
+</script>
+{{ end }}

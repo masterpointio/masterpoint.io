@@ -1,0 +1,94 @@
+{{- /*
+  loop-video
+
+  A silent, looping demo clip that stays completely inert until the reader
+  scrolls to it. Nothing is fetched on page load: the sources carry
+  `data-lv-src` rather than a real `src`, and assets/js/lazy-video.js swaps them
+  in, starts playback once the frame is on screen, and pauses it again as soon
+  as it scrolls away or the tab is hidden.
+
+  `data-lv-src` is deliberately not `data-src`: the site-wide Defer.js pass in
+  partials/scripts.html claims `data-src` and calls `.load()` on whatever it
+  reveals, which would restart playback underneath us.
+
+  Encode the source with no audio track — nothing here unmutes the video. H.264
+  MP4 only: VP9/WebM saves ~15% but is not supported widely enough to justify
+  carrying a second asset.
+
+  Call it on a SINGLE line in markdown. `trunk fmt` runs prettier over content,
+  which reflows a multi-line shortcode call and reads the closing `>}}` as a
+  blockquote, which then fails the build.
+
+  Params:
+    src     (required) path to the .mp4
+    poster  (required) still frame shown before the video loads
+    width   (required) intrinsic pixel width of the encode
+    height  (required) intrinsic pixel height of the encode
+    alt     (required) what the clip shows, for screen readers
+    caption (optional) visible caption below the frame; markdown is rendered
+*/ -}}
+
+{{- $src := .Get "src" -}}
+{{- $poster := .Get "poster" -}}
+{{- $width := .Get "width" -}}
+{{- $height := .Get "height" -}}
+{{- $alt := .Get "alt" -}}
+{{- $caption := .Get "caption" -}}
+
+{{- range slice "src" "poster" "width" "height" "alt" -}}
+  {{- if not ($.Get .) -}}
+    {{- errorf "loop-video shortcode in %q is missing the required %q param" $.Page.Path . -}}
+  {{- end -}}
+{{- end -}}
+
+<figure class="loop-video">
+  <div class="loop-video__frame">
+    <video
+      class="loop-video__el"
+      poster="{{ $poster }}"
+      width="{{ $width }}"
+      height="{{ $height }}"
+      aria-label="{{ $alt }}"
+      tabindex="0"
+      preload="none"
+      muted
+      loop
+      playsinline
+      disablepictureinpicture
+      disableremoteplayback
+    >
+      <source data-lv-src="{{ $src }}" type="video/mp4" />
+    </video>
+    <div class="loop-video__controls">
+      <button type="button" class="loop-video__toggle" aria-label="Pause video">
+        {{- /* Both glyphs are rendered and CSS picks one off `is-paused`.
+        Font Awesome's JS build rewrites each <i> into an <svg>, so these
+        wrapper spans are what the stylesheet can rely on. */ -}}
+        <span class="loop-video__icon loop-video__icon--pause">
+          <i class="fa fa-pause" aria-hidden="true"></i>
+        </span>
+        <span class="loop-video__icon loop-video__icon--play">
+          <i class="fa fa-play" aria-hidden="true"></i>
+        </span>
+      </button>
+      <span class="loop-video__time">0:00</span>
+      <div
+        class="loop-video__track"
+        role="slider"
+        tabindex="0"
+        aria-label="Seek through the video"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+      >
+        <span class="loop-video__rail">
+          <span class="loop-video__buffered"></span>
+          <span class="loop-video__progress"></span>
+        </span>
+      </div>
+    </div>
+  </div>
+  {{- with $caption }}
+  <figcaption class="loop-video__caption">{{ . | markdownify }}</figcaption>
+  {{- end }}
+</figure>

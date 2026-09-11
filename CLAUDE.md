@@ -10,6 +10,10 @@ This is the Masterpoint.io company website - a Hugo-based static site for an Inf
 
 **When working on anything related to case studies, always reference [`docs/case-studies.md`](docs/case-studies.md) first.** It documents the case-study architecture, layouts, shortcodes, front matter schema, styling decisions, and iteration workflow. **Keep it updated** — whenever you make a decision about case-study layout, shortcodes, visuals, or workflow, update that file before ending the session (and remove mentions of anything deleted from the codebase).
 
+## Videos
+
+**When adding video to a post or page, reference [`docs/videos.md`](docs/videos.md) first.** It documents the `loop-video` shortcode, the ffmpeg encoding recipe, the lazy-load/play-on-view behavior, and the gotchas (single-line shortcode calls, the Defer.js conflict, the non-lazy poster). **Keep it updated** when the shortcode, encoding recipe, or behavior changes.
+
 ## Essential Commands
 
 ### Development
@@ -107,6 +111,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 - `{{< process >}}` - Process steps
 - `{{< supports >}}` - Support/technology logos
 - `{{< client-logos >}}` - Client logo displays
+- `{{< loop-video src="..." poster="..." width="..." height="..." alt="..." >}}` - Silent looping demo clip, lazy-loaded and played only in view (see [`docs/videos.md`](docs/videos.md))
 
 ## Code Quality & Linting
 
