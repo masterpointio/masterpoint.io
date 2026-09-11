@@ -9,7 +9,7 @@ id: who-our-values
 
 cards:
   - title: "We communicate with excellence."
-    intro: "We are deliberate, explicit, and empathetic communicators. We listen to understand — not just to respond — and we hear the deeper concern behind what's being said. We believe being a good communicator starts with being a good listener."
+    intro: "We are deliberate, explicit, and empathetic communicators. We listen to understand — not simply to respond — and hear the concern behind what’s being said. Good communication starts with good listening."
   - title: "We are experts with a point of view."
     intro: "We stay well-read and current in our craft. We bring patterns, methodology, and opinions backed by experience. We are always improving, always curious, always bringing better thinking to the work."
   - title: "We work with autonomy and high agency."
