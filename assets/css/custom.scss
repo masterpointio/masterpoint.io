@@ -3092,6 +3092,84 @@ footer {
   color: $pine;
 }
 
+#who-our-values {
+  padding: 5.3rem 0 4.5rem;
+  position: relative;
+  color: #fff;
+  background: $pine;
+
+  @media (max-width: 767px) {
+    padding: 3.5rem 0 3rem;
+  }
+}
+
+.valuesPurpose {
+  font-weight: 700;
+  font-size: 1.75rem;
+  line-height: 1.36em;
+  letter-spacing: -0.03em;
+  max-width: 750px;
+  margin: 0 auto;
+  padding-bottom: 0.5em;
+
+  @media (max-width: 991px) {
+    font-size: 1.5rem;
+  }
+  @media (max-width: 575px) {
+    font-size: 1.3rem;
+  }
+}
+
+.valuesGroupTitle {
+  margin-top: 2.4rem;
+  margin-bottom: 0.2rem;
+
+  @media (max-width: 767px) {
+    margin-top: 1.6rem;
+  }
+}
+
+#values-who-row {
+  justify-content: center;
+  .col {
+    margin-top: 1.22rem;
+    margin-bottom: 1.1rem;
+  }
+  .card {
+    border-radius: 3.33rem;
+    background: linear-gradient(
+      54deg,
+      rgba(95, 220, 182, 0.16) 22.51%,
+      rgba(42, 217, 194, 0.16) 45.75%,
+      rgba(138, 177, 201, 0.16) 63.83%
+    );
+    @media (max-width: 767px) {
+      border-radius: 1.5rem;
+    }
+    .card-body {
+      padding: 1.9rem 2.1rem 2rem;
+      text-align: center;
+      @media (max-width: 767px) {
+        padding: 1.5rem;
+      }
+      h4 {
+        font-size: 1.44rem;
+        line-height: 1.15em;
+        padding-bottom: 0.5em;
+        @media (max-width: 767px) {
+          font-size: 1.3rem;
+        }
+      }
+      p {
+        font-size: 1.05rem;
+        font-weight: 400;
+        line-height: 1.42em;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
 #page-services {
   #banner {
     padding: 10.45rem 0 8.1rem;
