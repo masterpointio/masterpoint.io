@@ -99,9 +99,11 @@ apply_link: "" # non-empty URL = link out instead of embedding
 ```
 
 Body is plain Markdown. Use `##` for the main sections (What You'll Do, What
-You Bring, Why Masterpoint?, About Masterpoint, How to Apply) and `###` for
-Must-Haves / Nice-to-Haves. The single layout styles `h2` with a gradient bar
-and `h3` as small caps.
+You Bring, Why Masterpoint?, About Masterpoint, and the closing "Want to work
+with us? Good call!" section with the how-to-apply copy and screening
+questions) and `###` for Must-Haves / Nice-to-Haves. The single layout styles
+`h2` with a gradient bar and `h3` as small caps. The closing heading ends with
+"!", so it needs `<!-- markdownlint-disable-next-line MD026 -->` above it.
 
 ## Job post page
 
@@ -114,10 +116,11 @@ and `h3` as small caps.
 3. **Apply** (`#apply`, dark). Hidden when `status: closed`. Otherwise, in
    order of precedence:
    - `apply_link` set → a single external "Submit your application" button.
-   - `notion_form` set → `hiring-notion-form.html`: title, intro, the embedded
-     Notion form in a dark card, and an "open it in a new tab" fallback link.
-     Role-specific screening questions belong in the body's **How to Apply**
-     section (not the apply block) so they are not shown twice.
+   - `notion_form` set → `hiring-notion-form.html`: a plain **Application**
+     header, the embedded Notion form in a dark card, and an "open it in a new
+     tab" fallback link. All instructions (the "fill out the form below" intro
+     and the screening questions) live in the body's closing section so nothing
+     is shown twice.
    - neither → an email-us CTA (`hello@masterpoint.io`).
 
 ## Application form (embedded Notion form)
@@ -198,6 +201,12 @@ Optionally remove the role from the Notion form's **Position** options.
 - **`bg_our_team.jpg` is a placeholder preview/banner image.** Swap in a
   role-specific or team image when one is ready; the Notion post's cover
   (`twitter-header.png`) would work if exported to `static/img/hiring/`.
+- **Garbled body text in `hugo serve` after editing front matter.** If the
+  dev server shows the article starting mid-sentence and/or a run of `�`
+  characters at the end (also inside the JobPosting JSON-LD), Hugo's live
+  server has kept stale byte offsets for the body after the front matter
+  changed length. Restart `hugo serve`. The production build is unaffected;
+  verify with a one-shot build to a scratch directory.
 - **Hugo locally.** `aqua install` fails for Hugo 0.162.1 on macOS (the
   registry expects a `.tar.gz` asset that the release ships as `.pkg`). The
   aqua cache still has extended 0.162.1 (installed with a newer registry) at

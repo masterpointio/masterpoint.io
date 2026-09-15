@@ -627,22 +627,18 @@ $hire-pine-deep: #07262a;
     }
 
     .apply-title {
-      font-size: 2.1rem;
+      text-align: center;
+      font-size: 1.6rem;
       font-weight: 800;
       line-height: 1.05;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      margin-bottom: 0.8rem;
+      margin-bottom: 1.4rem;
       color: #fff;
 
       @media (max-width: 767px) {
-        font-size: 1.6rem;
+        font-size: 1.3rem;
       }
-    }
-    .apply-intro {
-      max-width: 700px;
-      margin: 0 auto 2rem;
-      color: rgba(255, 255, 255, 0.75);
-      line-height: 1.6;
     }
 
     // ── Embedded Notion form ──────────────────────────────────────────

@@ -103,11 +103,15 @@ Since our establishment in 2016, we have been committed to providing expert guid
 2. We are experts with a point of view.
 3. We work with autonomy and high agency.
 
-## How to Apply
+<!-- markdownlint-disable MD026 -->
 
-Good call! Fill out the form below and we'll get in touch to let you know if you seem like a fit for our team. Resumes up to a total of two pages only, please.
+## Want to work with us? Good call!
 
-For this role, please answer the following in the **Question Responses** section of the form:
+<!-- markdownlint-enable MD026 -->
+
+Fill out the form below and we'll get in touch to let you know if you seem like a fit for our team. Resumes up to a total of two pages only, please.
+
+For this role, please provide answers to the following questions in the "Question Responses" section of the form:
 
 1. What's your experience with AWS, Azure, and GCP? What cloud are you most familiar with?
 2. What's your experience with Terraform, OpenTofu, and more generally IaC?
