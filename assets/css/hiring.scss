@@ -645,36 +645,6 @@ $hire-pine-deep: #07262a;
       line-height: 1.6;
     }
 
-    .apply-questions {
-      margin: 0 0 2.2rem;
-      padding: 1.3rem 1.6rem 1.1rem;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-
-      h4 {
-        margin: 0 0 0.7rem;
-        font-size: 0.72rem;
-        font-weight: 800;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: $hire-mint;
-      }
-      ol {
-        margin: 0 0 0.6rem 1.2rem;
-        li {
-          margin-bottom: 0.45rem;
-          line-height: 1.5;
-          color: #fff;
-        }
-      }
-      &__hint {
-        margin: 0;
-        font-size: 0.85rem;
-        color: rgba(255, 255, 255, 0.6);
-      }
-    }
-
     // ── Embedded Notion form ──────────────────────────────────────────
     // Notion's /ebd/ embed page follows the viewer's colour scheme (renders dark
     // for most visitors) and does not auto-size, so the wrapper is a neutral

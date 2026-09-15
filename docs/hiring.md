@@ -95,9 +95,6 @@ og_img: /img/og-img.png # social share image
 notion_form: https://masterpoint.notion.site/ebd/<id> # embed src (Notion's /ebd/ path)
 notion_form_link: https://masterpoint.notion.site/<id> # plain link for the new-tab fallback
 apply_link: "" # non-empty URL = link out instead of embedding
-application_questions: # listed above the form + referenced in the body
-  - "Question one?"
-  - "Question two?"
 ---
 ```
 
@@ -117,9 +114,10 @@ and `h3` as small caps.
 3. **Apply** (`#apply`, dark). Hidden when `status: closed`. Otherwise, in
    order of precedence:
    - `apply_link` set → a single external "Submit your application" button.
-   - `notion_form` set → `hiring-notion-form.html`: title, intro, the
-     `application_questions` box, the embedded Notion form in a white card,
-     and an "open it in a new tab" fallback link.
+   - `notion_form` set → `hiring-notion-form.html`: title, intro, the embedded
+     Notion form in a dark card, and an "open it in a new tab" fallback link.
+     Role-specific screening questions belong in the body's **How to Apply**
+     section (not the apply block) so they are not shown twice.
    - neither → an email-us CTA (`hello@masterpoint.io`).
 
 ## Application form (embedded Notion form)
@@ -154,8 +152,9 @@ and `h3` as small caps.
   **Copy link** in the share menu). It powers the "Form not loading?" fallback
   under the embed and is the link to give people who can't use iframes.
 - The Notion form has a **Position** select. When opening a role, add the new
-  option in the Notion form (Share form → edit) so applicants can pick it, and
-  reference the job post's questions in the `application_questions` list.
+  option in the Notion form (Share form → edit) so applicants can pick it. The
+  form's free-text **Question Responses** field is where applicants answer the
+  role-specific questions listed in the post body.
 - Local `hugo serve` renders the real embed; you can submit a test
   application locally and it will appear in Notion, so use an obvious test
   name and archive it afterwards.

@@ -4,7 +4,8 @@ submissions land in Notion. Only Notion's `/ebd/` embed path can be framed;
 every other notion.site / notion.so URL is served with X-Frame-Options:
 SAMEORIGIN. Front matter: notion_form – the /ebd/ embed URL (iframe src)
 notion_form_link – plain public form link for the "open in a new tab" fallback
-application_questions – listed above the form See docs/hiring.md. */ -}}
+Role-specific questions live in the post body ("How to Apply"), not here. See
+docs/hiring.md. */ -}}
 <section id="apply">
   <div class="container">
     <div class="row justify-content-center">
@@ -19,21 +20,6 @@ application_questions – listed above the form See docs/hiring.md. */ -}}
         </p>
       </div>
     </div>
-
-    {{ with .Params.application_questions }}
-    <div class="apply-questions">
-      <h4>Please answer these in your Question Responses</h4>
-      <ol>
-        {{ range . }}
-        <li>{{ . | safeHTML }}</li>
-        {{ end }}
-      </ol>
-      <p class="apply-questions__hint">
-        Be detailed about your experience. That's what helps us understand
-        whether you've got the skillset we need.
-      </p>
-    </div>
-    {{ end }}
 
     <div class="notion-form">
       <iframe

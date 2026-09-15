@@ -31,9 +31,6 @@ og_img: /img/og-img.png
 notion_form: https://masterpoint.notion.site/ebd/ac791bde07fe4766b461dca6fbc10e85
 notion_form_link: https://masterpoint.notion.site/ac791bde07fe4766b461dca6fbc10e85
 apply_link: ""
-application_questions:
-  - "What's your experience with AWS, Azure, and GCP? What cloud are you most familiar with?"
-  - "What's your experience with Terraform, OpenTofu, and more generally IaC?"
 ---
 
 Come join us at Masterpoint where we build **rock-solid cloud platforms** for our clients through Infrastructure as Code (IaC). We're looking for our next great platform engineer to architect, automate, and deliver platforms using OpenTofu, Terraform, and other modern tooling.
