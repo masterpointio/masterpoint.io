@@ -14,6 +14,10 @@ This is the Masterpoint.io company website - a Hugo-based static site for an Inf
 
 **When adding video to a post or page, reference [`docs/videos.md`](docs/videos.md) first.** It documents the `loop-video` shortcode, the ffmpeg encoding recipe, the lazy-load/play-on-view behavior, and the gotchas (single-line shortcode calls, the Defer.js conflict, the non-lazy poster). **Keep it updated** when the shortcode, encoding recipe, or behavior changes.
 
+## Hiring / Job Postings
+
+**When working on anything related to hiring, job postings, or the `/hiring/` section, always reference [`docs/hiring.md`](docs/hiring.md) first.** It documents the section architecture, job-post front matter schema, the Netlify application form, and the posting/closing workflow. **Keep it updated** whenever you change hiring layouts, front matter, the form, or the workflow.
+
 ## Essential Commands
 
 ### Development
@@ -31,6 +35,7 @@ hugo --gc --minify
 # Create new content (blog posts use date-prefixed naming)
 hugo new blog/$(date +%Y-%m-%d)-my-new-post.md
 hugo new case-studies/client-name.md
+# Job postings live in content/hiring/ (see docs/hiring.md)
 
 # Lint and format code
 trunk check
@@ -51,7 +56,7 @@ trunk fmt
 - All content is in Markdown files under `/content/`
 - NetlifyCMS is configured for content editing (accessible at `/admin/`)
 - Front matter in Markdown files controls metadata and page behavior
-- Content types: blog posts, case studies, services, team profiles, landing pages
+- Content types: blog posts, case studies, job postings (hiring), services, team profiles, landing pages
 
 ### Template System
 

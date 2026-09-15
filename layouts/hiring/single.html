@@ -1,0 +1,87 @@
+{{ partial "head.html" . }}
+{{- $closed := eq .Params.status "closed" -}}
+{{- $applyExternal := .Params.apply_link -}}
+{{- $applyHref := cond (ne $applyExternal "") $applyExternal "#apply" -}}
+<body {{ if .Params.id }}id='{{ .Params.id }}' {{end}} class="hiring-single{{ if $closed }} hiring-single--closed{{ end }}">
+    {{ partial "header.html" . }}
+
+    {{/* HERO */}}
+    <section id="banner">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col col-12 col-lg-10">
+                    <div class="bannerTxtBx aos-item" data-aos="fade">
+                        <div class="bannerTagline">
+                            {{ if $closed }}Role Closed{{ else }}We're Hiring{{ end }}
+                        </div>
+                        <h1>{{ .Title | safeHTML }}</h1>
+                        {{ with .Description }}
+                        <p class="job-lede">{{ . | safeHTML }}</p>
+                        {{ end }}
+
+                        <ul class="job-facts" aria-label="Role details">
+                            {{ with .Params.location }}<li class="fact"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>{{ . }}</li>{{ end }}
+                            {{ with .Params.employment_type }}<li class="fact"><i class="fa-solid fa-briefcase" aria-hidden="true"></i>{{ . }}</li>{{ end }}
+                            {{ with .Params.salary }}<li class="fact"><i class="fa-solid fa-sack-dollar" aria-hidden="true"></i>{{ . }}</li>{{ end }}
+                            <li class="fact"><i class="fa-solid fa-calendar" aria-hidden="true"></i>Posted {{ .Date.Format "January 2, 2006" }}</li>
+                        </ul>
+
+                        {{ if not $closed }}
+                        <div class="job-actions">
+                            <a class="button btn-gradient" href="{{ $applyHref }}"{{ if ne $applyExternal "" }} target="_blank" rel="noopener"{{ end }}>Apply for this role →</a>
+                            <a class="button btn-outline-gradient" href="/hiring/">All open roles</a>
+                        </div>
+                        {{ else }}
+                        <div class="job-actions">
+                            <a class="button btn-outline-gradient" href="/hiring/">See current openings →</a>
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <div class="container">
+            <article class="job-article-card">
+                {{ if $closed }}
+                <div class="job-closed-notice">
+                    <strong>This role is no longer accepting applications.</strong> We keep past postings up so you can see the kind of people we hire. Check <a href="/hiring/">current openings</a> or say hello at <a href="mailto:hello@masterpoint.io">hello@masterpoint.io</a>.
+                </div>
+                {{ end }}
+
+                {{ with .Params.video }}
+                {{/* Loom share URL → embed URL. Strip any query string first. */}}
+                {{ $embed := replace (index (split . "?") 0) "/share/" "/embed/" }}
+                <div class="job-video-label">A quick intro from Matt</div>
+                <div class="job-video">
+                    <iframe src="{{ $embed }}" title="Intro video for {{ $.Title | plainify }}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen loading="lazy"></iframe>
+                </div>
+                {{ end }}
+
+                <div class="job-content">
+                    {{ .Content }}
+                </div>
+            </article>
+        </div>
+
+        {{ if not $closed }}
+        {{ if eq $applyExternal "" }}
+        {{ partial "hiring-application-form.html" . }}
+        {{ else }}
+        <section id="apply">
+            <div class="container text-center">
+                <h2 class="apply-title">Ready to <span class="text-gradient">apply?</span></h2>
+                <p class="apply-intro">Applications for this role are collected off-site.</p>
+                <a class="button btn-gradient btn-big" href="{{ $applyExternal }}" target="_blank" rel="noopener">Submit your application →</a>
+            </div>
+        </section>
+        {{ end }}
+        {{ end }}
+    </main>
+
+    {{ partial "footer.html" . }}
+    {{ partial "scripts.html" . }}
+</body>
+</html>

@@ -234,5 +234,52 @@
       }
     </script>
     {{ end }}
+
+    {{ if and (eq .Section "hiring") .IsPage }}
+    <!-- Structured Data for Job Postings (Google for Jobs) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org/",
+        "@type": "JobPosting",
+        "title": {{ .Params.role | default .Title | plainify }},
+        "description": {{ .Content }},
+        "identifier": {
+          "@type": "PropertyValue",
+          "name": "Masterpoint Consulting",
+          "value": {{ .File.ContentBaseName }}
+        },
+        "datePosted": {{ .Date.Format "2006-01-02" }},
+        {{ with .Params.valid_through }}
+        "validThrough": {{ . }},
+        {{ end }}
+        "employmentType": {{ replace (upper (.Params.employment_type | default "Full-time")) "-" "_" }},
+        "hiringOrganization": {
+          "@type": "Organization",
+          "name": "Masterpoint Consulting",
+          "sameAs": {{ .Site.BaseURL }},
+          "logo": {{ (printf "%simg/logo.png" .Site.BaseURL) }}
+        },
+        "jobLocationType": "TELECOMMUTE",
+        "applicantLocationRequirements": {
+          "@type": "Country",
+          "name": "USA"
+        },
+        {{ if .Params.salary_min }}
+        "baseSalary": {
+          "@type": "MonetaryAmount",
+          "currency": {{ .Params.salary_currency | default "USD" }},
+          "value": {
+            "@type": "QuantitativeValue",
+            "minValue": {{ .Params.salary_min }},
+            "maxValue": {{ .Params.salary_max | default .Params.salary_min }},
+            "unitText": "YEAR"
+          }
+        },
+        {{ end }}
+        "directApply": {{ if .Params.apply_link }}false{{ else }}true{{ end }},
+        "url": {{ .Permalink }}
+      }
+    </script>
+    {{ end }}
   </head>
 </html>

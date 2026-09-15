@@ -1,0 +1,86 @@
+{{- /*
+  On-site job application form (Netlify Forms). Rendered by layouts/hiring/single.html
+  when the post has no `apply_link`. Fields follow the contact form's `.col.labelToggle`
+  pattern so the floating-label JS + form SCSS apply. Submissions land in the Netlify
+  Forms UI under "job-application"; set up email notifications there.
+*/ -}}
+<section id="apply">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col col-12 text-center">
+                <h2 class="apply-title">Want to work with us? <span class="text-gradient">Good call!</span></h2>
+                <p class="apply-intro">Fill out the form below and we'll get in touch to let you know if you seem like a fit for our team. Resumes up to a total of two pages only, please.</p>
+            </div>
+        </div>
+
+        {{ with .Params.application_questions }}
+        <div class="apply-questions">
+            <h4>Please answer these in your Question Responses</h4>
+            <ol>
+                {{ range . }}<li>{{ . | safeHTML }}</li>{{ end }}
+            </ol>
+            <p class="apply-questions__hint">Be detailed about your experience. That's what helps us understand whether you've got the skillset we need.</p>
+        </div>
+        {{ end }}
+
+        <form accept-charset="UTF-8" name="job-application" method="POST" enctype="multipart/form-data"
+              data-netlify="true" data-netlify-honeypot="bot-field" action="/thank-you/application/">
+
+            <input type="hidden" name="form-name" value="job-application" />
+            <input type="hidden" name="subject" data-remove-prefix value="Masterpoint Job Application: {{ .Title | plainify }} (%{submissionId})" />
+            <input type="hidden" name="role" value="{{ .Title | plainify }}" />
+            <input type="hidden" name="role_url" value="{{ .Permalink }}" />
+            <p class="d-none" aria-hidden="true"><label>Don't fill this out if you're human: <input name="bot-field" /></label></p>
+
+            <div class="col col-12 col-sm-6 labelToggle">
+                <label for="app_full_name">Full Name*</label>
+                <input type="text" id="app_full_name" class="formField" name="full_name" placeholder="ex. Jane Doe" autocomplete="name" required>
+            </div>
+
+            <div class="col col-12 col-sm-6 labelToggle">
+                <label for="app_email">Email Address*</label>
+                <input type="email" id="app_email" class="formField" name="email" placeholder="ex. you@email.com" autocomplete="email" required>
+            </div>
+
+            <div class="col col-12 col-sm-6 labelToggle">
+                <label for="app_location">Where are you based?*</label>
+                <input type="text" id="app_location" class="formField" name="location" placeholder="ex. Boulder, CO" required>
+            </div>
+
+            <div class="col col-12 col-sm-6 labelToggle">
+                <label for="app_linkedin">LinkedIn URL</label>
+                <input type="url" id="app_linkedin" class="formField" name="linkedin" placeholder="https://www.linkedin.com/in/…">
+            </div>
+
+            <div class="col col-12 labelToggle">
+                <label for="app_links">GitHub, portfolio, or other links</label>
+                <input type="text" id="app_links" class="formField" name="links" placeholder="Anything that shows us your work">
+            </div>
+
+            <div class="col col-12 job-file">
+                <label for="app_resume">Resume (PDF, 2 pages max)*</label>
+                <input type="file" id="app_resume" name="resume" accept=".pdf,application/pdf" required>
+                <span class="hint">PDF only, up to 8&nbsp;MB.</span>
+            </div>
+
+            <div class="col col-12 labelToggle">
+                <label for="app_answers">Question Responses*</label>
+                <textarea name="question_responses" id="app_answers" cols="30" rows="10" placeholder="Answer the questions listed above. The more specific, the better." class="formField" required></textarea>
+            </div>
+
+            <div class="col col-12 labelToggle">
+                <label for="app_notes">Anything else you'd like us to know?</label>
+                <textarea name="notes" id="app_notes" cols="30" rows="5" placeholder="Optional" class="formField"></textarea>
+            </div>
+
+            <div class="col col-12 job-consent">
+                <input type="checkbox" id="app_work_auth" name="us_work_authorization" value="yes" required>
+                <label for="app_work_auth">I'm based in the United States and currently authorized to work here on a full-time basis without visa sponsorship.*</label>
+            </div>
+
+            <div class="col col-12 text-center">
+                <button type="submit" class="button btn-gradient">Submit Application</button>
+            </div>
+        </form>
+    </div>
+</section>

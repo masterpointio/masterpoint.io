@@ -83,3 +83,6 @@ menu:
       url: /now/
       weight: 40
       parent: content
+    - name: Hiring
+      url: /hiring/
+      weight: 50
