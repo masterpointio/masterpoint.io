@@ -1,5 +1,5 @@
 {{ partial "head.html" . }}
-<body {{ if .Params.id }}id="{{ .Params.id }}" {{end}} class="hiring-list">
+<body {{ if .Params.id }}id="{{ .Params.id }}" {{end}} class="careers-list">
   {{ partial "header.html" . }}
   <section id="banner">
     <div class="container">
@@ -32,13 +32,13 @@
     <div class="container">
       {{ with .Content }}
       <div class="row">
-        <div class="col col-12 hiring-intro">{{ . }}</div>
+        <div class="col col-12 careers-intro">{{ . }}</div>
       </div>
       {{ end }}
 
       <div class="row">
         <div class="col col-12">
-          <h2 class="hiring-group-title">
+          <h2 class="careers-group-title">
             Open Roles
             <span class="count">{{ len $open }}</span>
           </h2>
@@ -46,7 +46,7 @@
       </div>
 
       <div class="row job-grid">
-        {{ if $open }} {{ range $open }} {{ partial "hiring-entry.html" . }} {{
+        {{ if $open }} {{ range $open }} {{ partial "careers-entry.html" . }} {{
         end }} {{ else }}
         <div class="col col-12">
           <div class="job-empty">
@@ -65,7 +65,7 @@
       {{ if $closed }}
       <div class="row">
         <div class="col col-12">
-          <h2 class="hiring-group-title hiring-group-title--muted">
+          <h2 class="careers-group-title careers-group-title--muted">
             Past Openings
           </h2>
           <ul class="job-past">
@@ -83,9 +83,9 @@
       {{ end }}
 
       <div class="row">
-        <div class="col col-12 hiring-links">
-          <span class="hiring-links__label">Get to know us first</span>
-          <div class="hiring-links__row">
+        <div class="col col-12 careers-links">
+          <span class="careers-links__label">Get to know us first</span>
+          <div class="careers-links__row">
             <a href="/who-we-are/" class="button btn-outline-gradient"
               >Meet the team →</a
             >

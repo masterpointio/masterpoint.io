@@ -5,13 +5,14 @@ title: "Senior Platform Engineer (Fall 2026)"
 slug: senior-platform-engineer-fall-2026
 date: 2026-09-15
 # date_modified: 2026-xx-xx  # Set when you materially update the posting
-description: "We're hiring a US-based Senior Platform Engineer to architect, automate, and deliver rock-solid cloud platforms for our clients using OpenTofu, Terraform, and modern IaC tooling. Full-time, 100% remote, $150K – $180K base."
+description: "We're hiring a North America-based Senior Platform Engineer to architect, automate, and deliver rock-solid cloud platforms for our clients using OpenTofu, Terraform, and modern IaC tooling. Full-time, 100% remote, $150K – $180K base."
 
 # Role facts (rendered in the strip under the title + used for JobPosting schema)
 status: open # open | closed — closed roles drop to the "Past openings" list
 role: Senior Platform Engineer
 employment_type: Full-time # schema.org: FULL_TIME
-location: 100% Remote (US only)
+location: 100% Remote (North America only)
+applicant_countries: ["United States", "Canada"] # JobPosting.applicantLocationRequirements
 salary: "$150K – $180K base"
 salary_min: 150000
 salary_max: 180000
@@ -20,7 +21,7 @@ salary_currency: USD
 # Intro video (Loom share URL — the layout converts it to an embed)
 video: https://www.loom.com/share/7e4fde005c73408f9a16606370be65b3
 
-# Images. `preview_image` is the card on /hiring/; `og_img` is the social share image.
+# Images. `preview_image` is the card on /careers/; `og_img` is the social share image.
 preview_image: /img/bg_our_team.jpg
 og_img: /img/og-img.png
 
@@ -58,7 +59,7 @@ Expect to:
 
 ### Must-Haves
 
-- **US-based only at this time.** Applicants must be currently authorized to work in the United States on a full-time basis. Masterpoint does not sponsor applicants for work visas for this position.
+- **North America-based only at this time.** Applicants must be located in North America and currently authorized to work in their country of residence on a full-time basis. Masterpoint does not sponsor applicants for work visas for this position.
 - Strong people and soft skills. You can't be a good team member or consultant without knowing how to work with people. We value this above pretty much everything else.
 - 3+ years hands-on in the modern IaC ecosystem (Terraform, OpenTofu, or Pulumi).
 - Experience building infra on the cloud. AWS + Azure experience are in top demand right now, but GCP experience is useful as well.
@@ -97,11 +98,11 @@ Expect to:
 
 ## About Masterpoint
 
-Since our establishment in 2016, we have been committed to providing expert guidance to organizations of all sizes and helping them leverage the latest in IaC practices so their engineering teams can move faster. We have three Core Values:
+Since our establishment in 2016, we have been committed to providing expert guidance to organizations of all sizes and helping them leverage the latest in IaC practices so their engineering teams can move faster.
 
-1. We communicate with excellence.
-2. We are experts with a point of view.
-3. We work with autonomy and high agency.
+We hire by our three Core Values, and they matter more to us than any tool on your resume. Read them before you apply, and if they sound like how you already work, we want to hear from you.
+
+{{< button "/who-we-are/#who-our-values" >}}Read our Purpose & Values →{{< /button >}}
 
 <!-- markdownlint-disable MD026 -->
 

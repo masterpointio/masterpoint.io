@@ -7,7 +7,7 @@ $applyExternal := .Params.apply_link | default "" -}} {{- $notionForm :=
   .Params.id
   }}id="{{ .Params.id }}"
   {{end}}
-  class="hiring-single{{ if $closed }} hiring-single--closed{{ end }}"
+  class="careers-single{{ if $closed }} careers-single--closed{{ end }}"
 >
   {{ partial "header.html" . }} {{/* HERO */}}
   <section id="banner">
@@ -60,13 +60,13 @@ $applyExternal := .Params.apply_link | default "" -}} {{- $notionForm :=
                 >Apply for this role →</a
               >
               {{ end }}
-              <a class="button btn-outline-gradient" href="/hiring/"
+              <a class="button btn-outline-gradient" href="/careers/"
                 >All open roles</a
               >
             </div>
             {{ else }}
             <div class="job-actions">
-              <a class="button btn-outline-gradient" href="/hiring/"
+              <a class="button btn-outline-gradient" href="/careers/"
                 >See current openings →</a
               >
             </div>
@@ -84,7 +84,7 @@ $applyExternal := .Params.apply_link | default "" -}} {{- $notionForm :=
         <div class="job-closed-notice">
           <strong>This role is no longer accepting applications.</strong> We
           keep past postings up so you can see the kind of people we hire. Check
-          <a href="/hiring/">current openings</a> or say hello at
+          <a href="/careers/">current openings</a> or say hello at
           <a href="mailto:hello@masterpoint.io">hello@masterpoint.io</a>.
         </div>
         {{ end }} {{ with .Params.video }} {{/* Loom share URL → embed URL.
@@ -126,8 +126,8 @@ $applyExternal := .Params.apply_link | default "" -}} {{- $notionForm :=
         >
       </div>
     </section>
-    {{ else if ne $notionForm "" }} {{ partial "hiring-notion-form.html" . }} {{
-    else }}
+    {{ else if ne $notionForm "" }} {{ partial "careers-notion-form.html" . }}
+    {{ else }}
     <section id="apply">
       <div class="container text-center">
         <h2 class="apply-title">

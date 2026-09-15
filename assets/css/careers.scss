@@ -1,8 +1,8 @@
-// Hiring section — /hiring/ index (#hiringPage) + job post pages (.hiring-single).
+// Careers section — /careers/ index (#careersPage) + job post pages (.careers-single).
 // Imported at the end of custom.scss (same pattern as case-studies.scss).
 // Visual language borrows from the case-studies index (dark pine, mint/pink glows,
 // rounded cards) and the modern case-study article card (white, rounded, shadowed).
-// See docs/hiring.md.
+// See docs/careers.md.
 
 $hire-mint: #2ad9c2;
 $hire-pink: #d891ce;
@@ -111,9 +111,9 @@ $hire-pine-deep: #07262a;
 }
 
 // =============================================================================
-// /hiring/ INDEX
+// /careers/ INDEX
 // =============================================================================
-#hiringPage {
+#careersPage {
   #banner {
     @include hire-glow-banner;
   }
@@ -127,7 +127,7 @@ $hire-pine-deep: #07262a;
     }
   }
 
-  .hiring-intro {
+  .careers-intro {
     color: rgba(255, 255, 255, 0.8);
     text-align: center;
     max-width: 760px;
@@ -137,7 +137,7 @@ $hire-pine-deep: #07262a;
   }
 
   // "OPEN ROLES ─────────" group label with a count pill
-  .hiring-group-title {
+  .careers-group-title {
     display: flex;
     align-items: center;
     gap: 0.9rem;
@@ -374,7 +374,7 @@ $hire-pine-deep: #07262a;
   }
 
   // ── "Get to know us" links ────────────────────────────────────────
-  .hiring-links {
+  .careers-links {
     margin-top: 3.2rem;
     text-align: center;
 
@@ -417,7 +417,7 @@ $hire-pine-deep: #07262a;
 // =============================================================================
 // JOB POST PAGE
 // =============================================================================
-.hiring-single {
+.careers-single {
   #banner {
     @include hire-glow-banner;
     text-align: center;
@@ -569,6 +569,13 @@ $hire-pine-deep: #07262a;
     }
     strong {
       color: $pine;
+    }
+    // CTA button in the JD body (e.g. link to Purpose & Values). Beats the
+    // `.job-content a` link colour above so the button text stays white.
+    .button {
+      color: #fff;
+      text-decoration: none;
+      margin: 0.3rem 0 1.2rem;
     }
 
     h2 {
