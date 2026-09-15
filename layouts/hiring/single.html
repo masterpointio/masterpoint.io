@@ -1,7 +1,7 @@
 {{ partial "head.html" . }}
 {{- $closed := eq .Params.status "closed" -}}
-{{- $applyExternal := .Params.apply_link -}}
-{{- $applyHref := cond (ne $applyExternal "") $applyExternal "#apply" -}}
+{{- $applyExternal := .Params.apply_link | default "" -}}
+{{- $notionForm := .Params.notion_form | default "" -}}
 <body {{ if .Params.id }}id='{{ .Params.id }}' {{end}} class="hiring-single{{ if $closed }} hiring-single--closed{{ end }}">
     {{ partial "header.html" . }}
 
@@ -28,7 +28,11 @@
 
                         {{ if not $closed }}
                         <div class="job-actions">
-                            <a class="button btn-gradient" href="{{ $applyHref }}"{{ if ne $applyExternal "" }} target="_blank" rel="noopener"{{ end }}>Apply for this role →</a>
+                            {{ if ne $applyExternal "" }}
+                            <a class="button btn-gradient" href="{{ $applyExternal }}" target="_blank" rel="noopener">Apply for this role →</a>
+                            {{ else }}
+                            <a class="button btn-gradient" href="#apply">Apply for this role →</a>
+                            {{ end }}
                             <a class="button btn-outline-gradient" href="/hiring/">All open roles</a>
                         </div>
                         {{ else }}
@@ -67,14 +71,22 @@
         </div>
 
         {{ if not $closed }}
-        {{ if eq $applyExternal "" }}
-        {{ partial "hiring-application-form.html" . }}
-        {{ else }}
+        {{ if ne $applyExternal "" }}
         <section id="apply">
             <div class="container text-center">
                 <h2 class="apply-title">Ready to <span class="text-gradient">apply?</span></h2>
                 <p class="apply-intro">Applications for this role are collected off-site.</p>
                 <a class="button btn-gradient btn-big" href="{{ $applyExternal }}" target="_blank" rel="noopener">Submit your application →</a>
+            </div>
+        </section>
+        {{ else if ne $notionForm "" }}
+        {{ partial "hiring-notion-form.html" . }}
+        {{ else }}
+        <section id="apply">
+            <div class="container text-center">
+                <h2 class="apply-title">Ready to <span class="text-gradient">apply?</span></h2>
+                <p class="apply-intro">Send your resume and a note about your experience to <a href="mailto:hello@masterpoint.io">hello@masterpoint.io</a>.</p>
+                <a class="button btn-gradient btn-big" href="mailto:hello@masterpoint.io?subject={{ .Title | plainify | urlquery }}">Email your application →</a>
             </div>
         </section>
         {{ end }}

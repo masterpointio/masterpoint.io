@@ -616,7 +616,7 @@ $hire-pine-deep: #07262a;
     }
   }
 
-  // ── Application form (dark section, contact-form styling) ─────────
+  // ── Application section (dark, embedded Notion form) ──────────────
   #apply {
     padding: 3.6rem 0 1rem;
     color: #fff;
@@ -675,94 +675,40 @@ $hire-pine-deep: #07262a;
       }
     }
 
-    form {
-      // File input: static label + native picker (no floating-label behaviour)
-      .col.job-file {
-        label {
-          position: static;
-          display: block;
-          height: auto;
-          line-height: 1.4;
-          margin-bottom: 0.5rem;
-          font-size: 0.95rem;
-          font-weight: 700;
-          color: #fff;
-          left: auto;
-        }
-        input[type="file"] {
-          height: auto;
-          line-height: 1.4;
-          padding: 0.85rem 0.8rem;
-          font-size: 0.95rem;
-          font-weight: 500;
-          cursor: pointer;
-          border-radius: 3px;
-          color: rgba(255, 255, 255, 0.85);
+    // ── Embedded Notion form ──────────────────────────────────────────
+    // Notion's /ebd/ embed page follows the viewer's colour scheme (renders dark
+    // for most visitors) and does not auto-size, so the wrapper is a neutral
+    // dark card and the iframe gets a generous fixed height (tall enough that
+    // the whole form shows without inner scrolling).
+    .notion-form {
+      background: #191919; // Notion dark-theme page background
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.6);
 
-          &::file-selector-button {
-            margin-right: 1rem;
-            padding: 0.45rem 0.9rem;
-            border: 0;
-            border-radius: 3px;
-            font-weight: 800;
-            font-size: 0.8rem;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            color: $hire-pine-deep;
-            cursor: pointer;
-            @include hire-brand-gradient;
-          }
-          &:focus {
-            background: rgba(255, 255, 255, 0.16);
-            color: #fff;
-          }
-        }
-        .hint {
-          display: block;
-          margin-top: 0.45rem;
-          font-size: 0.8rem;
-          color: rgba(255, 255, 255, 0.6);
+      iframe {
+        display: block;
+        width: 100%;
+        height: 1780px; // fits the 11-question form + Submit without inner scrolling
+        border: 0;
+
+        @media (max-width: 767px) {
+          height: 2400px; // labels wrap to 2–3 lines on phones
         }
       }
+    }
 
-      // Consent checkbox: native control, inline label
-      .col.job-consent {
-        display: flex;
-        align-items: flex-start;
-        gap: 0.75rem;
+    &__fallback,
+    .notion-form__fallback {
+      margin: 1rem 0 0;
+      text-align: center;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
 
-        input[type="checkbox"] {
-          display: inline-block;
-          flex: 0 0 auto;
-          width: 1.15rem;
-          height: 1.15rem;
-          margin-top: 0.2rem;
-          padding: 0;
-          accent-color: $hire-mint;
-          background: transparent;
-          cursor: pointer;
-        }
-        label {
-          position: static;
-          height: auto;
-          line-height: 1.45;
-          font-size: 0.95rem;
-          font-weight: 500;
-          color: #fff;
-          left: auto;
-          pointer-events: auto;
-          cursor: pointer;
-
-          &::before {
-            display: none;
-          }
-        }
-      }
-
-      .col.text-center .button {
-        width: auto;
-        min-width: 260px;
-        padding: 0 1.6rem;
+      a {
+        color: #fff;
+        font-weight: 700;
       }
     }
   }

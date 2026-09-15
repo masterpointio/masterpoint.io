@@ -3,14 +3,16 @@
 The `/hiring/` section is where we publish job postings so we can send
 candidates to masterpoint.io instead of a Notion page. This file is the spec
 for how it works. **Keep it updated** when you change layouts, front matter,
-the application form, or the workflow.
+the application embed, or the workflow.
 
 ## Goals
 
 - One canonical, on-brand URL per role (`/hiring/<slug>/`) that we can link
   from LinkedIn, the newsletter, and job boards.
-- Candidates apply on our site (Netlify Forms) rather than bouncing to Notion
-  or a Google Form. An external `apply_link` is still supported per posting.
+- Applications go through the shared **Notion hiring form**, embedded on the
+  job post so candidates never leave the site and submissions land in the
+  same Notion database the team already works from. An external `apply_link`
+  is still supported per posting.
 - Posts stay up after a role closes (`status: closed`) so the history is
   visible and old links keep working.
 - Google for Jobs eligibility via `JobPosting` structured data.
@@ -28,10 +30,9 @@ layouts/hiring/
 
 layouts/partials/
 ├── hiring-entry.html                           # job card used on /hiring/
-└── hiring-application-form.html                # Netlify "job-application" form
+└── hiring-notion-form.html                     # #apply section with the embedded Notion form
 
 assets/css/hiring.scss                          # all styling, @imported last in custom.scss
-content/thank-you/application.md                # post-submit page (/thank-you/application/)
 ```
 
 Other touch points:
@@ -90,7 +91,10 @@ video: https://www.loom.com/share/<id> # optional; Loom share URL → embed
 preview_image: /img/bg_our_team.jpg # card image on /hiring/
 og_img: /img/og-img.png # social share image
 
-apply_link: "" # "" = on-site Netlify form; URL = link out instead
+# Application — pick one:
+notion_form: https://masterpoint.notion.site/ebd/<id> # embed src (Notion's /ebd/ path)
+notion_form_link: https://masterpoint.notion.site/<id> # plain link for the new-tab fallback
+apply_link: "" # non-empty URL = link out instead of embedding
 application_questions: # listed above the form + referenced in the body
   - "Question one?"
   - "Question two?"
@@ -98,9 +102,9 @@ application_questions: # listed above the form + referenced in the body
 ```
 
 Body is plain Markdown. Use `##` for the main sections (What You'll Do, What
-You Bring, Why Masterpoint?, About Masterpoint, the closing "Want to work with
-us?") and `###` for Must-Haves / Nice-to-Haves. The single layout styles `h2`
-with a gradient bar and `h3` as small caps.
+You Bring, Why Masterpoint?, About Masterpoint, How to Apply) and `###` for
+Must-Haves / Nice-to-Haves. The single layout styles `h2` with a gradient bar
+and `h3` as small caps.
 
 ## Job post page
 
@@ -110,43 +114,65 @@ with a gradient bar and `h3` as small caps.
    `apply_link` in a new tab) and **All open roles**.
 2. **White article card** (`.job-article-card`): optional closed-role notice,
    optional Loom embed (`video`), then `.Content`.
-3. **Apply** (`#apply`, dark): title, intro, the `application_questions` box,
-   and the Netlify form. Hidden when `status: closed`. When `apply_link` is set
-   the form is replaced by a single external button.
+3. **Apply** (`#apply`, dark). Hidden when `status: closed`. Otherwise, in
+   order of precedence:
+   - `apply_link` set → a single external "Submit your application" button.
+   - `notion_form` set → `hiring-notion-form.html`: title, intro, the
+     `application_questions` box, the embedded Notion form in a white card,
+     and an "open it in a new tab" fallback link.
+   - neither → an email-us CTA (`hello@masterpoint.io`).
 
-## Application form (Netlify Forms)
+## Application form (embedded Notion form)
 
-- Form name: **`job-application`**. `data-netlify="true"`,
-  `data-netlify-honeypot="bot-field"`, `enctype="multipart/form-data"` for the
-  PDF resume upload (Netlify caps uploads at 8 MB). Redirects to
-  `/thank-you/application/` on success.
-- Hidden fields: `form-name`, `subject` (Netlify email subject), `role` (post
-  title), `role_url` (permalink) so submissions from different postings are
-  distinguishable in one form.
-- Visible fields: full name*, email*, location*, LinkedIn, other links,
-  resume (PDF)_, question responses_, anything else, US work authorization
-  checkbox*.
-- Fields use the contact form's `.col.labelToggle` + `.formField` markup so the
-  existing floating-label JS and `form` SCSS apply. The file input and the
-  checkbox use `.job-file` / `.job-consent` instead (static labels, native
-  controls) because the global form styles hide checkboxes and float labels.
-- **After the first deploy**, open Netlify → Forms → `job-application` and set
-  up an email notification (and optionally a Slack/Zapier hook). Netlify only
-  registers a form once it has parsed the deployed HTML, so the form does not
-  exist in the UI until the branch deploys.
-- Local `hugo serve` does not process submissions; test the redirect and
-  validation states only. A deploy preview is a real Netlify form endpoint.
+- The form is the **"Application" form view** on the Notion database
+  **📋 Masterpoint Hiring Form** (the workspace's global hiring form).
+  Submissions create rows there, so the existing review workflow (Status
+  board, auto-screen, email templates) keeps working unchanged.
+- **Use the form's public URL id, not the view id.** The public form is a
+  Notion _form block_ (id `ac791bde07fe4766b461dca6fbc10e85`). The view id
+  (`901106d0…`) and the database id return "This page couldn't be found" on
+  notion.site. If the id is ever in doubt, open the public Notion hiring post,
+  inspect the form, and read `data-block-id` off the `notion-form-block`
+  element (the `notion-alias-block` wrapping it is just a link to it).
+- **Embedding only works through Notion's `/ebd/` path**
+  (`https://masterpoint.notion.site/ebd/<id>…`). Every other notion.site and
+  notion.so URL is served with `X-Frame-Options: SAMEORIGIN` and renders blank
+  inside an iframe on masterpoint.io. Current working URLs:
+  - embed (`notion_form`): `https://masterpoint.notion.site/ebd/ac791bde07fe4766b461dca6fbc10e85`
+  - public link (`notion_form_link`): `https://masterpoint.notion.site/ac791bde07fe4766b461dca6fbc10e85`
+
+  Notion's own embed code (form → **Share form** → **Anyone on the web with
+  link** → **Embed this page** → **Copy code**) produces the same `/ebd/` URL;
+  drop any `?pvs=` query, Notion strips it anyway.
+
+- The iframe has a fixed height (1780px desktop, 2400px mobile in
+  `hiring.scss`) because Notion embeds do not auto-resize. If the form gains
+  or loses questions, adjust the height so it shows without inner scrolling.
+  The embed follows the visitor's colour scheme (dark for most), so the
+  wrapper is a neutral dark card rather than white.
+- `notion_form_link` should be the form's normal public link (the one from
+  **Copy link** in the share menu). It powers the "Form not loading?" fallback
+  under the embed and is the link to give people who can't use iframes.
+- The Notion form has a **Position** select. When opening a role, add the new
+  option in the Notion form (Share form → edit) so applicants can pick it, and
+  reference the job post's questions in the `application_questions` list.
+- Local `hugo serve` renders the real embed; you can submit a test
+  application locally and it will appear in Notion, so use an obvious test
+  name and archive it afterwards.
 
 ## Workflow: posting a new role
 
 1. Copy the most recent post in `content/hiring/` to
    `content/hiring/YYYY-MM-DD-<slug>.md`, update front matter and body.
    Set `status: open`, `draft: false`.
-2. Pick a `preview_image` (16:10-ish) and, ideally, a role-specific `og_img`.
-3. Record a Loom intro if you want the video block; paste the share URL.
-4. `hugo serve` → check `/hiring/` and `/hiring/<slug>/` on desktop and mobile.
-5. PR title: `feat(hiring): add <role> posting`. Merge → Netlify builds.
-6. In Netlify Forms, confirm `job-application` exists and notifications are on.
+2. In Notion, make sure the **Masterpoint Hiring Form** is shared to the web
+   and has the new role in its **Position** options. Copy the embed `src`
+   into `notion_form` and the share link into `notion_form_link`.
+3. Pick a `preview_image` (16:10-ish) and, ideally, a role-specific `og_img`.
+4. Record a Loom intro if you want the video block; paste the share URL.
+5. `hugo serve` → check `/hiring/` and `/hiring/<slug>/` on desktop and mobile,
+   including that the embedded form loads and fits its frame.
+6. PR title: `feat(hiring): add <role> posting`. Merge → Netlify builds.
 7. Share `https://masterpoint.io/hiring/<slug>/`.
 
 ## Workflow: closing a role
@@ -154,6 +180,7 @@ with a gradient bar and `h3` as small caps.
 Set `status: closed` on the post. It moves to **Past Openings**, the hero
 swaps to "ROLE CLOSED", the apply section disappears, and a notice at the top
 of the article points at `/hiring/`. Do not delete the file; keep the URL.
+Optionally remove the role from the Notion form's **Position** options.
 
 ## Decisions & gotchas
 
@@ -163,6 +190,10 @@ of the article points at `/hiring/`. Do not delete the file; keep the URL.
   item before Content would shift that hack onto Hiring.
 - **Hiring pages do not use the `content-list` body class** for the same
   reason. Active-nav state comes from `menu.html` instead.
+- **We embed Notion's form rather than running our own** (an earlier draft
+  used a Netlify form). One intake database, one review workflow, no Netlify
+  Forms notifications to maintain. Trade-off: the embed is a fixed-height
+  iframe and depends on Notion being up.
 - **The 2023 hiring post lives in the blog** (`/blog/hiring-july-2023/`). It
   was left there; the new section starts with the Fall 2026 role.
 - **`bg_our_team.jpg` is a placeholder preview/banner image.** Swap in a
@@ -170,6 +201,6 @@ of the article points at `/hiring/`. Do not delete the file; keep the URL.
   (`twitter-header.png`) would work if exported to `static/img/hiring/`.
 - **Hugo locally.** `aqua install` fails for Hugo 0.162.1 on macOS (the
   registry expects a `.tar.gz` asset that the release ships as `.pkg`). The
-  aqua cache still has extended 0.146.4 at
-  `~/.local/share/aquaproj-aqua/pkgs/github_release/github.com/gohugoio/hugo/v0.146.4/…/hugo`,
-  which builds this site fine. `.claude/launch.json` points at it.
+  aqua cache still has extended 0.162.1 (installed with a newer registry) at
+  `~/.local/share/aquaproj-aqua/pkgs/github_release/github.com/gohugoio/hugo/v0.162.1/…/Payload/hugo`;
+  `.claude/launch.json` points at it.

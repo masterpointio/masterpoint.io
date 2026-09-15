@@ -24,8 +24,12 @@ video: https://www.loom.com/share/7e4fde005c73408f9a16606370be65b3
 preview_image: /img/bg_our_team.jpg
 og_img: /img/og-img.png
 
-# Application. Leave `apply_link` blank to use the on-site Netlify form; set it
-# to an external URL (Google Form, ATS, etc.) to link out instead.
+# Application. The shared Notion hiring form (form view on the "Masterpoint Hiring Form"
+# database) is embedded via Notion's /ebd/ path — the only Notion URL that allows framing.
+# `notion_form_link` is the plain public link used for the "open in a new tab" fallback.
+# Set `apply_link` to an external URL to link out instead of embedding.
+notion_form: https://masterpoint.notion.site/ebd/ac791bde07fe4766b461dca6fbc10e85
+notion_form_link: https://masterpoint.notion.site/ac791bde07fe4766b461dca6fbc10e85
 apply_link: ""
 application_questions:
   - "What's your experience with AWS, Azure, and GCP? What cloud are you most familiar with?"
