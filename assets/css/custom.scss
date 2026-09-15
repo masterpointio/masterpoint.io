@@ -784,9 +784,14 @@ padding-top: 12px;
       width: 200px;
       display: block;
     }
-    @media (min-width: 1200px) and (max-width: 1300px) {
+    // Compact header up to 1550px: five top-level menu items (Careers added
+    // Sept 2026) otherwise wrap onto a second line at common laptop widths.
+    @media (min-width: 1200px) and (max-width: 1550px) {
       width: 240px;
       display: block;
+    }
+    @media (min-width: 1200px) and (max-width: 1300px) {
+      width: 200px;
     }
 
     img {
@@ -805,6 +810,9 @@ padding-top: 12px;
   #headerSocial {
     margin-left: auto;
     padding-right: 1.1rem;
+    @media (min-width: 1200px) and (max-width: 1300px) {
+      padding-right: 0.7rem;
+    }
     @media (max-width: 767px) {
       padding-right: 0.8rem; margin-left: 0;
     }
@@ -816,8 +824,11 @@ padding-top: 12px;
   }
   #headerBtn {
     .button {
-      @media (min-width: 1200px) and (max-width:1330px) {
+      @media (min-width: 1200px) and (max-width: 1550px) {
         font-size: 16px;
+      }
+      @media (min-width: 1200px) and (max-width: 1300px) {
+        padding: 0 0.8em;
       }
     }
     @media (max-width: 575px) {
@@ -830,6 +841,9 @@ padding-top: 12px;
     position: relative;
     display: inline-block;
     padding-left: 2.17rem;
+    @media (min-width: 1200px) and (max-width: 1300px) {
+      padding-left: 1.2rem;
+    }
     @media (max-width: 767px) {
       padding-left: 1.1rem;
     }
@@ -901,8 +915,13 @@ padding-top: 12px;
         color: #ffffff;
         text-transform: uppercase;
         position: relative;
-        @media (min-width: 1200px) and (max-width: 1300px) {
+        @media (min-width: 1200px) and (max-width: 1550px) {
           font-size: 0.9rem;
+          margin-right: 0.55em;
+        }
+        @media (min-width: 1200px) and (max-width: 1300px) {
+          font-size: 0.85rem;
+          margin-right: 0.4em;
         }
         @media (max-width: 1199px) {
           width: 100%;
