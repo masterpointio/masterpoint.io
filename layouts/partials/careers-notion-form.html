@@ -1,0 +1,32 @@
+{{- /* Application section for a job post. Embeds the shared Notion "Masterpoint
+Hiring Form" (a form view on the Masterpoint Hiring Form database) so
+submissions land in Notion. Only Notion's `/ebd/` embed path can be framed;
+every other notion.site / notion.so URL is served with X-Frame-Options:
+SAMEORIGIN. Front matter: notion_form – the /ebd/ embed URL (iframe src);
+notion_form_link – plain public form link for the "open in a new tab" fallback.
+All instructions (intro + screening questions) live in the post body's closing
+"Want to work with us? Good call!" section, so this block is just a header and
+the form. See docs/careers.md. */ -}}
+<section id="apply">
+  <div class="container">
+    <h2 class="apply-title">Application</h2>
+    <div class="notion-form">
+      <iframe
+        src="{{ .Params.notion_form }}"
+        title="Masterpoint Hiring Form"
+        loading="lazy"
+        allow="clipboard-write"
+        referrerpolicy="strict-origin-when-cross-origin"
+      ></iframe>
+    </div>
+    <p class="notion-form__fallback">
+      Form not loading?
+      <a
+        href="{{ .Params.notion_form_link | default .Params.notion_form }}"
+        target="_blank"
+        rel="noopener"
+        >Open it in a new tab &rsaquo;</a
+      >
+    </p>
+  </div>
+</section>

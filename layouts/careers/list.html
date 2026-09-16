@@ -1,0 +1,107 @@
+{{ partial "head.html" . }}
+<body {{ if .Params.id }}id="{{ .Params.id }}" {{end}} class="careers-list">
+  {{ partial "header.html" . }}
+  <section id="banner">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="col col-12 col-md-9 col-lg-8">
+          <div class="bannerTxtBx aos-item" data-aos="fade-right">
+            {{ if .Params.banner_tagline }}
+            <div class="bannerTagline">
+              {{ .Params.banner_tagline | safeHTML }}
+            </div>
+            {{ end }}
+            <h3>
+              {{ if .Params.banner_title }}{{ .Params.banner_title | safeHTML
+              }}{{ else }}{{ .Title | safeHTML }}{{ end }}
+            </h3>
+            {{ with .Params.banner_text }}
+            <div class="bannerTxt">{{ . | safeHTML }}</div>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {{/* Open roles first (newest posted first), closed roles in a compact list
+  below. */}} {{ $open := where .Pages "Params.status" "ne" "closed" }} {{
+  $closed := where .Pages "Params.status" "closed" }}
+
+  <main>
+    <div class="container">
+      {{ with .Content }}
+      <div class="row">
+        <div class="col col-12 careers-intro">{{ . }}</div>
+      </div>
+      {{ end }}
+
+      <div class="row">
+        <div class="col col-12">
+          <h2 class="careers-group-title">
+            Open Roles
+            <span class="count">{{ len $open }}</span>
+          </h2>
+        </div>
+      </div>
+
+      <div class="row job-grid">
+        {{ if $open }} {{ range $open }} {{ partial "careers-entry.html" . }} {{
+        end }} {{ else }}
+        <div class="col col-12">
+          <div class="job-empty">
+            <h3>No open roles right now</h3>
+            <p>
+              We're always happy to meet great Infrastructure as Code engineers,
+              even when nothing is posted. Say hello at
+              <a href="mailto:hello@masterpoint.io">hello@masterpoint.io</a> and
+              tell us a bit about what you've built.
+            </p>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+
+      {{ if $closed }}
+      <div class="row">
+        <div class="col col-12">
+          <h2 class="careers-group-title careers-group-title--muted">
+            Past Openings
+          </h2>
+          <ul class="job-past">
+            {{ range $closed }}
+            <li>
+              <a href="{{ .Permalink }}">{{ .Title | safeHTML }}</a>
+              <span class="date"
+                >Posted {{ .Date.Format "January 2006" }} · Closed</span
+              >
+            </li>
+            {{ end }}
+          </ul>
+        </div>
+      </div>
+      {{ end }}
+
+      <div class="row">
+        <div class="col col-12 careers-links">
+          <span class="careers-links__label">Get to know us first</span>
+          <div class="careers-links__row">
+            <a href="/who-we-are/" class="button btn-outline-gradient"
+              >Meet the team →</a
+            >
+            <a href="/now/" class="button btn-outline-gradient"
+              >What we're up to now →</a
+            >
+            <a href="/blog/" class="button btn-outline-gradient"
+              >Read our blog →</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  {{ partial "footer.html" . }} {{ partial "scripts.html" . }}
+</body>
+{{- /* The html end tag is intentionally omitted (it is optional in HTML).
+Prettier lints this file on its own and rejects closing an element that
+head.html opened. */ -}}
