@@ -115,7 +115,8 @@ with the `button` shortcode instead of repeating the values in the JD.
    posted date), then **Apply for this role →** (anchors to `#apply`, or opens
    `apply_link` in a new tab) and **All open roles**.
 2. **White article card** (`.job-article-card`): optional closed-role notice,
-   optional Loom embed (`video`), then `.Content`.
+   optional Loom embed (`video`), `.Content`, then the standing
+   **AI-disclosure note** (`.job-notice`) — see below.
 3. **Apply** (`#apply`, dark). Hidden when `status: closed`. Otherwise, in
    order of precedence:
    - `apply_link` set → a single external "Submit your application" button.
@@ -125,6 +126,22 @@ with the `button` shortcode instead of repeating the values in the JD.
      and the screening questions) live in the body's closing section so nothing
      is shown twice.
    - neither → an email-us CTA (`hello@masterpoint.io`).
+
+## AI-disclosure note
+
+The "A note on our hiring process:" paragraph (Masterpoint may use AI for an
+initial screen; no AI in the final decision and no AI in interviews) is
+**hardcoded in `layouts/careers/single.html`**, at the foot of the article card
+and immediately above the apply section. It is deliberately not in post bodies
+so every posting carries the same wording and it only has to be edited once.
+
+- Rendered only when `status` is not `closed` (there is no form to precede on a
+  closed post).
+- `.job-notice` in `careers.scss` styles it as a footnote: `0.9rem`, italic,
+  grey, with a hairline rule above it; the lead-in `<strong>` is bold and
+  `$pine`.
+- If Legal/People change the wording, edit the layout — nothing in `content/`
+  needs touching.
 
 ## Application form (embedded Notion form)
 
@@ -195,6 +212,11 @@ Optionally remove the role from the Notion form's **Position** options.
   item before Content would shift that hack onto Careers.
 - **Careers pages do not use the `content-list` body class** for the same
   reason. Active-nav state comes from `menu.html` instead.
+- **The JD is copy-pasted from Notion, not sourced from it.** The Notion
+  hiring page and the Markdown post are maintained separately; editing Notion
+  does not update the site. When a JD changes in Notion, re-paste the body into
+  `content/careers/<post>.md`. (The AI-disclosure note is the exception — it
+  lives in the layout, so don't paste it into the body.)
 - **We embed Notion's form rather than running our own** (an earlier draft
   used a Netlify form). One intake database, one review workflow, no Netlify
   Forms notifications to maintain. Trade-off: the embed is a fixed-height

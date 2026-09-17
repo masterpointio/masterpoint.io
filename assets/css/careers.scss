@@ -556,6 +556,24 @@ $hire-pine-deep: #07262a;
     line-height: 1.5;
   }
 
+  // Standing AI-disclosure note at the foot of every open posting, just above
+  // the application form. Deliberately smaller and italic so it reads as a
+  // footnote rather than part of the JD copy.
+  .job-notice {
+    margin: 2.4rem 0 0;
+    padding-top: 1.4rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    font-size: 0.9rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: #555;
+
+    strong {
+      font-weight: 700;
+      color: $pine;
+    }
+  }
+
   .job-content {
     font-size: 1.05rem;
     line-height: 1.65;
