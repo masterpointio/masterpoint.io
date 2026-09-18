@@ -105,6 +105,18 @@ $applyExternal := .Params.apply_link | default "" -}} {{- $notionForm :=
         {{ end }}
 
         <div class="job-content">{{ .Content }}</div>
+
+        {{/* Standing AI-disclosure note. Shown on every open posting, directly
+        above the application section, so it never has to be copied into a post
+        body. See docs/careers.md. */}} {{ if not $closed }}
+        <p class="job-notice">
+          <strong>A note on our hiring process:</strong> Masterpoint may use AI
+          tools to assist with an initial screen of applications and resumes. No
+          AI is used to make the final hiring decision, and all interviews are
+          conducted entirely by humans &mdash; no AI is used to score, assess,
+          judge, or otherwise influence interview outcomes.
+        </p>
+        {{ end }}
       </article>
     </div>
 
