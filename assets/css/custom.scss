@@ -4662,6 +4662,7 @@ font-size: 1.55rem;
   }
 
   &__logo {
+    display: block;
     margin-bottom: 1.1rem;
     img {
       display: block;
@@ -4677,6 +4678,31 @@ font-size: 1.55rem;
     color: #fff;
     margin-bottom: 0.9rem;
     max-width: 36rem;
+    // no underline: it cuts through the .text-gradient spans awkwardly
+    a {
+      color: inherit;
+      &:hover {
+        color: inherit;
+        text-decoration: none;
+      }
+      &:focus-visible {
+        outline: 2px solid #2ad9c2;
+        outline-offset: 4px;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  // Hovering any of the card's links (title, logo, photo, CTA) previews the
+  // same destination: lift the CTA and nudge the photo.
+  &:has(a:hover) {
+    .csh-card__cta {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px -10px rgba(42, 217, 194, 0.75);
+    }
+    .csh-card__media img {
+      transform: scale(1.04);
+    }
   }
 
   &__blurb {
@@ -4689,11 +4715,16 @@ font-size: 1.55rem;
 
   &__cta {
     margin-top: 0.4rem;
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
   }
 
   &__media {
+    display: block;
     flex: 1 1 45%;
     position: relative;
+    overflow: hidden;
     min-height: 260px;
     img {
       position: absolute;
@@ -4701,6 +4732,7 @@ font-size: 1.55rem;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 0.5s ease;
     }
     // blend the photo into the pine card
     &::after {
@@ -4896,6 +4928,10 @@ font-size: 1.55rem;
   }
   .csh .csh-nav__progress {
     animation: none !important;
+  }
+  .csh-card__media img,
+  .csh-card__cta {
+    transition: none;
   }
 }
 

@@ -4,6 +4,11 @@
   /case-studies/ list page. Context: the case-study page. Content comes from
   the optional `highlight:` front matter map, falling back to
   hero_title / title, description, preview_image, client_logo.
+  Title, logo, photo and CTA all link to the study. The title and CTA are the
+  real (focusable, announced) links; the logo and photo links are mouse/touch
+  shortcuts only (tabindex -1 + aria-hidden) so keyboard and screen-reader
+  users don't hit the same destination four times. The slider's focus
+  management skips [data-csh-mirror] links for the same reason.
 */ -}}
 {{- $p := . -}}
 {{- $h := dict -}}
@@ -13,12 +18,21 @@
   <span class="csh-card__topline" aria-hidden="true"></span>
   <div class="csh-card__body">
     {{- with $h.card_logo | default $p.Params.client_logo }}
-    <div class="csh-card__logo"{{ with $p.Params.client_logo_height }} style="--cs-client-logo-h: {{ . }}"{{ end }}>
-      <img src="{{ . }}" alt="{{ $client }} logo" loading="lazy" />
-    </div>
+    <a
+      class="csh-card__logo"
+      href="{{ $p.RelPermalink }}"
+      tabindex="-1"
+      aria-hidden="true"
+      data-csh-mirror
+      {{- with $p.Params.client_logo_height }} style="--cs-client-logo-h: {{ . }}"{{ end }}
+    >
+      <img src="{{ . }}" alt="" loading="lazy" />
+    </a>
     {{- end }}
     <h4 class="csh-card__title">
-      {{ $h.title | default $p.Params.hero_title | default $p.Title | safeHTML }}
+      <a href="{{ $p.RelPermalink }}">
+        {{ $h.title | default $p.Params.hero_title | default $p.Title | safeHTML }}
+      </a>
     </h4>
     <p class="csh-card__blurb">
       {{ $h.blurb | default $p.Description | safeHTML }}
@@ -28,12 +42,18 @@
     </a>
   </div>
   {{- with $h.image | default $p.Params.preview_image }}
-  <div class="csh-card__media">
+  <a
+    class="csh-card__media"
+    href="{{ $p.RelPermalink }}"
+    tabindex="-1"
+    aria-hidden="true"
+    data-csh-mirror
+  >
     <img
       src="{{ . }}"
       alt="{{ $h.image_alt | default (printf `%s case study` $client) }}"
       loading="lazy"
     />
-  </div>
+  </a>
   {{- end }}
 </div>
