@@ -1453,7 +1453,8 @@ html:has(.cs-sticky-nav) {
 
 .case-study-immersive {
   // anchored sections land clear of the fixed sticky nav
-  .csi-section[id] {
+  .csi-section[id],
+  .csi-phase[id] {
     scroll-margin-top: 64px;
   }
   .csi-container {

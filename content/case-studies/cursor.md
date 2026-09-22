@@ -96,7 +96,7 @@ The existing platform, Terraform Cloud, introduced some friction too:
 {{< csi-section id="the-work" eyebrow="The Engagement" title="What <span class='csi-grad'>Masterpoint</span> Did" variant="light" >}}
 Masterpoint came in for a systematic overhaul, working across the architecture, platform, and developer workflows.
 
-{{< csi-phase title="November 2025 - Audit and High Leverage Fixes" >}}
+{{< csi-phase id="audit-and-fixes" title="November 2025 - Audit and High Leverage Fixes" >}}
 The engagement opened with [Masterpoint's audit](https://masterpoint.io/services/audit/) of Cursor's infrastructure:
 
 - cloud environments
@@ -136,7 +136,7 @@ delta: 44.7% faster
 All of this landed without touching the workspace structure and without downtime which is critical at the speed and scale Cursor operates. Every improvement had to land safely while the platform kept growing underneath it: even as Masterpoint deduplicated and trimmed resources, Cursor was continuously adding new ones. There was still more the systems could improve on.
 {{< /csi-phase >}}
 
-{{< csi-phase title="December 2025 - Spacelift Migration Begins" >}}
+{{< csi-phase id="platform-migration" title="December 2025 - Spacelift Migration Begins" >}}
 With the first phase complete, Masterpoint turned to the platform.
 
 As mentioned above, TFC's ClickOps workspace management, SSO troubles, and resource-under-management pricing were all inhibiting Cursor's velocity and growth.
@@ -154,7 +154,7 @@ Rather than migrating everything at once, a low-risk pilot Spacelift stack (the 
 Masterpoint also began evaluating a full migration from the Terraform runtime to [OpenTofu](https://opentofu.org/).
 {{< /csi-phase >}}
 
-{{< csi-phase title="January to February 2026 - Decomposition of the Monolithic Terraform Workspace into Domain Driven Module Architecture" >}}
+{{< csi-phase id="terraform-monolith-decomposition" title="January to February 2026 - Decomposition of the Monolithic Terraform Workspace into Domain Driven Module Architecture" >}}
 By February, the migration to Spacelift & OpenTofu was completed with no operational downtime for the Cursor engineering organization. OpenTofu freed Cursor from licensing constraints and unlocked capabilities unavailable or paywalled in Terraform, such as state encryption, OpenTelemetry support, and provider iteration.
 
 In parallel, Masterpoint continued to decompose the [terralith](https://masterpoint.io/blog/terralith-monolithic-terraform-architecture/). In the old architecture, all infrastructure lived in monolithic root modules backed by a single state file: every plan evaluated the entire footprint no matter how small the change, collaboration serialized on that one state, and unrelated systems were coupled together, so every apply carried the full monolith's blast radius.
@@ -164,7 +164,7 @@ The answer wasn't to simply carve that monolith into smaller pieces in place. Ma
 ![Before and after the decomposition: one monolithic production workspace where every service's ECS, ALB, network, storage, IAM, and secrets resources are scattered together, versus domain-scoped workspaces where each service's resources live and change together](/img/case-studies/cursor/cursor-terralith-scoping-masterpoint.svg)
 {{< /csi-phase >}}
 
-{{< csi-phase title="February to May 2026 - AI Agent Guardrails And Additional Improvements" >}}
+{{< csi-phase id="ai-agent-guardrails-and-terraform-optimizations" title="February to May 2026 - AI Agent Guardrails And Additional Optimizations" >}}
 After the migration was completed, Masterpoint continued to improved system usability and speed by:
 
 - [batching high volume API requests](https://docs.aws.amazon.com/Route53/latest/APIReference/API_ChangeResourceRecordSets.html) (in the Terraform Provider) to avoid throttling on aggressively rate-limited cloud APIs, such as AWS Route53 DNS (after AWS Support & TAM noted they could not be raised)

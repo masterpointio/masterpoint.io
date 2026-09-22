@@ -31,6 +31,10 @@ By default, the [Terraform AWS provider](https://registry.terraform.io/providers
 
 The default _standard_ retry mode backs off **per request**: each throttled call waits with a jitter, with no awareness of what any other in-flight request is doing. Terraform runs a default `-parallelism` of 10 resource operations at once, and each operation is rarely a single API call (the create or update, the read-back to refresh state, a polling waiter checking for completion). While one request sleeps through its backoff, nine others are firing fresh calls, and expired backoffs re-collide with new traffic. In an enterprise setting, with multiple operations running at once from multiple systems, this compounds!
 
+Here's what that looks like in practice. In this OpenTelemetry trace of a plan in standard mode, most resources refresh in under a second or a few seconds. But a single `aws_route53_record` read, stuck retrying against Route 53's five-requests-per-second account limit, took nearly 3 minutes, which was more than 60% of the whole plan's execution time.
+
+![OpenTelemetry trace of a TF plan in standard retry mode: one throttled aws_route53_record read takes 2m 55s, 62.7% of the total execution time, while neighboring resources finish in seconds](/img/updates/opentofu-exclude-flag-performance-bottlenecks/opentelemetry-traces-route53.png "With standard retries, a single Route 53 record read spent almost 3 minutes backing off and retrying against the rate limit.")
+
 ## Adaptive Mode, so the Client Paces Itself When Throttling is Detected
 
 [Adaptive mode](https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html) keeps everything standard mode does and adds the missing piece, which is a client-side rate limiter that watches for throttling responses and dials the client's send rate up or down accordingly, hence the name "adaptive". **When throttles appear, it cuts the rate and paces all requests from the Terraform Provider to avoid errors from rate limits, instead of blindly firing AWS API requests.**
