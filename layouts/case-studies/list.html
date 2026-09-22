@@ -37,6 +37,7 @@
             </div>
         </div>
     </section>
+    {{ with site.GetPage "/sections/home-join-clients" }}{{ partial "page-section.html" . }}{{ end }}
     <main>
         <div class="container">
             <div class="row">
@@ -44,14 +45,15 @@
                     {{ .Content }}
                 </div>
             </div>
-            <div class="row">
-                {{ range .Pages }}
-                {{ partial "case-study-entry.html" . }}
+            <div class="cs-list">
+                {{ range .Pages.ByWeight }}
+                {{ partial "case-study-card.html" . }}
                 {{ end }}
             </div>
  
         </div>
     </main>
+    {{ with site.GetPage "/sections/home-our-word" }}{{ partial "page-section.html" . }}{{ end }}
     {{ partial "schedule-assessment.html" . }}
     {{ partial "footer.html" . }}
     {{ partial "scripts.html" . }}

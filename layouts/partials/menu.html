@@ -3,7 +3,8 @@
 $active = or $active (eq .Name $current.Title) }} {{ $active = or $active (eq
 .URL $current.RelPermalink) }} {{ $active = or $active (and (eq .Name "Updates")
 (eq $current.Section "updates")) }} {{ $active = or $active (and (eq .URL
-"/careers/") (eq $current.Section "careers")) }}
+"/careers/") (eq $current.Section "careers")) }} {{ $active = or $active (and (eq .URL
+"/case-studies/") (eq $current.Section "case-studies")) }}
 <li class="menu-item">
   <a class="{{ if $active }}current-menu-item{{ end }}" href="{{ .URL }}">
     <span> {{ .Name }} </span>

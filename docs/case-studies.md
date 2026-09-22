@@ -45,27 +45,36 @@ cascade order is unchanged. The `#caseStudiesPage` list-page grid stays in
 
 ## List page (`/case-studies/`)
 
-`layouts/case-studies/list.html` (body `#caseStudiesPage`): hero banner + stacked
-full-width rows (`partials/case-study-entry.html`, each row one `<a>`). Chosen over a
-card grid to stay scannable as the list grows. Card image = each study's
-`preview_image` (`og_img` stays separate for social). Non-obvious bits:
+`layouts/case-studies/list.html` (body `#caseStudiesPage`), top to bottom: hero
+banner → "Trusted by innovators" client-logo section → stacked case-study cards →
+"Our clients love our hands-on approach" testimonials → schedule-assessment CTA.
+Case Studies is a **top-level nav item** (between Who We Are and Content), not under
+the Content dropdown. Non-obvious bits:
 
-- **Banner background is layered in CSS, not via `banner_image`** — cosmic photo
-  (`/img/bg_our_word.jpg`) + dark scrim (last stop `$pine`, so it fades into the rows)
-  + mint/pink glows + masked dot grid. Header is left **transparent** so the image runs
-  behind it; keep the global `padding-top: 9.9rem` (smaller hides the title under the
-  absolute header).
+- **Cards are the homepage slider's `.csh-card`**, via the shared
+  `partials/case-study-card.html` (also used by `shortcodes/case-study-slider.html`),
+  stacked in `.cs-list` and ordered **ByWeight**. So the list shows the same
+  `highlight:` title / blurb / image / card_logo as the slider; edit a study's card
+  in its front matter, not the template. Every study is listed, including ones with
+  `highlight: false` (that only hides a study from the slider). `main` is white
+  (like the homepage slider's section) so the dark cards stand out; the slider puts
+  its radius + shadow on `.csh__viewport`, so the list re-applies the shadow per card.
+- **The logo and testimonial sections are the homepage section files themselves**
+  (`content/sections/home-join-clients.md`, `home-our-word.md`), rendered with
+  `site.GetPage` + `partials/page-section.html` (same `<section>` markup as the
+  section-category loops). One copy of the text: editing the homepage section changes
+  both pages. Their `#join-clients` / `#our-word` styles are shared through the
+  `@at-root #home …, #caseStudiesPage …` selectors in `custom.scss`. Add a page to
+  those selectors if you reuse the sections elsewhere.
+- **Nav highlight:** `menu.html` marks Case Studies active on `/case-studies/` and on
+  every study (section match). The old `.content-list li:nth-child(N)` rule that
+  highlights "Content" on blog/now list pages excludes `#caseStudiesPage` and targets
+  the **5th** item. Update N if you reorder the top-level menu.
+- **Banner background is layered in CSS, not via `banner_image`**: cosmic photo
+  (`/img/bg_our_word.jpg`) + dark scrim + mint/pink glows + masked dot grid. The
+  header is left **transparent** so the image runs behind it; keep the global
+  `padding-top: 9.9rem` (smaller hides the title under the absolute header).
 - **`banner_tagline` is gradient text with a dash on _both_ ends.**
-- **Image column is 38%** (`flex: 0 0 38%`, `object-fit: cover`).
-- **Title is never clamped** (must always show in full → a long title grows the row);
-  description stays 2-line clamped.
-- **Hover accent is a gradient bar on the _left_ edge** (not the top).
-- **CTA gradient gotcha:** `.cs-card__cta` must be `align-self: flex-start`. As a flex
-  item in the column body it otherwise stretches full-width and the `text-gradient`
-  spreads across the whole column, leaving only the start color on the short word.
-- **A portrait `preview_image` makes its row taller** — `object-fit: cover` in a
-  %-width column with only `min-height` lets a tall poster (Power Digital) drive the
-  height, so rows can be uneven. A fixed `height` on `.cs-card` would crop instead.
 - **SCSS var-order:** `#caseStudiesPage` (in `custom.scss`) sits above the
   `@import "case-studies.scss"` line, where the `$cs-mint` / `csi-grad-*` defs now
   live, so use literal hex/gradients here (globals like `$pine` are fine).
@@ -76,7 +85,8 @@ card grid to stay scannable as the list grows. Card image = each study's
 
 Featured case-study slider on the homepage (section
 `content/sections/home-case-studies.md`, id `#case-study-highlights`, weight 5).
-One dark pine card per study (logo pill, title, blurb, CTA, photo) on a sliding
+One dark pine card per study (logo pill, title, blurb, CTA, photo; markup in
+`partials/case-study-card.html`, shared with the list page) on a sliding
 track navigated by a client-logo tab strip. Reused verbatim on `/services/audit/`
 via `content/sections/iac-success-stories.md` (weight 8, after the quotes section,
 before the CTA) — the shortcode and `.csh-*` styles are class-scoped/page-agnostic,
