@@ -1,0 +1,39 @@
+{{- /*
+  Featured case-study card (logo, title, blurb, CTA, photo) — one per study.
+  Shared by the homepage slider (shortcodes/case-study-slider.html) and the
+  /case-studies/ list page. Context: the case-study page. Content comes from
+  the optional `highlight:` front matter map, falling back to
+  hero_title / title, description, preview_image, client_logo.
+*/ -}}
+{{- $p := . -}}
+{{- $h := dict -}}
+{{- if reflect.IsMap $p.Params.highlight -}}{{- $h = $p.Params.highlight -}}{{- end -}}
+{{- $client := $p.Params.client | default $p.Title -}}
+<div class="csh-card">
+  <span class="csh-card__topline" aria-hidden="true"></span>
+  <div class="csh-card__body">
+    {{- with $h.card_logo | default $p.Params.client_logo }}
+    <div class="csh-card__logo"{{ with $p.Params.client_logo_height }} style="--cs-client-logo-h: {{ . }}"{{ end }}>
+      <img src="{{ . }}" alt="{{ $client }} logo" loading="lazy" />
+    </div>
+    {{- end }}
+    <h4 class="csh-card__title">
+      {{ $h.title | default $p.Params.hero_title | default $p.Title | safeHTML }}
+    </h4>
+    <p class="csh-card__blurb">
+      {{ $h.blurb | default $p.Description | safeHTML }}
+    </p>
+    <a class="button btn-gradient csh-card__cta" href="{{ $p.RelPermalink }}">
+      Read the Case Study &rarr;
+    </a>
+  </div>
+  {{- with $h.image | default $p.Params.preview_image }}
+  <div class="csh-card__media">
+    <img
+      src="{{ . }}"
+      alt="{{ $h.image_alt | default (printf `%s case study` $client) }}"
+      loading="lazy"
+    />
+  </div>
+  {{- end }}
+</div>

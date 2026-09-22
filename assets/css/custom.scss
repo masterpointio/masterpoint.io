@@ -784,9 +784,10 @@ padding-top: 12px;
       width: 200px;
       display: block;
     }
-    // Compact header up to 1550px: five top-level menu items (Careers added
-    // Sept 2026) otherwise wrap onto a second line at common laptop widths.
-    @media (min-width: 1200px) and (max-width: 1550px) {
+    // Compact header up to 1700px: six top-level menu items (Careers, then
+    // Case Studies, added Sept 2026) otherwise wrap onto a second line at
+    // common laptop widths.
+    @media (min-width: 1200px) and (max-width: 1700px) {
       width: 240px;
       display: block;
     }
@@ -810,6 +811,11 @@ padding-top: 12px;
   #headerSocial {
     margin-left: auto;
     padding-right: 1.1rem;
+    // Not enough room for the icons beside six menu items on small laptops;
+    // the same links are in the footer.
+    @media (min-width: 1200px) and (max-width: 1450px) {
+      display: none;
+    }
     @media (min-width: 1200px) and (max-width: 1300px) {
       padding-right: 0.7rem;
     }
@@ -824,7 +830,7 @@ padding-top: 12px;
   }
   #headerBtn {
     .button {
-      @media (min-width: 1200px) and (max-width: 1550px) {
+      @media (min-width: 1200px) and (max-width: 1700px) {
         font-size: 16px;
       }
       @media (min-width: 1200px) and (max-width: 1300px) {
@@ -915,7 +921,7 @@ padding-top: 12px;
         color: #ffffff;
         text-transform: uppercase;
         position: relative;
-        @media (min-width: 1200px) and (max-width: 1550px) {
+        @media (min-width: 1200px) and (max-width: 1700px) {
           font-size: 0.9rem;
           margin-right: 0.55em;
         }
@@ -1933,7 +1939,9 @@ footer {
       }
     }
   }
-  #join-clients {
+  // /case-studies/ renders this same section file (layouts/case-studies/list.html)
+  @at-root #home #join-clients,
+    #caseStudiesPage #join-clients {
     padding: 2.75rem 0 2.75rem;
     background: #fff;
     .container {
@@ -1973,7 +1981,8 @@ footer {
   // /services/audit mirrors this section (content/sections/iac-our-word.md,
   // same id) — @at-root scopes the treatment to both pages.
   @at-root #home #our-word,
-    #page-iac-audit-services #our-word {
+    #page-iac-audit-services #our-word,
+    #caseStudiesPage #our-word {
     color: #fff;
     padding: 5.25rem 0 3rem;
     background: $pine;
@@ -3846,145 +3855,37 @@ footer {
   }
 
   main {
-    background: $pine;
+    // light, like the homepage slider's section, so the dark cards stand out
+    background: #fff;
+    padding: 1rem 0 4.5rem;
 
     .container {
       max-width: 1180px;
     }
 
-    // ── Case-study card grid ─────────────────────────────────────────
-    .row {
-      row-gap: 1.5rem;
-    }
-
-    .cs-card-col {
+    // ── Case-study cards ─────────────────────────────────────────────
+    // Same .csh-card as the homepage slider (partials/case-study-card.html),
+    // stacked. The slider's radius + shadow live on .csh__viewport, so the
+    // list re-applies them per card.
+    .cs-list {
       display: flex;
-    }
-
-    .cs-card {
-      position: relative;
-      display: flex;
-      width: 100%;
-      min-height: 280px;
-      border-radius: 18px;
-      overflow: hidden;
-      text-decoration: none;
-      background:
-        radial-gradient(ellipse at 100% 0%, rgba(42, 217, 194, 0.12), transparent 45%),
-        linear-gradient(120deg, #0c3133 0%, #07262a 100%);
-      border: 1px solid rgba(42, 217, 194, 0.16);
-      box-shadow: 0 14px 32px -22px rgba(0, 0, 0, 0.7);
-      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
-
-      // No left-edge accent bar: the preview image is flush to the left edge, so
-      // any bar would paint over ("spill" onto) the preview on hover. Hover
-      // feedback comes from the lift + brighter border + deeper shadow + image
-      // zoom + arrow slide instead — nothing overlaps the card content.
-      &:hover,
-      &:focus-visible {
-        transform: translateY(-3px);
-        border-color: rgba(42, 217, 194, 0.45);
-        box-shadow: 0 22px 44px -26px rgba(0, 0, 0, 0.85);
-
-        .cs-card__media img {
-          transform: scale(1.05);
-        }
-        .cs-card__arrow {
-          transform: translateX(5px);
-        }
-      }
-    }
-
-    .cs-card__media {
-      position: relative;
-      flex: 0 0 38%;
-      align-self: stretch;
-      overflow: hidden;
-      background: #07262a;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        transition: transform 0.5s ease;
-      }
-    }
-
-    .cs-card__body {
-      display: flex;
-      flex: 1 1 auto;
       flex-direction: column;
-      justify-content: center;
-      min-width: 0;
-      padding: 2.4rem 2.7rem;
+      gap: 2rem;
     }
 
-    .cs-card__title {
-      margin: 0 0 0.5rem;
-      font-size: 1.2rem;
-      line-height: 1.3;
-      font-weight: 800;
-      color: #fff;
-    }
-
-    .cs-card__desc {
-      margin: 0 0 0.95rem;
-      font-size: 0.9rem;
-      line-height: 1.55;
-      color: rgba(255, 255, 255, 0.68);
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .cs-card__cta {
-      display: inline-flex;
-      align-self: flex-start; // shrink to content so the gradient maps to the words, not the whole column
-      align-items: center;
-      gap: 0.45rem;
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      background: linear-gradient(92.08deg, #ede497 -0.66%, #2ad9c2 26%, #d891ce 59.55%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
-    }
-
-    .cs-card__arrow {
-      font-size: 1.05rem;
-      -webkit-text-fill-color: #2ad9c2;
-      color: #2ad9c2;
-      transition: transform 0.28s ease;
-    }
-
-    // mobile: stack image on top, content below
-    @media (max-width: 767px) {
-      .cs-card {
-        flex-direction: column;
-        min-height: 0;
-      }
-      .cs-card__media {
-        flex: none;
-        width: 100%;
-        aspect-ratio: 16 / 10;
-      }
-      .cs-card__body {
-        padding: 1.25rem 1.3rem 1.4rem;
-      }
+    .csh-card {
+      box-shadow: 0 24px 48px -28px rgba(14, 56, 58, 0.45);
     }
   }
 }
 
-.content-list {
+// Highlight the "Content" dropdown (5th top-level item) on its list pages.
+// /case-studies/ is top-level itself — menu.html marks it active.
+.content-list:not(#caseStudiesPage) {
   header {
     ul {
       li {
-        &:nth-child(4) {
+        &:nth-child(5) {
           a {
             &:first-of-type {
               @extend .current-menu-item;

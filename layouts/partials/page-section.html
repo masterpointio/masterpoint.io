@@ -1,0 +1,24 @@
+{{- /* Renders one content/sections/*.md page as a standalone <section>, with the
+same markup the section-category loops in index.html / services layouts emit.
+Lets a layout reuse a homepage section verbatim (single source of copy):
+  {{ with site.GetPage "/sections/home-join-clients" }}{{ partial "page-section.html" . }}{{ end }}
+*/ -}}
+<section id="{{ .Params.id }}">
+    {{ if .Params.image }}
+    <div class="bg-image">
+        <img src='{{ .Params.image }}' class="lazy img-fluid" alt="{{ .Site.Title }} - {{ .Title }} Image">
+    </div>
+    {{end}}
+    <div class="container">
+        <div class="row {{ .Params.position }} ">
+            {{if .Params.section_image}}
+            <div class="col sectionImgCol aos-item" data-aos="fade">
+                <img src="{{.Params.section_image}}"/>
+            </div>
+            {{end}}
+            <div class="col col-12 sectionColTxt {{ .Params.size }} aos-item" data-aos="fade" >
+                {{ .Content }}
+            </div>
+        </div>
+    </div>
+</section>
