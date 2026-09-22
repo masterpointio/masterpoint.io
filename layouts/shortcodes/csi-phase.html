@@ -7,9 +7,11 @@
   INSIDE a csi-section — no wrapper element is needed.
   Args:
     title  phase heading (HTML allowed) — typically "Month YYYY - Headline"
+    id     optional anchor target so a phase can be deep-linked
+           (e.g. /case-studies/cursor/#ai-agent-guardrails)
 */}}
 {{- $title := .Get "title" -}}
-<article class="csi-phase" data-aos="fade-up" data-aos-duration="600">
+<article class="csi-phase"{{ with .Get "id" }} id="{{ . }}"{{ end }} data-aos="fade-up" data-aos-duration="600">
 <div class="csi-phase__rail" aria-hidden="true">
 <span class="csi-phase__marker"></span>
 </div>
