@@ -214,13 +214,28 @@
             var lightbox = root.querySelector(".csi-carousel__lightbox");
             if (lightbox) {
               var lightboxImg = lightbox.querySelector(".csi-carousel__lightbox-img");
-              root.querySelectorAll(".csi-carousel__zoom").forEach(function (btn) {
-                btn.addEventListener("click", function () {
-                  var img = btn.querySelector("img");
-                  lightboxImg.src = img.currentSrc || img.src;
-                  lightboxImg.alt = img.alt;
+              var zoomImgs = Array.prototype.slice.call(root.querySelectorAll(".csi-carousel__zoom img"));
+              var shown = 0;
+              var show = function (i) {
+                shown = Math.max(0, Math.min(zoomImgs.length - 1, i));
+                var img = zoomImgs[shown];
+                lightboxImg.src = img.currentSrc || img.src;
+                lightboxImg.alt = img.alt;
+              };
+              zoomImgs.forEach(function (img, i) {
+                img.parentNode.addEventListener("click", function () {
+                  show(i);
                   lightbox.showModal();
                 });
+              });
+              // the modal traps focus, so the scroller's native arrow-key
+              // scrolling can't reach it — step through the charts here, and
+              // keep the carousel behind in step so closing lands on the same one
+              lightbox.addEventListener("keydown", function (e) {
+                if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+                e.preventDefault();
+                show(shown + (e.key === "ArrowRight" ? 1 : -1));
+                goTo(shown);
               });
               // a click on the ::backdrop targets the dialog element itself
               lightbox.addEventListener("click", function (e) {

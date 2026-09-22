@@ -82,8 +82,9 @@
       if (slides.length < 2) return;
       var current = 0;
 
+      // Mirror links (card logo/photo) stay out of the tab order on every slide
       function setFocusable(slide, on) {
-        slide.querySelectorAll("a, button").forEach(function (el) {
+        slide.querySelectorAll("a:not([data-csh-mirror]), button").forEach(function (el) {
           el.tabIndex = on ? 0 : -1;
         });
       }

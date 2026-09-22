@@ -8,7 +8,9 @@
   Args:
     title  phase heading (HTML allowed) — typically "Month YYYY - Headline"
     id     optional anchor target so a phase can be deep-linked
-           (e.g. /case-studies/cursor/#ai-agent-guardrails)
+           (e.g. /case-studies/cursor/#ai-agent-guardrails); when set, the
+           title becomes a clickable anchor link like markdown headings get
+           from render-heading.html
 */}}
 {{- $title := .Get "title" -}}
 <article class="csi-phase"{{ with .Get "id" }} id="{{ . }}"{{ end }} data-aos="fade-up" data-aos-duration="600">
@@ -16,7 +18,13 @@
 <span class="csi-phase__marker"></span>
 </div>
 <div class="csi-phase__card">
-{{- with $title }}<h3 class="csi-phase__title">{{ . | safeHTML }}</h3>{{ end -}}
+{{- with $title -}}
+{{- with $.Get "id" -}}
+<h3 class="csi-phase__title heading-with-anchor"><a href="#{{ . }}" class="heading-anchor-link" aria-label="Link to {{ $title | plainify }}"><span class="heading-text">{{ $title | safeHTML }}</span><span class="heading-anchor-symbol">#</span></a></h3>
+{{- else -}}
+<h3 class="csi-phase__title">{{ . | safeHTML }}</h3>
+{{- end -}}
+{{- end -}}
 <div class="csi-phase__body csi-prose">
 {{ .Inner | $.Page.RenderString (dict "display" "block") }}
 </div>
