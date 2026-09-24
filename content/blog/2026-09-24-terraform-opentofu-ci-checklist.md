@@ -8,9 +8,11 @@ date: 2026-09-24
 slug: terraform-opentofu-ci-checklist
 description: "Run formatting and validation, linting, tests, security scans, and documentation checks locally and in CI for Terraform and OpenTofu."
 image: /img/updates/terraform-opentofu-ci-checklist/terraform-opentofu-ci-checklist-hero.png
+preview_image: /img/updates/terraform-opentofu-ci-checklist/terraform-opentofu-ci-checklist-preview.png
 hide_hero: true
 image_alt: "Terraform & OpenTofu CI Checklist. Masterpoint title graphic with five checkmarks."
 og_img: /img/updates/terraform-opentofu-ci-checklist/terraform-opentofu-ci-checklist-og.png
+callout: <p>👋 <b>If your team needs help establishing these standards across Terraform or OpenTofu repositories, <a href='https://masterpoint.io/contact/'>get in touch with Masterpoint</a>.</b> We can help you turn the above checklist into a pattern your team can reliably use and maintain.</p>
 ---
 
 AI makes Terraform and OpenTofu code faster to produce. That doesn't remove the need to validate every change before it ships. It raises the stakes for consistent validation: more code can reach review in less time, and every change still has to meet the same standard.
@@ -146,5 +148,3 @@ Tools like [mise](https://mise.jdx.dev/) and [Aqua](https://aquaproj.github.io/)
 ## Use automated checks to focus human review
 
 The reviewer still needs to decide whether a resource should exist, whether access is appropriate, and whether the plan matches the intended change. Use the above to give them reliable feedback from the routine checks so they can concentrate on those decisions.
-
-If your team needs help establishing these standards across Terraform or OpenTofu repositories, [get in touch with Masterpoint](https://masterpoint.io/contact/). We can help you turn the above checklist into a pattern your team can reliably use and maintain.

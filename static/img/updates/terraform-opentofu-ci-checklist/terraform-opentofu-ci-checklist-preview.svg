@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-labelledby="preview-title preview-desc">
+  <title id="preview-title">Infrastructure CI checklist</title>
+  <desc id="preview-desc">Five check marks and checklist rows on a dark teal background.</desc>
+  <!-- Checklist paths, strokes, and color gradient preserved from the approved native artwork. -->
+  <defs>
+    <linearGradient id="atmosphere" x1="0" y1="0" x2="1" y2=".53">
+      <stop offset=".36" stop-color="#222222" stop-opacity="0"/>
+      <stop offset=".76" stop-color="#222222" stop-opacity=".5"/>
+      <stop offset="1" stop-color="#d191bf" stop-opacity=".125"/>
+    </linearGradient>
+  </defs>
+  <path fill="#0e383a" d="M0 0H800V800H0Z"/>
+  <path fill="url(#atmosphere)" d="M0 0H800V800H0Z"/>
+  <defs>
+    <linearGradient id="checks-color" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#ece295"/>
+      <stop offset=".48" stop-color="#55c1b4"/>
+      <stop offset="1" stop-color="#d191bf"/>
+    </linearGradient>
+  </defs>
+  <style>
+    .boxes { fill: none; stroke: #55c1b4; stroke-opacity: .4; stroke-width: 2; }
+    .ticks { fill: none; stroke: url(#checks-color); stroke-width: 5; stroke-linecap: square; stroke-linejoin: miter; }
+    .lines { fill: none; stroke: #f3f3f3; stroke-opacity: .65; stroke-width: 3; }
+  </style>
+  <g transform="translate(176 161) scale(1.32)">
+  <g class="boxes">
+    <path d="M57 17H17V57H57V47 M57 89H17V129H57V119 M57 161H17V201H57V191 M57 233H17V273H57V263 M57 305H17V345H57V335"/>
+  </g>
+  <g class="ticks">
+    <path d="M30 33L42 45L67 20 M30 105L42 117L67 92 M30 177L42 189L67 164 M30 249L42 261L67 236 M30 321L42 333L67 308"/>
+  </g>
+  <g class="lines">
+    <path d="M98 37H322 M98 109H282 M98 181H302 M98 253H322 M98 325H262"/>
+  </g>
+  </g>
+</svg>
