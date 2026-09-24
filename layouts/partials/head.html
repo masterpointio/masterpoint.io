@@ -109,8 +109,8 @@
     <meta name="theme-color" content="#ffffff" />
 
     {{ if .Params.og_img }}
-    <meta property="og:image" content="{{ .Params.og_img }}" />
-    <meta property="twitter:image" content="{{ .Params.og_img }}" />
+    <meta property="og:image" content="{{ .Params.og_img | absURL }}" />
+    <meta property="twitter:image" content="{{ .Params.og_img | absURL }}" />
     {{ else if and (eq .Section "blog") (.Params.image) }}
     <meta property="og:image" content="{{ .Params.image }}" />
     <meta property="twitter:image" content="{{ .Params.image }}" />
@@ -201,33 +201,33 @@
       {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
-        "headline": {{ .Title | jsonify }},
-        "description": {{ .Description | jsonify }},
+        "headline": {{ .Title }},
+        "description": {{ .Description }},
         "author": {
           "@type": "Person",
-          "name": {{ if .Params.author }}{{ .Params.author | jsonify }}{{ else }}"Masterpoint"{{ end }}
+          "name": {{ if .Params.author }}{{ .Params.author }}{{ else }}"Masterpoint"{{ end }}
         },
         "publisher": {
           "@type": "Organization",
           "name": "Masterpoint Consulting",
           "url": "{{ .Site.BaseURL }}"
         },
-        "datePublished": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+        "datePublished": {{ .Date.Format "2006-01-02T15:04:05Z07:00" }},
         {{ if .Params.date_modified }}
-        "dateModified": {{ .Params.date_modified | dateFormat "2006-01-02T15:04:05Z07:00" | jsonify }},
+        "dateModified": {{ .Params.date_modified | dateFormat "2006-01-02T15:04:05Z07:00" }},
         {{ else }}
-        "dateModified": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+        "dateModified": {{ .Date.Format "2006-01-02T15:04:05Z07:00" }},
         {{ end }}
-        "url": {{ $canonicalURL | jsonify }},
+        "url": {{ $canonicalURL }},
         {{ if .Params.image }}
         "image": {
           "@type": "ImageObject",
-          "url": {{ (printf "%s%s" .Site.BaseURL .Params.image) | jsonify }}
+          "url": {{ .Params.image | absURL }},
         },
         {{ end }}
         "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": {{ $canonicalURL | jsonify }}
+          "@id": {{ $canonicalURL }}
         }
       }
     </script>

@@ -1,0 +1,12 @@
+{{- /* Keep the shortcode call on one line so Markdown formatters preserve it. */ -}}
+<figure class="downloadable-image">
+  <a class="downloadable-image__original" href="{{ .Get "src" }}" target="_blank" rel="noopener noreferrer">
+    <img src="{{ .Get "src" }}" alt="{{ .Get "alt" }}" width="{{ .Get "width" }}" height="{{ .Get "height" }}" loading="lazy" />
+  </a>
+  <a class="downloadable-image__download" href="{{ .Get "pdf" }}" download>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5" />
+    </svg>
+    <span>Download as PDF</span>
+  </a>
+</figure>
