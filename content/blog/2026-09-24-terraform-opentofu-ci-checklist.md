@@ -7,11 +7,11 @@ author: Matt Gowie
 date: 2026-09-24
 slug: terraform-opentofu-ci-checklist
 description: "Run formatting and validation, linting, tests, security scans, and documentation checks locally and in CI for Terraform and OpenTofu."
-image: /img/updates/terraform-opentofu-ci-checklist/terraform-opentofu-ci-checklist-hero.png
+image: /img/updates/terraform-opentofu-ci-checklist/terraform-opentofu-ci-checklist-preview.png
 preview_image: /img/updates/terraform-opentofu-ci-checklist/terraform-opentofu-ci-checklist-preview.png
-hide_hero: true
+hide_hero: true # intentional: a full-width hero pushes the article below the fold; `image` is still used for search metadata
 image_alt: "Terraform & OpenTofu CI Checklist. Masterpoint title graphic with five checkmarks."
-og_img: /img/updates/terraform-opentofu-ci-checklist/terraform-opentofu-ci-checklist-og.png
+og_img: /img/updates/terraform-opentofu-ci-checklist/terraform-opentofu-ci-checklist-preview.png
 callout: <p>👋 <b>If your team needs help establishing these standards across Terraform or OpenTofu repositories, <a href='https://masterpoint.io/contact/'>get in touch with Masterpoint</a>.</b> We can help you turn the above checklist into a pattern your team can reliably use and maintain.</p>
 ---
 
