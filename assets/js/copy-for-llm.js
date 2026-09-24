@@ -12,6 +12,7 @@
   var URL_LINE = /^(URL: )(\/\/[^\s]*|\/[^\s]*)/m;
   var LIGHTBOX_IMG = /\{\{<\s*lightboximg\s+"([^"]+)"\s+"([^"]+)"\s*>\}\}/g;
   var LOOP_VIDEO = /\{\{<\s*loop-video\b[\s\S]*?>\}\}/g;
+  var DOWNLOADABLE_IMAGE = /\{\{<\s*downloadable-image\b[\s\S]*?>\}\}/g;
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
@@ -73,6 +74,9 @@
       // {{< lightboximg "/path/to/img.png" "Alt text" >}}
       text = text.replace(LIGHTBOX_IMG, "![$2]($1)");
 
+      // Preserve downloadable graphics as an image and a usable PDF link.
+      text = text.replace(DOWNLOADABLE_IMAGE, downloadableImage);
+
       // Reduce loop-video shortcodes to a one-line note, since a silent
       // looping demo has no useful text form
       // {{< loop-video src="..." alt="..." caption="..." >}}
@@ -114,6 +118,21 @@
       var alt = /alt="([^"]*)"/.exec(shortcode);
       var label = (caption && caption[1]) || (alt && alt[1]);
       return label ? "[Video: " + label + "]" : "";
+    }
+
+    function downloadableImage(shortcode) {
+      var src = /src="([^"]*)"/.exec(shortcode);
+      var alt = /alt="([^"]*)"/.exec(shortcode);
+      var pdf = /pdf="([^"]*)"/.exec(shortcode);
+      if (!src) return "";
+
+      var origin = window.location.origin;
+      var imageUrl = new URL(src[1], origin).href;
+      var image = "![" + (alt ? alt[1] : "") + "](" + imageUrl + ")";
+      if (!pdf) return image;
+
+      var pdfUrl = new URL(pdf[1], origin).href;
+      return image + "\n\n[Download as PDF](" + pdfUrl + ")";
     }
 
     function copyToClipboard(text) {

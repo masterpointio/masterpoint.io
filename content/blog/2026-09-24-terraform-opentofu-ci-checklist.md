@@ -8,6 +8,7 @@ date: 2026-09-24
 slug: terraform-opentofu-ci-checklist
 description: "Run formatting and validation, linting, tests, security scans, and documentation checks locally and in CI for Terraform and OpenTofu."
 image: /img/updates/terraform-opentofu-ci-checklist/terraform-opentofu-ci-checklist-hero.png
+hide_hero: true
 image_alt: "Terraform & OpenTofu CI Checklist. Masterpoint title graphic with five checkmarks."
 og_img: /img/updates/terraform-opentofu-ci-checklist/terraform-opentofu-ci-checklist-og.png
 ---
@@ -18,7 +19,7 @@ If you're using AI for your infrastructure code, you should be using it to short
 
 Use the checklist below as a starting point for your own organization. It's the five-part baseline we follow at Masterpoint, and each section explains what the check catches, how to run it, and what passing still doesn't prove.
 
-[![Terraform and OpenTofu CI checklist: formatting and validation, linting, tests, security, and documentation. Run each locally before commit and automatically on pull requests. Required checks must block merge. Passing automation does not replace human review.](/img/updates/terraform-opentofu-ci-checklist/terraform-opentofu-ci-checklist.png)](/img/updates/terraform-opentofu-ci-checklist/terraform-opentofu-ci-checklist.png)
+{{< downloadable-image src="/img/updates/terraform-opentofu-ci-checklist/terraform-opentofu-ci-checklist.png" pdf="/download/terraform-opentofu-ci-checklist.pdf" width="2000" height="2420" alt="Terraform and OpenTofu CI checklist: formatting and validation, linting, tests, security, and documentation. Run each locally before commit and automatically on pull requests. Required checks must block merge. Passing automation does not replace human review." >}}
 
 ## 1. Formatting and validation: check the configuration
 
@@ -56,7 +57,7 @@ For a separate illustration of what a test can protect, consider a small AWS S3 
 
 The test uses a mocked AWS provider so it can inspect the planned configuration without AWS credentials or cloud resources:
 
-```hcl
+```terraform
 mock_provider "aws" {}
 
 run "private_bucket" {
