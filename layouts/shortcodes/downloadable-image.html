@@ -1,6 +1,6 @@
 {{- /* Keep the shortcode call on one line so Markdown formatters preserve it. */ -}}
 <figure class="downloadable-image">
-  <a class="downloadable-image__original" href="{{ .Get "src" }}">
+  <a class="downloadable-image__original" href="{{ .Get "src" }}" target="_blank" rel="noopener noreferrer">
     <img src="{{ .Get "src" }}" alt="{{ .Get "alt" }}" width="{{ .Get "width" }}" height="{{ .Get "height" }}" loading="lazy" />
   </a>
   <a class="downloadable-image__download" href="{{ .Get "pdf" }}" download>
