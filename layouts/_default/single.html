@@ -38,7 +38,7 @@
                     {{ if .Params.image }}
                     <div class="col-12 text-center">
                         <img src='{{ .Param "image"}}' class="img-fluid lazy"
-                        alt="{{ .Title | safeHTML }}">
+                        alt="{{ .Params.image_alt | default .Title }}">
                     </div>
 
                     {{end}}
