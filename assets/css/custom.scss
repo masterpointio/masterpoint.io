@@ -2308,6 +2308,10 @@ footer {
 
 // Default layout for single pages
 // Including updates (blog posts)
+.single-default#iac-five-years h1.postTitle {
+  text-wrap: balance;
+}
+
 .single-default {
   header {
     position: relative;
