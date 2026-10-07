@@ -7,6 +7,7 @@ draft: false
 team: true
 weight: 7
 image: /img/team/yves-richard.jpg
+bio: Yves is a Platform Engineer who helps teams build and scale reliable, well-automated infrastructure. Outside of work, he's usually out on the water fly fishing or up in the mountains exploring.
 ---
 
-Yves is a Platform Engineer who helps teams build and scale reliable, well-automated infrastructure. Outside of work, he's usually out on the water fly fishing or up in the mountains exploring.
+NO UPDATE

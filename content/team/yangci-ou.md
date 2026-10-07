@@ -10,17 +10,8 @@ image: /img/team/yangci-ou.png
 bio: Yangci (Yang) is a platform engineer from Philadelphia, PA. He finds great fulfillment in leveraging technology to tackle complex challenges across diverse technical domains and turning ambiguous problems into scalable, well-operated systems. Outside of work, he enjoys going on adventures, exploring new areas, skating, and playing racket sports like badminton.
 ---
 
-Lately I’ve been learning to dance with what life brings. Staying present and finding joy in the moment, even as things get busier.
+This summer I spent about two weeks in Italy, split between Venice, Florence, and Rome. There were days where we had plans, but there were also days where we went slow and wandered to see what we'd stumble upon, and that turned out to be the best part, finding lesser known gems that were beautiful or had great food.
 
-I’m also channeling my curiosity and adventurous streak into growth by diving deeper into technologies where it interests me most, while also making time for experiences with friends and family. I’m prioritizing better time management so I can keep doing both. Time management has become a big priority so I can keep growing without missing the moments that matter.
+Closer to home, most of my free time still goes to racquet sports, at least two or three times a week, I'd play badminton, tennis, or pickleball. I also skateboard now that it's getting cooler and not as hot as the summer, and it fits perfectly with my other quiet hobby of finding rooftops around the city with good views. For more chill evenings with friends, [Taco Cat Goat Cheese Pizza](https://tacocatgames.com/product/taco-cat-goat-cheese-pizza/) has become my default thing to bring along. It takes about a minute to teach and works with almost any group, which is most of why I love it.
 
-Along the way, I've been turning that curiosity into momentum by earning several certifications (and continuing to learn for more), including:
-
-- [AWS Certified Solutions Architect – Associate](https://www.credly.com/badges/3b79670c-3091-4c52-b59a-6dd580c111b1/)
-- [Microsoft Certified: Azure Developer Associate](https://learn.microsoft.com/en-us/users/yangci/credentials/f18d5775bfc1d60)
-- [Microsoft Certified: Azure AI Engineer Associate](https://learn.microsoft.com/en-us/users/yangci/credentials/35524e81cbbc84a)
-- [GitHub Advanced Security](https://www.credly.com/badges/472657ac-a234-4276-9c09-c0dc40262914/)
-
-For fun, you’ll usually find me playing badminton, tennis, or pickleball. I love the casual, social side of sports and the chance to have a good time with the people around me is always a plus.
-
-Outside of work, I’ve also been interested into being more hands-on and self-sufficient in everyday life. I’ve been treating practical things that pop up like mini-adventures, learning and troubleshooting as I go. Recently that’s looked like doing my own oil changes, replacing a car battery, installing a new ceiling fan, and working with sink plumbing. It's been great as I've found a lot of fulfillment in picking up a new skill each time.
+I also recently received my [AWS Certified Solutions Architect Professional](https://www.credly.com/badges/cdcabc8b-2b02-46a9-ae40-0e220f17f47f/public_url), it was a great excuse to go deeper on the corners of AWS that I don't touch day to day, so when it does come up, I've experienced it and worked with it to know how to operate it, and it's the same curiosity I've always run on.
