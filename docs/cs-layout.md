@@ -1,9 +1,9 @@
 <!-- trunk-ignore-all(markdownlint,prettier) -->
 
-# Case Studies — working guide
+# Maintainer notes: case studies
 
-Architecture, conventions, and workflow for building case study pages on
-masterpoint.io. **Keep it current and concise** — update it when a layout,
+Internal repo notes on the layouts, shortcodes, and workflow behind the
+`content/case-studies/` section. **Keep it current and concise** — update it when a layout,
 shortcode, visual, or workflow decision changes, and delete mentions of anything
 removed from the codebase. Document only what isn't obvious from the code; the
 code is the source of truth, this file describes what IS (no "we used to have X"

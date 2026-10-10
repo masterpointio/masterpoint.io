@@ -8,7 +8,7 @@ This is the Masterpoint.io company website - a Hugo-based static site for an Inf
 
 ## Case Studies
 
-**When working on anything related to case studies, always reference [`docs/case-studies.md`](docs/case-studies.md) first.** It documents the case-study architecture, layouts, shortcodes, front matter schema, styling decisions, and iteration workflow. **Keep it updated** — whenever you make a decision about case-study layout, shortcodes, visuals, or workflow, update that file before ending the session (and remove mentions of anything deleted from the codebase).
+**When working on anything related to case studies, always reference [`docs/cs-layout.md`](docs/cs-layout.md) first.** It documents the case-study architecture, layouts, shortcodes, front matter schema, styling decisions, and iteration workflow. **Keep it updated** — whenever you make a decision about case-study layout, shortcodes, visuals, or workflow, update that file before ending the session (and remove mentions of anything deleted from the codebase).
 
 ## Videos
 
