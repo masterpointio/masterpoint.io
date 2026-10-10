@@ -35,11 +35,9 @@ so the modern `.cs-*` CSS applies; the only divergence is an optional
 light↔dark colour cards (`.csi-*`). Don't merge them; scope every selector under
 its prefix.
 
-**Stylesheet:** all `.case-study-modern` / `.case-study-immersive` CSS (`.cs-*`
-and `.csi-*` rules, `$cs-*` vars, `cs-brand-gradient` mixins) lives in
-`assets/css/case-studies.scss`, `@import`ed at the **end** of `custom.scss` so
-cascade order is unchanged. The `#caseStudiesPage` list-page grid stays in
-`custom.scss`.
+**Stylesheet:** all case-study CSS (list page, homepage slider, modern +
+immersive layouts) lives in `assets/css/case-studies.scss`, `@import`ed at the
+end of `custom.scss`. Selectors shared with other pages stay in `custom.scss`.
 
 ---
 
@@ -83,9 +81,8 @@ the Content dropdown. Non-obvious bits:
   header is left **transparent** so the image runs behind it; keep the global
   `padding-top: 9.9rem` (smaller hides the title under the absolute header).
 - **`banner_tagline` is gradient text with a dash on _both_ ends.**
-- **SCSS var-order:** `#caseStudiesPage` (in `custom.scss`) sits above the
-  `@import "case-studies.scss"` line, where the `$cs-mint` / `csi-grad-*` defs now
-  live, so use literal hex/gradients here (globals like `$pine` are fine).
+- **SCSS var-order:** this block sits above the `$cs-*` defs in
+  `case-studies.scss`, so use literal hex (globals like `$pine` are fine).
 
 ---
 
@@ -105,8 +102,8 @@ homepage quotes/testimonials section is likewise mirrored there as
 
 - **Files:** `layouts/shortcodes/case-study-slider.html` (self-contained vanilla
   JS, no jQuery — NOT flexslider, which `plugins.js` would hijack) + the `.csh-*`
-  block in `assets/css/custom.scss` (literal hex; `$cs-*` vars aren't defined
-  there yet). Iterates case studies **ByWeight**, so `weight:` orders the slides.
+  block in `assets/css/case-studies.scss` (literal hex). Iterates case studies
+  **ByWeight**, so `weight:` orders the slides.
 - **Content: optional `highlight:` front-matter map** (see marketspark.md /
   power-digital.md), all fields optional with fallbacks:
 
