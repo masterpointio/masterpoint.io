@@ -29,7 +29,7 @@ stat_bar:
 preview_image: /img/case-studies/power-digital/power-digital-case-study-preview.jpg
 og_img: /img/case-studies/power-digital/power-digital-case-study-preview.jpg
 
-# Homepage highlight card (see docs/case-studies.md → Homepage slider)
+# Homepage highlight card (see docs/cs-layout.md → Homepage slider)
 highlight:
   blurb: "Masterpoint decomposed & migrated Power Digital's 43,000-resource Terraform monolith to Spacelift and OpenTofu, and the platform onboarded 100+ new clients in the first 60 days."
   image: /img/case-studies/power-digital/power-digital-team.jpg
