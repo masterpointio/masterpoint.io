@@ -49,8 +49,6 @@ For an ECS task timing out against RDS, [VPC Reachability Analyzer](https://docs
 
 A `false` result with a blocking security group gives the agent a specific failure to investigate. It fixes the HCL, applies in the sandbox, and reruns the analysis within the permitted change scope.
 
-Reachability Analyzer models configuration without sending packets. A `true` result does not establish that PostgreSQL is listening or that authentication works. If the requirement is database access, finish with a database query from the task. Attach that result to the PR alongside the plan. The sandbox result covers the tested environment; production still needs its own plan and deployment checks.
-
 ## Define the Verification and Fix Loop in Repository Instructions and Agent Skills
 
 Run the usual formatting, validation, linting, and security checks first. Our [CI checklist post](/blog/terraform-opentofu-ci-checklist/) covers the setup.
