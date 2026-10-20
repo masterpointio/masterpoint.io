@@ -27,19 +27,19 @@ A verification and fix loop lets the agent read those same results, compare them
 
 In application development, we expect a coding agent to run tests, read failures, and fix the code before asking for review. That expectation should carry over to infrastructure work.
 
-![Without a check, you carry each failed plan back to the agent. With a fix loop, the agent runs the check itself and returns a PR for review.](/img/updates/ai-verification-fix-loop-iac/manual-vs-agent-verification-loop.svg "The agent reads failures, fixes the code, and returns a PR for review.")
+![Without a check, you carry each failed plan back to the agent. With a fix loop, the agent runs the check itself and returns a PR for review.](/img/updates/ai-verification-fix-loop-iac/manual-vs-agent-verification-loop.svg)
 
 ## Importing a Hand-Built AWS Application Load Balancer Into Terraform
 
 A common example is bringing [ClickOps](/blog/terraform-opentofu-terminology-breakdown/#clickops) infrastructure into Terraform. Say I want to manage a hand-built ALB and its related infrastructure with Terraform without changing how it runs. I use [import blocks](https://developer.hashicorp.com/terraform/language/import) and write resource code that matches the live infrastructure on AWS. The only agreed AWS changes are the additional `ManagedBy` tags. In this example, the first plan proposes replacing a target group because its name in the code differs from the live name, so the agent reads the plan and corrects the name. The next plan would change the ALB's `idle_timeout` because the code leaves it at the default value, so the agent sets it to the existing value. The final plan contains the seven expected imports and only the agreed tag changes, with nothing created or destroyed, so it's ready for review.
 
-![An agent imports a live ALB over three Spacelift proposed runs: a target group replacement, then an idle_timeout change, then a plan with only the agreed ManagedBy tag changes.](/img/updates/ai-verification-fix-loop-iac/import-attempts.svg "The import plan preserves existing infrastructure, apart from agreed tag changes.")
+![An agent imports a live ALB over three Spacelift proposed runs: a target group replacement, then an idle_timeout change, then a plan with only the agreed ManagedBy tag changes.](/img/updates/ai-verification-fix-loop-iac/import-attempts.svg)
 
 ## Refactoring 14 Security Groups Into a Shared Terraform Module
 
 I can also use a loop to refactor a Terraform module without changing live infrastructure. Here, we want to move 14 security groups from the root module into a shared child module. We use [`moved` blocks to refactor the modules](https://developer.hashicorp.com/terraform/language/modules/develop/refactoring), mapping the old state addresses to the new ones (e.g. `module.security_groups.aws_security_group.this["alb"]`). In this example, the first Terraform plan proposes recreating some groups because their destination addresses are wrong, so the agent reads the plan and corrects the mappings. The next plan would remove an existing tag, which we don't want, so the agent preserves it in the module. The final plan shows all 14 expected address moves and no live resource changes, ready for review.
 
-![An agent refactors 14 security groups into a shared module over three Spacelift proposed runs: wrong moved addresses, then a dropped tag, then 14 moves with no resource changes.](/img/updates/ai-verification-fix-loop-iac/refactor-attempts.svg "The module refactor moves state addresses without changing live resources.")
+![An agent refactors 14 security groups into a shared module over three Spacelift proposed runs: wrong moved addresses, then a dropped tag, then 14 moves with no resource changes.](/img/updates/ai-verification-fix-loop-iac/refactor-attempts.svg)
 
 ## What a Plan Can't Prove: Applying in a Sandbox Account
 
@@ -70,11 +70,11 @@ Put the shared rules in repository instructions such as `CLAUDE.md` or `AGENTS.m
 4. A clear handoff. Require the agent to return the evidence when the checks pass or explain the blocker when it needs human input.
    - Stop after a number of attempts of the same result (e.g. 5 attempts and still the same bad output) to prevent the agent from burning tokens or working around the problem, such as adding `ignore_changes`, which tells Terraform to stop reconciling the listed attributes so an unexpected change disappears from the plan without being fixed.
 
-![You define done, the agent edits the code, runs the check with scoped credentials, reads the result, and either opens a PR with evidence, retries, or reports a blocker that needs human input.](/img/updates/ai-verification-fix-loop-iac/fix-loop.svg "Define done, let the agent verify and fix, then review the evidence.")
+![You define done, the agent edits the code, runs the check with scoped credentials, reads the result, and either opens a PR with evidence, retries, or reports a blocker that needs human input.](/img/updates/ai-verification-fix-loop-iac/fix-loop.svg)
 
 For example, with minimal permissions the agent can only open PRs for the code, read runs through the Spacelift (or another infrastructure automation platform) MCP, read AWS, and apply only in sandbox accounts.
 
-![The agent's four credentials: a read-only role for planning against AWS production, a Spacelift MCP token with mcp:read, a GitHub identity that can push and open PRs, and an apply role limited to the AWS sandbox account.](/img/updates/ai-verification-fix-loop-iac/agent-access.svg "Agent credentials should be minimal and least privileged when working in a loop.")
+![The agent's four credentials: a read-only role for planning against AWS production, a Spacelift MCP token with mcp:read, a GitHub identity that can push and open PRs, and an apply role limited to the AWS sandbox account.](/img/updates/ai-verification-fix-loop-iac/agent-access.svg)
 
 Here’s one way to write these instructions for a repository using Spacelift. Adapt the definition of done, how the agent reads results, and its permissions to your own repository and deployment workflow.
 
