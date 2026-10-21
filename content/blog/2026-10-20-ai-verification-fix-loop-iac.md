@@ -76,7 +76,7 @@ For example, with minimal permissions the agent can only open PRs for the code, 
 
 Here’s one way to write these instructions for a repository using Spacelift. Adapt the definition of done, how the agent reads results, and its permissions to your own repository and deployment workflow.
 
-```markdown
+```markdown {copy=true collapse=true}
 ---
 name: tf-verify-spacelift
 description: Verify Terraform/OpenTofu changes in this repo through Spacelift.
