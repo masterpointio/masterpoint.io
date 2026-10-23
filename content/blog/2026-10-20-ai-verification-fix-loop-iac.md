@@ -28,15 +28,19 @@ A verification and fix loop lets the agent read those same results, compare them
 
 In application development, we expect a coding agent to run tests, read failures, and fix the code before asking for review. That expectation should carry over to infrastructure work.
 
+## Examples: Verification and Fix Loops for IaC
+
+A verification and fix loop can help with any IaC change that has a clear intended outcome and checks the agent can run or read. Importing existing infrastructure and refactoring modules are two examples: in each, the agent catches unexpected changes, corrects the code, and repeats the check until the plan matches the intended outcome.
+
 ![Without a check, you carry each failed plan back to the agent. With a fix loop, the agent runs the check itself and returns a PR for review.](/img/updates/ai-verification-fix-loop-iac/manual-vs-agent-verification-loop.svg)
 
-## Importing a Hand-Built AWS Application Load Balancer Into Terraform
+### Importing a Hand-Built AWS Application Load Balancer Into Terraform
 
 A common example is bringing [ClickOps](/blog/terraform-opentofu-terminology-breakdown/#clickops) infrastructure into Terraform. Say I want to manage a hand-built ALB and its related infrastructure with Terraform without changing how it runs. I use [import blocks](https://developer.hashicorp.com/terraform/language/import) and write resource code that matches the live infrastructure on AWS. The only agreed AWS changes are the additional `ManagedBy` tags. In this example, the first plan proposes replacing a target group because its name in the code differs from the live name, so the agent reads the plan and corrects the name. The next plan would change the ALB's `idle_timeout` because the code leaves it at the default value, so the agent sets it to the existing value. The final plan contains the seven expected imports and only the agreed tag changes, with nothing created or destroyed, so it's ready for review.
 
 ![An agent imports a live ALB over three Spacelift proposed runs: a target group replacement, then an idle_timeout change, then a plan with only the agreed ManagedBy tag changes.](/img/updates/ai-verification-fix-loop-iac/import-attempts.svg)
 
-## Refactoring 14 Security Groups Into a Shared Terraform Module
+### Refactoring 14 Security Groups Into a Shared Terraform Module
 
 I can also use a loop to refactor a Terraform module without changing live infrastructure. Here, we want to move 14 security groups from the root module into a shared child module. We use [`moved` blocks to refactor the modules](https://developer.hashicorp.com/terraform/language/modules/develop/refactoring), mapping the old state addresses to the new ones (e.g. `module.security_groups.aws_security_group.this["alb"]`). In this example, the first Terraform plan proposes recreating some groups because their destination addresses are wrong, so the agent reads the plan and corrects the mappings. The next plan would remove an existing tag, which we don't want, so the agent preserves it in the module. The final plan shows all 14 expected address moves and no live resource changes, ready for review.
 
