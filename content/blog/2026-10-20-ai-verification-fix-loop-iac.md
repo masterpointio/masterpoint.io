@@ -3,7 +3,7 @@ visible: true
 draft: false
 title: "Using AI Verification and Fix Loop for IaC (Terraform, OpenTofu, Pulumi)"
 author: Yangci Ou
-date: 2026-10-23
+date: 2026-10-26
 slug: ai-verification-fix-loop-iac
 description: "Let AI agents read Terraform, OpenTofu, and Pulumi plans, compare them with what you asked for, and fix unexpected changes before asking for review."
 tags:
