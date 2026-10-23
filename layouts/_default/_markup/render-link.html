@@ -1,8 +1,7 @@
 {{- /*
   Link render hook (site-wide): every link opens in a new tab, except same-page
   anchors (#section) and non-web schemes (mailto:, tel:) that would otherwise
-  leave a blank tab behind. No noreferrer, so linked sites see masterpoint.io
-  as the referrer.
+  leave a blank tab behind.
 */ -}}
 {{- $u := urls.Parse .Destination -}}
 {{- $newTab := and (not (strings.HasPrefix .Destination "#")) (in (slice "" "http" "https") $u.Scheme) -}}
