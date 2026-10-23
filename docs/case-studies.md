@@ -438,13 +438,6 @@ Authoring rules:
   `<header>` collides with the scoped site-header rule and paints a pine box.
 - `csi-section`/`csi-split`/`csi-testimonial` render inner as `display "block"`;
   `csi-steps`/`csi-impact`/`csi-list` bodies as `display "inline"`.
-- **External links open in a new tab** via
-  `layouts/case-studies/_markup/render-link.html` — a case-studies-scoped link
-  render hook that adds `target="_blank" rel="noopener noreferrer"` to any
-  `http(s)` link. Applies to body prose and shortcode-rendered prose. The hook
-  template must **not** end in a trailing newline (it's trimmed with a closing
-  `{{- /* … */ -}}`): because the hook replaces links inline, a trailing newline
-  renders as a literal space after every link (e.g. `OpenTofu ,`).
 - **Caption links are hand-written, not hook-processed.** A `caption=` containing
   an `<a>` is injected via `safeHTML` and bypasses the render hook, so add
   `target="_blank" rel="noopener noreferrer"` to the anchor by hand if it should
