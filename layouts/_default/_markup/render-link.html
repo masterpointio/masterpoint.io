@@ -1,12 +1,13 @@
 {{- /*
   Link render hook (site-wide): every link opens in a new tab, except same-page
   anchors (#section) and non-web schemes (mailto:, tel:) that would otherwise
-  leave a blank tab behind. External links also get a safe rel; internal ones
-  keep their referrer for analytics. Applies to markdown links in the body and
-  inside shortcodes that use RenderString (it uses the page's render hooks).
+  leave a blank tab behind. External links also get rel="noopener" but
+  deliberately not noreferrer, so linked sites (e.g. partners) see masterpoint.io
+  as the referrer. Applies to markdown links in the body and inside shortcodes
+  that use RenderString (it uses the page's render hooks).
 */ -}}
 {{- $u := urls.Parse .Destination -}}
 {{- $newTab := and (not (strings.HasPrefix .Destination "#")) (in (slice "" "http" "https") $u.Scheme) -}}
 {{- $external := and $u.Host (ne $u.Host (urls.Parse site.BaseURL).Host) -}}
-<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $newTab }} target="_blank"{{ end }}{{ if $external }} rel="noopener noreferrer"{{ end }}>{{ .Text | safeHTML }}</a>
+<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $newTab }} target="_blank"{{ end }}{{ if $external }} rel="noopener"{{ end }}>{{ .Text | safeHTML }}</a>
 {{- /* trim trailing newline so inline links don't render a space after them */ -}}
