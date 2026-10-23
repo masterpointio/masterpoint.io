@@ -63,7 +63,7 @@ Put the shared rules in repository instructions such as `CLAUDE.md` or `AGENTS.m
 1. A measurable definition of done.
    - For a module refactor, that might be zero cloud resource changes and 14 expected address moves.
    - For a connectivity fix, it might be one new security group rule followed by a successful database query from the application, or a successful `curl` request from within the VPC.
-   - For importing live infrastructure into Terraform or OpenTofu, expect the imports with no changes to the existing AWS resources, except any explicitly agreed updates, such as tags. The resources become managed through IaC without being recreated or reconfigured beyond those tags.
+   - [For importing live infrastructure into Terraform or OpenTofu](https://masterpoint.io/blog/dont-let-ai-break-your-infra/), expect the imports with no changes to the existing AWS resources, except any explicitly agreed updates, such as tags. The resources become managed through IaC without being recreated or reconfigured beyond those tags.
 2. Outputs the agent can access and read. The agent fetches the plan output and logs for the current commit through one of the workflows above and compares them with the expected result to decide what needs fixing.
 3. Permissions & guardrails that block production applies. The agent can read production plans, but any apply needed to validate behavior must run in a separate sandbox account. Its credentials must not allow it to apply changes in production.
 4. A clear handoff. Require the agent to return the evidence when the checks pass or explain the blocker when it needs human input.
