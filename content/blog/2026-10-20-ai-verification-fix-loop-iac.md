@@ -20,7 +20,7 @@ hide_hero: true # keep `image` for the blog listing thumbnail and social preview
 callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact/'>Get in touch!</a></p>
 ---
 
-The cheapest part of [Infrastructure as Code (IaC)](https://aws.amazon.com/what-is/iac/) today, is the code generation. Agents from frontier AI models are opening pull requests on platforms like GitHub faster than reviewers can keep up. But with infrastructure, even a small change can replace a database or cut off an application's access to it, so each change needs to do only what we intended.
+The cheapest part of [Infrastructure as Code (IaC)](https://aws.amazon.com/what-is/iac/) today is the code generation. Agents from frontier AI models are opening pull requests on platforms like GitHub faster than reviewers can keep up. But with infrastructure, even a small change can replace a database or cut off an application's access to it, so each change needs to do only what we intended.
 
 CI/CD already runs the plans and posts the results on pull requests. You read them, spot an unexpected replacement that would cause downtime or an error that blocks the plan, and send the output back to the agent. The agent fixes the code and pushes again. You wait for CI, read the new plans, and paste back the next problem.
 
