@@ -104,6 +104,11 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 
 <CONTENT>
 
+### Code Blocks
+
+- **Always** open code blocks in blog posts with the copy/collapse attributes, e.g. `` ````markdown {copy=true collapse=true} `` (swap `markdown` for the block's language), and close them with four backticks. `layouts/_default/_markup/render-codeblock.html` turns `copy=true` into a Copy button and `collapse=true` into a collapsed block with a "Show more" toggle.
+- Use four backticks rather than three so the block can contain triple-backtick fences of its own (common in prompts, skills, and READMEs).
+
 ### Custom Shortcodes
 
 - `{{< button link="/path" text="CTA Text" >}}` - Call-to-action buttons
