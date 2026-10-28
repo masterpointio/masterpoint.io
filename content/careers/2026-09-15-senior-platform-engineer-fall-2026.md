@@ -4,19 +4,20 @@ draft: false
 title: "Senior Platform Engineer (Fall 2026)"
 slug: senior-platform-engineer-fall-2026
 date: 2026-09-15
-# date_modified: 2026-xx-xx  # Set when you materially update the posting
-description: "We're hiring a North America-based Senior Platform Engineer to architect, automate, and deliver rock-solid cloud platforms for our clients using OpenTofu, Terraform, and modern IaC tooling. Full-time, 100% remote, $150K – $180K base."
+# date_modified: 2026-10-29  # Set when you materially update the posting
+description: "We're hiring a Senior Platform Engineer based in Colorado's Front Range to architect, automate, and deliver rock-solid cloud platforms for our clients using OpenTofu, Terraform, and modern IaC tooling. Full-time, remote-first with occasional in-person days in the Denver/Boulder area, $150K – $180K base."
 
 # Role facts (rendered in the strip under the title + used for JobPosting schema)
 status: open # open | closed — closed roles drop to the "Past openings" list
 role: Senior Platform Engineer
 employment_type: Full-time # schema.org: FULL_TIME
-location: 100% Remote (North America only)
-applicant_countries: ["United States", "Canada"] # JobPosting.applicantLocationRequirements
+location: Remote-first · Colorado Front Range preferred
+applicant_countries: ["United States"] # JobPosting.applicantLocationRequirements
 salary: "$150K – $180K base"
 salary_min: 150000
 salary_max: 180000
 salary_currency: USD
+valid_through: 2027-01-31
 
 # Intro video (Loom share URL — the layout converts it to an embed)
 video: https://www.loom.com/share/7e4fde005c73408f9a16606370be65b3
@@ -59,7 +60,7 @@ Expect to:
 
 ### Must-Haves
 
-- **North America-based only at this time.** Applicants must be located in North America and currently authorized to work in their country of residence on a full-time basis. Masterpoint does not sponsor applicants for work visas for this position.
+- **U.S.-based, ideally in Colorado's Front Range.** We're prioritizing candidates in the Denver/Boulder area (roughly Fort Collins to Colorado Springs) who can join us for occasional in-person work days. Strong candidates elsewhere in the U.S. will still be considered. Applicants must be currently authorized to work in the U.S. on a full-time basis. Masterpoint does not sponsor work visas for this position.
 - Strong people and soft skills. You can't be a good team member or consultant without knowing how to work with people. We value this above pretty much everything else.
 - 3+ years hands-on in the modern IaC ecosystem (Terraform, OpenTofu, or Pulumi).
 - Experience building infra on the cloud. AWS + Azure experience are in top demand right now, but GCP experience is useful as well.
@@ -82,7 +83,7 @@ Expect to:
 ## Why Masterpoint?
 
 - **Competitive salary + bonuses.** Senior Platform Engineer base salary is **$150K – $180K** depending on experience.
-- **100% remote.** We're globally distributed with a majority of our team in North America and one in Ukraine. We've been remote since 2016.
+- **Remote-first, with a Colorado home base.** We've been remote since 2016 and still do most of our work that way. A growing part of our team lives along the Front Range, and we get together in person every so often to plan, whiteboard, and spend time together. The rest of the team is spread across North America, plus one teammate in Ukraine.
 - **Consistent projects** with great clients and meaningful outcomes.
 - **We're an organization that cares**, and that means your work helps us support meaningful causes:
   - We're a [1% for the Planet](https://www.onepercentfortheplanet.org/) member and give 1% of our gross income towards organizations supporting our environment.
@@ -111,6 +112,7 @@ We hire by our three Core Values, and they matter more to us than any tool on yo
 <!-- markdownlint-enable MD026 -->
 
 Fill out the form below and we'll get in touch to let you know if you seem like a fit for our team. Resumes up to a total of two pages only, please.
+We expect to accept applications through **January 31, 2027**. We may close the role earlier if we hire, or extend this date if it's still open.
 
 For this role, please provide answers to the following questions in the "Question Responses" section of the form:
 
