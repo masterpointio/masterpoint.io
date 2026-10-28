@@ -54,6 +54,8 @@ For an ECS task timing out against RDS, [VPC Reachability Analyzer](https://docs
 
 A `false` result with a blocking security group gives the agent a specific failure to investigate. It fixes the HCL, applies in the sandbox, and reruns the analysis within the permitted change scope.
 
+Reachability Analyzer checks the network configuration, but it doesn’t send traffic. After the analysis passes, verify that the application can query the database, using credentials limited to the required read access.
+
 ## Define the Verification and Fix Loop in Repository Instructions and Agent Skills
 
 Run the usual formatting, validation, linting, and security checks first. Our [CI checklist post](/blog/terraform-opentofu-ci-checklist/) covers the setup.
@@ -121,6 +123,6 @@ A [Stop hook](https://code.claude.com/docs/en/hooks#stop) can also require a ver
 
 The agent hands back a Pull Request with the code and explains the expected versus actual changes and includes any required behavior-test results. It also describes the unexpected changes it found and corrected, along with anything still unverified. If it is blocked, it returns the specific problem, what it tried, and the relevant runs.
 
-The human still reviews the code and final plan, confirms that the acceptance criteria cover the intended change, and checks any gaps in runtime verification. A passing sandbox test covers the tested environment; the production deployment still needs its own reviewed plan and checks.
+The human still reviews the code and final plan, confirms that the acceptance criteria cover the intended change, and checks any gaps in runtime verification. A passing sandbox test covers the tested environment. Production still needs its own reviewed plan, approved deployment, and checks that confirm the intended behavior. Keep verification access separate from deployment permissions and limited to what those checks require.
 
 At Masterpoint, we expect the agents to review infrastructure plans to ensure they match what we intended and review them ourselves first before asking another engineer / teammate for review.
