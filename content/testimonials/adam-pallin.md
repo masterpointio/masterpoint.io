@@ -1,5 +1,6 @@
 ---
 title: Adam Pallin
+weight: 3
 position: Director of Software Engineering, MarketSpark
 photo: /img/testimonials/adam-pallin.jpeg
 company: MarketSpark

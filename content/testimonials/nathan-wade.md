@@ -1,5 +1,6 @@
 ---
 title: Nathan Wade
+weight: 4
 position: Solutions Architect, Staples
 photo: /img/testimonials/nathan-wade.jpeg
 company: Staples

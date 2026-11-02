@@ -1,0 +1,67 @@
+{{ partial "head.html" . }}
+<body
+  {{
+  if
+  .Params.id
+  }}id="{{ .Params.id }}"
+  {{end}}
+  class="testimonials-list"
+>
+  {{ partial "header.html" . }}
+  <section id="banner">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="col col-12 col-md-9 col-lg-8">
+          <div class="bannerTxtBx aos-item" data-aos="fade-right">
+            {{ if .Params.banner_tagline }}
+            <div class="bannerTagline">
+              {{ .Params.banner_tagline | safeHTML }}
+            </div>
+            {{ end }}
+            <h3>
+              {{ if .Params.banner_title }}{{ .Params.banner_title | safeHTML
+              }}{{ else }}{{ .Title | safeHTML }}{{ end }}
+            </h3>
+            {{ with .Params.banner_text }}
+            <div class="bannerTxt">{{ . | safeHTML }}</div>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <div class="container">
+      {{ with .Content }}
+      <div class="row">
+        <div class="col col-12 testimonials-intro">{{ . }}</div>
+      </div>
+      {{ end }}
+
+      <div class="testimonial-grid">
+        {{ range .Pages.ByWeight }} {{ partial "testimonial-card.html" . }} {{
+        end }}
+      </div>
+
+      <div class="testimonials-links">
+        <span class="testimonials-links__label"
+          >See the work behind the words</span
+        >
+        <div class="testimonials-links__row">
+          <a href="/case-studies/" class="button btn-outline-gradient"
+            >Read our case studies →</a
+          >
+          <a href="/who-we-are/" class="button btn-outline-gradient"
+            >Meet the team →</a
+          >
+        </div>
+      </div>
+    </div>
+  </main>
+  {{ partial "schedule-assessment.html" . }} {{ partial "footer.html" . }} {{
+  partial "scripts.html" . }}
+</body>
+{{- /* The html end tag is intentionally omitted (it is optional in HTML).
+Prettier lints this file on its own and rejects closing an element that
+head.html opened. */ -}}

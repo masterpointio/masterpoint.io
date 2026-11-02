@@ -1,5 +1,6 @@
 ---
 title: Travis McPeak
+weight: 1
 position: Security Lead, Cursor
 photo: /img/testimonials/travis-mcpeak.jpeg
 company: Cursor
