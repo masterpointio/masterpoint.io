@@ -1,5 +1,6 @@
 ---
 title: Liam Egan
+weight: 6
 position: Director of Technology, We The Collective
 photo: /img/testimonials/liam-egan.jpeg
 company: We The Collective
