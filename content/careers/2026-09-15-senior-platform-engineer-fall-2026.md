@@ -1,7 +1,7 @@
 ---
 visible: true
 draft: false
-title: "Senior Platform Engineer (Fall 2026)"
+title: "Senior Platform Engineer"
 slug: senior-platform-engineer-fall-2026
 date: 2026-09-15
 # date_modified: 2026-10-29  # Set when you materially update the posting
@@ -9,9 +9,10 @@ description: "We're hiring a Senior Platform Engineer based in Colorado's Front 
 
 # Role facts (rendered in the strip under the title + used for JobPosting schema)
 status: open # open | closed — closed roles drop to the "Past openings" list
+weight: 1 # optional; lower numbers list first on /careers/ (unweighted roles follow, newest first)
 role: Senior Platform Engineer
 employment_type: Full-time # schema.org: FULL_TIME
-location: Remote-first · Colorado Front Range preferred
+location: Remote-first · Colorado Front Range
 applicant_countries: ["United States"] # JobPosting.applicantLocationRequirements
 salary: "$150K – $180K base"
 salary_min: 150000
@@ -60,7 +61,7 @@ Expect to:
 
 ### Must-Haves
 
-- **U.S.-based, ideally in Colorado's Front Range.** We're prioritizing candidates in the Denver/Boulder area (roughly Fort Collins to Colorado Springs) who can join us for occasional in-person work days. Strong candidates elsewhere in the U.S. will still be considered. Applicants must be currently authorized to work in the U.S. on a full-time basis. Masterpoint does not sponsor work visas for this position.
+- **Based in Colorado's Front Range.** This role is for candidates living in the Denver/Boulder area (roughly Fort Collins to Colorado Springs) who can join us for occasional in-person work days. Applicants must be currently authorized to work in the U.S. on a full-time basis. Masterpoint does not sponsor work visas for this position.
 - Strong people and soft skills. You can't be a good team member or consultant without knowing how to work with people. We value this above pretty much everything else.
 - 3+ years hands-on in the modern IaC ecosystem (Terraform, OpenTofu, or Pulumi).
 - Experience building infra on the cloud. AWS + Azure experience are in top demand right now, but GCP experience is useful as well.

@@ -52,7 +52,8 @@ Other touch points:
   grid). The eyebrow (`banner_tagline`), title (`banner_title`) and lede
   (`banner_text`) are front matter on `_index.md`.
 - **Open Roles**: every page in the section whose `status` is not `closed`,
-  newest first, rendered by `careers-entry.html` as a media-left card with
+  ordered by `weight` (lowest first; unweighted roles after), then newest
+  first, rendered by `careers-entry.html` as a media-left card with
   status/location/type/salary chips, title, description, "View role & apply"
   CTA and posted date.
 - **Empty state**: when nothing is open, a dashed card invites people to email
@@ -77,6 +78,7 @@ description: "One or two sentences. Card blurb, hero lede, meta description."
 
 # Role facts → hero pills, card chips, structured data
 status: open # open | closed
+# weight: 1                                     # optional; lower numbers list first among open roles
 role: Senior Platform Engineer # JobPosting.title (falls back to `title`)
 employment_type: Full-time # → JobPosting.employmentType FULL_TIME
 location: 100% Remote (North America only)
