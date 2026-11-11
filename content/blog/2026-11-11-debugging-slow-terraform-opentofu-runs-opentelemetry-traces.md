@@ -176,21 +176,13 @@ Start with aggregates and retrieve representative traces. Large trace responses 
 
 ## Make the Agent Verify the Performance Fix
 
-Consider the Route 53 investigation as an example workflow for an agent:
-
-The agent first finds that resource-planning spans for DNS records dominate the tail of several slow plans. It checks the matching run logs and finds throttling. It proposes a diagnostic plan excluding those records, through the team's permitted workflow, and compares repeated runs under similar conditions.
-
-If excluding DNS removes most of the delay, the evidence supports investigating that part of the configuration. Depending on the cause and ownership boundaries, the eventual PR might scope adaptive retries to a provider alias or propose separating DNS into its own root module. A state-boundary change needs an explicit migration plan; adding a child module alone does not split the state.
-
-The agent then checks two outcomes: the full plan still manages the intended infrastructure, and comparable full runs show the expected performance improvement.
+Take the Route 53 investigation as an example. The agent finds that DNS record spans dominate the slow plans, confirms throttling in the run logs, and runs a diagnostic plan that excludes those records. If that removes most of the delay, it opens a PR: adaptive retries on a provider alias, or DNS in its own root module with an explicit state migration plan.
 
 ![The agent's loop: locate slow spans, explain them from run logs, test with a diagnostic plan, change the code, verify with matched full runs, and revise the hypothesis if the plan is not faster](/img/updates/debugging-slow-terraform-opentofu-runs-opentelemetry-traces/agent-loop.svg)
 
-A plan can finish successfully and still leave you waiting seven minutes. It can also get faster because refresh was turned off, resources were excluded, or the work moved into another stage. A faster number on its own is not a fix.
+Then it verifies. A plan can get faster because refresh was turned off, resources were excluded, or the work moved to another stage, so a faster number on its own is not a fix. The agent checks that the full plan still manages the intended infrastructure and that comparable runs are faster, with provider versions, worker configuration, and cache conditions kept the same. A handful of matched runs is enough for a first signal; a claim about p95 needs more.
 
-For an initial experiment, a handful of matched runs can show whether a change deserves further testing. A claim about p95 needs a larger sample. Keep provider versions, resource coverage, worker configuration, and cache conditions consistent, and record concurrent workload when shared API quotas matter. Compare the phase you intended to improve as well as the whole command.
-
-Ask the agent to return a PR with the baseline and candidate commit SHAs, run and trace links, sample counts, observed durations, and a summary of the full plan. If it cannot reproduce the slowdown or the candidate fails to improve it, that is a useful finding too. It should say so and revise the hypothesis.
+Ask for a PR with the baseline and candidate commit SHAs, run and trace links, sample counts, and observed durations. If the agent can't reproduce the slowdown or the change doesn't help, it should say so and revise the hypothesis.
 
 **The completion condition is a correct full plan and measured improvement against comparable runs.**
 
@@ -207,4 +199,4 @@ Add monitors and alarms so the team hears about regressions without having to wa
 - A stack's plan duration stays above twice its recent baseline across several comparable runs. Alert the team that owns the root module, with links to the slow runs and their commits.
 - A resource-planning operation repeatedly exceeds 60 seconds. Include its resource address and trace link so an engineer or agent can investigate retries, throttling, or other provider behavior.
 
-These thresholds are starting points to tune against your own workloads. Require enough runs to make a comparison meaningful, and route performance regressions to the owning team's channel or issue queue.
+**With traces, run history, and the code in one place, you no longer have to guess where the time goes, the root cause, or the solution to fix it. Give that same context and data to an AI agent and it can diagnose the slowdown, make the best-informed decision about which fix suits your system, and show you the numbers that prove it helped.**
