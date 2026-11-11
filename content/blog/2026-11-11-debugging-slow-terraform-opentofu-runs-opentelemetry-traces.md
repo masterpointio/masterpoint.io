@@ -51,7 +51,7 @@ We use Datadog here because it lets us investigate infrastructure runs alongside
 
 For Datadog, configure the following in the environment that runs `tofu`.
 
-````bash {copy=true}
+```bash {copy=true}
 # Supply DD_API_KEY through your CI secret store.
 export OTEL_TRACES_EXPORTER=otlp
 export OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
@@ -63,7 +63,7 @@ export OTEL_RESOURCE_ATTRIBUTES=env=terraform
 tofu init
 tofu plan
 tofu apply
-````
+```
 
 Datadog's direct intake accepts HTTP OTLP, not gRPC. `compute_stats=true` enables trace metrics. See Datadog's intake documentation for configuration details.
 
@@ -81,13 +81,13 @@ When a stack starts taking longer to run, you need to know which configuration a
 
 We also add these custom attributes through `OTEL_RESOURCE_ATTRIBUTES`:
 
-| Attribute | Purpose |
-| --- | --- |
-| `terraform.stack` | Compare executions of one stack |
-| `terraform.root_module` | Locate the configuration directory |
-| `git.commit_sha` | Identify the exact revision |
-| `spacelift.run_id` | Retrieve the run, logs, and plan |
-| `spacelift.run_type` | Separate proposed (PR plans) and tracked runs (deployed TF applies) |
+| Attribute               | Purpose                                                             |
+| ----------------------- | ------------------------------------------------------------------- |
+| `terraform.stack`       | Compare executions of one stack                                     |
+| `terraform.root_module` | Locate the configuration directory                                  |
+| `git.commit_sha`        | Identify the exact revision                                         |
+| `spacelift.run_id`      | Retrieve the run, logs, and plan                                    |
+| `spacelift.run_type`    | Separate proposed (PR plans) and tracked runs (deployed TF applies) |
 
 Include repository identity when working across repositories. Other CI systems can supply equivalent metadata.
 
@@ -142,12 +142,12 @@ The same data can answer several other questions:
 
 As a quick reference, here is what each trace pattern in this post points to:
 
-| If the trace shows | It points to | Try |
-| --- | --- | --- |
-| Init dominated by `Get Providers` and `Install (http)` | Providers downloaded again on every fresh worker | A persistent plugin cache or a nearby network mirror |
-| A few resource spans stretched to minutes, with throttling in the DEBUG logs | API rate limits and provider retry backoff | Adaptive retry mode, or moving those resources into their own root module |
-| A resource that is slow by nature, such as an RDS instance, a CloudFront distribution, or an EKS cluster | The service itself, not your configuration | Move it into its own root module so it doesn't hold up unrelated changes |
-| A slow run with a short trace | Time spent outside the command, in CI queueing or approval waits | More workers or higher run concurrency |
+| If the trace shows                                                                                       | It points to                                                     | Try                                                                       |
+| -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Init dominated by `Get Providers` and `Install (http)`                                                   | Providers downloaded again on every fresh worker                 | A persistent plugin cache or a nearby network mirror                      |
+| A few resource spans stretched to minutes, with throttling in the DEBUG logs                             | API rate limits and provider retry backoff                       | Adaptive retry mode, or moving those resources into their own root module |
+| A resource that is slow by nature, such as an RDS instance, a CloudFront distribution, or an EKS cluster | The service itself, not your configuration                       | Move it into its own root module so it doesn't hold up unrelated changes  |
+| A slow run with a short trace                                                                            | Time spent outside the command, in CI queueing or approval waits | More workers or higher run concurrency                                    |
 
 That also answers the question from the top of this post. A provider cache helps when initialization is the slow part. A more scoped root module helps when the plan is slow because of how much it has to refresh; if the same root module keeps showing up in slow runs, consider [breaking up a monolithic root module](/blog/terralith-monolithic-terraform-architecture/). Bigger or faster CI workers help when the time is spread thinly across the whole run with no single slow span, and do nothing for a throttled API or a slow provider download. Which one fits depends on your system. **That is a good question to put to the agent: with the traces, the code, and the run history in front of it, it has far more data about your architecture to base that decision on than a rule of thumb does.**
 
@@ -157,12 +157,12 @@ If you’re going to ask an agent what’s slowing a stack down, it needs access
 
 With repository instructions defining the investigation method, start with one prompt:
 
-````text {copy=true}
+```text {copy=true}
 What's causing <root module / stack> to be so slow? Where is the time going,
 when did it get slower, and what introduced the slowdown? Check the traces,
 CI runs, and git history. What change would help most, and how can we verify
 it? Link the evidence behind your conclusions.
-````
+```
 
 Other questions work too: “Did the provider upgrade slow our plans?”, “Are we downloading providers every run?”, or “Why is this stack slower during business hours?”
 
