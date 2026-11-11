@@ -3,7 +3,6 @@
 <desc id="cs-dsc">A plan timeline with ten resource spans of 20 seconds each, all starting within the first four seconds and running concurrently. Below it, two bars on one scale: the sum of the span durations reaches 200 seconds while the wall-clock time reaches only 24 seconds. Illustrative timings.</desc>
 <style>
   .cs-root { --ink: #16160f; --soft: #55554c; --logo: #0d3f3f; }
-  @media (prefers-color-scheme: dark) { .cs-root { --ink: #f2f1ea; --soft: #b5b4ab; --logo: #ffffff; } }
   .cs-root text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: var(--ink); }
   .cs-root .cs-t { fill: var(--soft); font-size: 11px; }
   .cs-root .cs-s { fill: var(--soft); font-size: 10px; }

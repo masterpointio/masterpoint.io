@@ -3,7 +3,6 @@
 <desc id="tp-dsc">An ephemeral CI worker running tofu init, plan and apply exports spans over OTLP http/protobuf. On the direct path every span goes straight to Datadog's OTLP intake endpoint. On the optional path spans pass through an OpenTelemetry Collector that can filter, redact, buffer and sample them, so fewer spans reach Datadog. Another OTLP backend such as Honeycomb or Sentry can take Datadog's place.</desc>
 <style>
   .tp-root { --ink: #16160f; --soft: #55554c; --logo: #0d3f3f; }
-  @media (prefers-color-scheme: dark) { .tp-root { --ink: #f2f1ea; --soft: #b5b4ab; --logo: #ffffff; } }
   .tp-root text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: var(--ink); }
   .tp-root .tp-t { fill: var(--soft); font-size: 11px; }
   .tp-root .tp-s { fill: var(--soft); font-size: 10px; }

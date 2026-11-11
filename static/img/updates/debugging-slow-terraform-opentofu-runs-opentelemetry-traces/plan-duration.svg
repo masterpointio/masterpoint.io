@@ -3,7 +3,6 @@
 <desc id="pd-dsc">Two horizontal bars on a scale of zero to seven minutes. The full plan of roughly 3,000 resources took between five and seven minutes. A diagnostic plan that excluded the Route 53 resources took around two minutes.</desc>
 <style>
   .pd-root { --ink: #16160f; --soft: #55554c; --logo: #0d3f3f; }
-  @media (prefers-color-scheme: dark) { .pd-root { --ink: #f2f1ea; --soft: #b5b4ab; --logo: #ffffff; } }
   .pd-root text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: var(--ink); }
   .pd-root .pd-t { fill: var(--soft); font-size: 11px; }
   .pd-root .pd-s { fill: var(--soft); font-size: 10px; }

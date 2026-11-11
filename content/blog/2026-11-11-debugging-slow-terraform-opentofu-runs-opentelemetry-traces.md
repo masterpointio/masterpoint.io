@@ -29,7 +29,7 @@ We ran into this recently with an enterprise whose root module was managing roug
 
 Those posts used an [OpenTelemetry trace](https://opentofu.org/docs/internals/tracing/) to explain the problem. This post explains how to get that trace, what to look for, and how to give an AI agent access to the same evidence so it can investigate, propose a change, and check whether the change helped.
 
-The setup below uses OpenTofu.
+The setup below uses OpenTofu. If you use Terraform, you can still time initialization and planning separately, check provider logs for retries, and compare plans from the same stack before and after a change.
 
 ## Trace the Run Before Refactoring or Changing the Code
 
@@ -47,7 +47,7 @@ Once you’ve found a slow resource in the table, open its trace and look at wha
 
 ## Get Your First Trace Into Datadog
 
-We use Datadog here because it lets us investigate infrastructure runs alongside the applications they manage. You can use another OTLP-compatible backend such as Honeycomb or a local Jaeger instance, with the appropriate endpoint and authentication.
+We use [Datadog](https://www.datadoghq.com/) here because it lets us investigate infrastructure runs alongside the applications they manage. You can use another OTLP-compatible backend such as [Honeycomb](https://www.honeycomb.io/) or a local [Jaeger](https://www.jaegertracing.io/) instance, with the appropriate endpoint and authentication.
 
 For Datadog, configure the following in the environment that runs `tofu`.
 
@@ -55,17 +55,18 @@ For Datadog, configure the following in the environment that runs `tofu`.
 # Supply DD_API_KEY through your CI secret store.
 export OTEL_TRACES_EXPORTER=otlp
 export OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
-export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=https://otlp.{region}.datadoghq.com/v1/traces
+# Set DD_SITE to your Datadog site (for example, datadoghq.com for US1).
+export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT="https://otlp.${DD_SITE:?set DD_SITE}/v1/traces"
 export OTEL_EXPORTER_OTLP_TRACES_HEADERS="dd-api-key=${DD_API_KEY},compute_stats=true"
 export OTEL_SERVICE_NAME=terraform
-export OTEL_RESOURCE_ATTRIBUTES=env=terraform
+# Set DD_TRACE_HOST in CI to the host name you want Datadog to report.
+export OTEL_RESOURCE_ATTRIBUTES="env=terraform,datadog.host.name=${DD_TRACE_HOST:?set DD_TRACE_HOST for this runner}"
 
 tofu init
 tofu plan
-tofu apply
 ```
 
-Datadog's direct intake accepts HTTP OTLP, not gRPC. `compute_stats=true` enables trace metrics. See Datadog's intake documentation for configuration details.
+Datadog's direct intake accepts HTTP OTLP, not gRPC. `compute_stats=true` enables trace metrics. See [Datadog’s intake documentation](https://docs.datadoghq.com/opentelemetry/setup/otlp_ingest/traces/) for configuration details.
 
 Direct export keeps the initial setup small for an ephemeral CI worker. A Collector becomes useful when you need central filtering, redaction, buffering, or sampling. If your organization already has that pipeline, send the traces through it.
 
@@ -73,7 +74,7 @@ Direct export keeps the initial setup small for an ephemeral CI worker. A Collec
 
 [![Datadog trace explorer listing tofu traces from the opentofu/spacelift service with their durations and span counts](/img/updates/debugging-slow-terraform-opentofu-runs-opentelemetry-traces/trace-explorer-opentofu.png)](/img/updates/debugging-slow-terraform-opentofu-runs-opentelemetry-traces/trace-explorer-opentofu.png)
 
-On container-per-job runners, a new container ID every run can look like a new host in Datadog. In our setup, we set `datadog.host.name` to a stable worker-pool name in `OTEL_RESOURCE_ATTRIBUTES`; the run ID identifies individual runs. Check Datadog’s hostname guidance for your runner environment before the first invoice.
+**If your runner starts a container for every job, check which hostname appears in Datadog.** A fresh container ID can make every run look like a new host, which can affect your bill for products priced per host. We use a stable worker-pool name for `datadog.host.name` and a run ID to tell executions apart. The example above takes that name from `DD_TRACE_HOST`. See [Datadog’s hostname guidance](https://docs.datadoghq.com/opentelemetry/config/hostname_tagging/) for your runner setup.
 
 ## Give Every Trace a Stack, Commit, and Run ID
 
@@ -115,7 +116,7 @@ Trend `Install (http)` durations by provider. Simultaneous download slowdowns or
 
 ### Slow Plans or Applies Phases
 
-Throttling can affect reads during planning or writes during apply. In our Route 53 investigation, one record read took 2 minutes 55 seconds; debug logs confirmed throttling.
+Throttling can affect reads during planning or writes during apply. In our [Route 53 retry investigation](/blog/aws-adaptive-retry-mode-terraform-throttled-api-requests/), one record read took 2 minutes 55 seconds. The debug logs confirmed throttling. In the screenshot below, selecting a 37-second span reveals the address of the Route 53 record it belongs to.
 
 [![Datadog flame graph of a tofu plan trace with a 37-second Route 53 record planning span selected, and its opentofu.resource_instance.address in the span panel](/img/updates/debugging-slow-terraform-opentofu-runs-opentelemetry-traces/route53-plan-flame-graph.png)](/img/updates/debugging-slow-terraform-opentofu-runs-opentelemetry-traces/route53-plan-flame-graph.png)
 
@@ -127,7 +128,7 @@ Spans such as `Plan resource instance changes` carry `opentofu.resource_instance
 
 These instances come from the same resource block, but each has its own resource address and planning span. If all three have long spans, one possibility is that requests made while refreshing the rules are hitting AWS API rate limits. Throttled requests can trigger provider retries with backoff, stretching a resource operation across seconds or minutes. Before changing anything, check the provider logs for throttling responses and retry delays, then look for other stacks making requests against the same service in the same AWS account and Region.
 
-![The trace shows one span lasting 2 minutes 55 seconds; the debug logs show that span is twelve throttled attempts separated by growing backoff waits, then one success](/img/updates/debugging-slow-terraform-opentofu-runs-opentelemetry-traces/span-vs-retries.svg)
+![A resource span lasts 2 minutes 55 seconds. In the example timeline below it, backoff accounts for most of the elapsed time. Twelve attempts are throttled before the thirteenth succeeds.](/img/updates/debugging-slow-terraform-opentofu-runs-opentelemetry-traces/span-vs-retries.svg)
 
 For an apply example, suppose a Terraform or OpenTofu change updates tags on 1,000 listener rules across multiple ALBs. Planning completes normally, but many `aws_lb_listener_rule` update spans stretch into minutes. Provider logs reveal throttled Elastic Load Balancing requests and repeated backoff.
 
@@ -149,7 +150,7 @@ As a quick reference, here is what each trace pattern in this post points to:
 | A resource that is slow by nature, such as an RDS instance, a CloudFront distribution, or an EKS cluster | The service itself, not your configuration                       | Move it into its own root module so it doesn't hold up unrelated changes  |
 | A slow run with a short trace                                                                            | Time spent outside the command, in CI queueing or approval waits | More workers or higher run concurrency                                    |
 
-That also answers the question from the top of this post. A provider cache helps when initialization is the slow part. A more scoped root module helps when the plan is slow because of how much it has to refresh; if the same root module keeps showing up in slow runs, consider [breaking up a monolithic root module](/blog/terralith-monolithic-terraform-architecture/). Bigger or faster CI workers help when the time is spread thinly across the whole run with no single slow span, and do nothing for a throttled API or a slow provider download. Which one fits depends on your system. **That is a good question to put to the agent: with the traces, the code, and the run history in front of it, it has far more data about your architecture to base that decision on than a rule of thumb does.**
+That also answers the question from the top of this post. A provider cache helps when initialization is the slow part. A more scoped root module helps when the plan is slow because of how much it has to refresh; if the same root module keeps showing up in slow runs, consider [breaking up a monolithic root module](/blog/steps-to-break-up-a-terralith/). Bigger or faster CI workers help when the time is spread thinly across the whole run with no single slow span, and do nothing for a throttled API or a slow provider download. Which one fits depends on your system. **That is a good question to put to the agent: with the traces, the code, and the run history in front of it, it has far more data about your architecture to base that decision on than a rule of thumb does.**
 
 ## Give the Agent Access to the Evidence
 
@@ -161,7 +162,8 @@ With repository instructions defining the investigation method, start with one p
 What's causing <root module / stack> to be so slow? Where is the time going,
 when did it get slower, and what introduced the slowdown? Check the traces,
 CI runs, and git history. What change would help most, and how can we verify
-it? Link the evidence behind your conclusions.
+it? Link the evidence behind your conclusions. Follow the investigation steps in this post:
+https://masterpoint.io/blog/debugging-slow-terraform-opentofu-runs-opentelemetry-traces/
 ```
 
 Other questions work too: “Did the provider upgrade slow our plans?”, “Are we downloading providers every run?”, or “Why is this stack slower during business hours?”

@@ -3,7 +3,6 @@
 <desc id="al-dsc">Five steps in a row: locate slow spans in traces, explain them with throttling evidence in run logs, test with a diagnostic plan, change the code in a pull request, and verify with matched full runs. If verification shows a correct full plan and a measured improvement the work is done. If the slowdown is not reproduced or the plan is not faster, the agent revises the hypothesis and starts again.</desc>
 <style>
   .al-root { --ink: #16160f; --soft: #55554c; --logo: #0d3f3f; }
-  @media (prefers-color-scheme: dark) { .al-root { --ink: #f2f1ea; --soft: #b5b4ab; --logo: #ffffff; } }
   .al-root text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: var(--ink); }
   .al-root .al-t { fill: var(--soft); font-size: 11px; }
   .al-root .al-s { fill: var(--soft); font-size: 10px; }

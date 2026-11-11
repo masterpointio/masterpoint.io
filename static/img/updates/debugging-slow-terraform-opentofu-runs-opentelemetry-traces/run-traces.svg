@@ -3,7 +3,6 @@
 <desc id="rt-dsc">A timeline of one Spacelift run: queue wait, tofu init, tofu plan, tofu show, approval wait, tofu apply. Each tofu command is its own trace. The queue and approval waits are not in any trace. All of the traces carry the same resource attributes, including spacelift.run_id, which is what joins them back into one run.</desc>
 <style>
   .rt-root { --ink: #16160f; --soft: #55554c; --logo: #0d3f3f; }
-  @media (prefers-color-scheme: dark) { .rt-root { --ink: #f2f1ea; --soft: #b5b4ab; --logo: #ffffff; } }
   .rt-root text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: var(--ink); }
   .rt-root .rt-t { fill: var(--soft); font-size: 11px; }
   .rt-root .rt-s { fill: var(--soft); font-size: 10px; }

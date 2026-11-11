@@ -3,7 +3,6 @@
 <desc id="sr-dsc">Top: the trace shows a single resource-planning span lasting 2 minutes 55 seconds. Bottom, on the same time axis: the debug logs show twelve throttled API attempts, each followed by a backoff wait that doubles from 1 second up to a 20 second cap, and a thirteenth attempt that succeeds. Almost all of the span is waiting. The retry schedule is illustrative.</desc>
 <style>
   .sr-root { --ink: #16160f; --soft: #55554c; --logo: #0d3f3f; }
-  @media (prefers-color-scheme: dark) { .sr-root { --ink: #f2f1ea; --soft: #b5b4ab; --logo: #ffffff; } }
   .sr-root text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: var(--ink); }
   .sr-root .sr-t { fill: var(--soft); font-size: 11px; }
   .sr-root .sr-s { fill: var(--soft); font-size: 10px; }
