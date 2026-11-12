@@ -40,4 +40,7 @@ resources.Minify }}
 {{ $lazyVideoJS := resources.Get "js/lazy-video.js" }} {{ $secureLazyVideoJS :=
 $lazyVideoJS | resources.Minify }}
 <script src="{{ $secureLazyVideoJS.Permalink }}"></script>
+{{ $imageZoomJS := resources.Get "js/image-zoom.js" }} {{ $secureImageZoomJS :=
+$imageZoomJS | resources.Minify }}
+<script src="{{ $secureImageZoomJS.Permalink }}"></script>
 {{ end }} {{ partial "lightbox.html" .}}
