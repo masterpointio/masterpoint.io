@@ -29,7 +29,7 @@ We ran into this recently with an enterprise whose root module was managing roug
 
 Those posts used an [OpenTelemetry trace](https://opentofu.org/docs/internals/tracing/) to explain the problem. This post explains how to get that trace, what to look for, and how to give an AI agent access to the same evidence so it can investigate, propose a change, and check whether the change helped.
 
-The setup below uses OpenTofu. If you use Terraform, you can still time initialization and planning separately, check provider logs for retries, and compare plans from the same stack before and after a change.
+The setup below uses OpenTofu, but is similar in HashiCorp Terraform.
 
 ## Trace the Run Before Refactoring or Changing the Code
 
@@ -55,12 +55,10 @@ For Datadog, configure the following in the environment that runs `tofu`.
 # Supply DD_API_KEY through your CI secret store.
 export OTEL_TRACES_EXPORTER=otlp
 export OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
-# Set DD_SITE to your Datadog site (for example, datadoghq.com for US1).
-export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT="https://otlp.${DD_SITE:?set DD_SITE}/v1/traces"
+export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=https://otlp.{region}.datadoghq.com/v1/traces
 export OTEL_EXPORTER_OTLP_TRACES_HEADERS="dd-api-key=${DD_API_KEY},compute_stats=true"
 export OTEL_SERVICE_NAME=terraform
-# Set DD_TRACE_HOST in CI to the host name you want Datadog to report.
-export OTEL_RESOURCE_ATTRIBUTES="env=terraform,datadog.host.name=${DD_TRACE_HOST:?set DD_TRACE_HOST for this runner}"
+export OTEL_RESOURCE_ATTRIBUTES="env=terraform,datadog.host.name=<your-worker-pool-name>"
 
 tofu init
 tofu plan
@@ -74,7 +72,7 @@ Direct export keeps the initial setup small for an ephemeral CI worker. A Collec
 
 [![Datadog trace explorer listing tofu traces from the opentofu/spacelift service with their durations and span counts](/img/updates/debugging-slow-terraform-opentofu-runs-opentelemetry-traces/trace-explorer-opentofu.png)](/img/updates/debugging-slow-terraform-opentofu-runs-opentelemetry-traces/trace-explorer-opentofu.png)
 
-**If your runner starts a container for every job, check which hostname appears in Datadog.** A fresh container ID can make every run look like a new host, which can affect your bill for products priced per host. We use a stable worker-pool name for `datadog.host.name` and a run ID to tell executions apart. The example above takes that name from `DD_TRACE_HOST`. See [Datadog’s hostname guidance](https://docs.datadoghq.com/opentelemetry/config/hostname_tagging/) for your runner setup.
+**If your runner starts a container for every job, check which hostname appears in Datadog.** A fresh container ID can make every run look like a new host, which can affect your bill for products priced per host. We use a stable worker-pool name for `datadog.host.name` and a run ID to tell executions apart. See [Datadog’s hostname guidance](https://docs.datadoghq.com/opentelemetry/config/hostname_tagging/) for your runner setup.
 
 ## Give Every Trace a Stack, Commit, and Run ID
 
