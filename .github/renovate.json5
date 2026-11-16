@@ -1,32 +1,51 @@
 {
-  "extends": [
-    "config:best-practices",
-    "github>aquaproj/aqua-renovate-config#2.7.5"
+  extends: [
+    'config:best-practices',
+    'github>aquaproj/aqua-renovate-config#2.7.5',
   ],
-  "minimumReleaseAge": "3 days",
-  "enabledManagers": [
-    "github-actions"
+  minimumReleaseAge: '3 days',
+  enabledManagers: [
+    'github-actions',
   ],
-  "schedule": [
-    "after 9am on the first day of the month"
+  schedule: [
+    'after 9am on the first day of the month',
   ],
-  "assigneesFromCodeOwners": true,
-  "dependencyDashboardAutoclose": true,
-  "addLabels": ["{{manager}}"],
-  "packageRules": [
+  assigneesFromCodeOwners: true,
+  dependencyDashboard: {
+    autoclose: true,
+  },
+  addLabels: [
+    '{{manager}}',
+  ],
+  packageRules: [
     {
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "automerge": true,
-      "automergeType": "branch",
-      "groupName": "github-actions-auto-upgrade",
-      "addLabels": ["auto-upgrade"]
+      matchManagers: [
+        'github-actions',
+      ],
+      matchUpdateTypes: [
+        'minor',
+        'patch',
+        'pin',
+        'digest',
+      ],
+      automerge: true,
+      automergeType: 'branch',
+      groupName: 'github-actions-auto-upgrade',
+      addLabels: [
+        'auto-upgrade',
+      ],
     },
     {
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["major"],
-      "groupName": "github-actions-needs-review",
-      "addLabels": ["needs-review"]
-    }
-  ]
+      matchManagers: [
+        'github-actions',
+      ],
+      matchUpdateTypes: [
+        'major',
+      ],
+      groupName: 'github-actions-needs-review',
+      addLabels: [
+        'needs-review',
+      ],
+    },
+  ],
 }
