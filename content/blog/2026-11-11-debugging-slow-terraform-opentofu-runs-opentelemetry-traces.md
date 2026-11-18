@@ -5,6 +5,7 @@ title: "Debugging Slow Terraform and OpenTofu Runs with OpenTelemetry Traces and
 author: Yangci Ou
 slug: debugging-slow-terraform-opentofu-runs-opentelemetry-traces
 date: 2026-11-11
+# date_modified: 2026-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: "A seven-minute plan could need a provider cache, bigger workers, or a more scoped root module. OpenTelemetry traces show where the time goes, and give an AI agent the evidence to investigate, propose a fix, and verify it."
 tags:
   [
