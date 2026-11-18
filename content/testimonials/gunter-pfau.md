@@ -1,5 +1,6 @@
 ---
 title: Gunter Pfau
+weight: 2
 position: CEO, Stuzo
 photo: /img/testimonials/gunter-pfau.jpg
 company: Stuzo

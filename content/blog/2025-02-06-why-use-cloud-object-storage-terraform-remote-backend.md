@@ -5,9 +5,9 @@ title: "Why Use Cloud Object Storage for Terraform's Remote Backend & State"
 author: Yangci Ou
 slug: why-use-cloud-object-storage-terraform-remote-backend
 date: 2025-02-06
-date_modified: 2026-06-03 # Be sure to use this if you've updated the post as this helps with SEO and index freshness
+date_modified: 2026-10-23 # Be sure to use this if you've updated the post as this helps with SEO and index freshness
 description: Discover why cloud object storage services are the gold standard for Terraform or OpenTofu’s remote state and backend, including the benefits and an example using AWS S3 with native state locking.
-image: /img/updates/cloud-object-storage-terraform-remote-backend/cloud-object-storage-for-terraform-remote-backend.webp
+image: /img/updates/cloud-object-storage-terraform-remote-backend/cloud-object-storage-terraform-opentofu-remote-state.png
 callout: <p>👋 <b>If you're ready to take your infrastructure to the next level, we're here to help. We love to work together with engineering teams to help them build well-documented, scalable, automated IaC that make their jobs easier. <a href='/contact/'>Get in touch!</a></p>
 ---
 
@@ -28,9 +28,11 @@ At Masterpoint, as we build out or modernize many of our clients’ [Infrastruct
 
 Before we dive deeper, let’s give some background on what a remote state (which can only be supported by a remote backend) is in the context of Terraform, OpenTofu, or Pulumi, hereafter referred to as TF. Remote state means storing the IaC state files in a location separate from your local machine. The state files are crucial in a TF setup because they keep track of the resources TF manages and their current configurations. The backend specifies where these state files are stored and controls how your system and TF accesses them. The backend is responsible for storing the state and providing features such as access locking, which prevents concurrent operations that could corrupt the state. [By default, a TF project uses a local backend to store state on your local machine, but can be configured in the `backend` block](https://opentofu.org/docs/language/settings/backends/configuration).
 
+Terraform or OpenTofu writes a state file after every apply, recording the real infrastructure those systems manage — resource IDs, attributes, and how those resources depend on each other — so the next plan can compare your code with what actually exists. We strongly recommend using a cloud based object storage service for your remote state backend. [Amazon Web Services S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html), [Microsoft Azure Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction), and [Google Cloud Storage](https://cloud.google.com/storage/docs/introduction) are the usual choices, and any of them can act as the remote backend described below.
+
 ## Why Use Remote State and a Remote Backend?
 
-Remote state in TF isn’t just a fancy feature - it’s a necessity for any non-trivial IaC codebase. Imagine trying to collaborate on a complex infrastructure project with team members across the world using local state files. It would be like building a skyscraper together with everyone working from their own set of blueprints. The state files would each be different sources of truth for each person, making it nearly impossible to collaborate as a team.
+Remote state in TF isn’t just a fancy feature - it’s a necessity for any non-trivial IaC codebase. **Imagine trying to collaborate on a complex infrastructure project with team members across the world using local state files. It would be like building a skyscraper together with everyone working from their own set of blueprints. The state files would each be different sources of truth for each person, making it nearly impossible to collaborate as a team.**
 
 Using a remote backend to manage state solves issues like these by allowing any engineer to access the state data in a centralization and secure location. There are other benefits as well:
 
@@ -39,7 +41,7 @@ Using a remote backend to manage state solves issues like these by allowing any 
 3. **State Locking**: Most backends with remote state allow for [state locking](https://opentofu.org/docs/language/state/locking/). Locking prevents race conditions that could corrupt your state file when multiple members access and modify it at one time.
 4. **Disaster Recovery**: If your local machine's state files gets corrupted or lost, you lose track of the infrastructure being managed by TF. You'd have to manually import it all which is a lot of grunt work, or else you'd lose all the benefits of IaC. Many remote state backends (such as AWS S3) have automated backups and cross-region replication in the rare case that disaster strikes, your state files are safe.
 
-![Using Cloud for Terraform Remote Backend State](/img/updates/cloud-object-storage-terraform-remote-backend/aws-s3-terraform-remote-backend.png)
+![Terraform and OpenTofu using Remote State Backend via AWS Cloud](/img/updates/cloud-object-storage-terraform-remote-backend/s3-remote-backend-aws-architecture.svg)
 
 ## Why Cloud Based Object Storage Shines as a Remote Backend
 

@@ -1,0 +1,52 @@
+{{- /* One testimonial on /testimonials/. Reads the same front matter as the
+slider (layouts/partials/testimonials-slider.html), including the per-logo size
+and color overrides. */ -}} {{- $company := .Params.company | default .Title -}}
+{{- $logoStyle := "" -}} {{- with .Params.logo_height }}{{ $logoStyle = printf
+"--quote-logo-h:%dpx;" (int .) }}{{ end -}} {{- with .Params.logo_max_width }}{{
+$logoStyle = printf "%s--quote-logo-w:%dpx;" $logoStyle (int .) }}{{ end -}} {{-
+/* Some quotes are wrapped in quote marks in their source and some aren't. The
+card draws its own opening mark, so drop the wrapping pair for a consistent
+grid. (\x3c is "<", spelled out so Prettier doesn't parse the patterns as HTML
+tags.) */ -}} {{- $quote := .Content | replaceRE `^(\s*\x3cp>)&ldquo;` "$1" |
+replaceRE `&rdquo;(\x3c/p>\s*)$` "$1" -}}
+<figure class="testimonial-card" id="{{ .File.ContentBaseName }}">
+  <div class="testimonial-card__head">
+    {{ with .Params.logo }}
+    <div
+      class="testimonial-card__logo{{ if $.Params.logo_full_color }} testimonial-card__logo--color{{ end }}"
+      {{
+      with
+      $logoStyle
+      }}style="{{ . | safeCSS }}"
+      {{
+      end
+      }}
+    >
+      <img src="{{ . }}" alt="{{ $company }}" loading="lazy" />
+    </div>
+    {{ end }}
+    <span class="testimonial-card__mark" aria-hidden="true">&ldquo;</span>
+  </div>
+  <div class="testimonial-card__body">
+    <blockquote class="testimonial-card__quote">
+      {{ $quote | safeHTML }}
+    </blockquote>
+    {{ with .Params.case_study }}
+    <a class="testimonial-card__cta" href="{{ . | relURL }}"
+      >Read the {{ $company }} case study
+      <span class="testimonial-card__arrow" aria-hidden="true">→</span></a
+    >
+    {{ end }}
+  </div>
+  <figcaption class="testimonial-card__by">
+    {{ with .Params.photo }}
+    <div class="testimonial-card__avatar">
+      <img src="{{ . }}" alt="{{ $.Title }}" loading="lazy" />
+    </div>
+    {{ end }}
+    <div class="testimonial-card__byText">
+      <div class="testimonial-card__name">{{ .Title }}</div>
+      <div class="testimonial-card__position">{{ .Params.position }}</div>
+    </div>
+  </figcaption>
+</figure>

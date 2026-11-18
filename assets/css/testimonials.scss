@@ -1,0 +1,266 @@
+// Testimonials index — /testimonials/ (#testimonialsPage).
+// Imported at the end of custom.scss, after careers.scss: it reuses that file's
+// glow banner and brand-gradient mixins, and its dark rounded card language.
+// Cards read the same front matter as the homepage slider (.quoteBx in
+// custom.scss), including the --quote-logo-h / --quote-logo-w logo overrides.
+
+#testimonialsPage {
+  #banner {
+    // the homepage "our word" testimonial art, behind the same pine scrim
+    @include hire-glow-banner("/img/bg_our_word.jpg");
+  }
+
+  main {
+    background: $pine;
+    padding-top: 0.5rem;
+
+    .container {
+      max-width: 1080px;
+    }
+  }
+
+  .testimonials-intro {
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 2.4rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+
+    // an odd card out spans the full row instead of leaving a hole
+    > :last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 767px) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  // ── Testimonial card ──────────────────────────────────────────────
+  .testimonial-card {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 2.2rem 2.4rem 2.1rem;
+    border-radius: 18px;
+    color: #fff;
+    background:
+      radial-gradient(
+        ellipse at 100% 0%,
+        rgba(42, 217, 194, 0.12),
+        transparent 45%
+      ),
+      linear-gradient(120deg, #0c3133 0%, $hire-pine-deep 100%);
+    border: 1px solid rgba(42, 217, 194, 0.16);
+    box-shadow: 0 14px 32px -22px rgba(0, 0, 0, 0.7);
+    // clears the fixed header when deep-linked by #slug
+    scroll-margin-top: 7rem;
+    transition: border-color 0.24s ease;
+
+    &:hover,
+    &:target {
+      border-color: rgba(42, 217, 194, 0.45);
+    }
+
+    @media (max-width: 575px) {
+      padding: 1.6rem 1.4rem 1.5rem;
+    }
+  }
+
+  .testimonial-card__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 54px;
+    margin-bottom: 1.4rem;
+  }
+
+  // Monochrome white by default (the source files are dark marks), opt out
+  // with `logo_full_color: true` — same rules as the slider's .quoteLogo.
+  .testimonial-card__logo {
+    min-width: 0;
+
+    // A fixed height (not max-height) so SVGs without intrinsic dimensions
+    // still size from their viewBox instead of collapsing in the flex row;
+    // object-fit keeps wide marks undistorted when max-width kicks in.
+    img {
+      display: block;
+      height: var(--quote-logo-h, 34px);
+      width: auto;
+      // unquote() keeps Sass from trying to evaluate CSS min() itself
+      max-width: unquote("min(var(--quote-logo-w, 220px), 100%)");
+      object-fit: contain;
+      object-position: left center;
+      filter: brightness(0) invert(1);
+      opacity: 0.92;
+    }
+
+    &--color img {
+      filter: none;
+      opacity: 1;
+    }
+
+    @media (max-width: 575px) {
+      img {
+        height: calc(var(--quote-logo-h, 34px) * 0.8);
+      }
+    }
+  }
+
+  // big gradient opening quote, tucked into the top-right corner
+  .testimonial-card__mark {
+    flex: 0 0 auto;
+    margin-left: auto;
+    height: 54px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 5.5rem;
+    line-height: 1;
+    @include hire-brand-gradient-text;
+    opacity: 0.85;
+  }
+
+  // Grows to fill the card so every attribution sits on the bottom edge,
+  // lined up with its neighbour in the row whether or not either card has a
+  // case-study link.
+  .testimonial-card__body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1.8rem;
+  }
+
+  .testimonial-card__quote {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-style: normal;
+    font-size: 1.08rem;
+    line-height: 1.7;
+    letter-spacing: 0.01em;
+    color: rgba(255, 255, 255, 0.74);
+
+    p {
+      font-size: inherit;
+      line-height: inherit;
+      margin: 0 0 0.8em;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    // the bolded phrases carry the quote: lift them to full white
+    strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    @media (max-width: 575px) {
+      font-size: 1rem;
+    }
+  }
+
+  .testimonial-card__by {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  // headshot with the brand-gradient ring (as in the slider)
+  .testimonial-card__avatar {
+    flex: 0 0 auto;
+    padding: 1px;
+    border-radius: 50%;
+    background: linear-gradient(40deg, #2ad9c2 0%, #55c1b4 42%, #d191bf 100%);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+
+    img {
+      display: block;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+
+  .testimonial-card__byText {
+    min-width: 0;
+  }
+
+  .testimonial-card__name {
+    font-weight: 800;
+    font-size: 1.05rem;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .testimonial-card__position {
+    margin-top: 0.3rem;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .testimonial-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 1.3rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    @include hire-brand-gradient-text;
+
+    &:hover,
+    &:focus-visible {
+      text-decoration: none;
+
+      .testimonial-card__arrow {
+        transform: translateX(5px);
+      }
+    }
+  }
+
+  .testimonial-card__arrow {
+    font-size: 1.05rem;
+    -webkit-text-fill-color: $hire-mint;
+    color: $hire-mint;
+    transition: transform 0.28s ease;
+  }
+
+  // ── "See the work" links ──────────────────────────────────────────
+  .testimonials-links {
+    margin: 3.2rem 0 4rem;
+    text-align: center;
+
+    &__label {
+      display: block;
+      margin-bottom: 1rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.55);
+    }
+    &__row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
+    }
+  }
+}

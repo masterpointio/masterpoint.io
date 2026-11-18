@@ -1,5 +1,6 @@
 ---
 title: Alec Baker
+weight: 5
 position: Principal Solutions Architect, Leadership Analytics Group
 photo: /img/testimonials/alec-baker.jpeg
 company: Leadership Analytics Group

@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <!--
+      Masterpoint blog banner template. Rendered at exactly 1600x900 by render.sh.
+
+      EDIT: the .topmark src, the .title text, and the .subtitle text.
+      Paths use __SKILL_DIR__ and __REPO_ROOT__ tokens, substituted by render.sh.
+
+      LAYOUT RULES (learned the hard way, keep them):
+        - All content lives inside .inner, which is 800px wide, the center 50%
+          of the 1600px canvas. Nothing should exceed it.
+        - .title and .subtitle are nowrap. If a line is wider than 800px it
+          overflows RIGHT ONLY and silently goes off-center. Never let that
+          ship: run measure.py and shrink BOTH font sizes until it fits.
+        - Title and subtitle share a font size by default so the two lines read
+          as one block. Keep them equal if you change one.
+        - The wordmark is absolutely positioned, so it sits OUTSIDE .inner's
+          centering. .inner is centered on the canvas and the wordmark reads as
+          footer chrome below it.
+    -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1600px;
+        height: 900px;
+      }
+      body {
+        /* proxima-nova (the site font) is not installable locally; Avenir Next
+           is the closest available geometric sans. */
+        font-family: "Avenir Next", "Helvetica Neue", sans-serif;
+        background: #232a3b;
+        overflow: hidden;
+      }
+
+      .stage {
+        position: relative;
+        width: 1600px;
+        height: 900px;
+        /* House gradient: teal top-left, plum bottom-right, navy through the
+           middle. Colors derive from assets/css/variables.scss ($pine). */
+        background:
+          radial-gradient(
+            120% 90% at 0% 0%,
+            rgba(14, 56, 58, 0.95) 0%,
+            rgba(14, 56, 58, 0) 55%
+          ),
+          radial-gradient(
+            110% 95% at 100% 100%,
+            rgba(74, 45, 74, 0.95) 0%,
+            rgba(74, 45, 74, 0) 58%
+          ),
+          linear-gradient(
+            135deg,
+            #2c4a4a 0%,
+            #262d40 45%,
+            #2b2a3f 70%,
+            #3d2b3f 100%
+          );
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      /* faint grid texture, masked so it fades out at the edges */
+      .stage::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+          linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.035) 1px,
+            transparent 1px
+          );
+        background-size: 64px 64px;
+        mask-image: radial-gradient(
+          80% 70% at 50% 45%,
+          #000 20%,
+          transparent 78%
+        );
+        -webkit-mask-image: radial-gradient(
+          80% 70% at 50% 45%,
+          #000 20%,
+          transparent 78%
+        );
+      }
+
+      /* the center 50% band */
+      .inner {
+        position: relative;
+        z-index: 2;
+        width: 800px;
+        text-align: center;
+        transform: translateY(10px);
+      }
+
+      /* Optional vendor/tech logo above the title. Delete the <img> if unused. */
+      .topmark {
+        display: block;
+        height: 116px;
+        margin: 0 auto 34px;
+      }
+
+      .title {
+        font-size: 48px;
+        font-weight: 800;
+        line-height: 1.06;
+        letter-spacing: -0.02em;
+        color: #fff;
+        white-space: nowrap;
+      }
+
+      .subtitle {
+        margin-top: 14px;
+        font-size: 48px;
+        font-weight: 600;
+        letter-spacing: -0.005em;
+        color: #fff;
+        white-space: nowrap;
+      }
+
+      .brand {
+        position: absolute;
+        z-index: 2;
+        bottom: 48px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      /* logo.svg is the white wordmark. Do NOT use logo_footer.svg here, its
+         text is #0E383A and vanishes on this background. */
+      .brand img {
+        display: block;
+        height: 38px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <div class="inner">
+        <div class="title">Debugging Slow IaC Runs</div>
+        <div class="subtitle">OpenTelemetry Traces &amp; AI Agents</div>
+      </div>
+
+      <div class="brand">
+        <img src="__REPO_ROOT__/static/img/logo.svg" />
+      </div>
+    </div>
+  </body>
+</html>

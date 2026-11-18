@@ -75,7 +75,7 @@ To get started, I needed to configure a few things:
 
 1. **Install tfmcp.** I followed the install instructions in the [tfmcp's README](https://github.com/nwiizo/tfmcp/tree/b0fcc5c32f4bf0a71f373dd18891ce9faf36f09b?tab=readme-ov-file#installation).
 
-2. **Set up tfmcp in Cursor.** I followed [Cursor’s instructions](https://docs.cursor.com/context/model-context-protocol#configuring-mcp-servers]) and plugged in the relevant tfmcp settings (see example `mcp.json`).
+2. **Set up tfmcp in Cursor.** I followed [Cursor’s instructions](https://docs.cursor.com/context/model-context-protocol#configuring-mcp-servers) and plugged in the relevant tfmcp settings (see example `mcp.json`).
 
 3. **Configure tfmcp to run Terraform commands in the desired directory.** For this config I needed to tell tfmcp where my terraform was located and add my homebrew install location to the tfmcp path (again, see example `mcp.json`).
 

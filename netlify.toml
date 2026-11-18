@@ -66,6 +66,46 @@ status = 301
 force = true
 ########################################################
 
+# Individual testimonial pages are no longer rendered (content/testimonials/_index.md),
+# so send their old URLs to the index. One explicit rule per old page: a
+# non-forced /testimonials/* splat didn't fire on Netlify (404s instead), and a
+# forced splat would also catch /testimonials/ itself and loop.
+[[redirects]]
+from = "/testimonials/adam-pallin/"
+to = "/testimonials/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/testimonials/alec-baker/"
+to = "/testimonials/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/testimonials/gunter-pfau/"
+to = "/testimonials/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/testimonials/liam-egan/"
+to = "/testimonials/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/testimonials/nathan-wade/"
+to = "/testimonials/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/testimonials/travis-mcpeak/"
+to = "/testimonials/"
+status = 301
+force = true
+
 ########################################################
 # Plausible Analytics proxy. Serves the tracker first-party so ad blockers
 # don't strip it. These MUST stay above the catch-all 404 below, and the paths
