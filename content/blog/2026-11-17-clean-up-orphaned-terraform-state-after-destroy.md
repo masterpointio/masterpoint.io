@@ -6,7 +6,7 @@ author: Yangci Ou
 slug: clean-up-orphaned-terraform-state-after-destroy
 date: 2026-11-17
 # date_modified: 2026-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
-description: "Destroying a root module, deleting its directory, and deleting its stack never touch the state object in your Terraform backend. The empty state file, and with versioning every previous copy of it, lives in the bucket forever unless you delete it yourself."
+description: "Destroying a root module, its directory with its code, and the stack on CI/CD never removes the state object in your Terraform backend. The empty state file, and with versioning every previous copy of it, lives in the bucket forever unless you delete it yourself."
 tags:
   [
     "terraform",
