@@ -54,7 +54,7 @@ A single root module managing most of a platform may instead have just one state
 
 Using a test root module that as a simple `random_pet` resource that generates some string and the backend block above pointed at a fresh bucket Here's the whole lifecycle with the bucket listed after each step:
 
-```bash
+```console
 $ tofu apply -auto-approve
 random_pet.this: Creation complete after 0s [id=outgoing-iguana]
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
@@ -76,7 +76,7 @@ In practice, it's easy to skip `workspace delete` and go straight from destroy t
 
 When I recreated `demo-service`, the directory name pointed TF back to the old prefix. Workspace setup failed:
 
-```bash
+```console
 $ tofu workspace new testing
 Error: Workspace "testing" already exists
 ```
@@ -99,7 +99,7 @@ An empty state file with a serial, a lineage, and nothing in it. From TF's point
 
 Now the part that matters more than the 152 bytes. Listing the object versions:
 
-```bash
+```console
 $ aws s3api list-object-versions --bucket $BUCKET --output table
 +----------+----------------------------+-----------------------------+-------+
 | IsLatest |            Key             |        LastModified         | Size  |
