@@ -2,7 +2,7 @@
     <div class="entry">
         <div class="flex reverse">
             {{ if .Params.preview_image }}
-            <div class="entryImg">
+            <div class="entryImg{{ if .Params.preview_image_contain }} preview-contain{{ end }}">
                 {{ if .Params.outbound }}
                 <a href="{{ .Params.outbound }}" target="_blank"><img src='{{ .Param "preview_image"}}' class="img-fluid lazy"
                         alt="{{ .Title | safeHTML }}"></a>

@@ -8,6 +8,8 @@ slug: infrastructure-security-choosing-providers-ai
 description: "What recent provider security incidents mean for your production secrets, credential permissions, incident plans, and infrastructure choices."
 tags: ["security", "infrastructure", "cloud", "ai"]
 image: /img/updates/infrastructure-security/provider-evaluation-og-1200x630.png
+preview_image: /img/updates/infrastructure-security/provider-evaluation-card-960x960.svg
+preview_image_contain: true
 og_img: /img/updates/infrastructure-security/provider-evaluation-og-1200x630.png
 hide_hero: true
 ---

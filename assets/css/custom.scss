@@ -2384,6 +2384,12 @@ footer {
   .entryImg {
     width: 34.5%;
     position: relative;
+    &.preview-contain {
+      background: #0e383a;
+      img {
+        object-fit: contain;
+      }
+    }
     @media (max-width: 575px) {
       width: 100%;
       height: 60vw;
