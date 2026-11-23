@@ -1,49 +1,83 @@
 <div class="col col-12">
-    <div class="entry">
-        <div class="flex reverse">
-            {{ if .Params.preview_image }}
-            <div class="entryImg{{ if .Params.preview_image_contain }} preview-contain{{ end }}">
-                {{ if .Params.outbound }}
-                <a href="{{ .Params.outbound }}" target="_blank"><img src='{{ .Param "preview_image"}}' class="img-fluid lazy"
-                        alt="{{ .Title | safeHTML }}"></a>
-                {{else}}
-                <a href="{{ .Permalink }}"><img src='{{ .Param "preview_image"}}' class="img-fluid lazy"
-                        alt="{{ .Title | safeHTML }}"></a>
-                {{end}}
-            </div>
-            {{else}}
-            <div class="entryImg">
-                {{ if .Params.outbound }}
-                <a href="{{ .Params.outbound }}" target="_blank"><img src='{{ .Param "image"}}' class="img-fluid lazy"
-                        alt="{{ .Title | safeHTML }}"></a>
-                {{else}}
-                <a href="{{ .Permalink }}"><img src='{{ .Param "image"}}' class="img-fluid lazy"
-                        alt="{{ .Title | safeHTML }}"></a>
-                {{end}}
-            </div>
-            {{end}}
-            <div class="entryContent">
-                <div class="postMeta">
-                    <span>Published: {{ .Date.Format "1.02.2006" }}</span>
-                    {{ if and .Params.date_modified (ne (.Params.date_modified | dateFormat "1.02.2006") (.Date.Format "1.02.2006")) }}
-                    <span> • Updated: {{ .Params.date_modified | dateFormat "1.02.2006" }}</span>
-                    {{ end }}
-                </div>
-                <h3 class="postTitle">
-                    {{ if .Params.outbound }}
-                    <a href="{{ .Params.outbound }}" target="_blank">{{ .Title | safeHTML }}</a>
-                    {{else}}
-                    <a href="{{ .Permalink }}">{{ .Title | safeHTML }}</a>
-                    {{end}}
-                </h3>
-
-                <div class="entryDesc">{{ if .Params.author }}<b>By {{.Params.author}}</b>{{end}} - {{ .Description | safeHTML }}</div>
-                {{ if .Params.outbound }}
-                <a href="{{ .Params.outbound }}" target="_blank" class="entry-link text-gradient">Read More &rsaquo;</a>
-                {{else}}
-                <a href="{{ .Permalink }}" class="entry-link text-gradient">Read More &rsaquo;</a>
-                {{end}}
-            </div>
+  <div class="entry">
+    <div class="flex reverse">
+      {{ if .Params.preview_image }}
+      <div
+        class="entryImg{{ if .Params.preview_image_contain }} preview-contain{{ end }}"
+      >
+        {{ if .Params.outbound }}
+        <a href="{{ .Params.outbound }}" target="_blank"
+          ><img
+            src='{{ .Param "preview_image"}}'
+            class="img-fluid lazy"
+            alt="{{ .Title | safeHTML }}"
+        /></a>
+        {{else}}
+        <a href="{{ .Permalink }}"
+          ><img
+            src='{{ .Param "preview_image"}}'
+            class="img-fluid lazy"
+            alt="{{ .Title | safeHTML }}"
+        /></a>
+        {{end}}
+      </div>
+      {{else}}
+      <div class="entryImg">
+        {{ if .Params.outbound }}
+        <a href="{{ .Params.outbound }}" target="_blank"
+          ><img
+            src='{{ .Param "image"}}'
+            class="img-fluid lazy"
+            alt="{{ .Title | safeHTML }}"
+        /></a>
+        {{else}}
+        <a href="{{ .Permalink }}"
+          ><img
+            src='{{ .Param "image"}}'
+            class="img-fluid lazy"
+            alt="{{ .Title | safeHTML }}"
+        /></a>
+        {{end}}
+      </div>
+      {{end}}
+      <div class="entryContent">
+        <div class="postMeta">
+          <span>Published: {{ .Date.Format "1.02.2006" }}</span>
+          {{ if and .Params.date_modified (ne (.Params.date_modified |
+          dateFormat "1.02.2006") (.Date.Format "1.02.2006")) }}
+          <span>
+            • Updated: {{ .Params.date_modified | dateFormat "1.02.2006"
+            }}</span
+          >
+          {{ end }}
         </div>
+        <h3 class="postTitle">
+          {{ if .Params.outbound }}
+          <a href="{{ .Params.outbound }}" target="_blank"
+            >{{ .Title | safeHTML }}</a
+          >
+          {{else}}
+          <a href="{{ .Permalink }}">{{ .Title | safeHTML }}</a>
+          {{end}}
+        </h3>
+
+        <div class="entryDesc">
+          {{ if .Params.author }}<b>By {{.Params.author}}</b>{{end}} - {{
+          .Description | safeHTML }}
+        </div>
+        {{ if .Params.outbound }}
+        <a
+          href="{{ .Params.outbound }}"
+          target="_blank"
+          class="entry-link text-gradient"
+          >Read More &rsaquo;</a
+        >
+        {{else}}
+        <a href="{{ .Permalink }}" class="entry-link text-gradient"
+          >Read More &rsaquo;</a
+        >
+        {{end}}
+      </div>
     </div>
+  </div>
 </div>
