@@ -4608,3 +4608,8 @@ font-size: 1.55rem;
 @import "careers.scss";
 
 @import "testimonials.scss";
+
+// Preserve the complete artwork for explicitly opted-in blog thumbnails.
+.entryImg.entryImg-contain img {
+  object-fit: contain;
+}

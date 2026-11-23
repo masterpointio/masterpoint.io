@@ -108,18 +108,18 @@
     <meta name="msapplication-TileColor" content="#da532c" />
     <meta name="theme-color" content="#ffffff" />
 
-    {{ if .Params.og_img }}
-    <meta property="og:image" content="{{ .Params.og_img | absURL }}" />
-    <meta property="twitter:image" content="{{ .Params.og_img | absURL }}" />
-    {{ else if and (eq .Section "blog") (.Params.image) }}
-    <meta property="og:image" content="{{ .Params.image }}" />
-    <meta property="twitter:image" content="{{ .Params.image }}" />
-    {{ else }}
-    <meta property="og:image" content="/img/og-img.png" />
-    <meta property="twitter:image" content="/img/og-img.png" />
-    {{ end }}
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="628" />
+    {{ $socialImage := "/img/og-img.png" }} {{ if .Params.og_img }} {{
+    $socialImage = .Params.og_img }} {{ else if and (eq .Section "blog")
+    (.Params.image) }} {{ $socialImage = .Params.image }} {{ end }}
+    <meta property="og:image" content="{{ $socialImage | absURL }}" />
+    <meta name="twitter:image" content="{{ $socialImage | absURL }}" />
+    {{ if not (urls.Parse $socialImage).IsAbs }} {{ $imagePath := printf
+    "static/%s" (strings.TrimPrefix "/" $socialImage) }} {{ if and (fileExists
+    $imagePath) (in (slice ".png" ".jpg" ".jpeg" ".gif" ".webp") (lower
+    (path.Ext $imagePath))) }} {{ with imageConfig $imagePath }}
+    <meta property="og:image:width" content="{{ .Width }}" />
+    <meta property="og:image:height" content="{{ .Height }}" />
+    {{ end }} {{ end }} {{ end }}
     <meta name="twitter:card" content="summary_large_image" />
 
     {{ if isset .Site.Params "twitter_user" }}
