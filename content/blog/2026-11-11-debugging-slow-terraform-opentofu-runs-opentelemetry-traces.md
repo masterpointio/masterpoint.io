@@ -32,7 +32,7 @@ Those posts used an [OpenTelemetry trace](https://opentofu.org/docs/internals/tr
 
 The setup below uses OpenTofu, but is similar in HashiCorp Terraform.
 
-## Trace the Run Before Refactoring or Changing the Code
+## Trace the run before refactoring or changing the code
 
 Start with the trace. A trace represents an execution, with spans recording the operations inside it and how long they took. In our [OpenTofu traces](https://opentofu.org/docs/internals/tracing/), those operations include provider installation, module downloads, validation, and resource planning or application.
 
@@ -46,7 +46,7 @@ Once you’ve found a slow resource in the table, open its trace and look at wha
 
 **Start with the trace to find where the time goes, then collect the evidence (with DEBUG logs if necessary) needed to explain why.**
 
-## Get Your First Trace Into Datadog
+## Get your first trace into Datadog
 
 We use [Datadog](https://www.datadoghq.com/) here because it lets us investigate infrastructure runs alongside the applications they manage. You can use another OTLP-compatible backend such as [Honeycomb](https://www.honeycomb.io/) or a local [Jaeger](https://www.jaegertracing.io/) instance, with the appropriate endpoint and authentication.
 
@@ -75,7 +75,7 @@ Direct export keeps the initial setup small for an ephemeral CI worker. A Collec
 
 **If your runner starts a container for every job, check which hostname appears in Datadog.** A fresh container ID can make every run look like a new host, which can affect your bill for products priced per host. We use a stable worker-pool name for `datadog.host.name` and a run ID to tell executions apart. See [Datadog’s hostname guidance](https://docs.datadoghq.com/opentelemetry/config/hostname_tagging/) for your runner setup.
 
-## Give Every Trace a Stack, Commit, and Run ID
+## Give every trace a stack, commit, and run ID
 
 When a stack starts taking longer to run, you need to know which configuration and commit produced those traces so you can go back and work out what changed. Our Spacelift setup stores exporter settings in a shared context and adds run metadata before initialization using computed environment variables.
 
@@ -97,11 +97,11 @@ One CI run can produce separate traces for init, plan, and show. The run ID conn
 
 These attributes also let an agent distinguish a code regression from a different execution context. Compare runs of the same stack and run type, and inspect command arguments when refresh behavior differs.
 
-## Use the OTel Trace for Your Next Investigation
+## Use the OTel trace for your next investigation
 
 Use the trace to distinguish slow initialization from resource operations delayed by API throttling.
 
-### Slow Initialization: Investigate Provider Installation
+### Slow initialization: investigate provider installation
 
 For example, initialization on one of our stacks took roughly 38 to 42 seconds, with 32 to 37 seconds in `Get Providers`. Your root module might use several providers, such as AWS, Kubernetes, Helm, and GitHub, which a fresh CI worker has to install. Or most of that time might come from downloading and decompressing one large provider package. Expand the child spans to see which installations take the time, then check whether the worker downloads those packages again on every run.
 
@@ -113,7 +113,7 @@ Both Terraform and OpenTofu support persistent plugin caches and provider networ
 
 Trend `Install (http)` durations by provider. Simultaneous download slowdowns or errors across stacks suggest a shared network, registry, or module-source problem. Provider plugin caching does not cover Git-sourced modules.
 
-### Slow Plans or Applies Phases
+### Slow plans or applies phases
 
 Throttling can affect reads during planning or writes during apply. In our [Route 53 retry investigation](/blog/aws-adaptive-retry-mode-terraform-throttled-api-requests/), one record read took 2 minutes 55 seconds. The debug logs confirmed throttling. In the screenshot below, selecting a 37-second span reveals the address of the Route 53 record it belongs to.
 
@@ -151,7 +151,7 @@ As a quick reference, here is what each trace pattern in this post points to:
 
 That also answers the question from the top of this post. A provider cache helps when initialization is the slow part. A more scoped root module helps when the plan is slow because of how much it has to refresh; if the same root module keeps showing up in slow runs, consider [breaking up a monolithic root module](/blog/steps-to-break-up-a-terralith/). Bigger or faster CI workers help when the time is spread thinly across the whole run with no single slow span, and do nothing for a throttled API or a slow provider download. Which one fits depends on your system. **That is a good question to put to the agent: with the traces, the code, and the run history in front of it, it has far more data about your architecture to base that decision on than a rule of thumb does.**
 
-## Give the Agent Access to the Evidence
+## Give the agent access to the evidence
 
 If you’re going to ask an agent what’s slowing a stack down, it needs access to the traces and enough context to connect what happened in the run to the code. Datadog's MCP tools support span searches, aggregations, and trace retrieval. You can also use other API / CLI tools.
 
@@ -175,7 +175,7 @@ The agent can also investigate:
 
 Start with aggregates and retrieve representative traces. Large trace responses can be truncated; the agent should report missing evidence instead of treating partial results as complete. Resource addresses, commit SHAs, and run IDs connect each finding to the code and logs.
 
-## Make the Agent Verify the Performance Fix
+## Make the agent verify the performance fix
 
 Take the Route 53 investigation as an example. The agent finds that DNS record spans dominate the slow plans, confirms throttling in the run logs, and runs a diagnostic plan that excludes those records. If that removes most of the delay, it opens a PR: adaptive retries on a provider alias, or DNS in its own root module with an explicit state migration plan.
 
@@ -187,7 +187,7 @@ Ask for a PR with the baseline and candidate commit SHAs, run and trace links, s
 
 **The completion condition is a correct full plan and measured improvement against comparable runs.**
 
-## Keep the Telemetry Useful as Usage Grows
+## Keep the telemetry useful as usage grows
 
 Build a dashboard showing command and phase durations, slow resources with sample counts, and span volume. Keep init, plan, and apply separate. Historical queries depend on retained data, so check coverage before trusting trends.
 
