@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to AI coding agents when working with code in this repository.
 
 ## Project Overview
 
@@ -8,7 +8,7 @@ This is the Masterpoint.io company website - a Hugo-based static site for an Inf
 
 ## Case Studies
 
-**When working on anything related to case studies, always reference [`docs/case-studies.md`](docs/case-studies.md) first.** It documents the case-study architecture, layouts, shortcodes, front matter schema, styling decisions, and iteration workflow. **Keep it updated** — whenever you make a decision about case-study layout, shortcodes, visuals, or workflow, update that file before ending the session (and remove mentions of anything deleted from the codebase).
+**When working on anything related to case studies, always reference [`docs/cs-layout.md`](docs/cs-layout.md) first.** It documents the case-study architecture, layouts, shortcodes, front matter schema, styling decisions, and iteration workflow. **Keep it updated** — whenever you make a decision about case-study layout, shortcodes, visuals, or workflow, update that file before ending the session (and remove mentions of anything deleted from the codebase).
 
 ## Videos
 
@@ -85,16 +85,18 @@ trunk fmt
 
 ### Blog Posts
 
+Every blog post must include `date`, the commented-out `# date_modified` line, and the standard `callout` exactly as shown below (unless the post has a custom callout).
+
 Example blog post header:
 
-````markdown
+`````markdown
 ---
 visible: true
 draft: false
 title: "The Platform Engineering Way to Manage Google Workspace Users"
 author: Weston Platter
 date: 2025-07-17
-date_modified: 2025-07-19  # Optional: Shows "Updated" date if different from publish date
+# date_modified: 2026-xx-xx Be sure to use this if you've updated the post as this helps with SEO and index freshness
 slug: platform-engineering-way-to-manage-google-workspace-users
 description: "Migrate Google Workspace from ClickOps to Infrastructure as Code with our open source Terraform module. Includes design patterns and import examples."
 tags: ["terraform", "google-workspace", "infrastructure-as-code", "automation"]
@@ -106,7 +108,7 @@ callout: <p>👋 <b>If you're ready to take your infrastructure to the next leve
 
 ### Code Blocks
 
-- **Always** open code blocks in blog posts with the copy/collapse attributes, e.g. `` ````markdown {copy=true collapse=true} `` (swap `markdown` for the block's language), and close them with four backticks. `layouts/_default/_markup/render-codeblock.html` turns `copy=true` into a Copy button and `collapse=true` into a collapsed block with a "Show more" toggle.
+- **Always** open code blocks in blog posts with the copy/collapse attributes, e.g. ` ````markdown {copy=true collapse=true} ` (swap `markdown` for the block's language), and close them with four backticks. `layouts/_default/_markup/render-codeblock.html` turns `copy=true` into a Copy button and `collapse=true` into a collapsed block with a "Show more" toggle.
 - Use four backticks rather than three so the block can contain triple-backtick fences of its own (common in prompts, skills, and READMEs).
 
 ### Custom Shortcodes
@@ -195,7 +197,7 @@ hugo new blog/$(date +%Y-%m-%d)-my-post-title.md
 # Add banner image to static/img/blog/
 # Set draft: false when ready
 ```
-````
+`````
 
 ### Update Team Member
 

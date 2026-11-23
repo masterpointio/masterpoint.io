@@ -29,7 +29,7 @@ stat_bar:
 preview_image: /img/case-studies/marketspark/marketspark-aws.png
 og_img: /img/case-studies/marketspark/marketspark-aws.png
 
-# Homepage highlight card (see docs/case-studies.md → Homepage slider)
+# Homepage highlight card (see docs/cs-layout.md → Homepage slider)
 highlight:
   blurb: "Masterpoint rebuilt MarketSpark's single manually-operated AWS account into an 11-account AWS Organization: fully codified, automated, and scalable to business growth."
   image: /img/case-studies/marketspark/telecommunications.jpg
