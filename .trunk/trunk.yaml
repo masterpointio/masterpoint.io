@@ -24,6 +24,11 @@ lint:
     - yamllint@1.38.0
     - zizmor@1.31.1
   definitions:
+    - name: pinact
+      commands:
+        # The v1.11.0 plugin wrapper still passes single-dash flags removed in v5.
+        - name: lint
+          run: pinact run --format sarif --fix=false --verify-comment ${target}
     - name: zizmor
       environment:
         # Optional token here so that it's not needed locally, but can be used
