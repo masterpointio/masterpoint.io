@@ -106,6 +106,13 @@ to = "/testimonials/"
 status = 301
 force = true
 
+# Removed job postings: send old links (job boards, LinkedIn) to the open roles list.
+[[redirects]]
+from = "/careers/operations-associate-fractional-winter-2026/"
+to = "/careers/"
+status = 301
+force = true
+
 ########################################################
 # Plausible Analytics proxy. Serves the tracker first-party so ad blockers
 # don't strip it. These MUST stay above the catch-all 404 below, and the paths

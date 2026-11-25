@@ -13,8 +13,8 @@ the application embed, or the workflow.
   job post so candidates never leave the site and submissions land in the
   same Notion database the team already works from. An external `apply_link`
   is still supported per posting.
-- Posts stay up after a role closes (`status: closed`) so the history is
-  visible and old links keep working.
+- Posts are removed when a role closes, and their URLs redirect to
+  `/careers/` so old links keep working.
 - Google for Jobs eligibility via `JobPosting` structured data.
 
 ## Architecture overview
@@ -201,10 +201,15 @@ so every posting carries the same wording and it only has to be edited once.
 
 ## Workflow: closing a role
 
-Set `status: closed` on the post. It moves to **Past Openings**, the hero
-swaps to "ROLE CLOSED", the apply section disappears, and a notice at the top
-of the article points at `/careers/`. Do not delete the file; keep the URL.
-Optionally remove the role from the Notion form's **Position** options.
+Delete the post's file, and add a 301 redirect from its URL to `/careers/`
+in `netlify.toml` (next to the other removed-posting redirects) so links on
+job boards and LinkedIn still land somewhere useful. We don't keep a public
+history of past roles. Optionally remove the role from the Notion form's
+**Position** options.
+
+`status: closed` still works (the post moves to **Past Openings**, the hero
+swaps to "ROLE CLOSED" and the apply section disappears), but it's no longer
+the default.
 
 ## Decisions & gotchas
 
